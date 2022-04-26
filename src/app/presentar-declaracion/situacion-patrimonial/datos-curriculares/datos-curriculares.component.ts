@@ -47,11 +47,9 @@ export class DatosCurricularesComponent implements OnInit {
 
   minDate = new Date(1960, 1, 1);
   anio: number = new Date().getFullYear();
-  mes: number = new Date().getMonth()+1;
-  dia: number = new Date().getDate(); 
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
-  
-   
 
   constructor(
     private apollo: Apollo,
@@ -79,7 +77,7 @@ export class DatosCurricularesComponent implements OnInit {
     this.editIndex = null;
   }
 
- /* export function datePickerValidator(): ValidatorFn {
+  /* export function datePickerValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       let forbidden = true;
       if (control.value) {
@@ -90,7 +88,7 @@ export class DatosCurricularesComponent implements OnInit {
       }
       return forbidden ? { 'invalidDOBYear': true } : null;
     };
-  } */  
+  } */
 
   createForm() {
     this.datosCurricularesDeclaranteForm = this.formBuilder.group({

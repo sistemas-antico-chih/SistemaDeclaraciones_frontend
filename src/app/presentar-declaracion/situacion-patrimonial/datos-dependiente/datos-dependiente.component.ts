@@ -67,10 +67,9 @@ export class DatosDependienteComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-
-  minDate = new Date(1960, 1, 1)
+  minDate = new Date(1960, 1, 1);
   anio: number = new Date().getFullYear();
-  mes: number = new Date().getMonth()+1;
+  mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
@@ -483,12 +482,8 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const {
-      actividadLaboral,
-      parentescoRelacion,
-      domicilioExtranjero,
-      domicilioMexico,
-    } = this.datosDependientesEconomicosForm.value.dependienteEconomico;
+    const { actividadLaboral, parentescoRelacion, domicilioExtranjero, domicilioMexico } =
+      this.datosDependientesEconomicosForm.value.dependienteEconomico;
 
     if (actividadLaboral) {
       this.datosDependientesEconomicosForm
@@ -501,9 +496,8 @@ export class DatosDependienteComponent implements OnInit {
         .setValue(findOption(this.parentescoRelacionCatalogo, parentescoRelacion.clave));
     }
     if (actividadLaboral.clave == 'PRI' || actividadLaboral.clave === 'OTR') {
-      const {
-        sector,
-      } = this.datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro;
+      const { sector } =
+        this.datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro;
       if (sector) {
         this.datosDependientesEconomicosForm
           .get('dependienteEconomico.actividadLaboralSectorPrivadoOtro.sector')

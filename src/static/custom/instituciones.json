@@ -1,26 +1,542 @@
+
 [
   {
-    "ente_publico": "SECRETARÍA EJECUTIVA DEL SISTEMA ESTATAL ANTICORRUPCIÓN DEL ESTADO DE PUEBLA",
-    "clave": "SESEA PUEBLA",
+    "ente_publico": "MUNICIPIO DE AHUMADA",
+    "clave": "MUN_AHU",
     "servidor_publico_recibe": {
-      "nombre": "Juan Perez Tellez",
-      "cargo": "Director general de Responsabilidades y Verificación Patrimonial"
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
   {
-    "ente_publico": "MUNICIPIO DE VENUSTIANO CARRANZA PUEBLA",
-    "clave": "MUN VC",
+    "ente_publico": "MUNICIPIO DE ALDAMA",
+    "clave": "MUN_ALD",
     "servidor_publico_recibe": {
-      "nombre": "Juan Perez Tellez",
-      "cargo": "Director general de Responsabilidades y Verificación Patrimonial"
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
   {
-    "ente_publico": "MUNICIPIO DE JALPAN PUEBLA",
-    "clave": "MUN JALPAN",
+    "ente_publico": "MUNICIPIO DE ALLENDE",
+    "clave": "MUN_ALL",
     "servidor_publico_recibe": {
-      "nombre": "Juan Perez Tellez",
-      "cargo": "Director general de Responsabilidades y Verificación Patrimonial"
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE AQUILES SERDÁN",
+    "clave": "MUN_AQS",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE ASCENSIÓN",
+    "clave": "MUN_ASC",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE BACHINIVA",
+    "clave": "MUN_BAC",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE BALLEZA",
+    "clave": "MUN_BZA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE BATOPILAS",
+    "clave": "MUN_BAT",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE BOCOYNA",
+    "clave": "MUN_BOC",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE BUENAVENTURA",
+    "clave": "MUN_BUE",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE CAMARGO",
+    "clave": "MUN_CAM",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE CARICHÍ",
+    "clave": "MUN_ASC",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+{
+    "ente_publico": "MUNICIPIO DE CASAS GRANDES",
+    "clave": "MUN_CGR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE CHIHUAHUA",
+    "clave": "MUN_CHIH",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE CHÍNIPAS",
+    "clave": "MUN_CHIN",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE CORONADO",
+    "clave": "MUN_COR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE COYAME DEL SOTOL",
+    "clave": "MUN_COY",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE CUAUHTÉMOC",
+    "clave": "MUN_CUAU",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE CUSIHUIRIACHI",
+    "clave": "MUN_CUSI",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE DELICIAS",
+    "clave": "MUN_DEL",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE DR. BELISARIO DOMÍNGUEZ",
+    "clave": "MUN_BEL",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE EL TULE",
+    "clave": "MUN_TULE",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE GALEANA",
+    "clave": "MUN_GAL",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE GÓMEZ FARÍAS",
+    "clave": "MUN_GOM",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE GRAN MORELOS",
+    "clave": "MUN_MOR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE GUACHOCHI",
+    "clave": "MUN_GUA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE GUADALUPE",
+    "clave": "MUN_GPE",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE GUADALUPE Y CALVO",
+    "clave": "MUN_GYC",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE GUAZAPARES",
+    "clave": "MUN_GUZ",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE GUERRERO",
+    "clave": "MUN_GUE",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE HIDALGO DEL PARRAL",
+    "clave": "MUN_HGO",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE HUEJOTITÁN",
+    "clave": "MUN_HUE",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE IGNACIO ZARAGOZA",
+    "clave": "MUN_IZAR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE JANOS",
+    "clave": "MUN_JAN",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE JIMÉNEZ",
+    "clave": "MUN_JIM",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE JUÁREZ",
+    "clave": "MUN_JUA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE JULIMES",
+    "clave": "MUN_JUL",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE LA CRUZ",
+    "clave": "MUN_CRUZ",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE LÓPEZ",
+    "clave": "MUN_LOP",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE MADERA",
+    "clave": "MUN_MAD",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE MAGUARICHI",
+    "clave": "MUN_MAG",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE MANUEL BENAVIDES",
+    "clave": "MUN_MAN",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE MATACHÍ",
+    "clave": "MUN_MAT",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE MATAMOROS",
+    "clave": "MUN_MAS",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE MEOQUI",
+    "clave": "MUN_MEQ",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE MORELOS",
+    "clave": "MUN_MOR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE MORIS",
+    "clave": "MUN_MORIS",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE NAMIQUIPA",
+    "clave": "MUN_NAM",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE NONOAVA",
+    "clave": "MUN_NON",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE NUEVO CASAS GRANDES",
+    "clave": "MUN_NCG",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE OCAMPO",
+    "clave": "MUN_OCA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE OJINAGA",
+    "clave": "MUN_OJI",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE PRÁXEDIS G. GUERRERO",
+    "clave": "MUN_PRA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE RIVA PALACIO",
+    "clave": "MUN_RIVA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE ROSALES",
+    "clave": "MUN_ROS",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE ROSARIO",
+    "clave": "MUN_ROSA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE SAN FRANCISCO DE BORJA",
+    "clave": "MUN_BOR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE SAN FRANCISCO DE CONCHOS",
+    "clave": "MUN_CONCHOS",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE SAN FRANCISCO DEL ORO",
+    "clave": "MUN_ORO",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE SANTA BÁRBARA",
+    "clave": "MUN_BAR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE SANTA ISABEL",
+    "clave": "MUN_ISA",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE SATEVÓ",
+    "clave": "MUN_SAT",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE SAUCILLO",
+    "clave": "MUN_SAU",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+   {
+    "ente_publico": "MUNICIPIO DE TEMÓSACHIC",
+    "clave": "MUN_TEM",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE URIQUE",
+    "clave": "MUN_URI",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE URUACHI",
+    "clave": "MUN_ROS",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
+    }
+  },
+  {
+    "ente_publico": "MUNICIPIO DE VALLE DE ZARAGOZA",
+    "clave": "MUN_VZAR",
+    "servidor_publico_recibe": {
+      "nombre": "POR DEFINIR",
+      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   }
 ]
+
+
+

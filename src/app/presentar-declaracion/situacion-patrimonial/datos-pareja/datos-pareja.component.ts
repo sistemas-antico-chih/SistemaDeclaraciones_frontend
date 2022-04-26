@@ -63,14 +63,12 @@ export class DatosParejaComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-
   minDatePareja = new Date(1940, 1, 1);
-  minDate = new Date(1960, 1, 1)
+  minDate = new Date(1960, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth();
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
-
 
   constructor(
     private apollo: Apollo,
