@@ -200,6 +200,8 @@ export class DatosGeneralesComponent implements OnInit {
         },
       });
 
+      this.confirmSaveInfo();
+
       dialogRef.afterClosed().subscribe((result) => {
         if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
       });
