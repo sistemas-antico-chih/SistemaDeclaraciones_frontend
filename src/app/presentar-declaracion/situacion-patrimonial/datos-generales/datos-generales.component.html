@@ -25,17 +25,17 @@
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Nombre</mat-label>
           <mat-icon matPrefix>person</mat-icon>
-          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombre" required />
+          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombre" required readonly/>
         </mat-form-field>
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Primer Apellido</mat-label>
           <mat-icon matPrefix>person</mat-icon>
-          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="primerApellido" required />
+          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="primerApellido" required readonly/>
         </mat-form-field>
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Segundo Apellido</mat-label>
           <mat-icon matPrefix>person</mat-icon>
-          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="segundoApellido" />
+          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="segundoApellido" readonly/>
         </mat-form-field>
 
         <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill">
@@ -49,6 +49,7 @@
             type="text"
             formControlName="curp"
             required
+            readonly
           />
           <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
         </mat-form-field>
@@ -64,6 +65,7 @@
             type="text"
             formControlName="rfc"
             required
+            readonly
           />
           <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/10</mat-hint>
         </mat-form-field>
@@ -78,8 +80,9 @@
             type="text"
             formControlName="homoClave"
             required
+            readonly
           />
-          <mat-hint align="end">{{ input_homoclave.value?.length || 0 }}/3</mat-hint>
+          <mat-hint align="end" >{{ input_homoclave.value?.length || 0 }}/3</mat-hint>
         </mat-form-field>
       </div>
 
