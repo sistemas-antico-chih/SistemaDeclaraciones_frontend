@@ -29,6 +29,8 @@ export class DatosGeneralesComponent implements OnInit {
   aclaraciones = false;
   datosGeneralesForm: FormGroup;
   isLoading = false;
+  currentYear = new Date().getFullYear();
+  anio_ejercicio: number = null;
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -160,6 +162,7 @@ export class DatosGeneralesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
     } catch (error) {
       console.log(error);
@@ -199,13 +202,14 @@ export class DatosGeneralesComponent implements OnInit {
           trueText: 'Continuar',
         },
       });
-
-      this.confirmSaveInfo();
-
+      
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+        if (result) 
+        this.saveInfo();
+        this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
       });
     } else {
+      this.saveInfo();
       this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
     }
   }
@@ -224,6 +228,7 @@ export class DatosGeneralesComponent implements OnInit {
 
       const declaracion = {
         datosGenerales: this.finalForm,
+        anioEjercicio: this.anio_ejercicio,
       };
 
       const { errors } = await this.apollo

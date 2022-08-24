@@ -152,6 +152,7 @@ export class DomicilioDeclaranteComponent implements OnInit {
     let isDirty = this.domicilioDeclaranteForm.dirty;
     console.log(isDirty);
 
+
     if (isDirty) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
@@ -161,6 +162,8 @@ export class DomicilioDeclaranteComponent implements OnInit {
           trueText: 'Continuar',
         },
       });
+
+      this.saveInfo();
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) this.router.navigate([url + '/situacion-patrimonial/datos-curriculares']);
