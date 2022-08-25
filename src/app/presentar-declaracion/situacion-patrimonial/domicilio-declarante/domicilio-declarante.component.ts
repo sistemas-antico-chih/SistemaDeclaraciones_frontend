@@ -163,8 +163,6 @@ export class DomicilioDeclaranteComponent implements OnInit {
         },
       });
 
-      this.saveInfo();
-
       dialogRef.afterClosed().subscribe((result) => {
         if (result) this.router.navigate([url + '/situacion-patrimonial/datos-curriculares']);
       });
