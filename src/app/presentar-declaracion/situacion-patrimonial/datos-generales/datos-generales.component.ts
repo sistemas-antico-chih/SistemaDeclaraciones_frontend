@@ -205,11 +205,17 @@ export class DatosGeneralesComponent implements OnInit {
       
       dialogRef.afterClosed().subscribe((result) => {
         if (result) 
-        //this.saveInfo();
+     
         this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
       });
     } else {
-      //this.saveInfo();
+
+     
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) 
+        this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+      });
+    } else {
       this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
     }
   }
