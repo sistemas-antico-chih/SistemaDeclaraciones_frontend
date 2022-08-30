@@ -13,8 +13,7 @@ import { env } from './.env';
 export const environment = {
   production: false,
   version: env.npm_package_version + '-dev',
-  serverUrl: 'http://127.0.0.1:3000',
-  pageUrl: 'http://127.0.0.1:4200/',
+  serverUrl: 'https://declara-juarez.anticorrupcion.org/api',
   defaultLanguage: 'es-ES',
   supportedLanguages: ['es-ES'],
 };

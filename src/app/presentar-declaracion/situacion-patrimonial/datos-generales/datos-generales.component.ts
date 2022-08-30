@@ -202,18 +202,9 @@ export class DatosGeneralesComponent implements OnInit {
           trueText: 'Continuar',
         },
       });
-      
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) 
-     
-        this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
-      });
-    } else {
 
-     
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) 
-        this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+        if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
       });
     } else {
       this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
@@ -286,3 +277,4 @@ export class DatosGeneralesComponent implements OnInit {
     this.aclaraciones = value;
   }
 }
+
