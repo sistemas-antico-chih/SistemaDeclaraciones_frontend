@@ -112,8 +112,8 @@ export class ParticipacionEmpresaComponent implements OnInit {
           ],
         ],
         porcentajeParticipacion: [
-          0,
-          [Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0), Validators.max(100)],
+          1,
+          [Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(1), Validators.max(100)],
         ],
         tipoParticipacion: ['', Validators.required],
         recibeRemuneracion: [false, Validators.required],
