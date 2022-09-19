@@ -3,7 +3,7 @@ const tooltipData = {
   nombreEmpresaSociedadAsociacion:
     'Señalar el nombre o razón social completo de la empresa, sociedad o asociación, tal y como aparece en el documento legal en el que participe.',
   rfc: 'Proporcionar los 12 dígitos del registro de la empresa, sociedad o asociación en la cual participa.',
-  porcentajeParticipacion: 'Indicar el porcentaje de participación en la empresa, sociedad o asociación.',
+  porcentajeParticipacion: 'Indicar el porcentaje de participación (entre 1 y 100) en la empresa, sociedad o asociación.',
   tipoParticipacion:
     'Seleccionar de la lista desplegable una de las siguientes opciones: socio, accionista, comisario, representante, apoderado, colaborador, beneficiario u otro, especifique.',
   recibeRemuneracion: 'Señalar sí o no.',
