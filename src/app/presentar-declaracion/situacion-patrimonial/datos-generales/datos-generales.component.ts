@@ -81,8 +81,8 @@ export class DatosGeneralesComponent implements OnInit {
   createForm() {
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
-      primerApellido: [null, [Validators.pattern(/^\S.*\S$/)]],
-      segundoApellido: [null, [Validators.pattern(/^\S.*\S$/)]],
+      primerApellido: [null],
+      segundoApellido: [null],
       curp: [
         null,
         [
