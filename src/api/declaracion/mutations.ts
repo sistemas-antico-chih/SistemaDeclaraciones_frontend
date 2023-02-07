@@ -75,7 +75,6 @@ export const bienesInmueblesMutation = gql`
           titular {
             clave
             valor
-            titularDec
           }
           porcentajePropiedad
           superficieTerreno {

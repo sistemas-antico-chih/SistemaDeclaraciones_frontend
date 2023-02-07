@@ -216,7 +216,6 @@ export const bienesInmueblesQuery = gql`
           titular {
             clave
             valor
-            titularDec
           }
           porcentajePropiedad
           superficieTerreno {
