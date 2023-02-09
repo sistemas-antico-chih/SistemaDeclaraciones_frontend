@@ -294,6 +294,7 @@ export class BienesInmueblesComponent implements OnInit {
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
+          //bienesDeclarante,
         });
       }
     });
@@ -303,6 +304,7 @@ export class BienesInmueblesComponent implements OnInit {
     try {
       const declaracion = {
         bienesInmuebles: form,
+        //bienesDeclarant: aux,
       };
 
       const { data } = await this.apollo
@@ -345,6 +347,11 @@ export class BienesInmueblesComponent implements OnInit {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
+    
+    //var bienesDeclarante=0;
+    /*if (this.bienInmueble.){
+
+    }*/
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
@@ -357,6 +364,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
+      //bienesDeclarante,
     });
 
     this.isLoading = false;
