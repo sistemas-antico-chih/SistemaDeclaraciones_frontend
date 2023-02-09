@@ -291,11 +291,11 @@ export class BienesInmueblesComponent implements OnInit {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-        const bienesDeclarante=1;
+        //const bienesDeclarante=1;
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          bienesDeclarante,
+         // bienesDeclarante,
         });
       }
     });
@@ -303,12 +303,11 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
-      var aux =0;
+     // var aux =0;
       console.log("saveInfo")
       console.log(this.bienInmueble.toString);
       const declaracion = {
         bienesInmuebles: form,
-        bienesDeclarante: aux,
       };
 
       const { data } = await this.apollo
@@ -354,10 +353,7 @@ export class BienesInmueblesComponent implements OnInit {
     
     console.log("saveItem");
     console.log (newItem);
-    //var bienesDeclarante=0;
-    /*if (this.bienInmueble.){
 
-    }*/
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
