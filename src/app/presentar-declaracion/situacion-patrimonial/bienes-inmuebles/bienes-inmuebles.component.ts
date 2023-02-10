@@ -292,15 +292,15 @@ export class BienesInmueblesComponent implements OnInit {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
         
-        console.log("removeItem");
-        console.log(bienInmueble);
-        console.log("removeItem2");
-        console.log(bienInmueble.indexOf);
-        const bienesDeclarante=0;
+        //console.log("removeItem");
+        //console.log(bienInmueble);
+        //console.log("removeItem2");
+        //console.log(bienInmueble.indexOf);
+        //const bienesDeclarante=0;
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          bienesDeclarante,
+          //bienesDeclarante,
         });
       }
     });
@@ -309,9 +309,9 @@ export class BienesInmueblesComponent implements OnInit {
   async saveInfo(form: BienesInmuebles) {
     try {
      // var aux =0;
-      console.log("saveInfo")
-      console.log(this.bienInmueble);
-      console.log ("save info 2 ")
+      //console.log("saveInfo")
+      //console.log(this.bienInmueble);
+      //console.log ("save info 2 ")
       if(this.bienInmueble[0]){
         console.log(this.bienInmueble[0].titular);
       }
@@ -356,10 +356,6 @@ export class BienesInmueblesComponent implements OnInit {
     bienInbueble.get(selectedType).enable();
   }
 
-  bienesDeclarante(){
-
-    return this.bienesDeclarante;
-  }
 
   saveItem() {
     let bienInmueble = [...this.bienInmueble];
@@ -375,7 +371,9 @@ export class BienesInmueblesComponent implements OnInit {
 
     this.isLoading = true;
 
-    const bienesDeclarante=0;
+    //const bienesDeclarante=0;
+    const bienesDeclarante= this.saveBienesDeclarante();
+    console.log (bienesDeclarante);
 
     this.saveInfo({
       bienInmueble,
@@ -384,6 +382,14 @@ export class BienesInmueblesComponent implements OnInit {
     });
 
     this.isLoading = false;
+  }
+
+  saveBienesDeclarante(){
+    if(this.editIndex === null){
+      return 10;
+    }else{
+      return 2;
+    }
   }
 
   setEditMode() {
