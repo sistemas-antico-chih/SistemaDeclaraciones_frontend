@@ -356,16 +356,16 @@ export class BienesInmueblesComponent implements OnInit {
     bienInbueble.get(selectedType).enable();
   }
 
+  bienesDeclarante(){
+
+    return this.bienesDeclarante;
+  }
+
   saveItem() {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
     
-    console.log("saveItem");
-    console.log(newItem);
-    console.log("saveItem2  ");
-    console.log (newItem.titularBienCatalogo);
-
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
@@ -375,10 +375,12 @@ export class BienesInmueblesComponent implements OnInit {
 
     this.isLoading = true;
 
+    const bienesDeclarante=0;
+
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
-      //bienesDeclarante,
+      bienesDeclarante,
     });
 
     this.isLoading = false;
