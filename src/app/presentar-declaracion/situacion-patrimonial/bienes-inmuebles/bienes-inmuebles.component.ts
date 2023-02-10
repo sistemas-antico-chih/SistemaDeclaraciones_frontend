@@ -295,8 +295,8 @@ export class BienesInmueblesComponent implements OnInit {
         console.log("removeItem");
         console.log(bienInmueble);
         console.log("removeItem2");
-        console.log(bienInmueble.forEach);
-        const bienesDeclarante=1;
+        console.log(bienInmueble.indexOf);
+        const bienesDeclarante=0;
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
@@ -312,7 +312,10 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("saveInfo")
       console.log(this.bienInmueble);
       console.log ("save info 2 ")
-      console.log(this.bienInmueble[0].titular);
+      if(this.bienInmueble[0]){
+        console.log(this.bienInmueble[0].titular);
+      }
+
       const declaracion = {
         bienesInmuebles: form,
       };
