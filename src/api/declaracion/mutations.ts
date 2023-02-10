@@ -141,6 +141,7 @@ export const bienesInmueblesMutation = gql`
           }
         }
         aclaracionesObservaciones
+        bienesDeclarante
       }
     }
   }

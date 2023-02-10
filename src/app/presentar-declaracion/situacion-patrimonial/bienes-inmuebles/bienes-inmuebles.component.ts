@@ -354,7 +354,7 @@ export class BienesInmueblesComponent implements OnInit {
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
     
     console.log("saveItem");
-    console.log(newItem.titularBien);
+    console.log(newItem);
     console.log("saveItem2  ");
     console.log (newItem.titularBienCatalogo);
 

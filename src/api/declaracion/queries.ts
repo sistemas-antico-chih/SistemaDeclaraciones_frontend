@@ -282,6 +282,7 @@ export const bienesInmueblesQuery = gql`
           }
         }
         aclaracionesObservaciones
+        bienesDeclarante
       }
     }
   }
