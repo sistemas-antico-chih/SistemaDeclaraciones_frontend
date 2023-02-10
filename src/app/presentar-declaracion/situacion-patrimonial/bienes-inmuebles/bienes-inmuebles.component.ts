@@ -291,11 +291,16 @@ export class BienesInmueblesComponent implements OnInit {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-        //const bienesDeclarante=1;
+        
+        console.log("removeItem");
+        console.log(bienInmueble);
+        console.log("removeItem2");
+        console.log(bienInmueble.forEach);
+        const bienesDeclarante="1";
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-         // bienesDeclarante,
+          bienesDeclarante,
         });
       }
     });
@@ -307,7 +312,7 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("saveInfo")
       console.log(this.bienInmueble);
       console.log ("save info 2 ")
-      console.log(this.bienInmueble.values);
+      console.log(this.bienInmueble[0].titular);
       const declaracion = {
         bienesInmuebles: form,
       };
