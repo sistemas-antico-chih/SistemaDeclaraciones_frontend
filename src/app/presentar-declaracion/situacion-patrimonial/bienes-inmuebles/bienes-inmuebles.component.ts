@@ -296,7 +296,7 @@ export class BienesInmueblesComponent implements OnInit {
         console.log(bienInmueble);
         console.log("removeItem2");
         console.log(bienInmueble.forEach);
-        const bienesDeclarante="1";
+        const bienesDeclarante=1;
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,

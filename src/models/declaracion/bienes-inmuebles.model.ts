@@ -24,5 +24,5 @@ export interface BienesInmuebles {
   ninguno?: boolean;
   bienInmueble?: BienInmueble[];
   aclaracionesObservaciones?: string;
-  bienesDeclarante?: string;
+  bienesDeclarante?: number;
 }
