@@ -305,7 +305,7 @@ export class BienesInmueblesComponent implements OnInit {
     try {
      // var aux =0;
       console.log("saveInfo")
-      console.log(this.bienInmueble.toString);
+      console.log(this.bienInmueble);
       const declaracion = {
         bienesInmuebles: form,
       };
@@ -352,7 +352,7 @@ export class BienesInmueblesComponent implements OnInit {
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
     
     console.log("saveItem");
-    console.log (newItem);
+    console.log (newItem.titularBienCatalogo.clave);
 
 
     if (this.editIndex === null) {
