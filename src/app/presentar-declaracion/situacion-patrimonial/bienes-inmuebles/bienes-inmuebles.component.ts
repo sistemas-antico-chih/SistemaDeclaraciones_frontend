@@ -297,6 +297,7 @@ export class BienesInmueblesComponent implements OnInit {
         //console.log("removeItem2");
         //console.log(bienInmueble.indexOf);
         //const bienesDeclarante=0;
+        console.log("saveInfoRemoveItem")
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
@@ -373,6 +374,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     //const bienesDeclarante=0;
     const bienesDeclarante= this.saveBienesDeclarante();
+    console.log("saveInfoSaveItem");
     console.log (bienesDeclarante);
 
     this.saveInfo({
@@ -385,7 +387,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   saveBienesDeclarante(){
-    if(this.editIndex === null){
+    if(!this.bienInmueble[0]){
       return 10;
     }else{
       return 2;
