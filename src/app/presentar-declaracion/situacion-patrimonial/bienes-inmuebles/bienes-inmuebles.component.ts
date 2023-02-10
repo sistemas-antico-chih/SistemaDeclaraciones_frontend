@@ -387,17 +387,14 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   saveBienesDeclarante(){
-    const valorBienDeclarante=0;
     if(!this.bienInmueble[0]){
       const newItem = this.bienesInmueblesForm.value.bienInmueble;
-      let bienInmueble = [...this.bienInmueble];
-      console.log("newItem");
-      console.log(newItem);
-      console.log("bienInmueble")
-      console.log(bienInmueble);
-      //if(newItem){
-        return 10;
-      //}
+      if(newItem[0].titular.clave === "DEC"){
+        return 1;
+      }
+      else{
+        return 0;
+      }
     }else{
       return 2;
     }
