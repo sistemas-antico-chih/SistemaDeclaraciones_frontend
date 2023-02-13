@@ -389,7 +389,6 @@ export class BienesInmueblesComponent implements OnInit {
   saveBienesDeclarante(){
     if(!this.bienInmueble[0]){
       const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-      //console.log(newItem);
       if(newItem.titular.clave === "DEC"){
         return 1;
       }
@@ -401,10 +400,16 @@ export class BienesInmueblesComponent implements OnInit {
       console.log(this.bienInmueble);
       console.log("bienesInmuebles");
       console.log(this.bienInmueble.length);
-      /*Object.keys(this.bienInmueble)
-      .filter((field) => this.bienInmueble[field] !== null)
-      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(this.bienInmueble[field]));
-    this.bienesInmueblesForm.get(`bienInmueble.titular`).patchValue(this.bienInmueble.titular[0]);*/
+      if(this.bienInmueble[0].titular[0].clave === "DEC"){
+        return 1;
+      }
+      else{
+        for (let i=0; i<this.bienInmueble.length; i++){
+          if (this.bienInmueble[i].titular[0].clave === "DEC")
+          return 1;
+        }
+        return 0;
+      }
     }
   }
 
