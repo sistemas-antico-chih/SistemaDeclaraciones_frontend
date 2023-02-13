@@ -405,6 +405,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
       else {
         const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+        console.log (newItem);
         if (newItem.titular.clave === "DEC") {
           return 1;
         }
