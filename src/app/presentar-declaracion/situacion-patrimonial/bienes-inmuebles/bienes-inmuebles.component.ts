@@ -425,7 +425,16 @@ export class BienesInmueblesComponent implements OnInit {
   removeBienesDeclarante() {
     console.log("removeBienesDeclarante");
     console.log(this.bienInmueble);
-    if (this.bienInmueble[0]) {
+    if (this.bienInmueble.length >= 1) {
+     this.bienInmueble.forEach((x)=>{
+       console.log(x);
+       if(x.titular[0].clave === "DEC"){
+         return 1;
+       }
+       else
+        return 0;
+     })
+/*     
       for (let i = 0; i < this.bienInmueble.length; i++) {
         console.log("llega a I");
         console.log(this.bienInmueble[i]);
@@ -433,7 +442,7 @@ export class BienesInmueblesComponent implements OnInit {
           return 1;
         else
           return 0;
-      }
+      }*/
     }else{
       return 0;
     }
