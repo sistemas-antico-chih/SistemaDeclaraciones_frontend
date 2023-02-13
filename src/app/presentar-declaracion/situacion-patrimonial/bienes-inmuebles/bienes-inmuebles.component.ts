@@ -313,9 +313,9 @@ export class BienesInmueblesComponent implements OnInit {
       //console.log("saveInfo")
       //console.log(this.bienInmueble);
       //console.log ("save info 2 ")
-      if(this.bienInmueble[0]){
+     /* if(this.bienInmueble[0]){
         console.log(this.bienInmueble[0].titular);
-      }
+      }*/
 
       const declaracion = {
         bienesInmuebles: form,
