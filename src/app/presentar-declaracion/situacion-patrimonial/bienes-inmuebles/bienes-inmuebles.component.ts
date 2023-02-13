@@ -299,7 +299,7 @@ export class BienesInmueblesComponent implements OnInit {
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          //bienesDeclarante,
+          bienesDeclarante,
         });
       }
     });
