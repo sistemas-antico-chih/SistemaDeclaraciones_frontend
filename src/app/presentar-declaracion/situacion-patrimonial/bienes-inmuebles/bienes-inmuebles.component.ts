@@ -397,7 +397,14 @@ export class BienesInmueblesComponent implements OnInit {
         return 0;
       }
     }else{
-      return 2;
+      console.log("llega a 2do bienInmueble")
+      console.log(this.bienInmueble);
+      console.log("bienesInmuebles");
+      console.log(bienesInmueblesQuery);
+      /*Object.keys(this.bienInmueble)
+      .filter((field) => this.bienInmueble[field] !== null)
+      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(this.bienInmueble[field]));
+    this.bienesInmueblesForm.get(`bienInmueble.titular`).patchValue(this.bienInmueble.titular[0]);*/
     }
   }
 
