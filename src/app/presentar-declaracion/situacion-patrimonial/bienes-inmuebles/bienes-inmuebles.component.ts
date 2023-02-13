@@ -389,7 +389,7 @@ export class BienesInmueblesComponent implements OnInit {
   saveBienesDeclarante(){
     if(!this.bienInmueble[0]){
       const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-      console.log(newItem);
+      //console.log(newItem);
       if(newItem.titular.clave === "DEC"){
         return 1;
       }
@@ -400,7 +400,7 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("llega a 2do bienInmueble")
       console.log(this.bienInmueble);
       console.log("bienesInmuebles");
-      console.log(bienesInmueblesQuery);
+      console.log(this.bienInmueble.length);
       /*Object.keys(this.bienInmueble)
       .filter((field) => this.bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(this.bienInmueble[field]));
