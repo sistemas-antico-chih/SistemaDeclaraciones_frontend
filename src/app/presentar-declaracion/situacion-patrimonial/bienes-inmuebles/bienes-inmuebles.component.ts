@@ -255,7 +255,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   noProperty() {
     this.saveInfo({ ninguno: true });
@@ -291,7 +291,7 @@ export class BienesInmueblesComponent implements OnInit {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-        
+
         //console.log("removeItem");
         //console.log(bienInmueble);
         //console.log("removeItem2");
@@ -309,13 +309,13 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
-     // var aux =0;
+      // var aux =0;
       //console.log("saveInfo")
       //console.log(this.bienInmueble);
       //console.log ("save info 2 ")
-     /* if(this.bienInmueble[0]){
-        console.log(this.bienInmueble[0].titular);
-      }*/
+      /* if(this.bienInmueble[0]){
+         console.log(this.bienInmueble[0].titular);
+       }*/
 
       const declaracion = {
         bienesInmuebles: form,
@@ -362,7 +362,7 @@ export class BienesInmueblesComponent implements OnInit {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
-    
+
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
@@ -373,9 +373,9 @@ export class BienesInmueblesComponent implements OnInit {
     this.isLoading = true;
 
     //const bienesDeclarante=0;
-    const bienesDeclarante= this.saveBienesDeclarante();
+    const bienesDeclarante = this.saveBienesDeclarante();
     console.log("saveInfoSaveItem");
-    console.log (bienesDeclarante);
+    console.log(bienesDeclarante);
 
     this.saveInfo({
       bienInmueble,
@@ -386,31 +386,35 @@ export class BienesInmueblesComponent implements OnInit {
     this.isLoading = false;
   }
 
-  saveBienesDeclarante(){
-    if(!this.bienInmueble[0]){
+  saveBienesDeclarante() {
+    console.log("saveBienesDeclarante");
+    console.log(this.bienInmueble);
+    if (!this.bienInmueble[0]) {
       const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-      if(newItem.titular.clave === "DEC"){
+      if (newItem.titular.clave === "DEC") {
         return 1;
       }
-      else{
+      else {
         return 0;
       }
-    }else{
-      console.log("llega a 2do bienInmueble")
-      console.log(this.bienInmueble[0]);
-      console.log(this.getUserInfo);
-      console.log(this.bienInmueble);
-      if(this.bienInmueble[0].titular[0].clave === "DEC"){
-        console.log("llega a comparar primer inmueble")
-        console.log("");
+    } else {
+      console.log("2do bien inmueble");
+      console.log(this.bienInmueble.length);
+      if (this.bienInmueble[0].titular[0].clave === "DEC") {
         return 1;
       }
-      else{
-        for (let i=0; i<this.bienInmueble.length; i++){
-          console.log("llega a I");
-          console.log (this.bienInmueble[i]);
-          if (this.bienInmueble[i].titular[0].clave === "DEC")
+      else {
+        const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+        if (newItem.titular.clave === "DEC") {
           return 1;
+        }
+        else {
+          for (let i = 0; i < this.bienInmueble.length; i++) {
+            console.log("llega a I");
+            console.log(this.bienInmueble[i]);
+            if (this.bienInmueble[i].titular[0].clave === "DEC")
+              return 1;
+          }
         }
         return 0;
       }
