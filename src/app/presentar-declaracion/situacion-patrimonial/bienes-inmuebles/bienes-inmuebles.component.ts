@@ -292,12 +292,10 @@ export class BienesInmueblesComponent implements OnInit {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
-        //console.log("removeItem");
-        //console.log(bienInmueble);
-        //console.log("removeItem2");
-        //console.log(bienInmueble.indexOf);
-        //const bienesDeclarante=0;
-        console.log("saveInfoRemoveItem")
+
+        const bienesDeclarante = this.removeBienesDeclarante();
+        console.log("removeItem");
+        console.log(bienesDeclarante);
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
@@ -312,7 +310,9 @@ export class BienesInmueblesComponent implements OnInit {
       // var aux =0;
       //console.log("saveInfo")
       //console.log(this.bienInmueble);
-      //console.log ("save info 2 ")
+      console.log("modificar bien inmueble")
+      console.log(this.bienInmueble);
+      console.log("modificado");
       /* if(this.bienInmueble[0]){
          console.log(this.bienInmueble[0].titular);
        }*/
@@ -374,7 +374,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     //const bienesDeclarante=0;
     const bienesDeclarante = this.saveBienesDeclarante();
-    console.log("saveInfoSaveItem");
+    //console.log("saveInfoSaveItem");
     console.log(bienesDeclarante);
 
     this.saveInfo({
@@ -405,7 +405,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
       else {
         const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-        console.log (newItem);
+        console.log(newItem);
         if (newItem.titular.clave === "DEC") {
           return 1;
         }
@@ -421,6 +421,24 @@ export class BienesInmueblesComponent implements OnInit {
       }
     }
   }
+
+  removeBienesDeclarante() {
+    console.log("removeBienesDeclarante");
+    console.log(this.bienInmueble);
+    if (this.bienInmueble[0]) {
+      for (let i = 0; i < this.bienInmueble.length; i++) {
+        console.log("llega a I");
+        console.log(this.bienInmueble[i]);
+        if (this.bienInmueble[i].titular[0].clave === "DEC")
+          return 1;
+        else
+          return 0;
+      }
+    }else{
+      return 0;
+    }
+  }
+
 
   setEditMode() {
     this.bienesInmueblesForm.reset();
