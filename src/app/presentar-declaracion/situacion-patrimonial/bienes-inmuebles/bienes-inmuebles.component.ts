@@ -397,8 +397,9 @@ export class BienesInmueblesComponent implements OnInit {
       }
     }else{
       console.log("llega a 2do bienInmueble")
-      console.log(this.bienInmueble);
+      console.log(this.bienInmueble[0]);
       console.log(this.getUserInfo);
+      console.log(this.bienInmueble);
       if(this.bienInmueble[0].titular[0].clave === "DEC"){
         console.log("llega a comparar primer inmueble")
         console.log("");
@@ -407,7 +408,7 @@ export class BienesInmueblesComponent implements OnInit {
       else{
         for (let i=0; i<this.bienInmueble.length; i++){
           console.log("llega a I");
-          console.log (i);
+          console.log (this.bienInmueble[i]);
           if (this.bienInmueble[i].titular[0].clave === "DEC")
           return 1;
         }
