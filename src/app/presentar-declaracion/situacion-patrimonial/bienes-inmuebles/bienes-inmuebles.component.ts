@@ -305,12 +305,11 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   async saveInfo(form: BienesInmuebles) {
-    try {
-
-      const bienesDeclarante = this.removeBienesDeclarante();
-      console.log ("modifyBienesDeclarante");
-      console.log(this.bienInmueble);
-  
+    const bienesDeclarante = this.removeBienesDeclarante();
+    console.log ("modifyBienesDeclarante");
+    console.log(this.bienInmueble);
+    
+    try {  
       const declaracion = {
         bienesInmuebles: form,
       };
@@ -366,10 +365,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     this.isLoading = true;
 
-    //const bienesDeclarante=0;
     const bienesDeclarante = this.saveBienesDeclarante();
-    //console.log("saveInfoSaveItem");
-    console.log(bienesDeclarante);
 
     this.saveInfo({
       bienInmueble,
@@ -381,6 +377,9 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   saveBienesDeclarante() {
+    if (this.bienInmueble.length > 1 ){
+
+    }
     if (!this.bienInmueble[0]) {
       const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
       if (newItem.titular.clave === "DEC") {
