@@ -431,19 +431,6 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  /*modifyBienesDeclarante() {
-    console.log("modifyBienesDeclarante");
-    console.log(this.bienInmueble);
-     this.bienInmueble.forEach((x)=>{
-       console.log(x);
-       if(x.titular[0].clave === "DEC"){
-         return 1;
-       }
-       else
-        return 0;
-     })
-  }*/
-
   setEditMode() {
     this.bienesInmueblesForm.reset();
     this.editMode = true;
