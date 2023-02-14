@@ -255,7 +255,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   noProperty() {
     this.saveInfo({ ninguno: true });
@@ -291,9 +291,13 @@ export class BienesInmueblesComponent implements OnInit {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+
+        const bienesDeclarante = this.removeBienesDeclarante();
+
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
+          bienesDeclarante,
         });
       }
     });
@@ -341,10 +345,12 @@ export class BienesInmueblesComponent implements OnInit {
     bienInbueble.get(selectedType).enable();
   }
 
+
   saveItem() {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
+
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
@@ -354,12 +360,75 @@ export class BienesInmueblesComponent implements OnInit {
 
     this.isLoading = true;
 
+    const bienesDeclarante = this.saveBienesDeclarante();
+
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
+      bienesDeclarante,
     });
 
     this.isLoading = false;
+  }
+
+  saveBienesDeclarante() {
+    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    console.log(newItem);
+    if (newItem.titular.clave === "DEC") {
+      return 1;
+    }
+    if (this.bienInmueble.length > 1) {
+      this.bienInmueble.forEach((x) => {
+        console.log(x);
+        if (x.titular[0].clave === "DEC") {
+          return 1;
+        }
+        else
+          return 0;
+      })
+    }
+    if (!this.bienInmueble[0]) {
+      const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+      if (newItem.titular.clave === "DEC") {
+        return 1;
+      }
+      else {
+        return 0;
+      }
+    } else {
+      if (this.bienInmueble[0].titular[0].clave === "DEC") {
+        return 1;
+      }
+      else {
+        const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+        if (newItem.titular.clave === "DEC") {
+          return 1;
+        }
+        else {
+          this.bienInmueble.forEach((x) => {
+            if (x.titular[0].clave === "DEC") {
+              return 1;
+            }
+          });
+        }
+        return 0;
+      }
+    }
+  }
+
+  removeBienesDeclarante() {
+    if (this.bienInmueble.length > 1) {
+      this.bienInmueble.forEach((x) => {
+        console.log(x);
+        if (x.titular[0].clave === "DEC") {
+          return 1;
+        }
+        else
+          return 0;
+      })
+    } else {
+      return 0;
+    }
   }
 
   setEditMode() {
