@@ -387,8 +387,6 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   saveBienesDeclarante() {
-    console.log("saveBienesDeclarante");
-    console.log(this.bienInmueble);
     if (!this.bienInmueble[0]) {
       const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
       if (newItem.titular.clave === "DEC") {
@@ -398,24 +396,20 @@ export class BienesInmueblesComponent implements OnInit {
         return 0;
       }
     } else {
-      console.log("2do bien inmueble");
-      console.log(this.bienInmueble.length);
       if (this.bienInmueble[0].titular[0].clave === "DEC") {
         return 1;
       }
       else {
         const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-        console.log(newItem);
         if (newItem.titular.clave === "DEC") {
           return 1;
         }
         else {
-          for (let i = 0; i < this.bienInmueble.length; i++) {
-            console.log("llega a I");
-            console.log(this.bienInmueble[i]);
-            if (this.bienInmueble[i].titular[0].clave === "DEC")
+          this.bienInmueble.forEach((x)=>{
+            if(x.titular[0].clave === "DEC"){
               return 1;
-          }
+            }
+          });
         }
         return 0;
       }
@@ -424,8 +418,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   removeBienesDeclarante() {
     console.log("removeBienesDeclarante");
-    console.log(this.bienInmueble);
-    if (this.bienInmueble.length >= 1) {
+    if (this.bienInmueble) {
      this.bienInmueble.forEach((x)=>{
        console.log(x);
        if(x.titular[0].clave === "DEC"){
@@ -434,15 +427,6 @@ export class BienesInmueblesComponent implements OnInit {
        else
         return 0;
      })
-/*     
-      for (let i = 0; i < this.bienInmueble.length; i++) {
-        console.log("llega a I");
-        console.log(this.bienInmueble[i]);
-        if (this.bienInmueble[i].titular[0].clave === "DEC")
-          return 1;
-        else
-          return 0;
-      }*/
     }else{
       return 0;
     }
