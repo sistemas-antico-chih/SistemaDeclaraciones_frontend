@@ -294,8 +294,7 @@ export class BienesInmueblesComponent implements OnInit {
 
 
         const bienesDeclarante = this.removeBienesDeclarante();
-        console.log("removeItem");
-        console.log(bienesDeclarante);
+        //console.log("removeItem");
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
@@ -307,16 +306,11 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
-      // var aux =0;
-      //console.log("saveInfo")
-      //console.log(this.bienInmueble);
-      console.log("modificar bien inmueble")
-      console.log(this.bienInmueble);
-      console.log("modificado");
-      /* if(this.bienInmueble[0]){
-         console.log(this.bienInmueble[0].titular);
-       }*/
 
+      const bienesDeclarante = this.removeBienesDeclarante();
+      console.log ("modifyBienesDeclarante");
+      console.log(this.bienInmueble);
+  
       const declaracion = {
         bienesInmuebles: form,
       };
@@ -417,7 +411,6 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   removeBienesDeclarante() {
-    console.log("removeBienesDeclarante");
     if (this.bienInmueble.length > 1) {
      this.bienInmueble.forEach((x)=>{
        console.log(x);
@@ -432,6 +425,18 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
+  modifyBienesDeclarante() {
+    console.log("modifyBienesDeclarante");
+    console.log(this.bienInmueble);
+     this.bienInmueble.forEach((x)=>{
+       console.log(x);
+       if(x.titular[0].clave === "DEC"){
+         return 1;
+       }
+       else
+        return 0;
+     })
+  }
 
   setEditMode() {
     this.bienesInmueblesForm.reset();
