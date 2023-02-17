@@ -25,4 +25,7 @@ export interface BienesInmuebles {
   bienInmueble?: BienInmueble[];
   aclaracionesObservaciones?: string;
   bienesDeclarante?: number;
+  superficieConstruccion?: number;
+  superficieTerreno: number;
+  valorAdquisicion: number;
 }

@@ -283,6 +283,9 @@ export const bienesInmueblesQuery = gql`
         }
         aclaracionesObservaciones
         bienesDeclarante
+        superficieConstruccion
+        superficieTerreno
+        valorAdquisicion
       }
     }
   }
