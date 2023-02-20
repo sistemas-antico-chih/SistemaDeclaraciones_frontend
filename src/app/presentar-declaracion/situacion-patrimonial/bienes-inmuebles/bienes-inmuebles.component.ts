@@ -351,27 +351,20 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
-    let bienesDeclarante = this.saveBienesDeclarante();
-    let valoresDeclaranteSave = this.saveValoresDeclarante();
-    let superficieConstruccion = valoresDeclaranteSave[0];
-    let superficieTerreno = valoresDeclaranteSave[1];
-    let valorAdquisicion = valoresDeclaranteSave[2];
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      superficieConstruccion = [...superficieConstruccion, newItem];
-      superficieTerreno = [...superficieTerreno, newItem];
-      valorAdquisicion = [...valorAdquisicion, newItem];
     } else {
       bienInmueble[this.editIndex] = newItem;
-      superficieConstruccion[this.editIndex] = newItem;
-      superficieTerreno[this.editIndex] = newItem;
-      valorAdquisicion[this.editIndex] = newItem;
     }
 
     this.isLoading = true;
 
-
+    const bienesDeclarante = this.saveBienesDeclarante();
+    const valoresDeclaranteSave = this.saveValoresDeclarante();
+    const superficieConstruccion = valoresDeclaranteSave[0];
+    const superficieTerreno = valoresDeclaranteSave[1];
+    const valorAdquisicion = valoresDeclaranteSave[2];
 
     this.saveInfo({
       bienInmueble,
