@@ -357,12 +357,23 @@ export class BienesInmueblesComponent implements OnInit {
     let superficieTerreno = valoresDeclaranteSave[1];
     let valorAdquisicion = valoresDeclaranteSave[2];
 
+    
+    console.log("index 1");
+    console.log(this.editIndex);
+    console.log(bienInmueble.length);
+    console.log(bienInmueble.indexOf(newItem));
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      superficieConstruccion = [...superficieConstruccion, superficieConstruccion];
+     // superficieConstruccion = [...superficieConstruccion, superficieConstruccion];
+      console.log("if");
+      console.log(this.editIndex);
     } else {
       bienInmueble[this.editIndex] = newItem;
+      console.log("else");
+      console.log(this.editIndex);
     }
+    console.log("index 2");
+    console.log(this.editIndex);
 
     this.isLoading = true;
 
