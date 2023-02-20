@@ -364,7 +364,7 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(bienInmueble.indexOf(newItem));
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      superficieConstruccion = [...superficieConstruccion, newItem.superficieConstruccion.valor];
+     // superficieConstruccion = [...superficieConstruccion, newItem.superficieConstruccion.valor];
       //superficieTerreno = [...superficieTerreno, valoresDeclaranteSave[1]];
       //valorAdquisicion = [...valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
