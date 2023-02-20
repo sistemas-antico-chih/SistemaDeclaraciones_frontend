@@ -289,37 +289,15 @@ export class BienesInmueblesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        //const arr1=bienesInmueblesQuery.lengh
-        let arr1=this.bienInmueble.length;
- 
-        console.log("indice1");
-        console.log(index);
-        console.log("arr1 "+arr1);
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
-        let arr2=this.bienInmueble.length;
-
-        console.log("indice2");
-        console.log(index);
-        console.log("arr2 "+arr2);
-
         const bienesDeclarante = this.removeBienesDeclarante();
-        if(arr1=arr2){
-          const valoresDeclaranteRemove = this.saveValoresDeclarante();
-          var superficieConstruccion = valoresDeclaranteRemove[0];
-          var superficieTerreno = valoresDeclaranteRemove[1];
-          var valorAdquisicion = valoresDeclaranteRemove[2];
-        }
-
 
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
           bienesDeclarante,
-          superficieConstruccion,
-          superficieTerreno,
-          valorAdquisicion,
         });
       }
     });
@@ -383,18 +361,11 @@ export class BienesInmueblesComponent implements OnInit {
     this.isLoading = true;
 
     const bienesDeclarante = this.saveBienesDeclarante();
-    const valoresDeclaranteSave = this.saveValoresDeclarante();
-    const superficieConstruccion = valoresDeclaranteSave[0];
-    const superficieTerreno = valoresDeclaranteSave[1];
-    const valorAdquisicion = valoresDeclaranteSave[2];
 
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
       bienesDeclarante,
-      superficieConstruccion,
-      superficieTerreno,
-      valorAdquisicion,
     });
 
     this.isLoading = false;
@@ -459,34 +430,6 @@ export class BienesInmueblesComponent implements OnInit {
       return 0;
     }
   }
-
-  saveValoresDeclarante(){
-    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    console.log(newItem);
-    if (newItem.titular.clave === "DEC") {
-      let superficieConstruccion = newItem.superficieConstruccion.valor;
-      let superficieTerreno = newItem.superficieTerreno.valor;
-      let valorAdquisicion = newItem.valorAdquisicion.valor;
-      return [superficieConstruccion, superficieTerreno, valorAdquisicion];
-    }
-    else{
-      return [0,0,0];
-    }
-  }
-
-  /*removeValoresDeclarante(index: number){
-    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    console.log(newItem);
-    if (newItem.titular.clave === "DEC") {
-      let superficieConstruccion = newItem.superficieConstruccion.valor;
-      let superficieTerreno = newItem.superficieTerreno.valor;
-      let valorAdquisicion = newItem.valorAdquisicion.valor;
-      return [superficieConstruccion, superficieTerreno, valorAdquisicion];
-    }
-    else{
-      return [0,0,0];
-    }
-  }*/
 
   setEditMode() {
     this.bienesInmueblesForm.reset();
