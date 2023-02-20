@@ -26,6 +26,6 @@ export interface BienesInmuebles {
   aclaracionesObservaciones?: string;
   bienesDeclarante?: number;
   superficieConstruccion?: number;
-  superficieTerreno: number;
-  valorAdquisicion: number;
+  superficieTerreno?: number;
+  valorAdquisicion?: number;
 }
