@@ -361,11 +361,18 @@ export class BienesInmueblesComponent implements OnInit {
     this.isLoading = true;
 
     const bienesDeclarante = this.saveBienesDeclarante();
+    const valoresDeclaranteSave = this.saveValoresDeclarante();
+    const superficieConstruccion = valoresDeclaranteSave[0];
+    const superficieTerreno = valoresDeclaranteSave[1];
+    const valorAdquisicion = valoresDeclaranteSave[2];
 
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
       bienesDeclarante,
+      superficieConstruccion,
+      superficieTerreno,
+      valorAdquisicion,
     });
 
     this.isLoading = false;
@@ -428,6 +435,20 @@ export class BienesInmueblesComponent implements OnInit {
       })
     } else {
       return 0;
+    }
+  }
+
+  saveValoresDeclarante(){
+    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    console.log(newItem);
+    if (newItem.titular.clave === "DEC") {
+      let superficieConstruccion = newItem.superficieConstruccion.valor;
+      let superficieTerreno = newItem.superficieTerreno.valor;
+      let valorAdquisicion = newItem.valorAdquisicion.valor;
+      return [superficieConstruccion, superficieTerreno, valorAdquisicion];
+    }
+    else{
+      return [0,0,0];
     }
   }
 
