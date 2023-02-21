@@ -70,9 +70,9 @@ export class BienesInmueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
   
-  superficieConstruccion: number[] = [];
-  superficieTerreno: number[] = [];
-  valorAdquisicion: number[] = [];
+  arrSuperficieConstruccion: number[] = [];
+  arrSuperficieTerreno: number[] = [];
+  arrValorAdquisicion: number[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -355,10 +355,9 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
-    let superficieConstruccion = [...this.superficieConstruccion];
-    //let superficieConstruccion = [100, 200];
-    let superficieTerreno = [...this.superficieTerreno];
-    let valorAdquisicion = [...this.valorAdquisicion];
+    let superficieConstruccion = [...this.arrSuperficieConstruccion];
+    let superficieTerreno = [...this.arrSuperficieTerreno];
+    let valorAdquisicion = [...this.arrValorAdquisicion];
 
     const bienesDeclarante = this.saveBienesDeclarante();
     const valoresDeclaranteSave = this.saveValoresDeclarante();
@@ -368,14 +367,18 @@ export class BienesInmueblesComponent implements OnInit {
 
     if (this.editIndex === null) {
       console.log("llega IF");
+      console.log(bienInmueble.length);
+      console.log(superficieConstruccion.length);
       bienInmueble = [...bienInmueble, newItem];
+
+      superficieConstruccion = [...this.arrSuperficieConstruccion, valoresDeclaranteSave[0]];
+      superficieTerreno = [...this.arrSuperficieTerreno, valoresDeclaranteSave[1]];
+      valorAdquisicion = [...this.arrValorAdquisicion, valoresDeclaranteSave[2]];
+
+      console.log("saliendo de IF");
       console.log(bienInmueble.length);
       console.log(superficieConstruccion.length);
-      superficieConstruccion = [...superficieConstruccion, valoresDeclaranteSave[0]];
-      console.log(bienInmueble.length);
-      console.log(superficieConstruccion.length);
-      superficieTerreno = [...superficieTerreno, valoresDeclaranteSave[1]];
-      valorAdquisicion = [...valorAdquisicion, valoresDeclaranteSave[2]];
+
     } else {
       bienInmueble[this.editIndex] = newItem;
       superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
