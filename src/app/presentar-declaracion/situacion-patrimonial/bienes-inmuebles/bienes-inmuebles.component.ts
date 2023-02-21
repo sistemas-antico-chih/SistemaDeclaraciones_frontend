@@ -426,7 +426,6 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   removeBienesDeclarante() {
-    console.log("removeBienesDeclarante " + this.bienInmueble.length);
     if (this.bienInmueble.length >= 1) {
       for (let i = 0; i < this.bienInmueble.length; i++) {
         if (this.bienInmueble[i].titular[0].clave === "DEC") {
@@ -434,9 +433,7 @@ export class BienesInmueblesComponent implements OnInit {
         }
       }
     }
-    else {
       return 0;
-    }
   }
 
   saveValoresDeclarante() {
