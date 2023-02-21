@@ -302,6 +302,7 @@ export class BienesInmueblesComponent implements OnInit {
 
         console.log("BORRADO 1 "+bienInmueble.length);
         const bienesDeclarante = this.removeBienesDeclarante();
+        console.log("bienesDeclarante "+bienesDeclarante);
         console.log("BORRADO 2 "+bienInmueble.length);
 
         this.saveInfo({
