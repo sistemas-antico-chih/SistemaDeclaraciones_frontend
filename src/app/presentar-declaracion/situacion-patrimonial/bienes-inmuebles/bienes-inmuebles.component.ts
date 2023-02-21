@@ -70,6 +70,7 @@ export class BienesInmueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
   
+  bienesDeclarante: number;
   superficieConstruccion: number[] = [];
   superficieTerreno: number[] = [];
   valorAdquisicion: number[] = [];
@@ -374,7 +375,7 @@ export class BienesInmueblesComponent implements OnInit {
       valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
       bienInmueble[this.editIndex] = newItem;
-      const valoresDeclaranteSave = this.modifyValoresDeclarante(newItem);
+      const valoresDeclaranteSave = this.modifyValoresDeclarante();
       superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
       superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
       valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
@@ -468,7 +469,8 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  modifyValoresDeclarante(newItem: BienInmueble){
+  modifyValoresDeclarante(){
+    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     if (newItem.titular[0].clave === "DEC") {
       let superficieConstruccion = newItem.superficieConstruccion.valor;
       let superficieTerreno = newItem.superficieTerreno.valor;
@@ -517,6 +519,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.superficieConstruccion = bienesInmuebles.superficieConstruccion;
     this.superficieTerreno = bienesInmuebles.superficieTerreno;
     this.valorAdquisicion = bienesInmuebles.valorAdquisicion;
+    this.bienesDeclarante = bienesInmuebles.bienesDeclarante;
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
     if (bienesInmuebles.ninguno) {
