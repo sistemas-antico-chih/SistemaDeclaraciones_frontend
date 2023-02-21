@@ -300,7 +300,9 @@ export class BienesInmueblesComponent implements OnInit {
         const valorAdquisicion = [...this.valorAdquisicion.slice(0, index), ...this.valorAdquisicion.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
+        console.log("BORRADO 1 "+bienInmueble.length);
         const bienesDeclarante = this.removeBienesDeclarante();
+        console.log("BORRADO 2 "+bienInmueble.length);
 
         this.saveInfo({
           bienInmueble,
@@ -362,23 +364,24 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
+    const valoresDeclaranteSave = this.saveValoresDeclarante();
     let superficieConstruccion = [...this.superficieConstruccion];
     let superficieTerreno = [...this.superficieTerreno];
     let valorAdquisicion = [...this.valorAdquisicion];
-
-    const valoresDeclaranteSave = this.saveValoresDeclarante();
     
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
+    //  const valoresDeclaranteSave = this.saveValoresDeclarante();
       superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
       superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
       valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
+      console.log("LLEGA ELSE "+this.editIndex);;
       bienInmueble[this.editIndex] = newItem;
-      const valoresDeclaranteSave = this.modifyValoresDeclarante();
       superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
       superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
       valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
+      console.log("LLEGA ELSE FIN "+this.editIndex);
     }
 
     this.isLoading = true;
@@ -399,7 +402,6 @@ export class BienesInmueblesComponent implements OnInit {
 
   saveBienesDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    console.log(newItem);
     if (newItem.titular.clave === "DEC") {
       return 1;
     }
@@ -443,6 +445,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   removeBienesDeclarante() {
+    console.log("removeBienesDeclarante "+this.bienInmueble.length);
     if (this.bienInmueble.length > 1) {
       this.bienInmueble.forEach((x) => {
         if (x.titular[0].clave === "DEC") {
