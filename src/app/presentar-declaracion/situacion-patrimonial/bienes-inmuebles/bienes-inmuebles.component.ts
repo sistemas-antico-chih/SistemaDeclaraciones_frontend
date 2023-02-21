@@ -69,7 +69,7 @@ export class BienesInmueblesComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
-  
+
   bienesDeclarante: number;
   superficieConstruccion: number[] = [];
   superficieTerreno: number[] = [];
@@ -300,10 +300,10 @@ export class BienesInmueblesComponent implements OnInit {
         const valorAdquisicion = [...this.valorAdquisicion.slice(0, index), ...this.valorAdquisicion.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
-        console.log("BORRADO 1 "+bienInmueble.length);
+        console.log("BORRADO 1 " + bienInmueble.length);
         const bienesDeclarante = this.removeBienesDeclarante();
-        console.log("bienesDeclarante "+bienesDeclarante);
-        console.log("BORRADO 2 "+bienInmueble.length);
+        console.log("bienesDeclarante " + bienesDeclarante);
+        console.log("BORRADO 2 " + bienInmueble.length);
 
         this.saveInfo({
           bienInmueble,
@@ -369,20 +369,19 @@ export class BienesInmueblesComponent implements OnInit {
     let superficieConstruccion = [...this.superficieConstruccion];
     let superficieTerreno = [...this.superficieTerreno];
     let valorAdquisicion = [...this.valorAdquisicion];
-    
+
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-    //  const valoresDeclaranteSave = this.saveValoresDeclarante();
       superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
       superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
       valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
-      console.log("LLEGA ELSE "+this.editIndex);;
+      console.log("LLEGA ELSE " + this.editIndex);;
       bienInmueble[this.editIndex] = newItem;
       superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
       superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
       valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
-      console.log("LLEGA ELSE FIN "+this.editIndex);
+      console.log("LLEGA ELSE FIN " + this.editIndex);
     }
 
     this.isLoading = true;
@@ -403,28 +402,35 @@ export class BienesInmueblesComponent implements OnInit {
 
   saveBienesDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    if (newItem.titular.clave === "DEC") {
-      return 1;
+    if (!this.bienInmueble[0]) {
+      if (newItem.titular.clave === "DEC") {
+        return 1;
+      }
+      else {
+        return 0;
+      }
     }
-    if (this.bienInmueble.length >=1 ) {
-      this.bienInmueble.forEach((x) => {
-        if (x.titular[0].clave === "DEC") {
-          return 1;
-        }
-        else
-          return 0;
-      })
-    }
-    else{
-      return 0;
+    else {
+      if (newItem.titular.clave === "DEC") {
+        return 1;
+      }
+      else {
+        this.bienInmueble.forEach((x) => {
+          if (x.titular[0].clave === "DEC") {
+            return 1;
+          }
+          else
+            return 0;
+        })
+      }
     }
   }
 
   removeBienesDeclarante() {
-    console.log("removeBienesDeclarante "+this.bienInmueble.length);
+    console.log("removeBienesDeclarante " + this.bienInmueble.length);
     if (this.bienInmueble.length >= 1) {
       this.bienInmueble.forEach((x) => {
-        console.log(x.titular[0].clave);
+        console.log("titular " + x.titular[0].clave);
         if (x.titular[0].clave === "DEC") {
           return 1;
         }
@@ -436,7 +442,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  saveValoresDeclarante(){
+  saveValoresDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     if (newItem.titular.clave === "DEC") {
       let superficieConstruccion = newItem.superficieConstruccion.valor;
@@ -444,8 +450,8 @@ export class BienesInmueblesComponent implements OnInit {
       let valorAdquisicion = newItem.valorAdquisicion.valor;
       return [superficieConstruccion, superficieTerreno, valorAdquisicion];
     }
-    else{
-      return [0,0,0];
+    else {
+      return [0, 0, 0];
     }
   }
 
