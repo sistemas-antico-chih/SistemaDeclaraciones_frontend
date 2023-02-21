@@ -363,14 +363,16 @@ export class BienesInmueblesComponent implements OnInit {
     const bienesDeclarante = this.saveBienesDeclarante();
     const valoresDeclaranteSave = this.saveValoresDeclarante();
     
+    console.log("bienInmueble "+bienInmueble.length);
+    console.log("superficieConstruccion "+superficieConstruccion.length);
 
     if (this.editIndex === null) {
       console.log("llega IF");
       bienInmueble = [...bienInmueble, newItem];
-      console.log(superficieConstruccion);
+      console.log(bienInmueble.length);
       console.log(superficieConstruccion.length);
       superficieConstruccion = [...superficieConstruccion, valoresDeclaranteSave[0]];
-      console.log(superficieConstruccion);
+      console.log(bienInmueble.length);
       console.log(superficieConstruccion.length);
       superficieTerreno = [...superficieTerreno, valoresDeclaranteSave[1]];
       valorAdquisicion = [...valorAdquisicion, valoresDeclaranteSave[2]];
