@@ -70,9 +70,9 @@ export class BienesInmueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
   
-  superficieConstruccion: number[] =[];
-  superficieTerreno: number[] =[];
-  valorAdquisicion: number[] =[];
+  superficieConstruccion: number[] = [];
+  superficieTerreno: number[] = [];
+  valorAdquisicion: number[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -355,8 +355,8 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
-    //let superficieConstruccion = [...this.superficieConstruccion];
-    let superficieConstruccion = [100, 200];
+    let superficieConstruccion = [...this.superficieConstruccion];
+    //let superficieConstruccion = [100, 200];
     let superficieTerreno = [...this.superficieTerreno];
     let valorAdquisicion = [...this.valorAdquisicion];
 
@@ -365,8 +365,13 @@ export class BienesInmueblesComponent implements OnInit {
     
 
     if (this.editIndex === null) {
+      console.log("llega IF");
       bienInmueble = [...bienInmueble, newItem];
+      console.log(superficieConstruccion);
+      console.log(superficieConstruccion.length);
       superficieConstruccion = [...superficieConstruccion, valoresDeclaranteSave[0]];
+      console.log(superficieConstruccion);
+      console.log(superficieConstruccion.length);
       superficieTerreno = [...superficieTerreno, valoresDeclaranteSave[1]];
       valorAdquisicion = [...valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
