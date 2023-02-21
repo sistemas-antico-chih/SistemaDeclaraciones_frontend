@@ -429,7 +429,9 @@ export class BienesInmueblesComponent implements OnInit {
     console.log("removeBienesDeclarante " + this.bienInmueble.length);
     if (this.bienInmueble.length >= 1) {
       for (let i = 0; i < this.bienInmueble.length; i++) {
-        return 1;
+        if (this.bienInmueble[i].titular[0].clave === "DEC") {
+          return 1;
+        }
       }
     }
     else {
