@@ -365,12 +365,8 @@ export class BienesInmueblesComponent implements OnInit {
     let superficieTerreno = [...this.superficieTerreno];
     let valorAdquisicion = [...this.valorAdquisicion];
 
-    const bienesDeclarante = this.saveBienesDeclarante();
     const valoresDeclaranteSave = this.saveValoresDeclarante();
     
-    console.log("bienInmueble "+bienInmueble.length);
-    console.log("superficieConstruccion "+superficieConstruccion.length);
-
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
       superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
@@ -378,12 +374,15 @@ export class BienesInmueblesComponent implements OnInit {
       valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
       bienInmueble[this.editIndex] = newItem;
+      const valoresDeclaranteSave = this.modifyValoresDeclarante(newItem);
       superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
       superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
       valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
     }
 
     this.isLoading = true;
+
+    const bienesDeclarante = this.saveBienesDeclarante();
 
     this.saveInfo({
       bienInmueble,
@@ -445,7 +444,6 @@ export class BienesInmueblesComponent implements OnInit {
   removeBienesDeclarante() {
     if (this.bienInmueble.length > 1) {
       this.bienInmueble.forEach((x) => {
-        console.log(x);
         if (x.titular[0].clave === "DEC") {
           return 1;
         }
@@ -459,8 +457,19 @@ export class BienesInmueblesComponent implements OnInit {
 
   saveValoresDeclarante(){
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    console.log(newItem);
     if (newItem.titular.clave === "DEC") {
+      let superficieConstruccion = newItem.superficieConstruccion.valor;
+      let superficieTerreno = newItem.superficieTerreno.valor;
+      let valorAdquisicion = newItem.valorAdquisicion.valor;
+      return [superficieConstruccion, superficieTerreno, valorAdquisicion];
+    }
+    else{
+      return [0,0,0];
+    }
+  }
+
+  modifyValoresDeclarante(newItem: BienInmueble){
+    if (newItem.titular[0].clave === "DEC") {
       let superficieConstruccion = newItem.superficieConstruccion.valor;
       let superficieTerreno = newItem.superficieTerreno.valor;
       let valorAdquisicion = newItem.valorAdquisicion.valor;
