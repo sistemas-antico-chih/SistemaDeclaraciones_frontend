@@ -415,15 +415,14 @@ export class BienesInmueblesComponent implements OnInit {
         return 1;
       }
       else {
-        this.bienInmueble.forEach((x) => {
-          console.log("titulares "+ x.titular[0].clave);
-          if (x.titular[0].clave === "DEC") {
+        for ( let i = 0; i < this.bienInmueble.length; i++){
+          if (this.bienInmueble[i].titular[0].clave === "DEC"){
             return 1;
           }
-        })
+        }
       }
+      return 0;
     }
-    return 0;
   }
 
   removeBienesDeclarante() {
