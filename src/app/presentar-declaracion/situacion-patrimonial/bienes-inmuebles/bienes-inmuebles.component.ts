@@ -403,7 +403,7 @@ export class BienesInmueblesComponent implements OnInit {
   saveBienesDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     if (!this.bienInmueble[0]) {
-      if (newItem.titular[0].clave === "DEC") {
+      if (newItem.titular.clave === "DEC") {
         return 1;
       }
       else {
@@ -411,7 +411,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
     }
     else {
-      if (newItem.titular[0].clave === "DEC") {
+      if (newItem.titular.clave === "DEC") {
         return 1;
       }
       else {
