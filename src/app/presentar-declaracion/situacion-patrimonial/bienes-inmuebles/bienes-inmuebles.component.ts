@@ -70,9 +70,9 @@ export class BienesInmueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
   
-  arrSuperficieConstruccion: number[] = [];
-  arrSuperficieTerreno: number[] = [];
-  arrValorAdquisicion: number[] = [];
+  superficieConstruccion: number[] = [];
+  superficieTerreno: number[] = [];
+  valorAdquisicion: number[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -355,9 +355,9 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
-    let superficieConstruccion = [...this.arrSuperficieConstruccion];
-    let superficieTerreno = [...this.arrSuperficieTerreno];
-    let valorAdquisicion = [...this.arrValorAdquisicion];
+    let superficieConstruccion = [...this.superficieConstruccion];
+    let superficieTerreno = [...this.superficieTerreno];
+    let valorAdquisicion = [...this.valorAdquisicion];
 
     const bienesDeclarante = this.saveBienesDeclarante();
     const valoresDeclaranteSave = this.saveValoresDeclarante();
@@ -371,9 +371,9 @@ export class BienesInmueblesComponent implements OnInit {
       console.log(superficieConstruccion.length);
       bienInmueble = [...bienInmueble, newItem];
 
-      superficieConstruccion = [...this.arrSuperficieConstruccion, valoresDeclaranteSave[0]];
-      superficieTerreno = [...this.arrSuperficieTerreno, valoresDeclaranteSave[1]];
-      valorAdquisicion = [...this.arrValorAdquisicion, valoresDeclaranteSave[2]];
+      superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
+      superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
+      valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
 
       console.log("saliendo de IF");
       console.log(bienInmueble.length);
@@ -508,6 +508,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   setupForm(bienesInmuebles: BienesInmuebles) {
     this.bienInmueble = bienesInmuebles.bienInmueble;
+    this.superficieConstruccion = bienesInmuebles.superficieConstruccion;
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
     if (bienesInmuebles.ninguno) {
