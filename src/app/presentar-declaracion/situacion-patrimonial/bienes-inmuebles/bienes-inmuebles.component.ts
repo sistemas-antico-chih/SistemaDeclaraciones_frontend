@@ -403,7 +403,7 @@ export class BienesInmueblesComponent implements OnInit {
   saveBienesDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     if (!this.bienInmueble[0]) {
-      if (newItem.titular.clave === "DEC") {
+      if (newItem.titular[0].clave === "DEC") {
         return 1;
       }
       else {
@@ -411,12 +411,12 @@ export class BienesInmueblesComponent implements OnInit {
       }
     }
     else {
-      if (newItem.titular.clave === "DEC") {
+      if (newItem.titular[0].clave === "DEC") {
         return 1;
       }
       else {
         this.bienInmueble.forEach((x) => {
-          console.log("titulaes "+ x.titular[0].clave);
+          console.log("titulares "+ x.titular[0].clave);
           if (x.titular[0].clave === "DEC") {
             return 1;
           }
