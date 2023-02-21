@@ -70,7 +70,7 @@ export class BienesInmueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  bienesDeclarante: number;
+  //bienesDeclarante: number;
   superficieConstruccion: number[] = [];
   superficieTerreno: number[] = [];
   valorAdquisicion: number[] = [];
@@ -416,6 +416,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
       else {
         this.bienInmueble.forEach((x) => {
+          console.log("titulaes "+ x.titular[0].clave);
           if (x.titular[0].clave === "DEC") {
             return 1;
           }
@@ -492,7 +493,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.superficieConstruccion = bienesInmuebles.superficieConstruccion;
     this.superficieTerreno = bienesInmuebles.superficieTerreno;
     this.valorAdquisicion = bienesInmuebles.valorAdquisicion;
-    this.bienesDeclarante = bienesInmuebles.bienesDeclarante;
+    //const bienesDeclarante = bienesInmuebles.bienesDeclarante;
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
     if (bienesInmuebles.ninguno) {
