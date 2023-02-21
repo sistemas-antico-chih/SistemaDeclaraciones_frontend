@@ -420,11 +420,10 @@ export class BienesInmueblesComponent implements OnInit {
           if (x.titular[0].clave === "DEC") {
             return 1;
           }
-          else
-            return 0;
         })
       }
     }
+    return 0;
   }
 
   removeBienesDeclarante() {
