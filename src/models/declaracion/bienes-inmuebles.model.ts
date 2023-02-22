@@ -40,7 +40,7 @@ export interface BienesInmuebles {
   bienInmueble?: BienInmueble[];
   aclaracionesObservaciones?: string;
   bienesDeclarante?: number;
-  superficieConstruccion?: valoresConstruccion[];
-  superficieTerreno?: valoresTerreno[];
-  valorAdquisicion?: valoresAdquisicion[];
+  superficieConstruccion?: valorConstruccion[];
+  superficieTerreno?: valorTerreno[];
+  valorAdquisicion?: valorAdquisicion[];
 }
