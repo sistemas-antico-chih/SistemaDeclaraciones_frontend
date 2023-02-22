@@ -70,7 +70,6 @@ export class BienesInmueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  //bienesDeclarante: number;
   superficieConstruccion: ValorDeclarante[] = [];
   superficieTerreno: ValorDeclarante[] = [];
   valorAdquisicion: ValorDeclarante[] = [];
@@ -295,20 +294,18 @@ export class BienesInmueblesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
+        
         const superficieConstruccion = [...this.superficieConstruccion.slice(0, index), ...this.superficieConstruccion.slice(index + 1)];
         const superficieTerreno = [...this.superficieTerreno.slice(0, index), ...this.superficieTerreno.slice(index + 1)];
         const valorAdquisicion = [...this.valorAdquisicion.slice(0, index), ...this.valorAdquisicion.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
-        const bienesDeclarante = this.removeBienesDeclarante();
-
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          bienesDeclarante,
-         // superficieConstruccion,
-         // superficieTerreno,
-         // valorAdquisicion,
+          superficieConstruccion,
+          superficieTerreno,
+          valorAdquisicion,
         });
       }
     });
@@ -381,60 +378,21 @@ export class BienesInmueblesComponent implements OnInit {
 
     this.isLoading = true;
 
-    const bienesDeclarante = this.saveBienesDeclarante();
-
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
-      bienesDeclarante,
-     // superficieConstruccion,
-     // superficieTerreno,
-     // valorAdquisicion,
+      superficieConstruccion,
+      superficieTerreno,
+      valorAdquisicion,
     });
 
     this.isLoading = false;
   }
 
-  saveBienesDeclarante() {
-    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    if (!this.bienInmueble[0]) {
-      if (newItem.titular.clave === "DEC") {
-        return 1;
-      }
-      else {
-        return 0;
-      }
-    }
-    else {
-      if (newItem.titular.clave === "DEC") {
-        return 1;
-      }
-      else {
-        for (let i = 0; i < this.bienInmueble.length; i++) {
-          if (this.bienInmueble[i].titular[0].clave === "DEC") {
-            return 1;
-          }
-        }
-      }
-      return 0;
-    }
-  }
-
-  removeBienesDeclarante() {
-    if (this.bienInmueble.length >= 1) {
-      for (let i = 0; i < this.bienInmueble.length; i++) {
-        if (this.bienInmueble[i].titular[0].clave === "DEC") {
-          return 1;
-        }
-      }
-    }
-    return 0;
-  }
-
   saveValoresDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     if (newItem.titular.clave === "DEC") {
-      console.log("Indice "+this.bienInmueble.indexOf(newItem));
+      console.log("Indice "+this.bienInmueble.length);
       let superficieConstruccion = {
         "indice": this.bienInmueble.indexOf(newItem),
         "valor": newItem.superficieConstruccion.valor
@@ -491,7 +449,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.superficieConstruccion = bienesInmuebles.superficieConstruccion;
     this.superficieTerreno = bienesInmuebles.superficieTerreno;
     this.valorAdquisicion = bienesInmuebles.valorAdquisicion;
-    //const bienesDeclarante = bienesInmuebles.bienesDeclarante;
+
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
     if (bienesInmuebles.ninguno) {

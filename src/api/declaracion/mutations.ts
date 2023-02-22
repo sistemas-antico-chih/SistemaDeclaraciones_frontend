@@ -141,7 +141,6 @@ export const bienesInmueblesMutation = gql`
           }
         }
         aclaracionesObservaciones
-        bienesDeclarante
         superficieConstruccion {
           indice
           valor

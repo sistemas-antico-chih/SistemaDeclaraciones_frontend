@@ -282,7 +282,6 @@ export const bienesInmueblesQuery = gql`
           }
         }
         aclaracionesObservaciones
-        bienesDeclarante
         superficieConstruccion{
           indice
           valor
