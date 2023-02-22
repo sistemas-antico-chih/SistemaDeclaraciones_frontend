@@ -1,6 +1,21 @@
 import { Catalogo, DomicilioExtranjero, DomicilioMexico, Monto, Superficie, Tercero, Transmisor } from './common.model';
 import { FormaPago, ValorConformeA } from './types';
 
+interface valoresSuperficieConstruccion{
+  indice: number;
+  valor: number;
+}
+
+interface valoresSuperficieTerreno{
+  indice: number;
+  valor: number;
+}
+
+interface valoresAdquisicion{
+  indice: number;
+  valor: number;
+}
+
 export interface BienInmueble {
   tipoInmueble: Catalogo;
   titular: Catalogo[];
@@ -25,7 +40,7 @@ export interface BienesInmuebles {
   bienInmueble?: BienInmueble[];
   aclaracionesObservaciones?: string;
   bienesDeclarante?: number;
-  superficieConstruccion?: number[];
-  superficieTerreno?: number[];
-  valorAdquisicion?: number[];
+  superficieConstruccion?: valoresSuperficieConstruccion[];
+  superficieTerreno?: valoresSuperficieTerreno[];
+  valorAdquisicion?: valoresAdquisicion[];
 }
