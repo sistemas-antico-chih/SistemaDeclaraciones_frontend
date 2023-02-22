@@ -376,12 +376,10 @@ export class BienesInmueblesComponent implements OnInit {
       superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
       valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
-      console.log("LLEGA ELSE " + this.editIndex);;
       bienInmueble[this.editIndex] = newItem;
       superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
       superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
       valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
-      console.log("LLEGA ELSE FIN " + this.editIndex);
     }
 
     this.isLoading = true;
@@ -433,19 +431,29 @@ export class BienesInmueblesComponent implements OnInit {
         }
       }
     }
-      return 0;
+    return 0;
   }
 
   saveValoresDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     if (newItem.titular.clave === "DEC") {
-      let superficieConstruccion = newItem.superficieConstruccion.valor;
-      let superficieTerreno = newItem.superficieTerreno.valor;
-      let valorAdquisicion = newItem.valorAdquisicion.valor;
+      console.log("Indice "+this.bienInmueble.indexOf);
+      let superficieConstruccion = {
+        "indice": this.bienInmueble.indexOf,
+        "valor": newItem.superficieConstruccion.valor
+      };
+      let superficieTerreno = {
+        "indice": this.bienInmueble.indexOf,
+        "valor": newItem.superficieTerreno.valor
+      };
+      let valorAdquisicion = {
+        "indice": this.bienInmueble.indexOf, 
+        "valor": newItem.valorAdquisicion.valor
+      };
       return [superficieConstruccion, superficieTerreno, valorAdquisicion];
     }
     else {
-      return [0, 0, 0];
+      return;
     }
   }
 
