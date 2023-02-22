@@ -294,19 +294,25 @@ export class BienesInmueblesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
+        let superficieConstruccion = [...this.superficieConstruccion];
+        let superficieTerreno = [...this.superficieTerreno];
+        let valorAdquisicion = [...this.valorAdquisicion];
 
-        /*const superficieConstruccion = [...this.superficieConstruccion.slice(0, index), ...this.superficieConstruccion.slice(index + 1)];
-        const superficieTerreno = [...this.superficieTerreno.slice(0, index), ...this.superficieTerreno.slice(index + 1)];
-        const valorAdquisicion = [...this.valorAdquisicion.slice(0, index), ...this.valorAdquisicion.slice(index + 1)];
-        */
+        const indice = this.superficieConstruccion.findIndex(x => x.indice === index);
+        if (indice >= 0) {
+          superficieConstruccion = [...this.superficieConstruccion.slice(0, indice), ...this.superficieConstruccion.slice(indice + 1)];
+          superficieTerreno = [...this.superficieTerreno.slice(0, indice), ...this.superficieTerreno.slice(indice + 1)];
+          valorAdquisicion = [...this.valorAdquisicion.slice(0, indice), ...this.valorAdquisicion.slice(indice + 1)];
+        }
+
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          //superficieConstruccion,
-          //superficieTerreno,
-          //valorAdquisicion,
+          superficieConstruccion,
+          superficieTerreno,
+          valorAdquisicion,
         });
       }
     });
@@ -360,9 +366,7 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
-    //const isDeclarante = false;
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-
     let superficieConstruccion = [...this.superficieConstruccion];
     let superficieTerreno = [...this.superficieTerreno];
     let valorAdquisicion = [...this.valorAdquisicion];
@@ -370,7 +374,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      if (valorTitular === "DEC") {
+      if (valorTitular.titular[0].clave === "DEC") {
         const valoresDeclaranteSave = this.saveValoresDeclarante();
         superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
         superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
@@ -378,7 +382,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
     } else {
       bienInmueble[this.editIndex] = newItem;
-      if (valorTitular === "DEC") {
+      if (valorTitular.titular[0].clave === "DEC") {
         const valoresDeclaranteModify = this.saveValoresDeclarante();
         const indice = this.superficieConstruccion.findIndex(x => x.indice === this.editIndex);
         superficieConstruccion[indice] = valoresDeclaranteModify[0];
