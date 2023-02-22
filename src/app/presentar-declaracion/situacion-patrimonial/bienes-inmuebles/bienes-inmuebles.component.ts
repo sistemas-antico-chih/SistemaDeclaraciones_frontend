@@ -363,17 +363,18 @@ export class BienesInmueblesComponent implements OnInit {
     let superficieConstruccion = [...this.superficieConstruccion];
     let superficieTerreno = [...this.superficieTerreno];
     let valorAdquisicion = [...this.valorAdquisicion];
-
+    
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
       superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
-      superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
-      valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
+      //superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
+      //superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
+      //valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
       bienInmueble[this.editIndex] = newItem;
-      superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
-      superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
-      valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
+      //superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
+      //superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
+      //valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
     }
 
     this.isLoading = true;
@@ -381,9 +382,9 @@ export class BienesInmueblesComponent implements OnInit {
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
-      superficieConstruccion,
-      superficieTerreno,
-      valorAdquisicion,
+      //superficieConstruccion,
+      //superficieTerreno,
+      //valorAdquisicion,
     });
 
     this.isLoading = false;
@@ -391,6 +392,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   saveValoresDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    
     if (newItem.titular.clave === "DEC") {
       console.log("Indice "+this.bienInmueble.length);
       let superficieConstruccion = {
