@@ -374,7 +374,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      if (valorTitular.titular[0].clave === "DEC") {
+      if (valorTitular.titular.clave === "DEC") {
         const valoresDeclaranteSave = this.saveValoresDeclarante();
         superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
         superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
@@ -382,7 +382,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
     } else {
       bienInmueble[this.editIndex] = newItem;
-      if (valorTitular.titular[0].clave === "DEC") {
+      if (valorTitular.titular.clave === "DEC") {
         const valoresDeclaranteModify = this.saveValoresDeclarante();
         const indice = this.superficieConstruccion.findIndex(x => x.indice === this.editIndex);
         superficieConstruccion[indice] = valoresDeclaranteModify[0];
