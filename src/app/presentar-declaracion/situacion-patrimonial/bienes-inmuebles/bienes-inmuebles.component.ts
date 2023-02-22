@@ -306,9 +306,9 @@ export class BienesInmueblesComponent implements OnInit {
           bienInmueble,
           aclaracionesObservaciones,
           bienesDeclarante,
-          superficieConstruccion,
-          superficieTerreno,
-          valorAdquisicion,
+         // superficieConstruccion,
+         // superficieTerreno,
+         // valorAdquisicion,
         });
       }
     });
@@ -387,9 +387,9 @@ export class BienesInmueblesComponent implements OnInit {
       bienInmueble,
       aclaracionesObservaciones,
       bienesDeclarante,
-      superficieConstruccion,
-      superficieTerreno,
-      valorAdquisicion,
+     // superficieConstruccion,
+     // superficieTerreno,
+     // valorAdquisicion,
     });
 
     this.isLoading = false;
