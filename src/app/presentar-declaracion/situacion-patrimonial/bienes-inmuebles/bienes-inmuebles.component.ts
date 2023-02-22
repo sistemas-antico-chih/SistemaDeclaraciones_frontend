@@ -24,7 +24,7 @@ import Monedas from '@static/catalogos/monedas.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, valorDeclarante } from '@models/declaracion';
+import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante  } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -71,9 +71,9 @@ export class BienesInmueblesComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes, this.dia);
 
   //bienesDeclarante: number;
-  superficieConstruccion: valorDeclarante[] = [];
-  superficieTerreno: valorDeclarante[] = [];
-  valorAdquisicion: valorDeclarante[] = [];
+  superficieConstruccion: ValorDeclarante[] = [];
+  superficieTerreno: ValorDeclarante[] = [];
+  valorAdquisicion: ValorDeclarante[] = [];
 
   constructor(
     private apollo: Apollo,

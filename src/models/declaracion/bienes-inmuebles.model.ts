@@ -1,7 +1,7 @@
 import { Catalogo, DomicilioExtranjero, DomicilioMexico, Monto, Superficie, Tercero, Transmisor } from './common.model';
 import { FormaPago, ValorConformeA } from './types';
 
-interface valorDeclarante{
+export interface ValorDeclarante{
   indice: number;
   valor: number;
 }
@@ -30,7 +30,7 @@ export interface BienesInmuebles {
   bienInmueble?: BienInmueble[];
   aclaracionesObservaciones?: string;
   bienesDeclarante?: number;
-  superficieConstruccion?: valorDeclarante[];
-  superficieTerreno?: valorDeclarante[];
-  valorAdquisicion?: valorDeclarante[];
+  superficieConstruccion?: ValorDeclarante[];
+  superficieTerreno?: ValorDeclarante[];
+  valorAdquisicion?: ValorDeclarante[];
 }
