@@ -1,17 +1,17 @@
 import { Catalogo, DomicilioExtranjero, DomicilioMexico, Monto, Superficie, Tercero, Transmisor } from './common.model';
 import { FormaPago, ValorConformeA } from './types';
 
-interface valoresConstruccion{
+export interface valorConstruccion{
   indice: number;
   valor: number;
 }
 
-interface valoresTerreno{
+export interface valorTerreno{
   indice: number;
   valor: number;
 }
 
-interface valoresAdquisicion{
+export interface valorAdquisicion{
   indice: number;
   valor: number;
 }
