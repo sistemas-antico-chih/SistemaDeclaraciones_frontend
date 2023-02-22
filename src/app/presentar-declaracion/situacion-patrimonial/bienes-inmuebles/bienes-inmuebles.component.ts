@@ -300,10 +300,7 @@ export class BienesInmueblesComponent implements OnInit {
         const valorAdquisicion = [...this.valorAdquisicion.slice(0, index), ...this.valorAdquisicion.slice(index + 1)];
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
-        console.log("BORRADO 1 " + bienInmueble.length);
         const bienesDeclarante = this.removeBienesDeclarante();
-        console.log("bienesDeclarante " + bienesDeclarante);
-        console.log("BORRADO 2 " + bienInmueble.length);
 
         this.saveInfo({
           bienInmueble,
@@ -437,17 +434,17 @@ export class BienesInmueblesComponent implements OnInit {
   saveValoresDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     if (newItem.titular.clave === "DEC") {
-      console.log("Indice "+this.bienInmueble.indexOf);
+      console.log("Indice "+this.bienInmueble.indexOf(newItem));
       let superficieConstruccion = {
-        "indice": this.bienInmueble.indexOf,
+        "indice": this.bienInmueble.indexOf(newItem),
         "valor": newItem.superficieConstruccion.valor
       };
       let superficieTerreno = {
-        "indice": this.bienInmueble.indexOf,
+        "indice": this.bienInmueble.indexOf(newItem),
         "valor": newItem.superficieTerreno.valor
       };
       let valorAdquisicion = {
-        "indice": this.bienInmueble.indexOf, 
+        "indice": this.bienInmueble.indexOf(newItem), 
         "valor": newItem.valorAdquisicion.valor
       };
       return [superficieConstruccion, superficieTerreno, valorAdquisicion];
