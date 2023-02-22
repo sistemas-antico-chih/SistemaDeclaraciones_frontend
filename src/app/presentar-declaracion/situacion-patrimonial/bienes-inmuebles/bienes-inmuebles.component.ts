@@ -360,21 +360,21 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
-    /*const valoresDeclaranteSave = this.saveValoresDeclarante();
+    const valoresDeclaranteSave = this.saveValoresDeclarante();
     let superficieConstruccion = [...this.superficieConstruccion];
     let superficieTerreno = [...this.superficieTerreno];
     let valorAdquisicion = [...this.valorAdquisicion];
-    */
+    
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      //superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
+      superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
       //superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
       //superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
       //valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
       bienInmueble[this.editIndex] = newItem;
-      //superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
+      superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
       //superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
       //valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
     }
@@ -384,7 +384,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
-      //superficieConstruccion,
+      superficieConstruccion,
       //superficieTerreno,
       //valorAdquisicion,
     });
@@ -393,6 +393,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   saveValoresDeclarante() {
+
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
     console.log("Indice "+indice);
