@@ -369,12 +369,12 @@ export class BienesInmueblesComponent implements OnInit {
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
       superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
-      //superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
-      //superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
-      //valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
+      superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
+      valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
     } else {
       bienInmueble[this.editIndex] = newItem;
-      superficieConstruccion[this.editIndex] = valoresDeclaranteSave[0];
+      //const valoresDeclaranteModify = this.modifyValoresDeclarante();
+      //superficieConstruccion[obtenerIndice()] = valoresDeclaranteModify[0];
       //superficieTerreno[this.editIndex] = valoresDeclaranteSave[1];
       //valorAdquisicion[this.editIndex] = valoresDeclaranteSave[2];
     }
@@ -385,17 +385,41 @@ export class BienesInmueblesComponent implements OnInit {
       bienInmueble,
       aclaracionesObservaciones,
       superficieConstruccion,
-      //superficieTerreno,
-      //valorAdquisicion,
+      superficieTerreno,
+      valorAdquisicion,
     });
 
     this.isLoading = false;
   }
 
   saveValoresDeclarante() {
-
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
+    console.log("Indice "+indice);
+    if (newItem.titular.clave === "DEC") {
+      let superficieConstruccion = {
+        "indice": indice,
+        "valor": newItem.superficieConstruccion.valor
+      };
+      let superficieTerreno = {
+        "indice": indice,
+        "valor": newItem.superficieTerreno.valor
+      };
+      let valorAdquisicion = {
+        "indice": indice, 
+        "valor": newItem.valorAdquisicion.valor
+      };
+      console.log (superficieConstruccion);
+      return [superficieConstruccion, superficieTerreno, valorAdquisicion];
+    }
+    else {
+      return;
+    }
+  }
+
+  modifyValoresDeclarante(){
+    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    const indice = this.editIndex;
     console.log("Indice "+indice);
     if (newItem.titular.clave === "DEC") {
       let superficieConstruccion = {
