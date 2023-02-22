@@ -1,7 +1,7 @@
 import { Catalogo, DomicilioExtranjero, DomicilioMexico, Monto, Superficie, Tercero, Transmisor } from './common.model';
 import { FormaPago, ValorConformeA } from './types';
 
-export interface valorDeclarante{
+interface valorDeclarante{
   indice: number;
   valor: number;
 }
