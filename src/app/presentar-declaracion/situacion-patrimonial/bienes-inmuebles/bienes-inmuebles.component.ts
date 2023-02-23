@@ -293,16 +293,17 @@ export class BienesInmueblesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        console.log("llega 1");
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
         //let superficieConstruccion = [...this.superficieConstruccion];
         //let superficieTerreno = [...this.superficieTerreno];
         //let valorAdquisicion = [...this.valorAdquisicion];
-        console.log("llega");
+        console.log("llega 2");
 
         const valoresDeclaranteDelete = this.updateValoresDeclarante();
-        const superficieConstruccion = [valoresDeclaranteDelete[0]];
-        const superficieTerreno = [valoresDeclaranteDelete[1]];
-        const valorAdquisicion = [valoresDeclaranteDelete[2]];
+        let superficieConstruccion = [valoresDeclaranteDelete[0]];
+        let superficieTerreno = [valoresDeclaranteDelete[1]];
+        let valorAdquisicion = [valoresDeclaranteDelete[2]];
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
@@ -445,13 +446,13 @@ export class BienesInmueblesComponent implements OnInit {
         arraySuperficieTerreno.push(superficieTerreno);
         arrayValorAdquisicion.push(valorAdquisicion);
       }
-      console.log ("array Superficie construccion");
-      console.log(arraySuperficieConstruccion);
-      console.log ("array Superficie terreno");
-      console.log(arraySuperficieTerreno);
-      console.log ("array valor adquisicion");
-      console.log(arrayValorAdquisicion);
     }
+    console.log ("array Superficie construccion");
+    console.log(arraySuperficieConstruccion);
+    console.log ("array Superficie terreno");
+    console.log(arraySuperficieTerreno);
+    console.log ("array valor adquisicion");
+    console.log(arrayValorAdquisicion);
     return [arraySuperficieConstruccion, arraySuperficieTerreno, arrayValorAdquisicion];
   }
 
