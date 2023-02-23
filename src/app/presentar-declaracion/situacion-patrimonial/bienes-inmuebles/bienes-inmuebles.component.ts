@@ -300,9 +300,10 @@ export class BienesInmueblesComponent implements OnInit {
 
         const indice = this.superficieConstruccion.findIndex(x => x.indice === index);
         if (indice >= 0) {
-          superficieConstruccion = [...this.superficieConstruccion.slice(0, indice), ...this.superficieConstruccion.slice(indice + 1)];
-          superficieTerreno = [...this.superficieTerreno.slice(0, indice), ...this.superficieTerreno.slice(indice + 1)];
-          valorAdquisicion = [...this.valorAdquisicion.slice(0, indice), ...this.valorAdquisicion.slice(indice + 1)];
+          const valoresDeclaranteDelete = this.updateValoresDeclarante();
+          superficieConstruccion = [valoresDeclaranteDelete[0]];
+          superficieTerreno = [valoresDeclaranteDelete[1]];
+          valorAdquisicion = [valoresDeclaranteDelete[2]];
         }
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
@@ -383,11 +384,10 @@ export class BienesInmueblesComponent implements OnInit {
     } else {
       bienInmueble[this.editIndex] = newItem;
       if (valorTitular.titular.clave === "DEC") {
-        const valoresDeclaranteModify = this.saveValoresDeclarante();
-        const indice = this.superficieConstruccion.findIndex(x => x.indice === this.editIndex);
-        superficieConstruccion[indice] = valoresDeclaranteModify[0];
-        superficieTerreno[indice] = valoresDeclaranteModify[1];
-        valorAdquisicion[indice] = valoresDeclaranteModify[2];
+        const valoresDeclaranteModify = this.updateValoresDeclarante();
+        superficieConstruccion = [valoresDeclaranteModify[0]];
+        superficieTerreno = [valoresDeclaranteModify[1]];
+        valorAdquisicion = [valoresDeclaranteModify[2]];
       }
     }
 
@@ -407,7 +407,6 @@ export class BienesInmueblesComponent implements OnInit {
   saveValoresDeclarante() {
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
-    console.log("Indice " + indice);
     let superficieConstruccion = {
       "indice": indice,
       "valor": newItem.superficieConstruccion.valor
@@ -420,8 +419,36 @@ export class BienesInmueblesComponent implements OnInit {
       "indice": indice,
       "valor": newItem.valorAdquisicion.valor
     };
-    console.log(superficieConstruccion);
     return [superficieConstruccion, superficieTerreno, valorAdquisicion];
+  }
+
+  updateValoresDeclarante(){
+    let arraySuperficieConstruccion: any = [];
+    let arraySuperficieTerreno: any = [];
+    let arrayValorAdquisicion: any = [];
+    let superficieConstruccion: any = {};
+    let superficieTerreno: any = {};
+    let valorAdquisicion: any = {};
+    for (let i = 0; i <= this.bienInmueble.length; i++){
+      if( this.bienInmueble[i].titular[0].clave === "DEC"){
+        superficieConstruccion = {
+          "indice": i,
+          "valor": this.bienInmueble[i].superficieConstruccion.valor
+        };
+        superficieTerreno = {
+          "indice": i,
+          "valor": this.bienInmueble[i].superficieTerreno.valor
+        };
+        valorAdquisicion = {
+          "indice": i,
+          "valor": this.bienInmueble[i].valorAdquisicion.valor
+        };
+        arraySuperficieConstruccion.push(superficieConstruccion);
+        arraySuperficieTerreno.push(superficieTerreno);
+        arrayValorAdquisicion.push(valorAdquisicion);
+      }
+    }
+    return [arraySuperficieConstruccion, arraySuperficieTerreno, arrayValorAdquisicion];
   }
 
   setEditMode() {
