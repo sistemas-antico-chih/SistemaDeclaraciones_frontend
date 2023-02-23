@@ -447,6 +447,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
       console.log("I "+i);
       console.log(arraySuperficieConstruccion);
+      return [arraySuperficieConstruccion, arraySuperficieTerreno, arrayValorAdquisicion];
     }
     console.log("array Superficie construccion");
     console.log(arraySuperficieConstruccion);
