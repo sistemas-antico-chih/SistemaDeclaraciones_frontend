@@ -376,7 +376,6 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("despues de modificar "+bienInmueble.length);
       console.log("OBjecto ")
       console.log(bienInmueble);
-      console.log("titular modificado "+bienInmueble[this.editIndex].titular[0].clave);
 
       let array : any =[];
       array = this.updateValoresDeclarante(bienInmueble);
