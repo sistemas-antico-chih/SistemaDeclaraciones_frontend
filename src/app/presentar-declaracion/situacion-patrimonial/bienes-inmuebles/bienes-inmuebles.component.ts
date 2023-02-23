@@ -413,9 +413,9 @@ export class BienesInmueblesComponent implements OnInit {
       if (bienInmueble[i].titular[0].clave === "DEC") {
         valor = {
           "indice": i,
-          "superficieConstruccion": this.bienInmueble[i].superficieConstruccion.valor,
-          "superficieTerreno": this.bienInmueble[i].superficieTerreno.valor,
-          "valorAdquisicion": this.bienInmueble[i].valorAdquisicion.valor
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor
         };
         valores.push(valor);
       }
@@ -434,9 +434,9 @@ export class BienesInmueblesComponent implements OnInit {
         console.log("entra if")
         valor = {
           "indice": i,
-          "superficieConstruccion": this.bienInmueble[i].superficieConstruccion.valor,
-          "superficieTerreno": this.bienInmueble[i].superficieTerreno.valor,
-          "valorAdquisicion": this.bienInmueble[i].valorAdquisicion.valor
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor
         };
         valores.push(valor);
       }
