@@ -294,17 +294,14 @@ export class BienesInmueblesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
-        let superficieConstruccion = [...this.superficieConstruccion];
-        let superficieTerreno = [...this.superficieTerreno];
-        let valorAdquisicion = [...this.valorAdquisicion];
+        //let superficieConstruccion = [...this.superficieConstruccion];
+        //let superficieTerreno = [...this.superficieTerreno];
+        //let valorAdquisicion = [...this.valorAdquisicion];
 
-        const indice = this.superficieConstruccion.findIndex(x => x.indice === index);
-        if (indice >= 0) {
-          const valoresDeclaranteDelete = this.updateValoresDeclarante();
-          superficieConstruccion = [valoresDeclaranteDelete[0]];
-          superficieTerreno = [valoresDeclaranteDelete[1]];
-          valorAdquisicion = [valoresDeclaranteDelete[2]];
-        }
+        const valoresDeclaranteDelete = this.updateValoresDeclarante();
+        const superficieConstruccion = [valoresDeclaranteDelete[0]];
+        const superficieTerreno = [valoresDeclaranteDelete[1]];
+        const valorAdquisicion = [valoresDeclaranteDelete[2]];
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
@@ -422,15 +419,15 @@ export class BienesInmueblesComponent implements OnInit {
     return [superficieConstruccion, superficieTerreno, valorAdquisicion];
   }
 
-  updateValoresDeclarante(){
+  updateValoresDeclarante() {
     let arraySuperficieConstruccion: any = [];
     let arraySuperficieTerreno: any = [];
     let arrayValorAdquisicion: any = [];
     let superficieConstruccion: any = {};
     let superficieTerreno: any = {};
     let valorAdquisicion: any = {};
-    for (let i = 0; i <= this.bienInmueble.length; i++){
-      if( this.bienInmueble[i].titular[0].clave === "DEC"){
+    for (let i = 0; i <= this.bienInmueble.length; i++) {
+      if (this.bienInmueble[i].titular[0].clave === "DEC") {
         superficieConstruccion = {
           "indice": i,
           "valor": this.bienInmueble[i].superficieConstruccion.valor
