@@ -282,17 +282,11 @@ export const bienesInmueblesQuery = gql`
           }
         }
         aclaracionesObservaciones
-        superficieConstruccion{
+        valores {
           indice
-          valor
-        }
-        superficieTerreno{
-          indice
-          valor
-        }
-        valorAdquisicion{
-          indice
-          valor
+          superficieConstruccion
+          superficieTerreno
+          valorAdquisicion
         }
       }
     }

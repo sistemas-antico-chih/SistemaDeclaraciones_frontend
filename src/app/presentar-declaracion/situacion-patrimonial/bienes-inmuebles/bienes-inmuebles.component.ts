@@ -70,9 +70,7 @@ export class BienesInmueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  superficieConstruccion: ValorDeclarante[] = [];
-  superficieTerreno: ValorDeclarante[] = [];
-  valorAdquisicion: ValorDeclarante[] = [];
+  valores: ValorDeclarante[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -299,19 +297,14 @@ export class BienesInmueblesComponent implements OnInit {
         //let superficieTerreno = [...this.superficieTerreno];
         //let valorAdquisicion = [...this.valorAdquisicion];
 
-        const valoresDeclaranteDelete = this.updateValoresDeclarante();
-        let superficieConstruccion = [valoresDeclaranteDelete[0]];
-        let superficieTerreno = [valoresDeclaranteDelete[1]];
-        let valorAdquisicion = [valoresDeclaranteDelete[2]];
+        const valores = this.updateValoresDeclarante();
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          superficieConstruccion,
-          superficieTerreno,
-          valorAdquisicion,
+          valores,
         });
       }
     });
@@ -366,27 +359,17 @@ export class BienesInmueblesComponent implements OnInit {
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    let superficieConstruccion = [...this.superficieConstruccion];
-    let superficieTerreno = [...this.superficieTerreno];
-    let valorAdquisicion = [...this.valorAdquisicion];
-
+    let valores = [...this.valores];
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
       if (valorTitular.titular.clave === "DEC") {
-        const valoresDeclaranteSave = this.saveValoresDeclarante();
-        superficieConstruccion = [...this.superficieConstruccion, valoresDeclaranteSave[0]];
-        superficieTerreno = [...this.superficieTerreno, valoresDeclaranteSave[1]];
-        valorAdquisicion = [...this.valorAdquisicion, valoresDeclaranteSave[2]];
+        const valor = this.saveValoresDeclarante();
+        valores = [...valores, valor];
       }
     } else {
       bienInmueble[this.editIndex] = newItem;
-      if (valorTitular.titular.clave === "DEC") {
-        const valoresDeclaranteModify = this.updateValoresDeclarante();
-        superficieConstruccion = [valoresDeclaranteModify[0]];
-        superficieTerreno = [valoresDeclaranteModify[1]];
-        valorAdquisicion = [valoresDeclaranteModify[2]];
-      }
+      valores = this.updateValoresDeclarante();
     }
 
     this.isLoading = true;
@@ -394,68 +377,41 @@ export class BienesInmueblesComponent implements OnInit {
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
-      superficieConstruccion,
-      superficieTerreno,
-      valorAdquisicion,
+      valores,
     });
 
     this.isLoading = false;
   }
 
   saveValoresDeclarante() {
+
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
-    let superficieConstruccion = {
+    let valor = {
       "indice": indice,
-      "valor": newItem.superficieConstruccion.valor
+      "superficieConstruccion": newItem.superficieConstruccion.valor,
+      "superficieTerreno": newItem.superficieTerreno.valor,
+      "valorAdquisicion": newItem.valorAdquisicion.valor
     };
-    let superficieTerreno = {
-      "indice": indice,
-      "valor": newItem.superficieTerreno.valor
-    };
-    let valorAdquisicion = {
-      "indice": indice,
-      "valor": newItem.valorAdquisicion.valor
-    };
-    return [superficieConstruccion, superficieTerreno, valorAdquisicion];
+    return valor;
   }
 
   updateValoresDeclarante() {
-    let arraySuperficieConstruccion: any = [];
-    let arraySuperficieTerreno: any = [];
-    let arrayValorAdquisicion: any = [];
-    let superficieConstruccion: any = {};
-    let superficieTerreno: any = {};
-    let valorAdquisicion: any = {};
+    let valores: any = [];
+    let valor = {};
     for (let i = 0; i <= this.bienInmueble.length; i++) {
       if (this.bienInmueble[i].titular[0].clave === "DEC") {
-        superficieConstruccion = {
+        valor = {
           "indice": i,
-          "valor": this.bienInmueble[i].superficieConstruccion.valor
+          "superficieConstruccion": this.bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": this.bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": this.bienInmueble[i].valorAdquisicion.valor
         };
-        superficieTerreno = {
-          "indice": i,
-          "valor": this.bienInmueble[i].superficieTerreno.valor
-        };
-        valorAdquisicion = {
-          "indice": i,
-          "valor": this.bienInmueble[i].valorAdquisicion.valor
-        };
-        arraySuperficieConstruccion.push(superficieConstruccion);
-        arraySuperficieTerreno.push(superficieTerreno);
-        arrayValorAdquisicion.push(valorAdquisicion);
+        valores.push(valor);
       }
-      console.log("I "+i);
-      console.log(arraySuperficieConstruccion);
-      return [arraySuperficieConstruccion, arraySuperficieTerreno, arrayValorAdquisicion];
     }
-    console.log("array Superficie construccion");
-    console.log(arraySuperficieConstruccion);
-    console.log("array Superficie terreno");
-    console.log(arraySuperficieTerreno);
-    console.log("array valor adquisicion");
-    console.log(arrayValorAdquisicion);
-    return [arraySuperficieConstruccion, arraySuperficieTerreno, arrayValorAdquisicion];
+    console.log("valores " + valores);
+    return valores;
   }
 
   setEditMode() {
@@ -492,9 +448,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   setupForm(bienesInmuebles: BienesInmuebles) {
     this.bienInmueble = bienesInmuebles.bienInmueble;
-    this.superficieConstruccion = bienesInmuebles.superficieConstruccion;
-    this.superficieTerreno = bienesInmuebles.superficieTerreno;
-    this.valorAdquisicion = bienesInmuebles.valorAdquisicion;
+    this.valores = bienesInmuebles.valores;
 
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 

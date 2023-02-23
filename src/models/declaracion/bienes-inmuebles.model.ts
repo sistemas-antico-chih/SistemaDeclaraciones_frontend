@@ -3,7 +3,9 @@ import { FormaPago, ValorConformeA } from './types';
 
 export interface ValorDeclarante{
   indice: number;
-  valor: number;
+  superficieConstruccion: number;
+  superficieTerreno: number;
+  valorAdquisicion: number;
 }
 
 export interface BienInmueble {
@@ -29,7 +31,5 @@ export interface BienesInmuebles {
   ninguno?: boolean;
   bienInmueble?: BienInmueble[];
   aclaracionesObservaciones?: string;
-  superficieConstruccion?: ValorDeclarante[];
-  superficieTerreno?: ValorDeclarante[];
-  valorAdquisicion?: ValorDeclarante[];
+  valores?: ValorDeclarante[];
 }
