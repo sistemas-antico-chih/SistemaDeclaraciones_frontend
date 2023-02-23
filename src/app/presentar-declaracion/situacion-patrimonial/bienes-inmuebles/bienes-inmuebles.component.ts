@@ -294,7 +294,7 @@ export class BienesInmueblesComponent implements OnInit {
 
         console.log("antes de eliminar "+this.bienInmueble.length);
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
-        console.log("eliminado "+this.bienInmueble.length);
+        console.log("eliminado "+bienInmueble.length);
 
         let array : any =[];
         array = this.updateValoresDeclarante();
@@ -404,8 +404,10 @@ export class BienesInmueblesComponent implements OnInit {
     console.log("length "+this.bienInmueble.length);
     let valores: any = [];
     let valor = {};
+    console.log ("llega antes del for");
     for (let i = 0; i <= this.bienInmueble.length; i++) {
-      if (this.bienInmueble[i].titular[0].clave === "DEC") {
+      console.log ("llega al for "+i);
+      if (this.bienInmueble[i].titular) {
         valor = {
           "indice": i,
           "superficieConstruccion": this.bienInmueble[i].superficieConstruccion.valor,
