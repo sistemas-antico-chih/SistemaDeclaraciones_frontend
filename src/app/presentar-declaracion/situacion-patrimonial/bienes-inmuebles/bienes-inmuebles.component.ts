@@ -446,6 +446,7 @@ export class BienesInmueblesComponent implements OnInit {
         arrayValorAdquisicion.push(valorAdquisicion);
       }
       console.log("I "+i);
+      console.log(arraySuperficieConstruccion);
     }
     console.log("array Superficie construccion");
     console.log(arraySuperficieConstruccion);
