@@ -299,6 +299,7 @@ export class BienesInmueblesComponent implements OnInit {
         //let valorAdquisicion = [...this.valorAdquisicion];
 
         const valoresDeclaranteDelete = this.updateValoresDeclarante();
+        console.log("llega");
         const superficieConstruccion = [valoresDeclaranteDelete[0]];
         const superficieTerreno = [valoresDeclaranteDelete[1]];
         const valorAdquisicion = [valoresDeclaranteDelete[2]];
@@ -426,11 +427,8 @@ export class BienesInmueblesComponent implements OnInit {
     let superficieConstruccion: any = {};
     let superficieTerreno: any = {};
     let valorAdquisicion: any = {};
-    console.log("llega")
     for (let i = 0; i <= this.bienInmueble.length; i++) {
-      console.log("llega a FOR")
       if (this.bienInmueble[i].titular[0].clave === "DEC") {
-        console.log("llega a IF")
         superficieConstruccion = {
           "indice": i,
           "valor": this.bienInmueble[i].superficieConstruccion.valor
