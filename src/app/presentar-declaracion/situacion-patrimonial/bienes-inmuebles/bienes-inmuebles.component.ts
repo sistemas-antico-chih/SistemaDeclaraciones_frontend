@@ -297,7 +297,7 @@ export class BienesInmueblesComponent implements OnInit {
         console.log("eliminado "+bienInmueble.length);
 
         let array : any =[];
-        array = this.updateValoresDeclarante();
+        array = this.updateValoresDeclarante(bienInmueble);
         let valores = array;
 
 
@@ -372,7 +372,7 @@ export class BienesInmueblesComponent implements OnInit {
     } else {
       bienInmueble[this.editIndex] = newItem;
       let array : any =[];
-      array = this.updateValoresDeclarante();
+      array = this.updateValoresDeclarante(bienInmueble);
       valores = array;
     }
 
@@ -400,14 +400,14 @@ export class BienesInmueblesComponent implements OnInit {
     return valor;
   }
 
-  updateValoresDeclarante() {
-    console.log("length "+this.bienInmueble.length);
+  updateValoresDeclarante(bienInmueble: any) {
+    console.log("length "+bienInmueble.length);
     let valores: any = [];
     let valor = {};
     console.log ("llega antes del for");
-    for (let i = 0; i <= this.bienInmueble.length; i++) {
+    for (let i = 0; i < bienInmueble.length; i++) {
       console.log ("llega al for "+i);
-      if (this.bienInmueble[i].titular) {
+      if (bienInmueble[i].titular[0].clave === "DEC") {
         valor = {
           "indice": i,
           "superficieConstruccion": this.bienInmueble[i].superficieConstruccion.valor,
