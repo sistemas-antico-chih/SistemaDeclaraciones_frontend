@@ -297,8 +297,9 @@ export class BienesInmueblesComponent implements OnInit {
         console.log("eliminado "+bienInmueble.length);
 
         let array : any =[];
-        array = this.deleteValoresDeclarante();
+        array = this.deleteValoresDeclarante(bienInmueble);
         let valores = array;
+
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
@@ -373,10 +374,12 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("titular 1 "+valorTitular.titular.clave);
       bienInmueble[this.editIndex] = newItem;
       console.log("despues de modificar "+bienInmueble.length);
+      console.log("OBjecto ")
+      console.log(bienInmueble);
       console.log("titular modificado "+bienInmueble[this.editIndex].titular[0].clave);
 
       let array : any =[];
-      array = this.updateValoresDeclarante();
+      array = this.updateValoresDeclarante(bienInmueble);
       valores = array;
     }
 
@@ -404,11 +407,11 @@ export class BienesInmueblesComponent implements OnInit {
     return valor;
   }
 
-  deleteValoresDeclarante() {
+  deleteValoresDeclarante(bienInmueble: any) {
     let valores: any = [];
     let valor = {};
-    for (let i = 0; i < this.bienInmueble.length; i++) {
-      if (this.bienInmueble[i].titular[0].clave === "DEC") {
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular[0].clave === "DEC") {
         valor = {
           "indice": i,
           "superficieConstruccion": this.bienInmueble[i].superficieConstruccion.valor,
@@ -421,12 +424,15 @@ export class BienesInmueblesComponent implements OnInit {
     return valores;
   }
 
-  updateValoresDeclarante() {
-    console.log("update lengt "+this.bienInmueble.length);
+  updateValoresDeclarante(bienInmueble: any) {
+    console.log("llega update");
+    console.log(bienInmueble);
     let valores: any = [];
     let valor = {};
-    for (let i = 0; i < this.bienInmueble.length; i++) {
-      if (this.bienInmueble[i].titular[0].clave === "DEC") {
+    for (let i = 0; i < bienInmueble.length; i++) {
+      console.log("entra for")
+      if (bienInmueble[i].titular[0].clave === "DEC") {
+        console.log("entra if")
         valor = {
           "indice": i,
           "superficieConstruccion": this.bienInmueble[i].superficieConstruccion.valor,
