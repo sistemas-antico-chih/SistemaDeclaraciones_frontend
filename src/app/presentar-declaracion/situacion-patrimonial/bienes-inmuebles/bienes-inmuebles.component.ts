@@ -297,9 +297,9 @@ export class BienesInmueblesComponent implements OnInit {
         //let superficieConstruccion = [...this.superficieConstruccion];
         //let superficieTerreno = [...this.superficieTerreno];
         //let valorAdquisicion = [...this.valorAdquisicion];
+        console.log("llega");
 
         const valoresDeclaranteDelete = this.updateValoresDeclarante();
-        console.log("llega");
         const superficieConstruccion = [valoresDeclaranteDelete[0]];
         const superficieTerreno = [valoresDeclaranteDelete[1]];
         const valorAdquisicion = [valoresDeclaranteDelete[2]];
@@ -445,6 +445,12 @@ export class BienesInmueblesComponent implements OnInit {
         arraySuperficieTerreno.push(superficieTerreno);
         arrayValorAdquisicion.push(valorAdquisicion);
       }
+      console.log ("array Superficie construccion");
+      console.log(arraySuperficieConstruccion);
+      console.log ("array Superficie terreno");
+      console.log(arraySuperficieTerreno);
+      console.log ("array valor adquisicion");
+      console.log(arrayValorAdquisicion);
     }
     return [arraySuperficieConstruccion, arraySuperficieTerreno, arrayValorAdquisicion];
   }
