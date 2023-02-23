@@ -292,12 +292,14 @@ export class BienesInmueblesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
 
+        console.log("antes de eliminar "+this.bienInmueble.length);
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
-        //let superficieConstruccion = [...this.superficieConstruccion];
-        //let superficieTerreno = [...this.superficieTerreno];
-        //let valorAdquisicion = [...this.valorAdquisicion];
+        console.log("eliminado "+this.bienInmueble.length);
 
-        const valores = this.updateValoresDeclarante();
+        let array : any =[];
+        array = this.updateValoresDeclarante();
+        let valores = array;
+
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
@@ -369,7 +371,9 @@ export class BienesInmueblesComponent implements OnInit {
       }
     } else {
       bienInmueble[this.editIndex] = newItem;
-      valores = this.updateValoresDeclarante();
+      let array : any =[];
+      array = this.updateValoresDeclarante();
+      valores = array;
     }
 
     this.isLoading = true;
@@ -397,6 +401,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   updateValoresDeclarante() {
+    console.log("length "+this.bienInmueble.length);
     let valores: any = [];
     let valor = {};
     for (let i = 0; i <= this.bienInmueble.length; i++) {
