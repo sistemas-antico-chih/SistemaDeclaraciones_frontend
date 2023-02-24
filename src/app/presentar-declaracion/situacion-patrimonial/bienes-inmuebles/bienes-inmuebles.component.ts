@@ -291,15 +291,11 @@ export class BienesInmueblesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-
-        console.log("antes de eliminar "+this.bienInmueble.length);
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
-        console.log("eliminado "+bienInmueble.length);
 
         let array : any =[];
         array = this.deleteValoresDeclarante(bienInmueble);
         let valores = array;
-
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
@@ -362,6 +358,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
+    let bandera = false;
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
@@ -370,19 +367,18 @@ export class BienesInmueblesComponent implements OnInit {
         valores = [...valores, valor];
       }
     } else {
-      console.log("antes de modificar "+bienInmueble.length)
-      console.log("titular 1 "+valorTitular.titular.clave);
       bienInmueble[this.editIndex] = newItem;
-      console.log("despues de modificar "+bienInmueble.length);
-      console.log("OBjecto ")
-      console.log(bienInmueble);
+      bandera = true;
+    }
 
+
+    this.isLoading = true;
+
+    if (bandera){
       let array : any =[];
       array = this.updateValoresDeclarante(bienInmueble);
       valores = array;
     }
-
-    this.isLoading = true;
 
     this.saveInfo({
       bienInmueble,
@@ -426,10 +422,12 @@ export class BienesInmueblesComponent implements OnInit {
   updateValoresDeclarante(bienInmueble: any) {
     console.log("llega update");
     console.log(bienInmueble);
+    console.log("define vriables update");
     let valores: any = [];
     let valor = {};
+    console.log("define vriables update");
     for (let i = 0; i < bienInmueble.length; i++) {
-      console.log("entra for " + bienInmueble.titular[0].clave);
+      console.log("entra for " + bienInmueble.titular.clave);
       if (bienInmueble[i].titular[0].clave === "DEC") {
         console.log("entra if "+ i);
         valor = {
