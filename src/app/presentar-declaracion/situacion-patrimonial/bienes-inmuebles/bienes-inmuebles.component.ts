@@ -422,13 +422,11 @@ export class BienesInmueblesComponent implements OnInit {
   updateValoresDeclarante(bienInmueble: any) {
     console.log("llega update");
     console.log(bienInmueble);
-    console.log("define vriables update");
     let valores: any = [];
     let valor = {};
-    console.log("define vriables update");
     for (let i = 0; i < bienInmueble.length; i++) {
-      console.log("entra for " + bienInmueble.titular.clave);
-      if (bienInmueble[i].titular[0].clave === "DEC") {
+      console.log("entra for " + bienInmueble.titular[0].clave);
+      if (bienInmueble[i].titular.clave === "DEC") {
         console.log("entra if "+ i);
         valor = {
           "indice": i,
