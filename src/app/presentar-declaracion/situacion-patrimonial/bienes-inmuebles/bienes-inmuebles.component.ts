@@ -24,7 +24,7 @@ import Monedas from '@static/catalogos/monedas.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput } from '@models/declaracion';
+import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -69,6 +69,8 @@ export class BienesInmueblesComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
+
+  valores: ValorDeclarante[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -290,14 +292,17 @@ export class BienesInmueblesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
-        const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
-        const bienesDeclarante = this.removeBienesDeclarante();
+        let array : any =[];
+        array = this.deleteValoresDeclarante(bienInmueble);
+        let valores = array;
+
+        const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
 
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          bienesDeclarante,
+          valores,
         });
       }
     });
@@ -351,84 +356,84 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
+    const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    let valores = [...this.valores];
+    let bandera = false;
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
+      if (valorTitular.titular.clave === "DEC") {
+        const valor = this.saveValoresDeclarante();
+        valores = [...valores, valor];
+      }
     } else {
       bienInmueble[this.editIndex] = newItem;
+      bandera = true;
     }
+
 
     this.isLoading = true;
 
-    const bienesDeclarante = this.saveBienesDeclarante();
+    if (bandera){
+      let array : any =[];
+      array = this.updateValoresDeclarante(bienInmueble);
+      valores = array;
+    }
 
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
-      bienesDeclarante,
+      valores,
     });
 
     this.isLoading = false;
   }
 
-  saveBienesDeclarante() {
+  saveValoresDeclarante() {
+
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    console.log(newItem);
-    if (newItem.titular.clave === "DEC") {
-      return 1;
-    }
-    if (this.bienInmueble.length > 1) {
-      this.bienInmueble.forEach((x) => {
-        console.log(x);
-        if (x.titular[0].clave === "DEC") {
-          return 1;
-        }
-        else
-          return 0;
-      })
-    }
-    if (!this.bienInmueble[0]) {
-      const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-      if (newItem.titular.clave === "DEC") {
-        return 1;
-      }
-      else {
-        return 0;
-      }
-    } else {
-      if (this.bienInmueble[0].titular[0].clave === "DEC") {
-        return 1;
-      }
-      else {
-        const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-        if (newItem.titular.clave === "DEC") {
-          return 1;
-        }
-        else {
-          this.bienInmueble.forEach((x) => {
-            if (x.titular[0].clave === "DEC") {
-              return 1;
-            }
-          });
-        }
-        return 0;
-      }
-    }
+    const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
+    let valor = {
+      "indice": indice,
+      "superficieConstruccion": newItem.superficieConstruccion.valor,
+      "superficieTerreno": newItem.superficieTerreno.valor,
+      "valorAdquisicion": newItem.valorAdquisicion.valor
+    };
+    return valor;
   }
 
-  removeBienesDeclarante() {
-    if (this.bienInmueble.length > 1) {
-      this.bienInmueble.forEach((x) => {
-        console.log(x);
-        if (x.titular[0].clave === "DEC") {
-          return 1;
-        }
-        else
-          return 0;
-      })
-    } else {
-      return 0;
+  deleteValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular[0].clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor
+        };
+        valores.push(valor);
+      }
     }
+    return valores;
+  }
+
+  updateValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular.clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor
+        };
+        valores.push(valor);
+      }
+    }
+    return valores;
   }
 
   setEditMode() {
@@ -465,6 +470,8 @@ export class BienesInmueblesComponent implements OnInit {
 
   setupForm(bienesInmuebles: BienesInmuebles) {
     this.bienInmueble = bienesInmuebles.bienInmueble;
+    this.valores = bienesInmuebles.valores;
+
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
     if (bienesInmuebles.ninguno) {
