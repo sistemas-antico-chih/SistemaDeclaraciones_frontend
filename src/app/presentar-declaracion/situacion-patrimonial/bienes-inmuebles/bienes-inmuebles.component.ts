@@ -423,9 +423,7 @@ export class BienesInmueblesComponent implements OnInit {
     let valores: any = [];
     let valor = {};
     for (let i = 0; i < bienInmueble.length; i++) {
-      console.log("entra for ");
       if (bienInmueble[i].titular.clave === "DEC") {
-        console.log("entra if "+ i);
         valor = {
           "indice": i,
           "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
