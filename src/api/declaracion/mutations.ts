@@ -146,6 +146,7 @@ export const bienesInmueblesMutation = gql`
           superficieConstruccion
           superficieTerreno
           valorAdquisicion
+        }
       }
     }
   }
