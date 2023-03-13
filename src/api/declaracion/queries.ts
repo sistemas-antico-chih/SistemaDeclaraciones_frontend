@@ -287,6 +287,7 @@ export const bienesInmueblesQuery = gql`
           superficieConstruccion
           superficieTerreno
           valorAdquisicion
+          formaAdquisicion
         }
       }
     }

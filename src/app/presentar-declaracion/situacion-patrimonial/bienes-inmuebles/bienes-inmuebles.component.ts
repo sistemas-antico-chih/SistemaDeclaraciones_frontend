@@ -397,7 +397,8 @@ export class BienesInmueblesComponent implements OnInit {
       "indice": indice,
       "superficieConstruccion": newItem.superficieConstruccion.valor,
       "superficieTerreno": newItem.superficieTerreno.valor,
-      "valorAdquisicion": newItem.valorAdquisicion.valor
+      "valorAdquisicion": newItem.valorAdquisicion.valor,
+      "formaAdquisicion": newItem.formaAdquisicion.clave,
     };
     return valor;
   }
@@ -411,7 +412,8 @@ export class BienesInmueblesComponent implements OnInit {
           "indice": i,
           "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
           "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
-          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
         };
         valores.push(valor);
       }
@@ -428,7 +430,8 @@ export class BienesInmueblesComponent implements OnInit {
           "indice": i,
           "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
           "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
-          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
         };
         valores.push(valor);
       }
