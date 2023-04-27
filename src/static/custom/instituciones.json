@@ -83,7 +83,7 @@
     "ente_publico": "MUNICIPIO DE CAMARGO",
     "clave": "MUN_CAM",
     "servidor_publico_recibe": {
-      "nombre": "C. JULIAN GILBERTO ESTEVANE LUNA",
+      "nombre": "LIC. JULIAN GILBERTO ESTEVANE LUNA",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -219,8 +219,8 @@
     "ente_publico": "MUNICIPIO DE GUADALUPE Y CALVO",
     "clave": "MUN_GYC",
     "servidor_publico_recibe": {
-      "nombre": "C. JULIO CÉSAR CHÁVEZ PONCE",
-      "cargo": "PRESIDENTE MUNICIPAL"
+      "valor": "ING. MARTÍN ALEJANDRO MOLINA LÓPEZ"
+      "cargo": "TITULAR DEL ÓRGANO INTERNO DE CONTROL"
     }
   },
   {
