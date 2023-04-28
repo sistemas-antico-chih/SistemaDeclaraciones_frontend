@@ -16,7 +16,7 @@ import beneficiarioPrograma from '@static/catalogos/beneficiariosPrograma.json';
 import NivelGobierno from '@static/catalogos/nivelOrdenGobierno.json';
 import TiposApoyo from '@static/catalogos/tipoApoyo.json';
 import RecepcionApoyo from '@static/catalogos/formaRecepcion.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/apoyos';
 import { apoyosQuery, apoyosMutation } from '@api/declaracion';
 
@@ -43,7 +43,7 @@ export class ApoyosPublicosComponent implements OnInit {
   tipoDeclaracion: string = null;
 
   declaracionId: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
@@ -74,7 +74,7 @@ export class ApoyosPublicosComponent implements OnInit {
     this.apoyosForm = this.formBuilder.group({
       ninguno: [false],
       apoyo: this.formBuilder.group({
-        // tipoOperacion: [''],
+        tipoOperacion: [null, [Validators.required]],
         tipoPersona: ['', [Validators.required]],
         beneficiarioPrograma: [{ clave: '', valor: '' }, [Validators.required]],
         nombrePrograma: ['', [Validators.required, Validators.pattern(/^\S.*\S?$/)]],

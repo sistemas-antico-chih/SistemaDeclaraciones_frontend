@@ -1,4 +1,5 @@
 import { Catalogo, Monto, Tercero } from './common.model';
+import { TipoOperacion } from './types';
 
 interface LocalizacionInversion {
   pais: string;
@@ -7,6 +8,7 @@ interface LocalizacionInversion {
 }
 
 export interface Inversion {
+  tipoOperacion?: TipoOperacion;
   tipoInversion: Catalogo;
   subTipoInversion: Catalogo;
   titular: Catalogo[];
