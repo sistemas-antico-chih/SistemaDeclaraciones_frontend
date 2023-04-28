@@ -26,6 +26,7 @@ import { DeclaracionOutput, Inversion, InversionesCuentasValores } from '@models
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @Component({
   selector: 'app-inversiones',
@@ -55,7 +56,7 @@ export class InversionesComponent implements OnInit {
   tipoDomicilio: string;
 
   declaracionId: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
@@ -100,6 +101,7 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm = this.formBuilder.group({
       ninguno: [false],
       inversion: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoInversion: [null, [Validators.required]],
         subTipoInversion: [null, [Validators.required]],
         titular: [null, [Validators.required]],

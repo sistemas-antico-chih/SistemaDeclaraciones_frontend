@@ -20,7 +20,7 @@ import Monedas from '@static/catalogos/monedas.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bienes-muebles';
 
 import { BienMueble, BienesMuebles, DeclaracionOutput } from '@models/declaracion';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { findOption } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
@@ -47,7 +47,7 @@ export class BienesMueblesComponent implements OnInit {
   monedasCatalogo = Monedas;
 
   tipoDeclaracion: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   declaracionId: string = null;
 
   tooltipData = tooltipData;
@@ -87,6 +87,7 @@ export class BienesMueblesComponent implements OnInit {
     this.bienesMueblesForm = this.formBuilder.group({
       ninguno: [false],
       bienMueble: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         titular: [[], Validators.required],
         tipoBien: [null, [Validators.required]],
         transmisor: this.formBuilder.group({

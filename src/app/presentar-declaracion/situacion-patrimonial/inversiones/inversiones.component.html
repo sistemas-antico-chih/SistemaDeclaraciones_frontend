@@ -176,6 +176,19 @@
       <!-- Agregar  -->
       <div class="padding-agregar" formGroupName="inversion">
         <mat-divider></mat-divider>
+        <p>Agregar inversión</p>
+        <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <h2>Agregar inversión</h2>
         <!-- Agregar -->
         <div class="">

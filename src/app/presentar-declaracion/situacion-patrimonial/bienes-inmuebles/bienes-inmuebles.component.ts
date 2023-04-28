@@ -21,7 +21,7 @@ import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import Paises from '@static/catalogos/paises.json';
 import Monedas from '@static/catalogos/monedas.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
 import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante } from '@models/declaracion';
@@ -55,7 +55,7 @@ export class BienesInmueblesComponent implements OnInit {
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
   monedasCatalogo = Monedas;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio = 'MEXICO';
 
@@ -100,6 +100,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.bienesInmueblesForm = this.formBuilder.group({
       ninguno: [false],
       bienInmueble: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoInmueble: [null, [Validators.required]],
         titular: [[], [Validators.required]],
         porcentajePropiedad: [
