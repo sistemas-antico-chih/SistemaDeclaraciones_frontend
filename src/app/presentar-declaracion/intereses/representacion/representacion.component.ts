@@ -17,7 +17,7 @@ import TipoRelacion from '@static/catalogos/tipoRelacion.json';
 import TipoRepresentacion from '@static/catalogos/tipoRepresentacion.json';
 import Extranjero from '@static/catalogos/extranjero.json';
 import Sector from '@static/catalogos/sector.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/representacion';
 
 import { DeclaracionOutput, Representacion, Representaciones } from '@models/declaracion';
@@ -46,7 +46,7 @@ export class RepresentacionComponent implements OnInit {
   paisesCatalogo = Paises;
   estadosCatalogo = Estados;
   sectorCatalogo = Sector;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio: string;
 
@@ -106,7 +106,7 @@ export class RepresentacionComponent implements OnInit {
       ninguno: false,
       // participaciones
       representacion: this.formBuilder.group({
-        //tipoOperacion: ['', Validators.required],
+        tipoOperacion: [null, [Validators.required]],
         tipoRelacion: ['', Validators.required],
         tipoRepresentacion: ['', Validators.required],
         fechaInicioRepresentacion: ['', [Validators.required]],

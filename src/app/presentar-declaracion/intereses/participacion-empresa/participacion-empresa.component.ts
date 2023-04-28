@@ -17,7 +17,7 @@ import Extranjero from '@static/catalogos/extranjero.json';
 import Paises from '@static/catalogos/paises.json';
 import Estados from '@static/catalogos/estados.json';
 import Sector from '@static/catalogos/sector.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/participacion-empresa';
 
 import { DeclaracionOutput, Participacion, Participaciones } from '@models/declaracion';
@@ -46,7 +46,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
   paisesCatalogo = Paises;
   estadosCatalogo = Estados;
   sectorCatalogo = Sector;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio: string;
 
@@ -100,6 +100,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
       ninguno: [false],
       // participaciones
       participacion: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoRelacion: ['', Validators.required],
         nombreEmpresaSociedadAsociacion: ['', [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
         rfc: [

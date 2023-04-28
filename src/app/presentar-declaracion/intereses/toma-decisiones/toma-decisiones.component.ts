@@ -18,7 +18,7 @@ import Paises from '@static/catalogos/paises.json';
 import Estados from '@static/catalogos/estados.json';
 
 import { tooltipData } from '@static/tooltips/intereses/toma-descisiones';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { DeclaracionOutput, ParticipacionTD, ParticipacionTomaDecisiones } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
@@ -45,7 +45,7 @@ export class TomaDecisionesComponent implements OnInit {
   extranjeroCatalogo = Extranjero;
   paisesCatalogo = Paises;
   estadosCatalogo = Estados;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio = 'MEXICO';
 
@@ -104,7 +104,7 @@ export class TomaDecisionesComponent implements OnInit {
     this.participacionTomaDecisionesForm = this.formBuilder.group({
       ninguno: [false],
       participacion: this.formBuilder.group({
-        //tipoOperacion: ['', Validators.required],
+        tipoOperacion: [null, [Validators.required]],
         tipoRelacion: ['', Validators.required],
         tipoInstitucion: ['', [Validators.required]],
         nombreInstitucion: ['', [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
