@@ -112,8 +112,20 @@
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="apoyo">
         <mat-divider></mat-divider>
-        <p>Agregar participación</p>
+        <p>Apoyo o beneficio</p>
         <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="grid-2-col grid-margin">
           <mat-form-field matTooltip="{{ tooltipData.beneficiario }}" appearance="fill">
             <mat-label>Beneficiario de algún programa</mat-label>

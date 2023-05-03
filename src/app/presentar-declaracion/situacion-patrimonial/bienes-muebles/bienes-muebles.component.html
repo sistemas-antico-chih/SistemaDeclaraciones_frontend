@@ -1,458 +1,501 @@
-<div class="section-main-container">
-  <mat-card class="form-card">
-    <section-header section="I. Declaración de situación patrimonial" progress="54" type="{{ tipoDeclaracion }}">
-    </section-header>
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-    <mat-divider></mat-divider>
+import { Apollo } from 'apollo-angular';
+import { bienesInmueblesMutation, bienesInmueblesQuery } from '@api/declaracion';
 
-    <mat-toolbar class="background-white">
-      <label class="step-title">
-        12. Bienes muebles
-        <span *ngIf="tipoDeclaracion === 'inicial'"> (situación actual)</span>
-        <span *ngIf="tipoDeclaracion === 'modificacion'">
-          (entre el 1 de enero y 31 de diciembre del año inmediato anterior)</span
-        >
-        <span *ngIf="tipoDeclaracion === 'conclusion'"> (del año en curso a la fecha de conclusión del empleo)</span>
-      </label>
-    </mat-toolbar>
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '@shared/dialog/dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-    <mat-divider></mat-divider>
+import { UntilDestroy, untilDestroyed } from '@core';
 
-    <p>
-      Todos los campos * son obligatorios. Todos los datos de los bienes declarados a nombre de la
-      <span class="negritas">pareja, dependientes económicos y/o terceros</span> o que sean en copropiedad con el
-      declarante no seran públicos y los campos resaltados <span class="no-public-inline"></span> no serán públicos.
+import TipoInmueble from '@static/catalogos/tipoInmueble.json';
+import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
+import TitularBien from '@static/catalogos/titularBien.json';
+import FormaPago from '@static/catalogos/formaPago.json';
+import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
+import ValorConformeA from '@static/catalogos/valorConformeA.json';
+import Estados from '@static/catalogos/estados.json';
+import Municipios from '@static/catalogos/municipios.json';
+import Paises from '@static/catalogos/paises.json';
+import Monedas from '@static/catalogos/monedas.json';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-      <br />
-      <span *ngIf="tipoDeclaracion === 'inicial'">
-        Para la declaración de inicio reportar la situación de los bienes muebles a la fecha de ingreso al empleo, cargo
-        o comisión.
-      </span>
-      <span *ngIf="tipoDeclaracion === 'modificacion'">
-        Para la declaración de modificación reportar la situación de los bienes muebles del año inmediato anterior.
-      </span>
-      <span *ngIf="tipoDeclaracion === 'conclusion'">
-        Para la declaración de conclusión reportar la situación de los bienes muebles a la fecha de conclusión del
-        empleo, cargo o comisión.
-      </span>
-    </p>
-    <p>
-      Se refiere a la información que el Declarante reportará sobre bienes que conforme a la normatividad aplicable se
-      consideran muebles, que por su naturaleza de manera individual o en conjunto representan una parte considerable
-      del patrimonio del servidor público de acuerdo con su situación socioeconómica y que para efectos de referencia el
-      monto de su valor comercial sea mayor a 1200 Unidades de Medida y Actualización (UMA) por lo que se refiere al
-      conjunto de menaje. En el caso de los demás bienes dicho valor será en lo individual.
-    </p>
+import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante } from '@models/declaracion';
 
-    <!-- Botones iniciales -->
-    <div *ngIf="!bienMueble?.length && !editMode && !bienesMueblesForm.value.ninguno">
-      <mat-grid-list cols="2" rowHeight="150px">
-        <mat-grid-tile colspan="1">
-          <div class="boton-agregar">
-            <button mat-raised-button color="primary" (click)="noPossessions()">Ninguno</button>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="1">
-          <div class="boton-agregar">
-            <button mat-raised-button color="primary" (click)="addItem()">Agregar Bien Mueble</button>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </div>
+import { findOption, ifExistsEnableFields } from '@utils/utils';
 
-    <!-- card de información -->
-    <div class="">
-      <mat-card class="info" *ngIf="bienesMueblesForm.value.ninguno">
-        <p>Ningún bien mueble</p>
-      </mat-card>
+import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 
-      <mat-card class="info" *ngFor="let m of bienMueble; let i = index">
-        <mat-card-content class="">
-          <div class="grid-3fr-1fr">
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">wb_iridescent</mat-icon>
-              <p>
-                <span class="negritas">{{ m.tipoBien.valor }}</span>
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">person</mat-icon>
-              <p>
-                Titular:<span class="resaltar" *ngFor="let dato of m.titular"> {{ dato.valor }} </span>
-              </p>
-            </div>
-          </div>
+@UntilDestroy()
+@Component({
+  selector: 'app-bienes-inmuebles',
+  templateUrl: './bienes-inmuebles.component.html',
+  styleUrls: ['./bienes-inmuebles.component.scss'],
+})
+export class BienesInmueblesComponent implements OnInit {
+  aclaraciones = false;
+  bienesInmueblesForm: FormGroup;
+  estado: Catalogo = null;
+  editMode = false;
+  editIndex: number = null;
+  bienInmueble: BienInmueble[] = [];
+  isLoading = false;
 
-          <!-- Terceros -->
-          <mat-divider></mat-divider>
+  tipoInmuebleCatalogo = TipoInmueble;
+  formaAdquisicionCatalogo = FormaAdquisicion;
+  titularBienCatalogo = TitularBien;
+  formaPagoCatalogo = FormaPago;
+  parentescoRelacionCatalogo = ParentescoRelacion;
+  valorConformeACatalogo = ValorConformeA;
+  estadosCatalogo = Estados;
+  municipiosCatalogo = Municipios;
+  paisesCatalogo = Paises;
+  monedasCatalogo = Monedas;
+  tipoOperacionCatalogo = TipoOperacion;
+  tipoDeclaracion: string = null;
+  tipoDomicilio = 'MEXICO';
 
-          <p>Nombre del Tercero o Terceros</p>
-          <div class="card-grid-3-col" *ngFor="let dato of m.tercero">
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">person</mat-icon>
-              <p>
-                {{ dato.nombreRazonSocial }}
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">fingerprint</mat-icon>
-              <p>
-                {{ dato.rfc }}
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">person</mat-icon>
-              <p>
-                {{ dato.tipoPersona }}
-              </p>
-            </div>
-          </div>
+  declaracionId: string = null;
 
-          <mat-divider></mat-divider>
+  tooltipData = tooltipData;
+  errorMatcher = new DeclarationErrorStateMatcher();
 
-          <p>Nombre o razón social del Transmisor de la propiedad</p>
-          <div class="card-grid-3-col" *ngFor="let dato of m.transmisor">
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">person</mat-icon>
-              <p>
-                {{ dato.nombreRazonSocial }}
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">fingerprint</mat-icon>
-              <p>
-                {{ dato.rfc }}
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">person</mat-icon>
-              <p>{{ dato.tipoPersona }}</p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">group</mat-icon>
-              <p>
-                Relación con el titular: <span class="resaltar">{{ dato.relacion.valor }}</span>
-              </p>
-            </div>
-          </div>
+  minDate = new Date(1940, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes, this.dia);
 
-          <mat-divider></mat-divider>
+  valores: ValorDeclarante[] = [];
 
-          <div class="grid-3fr-1fr">
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">credit_card</mat-icon>
-              <p>
-                Forma de adquisición: <span class="resaltar">{{ m.formaAdquisicion.valor }}</span>
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">credit_card</mat-icon>
-              <p>
-                Forma de pago: <span class="resaltar">{{ m.formaPago | replace: '_':' ' }}</span>
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">date_range</mat-icon>
-              <p>
-                Fecha de adquisición del inmueble:
-                <span class="resaltar">{{ m.fechaAdquisicion | date: 'dd/MM/yyyy' }}</span>
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">account_balance_wallet</mat-icon>
-              <p>
-                Valor de adquisición:
-                <span class="resaltar">{{ m.valorAdquisicion.valor | currency }} {{ m.valorAdquisicion.moneda }}</span>
-              </p>
-            </div>
-          </div>
+  constructor(
+    private apollo: Apollo,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.tipoDeclaracion = this.router.url.split('/')[1];
+    this.createForm();
+    this.getUserInfo();
+  }
 
-          <!-- <mat-divider></mat-divider>
-          <div class="padding-card-section">
-            <div class="paragraph-flex aclaraciones">
-              <mat-icon matPrefix class="icon">speaker_notes</mat-icon>
-              <p class="">Aclaraciones/Observaciones</p>
-            </div>
-            <p>
-              {{ m.aclaracionesObservaciones }}
-            </p>
-          </div> -->
+  addItem() {
+    this.bienesInmueblesForm.reset();
+    this.bienesInmueblesForm.get('ninguno').setValue(false);
+    this.editMode = true;
+    this.editIndex = null;
+  }
 
-          <mat-divider></mat-divider>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary" (click)="editItem(i)">Modificar</button>
-          <button mat-button color="primary" (click)="removeItem(i)">Eliminar</button>
-        </mat-card-actions>
-      </mat-card>
-      <div class="boton-agregar" *ngIf="(bienMueble.length && !editMode) || bienesMueblesForm.value.ninguno">
-        <button mat-raised-button color="primary" (click)="addItem()">Agregar Bien Mueble</button>
-      </div>
-    </div>
+  cancelEditMode() {
+    this.editMode = false;
+    this.editIndex = null;
+  }
 
-    <!-- Formulario -->
-    <form (ngSubmit)="saveItem()" [formGroup]="bienesMueblesForm" *ngIf="editMode">
-      <!-- Agregar empleo, cargo o comisión -->
-      <div class="padding-agregar" formGroupName="bienMueble">
-        <mat-divider></mat-divider>
-        <!-- Datos mueble -->
-        <div class="">
-          <h2>Agregar bien mueble</h2>
-          <div class="grid-2-col grid-margin">
-            <mat-form-field matTooltip="{{ tooltipData.tipoBien }}" appearance="fill">
-              <mat-label>Tipo del bien</mat-label>
-              <mat-icon matPrefix>dns</mat-icon>
-              <mat-select formControlName="tipoBien" required>
-                <mat-option
-                  *ngFor="let tipoBienBienesMuebles of tipoBienBienesMueblesCatalogo"
-                  [value]="tipoBienBienesMuebles"
-                >
-                  {{ tipoBienBienesMuebles.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" *ngIf="bienesMueblesForm.value.bienMueble.tipoBien?.clave === 'OTRO'">
-              <mat-label>Especifique</mat-label>
-              <mat-icon matPrefix class="no-public">dns</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.titularBien }}" appearance="fill">
-              <mat-label>Titular del Bien</mat-label>
-              <mat-icon matPrefix class="no-public">person</mat-icon>
-              <mat-select formControlName="titular" required>
-                <mat-option *ngFor="let titularBien of titularBienCatalogo" [value]="titularBien">
-                  {{ titularBien.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+  createForm() {
+    this.bienesInmueblesForm = this.formBuilder.group({
+      ninguno: [false],
+      bienInmueble: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
+        tipoInmueble: [null, [Validators.required]],
+        titular: [[], [Validators.required]],
+        porcentajePropiedad: [
+          0,
+          [Validators.required, Validators.pattern(/^\d+\.?\d{0,4}$/), Validators.min(0), Validators.max(100)],
+        ],
+        superficieTerreno: this.formBuilder.group({
+          valor: [0, [Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          unidad: ['m'],
+        }),
+        superficieConstruccion: this.formBuilder.group({
+          valor: [0, [Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          unidad: ['m'],
+        }),
+        tercero: this.formBuilder.group({
+          tipoPersona: [null],
+          nombreRazonSocial: [null, [Validators.pattern(/^\S.*\S?$/)]],
+          rfc: [
+            null,
+            [
+              Validators.pattern(
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              ),
+            ],
+          ],
+        }),
+        transmisor: this.formBuilder.group({
+          tipoPersona: [null, [Validators.required]],
+          nombreRazonSocial: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+          rfc: [
+            null,
+            [
+              Validators.required,
+              Validators.pattern(
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              ),
+            ],
+          ],
+          relacion: [null, [Validators.required]],
+        }),
+        formaAdquisicion: [null, [Validators.required]],
+        formaPago: [null, [Validators.required]],
+        valorAdquisicion: this.formBuilder.group({
+          valor: [0, [Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          moneda: ['MXN', [Validators.required]],
+        }),
+        fechaAdquisicion: [null, [Validators.required]],
+        datoIdentificacion: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+        valorConformeA: [null, [Validators.required]],
+        domicilioMexico: this.formBuilder.group({
+          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
+          coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+          municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
+          entidadFederativa: [null, [Validators.required]],
+          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        }),
+        domicilioExtranjero: this.formBuilder.group({
+          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
+          ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+          estadoProvincia: [null, [Validators.required]],
+          pais: [null, [Validators.required]],
+          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        }),
+      }),
+      aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+    });
 
-          <!-- Tercero -->
-          <div class="grid-3-col grid-margin" formGroupName="tercero">
-            <mat-radio-group matTooltip="{{ tooltipData.tercero }}" class="checkbox" formControlName="tipoPersona">
-              <p class="question double-col">Tercero</p>
-              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Persona Física</mat-radio-button>
-              <mat-radio-button value="MORAL">Persona Moral</mat-radio-button>
-            </mat-radio-group>
-            <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill">
-              <mat-label>Nombre del Tercero o Terceros</mat-label>
-              <mat-icon matPrefix>group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombreRazonSocial" />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.rfcTercero }}" appearance="fill">
-              <mat-label>RFC</mat-label>
-              <mat-icon matPrefix>fingerprint</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                #input_rfc_tercero
-                formControlName="rfc"
-                type="text"
-                maxlength="13"
-              />
-              <mat-hint align="end">{{ input_rfc_tercero.value?.length || 0 }}/13</mat-hint>
-            </mat-form-field>
-          </div>
+    this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
 
-          <div class="grid-3-col grid-margin">
-            <mat-form-field matTooltip="{{ tooltipData.formaAdquisicion }}" appearance="fill">
-              <mat-label>Forma de Adquisición</mat-label>
-              <mat-icon matPrefix>credit_card</mat-icon>
-              <mat-select formControlName="formaAdquisicion" required>
-                <mat-option *ngFor="let formaAdquisicion of formaAdquisicionCatalogo" [value]="formaAdquisicion">
-                  {{ formaAdquisicion.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.formaPago }}" appearance="fill">
-              <mat-label>Forma de Pago</mat-label>
-              <mat-icon matPrefix>credit_card</mat-icon>
-              <mat-select formControlName="formaPago" required>
-                <mat-option *ngFor="let formaPago of formaPagoCatalogo" value="{{ formaPago }}">
-                  {{ formaPago | replace: '_':' ' }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field
-              matTooltip="{{ tooltipData.relacionTransmisorTitular }}"
-              appearance="fill"
-              formGroupName="transmisor"
-            >
-              <mat-label>Relación del transmisor del bien con el titular</mat-label>
-              <mat-icon matPrefix class="no-public">group</mat-icon>
-              <mat-select formControlName="relacion" required>
-                <mat-option *ngFor="let parentescoRelacion of parentescoRelacionCatalogo" [value]="parentescoRelacion">
-                  {{ parentescoRelacion.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field
-              appearance="fill"
-              class="double-col"
-              *ngIf="bienesMueblesForm.value.bienMueble.transmisor?.relacion?.clave === 'OTRO'"
-            >
-              <mat-label>Especifique</mat-label>
-              <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
-            </mat-form-field>
-          </div>
+    const domicilioMexico = this.bienesInmueblesForm.get('bienInmueble').get('domicilioMexico');
+    const estado = domicilioMexico.get('entidadFederativa');
+    estado.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      const municipio = domicilioMexico.get('municipioAlcaldia');
 
-          <div class="grid-4-col grid-margin">
-            <mat-form-field
-              matTooltip="{{ tooltipData.nombreRazonSocial }}"
-              appearance="fill"
-              class="double-col"
-              formGroupName="transmisor"
-            >
-              <mat-label>Nombre o razón social del transmisor</mat-label>
-              <mat-icon matPrefix class="no-public">dns</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="nombreRazonSocial"
-                required
-              />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.rfcTransmisor }}" appearance="fill" formGroupName="transmisor">
-              <mat-label>RFC</mat-label>
-              <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                #input_rfc_transmisor
-                formControlName="rfc"
-                type="text"
-                maxlength="13"
-                required
-              />
-              <mat-hint align="end">{{ input_rfc_transmisor.value?.length || 0 }}/13</mat-hint>
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.transmisor }}" appearance="fill" formGroupName="transmisor">
-              <mat-label>Persona Física o Moral</mat-label>
-              <mat-icon matPrefix class="no-public">person</mat-icon>
-              <mat-select formControlName="tipoPersona" required>
-                <mat-option value="FISICA"> Física </mat-option>
-                <mat-option value="MORAL"> Moral </mat-option>
-              </mat-select>
-            </mat-form-field>
+      if (value) {
+        municipio.enable();
+      } else {
+        municipio.disable();
+        municipio.reset();
+      }
+      this.estado = value;
+    });
+  }
 
-            <mat-form-field
-              matTooltip="{{ tooltipData.descripcionGeneralBien }}"
-              appearance="fill"
-              class="quadruple-col"
-            >
-              <mat-label>Descripción general del bien</mat-label>
-              <mat-icon matPrefix>speaker_notes</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="descripcionGeneralBien"
-                required
-              />
-            </mat-form-field>
-          </div>
+  editItem(index: number) {
+    this.setEditMode();
+    this.fillForm(this.bienInmueble[index]);
+    this.editIndex = index;
+  }
 
-          <div class="grid-3-col grid-margin">
-            <mat-form-field
-              matTooltip="{{ tooltipData.valorAdquisicion }}"
-              appearance="fill"
-              formGroupName="valorAdquisicion"
-            >
-              <mat-label>Valor de Adquisición del mueble</mat-label>
-              <mat-icon matPrefix>credit_card</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="number"
-                formControlName="valor"
-                min="0"
-                required
-              />
-            </mat-form-field>
-            <mat-form-field
-              matTooltip="{{ tooltipData.tipoMoneda }}"
-              appearance="fill"
-              formGroupName="valorAdquisicion"
-            >
-              <mat-label>Tipo de Moneda</mat-label>
-              <mat-icon matPrefix>call_merge</mat-icon>
-              <mat-select formControlName="moneda" required>
-                <mat-option *ngFor="let m of monedasCatalogo" [value]="m.clave">
-                  {{ m.clave }} - {{ m.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.fechaAdquisicion }}" appearance="fill">
-              <mat-label>Fecha de Adquisición del Inmueble</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerAdquisicion"
-                [min]="minDate"
-                [max]="maxDate"
-                formControlName="fechaAdquisicion"
-                required
-              />
-              <mat-hint>dd/mm/yyyy</mat-hint>
-              <mat-datepicker-toggle matPrefix [for]="pickerAdquisicion"> </mat-datepicker-toggle>
-              <mat-datepicker #pickerAdquisicion></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
+  fillForm(bienInmueble: BienInmueble) {
+    Object.keys(bienInmueble)
+      .filter((field) => bienInmueble[field] !== null)
+      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
+    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
+    this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
 
-      <mat-divider></mat-divider>
+    ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
+    if (bienInmueble.domicilioMexico) {
+      this.tipoDomicilio = 'MEXICO';
+    }
+    ifExistsEnableFields(
+      bienInmueble.domicilioExtranjero,
+      this.bienesInmueblesForm,
+      'bienInmueble.domicilioExtranjero'
+    );
+    if (bienInmueble.domicilioExtranjero) {
+      this.tipoDomicilio = 'EXTRANJERO';
+    }
 
-      <div class="boton" *ngIf="!aclaraciones">
-        <button mat-raised-button class="text-primary" (click)="toggleAclaraciones(true)">
-          AGREGAR ACLARACIONES / OBSERVACIONES
-        </button>
-      </div>
-      <div class="" *ngIf="aclaraciones">
-        <div class="flex">
-          <p>Aclaraciones / Observaciones</p>
-          <button mat-raised-button color="primary" (click)="toggleAclaraciones(false)">CANCELAR</button>
-        </div>
+    this.setSelectedOptions();
+  }
 
-        <mat-form-field matTooltip="{{ tooltipData.aclaracionesObservaciones }}" appearance="fill" class="grid-margin">
-          <mat-icon matPrefix class="aclaraciones-no-public">speaker_notes</mat-icon>
-          <textarea
-            maxlength="500"
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            formControlName="aclaracionesObservaciones"
-            rows="10"
-          ></textarea>
-        </mat-form-field>
-      </div>
+  async getUserInfo() {
+    try {
+      const { data } = await this.apollo
+        .query<DeclaracionOutput>({
+          query: bienesInmueblesQuery,
+          variables: {
+            tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
+          },
+        })
+        .toPromise();
 
-      <mat-divider></mat-divider>
+      this.declaracionId = data.declaracion._id;
+      if (data.declaracion.bienesInmuebles) {
+        this.setupForm(data.declaracion.bienesInmuebles);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-      <div class="boton text-right">
-        <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-        <button mat-raised-button color="primary" type="button" *ngIf="editMode" (click)="cancelEditMode()">
-          CANCELAR
-        </button>
-        <button mat-raised-button color="primary" type="button" (click)="bienesMueblesForm.reset()">
-          LIMPIAR FORMULARIO
-        </button>
-        <button mat-raised-button color="primary" [disabled]="bienesMueblesForm.invalid || isLoading">
-          GUARDAR CAMBIOS
-        </button>
-      </div>
-    </form>
+  formHasChanges() {
+    let isDirty = this.bienesInmueblesForm.dirty;
+    if (isDirty) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Tienes cambios sin guardar',
+          message: '¿Deseas continuar?',
+          falseText: 'Cancelar',
+          trueText: 'Continuar',
+        },
+      });
 
-    <mat-divider></mat-divider>
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/vehiculos']);
+      });
+    } else {
+      this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/vehiculos']);
+    }
+  }
 
-    <div class="boton center">
-      <button mat-raised-button color="primary" (click)="formHasChanges()">
-        CONTINUAR 13 DE 15
-        <mat-icon matSofix>arrow_forward</mat-icon>
-      </button>
-    </div>
+  ngOnInit(): void { }
 
-    <section-footer [declaracionId]="declaracionId"></section-footer>
-  </mat-card>
-</div>
+  noProperty() {
+    this.saveInfo({ ninguno: true });
+  }
+
+  openSnackBar(message: string, action: string = null) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
+  }
+
+  presentSuccessAlert() {
+    this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Operación exitosa',
+        message: 'Se han guardado tus cambios',
+        trueText: 'Aceptar',
+      },
+    });
+  }
+
+  removeItem(index: number) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Eliminar elemento',
+        message: '¿Está seguro de eliminar este elemento?',
+        trueText: 'Eliminar',
+        falseText: 'Cancelar',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
+
+        let array : any =[];
+        array = this.deleteValoresDeclarante(bienInmueble);
+        let valores = array;
+
+        const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+
+        this.saveInfo({
+          bienInmueble,
+          aclaracionesObservaciones,
+          valores,
+        });
+      }
+    });
+  }
+
+  async saveInfo(form: BienesInmuebles) {
+    try {
+      const declaracion = {
+        bienesInmuebles: form,
+      };
+
+      const { data } = await this.apollo
+        .mutate<DeclaracionOutput>({
+          mutation: bienesInmueblesMutation,
+          variables: {
+            id: this.declaracionId,
+            declaracion,
+          },
+        })
+        .toPromise();
+
+      this.editMode = false;
+      if (data.declaracion.bienesInmuebles) {
+        this.setupForm(data.declaracion.bienesInmuebles);
+      }
+      this.presentSuccessAlert();
+    } catch (error) {
+      console.log(error);
+      this.openSnackBar('ERROR: No se guardaron los cambios', 'Aceptar');
+    }
+  }
+
+  tipoDomicilioChanged(value: any) {
+    this.tipoDomicilio = value;
+
+    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const bienInbueble = this.bienesInmueblesForm.get('bienInmueble');
+
+    const notSelected = bienInbueble.get(notSelectedType);
+
+    notSelected.disable();
+    notSelected.reset();
+
+    bienInbueble.get(selectedType).enable();
+  }
+
+
+  saveItem() {
+    let bienInmueble = [...this.bienInmueble];
+    const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+    const newItem = this.bienesInmueblesForm.value.bienInmueble;
+
+    const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    let valores = [...this.valores];
+    let bandera = false;
+
+    if (this.editIndex === null) {
+      bienInmueble = [...bienInmueble, newItem];
+      if (valorTitular.titular.clave === "DEC") {
+        const valor = this.saveValoresDeclarante();
+        valores = [...valores, valor];
+      }
+    } else {
+      bienInmueble[this.editIndex] = newItem;
+      bandera = true;
+    }
+
+
+    this.isLoading = true;
+
+    if (bandera){
+      let array : any =[];
+      array = this.updateValoresDeclarante(bienInmueble);
+      valores = array;
+    }
+
+    this.saveInfo({
+      bienInmueble,
+      aclaracionesObservaciones,
+      valores,
+    });
+
+    this.isLoading = false;
+  }
+
+  saveValoresDeclarante() {
+
+    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
+    let valor = {
+      "indice": indice,
+      "superficieConstruccion": newItem.superficieConstruccion.valor,
+      "superficieTerreno": newItem.superficieTerreno.valor,
+      "valorAdquisicion": newItem.valorAdquisicion.valor,
+      "formaAdquisicion": newItem.formaAdquisicion.clave,
+    };
+    return valor;
+  }
+
+  deleteValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular[0].clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
+        };
+        valores.push(valor);
+      }
+    }
+    return valores;
+  }
+
+  updateValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular.clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
+        };
+        valores.push(valor);
+      }
+    }
+    return valores;
+  }
+
+  setEditMode() {
+    this.bienesInmueblesForm.reset();
+    this.editMode = true;
+    this.editIndex = null;
+  }
+
+  setSelectedOptions() {
+    const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
+
+    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
+
+    if (tipoInmueble) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.tipoInmueble')
+        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+    }
+    if (titular) {
+      this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+    }
+    if (formaAdquisicion) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.formaAdquisicion')
+        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+    }
+
+    if (relacion) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.transmisor.relacion')
+        .setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+    }
+  }
+
+  setupForm(bienesInmuebles: BienesInmuebles) {
+    this.bienInmueble = bienesInmuebles.bienInmueble;
+    this.valores = bienesInmuebles.valores;
+
+    const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
+
+    if (bienesInmuebles.ninguno) {
+      this.bienesInmueblesForm.get('ninguno').patchValue(true);
+    }
+
+    if (aclaraciones) {
+      this.bienesInmueblesForm.get('aclaracionesObservaciones').setValue(aclaraciones);
+      this.toggleAclaraciones(true);
+    }
+  }
+
+  toggleAclaraciones(value: boolean) {
+    const aclaraciones = this.bienesInmueblesForm.get('aclaracionesObservaciones');
+    if (value) {
+      aclaraciones.enable();
+    } else {
+      aclaraciones.disable();
+      aclaraciones.reset();
+    }
+    this.aclaraciones = value;
+  }
+}

@@ -26,6 +26,7 @@ import { Catalogo, DeclaracionOutput, Prestamo, PrestamoComodato } from '@models
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -50,7 +51,7 @@ export class PrestamosTercerosComponent implements OnInit {
   estadosCatalogo = Estados;
   municipiosCatalogo = Municipios;
   parentescoRelacionCatalogo = ParentescoRelacion;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoBien: string;
   tipoDomicilio: string;
@@ -148,6 +149,7 @@ export class PrestamosTercerosComponent implements OnInit {
     this.prestamoComodatoForm = this.formBuilder.group({
       ninguno: [false],
       prestamo: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoBien: this.formBuilder.group({
           inmueble: this.formBuilder.group({
             tipoInmueble: ['', Validators.required],

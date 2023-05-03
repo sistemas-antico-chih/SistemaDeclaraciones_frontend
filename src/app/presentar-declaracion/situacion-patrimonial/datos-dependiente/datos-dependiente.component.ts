@@ -26,6 +26,7 @@ import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-dependiente';
 import { findOption } from '@utils/utils';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -58,7 +59,7 @@ export class DatosDependienteComponent implements OnInit {
   paisesCatalogo = Paises;
   parentescoRelacionCatalogo = ParentescoRelacion;
   sectorCatalogo = Sector;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio: string = null;
 
@@ -125,6 +126,7 @@ export class DatosDependienteComponent implements OnInit {
     this.datosDependientesEconomicosForm = this.formBuilder.group({
       ninguno: [false],
       dependienteEconomico: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         segundoApellido: [null, [Validators.pattern(/^\S.*\S$/)]],

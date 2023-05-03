@@ -301,12 +301,24 @@
     <!-- Formulario -->
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosParejaForm" [ngClass]="{ hidden: !editMode }">
       <mat-divider></mat-divider>
-
+      <p>Datos de la Pareja</p>
+      <!-- Datos -->
+      <div class="grid-3-col grid-margin">
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de Operacion</mat-label>
+          <mat-icon matPrefix>beenhere</mat-icon>
+          <mat-select formControlName="tipoOperacion" required>
+            <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+              {{ tipoOperacion | replace: '_':' ' }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div class="padding-agregar">
         <!-- Agregar Pareja -->
         <!-- Datos pareja -->
         <div class="">
-          <h2>Agregar pareja</h2>
+          <h2>Datos de la Pareja</h2>
           <div class="grid-3-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
               <mat-label>Nombre(s)</mat-label>

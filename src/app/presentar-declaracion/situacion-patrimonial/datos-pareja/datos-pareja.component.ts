@@ -24,6 +24,7 @@ import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json'
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -52,7 +53,7 @@ export class DatosParejaComponent implements OnInit {
   monedasCatalogo = Monedas;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
-
+  tipoOperacionCatalogo = TipoOperacion;
   pareja: DatosPareja = null;
 
   tipoDeclaracion: string = null;
@@ -123,6 +124,7 @@ export class DatosParejaComponent implements OnInit {
 
   createForm() {
     this.datosParejaForm = this.formBuilder.group({
+      tipoOperacion: [null, [Validators.required]],
       ninguno: [false],
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],

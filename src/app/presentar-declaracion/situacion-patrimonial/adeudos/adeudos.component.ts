@@ -20,7 +20,7 @@ import ValorConformeA from '@static/catalogos/valorConformeA.json';
 import Extranjero from '@static/catalogos/extranjero.json';
 import Paises from '@static/catalogos/paises.json';
 import Monedas from '@static/catalogos/monedas.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/adeudos';
 
 import { findOption } from '@utils/utils';
@@ -39,7 +39,7 @@ export class AdeudosComponent implements OnInit {
   editIndex: number = null;
   adeudo: Adeudo[] = [];
   isLoading = false;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoAdeudoCatalogo = TipoAdeudo;
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
@@ -99,6 +99,7 @@ export class AdeudosComponent implements OnInit {
     this.adeudosPasivosForm = this.formBuilder.group({
       ninguno: [false],
       adeudo: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         titular: [[], Validators.required],
         tipoAdeudo: [null, Validators.required],
         numeroCuentaContrato: ['', [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
