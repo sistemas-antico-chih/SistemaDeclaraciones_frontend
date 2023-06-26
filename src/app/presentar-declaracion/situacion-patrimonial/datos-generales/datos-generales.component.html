@@ -22,7 +22,7 @@
 
     <div class="grid-3-col">
       <mat-form-field appearance="fill">
-        <mat-label>Año del ejercicio</mat-label>
+        <mat-label>Año de la declaración</mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
         <input
           [errorStateMatcher]="errorMatcher"
@@ -45,7 +45,7 @@
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Primer Apellido</mat-label>
           <mat-icon matPrefix>person</mat-icon>
-          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="primerApellido"  readonly/>
+          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="primerApellido" readonly/>
         </mat-form-field>
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Segundo Apellido</mat-label>
