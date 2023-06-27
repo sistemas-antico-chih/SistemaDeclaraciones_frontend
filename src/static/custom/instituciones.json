@@ -27,7 +27,7 @@
     "ente_publico": "MUNICIPIO DE AQUILES SERDÁN",
     "clave": "MUN_AQS",
     "servidor_publico_recibe": {
-      "nombre": "C. RICARO LUJÁN TERRAZAS",
+      "nombre": "LIC. LUIS GREGORIO GUERRA LÓPEZ",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -163,7 +163,7 @@
     "ente_publico": "MUNICIPIO DE DR. BELISARIO DOMÍNGUEZ",
     "clave": "MUN_BEL",
     "servidor_publico_recibe": {
-      "nombre": "C. ANA CECILIA ESTRADA OLIVAS",
+      "nombre": "C. PAOLA RODRÍGUEZ CEPEDA",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -211,7 +211,7 @@
     "ente_publico": "MUNICIPIO DE GUADALUPE",
     "clave": "MUN_GPE",
     "servidor_publico_recibe": {
-      "nombre": "C. AVIMAEL CHÁVEZ GARAY",
+      "nombre": "C. ABIMAEL CHÁVEZ GARAY",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -355,7 +355,7 @@
     "ente_publico": "MUNICIPIO DE MEOQUI",
     "clave": "MUN_MEQ",
     "servidor_publico_recibe": {
-      "nombre": "C. RICARDO LUJÁN TERRAZAS",
+      "nombre": "ING. OSMAR AARÓN NERI GONZÁLEZ",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
