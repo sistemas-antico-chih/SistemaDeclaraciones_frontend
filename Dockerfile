@@ -7,6 +7,7 @@ WORKDIR /build
 # RUN npm install
 
 COPY . ./
+ENV NODE_OPTIONS="--openssl-legacy-provider"
 RUN npm install npm@6.14.15
 RUN npm run build --prod
 
