@@ -10,6 +10,7 @@ import { AuthenticationService } from '../authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import InstitucionesCatalogo from '@static/custom/instituciones.json';
+import { validadores } from '../signup/signup.validador';
 
 const log = new Logger('Signup');
 
@@ -107,9 +108,9 @@ export class SignupComponent implements OnInit, OnDestroy {
         ],
       ],
       curp: [
-        // '',
-        this.curpValida,
+         '',
         [
+          validadores.validarCURP,
           Validators.required,
           //Validators.pattern(
            // /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
@@ -135,7 +136,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   //Función para validar una CURP
   curpValida(curp: any) {
     //console.log(this.signupForm.curp.value);
-    console.log(curp);
     var re = /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
       validado = curp.match(re);
 
