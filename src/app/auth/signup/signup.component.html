@@ -121,7 +121,6 @@
             />
             <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             <mat-error *ngIf="signupForm.controls.curp.invalid && signupForm.controls.curp.touched">
-              {{console.log("probando")}}
               <span translate>CURP requerido</span>
             </mat-error>
           </mat-form-field>
