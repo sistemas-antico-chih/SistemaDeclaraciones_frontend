@@ -31,9 +31,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   //console
   console = console;
 
-  console.log("1ss");
-
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -95,9 +92,6 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
   }
 
-  console.log("2ss");
-
-
   private createForm() {
     this.signupForm = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -136,8 +130,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       institucion: [{ disabled: true, value: null }, [Validators.required]],
     });
   }
-
-  console.log("ss");
 
   //Función para validar una CURP
   curpValida(curp: any) {
