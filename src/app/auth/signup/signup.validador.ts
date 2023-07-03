@@ -5,9 +5,9 @@ export class validadores {
     console.log(curp);  
 
 
-  if (curp == "JUAS820710HCHRRL04" )
+  /*if (curp == "JUAS820710HCHRRL04" )
     return false;
-
+*/
   return ({validarCURP: true}); //Validado
   }
 }

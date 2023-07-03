@@ -132,7 +132,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
   }
 
-  modelChangeFn(e:any) {
+ /* modelChangeFn(e:any) {
     this.signupForm.curp = e;
-  }
+  }*/
 }
