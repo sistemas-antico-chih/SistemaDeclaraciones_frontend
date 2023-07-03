@@ -118,8 +118,11 @@
               required
               #input_curp
               maxlength="18"
-              (ngModelChange)="modelChangeFn($event)">
+              name = "curp"
+              [ngModel]="curp"
+              (ngModelChange)="modelChangeFn($event)"
             />
+            <p>{{ curp }}</p>
             <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             <mat-error *ngIf="signupForm.controls.curp.invalid && signupForm.controls.curp.touched">
               <span translate>CURP no válido</span>
