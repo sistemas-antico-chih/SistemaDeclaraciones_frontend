@@ -2,11 +2,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 export class validadores {
   static validarCURP(fc: FormBuilder){
-    var re = /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
-    validado = fc.curp.match(re);
-
-  if (!validado)  //Coincide con el formato general?
-    return false;
 
   //Validar que coincida el dígito verificador
   function digitoVerificador(curp17: any) {
