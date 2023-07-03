@@ -131,7 +131,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       institucion: [{ disabled: true, value: null }, [Validators.required]],
     });
   }
-
+  
+  curp = 'World';
   modelChangeFn(e: any) {
     this.curp = e;
   }
