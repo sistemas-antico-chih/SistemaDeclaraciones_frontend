@@ -20,7 +20,7 @@ export class validadores {
     if (lngDigito == 10) return 0;
     return lngDigito;
   }
-
+  console.log("exito");
   console.log(validado);
   if (validado[2] != digitoVerificador(validado[1]))
     return false;
