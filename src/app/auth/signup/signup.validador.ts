@@ -4,7 +4,7 @@ export function validarCURP(control: FormControl) {
     console.log(control.value);
     let curp = control.value;
     if (curp = "JUAS820710HCHRRL02") {
-        return "curpValido";
+        return {validarCURP:true};
     }
     return null;
 }
