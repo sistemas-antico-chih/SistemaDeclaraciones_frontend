@@ -119,8 +119,6 @@
               #input_curp
               maxlength="18"
               name = "curp"
-              [ngModel]="curp"
-              (ngModelChange)="modelChangeFn($event)"
             />
             <p>{{ curp }}</p>
             <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
