@@ -2,12 +2,14 @@ import { FormGroup, FormBuilder, FormControl, AbstractControl, ValidationErrors,
 
 export function validarCURP(curp: FormControl): ValidatorFn {
     return (curp: AbstractControl): ValidationErrors | null => {
+        console.log("llegando")
+        //var re = /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
+          //  validado = curp.match(re);
 
-        var re = /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
-            validado = curp.match(re);
+        //if (!validado)  //Coincide con el formato general?
+            //return false;
 
-        if (!validado)  //Coincide con el formato general?
-            return false;
+            return { 'myCustomError': 'This value is invalid' } 
 
         //Validar que coincida el dígito verificador
         function digitoVerificador(curp17: any) {
@@ -22,7 +24,7 @@ export function validarCURP(curp: FormControl): ValidatorFn {
             return lngDigito;
         }
 
-        if (validado[2] != digitoVerificador(validado[1]))
+        //if (validado[2] != digitoVerificador(validado[1]))
             return false;
 
         return { 'myCustomError': 'This value is invalid' } //
