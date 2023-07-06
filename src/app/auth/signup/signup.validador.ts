@@ -4,9 +4,9 @@ export function validarCURP(control: FormControl) {
     console.log(control.value);
     let curp = control.value;
     if (curp = "JUAS820710HCHRRL02") {
-        return {validarCURP:true};
+        return null;
     }
-    return null;
+    return {'validarCURP':true}
 }
 /*export function ageRangeValidator(min: number, max: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
