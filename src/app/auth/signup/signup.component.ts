@@ -10,7 +10,7 @@ import { AuthenticationService } from '../authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import InstitucionesCatalogo from '@static/custom/instituciones.json';
-import { validadores } from '../signup/signup.validador';
+import { ageRangeValidator } from '../signup/signup.validador';
 
 const log = new Logger('Signup');
 
@@ -121,9 +121,10 @@ export class SignupComponent implements OnInit, OnDestroy {
         [
           //validadores.validarCURP,
           Validators.required,
-          Validators.pattern(
+          ageRangeValidator(7, 20),
+          /*Validators.pattern(
             /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
-          ),
+          ),*/
         ],
       ],updatedOn: 'change',
       rfc: [
