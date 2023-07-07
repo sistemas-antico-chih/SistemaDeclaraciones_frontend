@@ -10,8 +10,6 @@ import { AuthenticationService } from '../authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import InstitucionesCatalogo from '@static/custom/instituciones.json';
-import { validarCURP } from '../signup/signup.validador';
-//import { ageRangeValidator } from '../signup/signup.validador';
 
 const log = new Logger('Signup');
 
@@ -21,7 +19,6 @@ const log = new Logger('Signup');
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-
 export class SignupComponent implements OnInit, OnDestroy {
   version: string | null = environment.version;
   error: string | undefined;
@@ -29,14 +26,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   institucionesCatalogo = InstitucionesCatalogo;
-
-    
-  curp = '';
-  modelChangeFn(e: any) {
-    this.curp = e;
-  }
-
-  //console
 
   constructor(
     private router: Router,
@@ -51,9 +40,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
-  ngOnDestroy() { }
+  ngOnDestroy() {}
 
   signup() {
     this.isLoading = true;
@@ -66,7 +55,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       };
     }
 
-    
     const signup$ = this.authenticationService.signup(signupForm);
     signup$
       .pipe(
@@ -99,9 +87,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       duration: 3000,
     });
   }
-  /*get email() {
-    return this.signupForm.controls['curp'];
-  }*/
 
   private createForm() {
     this.signupForm = this.formBuilder.group({
@@ -118,17 +103,14 @@ export class SignupComponent implements OnInit, OnDestroy {
         ],
       ],
       curp: [
-         '',
+        '',
         [
-          //validadores.validarCURP,
           Validators.required,
-          //validarCURP
-          //ageRangeValidator(7, 20),
           Validators.pattern(
             /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
           ),
         ],
-      ],updatedOn: 'change',
+      ],
       rfc: [
         '',
         [
