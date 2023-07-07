@@ -1,12 +1,13 @@
 import { AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 
 export function validarCURP(control: FormControl) {
-    console.log(control.value);
+    //console.log(control.value);
     let curp = control.value;
-    if (curp = "JUAS820710HCHRRL02") {
-        return null;
+    if (curp !== "JUAS820710HCHRRL02") {
+        console.log(curp);
+        return { 'validarCURP': true };
     }
-    return {'validarCURP':true}
+    return null
 }
 /*export function ageRangeValidator(min: number, max: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
