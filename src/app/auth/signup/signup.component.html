@@ -118,12 +118,10 @@
               required
               #input_curp
               maxlength="18"
-              name = "curp"
             />
-            <!--<p>{{ curp }}</p>-->
             <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             <mat-error *ngIf="signupForm.controls.curp.invalid && signupForm.controls.curp.touched">
-              <span translate>CURP no válido</span>
+              <span translate>CURP requerido</span>
             </mat-error>
           </mat-form-field>
 
