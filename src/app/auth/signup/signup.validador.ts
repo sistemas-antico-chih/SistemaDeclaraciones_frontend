@@ -28,65 +28,46 @@ export function validarCURP(control: FormControl) {
 
     //return true; //Validado
     return null;
-
-    /*
-    if (curp === "JUAS820710HCHRRL08") {
-        console.log(curp);
-        return null;
-    }
-    return { 'validarCURP': true };
-    */
-}
-/*export function ageRangeValidator(min: number, max: number): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-        if (control.value !== undefined && (isNaN(control.value) || control.value < min || control.value > max)) {
-            return { 'ageRange': true };
-        }
-        return null;
-    };
-}*/
-
-//Función para validar una CURP
-/*function curpValida(curp) {
-    var re = /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
-        validado = curp.match(re);
-
-    if (!validado)  //Coincide con el formato general?
-        return false;
-
-    //Validar que coincida el dígito verificador
-    function digitoVerificador(curp17) {
-        //Fuente https://consultas.curp.gob.mx/CurpSP/
-        var diccionario  = "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
-            lngSuma      = 0.0,
-            lngDigito    = 0.0;
-        for(var i=0; i<17; i++)
-            lngSuma = lngSuma + diccionario.indexOf(curp17.charAt(i)) * (18 - i);
-        lngDigito = 10 - lngSuma % 10;
-        if (lngDigito == 10) return 0;
-        return lngDigito;
-    }
-
-    if (validado[2] != digitoVerificador(validado[1]))
-        return false;
-
-    return true; //Validado
 }
 
+export function validarRFC(control: FormControl, aceptarGenerico=true) {
+    //console.log(control.value);
+    let rfc = control.value.toUpperCase();
+    const re       = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
+    var   validado = rfc.match(re);
 
-//Handler para el evento cuando cambia el input
-//Lleva la CURP a mayúsculas para validarlo
-function validarInput(input) {
-    var curp = input.value.toUpperCase(),
-        resultado = document.getElementById("resultado"),
-        valido = "No válido";
+    if (!validado)  //Coincide con el formato general del regex?
+        return false;
 
-    if (curpValida(curp)) { // ⬅️ Acá se comprueba
-        valido = "Válido";
-        resultado.classList.add("ok");
-    } else {
-        resultado.classList.remove("ok");
-    }
+    //Separar el dígito verificador del resto del RFC
+    const digitoVerificador = validado.pop(),
+          rfcSinDigito      = validado.slice(1).join(''),
+          len               = rfcSinDigito.length,
 
-    resultado.innerText = "CURP: " + curp + "\nFormato: " + valido;
-}*/
+    //Obtener el digito esperado
+          diccionario       = "0123456789ABCDEFGHIJKLMN&OPQRSTUVWXYZ Ñ",
+          indice            = len + 1;
+    var   suma,
+          digitoEsperado;
+
+    if (len == 12) suma = 0
+    else suma = 481; //Ajuste para persona moral
+
+    for(var i=0; i<len; i++)
+        suma += diccionario.indexOf(rfcSinDigito.charAt(i)) * (indice - i);
+    digitoEsperado = 11 - suma % 11;
+    if (digitoEsperado == 11) digitoEsperado = 0;
+    else if (digitoEsperado == 10) digitoEsperado = "A";
+
+    //El dígito verificador coincide con el esperado?
+    // o es un RFC Genérico (ventas a público general)?
+    if ((digitoVerificador != digitoEsperado)
+     && (!aceptarGenerico || rfcSinDigito + digitoVerificador != "XAXX010101000"))
+        //return false;
+        return { 'validarRFC': true };
+    else if (!aceptarGenerico && rfcSinDigito + digitoVerificador == "XEXX010101000")
+        //return false;
+        return { 'validarRFC': true };
+    //return rfcSinDigito + digitoVerificador;
+    return null; 
+}   
