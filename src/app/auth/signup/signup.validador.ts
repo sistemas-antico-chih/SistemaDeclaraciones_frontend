@@ -38,7 +38,7 @@ function curpValida(curp2: string) {
 }*/
 
 
-if (curp === "JUAS820710HCHRRL02") {
+if (curp === "JUAS820710HCHRRL08") {
     return null;
 }
 return { 'validarCURP': true };
