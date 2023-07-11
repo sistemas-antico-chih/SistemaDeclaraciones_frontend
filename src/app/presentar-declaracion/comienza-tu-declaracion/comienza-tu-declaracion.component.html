@@ -25,32 +25,21 @@
     </ul>
     <mat-divider></mat-divider>
 
-    <div>
-      <h1 mat-dialog-title>Artículo</h1>
-      <div mat-dialog-content>
-          <div style="display: flex;flex-direction: column; margin:1rem auto; max-width: 600px; padding: 1rem;">
-  
-              <mat-form-field>
-                  <input matInput [(ngModel)]="data.codigo" type="number" placeholder="Ingrese código">
-              </mat-form-field>
-  
-              <mat-form-field>
-                  <input matInput [(ngModel)]="data.descripcion" type="text" placeholder="Ingrese descripción">
-              </mat-form-field>
-  
-              <mat-form-field>
-                  <input matInput [(ngModel)]="data.precio" type="number" placeholder="Ingrese precio">
-              </mat-form-field>
-  
-          </div>
-      </div>
-      <div mat-dialog-actions>
-          <button mat-button (click)="cancelar()">Cancelar</button>
-          <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Confirmar</button>
-      </div>
-  </div>
-
-  <button mat-raised-button (click)="abrirDialogo()">Agregar artículo</button>
+    <ol>
+      <li>
+        <mat-form-field>
+          <mat-label>What's your name?</mat-label>
+          <input matInput [(ngModel)]="name">
+        </mat-form-field>
+      </li>
+      <li>
+        <button mat-raised-button (click)="openDialog()">Pick one</button>
+      </li>
+      <li *ngIf="animal">
+        You chose: <em>{{animal}}</em>
+      </li>
+    </ol>
+    
 
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
       <mat-card class="info" fxFlex="30" fxLayout="column">
