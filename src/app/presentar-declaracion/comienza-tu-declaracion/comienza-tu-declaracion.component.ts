@@ -9,7 +9,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 export class ComienzaTuDeclaracionComponent implements OnInit {
   //constructor() {}
 
-  //ngOnInit(): void {}
+  ngOnInit(): void {}
   constructor(private dialog: MatDialog) { }
   openDialog() {
 
