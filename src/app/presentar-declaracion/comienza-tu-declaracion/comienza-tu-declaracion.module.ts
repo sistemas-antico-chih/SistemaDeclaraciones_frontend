@@ -9,7 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
-import { MaterialModule } from '@app/material.module';
+//import { MatDialogModule  } from '@app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { ComienzaTuDeclaracionRoutingModule } from './comienza-tu-declaracion-routing';
@@ -18,16 +18,16 @@ import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.compon
 @NgModule({
   declarations: [ComienzaTuDeclaracionComponent],
   imports: [
-    CommonModule,
-    CoreModule,
-    SharedModule,
-    FlexLayoutModule,
-    MaterialModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
     MatButtonModule,
     NgIf,
+    MatDialogModule,
+    CommonModule,
+    CoreModule,
+    SharedModule,
+    FlexLayoutModule,
     ComienzaTuDeclaracionRoutingModule,
   ],
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MaterialModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {MatDialogModule , MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 export interface DialogData {
@@ -19,7 +19,7 @@ export class DialogOverviewExample {
   animal: string;
   name: string;
 
-  constructor(public dialog: MaterialModule) {}
+  constructor(public dialog: MatDialogModule ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
