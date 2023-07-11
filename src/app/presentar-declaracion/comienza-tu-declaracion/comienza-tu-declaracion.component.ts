@@ -6,16 +6,18 @@ import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
   styleUrls: ['./comienza-tu-declaracion.component.scss'],
 })
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+
 
 export class DialogOverviewExample {
   animal: string;
