@@ -28,7 +28,6 @@ import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.compon
     FormsModule,
     MatButtonModule,
     NgIf,
-    MatDialogModule,
     ComienzaTuDeclaracionRoutingModule,
   ],
 })
