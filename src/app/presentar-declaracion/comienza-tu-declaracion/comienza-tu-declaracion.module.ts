@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
@@ -17,6 +18,12 @@ import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.compon
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    NgIf,
+    MatDialogModule,
     ComienzaTuDeclaracionRoutingModule,
   ],
 })
