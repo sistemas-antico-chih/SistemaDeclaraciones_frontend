@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 
+
 @Component({
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
