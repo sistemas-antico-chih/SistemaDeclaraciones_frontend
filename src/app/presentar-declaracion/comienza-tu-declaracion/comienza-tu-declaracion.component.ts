@@ -1,10 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-import {NgIf} from '@angular/common';
-import {MatButtonModule} from '@angular/material/button';
-import {FormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 
 export interface DialogData {
   animal: string;
