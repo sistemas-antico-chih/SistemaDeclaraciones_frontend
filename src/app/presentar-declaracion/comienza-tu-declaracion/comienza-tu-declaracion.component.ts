@@ -9,7 +9,7 @@ import {MatButtonModule} from '@angular/material/button'
   styleUrls: ['./comienza-tu-declaracion.component.scss'],
 })
 
-export class ComienzaTuDeclaracionComponent implements OnInit {
+export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
 
   //ngOnInit(): void {}
