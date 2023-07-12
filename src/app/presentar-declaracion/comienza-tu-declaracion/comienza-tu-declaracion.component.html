@@ -25,15 +25,9 @@
     </ul>
     <mat-divider></mat-divider>
 
-    <div class="card flex justify-content-center">
-      <button (click)="showDialog()" icon="pi pi-external-link" label="Show"></button>
-      <mat-dialog-content header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
-        <div class="flex py-2 justify-content-center">
-          <mat-select appendTo="body" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City"
-            optionLabel="name"></mat-select>
-        </div>
-      </mat-dialog-content>-->
-    </div>
+
+    <button mat-raised-button (click)="openDialog('0ms', '0ms')">Open dialog without animation</button>
+    <button mat-raised-button (click)="openDialog('3000ms', '1500ms')">Open dialog slowly</button>
     <h1 mat-dialog-title>Delete file</h1>
     <div mat-dialog-content>
       Would you like to delete cat.jpeg?
@@ -42,6 +36,7 @@
       <button mat-button mat-dialog-close>No</button>
       <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
     </div>
+
 
 
 
