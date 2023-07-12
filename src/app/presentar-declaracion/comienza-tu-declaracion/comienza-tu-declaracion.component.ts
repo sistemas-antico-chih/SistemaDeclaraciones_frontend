@@ -3,11 +3,6 @@ import {MatDialog, MatDialogRef, MatDialogModule} from '@angular/material/dialog
 import {MatButtonModule} from '@angular/material/button'
 
 
-interface City {
-  name: string;
-  code: string;
-}
-
 @Component({
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
