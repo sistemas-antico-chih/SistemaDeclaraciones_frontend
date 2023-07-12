@@ -27,11 +27,11 @@
 
     <div class="card flex justify-content-center">
       <button (click)="showDialog()" icon="pi pi-external-link" label="Show"></button>
-      <mat-dialog header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
+      <mat-dialog-content header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
           <div class="flex py-2 justify-content-center">
               <mat-select appendTo="body" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></mat-select>
           </div>
-      </mat-dialog>-->
+      </mat-dialog-content>-->
   </div>
 
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
