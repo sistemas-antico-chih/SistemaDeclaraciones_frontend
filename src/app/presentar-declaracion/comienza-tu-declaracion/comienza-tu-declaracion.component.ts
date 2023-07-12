@@ -7,7 +7,6 @@ import {MatButtonModule} from '@angular/material/button'
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
   styleUrls: ['./comienza-tu-declaracion.component.scss'],
-  standalone: true,
   imports: [MatButtonModule, MatDialogModule],
 })
 
@@ -25,7 +24,6 @@ export class ComienzaTuDeclaracionComponent  {
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
   templateUrl: 'comienza-tu-declaracion.dialog.html',
-  standalone: true,
   imports: [MatDialogModule, MatButtonModule],
 })
 
