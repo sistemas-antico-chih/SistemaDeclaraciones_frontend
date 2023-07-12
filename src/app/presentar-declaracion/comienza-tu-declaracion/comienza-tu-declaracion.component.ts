@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-//import { MatDialog } from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button'
 
 
 interface City {
@@ -11,29 +12,12 @@ interface City {
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
   styleUrls: ['./comienza-tu-declaracion.component.scss'],
+  imports: [MatButtonModule, MatDialogModule],
 })
 
 export class ComienzaTuDeclaracionComponent implements OnInit {
   //constructor() {}
 
   //ngOnInit(): void {}
-  cities: City[] | undefined;
-
-    selectedCity: City | undefined;
-
-    visible: boolean = false;
-
-    ngOnInit() { 
-        this.cities = [
-            {name: 'New York', code: 'NY'},
-            {name: 'Rome', code: 'RM'},
-            {name: 'London', code: 'LDN'},
-            {name: 'Istanbul', code: 'IST'},
-            {name: 'Paris', code: 'PRS'}
-        ];
-    }
-
-    showDialog() {
-        this.visible = true;
-    }
+  constructor(public dialogRef: MatDialogRef<ComienzaTuDeclaracionComponent>) {}
 }
