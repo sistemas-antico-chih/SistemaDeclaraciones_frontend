@@ -12,7 +12,6 @@ interface City {
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
   styleUrls: ['./comienza-tu-declaracion.component.scss'],
-  imports: [MatButtonModule, MatDialogModule],
 })
 
 export class ComienzaTuDeclaracionComponent implements OnInit {
