@@ -13,6 +13,17 @@ export class ComienzaTuDeclaracionComponent implements OnInit {
   //constructor() {}
 
   //ngOnInit(): void {}
-  constructor(public dialogRef: MatDialogRef<ComienzaTuDeclaracionComponent>) {}
+  constructor(public dialog: MatDialog) {}
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DialogAnimationsExampleDialog, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
   ngOnInit(): void {}
+}
+export class DialogAnimationsExampleDialog {
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
 }
