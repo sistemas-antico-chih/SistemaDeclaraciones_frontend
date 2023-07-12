@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
@@ -17,7 +18,7 @@ import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.compon
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
-    ComienzaTuDeclaracionRoutingModule,
+    ComienzaTuDeclaracionRoutingModule
   ],
 })
 export class ComienzaTuDeclaracionModule {}

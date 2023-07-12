@@ -7,6 +7,8 @@ import {MatButtonModule} from '@angular/material/button'
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
   styleUrls: ['./comienza-tu-declaracion.component.scss'],
+  standalone: true,
+  imports: [MatButtonModule, MatDialogModule],
 })
 
 export class ComienzaTuDeclaracionComponent  {
@@ -15,14 +17,9 @@ export class ComienzaTuDeclaracionComponent  {
   //ngOnInit(): void {}
   constructor(public dialog: MatDialog) {}
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
+  openDialog() {
+    this.dialog.open(DialogElementsExampleDialog);
   }
-  ngOnInit(): void {}
 }
 
 @Component({
@@ -32,6 +29,4 @@ export class ComienzaTuDeclaracionComponent  {
   imports: [MatDialogModule, MatButtonModule],
 })
 
-export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
-}
+export class DialogElementsExampleDialog {}
