@@ -26,12 +26,12 @@
     <mat-divider></mat-divider>
 
     <div class="card flex justify-content-center">
-      <p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button>
-      <p-dialog header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
+      <button (click)="showDialog()" icon="pi pi-external-link" label="Show"></button>
+      <dialog header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
           <div class="flex py-2 justify-content-center">
-              <p-dropdown appendTo="body" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
+              <dropdown appendTo="body" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></dropdown>
           </div>
-      </p-dialog>
+      </dialog>
   </div>
 
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
