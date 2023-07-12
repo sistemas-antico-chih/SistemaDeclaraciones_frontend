@@ -25,21 +25,14 @@
     </ul>
     <mat-divider></mat-divider>
 
-    <!--
-      <li>
-        <mat-form-field>
-          <mat-label>What's your name?</mat-label>
-          <input matInput [(ngModel)]="name">
-        </mat-form-field>
-      </li>
-      <li>
-        <button mat-raised-button (click)="openDialog()">Pick one</button>
-      </li>
-      <li *ngIf="animal">
-        You chose: <em>{{animal}}</em>
-      </li>
-    </ol>
-    -->
+    <div class="card flex justify-content-center">
+      <p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button>
+      <p-dialog header="Header" [(visible)]="visible" [style]="{ width: '50vw' }">
+          <div class="flex py-2 justify-content-center">
+              <p-dropdown appendTo="body" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
+          </div>
+      </p-dialog>
+  </div>
 
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
       <mat-card class="info" fxFlex="30" fxLayout="column">
