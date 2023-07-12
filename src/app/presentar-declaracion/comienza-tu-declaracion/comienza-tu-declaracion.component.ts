@@ -24,6 +24,14 @@ export class ComienzaTuDeclaracionComponent implements OnInit {
   }
   ngOnInit(): void {}
 }
+
+@Component({
+  selector: 'comienza-tu-declaracion.dialog',
+  templateUrl: 'comienza-tu-declaracion.dialog.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule],
+})
+
 export class DialogAnimationsExampleDialog {
   constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
 }
