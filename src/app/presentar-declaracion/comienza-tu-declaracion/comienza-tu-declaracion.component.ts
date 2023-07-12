@@ -14,4 +14,5 @@ export class ComienzaTuDeclaracionComponent implements OnInit {
 
   //ngOnInit(): void {}
   constructor(public dialogRef: MatDialogRef<ComienzaTuDeclaracionComponent>) {}
+  ngOnInit(): void {}
 }
