@@ -12,11 +12,15 @@ import {MatButtonModule} from '@angular/material/button'
 export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
 
-  //ngOnInit(): void {}
+  ngOnInit(){
+    console.log("component has been initialized!");
+  }
+  //: void {}
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
     this.dialog.open(DialogElementsExampleDialog);
+    console.log("component has been initialized!");
   }
 }
 
