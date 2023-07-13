@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button'
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
