@@ -8,12 +8,13 @@ import { MaterialModule } from '@app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { ComienzaTuDeclaracionRoutingModule } from './comienza-tu-declaracion-routing';
 import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.component';
 
 @NgModule({
-  declarations: [ComienzaTuDeclaracionComponent],
+  declarations: [ComienzaTuDeclaracionComponent, DialogElementsExampleDialog],
   imports: [
     CommonModule,
     CoreModule,
@@ -21,7 +22,9 @@ import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.compon
     FlexLayoutModule,
     MaterialModule,
     MatCardModule,
-    ComienzaTuDeclaracionRoutingModule
+    ComienzaTuDeclaracionRoutingModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
+
 export class ComienzaTuDeclaracionModule {}
