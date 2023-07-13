@@ -13,14 +13,15 @@ export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
 
   ngOnInit(){
-    console.log("component has been initialized!");
+    this.dialog.open(DialogElementsExampleDialog);
+    console.log("component has been initialized! ngOnInit");
   }
   //: void {}
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
     this.dialog.open(DialogElementsExampleDialog);
-    console.log("component has been initialized!");
+    console.log("component has been initialized! openDialog");
   }
 }
 
