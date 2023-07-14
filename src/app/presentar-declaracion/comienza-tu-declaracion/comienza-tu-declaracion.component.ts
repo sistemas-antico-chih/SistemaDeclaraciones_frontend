@@ -22,6 +22,10 @@ export class ComienzaTuDeclaracionComponent  {
     this.dialog.open(DialogElementsExampleDialog);
     console.log("component has been initialized! openDialog");
   }
+
+  close(): void {
+    this.dialog.close();
+  }
 }
 
 @Component({
