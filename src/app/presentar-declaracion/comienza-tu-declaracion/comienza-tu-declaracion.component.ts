@@ -23,7 +23,7 @@ export class ComienzaTuDeclaracionComponent  {
     console.log("component has been initialized! openDialog");
   }
 
-  close(): void {
+  closeDialog(): void {
     this.dialog.close();
   }
 }
