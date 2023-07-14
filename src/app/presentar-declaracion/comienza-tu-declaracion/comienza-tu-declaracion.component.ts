@@ -25,7 +25,7 @@ export class ComienzaTuDeclaracionComponent  {
 
   /*closeDialog(): void {
     this.dialog.close();
-  }*/
+  }*/ 
 }
 
 @Component({
@@ -33,4 +33,8 @@ export class ComienzaTuDeclaracionComponent  {
   templateUrl: 'comienza-tu-declaracion.dialog.html',
 })
 
-export class DialogElementsExampleDialog {}
+export class DialogElementsExampleDialog {
+   closeDialog(): void {
+    this.dialog.close();
+  }
+}
