@@ -34,7 +34,7 @@ export class ComienzaTuDeclaracionComponent  {
 })
 
 export class DialogElementsExampleDialog {
-  closeDialog(): void {
+  /*closeDialog(): void {
     this.dialog.close();
-  }
+  }*/
 }
