@@ -12,14 +12,14 @@ import { DialogElementsExampleDialog } from '../comienza-tu-declaracion/comienza
 export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
   ngOnInit(){
-    
   }
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    let dialogRef = this.dialog.open(DialogElementsExampleDialog,{
+    this.dialog.open();
+    /*let dialogRef = this.dialog.open(DialogElementsExampleDialog,{
       closeOnNavigation: true,
-    });
+    });*/
     console.log("component has been initialized! openDialog");
     //dialogRef.close();
   }

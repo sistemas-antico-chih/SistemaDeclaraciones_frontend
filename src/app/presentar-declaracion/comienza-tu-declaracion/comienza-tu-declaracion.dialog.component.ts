@@ -4,10 +4,12 @@ import { ComienzaTuDeclaracionComponent } from '../comienza-tu-declaracion/comie
 
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
-  templateUrl: 'comienza-tu-declaracion.dialog.html',
+  templateUrl: 'comienza-tu-declaracion.dialog.component.html',
+  styleUrls: ['./comienza-tu-declaracion.component.scss'],
 })
 
 export class DialogElementsExampleDialog {
+  constructor(public dialog: MatDialog) {}
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
   }
