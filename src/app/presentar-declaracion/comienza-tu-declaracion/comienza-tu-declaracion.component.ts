@@ -41,6 +41,10 @@ export class ComienzaTuDeclaracionComponent  {
 })
 
 export class DialogElementsExampleDialog {
+  ngOnInit(){
+
+    console.log("component has been initialized! ngOnInitxxxxx");
+  }
   /*closeDialog(): void {
     this.dialog.close();
   }*/
