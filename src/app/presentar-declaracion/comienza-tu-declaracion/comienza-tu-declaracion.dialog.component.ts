@@ -13,10 +13,10 @@ export class DialogElementsExampleDialog {
 
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
-    this.dialog.close(DialogElementsExampleDialog)
+   // this.dialog.close(DialogElementsExampleDialog)
   }
   closeDialog() {
     console.log("component has been initialized! closeDialog");
-    this.dialog.close(DialogElementsExampleDialog)
+    //this.dialog.close(DialogElementsExampleDialog)
   }
 }
