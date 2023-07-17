@@ -16,7 +16,7 @@ export class ComienzaTuDeclaracionComponent  {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    this.dialog.open();
+    this.dialog.open(DialogElementsExampleDialog);
     /*let dialogRef = this.dialog.open(DialogElementsExampleDialog,{
       closeOnNavigation: true,
     });*/

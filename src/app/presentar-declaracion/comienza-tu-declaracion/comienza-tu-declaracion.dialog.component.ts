@@ -4,7 +4,7 @@ import { ComienzaTuDeclaracionComponent } from '../comienza-tu-declaracion/comie
 
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
-  templateUrl: 'comienza-tu-declaracion.dialog.component.html',
+  templateUrl: './comienza-tu-declaracion.dialog.component.html',
   styleUrls: ['./comienza-tu-declaracion.component.scss'],
 })
 
