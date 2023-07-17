@@ -25,10 +25,14 @@ export class ComienzaTuDeclaracionComponent  {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    this.dialog.open(DialogElementsExampleDialog,{
+    let dialogRef = this.dialog.open(DialogElementsExampleDialog,{
       closeOnNavigation: true,
     });
     console.log("component has been initialized! openDialog");
+    dialogRef.afterClosed().subscribe(() => {
+      // received data from confirm-component
+      console.log("data");
+    })
    // this.dialog.closed();
   }
 
