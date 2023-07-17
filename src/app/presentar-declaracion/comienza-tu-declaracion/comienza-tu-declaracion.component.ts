@@ -24,8 +24,10 @@ export class ComienzaTuDeclaracionComponent  {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    this.dialog.open(DialogElementsExampleDialog);
-    console.log("component has been initialized! openDialog");
+    this.dialog.open(DialogElementsExampleDialog,{
+      closeOnNavigation: true,
+    });
+        console.log("component has been initialized! openDialog");
   }
 
   /*closeDialog(): void {
