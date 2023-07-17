@@ -14,7 +14,9 @@ export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
 
   ngOnInit(){
-    this.dialog.open(DialogElementsExampleDialog);
+    this.dialog.open(DialogElementsExampleDialog,{
+      closeOnNavigation: true,
+    });
 
     console.log("component has been initialized! ngOnInit");
   }
