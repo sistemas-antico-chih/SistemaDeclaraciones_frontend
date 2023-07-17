@@ -29,10 +29,11 @@ export class ComienzaTuDeclaracionComponent  {
       closeOnNavigation: true,
     });
     console.log("component has been initialized! openDialog");
-    dialogRef.close();
-   // this.dialog.closed();
+    this.dialog
+    .subscribe(()=>{
+      dialogRef.close();
+    })
   }
-
   /*closeDialog(): void {
     this.dialog.close();
   }*/ 
