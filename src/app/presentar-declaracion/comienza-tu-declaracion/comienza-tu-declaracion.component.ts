@@ -14,6 +14,7 @@ export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
 
   ngOnInit(){
+    
   /*  this.dialog.open(DialogElementsExampleDialog,{
       closeOnNavigation: true,
     });
@@ -27,11 +28,8 @@ export class ComienzaTuDeclaracionComponent  {
     this.dialog.open(DialogElementsExampleDialog,{
       closeOnNavigation: true,
     });
-    this.dialog.events().
-    subscribre(()=>{
-      this.dialog.close();
-    })
     console.log("component has been initialized! openDialog");
+    this.dialog.close();
   }
 
   /*closeDialog(): void {
