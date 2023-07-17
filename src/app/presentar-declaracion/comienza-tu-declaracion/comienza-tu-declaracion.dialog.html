@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Declaración a prsentar</h1>
 <!--<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>-->
 <div mat-dialog-actions>
-  <!--
+  
   <div class="contenedor">
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
       <mat-card class="info" fxFlex="30" fxLayout="column">
@@ -17,7 +17,7 @@
           <mat-checkbox color="primary" #inicialSimplificada>Declaración simplificada</mat-checkbox>
           <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary"
             [routerLink]="['/inicial/simplificada/situacion-patrimonial']">
-            [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()">
+           <!-- [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()">-->
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary"
@@ -68,6 +68,6 @@
       </mat-card>
     </div>
   </div>
-  -->
+  
   <button mat-button mat-dialog-close>Close</button>
 </div>

@@ -9,6 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class ComienzaTuDeclaracionComponent  {
+  contentTemplate: TemplateRef<any>;
+  this.router.events
+ .subscribe(() => {
+   dialogRef.close();
+ });
   //constructor() {}
 
   ngOnInit(){
