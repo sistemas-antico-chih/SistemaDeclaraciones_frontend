@@ -46,6 +46,9 @@ export class DialogElementsExampleDialog {
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
   }
+  constructor(public dialog: MatDialog) {}
+  closeDialog(): void {
+  this.dialog.close();
   /*closeDialog(): void {
     this.dialog.close();
   }*/
