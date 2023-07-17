@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogElementsExampleDialog } from '../comienza-tu-declaracion/comienza-tu-declaracion.dialog.component';
 
-
 @Component({
   selector: 'app-comienza-tu-declaracion',
   templateUrl: './comienza-tu-declaracion.component.html',
