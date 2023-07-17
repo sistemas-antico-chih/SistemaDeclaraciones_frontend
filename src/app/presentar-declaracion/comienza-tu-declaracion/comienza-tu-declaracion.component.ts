@@ -29,10 +29,7 @@ export class ComienzaTuDeclaracionComponent  {
       closeOnNavigation: true,
     });
     console.log("component has been initialized! openDialog");
-    dialogRef.afterClosed().subscribe(() => {
-      // received data from confirm-component
-      console.log("data");
-    })
+    dialogRef.close();
    // this.dialog.closed();
   }
 
