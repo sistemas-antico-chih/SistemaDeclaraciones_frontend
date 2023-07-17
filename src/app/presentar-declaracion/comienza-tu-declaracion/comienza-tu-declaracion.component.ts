@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -10,14 +10,12 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class ComienzaTuDeclaracionComponent  {
   contentTemplate: TemplateRef<any>;
-  this.router.events
- .subscribe(() => {
-   dialogRef.close();
- });
+
   //constructor() {}
 
   ngOnInit(){
     this.dialog.open(DialogElementsExampleDialog);
+
     console.log("component has been initialized! ngOnInit");
   }
   //: void {}
