@@ -29,7 +29,7 @@ export class ComienzaTuDeclaracionComponent  {
       closeOnNavigation: true,
     });
     console.log("component has been initialized! openDialog");
-    this.dialog.closed();
+   // this.dialog.closed();
   }
 
   /*closeDialog(): void {
