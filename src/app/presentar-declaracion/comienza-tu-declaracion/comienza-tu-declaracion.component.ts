@@ -9,19 +9,10 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class ComienzaTuDeclaracionComponent  {
-  contentTemplate: TemplateRef<any>;
-
   //constructor() {}
-
   ngOnInit(){
-    
-  /*  this.dialog.open(DialogElementsExampleDialog,{
-      closeOnNavigation: true,
-    });
 
-    console.log("component has been initialized! ngOnInit");*/
   }
-  //: void {}
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
@@ -30,13 +21,7 @@ export class ComienzaTuDeclaracionComponent  {
     });
     console.log("component has been initialized! openDialog");
     this.dialog.open()
-    .subscribe(()=>{
-      dialogRef.close();
-    })
   }
-  /*closeDialog(): void {
-    this.dialog.close();
-  }*/ 
 }
 
 @Component({
@@ -44,15 +29,13 @@ export class ComienzaTuDeclaracionComponent  {
   templateUrl: 'comienza-tu-declaracion.dialog.html',
 })
 
-export class DialogElementsExampleDialog {
+export class DialogElementsExampleDialog extends ComienzaTuDeclaracionComponent{
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
-  }
-  /*constructor(public dialog: MatDialog) {}
-  closeDialog(): void {
-  this.dialog.close();
-  }*/
-  /*closeDialog(): void {
+   let dialog = this.dialog.open(DialogElementsExampleDialog,{
+      closeOnNavigation: true,
+    });
     this.dialog.close();
-  }*/
+    
+  }
 }
