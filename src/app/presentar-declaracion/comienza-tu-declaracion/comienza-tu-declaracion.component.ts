@@ -10,19 +10,10 @@ import { DialogElementsExampleDialog } from '../comienza-tu-declaracion/comienza
 })
 
 export class ComienzaTuDeclaracionComponent  {
-  contentTemplate: TemplateRef<any>;
-
   //constructor() {}
-
   ngOnInit(){
     
-  /*  this.dialog.open(DialogElementsExampleDialog,{
-      closeOnNavigation: true,
-    });
-
-    console.log("component has been initialized! ngOnInit");*/
   }
-  //: void {}
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
@@ -33,14 +24,3 @@ export class ComienzaTuDeclaracionComponent  {
     //dialogRef.close();
   }
 }
-/*
-@Component({
-  selector: 'comienza-tu-declaracion.dialog',
-  templateUrl: 'comienza-tu-declaracion.dialog.html',
-})
-
-export class DialogElementsExampleDialog {
-  ngOnInit(){
-    console.log("component has been initialized! ngOnInitxxxxx");
-  }
-}*/
