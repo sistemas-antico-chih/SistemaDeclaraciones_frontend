@@ -49,6 +49,7 @@ export class DialogElementsExampleDialog {
   constructor(public dialog: MatDialog) {}
   closeDialog(): void {
   this.dialog.close();
+  }
   /*closeDialog(): void {
     this.dialog.close();
   }*/
