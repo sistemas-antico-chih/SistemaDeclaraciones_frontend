@@ -14,11 +14,11 @@ export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
 
   ngOnInit(){
-    this.dialog.open(DialogElementsExampleDialog,{
+  /*  this.dialog.open(DialogElementsExampleDialog,{
       closeOnNavigation: true,
     });
 
-    console.log("component has been initialized! ngOnInit");
+    console.log("component has been initialized! ngOnInit");*/
   }
   //: void {}
   constructor(public dialog: MatDialog) {}
@@ -27,7 +27,11 @@ export class ComienzaTuDeclaracionComponent  {
     this.dialog.open(DialogElementsExampleDialog,{
       closeOnNavigation: true,
     });
-        console.log("component has been initialized! openDialog");
+    this.dialog.events().
+    subscribre(()=>{
+      this.dialog.close();
+    })
+    console.log("component has been initialized! openDialog");
   }
 
   /*closeDialog(): void {
@@ -42,7 +46,6 @@ export class ComienzaTuDeclaracionComponent  {
 
 export class DialogElementsExampleDialog {
   ngOnInit(){
-
     console.log("component has been initialized! ngOnInitxxxxx");
   }
   /*closeDialog(): void {
