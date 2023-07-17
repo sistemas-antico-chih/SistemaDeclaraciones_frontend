@@ -12,7 +12,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { ComienzaTuDeclaracionRoutingModule } from './comienza-tu-declaracion-routing';
 import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.component';
-import { DialogElementsExampleDialog } from './comienza-tu-declaracion.component';
+import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.component';
 
 
 @NgModule({
