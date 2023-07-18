@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class DialogElementsExampleDialog {
-  //constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
@@ -17,6 +17,7 @@ export class DialogElementsExampleDialog {
   }
   closeDialog() {
     console.log("component has been initialized! closeDialog");
+    this.dialog.close(DialogElementsExampleDialog);
     //this.dialog.close(DialogElementsExampleDialog)
   }
 }
