@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 export class DialogElementsExampleDialog implements OnInit{
   //constructor(public dialog: MatDialog) {}
   constructor(
-    private dialog: MatDialogRef,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
