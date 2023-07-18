@@ -33,7 +33,13 @@ mat-card.info {
 }
 .presentar{
   color:white;
-  background-color:firebrick;
+  background-color:#d82804;
+  //background-color:firebrick;
+}
+.presentar:hover{
+  color:white;
+  background-color:#862713;
+  //background-color:firebrick;
 }
 .title {
   font-size: 20px;
