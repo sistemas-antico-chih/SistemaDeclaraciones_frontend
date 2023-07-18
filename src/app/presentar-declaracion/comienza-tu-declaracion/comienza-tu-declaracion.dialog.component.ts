@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class DialogElementsExampleDialog {
-  constructor(public dialog: MatDialog) {}
+  //constructor(public dialog: MatDialog) {}
 
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
