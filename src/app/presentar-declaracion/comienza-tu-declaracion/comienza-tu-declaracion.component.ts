@@ -14,7 +14,7 @@ export class ComienzaTuDeclaracionComponent  {
   }
  // constructor(public dialog: MatDialog) {}
  constructor(
-  private dialog: MatDialogRef,
+  private dialog: MatDialog,
   @Inject(MAT_DIALOG_DATA) public data: any
 ) {}
 
