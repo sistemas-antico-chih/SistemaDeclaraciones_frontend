@@ -17,7 +17,7 @@ export class DialogElementsExampleDialog {
   }
   closeDialog() {
     console.log("component has been initialized! closeDialog");
-    this.dialog.close(DialogElementsExampleDialog);
+    this.dialog.closed(DialogElementsExampleDialog);
     //this.dialog.close(DialogElementsExampleDialog)
   }
 }
