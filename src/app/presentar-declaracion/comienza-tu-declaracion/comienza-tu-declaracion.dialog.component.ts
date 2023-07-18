@@ -16,11 +16,9 @@ export class DialogElementsExampleDialog implements OnInit{
   ) {}
   
   ngOnInit(){
-    console.log("component has been initialized! ngOnInitxxxxx");
-   // this.dialog.close(DialogElementsExampleDialog)
+
   }
   closeDialog() {
-    console.log("component has been initialized! closeDialog");
-    this.dialogRef.close({ data: 'you confirmed' })
+    this.dialogRef.close({ data: '' })
   }
 }

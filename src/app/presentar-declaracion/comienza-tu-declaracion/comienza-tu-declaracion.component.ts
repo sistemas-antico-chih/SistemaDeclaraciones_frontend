@@ -19,11 +19,9 @@ export class ComienzaTuDeclaracionComponent  {
     let dialogRef = this.dialog.open(DialogElementsExampleDialog, {
       data: `Are you sure you want to delete?`
     })
-    console.log("component has been initialized! openDialog");
+    console.log("");
     dialogRef.afterClosed().subscribe((res: { data: any; }) => {
-      // received data from confirm-component
       console.log(res.data)
     })
-    //dialogRef.close();
   }
 }
