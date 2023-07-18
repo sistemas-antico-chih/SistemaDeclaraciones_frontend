@@ -21,7 +21,7 @@ export class DialogElementsExampleDialog implements OnInit{
   }
   closeDialog() {
     console.log("component has been initialized! closeDialog");
-    this.dialog.close(DialogElementsExampleDialog);
+   // this.dialog.close(DialogElementsExampleDialog);
     //this.dialog.close(DialogElementsExampleDialog)
   }
 }

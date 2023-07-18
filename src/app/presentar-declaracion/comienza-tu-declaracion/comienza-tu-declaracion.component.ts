@@ -1,5 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.component';
 
 @Component({
@@ -12,7 +12,11 @@ export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
   ngOnInit(){
   }
-  constructor(public dialog: MatDialog) {}
+ // constructor(public dialog: MatDialog) {}
+ constructor(
+  private dialog: MatDialogRef,
+  @Inject(MAT_DIALOG_DATA) public data: any
+) {}
 
   openDialog() {
     this.dialog.open(DialogElementsExampleDialog);
@@ -24,5 +28,6 @@ export class ComienzaTuDeclaracionComponent  {
   }
   closeDialog(){
     console.log("llega");
+    this.dialog.close()
   }
 }
