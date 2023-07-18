@@ -28,6 +28,6 @@ export class ComienzaTuDeclaracionComponent  {
   }
   closeDialog(){
     console.log("llega");
-    this.dialog.close()
+    //this.dialog.close()
   }
 }
