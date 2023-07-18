@@ -26,8 +26,8 @@ export class ComienzaTuDeclaracionComponent  {
     console.log("component has been initialized! openDialog");
     //dialogRef.close();
   }
-  closeDialog(){
+  /*closeDialog(){
     console.log("llega");
     //this.dialog.close()
-  }
+  }*/
 }
