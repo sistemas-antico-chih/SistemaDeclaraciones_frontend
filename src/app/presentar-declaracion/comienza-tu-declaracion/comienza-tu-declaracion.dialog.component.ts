@@ -10,18 +10,17 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 
 export class DialogElementsExampleDialog implements OnInit{
   //constructor(public dialog: MatDialog) {}
-  /*constructor(
-    private dialog: MatDialog,
+  constructor(
+    private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-  */
+  
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
    // this.dialog.close(DialogElementsExampleDialog)
   }
   closeDialog() {
     console.log("component has been initialized! closeDialog");
-   // this.dialog.close(DialogElementsExampleDialog);
-    //this.dialog.close(DialogElementsExampleDialog)
+    this.dialogRef.close({ data: 'you confirmed' })
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialog  } from '@angular/material/dialog';
 import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.component';
 
 @Component({
@@ -13,21 +13,17 @@ export class ComienzaTuDeclaracionComponent  {
   ngOnInit(){
   }
  constructor(public dialog: MatDialog) {}
- /*constructor(
-  private dialog: MatDialog,
-  @Inject(MAT_DIALOG_DATA) public data: any
-) {}*/
 
   openDialog() {
-    this.dialog.open(DialogElementsExampleDialog);
-    /*let dialogRef = this.dialog.open(DialogElementsExampleDialog,{
-      closeOnNavigation: true,
-    });*/
+    //this.dialogRef.open(DialogElementsExampleDialog);
+    let dialogRef = this.dialog.open(DialogElementsExampleDialog, {
+      data: `Are you sure you want to delete?`
+    })
     console.log("component has been initialized! openDialog");
+    dialogRef.afterClosed().subscribe((res: { data: any; }) => {
+      // received data from confirm-component
+      console.log(res.data)
+    })
     //dialogRef.close();
-  }
-  closeDialog(){
-    console.log("llega");
-    //this.dialog.close()
   }
 }
