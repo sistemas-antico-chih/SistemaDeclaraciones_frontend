@@ -8,12 +8,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   //styleUrls: ['./comienza-tu-declaracion.component.scss'],
 })
 
-export class DialogElementsExampleDialog {
+export class DialogElementsExampleDialog implements OnInit{
+  //constructor(public dialog: MatDialog) {}
   constructor(
-    //public dialog: MatDialog
     private dialog: MatDialogRef,
     @Inject(MAT_DIALOG_DATA) public data: any
-    ) {}
+  ) {}
 
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
