@@ -12,11 +12,11 @@ export class ComienzaTuDeclaracionComponent  {
   //constructor() {}
   ngOnInit(){
   }
- // constructor(public dialog: MatDialog) {}
- constructor(
+ constructor(public dialog: MatDialog) {}
+ /*constructor(
   private dialog: MatDialog,
   @Inject(MAT_DIALOG_DATA) public data: any
-) {}
+) {}*/
 
   openDialog() {
     this.dialog.open(DialogElementsExampleDialog);
