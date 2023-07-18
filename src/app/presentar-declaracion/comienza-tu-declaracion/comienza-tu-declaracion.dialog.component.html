@@ -8,7 +8,7 @@
       Fecha de inicio
       Año
       Nivel de encargo más alto:
-      
+
     </div>
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
       <mat-card class="info" fxFlex="30" fxLayout="column">
@@ -28,7 +28,7 @@
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/inicial/situacion-patrimonial']">
+            [routerLink]="['/inicial/situacion-patrimonial']" (click)="closeDialog()">
             Comenzar declaración
           </button>
         </mat-card-actions>
@@ -44,11 +44,11 @@
         <mat-card-actions>
           <mat-checkbox color="primary" #modificacionSimplificada>Declaración simplificada</mat-checkbox>
           <button *ngIf="modificacionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']">
+            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()">
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!modificacionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/modificacion/situacion-patrimonial']">
+            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()">
             Comenzar declaración
           </button>
         </mat-card-actions>
@@ -64,11 +64,11 @@
         <mat-card-actions>
           <mat-checkbox color="primary" #conclusionSimplificada>Declaración simplificada</mat-checkbox>
           <button *ngIf="conclusionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/conclusion/simplificada/situacion-patrimonial']">
+            [routerLink]="['/conclusion/simplificada/situacion-patrimonial']" (click)="closeDialog()">
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!conclusionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/conclusion/situacion-patrimonial']">
+            [routerLink]="['/conclusion/situacion-patrimonial']" (click)="closeDialog()">
             Comenzar declaración
           </button>
         </mat-card-actions>
