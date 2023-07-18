@@ -1,5 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 //import { ComienzaTuDeclaracionComponent } from '../comienza-tu-declaracion/comienza-tu-declaracion.component'
 
 @Component({
@@ -9,7 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class DialogElementsExampleDialog {
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    //public dialog: MatDialog
+    private dialog: MatDialogRef,
+    @Inject(MAT_DIALOG_DATA) public data: any
+    ) {}
 
   ngOnInit(){
     console.log("component has been initialized! ngOnInitxxxxx");
