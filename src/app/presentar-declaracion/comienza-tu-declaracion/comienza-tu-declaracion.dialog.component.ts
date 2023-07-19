@@ -1,12 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { datosEmpleoCargoComisionQuery, declaracionMutation } from '@api/declaracion';
+import { Catalogo, DatosDialog } from '@models/declaracion';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 
 
 import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
+import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
@@ -16,13 +17,16 @@ import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
 
 export class DialogElementsExampleDialog implements OnInit{
   catalogoPuestos=catalogoPuestos;
+  datosComponenteForm: FormGroup;
 
   //constructor(public dialog: MatDialog) {}
   constructor(
+    private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
+    
   ) {
-    this.createForm();
+    //this.createForm();
   }
   
   ngOnInit(){
@@ -33,6 +37,13 @@ export class DialogElementsExampleDialog implements OnInit{
   }
 
   createForm() {
+    this.datosComponenteForm = this.formBuilder.group({
+    })
     //catalogoPuestos: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+  }
+
+  fillForm(datosComponenteForm: DatosDialog | undefined) {
+    this.datosComponenteForm.patchValue(datosComponenteForm || {});
+
   }
 }
