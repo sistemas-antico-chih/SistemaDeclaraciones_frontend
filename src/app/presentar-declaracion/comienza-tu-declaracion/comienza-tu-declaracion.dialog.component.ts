@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators  } from '@angular/forms';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
-import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import entePublico from '@static/catalogos/entePublico.json';
 
 @Component({
@@ -26,7 +26,7 @@ export class DialogElementsExampleDialog implements OnInit{
   errorMatcher = new DeclarationErrorStateMatcher();
 
   entePublicoCatalogo = entePublico;
-  nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
+  tipoDeclaracionCatalogo = tipoDeclaracion;
   ambitoPublicoCatalogo = AmbitoPublico;
   isLoading = false;
 
@@ -48,7 +48,12 @@ export class DialogElementsExampleDialog implements OnInit{
   }
   
   ngOnInit(){
-
+    this.datosDialogForm = this.formBuilder.group({
+      nivelOrdenGobierno: [null, [Validators.required]],
+      ambitoPublico: [null, [Validators.required]],
+      nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      fechaTomaPosesion: [null, [Validators.required]],
+    });
   }
   closeDialog() {
     this.dialogRef.close({ data: '' })

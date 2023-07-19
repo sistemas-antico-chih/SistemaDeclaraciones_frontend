@@ -5,13 +5,13 @@
   <div class="contenedor">
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosDialogForm">
       <!-- Primer bloque -->
-      <div>Nivel algo
+      <div>
         <div class="grid-2-col">
           <mat-form-field appearance="fill">
-            <mat-label>Nivel/Orden de Gobierno </mat-label>
+            <mat-label>Tipo de declaración </mat-label>
             <mat-icon matPrefix>star</mat-icon>
-            <mat-select formControlName="nivelOrdenGobierno" required>
-              <mat-option *ngFor="let orden of nivelOrdenGobiernoCatalogo" [value]="orden">
+            <mat-select formControlName="tipoDeclaracion" required>
+              <mat-option *ngFor="let tipo of tipoDeclaracionCatalogo" [value]="tipo">
                 {{ orden | replace: '_':' ' }}
               </mat-option>
             </mat-select>
@@ -54,6 +54,7 @@
       </div>
     </form>
 
+    
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
       <mat-card class="info" fxFlex="30" fxLayout="column">
         <mat-card-content fxFlex="grow">
@@ -68,7 +69,6 @@
           <mat-checkbox color="primary" #inicialSimplificada>Declaración simplificada</mat-checkbox>
           <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary"
            [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()"> 
-           <!-- [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()">-->
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary"
@@ -118,6 +118,7 @@
         </mat-card-actions>
       </mat-card>
     </div>
+    
   </div>
   
   <button mat-button mat-dialog-close>Close</button>
