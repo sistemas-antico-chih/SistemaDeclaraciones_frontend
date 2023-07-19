@@ -13,7 +13,7 @@ import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
   templateUrl: './comienza-tu-declaracion.dialog.component.html',
-  styleUrls: ['./comienza-tu-declaracion.component.scss'],
+  //styleUrls: ['./comienza-tu-declaracion.component.scss'],
 })
 
 export class DialogElementsExampleDialog implements OnInit{
