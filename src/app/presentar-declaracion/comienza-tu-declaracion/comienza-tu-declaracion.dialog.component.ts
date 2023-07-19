@@ -9,7 +9,7 @@ import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
 })
 
 export class DialogElementsExampleDialog implements OnInit{
-  catPuestos=catalogoPuestos;
+  catalogoPuestos=catalogoPuestos;
 
   //constructor(public dialog: MatDialog) {}
   constructor(
