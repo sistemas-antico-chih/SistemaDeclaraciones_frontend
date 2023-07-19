@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
-//import { ComienzaTuDeclaracionComponent } from '../comienza-tu-declaracion/comienza-tu-declaracion.component'
+import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
 
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
@@ -9,6 +9,8 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 })
 
 export class DialogElementsExampleDialog implements OnInit{
+  catPuestos=catalogoPuestos;
+
   //constructor(public dialog: MatDialog) {}
   constructor(
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog  } from '@angular/material/dialog';
 import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.component';
-import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
 
 
 @Component({
@@ -11,7 +10,6 @@ import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
 })
 
 export class ComienzaTuDeclaracionComponent  {
-  catPuestos=catalogoPuestos;
   ngOnInit(){
   }
  constructor(public dialog: MatDialog) {}
