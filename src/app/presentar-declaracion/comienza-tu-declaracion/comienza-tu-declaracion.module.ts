@@ -7,6 +7,7 @@ import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
+import { Validators } from '@angular/forms';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
@@ -25,7 +26,8 @@ import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.co
     MaterialModule,
     MatCardModule,
     ReactiveFormsModule,
-    FormsModule, 
+    FormsModule,
+    Validators, 
     ComienzaTuDeclaracionRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

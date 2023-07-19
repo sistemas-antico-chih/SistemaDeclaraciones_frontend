@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 //import { Catalogo, DatosDialog } from '@models/declaracion';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule  } from '@angular/forms';
+import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.component';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 
@@ -56,7 +57,11 @@ export class DialogElementsExampleDialog implements OnInit{
 
   createForm() {
     this.datosDialogForm = this.formBuilder.group({
-    })
+      nivelOrdenGobierno: [null, [Validators.required]],
+      ambitoPublico: [null, [Validators.required]],
+      nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      fechaTomaPosesion: [null, [Validators.required]],
+    });
     //catalogoPuestos: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
   }
 
