@@ -65,10 +65,10 @@
 
       <div class="boton text-right">
         <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-        <button mat-raised-button color="primary" type="button" (click)="datosEmpleoCargoComisionForm.reset()">
+        <button mat-raised-button color="primary" type="button" (click)="datosDialogForm.reset()">
           LIMPIAR FORMULARIO
         </button>
-        <button mat-raised-button color="primary" [disabled]="datosEmpleoCargoComisionForm.invalid || isLoading">
+        <button mat-raised-button color="primary" [disabled]="datosDialogForm.invalid || isLoading">
           GUARDAR CAMBIOS
         </button>
       </div>
