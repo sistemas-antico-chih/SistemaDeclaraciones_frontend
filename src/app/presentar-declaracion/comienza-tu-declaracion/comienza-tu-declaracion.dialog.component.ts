@@ -9,6 +9,9 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 
 import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
+import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import entePublico from '@static/catalogos/entePublico.json';
 
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
@@ -22,6 +25,11 @@ export class DialogElementsExampleDialog implements OnInit{
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  entePublicoCatalogo = entePublico;
+  nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
+  ambitoPublicoCatalogo = AmbitoPublico;
+  isLoading = false;
 
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
