@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Catalogo, DatosDialog } from '@models/declaracion';
+import { Router } from '@angular/router';
+//import { Catalogo, DatosDialog } from '@models/declaracion';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -22,6 +23,7 @@ export class DialogElementsExampleDialog implements OnInit{
   //constructor(public dialog: MatDialog) {}
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
     
