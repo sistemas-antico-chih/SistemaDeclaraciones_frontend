@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
@@ -24,6 +24,8 @@ import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.co
     FlexLayoutModule,
     MaterialModule,
     MatCardModule,
+    ReactiveFormsModule,
+    FormsModule, 
     ComienzaTuDeclaracionRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
