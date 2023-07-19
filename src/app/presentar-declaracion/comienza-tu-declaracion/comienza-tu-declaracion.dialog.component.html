@@ -3,11 +3,11 @@
 <div mat-dialog-actions>
   
   <div class="contenedor">
-    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosEmpleoCargoComisionForm">
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosDialogForm">
       <!-- Primer bloque -->
       <div>
         <div class="grid-2-col">
-          <mat-form-field matTooltip="{{ tooltipData.nivelOrdenGobierno }}" appearance="fill">
+          <mat-form-field appearance="fill">
             <mat-label>Nivel/Orden de Gobierno </mat-label>
             <mat-icon matPrefix>star</mat-icon>
             <mat-select formControlName="nivelOrdenGobierno" required>
@@ -16,7 +16,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field matTooltip="{{ tooltipData.ambitoPublico }}" appearance="fill">
+          <mat-form-field  appearance="fill">
             <mat-label>Ámbito Público</mat-label>
             <mat-icon matPrefix>aspect_ratio</mat-icon>
             <mat-select formControlName="ambitoPublico" required>
@@ -26,7 +26,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill">
+          <mat-form-field  appearance="fill">
             <mat-label>Nombre del Ente Público</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
             <mat-select formControlName="nombreEntePublico" required>
@@ -44,7 +44,7 @@
           </mat-form-field>
 
           <!--</div>-->
-          <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}" appearance="fill">
+          <mat-form-field  appearance="fill">
             <mat-label>Fecha de toma de posesión/conclusión</mat-label>
             <input
               [errorStateMatcher]="errorMatcher"
