@@ -5,7 +5,7 @@
   <div class="contenedor">
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosDialogForm">
       <!-- Primer bloque -->
-      <div>
+      <div>Nivel algo
         <div class="grid-2-col">
           <mat-form-field appearance="fill">
             <mat-label>Nivel/Orden de Gobierno </mat-label>
@@ -34,16 +34,7 @@
                 {{ entePublico.valor }}
               </mat-option>
             </mat-select>
-            <!-- <input
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              type="text"
-              formControlName="nombreEntePublico"
-              required
-            />-->
           </mat-form-field>
-
-          <!--</div>-->
           <mat-form-field  appearance="fill">
             <mat-label>Fecha de toma de posesión/conclusión</mat-label>
             <input
@@ -61,32 +52,8 @@
           </mat-form-field>
         </div>
       </div>
-
-
-      <div class="boton text-right">
-        <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-        <button mat-raised-button color="primary" type="button" (click)="datosDialogForm.reset()">
-          LIMPIAR FORMULARIO
-        </button>
-        <button mat-raised-button color="primary" [disabled]="datosDialogForm.invalid || isLoading">
-          GUARDAR CAMBIOS
-        </button>
-      </div>
     </form>
 
-    <div>
-      <p><span>Declaración</span></p>
-      Fecha de inicio
-      <p>Año</p>
-      <!--<mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill">-->
-        <mat-label>Nivel de encargo más alto:</mat-label>
-        <mat-icon matPrefix>dns</mat-icon>
-        <mat-select formControlName="nombrePuestos" required>
-          <mat-option *ngFor="let puesto of catalogoPuestos" [value]="catalogoPuestos.valor">
-            {{ catalogoPuestos.valor }}
-          </mat-option>
-        </mat-select>
-    </div>
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
       <mat-card class="info" fxFlex="30" fxLayout="column">
         <mat-card-content fxFlex="grow">
