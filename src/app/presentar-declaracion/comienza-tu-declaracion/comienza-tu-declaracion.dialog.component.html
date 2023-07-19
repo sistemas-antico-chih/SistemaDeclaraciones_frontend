@@ -7,7 +7,22 @@
       <p><span>Declaración</span></p>
       Fecha de inicio
       <p>Año</p>
-      <p>Nivel de encargo más alto:</p>
+      <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill">
+        <mat-label>Nivel de encargo más alto:</mat-label>
+        <mat-icon matPrefix>dns</mat-icon>
+        <mat-select formControlName="catalogoPuestos" required>
+          <mat-option *ngFor="let puestos of catalogoPuestos" [value]="calogoPuestos.valor">
+            {{ catalogoPuestos.valor }}
+          </mat-option>
+        </mat-select>
+        <!-- <input
+          [errorStateMatcher]="errorMatcher"
+          matInput
+          type="text"
+          formControlName="nombreEntePublico"
+          required
+        />-->
+      </mat-form-field>
 
     </div>
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
