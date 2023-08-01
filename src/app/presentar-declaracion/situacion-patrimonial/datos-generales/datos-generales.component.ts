@@ -87,7 +87,7 @@ export class DatosGeneralesComponent implements OnInit {
 
 
   createForm() {
-    this.anio_ejercicio = this.formBuilder.group({
+    this.anioEjercicioGroup = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo)]
     })
     this.datosGeneralesForm = this.formBuilder.group({
