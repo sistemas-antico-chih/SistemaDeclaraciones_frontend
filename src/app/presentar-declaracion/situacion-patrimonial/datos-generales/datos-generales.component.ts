@@ -173,7 +173,7 @@ export class DatosGeneralesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
+      this.anioEjercicioGroup.anio_ejercicio = data?.declaracion.anioEjercicio;
       //this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
     } catch (error) {
