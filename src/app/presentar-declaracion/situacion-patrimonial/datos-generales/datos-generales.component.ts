@@ -30,7 +30,10 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
-  anio_ejercicio: number = null;
+  anio_ejercicio: FormGroup;
+  //anio_ejercicio: number = null;
+
+
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -42,6 +45,9 @@ export class DatosGeneralesComponent implements OnInit {
   declaracionSimplificada = false;
   tipoDeclaracion: string = null;
   declaracionId: string = null;
+
+  minimo: number = 2020;
+  maximo: number = 2023;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
@@ -78,7 +84,12 @@ export class DatosGeneralesComponent implements OnInit {
     });
   }
 
+
+
   createForm() {
+    this.anio_ejercicio = this.formBuilder.group({
+      anio_ejercicio:['', Validators.min(minimo), Validators.max(maximo)]
+    })
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
       primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],

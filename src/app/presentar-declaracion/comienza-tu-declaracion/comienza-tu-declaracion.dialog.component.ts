@@ -39,7 +39,6 @@ export class DialogElementsExampleDialog implements OnInit{
   //constructor(public dialog: MatDialog) {}
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
     
