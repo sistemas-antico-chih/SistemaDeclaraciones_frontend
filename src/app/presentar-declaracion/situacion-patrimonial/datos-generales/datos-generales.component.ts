@@ -236,7 +236,8 @@ export class DatosGeneralesComponent implements OnInit {
 
       const declaracion = {
         datosGenerales: this.finalForm,
-        anioEjercicio: this.anio_ejercicio,
+        anioEjercicio: this.anioEjercicioGroup,
+        //anioEjercicio: this.anio_ejercicio,
       };
 
       const { errors } = await this.apollo
