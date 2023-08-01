@@ -18,7 +18,6 @@ interface VehiculoPrestamo {
 }
 
 interface TipoBienPrestamo {
-  tipoOperacion?: TipoOperacion;
   inmueble?: InmueblePrestamo;
   vehiculo?: VehiculoPrestamo;
 }
@@ -31,6 +30,7 @@ interface DuenoTitularPrestamo {
 }
 
 export interface Prestamo {
+  tipoOperacion?: TipoOperacion;
   tipoBien: TipoBienPrestamo;
   duenoTitular: DuenoTitularPrestamo;
 }
