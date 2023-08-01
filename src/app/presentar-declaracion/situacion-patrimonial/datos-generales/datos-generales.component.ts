@@ -30,7 +30,7 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
-  anio_ejercicio: FormGroup;
+  anioEjercicioGroup: FormGroup;
   //anio_ejercicio: number = null;
 
 
