@@ -253,7 +253,7 @@ export class DatosGeneralesComponent implements OnInit {
     try {
       this.isLoading = true;
       console.log("llega a saveInfo() " + this.anioEjercicioForm);
-      console.log("llega a saveInfo()22 " + this.anioEjercicioForm.anio_ejercicio);
+      console.log("llega a saveInfo()22s " + this.anioEjercicioForm.anio_ejercicio);
       const declaracion = {
         datosGenerales: this.finalForm,
         anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
