@@ -30,7 +30,7 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
-  anioEjercicioGroup: FormGroup;
+  anioEjercicioForm: FormGroup;
   anio_ejercicio: number = 2024;
 
 
@@ -85,7 +85,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
   
   createForm() {
-    this.anioEjercicioGroup = this.formBuilder.group({
+    this.anioEjercicioForm = this.formBuilder.group({
       anio_ejercicio:[null, Validators.min(this.minimo), Validators.max(this.maximo) ]
     })
     this.datosGeneralesForm = this.formBuilder.group({
@@ -142,6 +142,7 @@ export class DatosGeneralesComponent implements OnInit {
 
   fillForm(datosGenerales: DatosGenerales) {
     this.datosGeneralesForm.patchValue(datosGenerales || {});
+    this.anioEjercicioForm.patchValue(2025 || {});
 
     if (datosGenerales?.aclaracionesObservaciones) {
       this.toggleAclaraciones(true);
@@ -191,7 +192,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   get finalFormAnioEjercicio(){
-    const form = JSON.parse(JSON.stringify(this.anioEjercicioGroup.value)); // Deep copy
+    const form = JSON.parse(JSON.stringify(this.anioEjercicioForm.value)); // Deep copy
     return form;
   }
 
