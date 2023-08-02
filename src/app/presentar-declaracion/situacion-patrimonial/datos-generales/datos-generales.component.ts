@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
@@ -30,9 +30,11 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
-  anioEjercicioForm:  FormGroup;
-  anio_ejercicio: number = 2024;
-
+  //anioEjercicioForm:  FormGroup;
+  //anio_ejercicio: number = 2024;
+  anioEjercicioForm : any = new FormGroup({
+    anio_ejercicio : new FormControl(''),
+  });
 
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
@@ -85,6 +87,9 @@ export class DatosGeneralesComponent implements OnInit {
   }
   
   createForm() {
+    /*const anioEjercicioForm = new FormGroup({
+      anio_ejercicio : new FormControl(''),
+    });*/
     /*this.anioEjercicioForm = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
     });*/
@@ -155,9 +160,9 @@ export class DatosGeneralesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
-  fillFormAnio(anioEjercicio: number) {
+  /*fillFormAnio(anioEjercicio: number) {
     this.anioEjercicioForm.patchValue(2022 || 2028);
-  }
+  }*/
 
   async getUserInfo() {
     try {
@@ -174,16 +179,15 @@ export class DatosGeneralesComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-      console.log("llega a getUserInfo()");
+      console.log("llega a getUserInfo() "+data?.declaracion.anioEjercicio);
+      console.log("llega a getUserInfo() anio "+this.anioEjercicioForm.anio_ejercicio);
       console.log(this.finalFormAnioEjercicio);
       this.declaracionId = data?.declaracion._id;
-      //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
-      //this.anio_ejercicio = data?.declaracion.anioEjercicio;
-      console.log("llega aqui?");
       console.log(data?.declaracion.anioEjercicio);
       this.fillForm(data?.declaracion.datosGenerales);
       //const anioEjercicio = this.anioEjercicioForm.get(this.anio_ejercicio);
-      this.fillFormAnio = (data?.declaracion.anioEjercicio);  
+      this.anioEjercicioForm.anio_ejercicio = (data?.declaracion.anioEjercicio);  
+      console.log("llega a getUserInfo() anio2 "+this.anioEjercicioForm.anio_ejercicio);
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
