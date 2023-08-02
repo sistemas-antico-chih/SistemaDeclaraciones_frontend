@@ -154,10 +154,6 @@ export class DatosGeneralesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
-  fillFormAnio(anioEjercicio: number) {
-    this.datosGeneralesForm.patchValue(2025 || {});
-  }
-
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -178,7 +174,7 @@ export class DatosGeneralesComponent implements OnInit {
       //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
       //this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
-      this.fillFormAnio(data?.declaracion.anioEjercicio);
+      this.anioEjercicioForm = (data?.declaracion.anioEjercicio);
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
