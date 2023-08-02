@@ -84,24 +84,6 @@ export class DatosGeneralesComponent implements OnInit {
     });
   }
   
-  confirmSaveInfo2() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Guardar cambios',
-        message: '',
-        trueText: 'Guardar',
-        falseText: 'Cancelar',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.saveInfo();
-      }
-    });
-  }
-
-
   createForm() {
     this.anioEjercicioGroup = this.formBuilder.group({
       anio_ejercicio:[null, Validators.min(this.minimo), Validators.max(this.maximo) ]

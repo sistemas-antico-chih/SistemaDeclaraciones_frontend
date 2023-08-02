@@ -37,7 +37,7 @@
       </mat-form-field>
     </div>
     -->
-    <form (ngSubmit)="confirmSaveInfo2()" [formGroup]="anioEjercicioGroup">
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="anioEjercicioGroup">
       <div class="grid-3-col">
         <mat-form-field appearance="fill">
           <mat-label>Año de la declaración</mat-label>
@@ -45,7 +45,7 @@
           <input
             [errorStateMatcher]="errorMatcher"
             matInput type="number"
-            [formControlName="anio_ejercicio"
+            formControlName="anio_ejercicio"
             placeholder="{{ currentYear }}"
           />
         </mat-form-field>
