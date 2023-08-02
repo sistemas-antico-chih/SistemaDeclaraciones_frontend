@@ -85,9 +85,10 @@ export class DatosGeneralesComponent implements OnInit {
   }
   
   createForm() {
-    this.anioEjercicioForm = this.formBuilder.group({
+    /*this.anioEjercicioForm = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
-    })
+    });*/
+
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
       primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
