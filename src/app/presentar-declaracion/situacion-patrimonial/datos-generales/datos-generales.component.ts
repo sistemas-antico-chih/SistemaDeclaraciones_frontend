@@ -31,7 +31,7 @@ export class DatosGeneralesComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
   anioEjercicioGroup: FormGroup;
-  anio_ejercicio: number = null;
+  //anio_ejercicio: number = null;
 
 
 
@@ -87,9 +87,9 @@ export class DatosGeneralesComponent implements OnInit {
 
 
   createForm() {
-   /* this.anioEjercicioGroup = this.formBuilder.group({
+    this.anioEjercicioGroup = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo)]
-    })*/
+    })
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
       primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
@@ -173,7 +173,7 @@ export class DatosGeneralesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.anio_ejercicio = data?.declaracion.anioEjercicio;
+      this.anioEjercicioGroup.anio_ejercicio = data?.declaracion.anioEjercicio;
       //this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
     } catch (error) {
@@ -237,8 +237,8 @@ export class DatosGeneralesComponent implements OnInit {
 
       const declaracion = {
         datosGenerales: this.finalForm,
-        //anioEjercicio: this.anioEjercicioGroup,
-        anioEjercicio: this.anio_ejercicio,
+        anioEjercicio: this.anioEjercicioGroup.anio_ejercicio,
+        //anioEjercicio: this.anio_ejercicio,
       };
 
       const { errors } = await this.apollo
