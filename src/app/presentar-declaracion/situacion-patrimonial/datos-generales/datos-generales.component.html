@@ -20,7 +20,7 @@
       resaltados <span class="no-public-inline"></span> no serán públicos.
     </p>
 
-    
+    <!--
     <div class="grid-3-col">
         <mat-form-field appearance="fill">
         <mat-label>Año de la declaración</mat-label>
@@ -36,8 +36,8 @@
         />
       </mat-form-field>
     </div>
-    
-   <!-- <form (ngSubmit)="confirmSaveInfo()" [formGroup]="anioEjercicioGroup">
+    -->
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="anioEjercicioGroup">
       <div class="grid-3-col">
         <mat-form-field appearance="fill">
           <mat-label>Año de la declaración</mat-label>
@@ -50,7 +50,8 @@
           />
         </mat-form-field>
       </div>
-    </form>-->
+    </form>
+    
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm">
       <div class="grid-3-col grid-margin">
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">

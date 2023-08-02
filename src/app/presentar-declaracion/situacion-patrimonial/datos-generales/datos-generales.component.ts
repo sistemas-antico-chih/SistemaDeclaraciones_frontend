@@ -30,8 +30,8 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
-  //anioEjercicioGroup: FormGroup;
-  anio_ejercicio: number = null;
+  anioEjercicioGroup: FormGroup;
+  //anio_ejercicio: number = null;
 
 
 
@@ -87,9 +87,9 @@ export class DatosGeneralesComponent implements OnInit {
 
 
   createForm() {
-    /*this.anioEjercicioGroup = this.formBuilder.group({
-      anio_ejercicio:[null, ]
-    })*/
+    this.anioEjercicioGroup = this.formBuilder.group({
+      anio_ejercicio:[null, Validators.min(this.minimo), Validators.max(this.maximo) ]
+    })
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
       primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
@@ -173,8 +173,8 @@ export class DatosGeneralesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
-      this.anio_ejercicio = data?.declaracion.anioEjercicio;
+      this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
+      //this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
     } catch (error) {
       console.log(error);
@@ -189,6 +189,11 @@ export class DatosGeneralesComponent implements OnInit {
       form.regimenMatrimonial.valor = this.otroRegimenMatrimonial.nativeElement.value;
     }
 
+    return form;
+  }
+
+  get finalFormAnioEjercicio(){
+    const form = JSON.parse(JSON.stringify(this.anioEjercicioGroup.value)); // Deep copy
     return form;
   }
 
@@ -237,8 +242,8 @@ export class DatosGeneralesComponent implements OnInit {
 
       const declaracion = {
         datosGenerales: this.finalForm,
-        //anioEjercicio: this.anioEjercicioGroup,
-        anioEjercicio: this.anio_ejercicio,
+        anioEjercicio: this.finalFormAnioEjercicio,
+        //anioEjercicio: this.anio_ejercicio,
       };
 
       const { errors } = await this.apollo
