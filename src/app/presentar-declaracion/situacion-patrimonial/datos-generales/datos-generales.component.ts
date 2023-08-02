@@ -32,10 +32,10 @@ export class DatosGeneralesComponent implements OnInit {
   currentYear = new Date().getFullYear();
   minimo: number = 2020;
   maximo: number = 2023;
-  anio_ejercicio!: number;
+  anio_ejercicio: number = null;
   //anioEjercicioForm:  FormGroup;
   //anio_ejercicio: number = 2024;
-  /*anioEjercicioForm : any = new FormGroup({
+  /*anioEjercicioForm! : any = new FormGroup({
     anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
   });*/
 
@@ -182,7 +182,8 @@ export class DatosGeneralesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
+      this.fillForm(data?.declaracion.datosGenerales);
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
