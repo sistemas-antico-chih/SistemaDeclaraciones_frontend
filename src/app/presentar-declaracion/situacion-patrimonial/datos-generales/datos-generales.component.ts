@@ -90,9 +90,9 @@ export class DatosGeneralesComponent implements OnInit {
     /*const anioEjercicioForm = new FormGroup({
       anio_ejercicio : new FormControl(''),
     });*/
-    /*this.anioEjercicioForm = this.formBuilder.group({
+    this.anioEjercicioForm = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
-    });*/
+    });
 
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
@@ -252,11 +252,11 @@ export class DatosGeneralesComponent implements OnInit {
   async saveInfo() {
     try {
       this.isLoading = true;
-      console.log("llega a saveInfo()");
-      console.log(this.finalFormAnioEjercicio);
+      console.log("llega a saveInfo() " + this.anioEjercicioForm);
+      console.log("llega a saveInfo()22 " + this.anioEjercicioForm.anio_ejercicio);
       const declaracion = {
         datosGenerales: this.finalForm,
-        anioEjercicio: this.finalFormAnioEjercicio,
+        anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
         //anioEjercicio: this.anio_ejercicio,
       };
 
