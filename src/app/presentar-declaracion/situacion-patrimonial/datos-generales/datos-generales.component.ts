@@ -30,10 +30,13 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
+  minimo: number = 2020;
+  maximo: number = 2023;
+
   //anioEjercicioForm:  FormGroup;
   //anio_ejercicio: number = 2024;
   anioEjercicioForm : any = new FormGroup({
-    anio_ejercicio : new FormControl(''),
+    anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
   });
 
 
@@ -48,8 +51,6 @@ export class DatosGeneralesComponent implements OnInit {
   tipoDeclaracion: string = null;
   declaracionId: string = null;
 
-  minimo: number = 2020;
-  maximo: number = 2023;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
@@ -90,9 +91,9 @@ export class DatosGeneralesComponent implements OnInit {
     /*const anioEjercicioForm = new FormGroup({
       anio_ejercicio : new FormControl(''),
     });*/
-    this.anioEjercicioForm = this.formBuilder.group({
+    /*this.anioEjercicioForm = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
-    });
+    });*/
 
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
