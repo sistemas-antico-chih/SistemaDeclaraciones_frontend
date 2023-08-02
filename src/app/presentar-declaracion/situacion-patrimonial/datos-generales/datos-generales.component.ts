@@ -30,7 +30,7 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
-  anioEjercicioForm:  FormGroup | null= null;
+  anioEjercicioForm!:  FormGroup;
   anio_ejercicio: number = 2024;
 
 
@@ -174,7 +174,8 @@ export class DatosGeneralesComponent implements OnInit {
       //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
       //this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
-      this.anioEjercicioForm = (data?.declaracion.anioEjercicio);
+      console.log(data?.declaracion.anioEjercicio);
+      //this.anioEjercicioForm = (data?.declaracion.anioEjercicio);
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
