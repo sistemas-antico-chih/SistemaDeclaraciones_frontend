@@ -174,6 +174,7 @@ export class DatosGeneralesComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
       //this.anio_ejercicio = data?.declaracion.anioEjercicio;
+      console.log("llega aqui?");
       console.log(data?.declaracion.anioEjercicio);
       this.fillForm(data?.declaracion.datosGenerales);
       //const anioEjercicio = this.anioEjercicioForm.get(this.anio_ejercicio);
@@ -241,7 +242,8 @@ export class DatosGeneralesComponent implements OnInit {
   async saveInfo() {
     try {
       this.isLoading = true;
-
+      console.log("llega a saveInfo()");
+      console.log(this.finalFormAnioEjercicio);
       const declaracion = {
         datosGenerales: this.finalForm,
         anioEjercicio: this.finalFormAnioEjercicio,
