@@ -31,7 +31,7 @@ export class DatosGeneralesComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
   anioEjercicioGroup: FormGroup;
-  //anio_ejercicio: number = null;
+  anio_ejercicio: number = null;
 
 
 
@@ -173,8 +173,8 @@ export class DatosGeneralesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
-      //this.anio_ejercicio = data?.declaracion.anioEjercicio;
+      //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
     } catch (error) {
       console.log(error);
