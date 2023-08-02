@@ -32,12 +32,12 @@ export class DatosGeneralesComponent implements OnInit {
   currentYear = new Date().getFullYear();
   minimo: number = 2020;
   maximo: number = 2023;
-
+  anio_ejercicio!: number;
   //anioEjercicioForm:  FormGroup;
   //anio_ejercicio: number = 2024;
-  anioEjercicioForm : any = new FormGroup({
+  /*anioEjercicioForm : any = new FormGroup({
     anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
-  });
+  });*/
 
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
@@ -180,15 +180,9 @@ export class DatosGeneralesComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-      console.log("llega a getUserInfo() "+data?.declaracion.anioEjercicio);
-      console.log("llega a getUserInfo() anio "+this.anioEjercicioForm.anio_ejercicio);
-      console.log(this.finalFormAnioEjercicio);
+
       this.declaracionId = data?.declaracion._id;
-      console.log(data?.declaracion.anioEjercicio);
-      this.fillForm(data?.declaracion.datosGenerales);
-      //const anioEjercicio = this.anioEjercicioForm.get(this.anio_ejercicio);
-      this.anioEjercicioForm.anio_ejercicio = (data?.declaracion.anioEjercicio);  
-      console.log("llega a getUserInfo() anio2 "+this.anioEjercicioForm.anio_ejercicio);
+
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -205,12 +199,12 @@ export class DatosGeneralesComponent implements OnInit {
     return form;
   }
 
-  get finalFormAnioEjercicio(){
+/*  get finalFormAnioEjercicio(){
     const form = JSON.parse(JSON.stringify(this.anioEjercicioForm.value)); // Deep copy
     console.log("formAnio "+form);
     return form;
   }
-
+*/
   inputsAreValid(): boolean {
     if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
       return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
@@ -253,12 +247,10 @@ export class DatosGeneralesComponent implements OnInit {
   async saveInfo() {
     try {
       this.isLoading = true;
-      console.log("llega a saveInfo() " + this.anioEjercicioForm);
-      console.log("llega a saveInfo()22s " + this.anioEjercicioForm.anio_ejercicio);
       const declaracion = {
         datosGenerales: this.finalForm,
-        anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
-        //anioEjercicio: this.anio_ejercicio,
+        //anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
+        anioEjercicio: this.anio_ejercicio,
       };
 
       const { errors } = await this.apollo
