@@ -155,7 +155,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   fillFormAnio(anioEjercicio: number) {
-    this.datosGeneralesForm.patchValue(anioEjercicio || {});
+    this.datosGeneralesForm.patchValue(2025 || {});
   }
 
   async getUserInfo() {
