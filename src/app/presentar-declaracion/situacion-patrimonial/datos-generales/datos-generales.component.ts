@@ -142,7 +142,6 @@ export class DatosGeneralesComponent implements OnInit {
 
   fillForm(datosGenerales: DatosGenerales) {
     this.datosGeneralesForm.patchValue(datosGenerales || {});
-    this.anioEjercicioForm.patchValue(2025 || {});
 
     if (datosGenerales?.aclaracionesObservaciones) {
       this.toggleAclaraciones(true);
@@ -153,6 +152,10 @@ export class DatosGeneralesComponent implements OnInit {
     }
 
     this.setSelectedOptions();
+  }
+
+  fillFormAnio(anioEjercicio: number) {
+    this.datosGeneralesForm.patchValue(anioEjercicio || {});
   }
 
   async getUserInfo() {
@@ -173,8 +176,9 @@ export class DatosGeneralesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
-      this.anio_ejercicio = data?.declaracion.anioEjercicio;
+      //this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
+      this.fillFormAnio(data?.declaracion.anioEjercicio);
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
