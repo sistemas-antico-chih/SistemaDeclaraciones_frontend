@@ -31,7 +31,7 @@ export class DatosGeneralesComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
   anioEjercicioGroup: FormGroup;
-  anio_ejercicio: number = null;
+  anio_ejercicio: number = 2024;
 
 
 
