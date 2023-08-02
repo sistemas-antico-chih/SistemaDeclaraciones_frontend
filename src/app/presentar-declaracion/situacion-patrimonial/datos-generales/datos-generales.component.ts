@@ -155,6 +155,10 @@ export class DatosGeneralesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  fillFormAnio(anioEjercicio: number) {
+    this.anioEjercicioForm.patchValue(2022 || 2028);
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -170,7 +174,8 @@ export class DatosGeneralesComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
+      console.log("llega a getUserInfo()");
+      console.log(this.finalFormAnioEjercicio);
       this.declaracionId = data?.declaracion._id;
       //this.anioEjercicioGroup = data?.declaracion.anioEjercicio;
       //this.anio_ejercicio = data?.declaracion.anioEjercicio;
@@ -178,7 +183,7 @@ export class DatosGeneralesComponent implements OnInit {
       console.log(data?.declaracion.anioEjercicio);
       this.fillForm(data?.declaracion.datosGenerales);
       //const anioEjercicio = this.anioEjercicioForm.get(this.anio_ejercicio);
-      //this.anioEjercicioForm = (data?.declaracion.anioEjercicio);
+      this.fillFormAnio = (data?.declaracion.anioEjercicio);  
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -197,6 +202,7 @@ export class DatosGeneralesComponent implements OnInit {
 
   get finalFormAnioEjercicio(){
     const form = JSON.parse(JSON.stringify(this.anioEjercicioForm.value)); // Deep copy
+    console.log("formAnio "+form);
     return form;
   }
 
