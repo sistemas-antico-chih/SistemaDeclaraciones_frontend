@@ -33,7 +33,7 @@ export class DatosGeneralesComponent implements OnInit {
   minimo: number = 2020;
   maximo: number = 2023;
   anio_ejercicio: number = null;
-  //anioEjercicioForm:  FormGroup;
+  anioEjercicioForm:  FormGroup;
   //anio_ejercicio: number = 2024;
   /*anioEjercicioForm! : any = new FormGroup({
     anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
@@ -91,11 +91,11 @@ export class DatosGeneralesComponent implements OnInit {
     /*const anioEjercicioForm = new FormGroup({
       anio_ejercicio : new FormControl(''),
     });*/
-    /*this.anioEjercicioForm = this.formBuilder.group({
+    this.anioEjercicioForm = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
-    });*/
+    });
 
-    this.datosGeneralesForm = this.formBuilder.group({
+    /*this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
       primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
       segundoApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
@@ -133,7 +133,8 @@ export class DatosGeneralesComponent implements OnInit {
       nacionalidad: [null, [Validators.required, Validators.pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/i)]], //solo letras, incluyendo acentos
       aclaracionesObservaciones: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
     });
-
+    */
+   
     const situacionPersonal = this.datosGeneralesForm.get('situacionPersonalEstadoCivil');
     situacionPersonal.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       const regimenMatrimonial = this.datosGeneralesForm.get('regimenMatrimonial');
