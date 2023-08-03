@@ -21,25 +21,26 @@
       <mat-form-field appearance="fill">
         <mat-label>Año de la declaración</mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
-        <input class="form-control"
-          [errorStateMatcher]="errorMatcher" 
-          id="anio_ejercicio" name="anio_ejercicio"          
-          matInput type="number"
-          [(ngModel)]="anio_ejercicio" 
-          min="2015" 
-          max="currentYear" 
-          placeholder="{{ currentYear }}" 
-          minlength="4"
-          required />
-        <!--<div *ngIf="anio_ejercicio.invalid && (anio_ejercicio.dirty || anio_ejercicio.touched)"
-          class="alert">
+        <input class="form-control" 
+        [errorStateMatcher]="errorMatcher" 
+        id="anio_ejercicio" 
+        name="anio_ejercicio"
+        matInput 
+        type="number" 
+        [(ngModel)]="anio_ejercicio" 
+        min="2015" 
+        max="currentYear"
+        placeholder="{{ currentYear }}" 
+        minlength="4" 
+        required />
+        <div *ngIf="anio_ejercicio.invalid && (anio_ejercicio.dirty || anio_ejercicio.touched)" class="alert">
+          <div *ngIf="anio_ejercicio.errors?.['required']">
+            Name is required.
+          </div>
+          <div *ngIf="anio_ejercicio.errors?.['minlength']">
+            Name must be at least 4 characters long.
+          </div>
         </div>
-        <div *ngIf="anio_ejercicio.errors?.['required']">
-          Name is required.
-        </div>
-        <div *ngIf="anio_ejercicio.errors?.['minlength']">
-          Name must be at least 4 characters long.
-        </div>-->
       </mat-form-field>
     </div>
 
