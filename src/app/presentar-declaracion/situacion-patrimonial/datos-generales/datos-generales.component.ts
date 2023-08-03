@@ -33,11 +33,11 @@ export class DatosGeneralesComponent implements OnInit {
   minimo: number = 2020;
   maximo: number = 2023;
   anio_ejercicio: number = null;
-  anioEjercicioForm:  FormGroup;
+  //anioEjercicioForm!:  FormGroup;
   //anio_ejercicio: number = 2024;
-  /*anioEjercicioForm! : any = new FormGroup({
+  anioEjercicioForm : any = new FormGroup({
     anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
-  });*/
+  });
 
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
