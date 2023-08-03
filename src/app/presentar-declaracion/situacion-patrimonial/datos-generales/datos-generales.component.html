@@ -23,7 +23,7 @@
         <mat-icon matPrefix>date_range</mat-icon>
         <input class="form-control"
           [errorStateMatcher]="errorMatcher" 
-          id="anio" name="anio"          
+          id="anio_ejercicio" name="anio_ejercicio"          
           matInput type="number"
           [(ngModel)]="anio_ejercicio" 
           min="2015" 
@@ -31,13 +31,13 @@
           placeholder="{{ currentYear }}" 
           minlength="4"
           required />
-        <div *ngIf="anio.invalid && (anio.dirty || anio.touched)"
+        <div *ngIf="anio_ejercicio.invalid && (anio_ejercicio.dirty || anio_ejercicio.touched)"
           class="alert">
         </div>
-        <div *ngIf="anio.errors?.['required']">
+        <div *ngIf="anio_ejercicio.errors?.['required']">
           Name is required.
         </div>
-        <div *ngIf="anio.errors?.['minlength']">
+        <div *ngIf="anio_ejercicio.errors?.['minlength']">
           Name must be at least 4 characters long.
         </div>
       </mat-form-field>

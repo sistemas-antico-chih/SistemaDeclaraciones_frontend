@@ -198,6 +198,7 @@ export class DatosGeneralesComponent implements OnInit {
     return form;
   }
 
+
   inputsAreValid(): boolean {
     if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
       return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
