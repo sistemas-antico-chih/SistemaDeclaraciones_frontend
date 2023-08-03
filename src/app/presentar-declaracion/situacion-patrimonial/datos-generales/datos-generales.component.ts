@@ -35,9 +35,10 @@ export class DatosGeneralesComponent implements OnInit {
   anio_ejercicio: number = null;
   //anioEjercicioForm!:  FormGroup;
   //anio_ejercicio: number = 2024;
-  anioEjercicioForm : any = new FormGroup({
+  /*anioEjercicioForm : any = new FormGroup({
     anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
   });
+  */
 
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
@@ -91,11 +92,11 @@ export class DatosGeneralesComponent implements OnInit {
     /*const anioEjercicioForm = new FormGroup({
       anio_ejercicio : new FormControl(''),
     });*/
-    this.anioEjercicioForm = this.formBuilder.group({
+    /*this.anioEjercicioForm = this.formBuilder.group({
       anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
     });
-
-    /*this.datosGeneralesForm = this.formBuilder.group({
+    */
+    this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
       primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
       segundoApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
@@ -133,7 +134,7 @@ export class DatosGeneralesComponent implements OnInit {
       nacionalidad: [null, [Validators.required, Validators.pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/i)]], //solo letras, incluyendo acentos
       aclaracionesObservaciones: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
     });
-    */
+    
    
     const situacionPersonal = this.datosGeneralesForm.get('situacionPersonalEstadoCivil');
     situacionPersonal.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
@@ -162,10 +163,6 @@ export class DatosGeneralesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
-  /*fillFormAnio(anioEjercicio: number) {
-    this.anioEjercicioForm.patchValue(2022 || 2028);
-  }*/
-
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -183,8 +180,7 @@ export class DatosGeneralesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      //this.anio_ejercicio = data?.declaracion.anioEjercicio;
-      this.anioEjercicioForm.anio_ejercicio = data?.declaracion.anioEjercicio;
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.fillForm(data?.declaracion.datosGenerales);
     } catch (error) {
       console.log(error);
@@ -202,12 +198,6 @@ export class DatosGeneralesComponent implements OnInit {
     return form;
   }
 
-/*  get finalFormAnioEjercicio(){
-    const form = JSON.parse(JSON.stringify(this.anioEjercicioForm.value)); // Deep copy
-    console.log("formAnio "+form);
-    return form;
-  }
-*/
   inputsAreValid(): boolean {
     if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
       return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);

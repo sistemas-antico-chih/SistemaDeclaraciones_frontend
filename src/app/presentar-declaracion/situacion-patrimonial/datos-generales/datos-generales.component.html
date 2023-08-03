@@ -20,13 +20,14 @@
       resaltados <span class="no-public-inline"></span> no serán públicos.
     </p>
 
-   <!-- 
+   
     <div class="grid-3-col">
         <mat-form-field appearance="fill">
         <mat-label>Año de la declaración</mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
         <input
           [errorStateMatcher]="errorMatcher"
+          #input_anio_ejercicio
           matInput
           type="number"
           [(ngModel)]="anio_ejercicio"
@@ -34,10 +35,11 @@
           max="currentYear"
           placeholder="{{ currentYear }}"
         />
+        <mat-hint align="end">{{ input_anio_ejercicio.value?.length || 0 }}/4</mat-hint>
       </mat-form-field>
     </div>
-    -->
     
+    <!--
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="anioEjercicioForm">
       <div class="grid-3-col">
         <mat-form-field appearance="fill">
@@ -51,22 +53,9 @@
           />
         </mat-form-field>
       </div>
-      <div class="boton text-right">
-        <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-        <button mat-raised-button color="primary" type="button" (click)="datosGeneralesForm.reset()">
-          LIMPIAR FORMULARIO
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          [disabled]="datosGeneralesForm.invalid || !inputsAreValid() || isLoading"
-        >
-          GUARDAR CAMBIOS
-        </button>
-      </div>
     </form>
+    -->
     
-    <!--
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm">
       <div class="grid-3-col grid-margin">
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
@@ -277,7 +266,7 @@
         </button>
       </div>
     </form>
-  -->
+  
 
     <mat-divider></mat-divider>
 
