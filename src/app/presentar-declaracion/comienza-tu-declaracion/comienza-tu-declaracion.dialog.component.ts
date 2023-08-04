@@ -39,7 +39,15 @@ export class DialogElementsExampleDialog implements OnInit{
    isDisabledInicial: boolean = true;
    isDisabledModificacion: boolean = true;
    isDisabledConclusion: boolean = true;
+   isDisabledCheckBoxInicial: boolean = true;
+   isDisabledCheckBoxModificacion: boolean = true;
+   isDisabledCheckBoxConclusion: boolean = true;
 
+  comprobarMes(){
+    if (this.mes===5){
+      this.isDisabledModificacion = false;
+    }
+  }
 
   //constructor(public dialog: MatDialog) {}
   constructor(
@@ -66,6 +74,7 @@ export class DialogElementsExampleDialog implements OnInit{
       fechaTomaPosesion: [null, [Validators.required]],
       puesto: [null, [Validators.required]],
     });
+
   }
   closeDialog() {
     this.dialogRef.close({ data: '' })
