@@ -19,6 +19,7 @@
           <mat-form-field  appearance="fill">
             <mat-label>Fecha de toma de posesión/conclusión</mat-label>
             <input
+              *ngIf="tipoDeclaracion.tipo"
               [errorStateMatcher]="errorMatcher"
               matInput
               [matDatepicker]="picker"
@@ -79,11 +80,11 @@
         <mat-card-actions>
           <mat-checkbox color="primary" #modificacionSimplificada>Declaración simplificada</mat-checkbox>
           <button *ngIf="modificacionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()">
+            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()" disabled = true>
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!modificacionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()">
+            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()" disabled = true>
             Comenzar declaración
           </button>
         </mat-card-actions>
