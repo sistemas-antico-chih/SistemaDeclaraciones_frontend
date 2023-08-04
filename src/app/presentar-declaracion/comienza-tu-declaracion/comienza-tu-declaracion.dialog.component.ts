@@ -37,7 +37,7 @@ export class DialogElementsExampleDialog implements OnInit{
 
    isDisabledInicial: boolean = true;
    isDisabledModificacion: boolean = true;
-   isDisabledConslusion: boolean = true;
+   isDisabledConclusion: boolean = true;
 
 
   //constructor(public dialog: MatDialog) {}

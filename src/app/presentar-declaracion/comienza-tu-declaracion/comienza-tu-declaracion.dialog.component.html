@@ -38,7 +38,7 @@
             <mat-icon matPrefix>dns</mat-icon>
             <mat-select formControlName="puesto" required>
               <mat-option *ngFor="let p of puestoCatalogo" [value]="catalogoPuestos.valor">
-                {{ entePublico.valor }}
+                {{ p.valor }}
               </mat-option>
             </mat-select>
           </mat-form-field>
