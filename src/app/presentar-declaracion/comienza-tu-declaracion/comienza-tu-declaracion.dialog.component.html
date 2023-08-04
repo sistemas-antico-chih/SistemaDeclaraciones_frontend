@@ -37,7 +37,7 @@
             <mat-label>Seleccionar un puesto</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
             <mat-select formControlName="puesto" required>
-              <mat-option *ngFor="let p of puestoCatalogo" [value]="catalogoPuestos.valor">
+              <mat-option *ngFor="let p of puestoCatalogo" [value]="p.valor">
                 {{ p.valor }}
               </mat-option>
             </mat-select>
