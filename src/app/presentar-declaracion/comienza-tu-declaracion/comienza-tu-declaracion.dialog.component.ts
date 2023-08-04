@@ -36,6 +36,8 @@ export class DialogElementsExampleDialog implements OnInit{
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
+   isDisabledModificacion: boolean = true;
+
   //constructor(public dialog: MatDialog) {}
   constructor(
     private formBuilder: FormBuilder,
