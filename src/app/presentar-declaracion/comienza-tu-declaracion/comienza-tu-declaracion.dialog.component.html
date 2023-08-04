@@ -58,12 +58,12 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <mat-checkbox color="primary" #inicialSimplificada>Declaración simplificada</mat-checkbox>
-          <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary"
+          <mat-checkbox color="primary" #inicialSimplificada [disabled]="isDisabledInicial">Declaración simplificada</mat-checkbox>
+          <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary" [disabled]="isDisabledInicial"
            [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()"> 
             <small>Comenzar declaración simplificada</small>
           </button>
-          <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary"
+          <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary" [disabled]="isDisabledInicial"
             [routerLink]="['/inicial/situacion-patrimonial']" (click)="closeDialog()">
             Comenzar declaración
           </button>
@@ -98,12 +98,12 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <mat-checkbox color="primary" #conclusionSimplificada>Declaración simplificada</mat-checkbox>
-          <button *ngIf="conclusionSimplificada.checked" mat-raised-button color="primary"
+          <mat-checkbox color="primary" #conclusionSimplificada [disabled]="isDisabledConclusion">Declaración simplificada</mat-checkbox>
+          <button *ngIf="conclusionSimplificada.checked" mat-raised-button color="primary" [disabled]="isDisabledConclusion"
             [routerLink]="['/conclusion/simplificada/situacion-patrimonial']" (click)="closeDialog()">
             <small>Comenzar declaración simplificada</small>
           </button>
-          <button *ngIf="!conclusionSimplificada.checked" mat-raised-button color="primary"
+          <button *ngIf="!conclusionSimplificada.checked" mat-raised-button color="primary" [disabled]="isDisabledConclusion"
             [routerLink]="['/conclusion/situacion-patrimonial']" (click)="closeDialog()">
             Comenzar declaración
           </button>
