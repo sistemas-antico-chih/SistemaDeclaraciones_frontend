@@ -33,7 +33,7 @@
         minlength="4" 
         appForbiddenName="bob"
         required />
-        <div *ngIf="anio_ejercicio.invalid && (anio_ejercicio.dirty || anio_ejercicio.touched)" class="alert alert-danger">
+        <!--<div *ngIf="anio_ejercicio.invalid < 2000 && (anio_ejercicio.dirty || anio_ejercicio.touched)" class="alert alert-danger">
           <div *ngIf="anio_ejercicio.errors?.['required']">
             Name is required.
           </div>
@@ -44,6 +44,7 @@
             Name cannot be Bob.
           </div>
         </div>
+      -->
       </mat-form-field>
     </div>
 
