@@ -29,6 +29,7 @@ export class DialogElementsExampleDialog implements OnInit{
   puestoCatalogo = puestos;
   isLoading = false;
 
+
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
@@ -49,7 +50,16 @@ export class DialogElementsExampleDialog implements OnInit{
   ) {
     //this.createForm();
   }
-  
+
+  formHasChanges() {
+    console.log("formHasChange()");
+    let puesto = puestos.clave;
+    if(puesto.clave === "DIRECTIVO"){
+      console.log("formHasChange() - IF");
+      this.isDisabledModificacion = false;
+    }
+  }
+
   ngOnInit(){
     this.datosDialogForm = this.formBuilder.group({
       tipoDeclaracion: [null, [Validators.required]],
