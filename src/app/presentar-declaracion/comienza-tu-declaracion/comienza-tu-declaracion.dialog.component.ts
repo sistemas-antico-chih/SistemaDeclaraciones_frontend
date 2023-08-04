@@ -7,7 +7,7 @@ import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
-import catalogoPuestos from '@static/catalogos/catalogoPuestos.json';
+import puestos from '@static/catalogos/catalogoPuestos.json';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import entePublico from '@static/catalogos/entePublico.json';
@@ -19,15 +19,14 @@ import entePublico from '@static/catalogos/entePublico.json';
 })
 
 export class DialogElementsExampleDialog implements OnInit{
-  catalogoPuestos=catalogoPuestos;
   datosDialogForm: FormGroup;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  entePublicoCatalogo = entePublico;
+  //entePublicoCatalogo = entePublico;
   tipoDeclaracionCatalogo = tipoDeclaracion;
-  ambitoPublicoCatalogo = AmbitoPublico;
+  puestoCatalogo = puestos;
   isLoading = false;
 
   minDate = new Date(1980, 1, 1);
@@ -50,10 +49,9 @@ export class DialogElementsExampleDialog implements OnInit{
   
   ngOnInit(){
     this.datosDialogForm = this.formBuilder.group({
-      nivelOrdenGobierno: [null, [Validators.required]],
-      ambitoPublico: [null, [Validators.required]],
-      nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      tipoDeclaracion: [null, [Validators.required]],
       fechaTomaPosesion: [null, [Validators.required]],
+      puesto: [null, [Validators.required]],
     });
   }
   closeDialog() {

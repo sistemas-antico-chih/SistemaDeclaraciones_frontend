@@ -34,10 +34,10 @@
           </mat-form-field>
 
           <mat-form-field  appearance="fill">
-            <mat-label>Nombre del Ente Público</mat-label>
+            <mat-label>Seleccionar un puesto</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
-            <mat-select formControlName="nombreEntePublico" required>
-              <mat-option *ngFor="let entePublico of entePublicoCatalogo" [value]="entePublico.valor">
+            <mat-select formControlName="puesto" required>
+              <mat-option *ngFor="let p of puestoCatalogo" [value]="catalogoPuestos.valor">
                 {{ entePublico.valor }}
               </mat-option>
             </mat-select>
