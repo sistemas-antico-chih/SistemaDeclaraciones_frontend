@@ -67,17 +67,17 @@ export class DialogElementsExampleDialog implements OnInit{
     //const modificacionSimplificada = document.getElementById('modificacionSimplificada',) as HTMLInputElement | null;
     //const conclusionSimplificada = document.getElementById('conclusionSimplificada',) as HTMLInputElement | null;
 
-    if (value === 'DIRECTIVO') {
+    if (value === 'OPERATIVO') {
       console.log("entra IF")
-      this.ckInicial=false;
-      this.ckModificacion=false;
-      this.ckConclusion=false;
-    } 
-    else {
-      console.log("ENTRA else");
       this.ckInicial=true;
       this.ckModificacion=true;
       this.ckConclusion=true;
+    } 
+    else if (value === 'DIRECTIVO'){
+      console.log("ENTRA else");
+      this.ckInicial=false;
+      this.ckModificacion=false;
+      this.ckConclusion=false;
     }
   }
 
