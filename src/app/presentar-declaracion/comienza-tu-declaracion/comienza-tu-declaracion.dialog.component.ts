@@ -74,6 +74,15 @@ export class DialogElementsExampleDialog implements OnInit{
     }
   }
 
+  modificacionSimplificada(){
+    if (this.puestoChanged){
+      console.log("entrando if");
+    }
+    else{
+      console.log("entrando else");
+    }
+  }
+
   ngOnInit(){
     this.datosDialogForm = this.formBuilder.group({
       tipoDeclaracion: [null, [Validators.required]],
