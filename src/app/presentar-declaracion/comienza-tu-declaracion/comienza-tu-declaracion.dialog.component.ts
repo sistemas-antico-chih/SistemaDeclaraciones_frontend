@@ -59,12 +59,9 @@ export class DialogElementsExampleDialog implements OnInit{
     //this.createForm();
   }
 
-  onChangeCB(ob:any){
-    console.log("checked "+ob.checked);
-  }
-
   puestoChanged(value: any){
     const inicialSimplificada = document.getElementById('inicialSimplificada',) as HTMLInputElement | null;
+    console.log(inicialSimplificada);
     if (value === 'DIRECTIVO') {
       inicialSimplificada.checked=false;
       console.log("ENTRA IF");      
