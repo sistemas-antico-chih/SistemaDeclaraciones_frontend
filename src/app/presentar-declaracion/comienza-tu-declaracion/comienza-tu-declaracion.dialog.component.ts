@@ -61,18 +61,16 @@ export class DialogElementsExampleDialog implements OnInit{
 
 
   puestoChanged(value: any){
-    console.log(this.datosDialogForm.get('puesto'))
-    console.log(value);
-    const x = this.datosDialogForm.get('puesto').setValue(findOption(this.puestoCatalogo, value.clave));
-    console.log(x);
-    
-    /*const clave = value.clave || null;
-    if (clave === 'DIRECTIVO') {
+    if (value === 'DIRECTIVO') {
       console.log("ENTRA IF");
+      this.isDisabledCheckBoxInicial = false;
+      this.isDisabledCheckBoxModificacion = false;
+      this.isDisabledCheckBoxConclusion = false;
+      
     } 
     else {
-      console.log("NO ENTRA IF");
-    }*/
+      console.log("ENTRA IF");
+    }
   }
 
   ngOnInit(){
