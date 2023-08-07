@@ -8,9 +8,7 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import puestos from '@static/catalogos/catalogoPuestos.json';
-import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
-import entePublico from '@static/catalogos/entePublico.json';
 
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
@@ -61,7 +59,7 @@ export class DialogElementsExampleDialog implements OnInit{
 
 
   puestoChanged(value: any){
-    console.log(value);
+    console.log(value.clave);
     /*const clave = value.clave || null;
     if (clave === 'DIRECTIVO') {
       console.log("ENTRA IF");
