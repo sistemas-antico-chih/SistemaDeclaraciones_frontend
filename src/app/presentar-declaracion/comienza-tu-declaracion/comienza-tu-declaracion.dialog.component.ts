@@ -62,13 +62,13 @@ export class DialogElementsExampleDialog implements OnInit{
 
   puestoChanged(value: any){
     console.log(value);
-    const clave = value.clave || null;
+    /*const clave = value.clave || null;
     if (clave === 'DIRECTIVO') {
       console.log("ENTRA IF");
     } 
     else {
       console.log("NO ENTRA IF");
-    }
+    }*/
   }
 
   ngOnInit(){
