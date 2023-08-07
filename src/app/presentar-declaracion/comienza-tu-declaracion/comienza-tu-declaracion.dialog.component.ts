@@ -61,14 +61,16 @@ export class DialogElementsExampleDialog implements OnInit{
 
   puestoChanged(value: any){
     const inicialSimplificada = document.getElementById('inicialSimplificada',) as HTMLInputElement | null;
-    console.log(inicialSimplificada);
+    console.log(inicialSimplificada.checked);
     if (value === 'DIRECTIVO') {
       inicialSimplificada.checked=false;
       console.log("ENTRA IF");      
+      console.log(inicialSimplificada.checked);
     } 
     else {
       console.log("ENTRA else");
       inicialSimplificada.checked=true;
+      console.log(inicialSimplificada.checked);
     }
   }
 
