@@ -9,6 +9,8 @@ import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import puestos from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
+import { findOption } from '@utils/utils';
+
 
 @Component({
   selector: 'comienza-tu-declaracion.dialog',
@@ -59,7 +61,9 @@ export class DialogElementsExampleDialog implements OnInit{
 
 
   puestoChanged(value: any){
-    console.log(value.clave);
+    const x = this.datosDialogForm.get('puesto').setValue(findOption(this.puestoCatalogo, value.clave));
+    console.log(x);
+    
     /*const clave = value.clave || null;
     if (clave === 'DIRECTIVO') {
       console.log("ENTRA IF");
@@ -79,16 +83,6 @@ export class DialogElementsExampleDialog implements OnInit{
   }
   closeDialog() {
     this.dialogRef.close({ data: '' })
-  }
-
-  createForm() {
-    this.datosDialogForm = this.formBuilder.group({
-      nivelOrdenGobierno: [null, [Validators.required]],
-      ambitoPublico: [null, [Validators.required]],
-      nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaTomaPosesion: [null, [Validators.required]],
-    });
-    //catalogoPuestos: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
