@@ -42,6 +42,7 @@ export class DialogElementsExampleDialog implements OnInit{
    isDisabledCheckBoxInicial: boolean = true;
    isDisabledCheckBoxModificacion: boolean = true;
    isDisabledCheckBoxConclusion: boolean = true;
+   ckSimplificada: boolean = true;
 
   comprobarMes(){
     if (this.mes===5){
@@ -71,15 +72,6 @@ export class DialogElementsExampleDialog implements OnInit{
       console.log("ENTRA else");
       inicialSimplificada.checked=true;
       console.log(inicialSimplificada.checked);
-    }
-  }
-
-  modificacionSimplificada(){
-    if (this.puestoChanged){
-      console.log("entrando if");
-    }
-    else{
-      console.log("entrando else");
     }
   }
 
