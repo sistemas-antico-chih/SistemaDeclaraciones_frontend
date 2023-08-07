@@ -19,7 +19,6 @@
           <mat-form-field  appearance="fill">
             <mat-label>Fecha de toma de posesión/conclusión</mat-label>
             <input
-              
               [errorStateMatcher]="errorMatcher"
               matInput
               [matDatepicker]="picker"
@@ -58,7 +57,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <mat-checkbox color="primary" #inicialSimplificada [disabled]="isDisabledCheckBoxInicial">Declaración simplificada</mat-checkbox>
+          <mat-checkbox color="primary" name="inicialSimplificada" #inicialSimplificada [disabled]="isDisabledCheckBoxInicial">Declaración simplificada</mat-checkbox>
           <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary" [disabled]="isDisabledInicial"
            [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()" > 
             <small>Comenzar declaración simplificada</small>
