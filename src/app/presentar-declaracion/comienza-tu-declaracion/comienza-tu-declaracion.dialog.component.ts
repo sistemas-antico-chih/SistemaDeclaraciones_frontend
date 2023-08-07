@@ -62,13 +62,18 @@ export class DialogElementsExampleDialog implements OnInit{
     //this.createForm();
   }
 
+  tipoDeclaracionChanged(value: any){
+    console.log(value);
+  }
   puestoChanged(value: any){
+    console.log(tipoDeclaracion);
     //const inicialSimplificada = document.getElementById('inicialSimplificada',) as HTMLInputElement | null;
     //const modificacionSimplificada = document.getElementById('modificacionSimplificada',) as HTMLInputElement | null;
     //const conclusionSimplificada = document.getElementById('conclusionSimplificada',) as HTMLInputElement | null;
-
+ 
     if (value === 'OPERATIVO') {
       console.log("entra IF")
+
       this.ckInicial=true;
       this.ckModificacion=true;
       this.ckConclusion=true;
