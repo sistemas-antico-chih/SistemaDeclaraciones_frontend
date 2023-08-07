@@ -42,9 +42,7 @@ export class DialogElementsExampleDialog implements OnInit{
    isDisabledCheckBoxInicial: boolean = true;
    isDisabledCheckBoxModificacion: boolean = true;
    isDisabledCheckBoxConclusion: boolean = true;
-   ckInicial: boolean = false;
-   ckModificacion: boolean = false;
-   ckConclusion: boolean = false;
+
 
   comprobarMes(){
     if (this.mes===5){
@@ -67,22 +65,18 @@ export class DialogElementsExampleDialog implements OnInit{
   }
   puestoChanged(value: any){
     console.log(tipoDeclaracion);
+    
     //const inicialSimplificada = document.getElementById('inicialSimplificada',) as HTMLInputElement | null;
     //const modificacionSimplificada = document.getElementById('modificacionSimplificada',) as HTMLInputElement | null;
     //const conclusionSimplificada = document.getElementById('conclusionSimplificada',) as HTMLInputElement | null;
  
     if (value === 'OPERATIVO') {
       console.log("entra IF")
-
-      this.ckInicial=true;
-      this.ckModificacion=true;
-      this.ckConclusion=true;
+      
     } 
     else if (value === 'DIRECTIVO'){
       console.log("ENTRA else");
-      this.ckInicial=false;
-      this.ckModificacion=false;
-      this.ckConclusion=false;
+
     }
   }
 
