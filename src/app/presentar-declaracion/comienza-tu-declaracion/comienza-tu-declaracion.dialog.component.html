@@ -36,7 +36,7 @@
           <mat-form-field  appearance="fill">
             <mat-label>Seleccionar un puesto</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
-            <mat-select formControlName="puesto" required  (selectionChange)="puestoChanged(p)">
+            <mat-select formControlName="puesto" required  (selectionChange)="puestoChanged($event.value)">
               <mat-option *ngFor="let p of puestoCatalogo" [value]="p.valor">
                 {{ p.valor }}
               </mat-option>

@@ -61,6 +61,7 @@ export class DialogElementsExampleDialog implements OnInit{
 
 
   puestoChanged(value: any){
+    console.log(value);
     const clave = value.clave || null;
     if (clave === 'DIRECTIVO') {
       console.log("ENTRA IF");
