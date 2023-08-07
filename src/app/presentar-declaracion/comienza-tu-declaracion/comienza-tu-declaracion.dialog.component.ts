@@ -42,7 +42,7 @@ export class DialogElementsExampleDialog implements OnInit{
    isDisabledCheckBoxInicial: boolean = true;
    isDisabledCheckBoxModificacion: boolean = true;
    isDisabledCheckBoxConclusion: boolean = true;
-
+   inicial: string;
 
   comprobarMes(){
     if (this.mes===5){
@@ -61,23 +61,16 @@ export class DialogElementsExampleDialog implements OnInit{
   }
 
   tipoDeclaracionChanged(value: any){
-    console.log(value);
+    console.log('tipoDeclaracion: '+value);
+    this.validarDeclaracion();
   }
   puestoChanged(value: any){
-    console.log(tipoDeclaracion);
-    
-    //const inicialSimplificada = document.getElementById('inicialSimplificada',) as HTMLInputElement | null;
-    //const modificacionSimplificada = document.getElementById('modificacionSimplificada',) as HTMLInputElement | null;
-    //const conclusionSimplificada = document.getElementById('conclusionSimplificada',) as HTMLInputElement | null;
- 
-    if (value === 'OPERATIVO') {
-      console.log("entra IF")
-      
-    } 
-    else if (value === 'DIRECTIVO'){
-      console.log("ENTRA else");
+    console.log('puesto '+value);
+    this.validarDeclaracion();
+  }
 
-    }
+  validarDeclaracion(){
+    //const 
   }
 
   ngOnInit(){
