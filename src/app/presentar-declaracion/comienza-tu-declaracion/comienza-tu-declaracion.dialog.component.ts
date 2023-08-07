@@ -62,14 +62,10 @@ export class DialogElementsExampleDialog implements OnInit{
 
   puestoChanged(value: any){
     if (value === 'DIRECTIVO') {
-      console.log("ENTRA IF");
-      this.isDisabledCheckBoxInicial = false;
-      this.isDisabledCheckBoxModificacion = false;
-      this.isDisabledCheckBoxConclusion = false;
-      
+      console.log("ENTRA IF");      
     } 
     else {
-      console.log("ENTRA IF");
+      console.log("ENTRA else");
     }
   }
 
