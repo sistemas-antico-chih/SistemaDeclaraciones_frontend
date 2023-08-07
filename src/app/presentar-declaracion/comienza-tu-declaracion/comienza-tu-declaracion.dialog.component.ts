@@ -60,11 +60,14 @@ export class DialogElementsExampleDialog implements OnInit{
   }
 
   formHasChanges() {
-    console.log("formHasChange()");
-    let puesto = puestos.clave;
+    console.log("formHasChange() aqui");
+    const puesto = this.datosDialogForm.get('puesto');
     if(puesto.clave === "DIRECTIVO"){
       console.log("formHasChange() - IF");
       this.isDisabledModificacion = false;
+    }
+    else{
+      console.log("puesto.clave no changed");
     }
   }
 
