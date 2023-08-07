@@ -59,6 +59,9 @@ export class DialogElementsExampleDialog implements OnInit{
     //this.createForm();
   }
 
+  onChangeCB(ob:any){
+    console.log("checked "+ob.checked);
+  }
 
   puestoChanged(value: any){
     if (value === 'DIRECTIVO') {
