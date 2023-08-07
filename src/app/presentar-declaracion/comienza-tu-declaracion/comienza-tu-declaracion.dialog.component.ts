@@ -61,6 +61,8 @@ export class DialogElementsExampleDialog implements OnInit{
 
 
   puestoChanged(value: any){
+    console.log(this.datosDialogForm.get('puesto'))
+    console.log(value);
     const x = this.datosDialogForm.get('puesto').setValue(findOption(this.puestoCatalogo, value.clave));
     console.log(x);
     
