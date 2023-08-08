@@ -62,9 +62,10 @@ export class DialogElementsExampleDialog implements OnInit{
 
   validarDeclaracion(value: any){
     console.log('value '+value);
-    const tipo = JSON.parse(JSON.stringify(this.datosDialogForm.value)); // Deep copy
-    const puesto = JSON.parse(JSON.stringify(this.datosDialogForm.value)); // Deep copy
-    //let tipo = this.datosDialogForm.get('tipoDeclaracion'));
+    //const tipo = JSON.parse(JSON.stringify(this.datosDialogForm.value)); // Deep copy
+    //const puesto = JSON.parse(JSON.stringify(this.datosDialogForm.value)); // Deep copy
+    const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+    const puesto = this.datosDialogForm.get('puesto').value;
     console.log('tipoDeclaracion '+ tipo);
     console.log('puesto '+ puesto);
   }
