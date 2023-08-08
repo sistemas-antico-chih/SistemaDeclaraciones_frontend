@@ -7,7 +7,7 @@ import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
-import puestos from '@static/catalogos/catalogoPuestos.json';
+import puesto from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import { findOption } from '@utils/utils';
 
@@ -26,7 +26,7 @@ export class DialogElementsExampleDialog implements OnInit{
 
   //entePublicoCatalogo = entePublico;
   tipoDeclaracionCatalogo = tipoDeclaracion;
-  puestoCatalogo = puestos;
+  puestoCatalogo = puesto;
   isLoading = false;
 
 
@@ -42,7 +42,7 @@ export class DialogElementsExampleDialog implements OnInit{
    isDisabledCheckBoxInicial: boolean = true;
    isDisabledCheckBoxModificacion: boolean = true;
    isDisabledCheckBoxConclusion: boolean = true;
-   inicial: string;
+   
 
   comprobarMes(){
     if (this.mes===5){
@@ -60,18 +60,20 @@ export class DialogElementsExampleDialog implements OnInit{
     //this.createForm();
   }
 
-  tipoDeclaracionChanged(value: any){
+  validarDeclaracion(value: any){
+    console.log('value '+value);
+    //let tipo = tipoDeclaracion;
+    console.log('tipoDeclaracion '+tipoDeclaracion);
+    console.log('puesto '+puesto);
+  }
+  /*tipoDeclaracionChanged(value: any){
     console.log('tipoDeclaracion: '+value);
     this.validarDeclaracion();
   }
   puestoChanged(value: any){
     console.log('puesto '+value);
     this.validarDeclaracion();
-  }
-
-  validarDeclaracion(){
-    //const 
-  }
+  }*/
 
   ngOnInit(){
     this.datosDialogForm = this.formBuilder.group({
@@ -92,4 +94,8 @@ export class DialogElementsExampleDialog implements OnInit{
   confirmSaveInfo() {
     console.log("boton guardar");
   }
+}
+
+function Input() {
+  throw new Error('Function not implemented.');
 }

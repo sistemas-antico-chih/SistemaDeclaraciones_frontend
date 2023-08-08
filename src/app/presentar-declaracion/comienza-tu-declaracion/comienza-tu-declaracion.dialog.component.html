@@ -10,7 +10,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Tipo de declaración </mat-label>
             <mat-icon matPrefix>star</mat-icon>
-            <mat-select formControlName="tipoDeclaracion" required (selectionChange)="tipoDeclaracionChanged($event.value)">
+            <mat-select formControlName="tipoDeclaracion" required (selectionChange)="validarDeclaracion($event.value)">
               <mat-option *ngFor="let tipo of tipoDeclaracionCatalogo" [value]="tipo">
                 {{ tipo | replace: '_':' ' }}
               </mat-option>
@@ -35,7 +35,7 @@
           <mat-form-field  appearance="fill">
             <mat-label>Seleccionar un puesto</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
-            <mat-select formControlName="puesto" required  (selectionChange)="puestoChanged($event.value)">
+            <mat-select formControlName="puesto" required  (selectionChange)="validarDeclaracion($event.value)">
               <mat-option *ngFor="let p of puestoCatalogo" [value]="p.clave">
                 {{ p.valor }}
               </mat-option>
