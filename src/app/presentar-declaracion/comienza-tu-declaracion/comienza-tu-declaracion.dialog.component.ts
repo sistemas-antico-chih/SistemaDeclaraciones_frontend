@@ -76,82 +76,46 @@ export class DialogElementsExampleDialog implements OnInit {
     let btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
     let btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
     
+    btnInicialSimple.disabled=true;
+    btnInicialCompleta.disabled=true;
+    btnModificacionSimple.disabled=true;
+    btnModificacionCompleta.disabled=true;
+    btnConclusionSimple.disabled=true;
+    btnConclusionCompleta.disabled=true;
+    cbInicial.checked=false;
+    cbModificacion.checked=false;
+    cbConclusion.checked=false;
+    cbInicial.disabled=true;
+    cbModificacion.disabled=true;
+    cbConclusion.disabled=true;
+
     if (tipo === "INICIAL") {
-      btnInicialSimple?.setAttribute('enabled','true');
-      btnInicialCompleta?.setAttribute('enabled','true');
-      btnModificacionSimple?.setAttribute('disabled', '');
-      btnModificacionCompleta?.setAttribute('disabled', '');
-      btnConclusionSimple?.setAttribute('disabled', '');
-      btnConclusionCompleta?.setAttribute('disabled', '');
-      if (puesto === "DIRECTIVO") {
-        cbInicial?.setAttribute('unchecked', '');
-        cbModificacion?.setAttribute('disabled', '');
-        cbConclusion?.setAttribute('disabled', '');
-      }
-      else if (puesto === "OPERATIVO") {
-        cbInicial?.setAttribute('checked', '');
-        cbModificacion?.setAttribute('disabled', '');
-        cbConclusion?.setAttribute('disabled', '');
-      }
-      else {
-        cbInicial?.setAttribute('disabled', '');
-        cbModificacion?.setAttribute('disabled', '');
-        cbConclusion?.setAttribute('disabled', '');
+      btnInicialSimple.disabled=false;
+      btnInicialCompleta.disabled=false;
+      if (puesto === "OPERATIVO") {
+        cbInicial.checked=true;
       }
     }
     else if (tipo === "MODIFICACIÓN") {
-      btnModificacionSimple?.setAttribute('enabled','true');
-      btnModificacionCompleta?.setAttribute('enabled','true');
-      btnInicialSimple?.setAttribute('disabled', '');
-      btnInicialCompleta?.setAttribute('disabled', '');
-      btnConclusionSimple?.setAttribute('disabled', '');
-      btnConclusionCompleta?.setAttribute('disabled', '');
-      if (puesto === "DIRECTIVO") {
-        cbInicial?.setAttribute('disabled', '');
-        cbModificacion?.setAttribute('unchecked', '');
-        cbConclusion?.setAttribute('disabled', '');
-      }
-      else if (puesto === "OPERATIVO") {
-        cbInicial?.setAttribute('disabled', '');
-        cbModificacion?.setAttribute('checked', '');
-        cbConclusion?.setAttribute('disabled', '');
-      }
-      else {
-        cbInicial?.setAttribute('disabled', '');
-        cbModificacion?.setAttribute('disabled', '');
-        cbConclusion?.setAttribute('disabled', '');
+      btnModificacionSimple.disabled=false;
+      btnModificacionCompleta.disabled=false;
+      if (puesto === "OPERATIVO") {
+        btnModificacionSimple.disabled=false;
+        btnModificacionCompleta.disabled=false;
       }
     }
     else if (tipo === "CONCLUSIÓN") {
-      btnConclusionSimple?.setAttribute('enabled','true');
-      btnConclusionCompleta?.setAttribute('enabled','true');
-      btnInicialSimple?.setAttribute('disabled', '');
-      btnInicialCompleta?.setAttribute('disabled', '');
-      btnConclusionSimple?.setAttribute('disabled', '');
-      btnConclusionCompleta?.setAttribute('disabled', '');
-      if (puesto === "DIRECTIVO") {
-        cbInicial?.setAttribute('disabled', '');
-        cbModificacion?.setAttribute('disabled', '');
-        cbConclusion?.setAttribute('unchecked', '');
-      }
-      else if (puesto === "OPERATIVO") {
-        cbInicial?.setAttribute('disabled', '');
-        cbModificacion?.setAttribute('disabled', '');
-        cbConclusion?.setAttribute('checked', '');
+      btnConclusionSimple.disabled=false;
+      btnConclusionCompleta.disabled=false;
+      if (puesto === "OPERATIVO") {
+        btnConclusionSimple.disabled=false;
+        btnConclusionCompleta.disabled=false;
       }
       else {
         cbInicial?.setAttribute('disabled', '');
         cbModificacion?.setAttribute('disabled', '');
         cbConclusion?.setAttribute('disabled', '');
       }
-    }
-    else {
-      btnInicialSimple?.setAttribute('disabled', '');
-      btnInicialCompleta?.setAttribute('disabled', '');
-      btnModificacionSimple?.setAttribute('disabled', '');
-      btnModificacionCompleta?.setAttribute('disabled', '');
-      btnConclusionSimple?.setAttribute('disabled', '');
-      btnConclusionCompleta?.setAttribute('disabled', '');
     }
   }
 
