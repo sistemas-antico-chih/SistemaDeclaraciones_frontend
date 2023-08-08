@@ -55,7 +55,6 @@ export class DialogElementsExampleDialog implements OnInit {
   isDisabledCheckBoxInicial: boolean = true;
   isDisabledCheckBoxModificacion: boolean = true;
   isDisabledCheckBoxConclusion: boolean = true;
-  
 
  /* comprobarMes() {
     if (this.mes === 5) {
