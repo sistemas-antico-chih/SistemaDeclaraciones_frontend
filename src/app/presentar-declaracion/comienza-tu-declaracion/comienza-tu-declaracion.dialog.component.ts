@@ -36,11 +36,11 @@ export class DialogElementsExampleDialog implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  cbInicial = document.getElementById('cbInicialSimplificada') as HTMLInputElement | null;
+  cbInicial = document.getElementById(`cbInicialSimplificada`) as HTMLInputElement | null;
   cbModificacion = document.getElementById('cbModificacionSimplificada') as HTMLInputElement | null;
   cbConclusion = document.getElementById('cbConclusionSimplificada') as HTMLInputElement | null;
-  btnInicialSimple = document.getElementById('btnInicialSimple') as HTMLInputElement | null;
-  btnInicialCompleta = document.getElementById('btnInicialCompleta') as HTMLInputElement | null;
+  btnInicialSimple = document.getElementById(`btnInicialSimple`) as HTMLInputElement | null;
+  btnInicialCompleta = document.getElementById(`btnInicialCompleta`) as HTMLInputElement | null;
   btnModificacionSimple = document.getElementById('btnModificacionSimple') as HTMLInputElement | null;
   btnModificacionCompleta = document.getElementById('btnModificacionCompleta') as HTMLInputElement | null;
   btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
@@ -76,9 +76,9 @@ export class DialogElementsExampleDialog implements OnInit {
     const puesto = this.datosDialogForm.get('puesto').value;
     console.log('tipoDeclaracion ' + tipo);
     console.log('puesto ' + puesto);
-    console.log('cbInicial '+ this.cbInicial);
-    console.log('btnInicialSimple '+ this.btnInicialSimple);
-    console.log('btnInicialCompleta '+ this.btnInicialCompleta);
+    console.log('cbInicial '+ this.cbInicial.value);
+    console.log('btnInicialSimple '+ this.btnInicialSimple.id);
+    console.log('btnInicialCompleta '+ this.btnInicialCompleta.id);
 
     if (tipo === "INICIAL") {
       this.btnInicialSimple.disabled=false;
