@@ -36,9 +36,9 @@ export class DialogElementsExampleDialog implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  cbInicial = document.getElementById('cbInicial') as HTMLInputElement | null;
-  cbModificacion = document.getElementById('cbModificacion') as HTMLInputElement | null;
-  cbConclusion = document.getElementById('cbConclusion') as HTMLInputElement | null;
+  cbInicial = document.getElementById('cbInicialSimplificada') as HTMLInputElement | null;
+  cbModificacion = document.getElementById('cbModificacionSimplificada') as HTMLInputElement | null;
+  cbConclusion = document.getElementById('cbConclusionSimplificada') as HTMLInputElement | null;
   btnInicialSimple = document.getElementById('btnInicialSimple') as HTMLInputElement | null;
   btnInicialCompleta = document.getElementById('btnInicialCompleta') as HTMLInputElement | null;
   btnModificacionSimple = document.getElementById('btnModificacionSimple') as HTMLInputElement | null;
@@ -71,7 +71,6 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarDeclaracion(value: any) {
-
     console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
