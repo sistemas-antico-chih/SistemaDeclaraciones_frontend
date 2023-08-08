@@ -36,20 +36,20 @@ export class DialogElementsExampleDialog implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  isDisabledInicial: boolean = true;
+  /*isDisabledInicial: boolean = true;
   isDisabledModificacion: boolean = true;
   isDisabledConclusion: boolean = true;
   isDisabledCheckBoxInicial: boolean = true;
   isDisabledCheckBoxModificacion: boolean = true;
   isDisabledCheckBoxConclusion: boolean = true;
+  */
 
-
-  comprobarMes() {
+ /* comprobarMes() {
     if (this.mes === 5) {
-      this.isDisabledModificacion = false;
+      //this.isDisabledModificacion = false;
     }
   }
-
+*/
   //constructor(public dialog: MatDialog) {}
   constructor(
     private formBuilder: FormBuilder,
@@ -75,19 +75,10 @@ export class DialogElementsExampleDialog implements OnInit {
     let btnModificacionCompleta = document.getElementById('btnModificacionCompleta') as HTMLInputElement | null;
     let btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
     let btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
-
-    /*if(puesto === "DIRECTIVO"){
-
-    }
-    else if (puesto === "OPERATIVO"){
-
-    }
-    else{
-
-    }*/
+    
     if (tipo === "INICIAL") {
-      btnInicialSimple?.removeAttribute('disabled');
-      btnInicialCompleta?.removeAttribute('disabled');
+      btnInicialSimple?.setAttribute('enabled','true');
+      btnInicialCompleta?.setAttribute('enabled','true');
       btnModificacionSimple?.setAttribute('disabled', '');
       btnModificacionCompleta?.setAttribute('disabled', '');
       btnConclusionSimple?.setAttribute('disabled', '');
@@ -109,8 +100,8 @@ export class DialogElementsExampleDialog implements OnInit {
       }
     }
     else if (tipo === "MODIFICACIÓN") {
-      btnModificacionSimple?.removeAttribute('disabled');
-      btnModificacionCompleta?.removeAttribute('disabled');
+      btnModificacionSimple?.setAttribute('enabled','true');
+      btnModificacionCompleta?.setAttribute('enabled','true');
       btnInicialSimple?.setAttribute('disabled', '');
       btnInicialCompleta?.setAttribute('disabled', '');
       btnConclusionSimple?.setAttribute('disabled', '');
@@ -132,8 +123,8 @@ export class DialogElementsExampleDialog implements OnInit {
       }
     }
     else if (tipo === "CONCLUSIÓN") {
-      btnConclusionSimple?.removeAttribute('disabled');
-      btnConclusionCompleta?.removeAttribute('disabled');
+      btnConclusionSimple?.setAttribute('enabled','true');
+      btnConclusionCompleta?.setAttribute('enabled','true');
       btnInicialSimple?.setAttribute('disabled', '');
       btnInicialCompleta?.setAttribute('disabled', '');
       btnConclusionSimple?.setAttribute('disabled', '');
