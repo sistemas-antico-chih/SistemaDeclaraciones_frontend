@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 //import { Catalogo, DatosDialog } from '@models/declaracion';
-import { FormGroup, FormBuilder, Validators  } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
@@ -18,7 +18,7 @@ import { findOption } from '@utils/utils';
   //styleUrls: ['./comienza-tu-declaracion.component.scss'],
 })
 
-export class DialogElementsExampleDialog implements OnInit{
+export class DialogElementsExampleDialog implements OnInit {
   datosDialogForm: FormGroup;
 
   tooltipData = tooltipData;
@@ -36,16 +36,16 @@ export class DialogElementsExampleDialog implements OnInit{
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-   isDisabledInicial: boolean = true;
-   isDisabledModificacion: boolean = true;
-   isDisabledConclusion: boolean = true;
-   isDisabledCheckBoxInicial: boolean = true;
-   isDisabledCheckBoxModificacion: boolean = true;
-   isDisabledCheckBoxConclusion: boolean = true;
-   
+  isDisabledInicial: boolean = true;
+  isDisabledModificacion: boolean = true;
+  isDisabledConclusion: boolean = true;
+  isDisabledCheckBoxInicial: boolean = true;
+  isDisabledCheckBoxModificacion: boolean = true;
+  isDisabledCheckBoxConclusion: boolean = true;
 
-  comprobarMes(){
-    if (this.mes===5){
+
+  comprobarMes() {
+    if (this.mes === 5) {
       this.isDisabledModificacion = false;
     }
   }
@@ -60,12 +60,12 @@ export class DialogElementsExampleDialog implements OnInit{
     //this.createForm();
   }
 
-  validarDeclaracion(value: any){
-    console.log('value '+value);
+  validarDeclaracion(value: any) {
+    console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
-    console.log('tipoDeclaracion '+ tipo);
-    console.log('puesto '+ puesto);
+    console.log('tipoDeclaracion ' + tipo);
+    console.log('puesto ' + puesto);
     let cbInicial = document.getElementById('cbInicial') as HTMLInputElement | null;
     let cbModificacion = document.getElementById('cbModificacion') as HTMLInputElement | null;
     let cbConclusion = document.getElementById('cbConclusion') as HTMLInputElement | null;
@@ -85,41 +85,86 @@ export class DialogElementsExampleDialog implements OnInit{
     else{
 
     }*/
-    if(tipo === "INICIAL"){
+    if (tipo === "INICIAL") {
       btnInicialSimple?.removeAttribute('disabled');
       btnInicialCompleta?.removeAttribute('disabled');
-      btnModificacionSimple?.setAttribute('disabled','');
-      btnModificacionCompleta?.setAttribute('disabled','');
-      btnConclusionSimple?.setAttribute('disabled','');
-      btnConclusionCompleta?.setAttribute('disabled','');
+      btnModificacionSimple?.setAttribute('disabled', '');
+      btnModificacionCompleta?.setAttribute('disabled', '');
+      btnConclusionSimple?.setAttribute('disabled', '');
+      btnConclusionCompleta?.setAttribute('disabled', '');
+      if (puesto === "DIRECTIVO") {
+        cbInicial?.setAttribute('unchecked', '');
+        cbModificacion?.setAttribute('disabled', '');
+        cbConclusion?.setAttribute('disabled', '');
+      }
+      else if (puesto === "OPERATIVO") {
+        cbInicial?.setAttribute('checked', '');
+        cbModificacion?.setAttribute('disabled', '');
+        cbConclusion?.setAttribute('disabled', '');
+      }
+      else {
+        cbInicial?.setAttribute('disabled', '');
+        cbModificacion?.setAttribute('disabled', '');
+        cbConclusion?.setAttribute('disabled', '');
+      }
     }
-    else if (tipo === "MODIFICACIÓN"){
+    else if (tipo === "MODIFICACIÓN") {
       btnModificacionSimple?.removeAttribute('disabled');
       btnModificacionCompleta?.removeAttribute('disabled');
-      btnInicialSimple?.setAttribute('disabled','');
-      btnInicialCompleta?.setAttribute('disabled','');
-      btnConclusionSimple?.setAttribute('disabled','');
-      btnConclusionCompleta?.setAttribute('disabled','');
+      btnInicialSimple?.setAttribute('disabled', '');
+      btnInicialCompleta?.setAttribute('disabled', '');
+      btnConclusionSimple?.setAttribute('disabled', '');
+      btnConclusionCompleta?.setAttribute('disabled', '');
+      if (puesto === "DIRECTIVO") {
+        cbInicial?.setAttribute('disabled', '');
+        cbModificacion?.setAttribute('unchecked', '');
+        cbConclusion?.setAttribute('disabled', '');
+      }
+      else if (puesto === "OPERATIVO") {
+        cbInicial?.setAttribute('disabled', '');
+        cbModificacion?.setAttribute('checked', '');
+        cbConclusion?.setAttribute('disabled', '');
+      }
+      else {
+        cbInicial?.setAttribute('disabled', '');
+        cbModificacion?.setAttribute('disabled', '');
+        cbConclusion?.setAttribute('disabled', '');
+      }
     }
-    else if (tipo === "CONCLUSIÓN"){
+    else if (tipo === "CONCLUSIÓN") {
       btnConclusionSimple?.removeAttribute('disabled');
       btnConclusionCompleta?.removeAttribute('disabled');
-      btnInicialSimple?.setAttribute('disabled','');
-      btnInicialCompleta?.setAttribute('disabled','');
-      btnConclusionSimple?.setAttribute('disabled','');
-      btnConclusionCompleta?.setAttribute('disabled','');
+      btnInicialSimple?.setAttribute('disabled', '');
+      btnInicialCompleta?.setAttribute('disabled', '');
+      btnConclusionSimple?.setAttribute('disabled', '');
+      btnConclusionCompleta?.setAttribute('disabled', '');
+      if (puesto === "DIRECTIVO") {
+        cbInicial?.setAttribute('disabled', '');
+        cbModificacion?.setAttribute('disabled', '');
+        cbConclusion?.setAttribute('unchecked', '');
+      }
+      else if (puesto === "OPERATIVO") {
+        cbInicial?.setAttribute('disabled', '');
+        cbModificacion?.setAttribute('disabled', '');
+        cbConclusion?.setAttribute('checked', '');
+      }
+      else {
+        cbInicial?.setAttribute('disabled', '');
+        cbModificacion?.setAttribute('disabled', '');
+        cbConclusion?.setAttribute('disabled', '');
+      }
     }
-    else{
-      btnInicialSimple?.setAttribute('disabled','');
-      btnInicialCompleta?.setAttribute('disabled','');
-      btnModificacionSimple?.setAttribute('disabled','');
-      btnModificacionCompleta?.setAttribute('disabled','');
-      btnConclusionSimple?.setAttribute('disabled','');
-      btnConclusionCompleta?.setAttribute('disabled','');
+    else {
+      btnInicialSimple?.setAttribute('disabled', '');
+      btnInicialCompleta?.setAttribute('disabled', '');
+      btnModificacionSimple?.setAttribute('disabled', '');
+      btnModificacionCompleta?.setAttribute('disabled', '');
+      btnConclusionSimple?.setAttribute('disabled', '');
+      btnConclusionCompleta?.setAttribute('disabled', '');
     }
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.datosDialogForm = this.formBuilder.group({
       tipoDeclaracion: [null, [Validators.required]],
       fechaTomaPosesion: [null, [Validators.required]],
