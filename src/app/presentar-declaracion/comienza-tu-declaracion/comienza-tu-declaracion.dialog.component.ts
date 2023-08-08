@@ -36,7 +36,31 @@ export class DialogElementsExampleDialog implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  /*isDisabledInicial: boolean = true;
+  cbInicial = document.getElementById('cbInicial') as HTMLInputElement | null;
+  cbModificacion = document.getElementById('cbModificacion') as HTMLInputElement | null;
+  cbConclusion = document.getElementById('cbConclusion') as HTMLInputElement | null;
+  btnInicialSimple = document.getElementById('btnInicialSimple') as HTMLInputElement | null;
+  btnInicialCompleta = document.getElementById('btnInicialCompleta') as HTMLInputElement | null;
+  btnModificacionSimple = document.getElementById('btnModificacionSimple') as HTMLInputElement | null;
+  btnModificacionCompleta = document.getElementById('btnModificacionCompleta') as HTMLInputElement | null;
+  btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
+  btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
+  
+  /*
+  btnInicialSimple.disabled=true;
+  btnInicialCompleta.disabled=true;
+  btnModificacionSimple.disabled=true;
+  btnModificacionCompleta.disabled=true;
+  btnConclusionSimple.disabled=true;
+  btnConclusionCompleta.disabled=true;
+  cbInicial.checked=false;
+  cbModificacion.checked=false;
+  cbConclusion.checked=false;
+  cbInicial.disabled=true;
+  cbModificacion.disabled=true;
+  cbConclusion.disabled=true; 
+  */
+ /*isDisabledInicial: boolean = true;
   isDisabledModificacion: boolean = true;
   isDisabledConclusion: boolean = true;
   isDisabledCheckBoxInicial: boolean = true;
@@ -66,55 +90,38 @@ export class DialogElementsExampleDialog implements OnInit {
     const puesto = this.datosDialogForm.get('puesto').value;
     console.log('tipoDeclaracion ' + tipo);
     console.log('puesto ' + puesto);
-    let cbInicial = document.getElementById('cbInicial') as HTMLInputElement | null;
-    let cbModificacion = document.getElementById('cbModificacion') as HTMLInputElement | null;
-    let cbConclusion = document.getElementById('cbConclusion') as HTMLInputElement | null;
-    let btnInicialSimple = document.getElementById('btnInicialSimple') as HTMLInputElement | null;
-    let btnInicialCompleta = document.getElementById('btnInicialCompleta') as HTMLInputElement | null;
-    let btnModificacionSimple = document.getElementById('btnModificacionSimple') as HTMLInputElement | null;
-    let btnModificacionCompleta = document.getElementById('btnModificacionCompleta') as HTMLInputElement | null;
-    let btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
-    let btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
-    
-    btnInicialSimple.disabled=true;
-    btnInicialCompleta.disabled=true;
-    btnModificacionSimple.disabled=true;
-    btnModificacionCompleta.disabled=true;
-    btnConclusionSimple.disabled=true;
-    btnConclusionCompleta.disabled=true;
-    cbInicial.checked=false;
-    cbModificacion.checked=false;
-    cbConclusion.checked=false;
-    cbInicial.disabled=true;
-    cbModificacion.disabled=true;
-    cbConclusion.disabled=true;
+
 
     if (tipo === "INICIAL") {
-      btnInicialSimple.disabled=false;
-      btnInicialCompleta.disabled=false;
+      this.btnInicialSimple.disabled=false;
+      this.btnInicialCompleta.disabled=false;
+      this.btnModificacionSimple.disabled=true;
+      this.btnModificacionCompleta.disabled=true;
+      this.btnConclusionSimple.disabled=true;
+      this.btnConclusionCompleta.disabled=true;
       if (puesto === "OPERATIVO") {
-        cbInicial.checked=true;
+        this.cbInicial.checked=true;
       }
     }
     else if (tipo === "MODIFICACIÓN") {
-      btnModificacionSimple.disabled=false;
-      btnModificacionCompleta.disabled=false;
+      this.btnModificacionSimple.disabled=false;
+      this.btnModificacionCompleta.disabled=false;
       if (puesto === "OPERATIVO") {
-        btnModificacionSimple.disabled=false;
-        btnModificacionCompleta.disabled=false;
+        this.btnModificacionSimple.disabled=false;
+        this.btnModificacionCompleta.disabled=false;
       }
     }
     else if (tipo === "CONCLUSIÓN") {
-      btnConclusionSimple.disabled=false;
-      btnConclusionCompleta.disabled=false;
+      this.btnConclusionSimple.disabled=false;
+      this.btnConclusionCompleta.disabled=false;
       if (puesto === "OPERATIVO") {
-        btnConclusionSimple.disabled=false;
-        btnConclusionCompleta.disabled=false;
+        this.btnConclusionSimple.disabled=false;
+        this.btnConclusionCompleta.disabled=false;
       }
       else {
-        cbInicial?.setAttribute('disabled', '');
-        cbModificacion?.setAttribute('disabled', '');
-        cbConclusion?.setAttribute('disabled', '');
+        this.cbInicial.disabled=true;
+        this.cbModificacion.disabled=true;
+        this.cbConclusion.disabled=true;
       }
     }
   }
