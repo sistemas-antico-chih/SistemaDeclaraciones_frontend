@@ -46,20 +46,6 @@ export class DialogElementsExampleDialog implements OnInit {
   btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
   btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
   
-  /*
-  btnInicialSimple.disabled=true;
-  btnInicialCompleta.disabled=true;
-  btnModificacionSimple.disabled=true;
-  btnModificacionCompleta.disabled=true;
-  btnConclusionSimple.disabled=true;
-  btnConclusionCompleta.disabled=true;
-  cbInicial.checked=false;
-  cbModificacion.checked=false;
-  cbConclusion.checked=false;
-  cbInicial.disabled=true;
-  cbModificacion.disabled=true;
-  cbConclusion.disabled=true; 
-  */
  /*isDisabledInicial: boolean = true;
   isDisabledModificacion: boolean = true;
   isDisabledConclusion: boolean = true;
@@ -85,12 +71,15 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarDeclaracion(value: any) {
+
     console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
     console.log('tipoDeclaracion ' + tipo);
     console.log('puesto ' + puesto);
-
+    console.log('cbInicial '+ this.cbInicial);
+    console.log('btnInicialSimple '+ this.btnInicialSimple);
+    console.log('btnInicialCompleta '+ this.btnInicialCompleta);
 
     if (tipo === "INICIAL") {
       this.btnInicialSimple.disabled=false;
@@ -132,7 +121,18 @@ export class DialogElementsExampleDialog implements OnInit {
       fechaTomaPosesion: [null, [Validators.required]],
       puesto: [null, [Validators.required]],
     });
-
+    this.btnInicialSimple.disabled=true;
+    this.btnInicialCompleta.disabled=true;
+    this.btnModificacionSimple.disabled=true;
+    this.btnModificacionCompleta.disabled=true;
+    this.btnConclusionSimple.disabled=true;
+    this.btnConclusionCompleta.disabled=true;
+    this.cbInicial.checked=false;
+    this.cbModificacion.checked=false;
+    this.cbConclusion.checked=false;
+    this.cbInicial.disabled=true;
+    this.cbModificacion.disabled=true;
+    this.cbConclusion.disabled=true; 
   }
   closeDialog() {
     this.dialogRef.close({ data: '' })
