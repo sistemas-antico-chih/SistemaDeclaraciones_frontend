@@ -62,21 +62,62 @@ export class DialogElementsExampleDialog implements OnInit{
 
   validarDeclaracion(value: any){
     console.log('value '+value);
-    //const tipo = JSON.parse(JSON.stringify(this.datosDialogForm.value)); // Deep copy
-    //const puesto = JSON.parse(JSON.stringify(this.datosDialogForm.value)); // Deep copy
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
     console.log('tipoDeclaracion '+ tipo);
     console.log('puesto '+ puesto);
+    let cbInicial = document.getElementById('cbInicial') as HTMLInputElement | null;
+    let cbModificacion = document.getElementById('cbModificacion') as HTMLInputElement | null;
+    let cbConclusion = document.getElementById('cbConclusion') as HTMLInputElement | null;
+    let btnInicialSimple = document.getElementById('btnInicialSimple') as HTMLInputElement | null;
+    let btnInicialCompleta = document.getElementById('btnInicialCompleta') as HTMLInputElement | null;
+    let btnModificacionSimple = document.getElementById('btnModificacionSimple') as HTMLInputElement | null;
+    let btnModificacionCompleta = document.getElementById('btnModificacionCompleta') as HTMLInputElement | null;
+    let btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
+    let btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
+
+    /*if(puesto === "DIRECTIVO"){
+
+    }
+    else if (puesto === "OPERATIVO"){
+
+    }
+    else{
+
+    }*/
+    if(tipo === "INICIAL"){
+      btnInicialSimple?.removeAttribute('disabled');
+      btnInicialCompleta?.removeAttribute('disabled');
+      btnModificacionSimple?.setAttribute('disabled','');
+      btnModificacionCompleta?.setAttribute('disabled','');
+      btnConclusionSimple?.setAttribute('disabled','');
+      btnConclusionCompleta?.setAttribute('disabled','');
+    }
+    else if (tipo === "MODIFICACIÓN"){
+      btnModificacionSimple?.removeAttribute('disabled');
+      btnModificacionCompleta?.removeAttribute('disabled');
+      btnInicialSimple?.setAttribute('disabled','');
+      btnInicialCompleta?.setAttribute('disabled','');
+      btnConclusionSimple?.setAttribute('disabled','');
+      btnConclusionCompleta?.setAttribute('disabled','');
+    }
+    else if (tipo === "CONCLUSIÓN"){
+      btnConclusionSimple?.removeAttribute('disabled');
+      btnConclusionCompleta?.removeAttribute('disabled');
+      btnInicialSimple?.setAttribute('disabled','');
+      btnInicialCompleta?.setAttribute('disabled','');
+      btnConclusionSimple?.setAttribute('disabled','');
+      btnConclusionCompleta?.setAttribute('disabled','');
+    }
+    else{
+      btnInicialSimple?.setAttribute('disabled','');
+      btnInicialCompleta?.setAttribute('disabled','');
+      btnModificacionSimple?.setAttribute('disabled','');
+      btnModificacionCompleta?.setAttribute('disabled','');
+      btnConclusionSimple?.setAttribute('disabled','');
+      btnConclusionCompleta?.setAttribute('disabled','');
+    }
   }
-  /*tipoDeclaracionChanged(value: any){
-    console.log('tipoDeclaracion: '+value);
-    this.validarDeclaracion();
-  }
-  puestoChanged(value: any){
-    console.log('puesto '+value);
-    this.validarDeclaracion();
-  }*/
 
   ngOnInit(){
     this.datosDialogForm = this.formBuilder.group({
