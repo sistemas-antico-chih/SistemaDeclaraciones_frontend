@@ -19,6 +19,7 @@ import { findOption } from '@utils/utils';
 })
 
 export class DialogElementsExampleDialog implements OnInit {
+  
   datosDialogForm: FormGroup;
 
   tooltipData = tooltipData;
@@ -46,6 +47,7 @@ export class DialogElementsExampleDialog implements OnInit {
   btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
   btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
   
+  cbInicialSimplificada=true;
   isDisabledInicialSimple: boolean = true;
   isDisabledInicialCompleta: boolean = true;
   isDisabledModificacionSimple: boolean = true;
@@ -67,7 +69,7 @@ export class DialogElementsExampleDialog implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
-
+    
   ) {
     //this.createForm();
   }
