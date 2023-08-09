@@ -19,7 +19,7 @@ import { findOption } from '@utils/utils';
 })
 
 export class DialogElementsExampleDialog implements OnInit {
-  
+
   datosDialogForm: FormGroup;
 
   tooltipData = tooltipData;
@@ -36,126 +36,118 @@ export class DialogElementsExampleDialog implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
-
-  cbInicial = document.getElementById('cbInicialSimplificada') as HTMLInputElement | null;
-  cbModificacion = document.getElementById('cbModificacionSimplificada') as HTMLInputElement | null;
-  cbConclusion = document.getElementById('cbConclusionSimplificada') as HTMLInputElement | null;
-  btnInicialSimple = document.getElementById('btnInicialSimple') as HTMLInputElement | null;
-  btnInicialCompleta = document.getElementById('btnInicialCompleta') as HTMLInputElement | null;
-  btnModificacionSimple = document.getElementById('btnModificacionSimple') as HTMLInputElement | null;
-  btnModificacionCompleta = document.getElementById('btnModificacionCompleta') as HTMLInputElement | null;
-  btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
-  btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
   
-
-
-  isDisabledCheckBoxInicial: boolean = false;
-  isCheckedCheckBoxInicial: boolean = true;
+  isDisabledCheckBoxInicial: boolean = true;
   isDisabledCheckBoxModificacion: boolean = true;
+  isDisabledCheckBoxConclusion: boolean = true;
+
   isCheckedCheckBoxModificacion: boolean = false;
-  isDisabledCheckBoxConclusion: boolean = false;
+  isCheckedCheckBoxInicial: boolean = false;
   isCheckedCheckBoxConclusion: boolean = false;
 
-  isDisabledButtonInicialSimple: boolean = true;
-  isDisabledButtonInicialCompleta: boolean = true;
-  isDisabledButtonModificacionSimple: boolean = true;
+  isDisabledButtonInicialSimple: boolean = false;
+  isDisabledButtonInicialCompleta: boolean = false;
+  isDisabledButtonModificacionSimple: boolean = false;
   isDisabledButtonModificacionCompleta: boolean = false;
   isDisabledButtonConclusionSimple: boolean = false;
-  isDisabledButtonConclusionCompleta: boolean = true;
+  isDisabledButtonConclusionCompleta: boolean = false;
 
 
- /* comprobarMes() {
-    if (this.mes === 5) {
-      //this.isDisabledModificacion = false;
-    }
-  }
-*/
+  /* comprobarMes() {
+     if (this.mes === 5) {
+       //this.isDisabledModificacion = false;
+     }
+   }
+ */
   //constructor(public dialog: MatDialog) {}
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
-    
+
   ) {
     //this.createForm();
   }
 
   validarDeclaracion(value: any) {
-
-
     console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
-
-    //var btnInicialCompleta= document.getElementById("btnInicialSimple") as HTMLInputElement | null
-
-
     if (tipo === "INICIAL") {
-      this.btnInicialSimple.disabled=false;
-      this.btnInicialCompleta.disabled=false;
-      this.btnModificacionSimple.disabled=true;
-      this.btnModificacionCompleta.disabled=true;
-      this.btnConclusionSimple.disabled=true;
-      this.btnConclusionCompleta.disabled=true;
+      this.isDisabledButtonInicialSimple = false;
+      this.isDisabledButtonInicialCompleta = false;
+      this.isDisabledButtonModificacionSimple = true;
+      this.isDisabledButtonModificacionCompleta = true;
+      this.isDisabledButtonConclusionSimple = true;
+      this.isDisabledButtonConclusionCompleta = true;
       if (puesto === "OPERATIVO") {
-        this.cbInicial.checked=true;
+        this.isCheckedCheckBoxInicial = true;
+        this.isCheckedCheckBoxModificacion = false;
+        this.isCheckedCheckBoxConclusion = false;
+      } 
+      else {
+        this.isCheckedCheckBoxInicial = false;
+        this.isCheckedCheckBoxModificacion = false;
+        this.isCheckedCheckBoxConclusion = false;
       }
     }
     else if (tipo === "MODIFICACIÓN") {
-      this.btnModificacionSimple.disabled=false;
-      this.btnModificacionCompleta.disabled=false;
+      this.isDisabledButtonInicialSimple = true;
+      this.isDisabledButtonInicialCompleta = true;
+      this.isDisabledButtonModificacionSimple = false;
+      this.isDisabledButtonModificacionCompleta = false;
+      this.isDisabledButtonConclusionSimple = true;
+      this.isDisabledButtonConclusionCompleta = true;
       if (puesto === "OPERATIVO") {
-        this.btnModificacionSimple.disabled=false;
-        this.btnModificacionCompleta.disabled=false;
+        this.isCheckedCheckBoxInicial = false;
+        this.isCheckedCheckBoxModificacion = true;
+        this.isCheckedCheckBoxConclusion = false;
+      } 
+      else {
+        this.isCheckedCheckBoxInicial = false;
+        this.isCheckedCheckBoxModificacion = false;
+        this.isCheckedCheckBoxConclusion = false;
       }
     }
     else if (tipo === "CONCLUSIÓN") {
-      this.btnConclusionSimple.disabled=false;
-      this.btnConclusionCompleta.disabled=false;
+      this.isDisabledButtonInicialSimple = true;
+      this.isDisabledButtonInicialCompleta = true;
+      this.isDisabledButtonModificacionSimple = true;
+      this.isDisabledButtonModificacionCompleta = true;
+      this.isDisabledButtonConclusionSimple = false;
+      this.isDisabledButtonConclusionCompleta = false;
       if (puesto === "OPERATIVO") {
-        this.btnConclusionSimple.disabled=false;
-        this.btnConclusionCompleta.disabled=false;
-      }
+        this.isCheckedCheckBoxInicial = false;
+        this.isCheckedCheckBoxModificacion = false;
+        this.isCheckedCheckBoxConclusion = true;
+      } 
       else {
-        this.cbInicial.disabled=true;
-        this.cbModificacion.disabled=true;
-        this.cbConclusion.disabled=true;
+        this.isCheckedCheckBoxInicial = false;
+        this.isCheckedCheckBoxModificacion = false;
+        this.isCheckedCheckBoxConclusion = false;
       }
     }
   }
+    ngOnInit() {
+      this.datosDialogForm = this.formBuilder.group({
+        tipoDeclaracion: [null, [Validators.required]],
+        fechaTomaPosesion: [null, [Validators.required]],
+        puesto: [null, [Validators.required]],
+      });
+    }
+    closeDialog() {
+      this.dialogRef.close({ data: '' })
+    }
 
-  ngOnInit() {
-    this.datosDialogForm = this.formBuilder.group({
-      tipoDeclaracion: [null, [Validators.required]],
-      fechaTomaPosesion: [null, [Validators.required]],
-      puesto: [null, [Validators.required]],
-    });
-    this.btnInicialSimple.disabled=true;
-    this.btnInicialCompleta.disabled=true;
-    this.btnModificacionSimple.disabled=true;
-    this.btnModificacionCompleta.disabled=true;
-    this.btnConclusionSimple.disabled=true;
-    this.btnConclusionCompleta.disabled=true;
-    this.cbInicial.checked=false;
-    this.cbModificacion.checked=false;
-    this.cbConclusion.checked=false;
-    this.cbInicial.disabled=true;
-    this.cbModificacion.disabled=true;
-    this.cbConclusion.disabled=true; 
-  }
-  closeDialog() {
-    this.dialogRef.close({ data: '' })
-  }
+    fillForm(datosComponenteForm: DatosDialog | undefined) {
+      this.datosDialogForm.patchValue(datosComponenteForm || {});
 
-  fillForm(datosComponenteForm: DatosDialog | undefined) {
-    this.datosDialogForm.patchValue(datosComponenteForm || {});
-
+    }
+    confirmSaveInfo() {
+      console.log("boton guardar");
+    }
   }
-  confirmSaveInfo() {
-    console.log("boton guardar");
-  }
-}
 
 function Input() {
   throw new Error('Function not implemented.');
