@@ -45,12 +45,12 @@ export class DialogElementsExampleDialog implements OnInit {
   isCheckedCheckBoxInicial: boolean = false;
   isCheckedCheckBoxConclusion: boolean = false;
 
-  isDisabledButtonInicialSimple: boolean = false;
-  isDisabledButtonInicialCompleta: boolean = false;
-  isDisabledButtonModificacionSimple: boolean = false;
-  isDisabledButtonModificacionCompleta: boolean = false;
-  isDisabledButtonConclusionSimple: boolean = false;
-  isDisabledButtonConclusionCompleta: boolean = false;
+  isDisabledButtonInicialSimple: boolean = true;
+  isDisabledButtonInicialCompleta: boolean = true;
+  isDisabledButtonModificacionSimple: boolean = true;
+  isDisabledButtonModificacionCompleta: boolean = true;
+  isDisabledButtonConclusionSimple: boolean = true;
+  isDisabledButtonConclusionCompleta: boolean = true;
 
 
   /* comprobarMes() {
