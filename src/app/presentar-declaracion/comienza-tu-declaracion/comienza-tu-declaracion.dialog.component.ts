@@ -81,15 +81,14 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarDeclaracion(value: any) {
+    const btnInicialSimple= document.getElementById("btnInicialSimple") as HTMLInputElement | null
+    btnInicialSimple.disabled=true; 
+
     console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
-    console.log('tipoDeclaracion ' + tipo);
-    console.log('puesto ' + puesto);
-    console.log('btnInicialSimple '+ this.btnInicialSimple.id);
-    console.log('btnInicialCompleta '+ this.btnInicialCompleta.id);
-    console.log('cbInicial '+ this.cbInicial.id);
-    console.log('cbInicial '+ this.cbInicial.value);
+    console.log('btnInicialSimple ' + btnInicialSimple.id);
+
 
 
     if (tipo === "INICIAL") {
