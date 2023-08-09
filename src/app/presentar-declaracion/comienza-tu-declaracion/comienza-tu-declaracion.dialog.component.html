@@ -59,11 +59,11 @@
         <mat-card-actions>
           <mat-checkbox color="primary" #cbInicialSimplificada [disabled]="isDisabledCheckBoxInicial" [checked]="isCheckedCheckBoxInicial" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbInicialSimplificada.checked" id="btnInicialSimple" mat-raised-button color="primary" 
-           [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()" [disabled]="true"> 
+           [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()" [disabled]="isDisabledButtonInicialSimple"> 
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!cbInicialSimplificada.checked" mat-raised-button color="primary" #btnInicialCompleta
-            [routerLink]="['/inicial/situacion-patrimonial']"  (click)="closeDialog()" [disabled]="false">
+            [routerLink]="['/inicial/situacion-patrimonial']"  (click)="closeDialog()" [disabled]="isDisabledButtonInicialCompleta">
             Comenzar declaración
           </button>
         </mat-card-actions>
@@ -79,11 +79,11 @@
         <mat-card-actions>
           <mat-checkbox color="primary" #cbModificacionSimplificada [disabled]="isDisabledCheckBoxModificacion" [checked]="isCheckedCheckBoxModificacion" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbModificacionSimplificada.checked"  mat-raised-button color="primary" #btnInicialSimple id="btnInicialSimple"
-            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="false">
+            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="isDisabledButtonModifiacionSimple">
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!cbModificacionSimplificada.checked" mat-raised-button color="primary" 
-            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="true">
+            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="isDisabledButtonModifiacionCompleta">
             Comenzar declaración
           </button>
         </mat-card-actions>
@@ -99,11 +99,11 @@
         <mat-card-actions>
           <mat-checkbox color="primary" #cbConclusionSimplificada  [disabled]="isDisabledCheckBoxConclusion" [checked]="isCheckedCheckBoxConclusion" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbConclusionSimplificada.checked"  mat-raised-button color="primary" 
-            [routerLink]="['/conclusion/simplificada/situacion-patrimonial']" (click)="closeDialog()" [disabled]="false">
+            [routerLink]="['/conclusion/simplificada/situacion-patrimonial']" (click)="closeDialog()" [disabled]="isDisabledButtonConclusionSimple">
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!cbConclusionSimplificada.checked" mat-raised-button color="primary" 
-            [routerLink]="['/conclusion/situacion-patrimonial']" (click)="closeDialog()" [disabled]="true">
+            [routerLink]="['/conclusion/situacion-patrimonial']" (click)="closeDialog()" [disabled]="isDisabledButtonConclusionCompleta">
             Comenzar declaración
           </button>
         </mat-card-actions>
