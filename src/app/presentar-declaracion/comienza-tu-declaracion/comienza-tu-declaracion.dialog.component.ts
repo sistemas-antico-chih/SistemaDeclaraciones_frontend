@@ -47,9 +47,7 @@ export class DialogElementsExampleDialog implements OnInit {
   btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
   btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
   
-  cbInicialSimplificada=true
-  cbModificacionSimplificada=false;
-  cbConclusionSimplificada=false;
+
 
   isDisabledCheckBoxInicial: boolean = false;
   isCheckedCheckBoxInicial: boolean = true;
@@ -57,6 +55,14 @@ export class DialogElementsExampleDialog implements OnInit {
   isCheckedCheckBoxModificacion: boolean = false;
   isDisabledCheckBoxConclusion: boolean = false;
   isCheckedCheckBoxConclusion: boolean = false;
+
+  isDisabledButtonInicialSimple: boolean = true;
+  isDisabledButtonInicialCompleta: boolean = true;
+  isDisabledButtonModificacionSimple: boolean = true;
+  isDisabledButtonModificacionCompleta: boolean = false;
+  isDisabledButtonConclusionSimple: boolean = false;
+  isDisabledButtonConclusionCompleta: boolean = true;
+
 
  /* comprobarMes() {
     if (this.mes === 5) {
