@@ -47,8 +47,12 @@ export class DialogElementsExampleDialog implements OnInit {
   btnConclusionSimple = document.getElementById('btnConclusionSimple') as HTMLInputElement | null;
   btnConclusionCompleta = document.getElementById('btnConclusionCompleta') as HTMLInputElement | null;
   
-  cbInicialSimplificada=true;
-  isDisabledInicialSimple: boolean = true;
+  cbInicialSimplificada=true
+  cbModificacionSimplificada=false;
+  cbConclusionSimplificada=false;
+
+  isDisabledInicialSimple: boolean = false;
+
   isDisabledInicialCompleta: boolean = true;
   isDisabledModificacionSimple: boolean = true;
   isDisabledModificacionCompleta: boolean = true;
