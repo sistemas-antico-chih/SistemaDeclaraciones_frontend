@@ -57,7 +57,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <mat-checkbox color="primary" #cbInicialSimplificada [checked]="true" >Declaración simplificada</mat-checkbox>
+          <mat-checkbox color="primary" #cbInicialSimplificada [disabled]="isDisabledCheckBoxInicial" [checked]="isCheckedCheckBoxInicial" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbInicialSimplificada.checked" #btnInicialSimple mat-raised-button color="primary" 
            [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()" [disabled]="isDisabledInicialSimple"> 
             <small>Comenzar declaración simplificada</small>
@@ -77,7 +77,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <mat-checkbox color="primary" #cbModificacionSimplificada  [checked]="true">Declaración simplificada</mat-checkbox>
+          <mat-checkbox color="primary" #cbModificacionSimplificada [disabled]="isDisabledCheckBoxModificacion" [checked]="isCheckedCheckBoxModificacion" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbModificacionSimplificada.checked"  mat-raised-button color="primary" 
             [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()"  >
             <small>Comenzar declaración simplificada</small>
@@ -97,7 +97,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <mat-checkbox color="primary" #cbConclusionSimplificada  [checked]="true">Declaración simplificada</mat-checkbox>
+          <mat-checkbox color="primary" #cbConclusionSimplificada  [disabled]="isDisabledCheckBoxConclusion" [checked]="isCheckedCheckBoxConclusion" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbConclusionSimplificada.checked"  mat-raised-button color="primary" 
             [routerLink]="['/conclusion/simplificada/situacion-patrimonial']" (click)="closeDialog()">
             <small>Comenzar declaración simplificada</small>

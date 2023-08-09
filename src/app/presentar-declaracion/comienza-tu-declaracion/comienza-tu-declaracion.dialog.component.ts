@@ -51,16 +51,12 @@ export class DialogElementsExampleDialog implements OnInit {
   cbModificacionSimplificada=false;
   cbConclusionSimplificada=false;
 
-  isDisabledInicialSimple: boolean = false;
-
-  isDisabledInicialCompleta: boolean = true;
-  isDisabledModificacionSimple: boolean = true;
-  isDisabledModificacionCompleta: boolean = true;
-  isDisabledConclusionSimple: boolean = true;
-  isDisabledConclusionCompleta: boolean = true;
-  isDisabledCheckBoxInicial: boolean = true;
+  isDisabledCheckBoxInicial: boolean = false;
+  isCheckedCheckBoxInicial: boolean = true;
   isDisabledCheckBoxModificacion: boolean = true;
-  isDisabledCheckBoxConclusion: boolean = true;
+  isCheckedCheckBoxModificacion: boolean = false;
+  isDisabledCheckBoxConclusion: boolean = false;
+  isCheckedCheckBoxConclusion: boolean = false;
 
  /* comprobarMes() {
     if (this.mes === 5) {
