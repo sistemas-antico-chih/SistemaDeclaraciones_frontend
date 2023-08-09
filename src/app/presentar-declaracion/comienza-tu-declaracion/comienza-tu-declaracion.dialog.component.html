@@ -79,11 +79,11 @@
         <mat-card-actions>
           <mat-checkbox color="primary" #cbModificacionSimplificada [disabled]="isDisabledCheckBoxModificacion" [checked]="isCheckedCheckBoxModificacion" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbModificacionSimplificada.checked"  mat-raised-button color="primary" #btnInicialSimple id="btnInicialSimple"
-            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="isDisabledButtonModifiacionSimple">
+            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="isDisabledButtonModificacionSimple">
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!cbModificacionSimplificada.checked" mat-raised-button color="primary" 
-            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="isDisabledButtonModifiacionCompleta">
+            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="isDisabledButtonModificacionCompleta">
             Comenzar declaración
           </button>
         </mat-card-actions>
