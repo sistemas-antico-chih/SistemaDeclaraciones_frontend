@@ -88,10 +88,9 @@ export class DialogElementsExampleDialog implements OnInit {
     const puesto = this.datosDialogForm.get('puesto').value;
 
     var btnInicialSimple= <HTMLInputElement> document.getElementById("btnInicialSimple") ;
-    btnInicialSimple.disabled=true; 
+    //btnInicialSimple.disabled=true; 
+    btnInicialSimple?.setAttribute('disabled','');
     //var btnInicialCompleta= document.getElementById("btnInicialSimple") as HTMLInputElement | null
-    console.log('btnInicialSimple ' + btnInicialSimple.id);
-
 
 
     if (tipo === "INICIAL") {

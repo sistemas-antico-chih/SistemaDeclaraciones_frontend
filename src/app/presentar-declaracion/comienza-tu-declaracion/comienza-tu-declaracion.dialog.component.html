@@ -83,7 +83,7 @@
             <small>Comenzar declaración simplificada</small>
           </button>
           <button *ngIf="!cbModificacionSimplificada.checked" mat-raised-button color="primary" 
-            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()"  >
+            [routerLink]="['/modificacion/situacion-patrimonial']" (click)="closeDialog()"  [disabled]="true">
             Comenzar declaración
           </button>
         </mat-card-actions>
