@@ -16,9 +16,11 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <!--
           <mat-form-field  appearance="fill">
             <mat-label>Fecha de toma de posesión/conclusión</mat-label>
             <input
+             *ngIf="cbInicialSimplificada.checked"
               [errorStateMatcher]="errorMatcher"
               matInput
               [matDatepicker]="picker"
@@ -29,9 +31,10 @@
             />
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker >
+          </mat-datepicker>
           </mat-form-field>
-
+          -->
           <mat-form-field  appearance="fill">
             <mat-label>Seleccionar un puesto</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
