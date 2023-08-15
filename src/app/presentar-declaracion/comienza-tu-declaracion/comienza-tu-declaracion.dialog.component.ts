@@ -74,59 +74,67 @@ export class DialogElementsExampleDialog implements OnInit {
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
-    if (tipo === "INICIAL") {
-      this.isDisabledButtonInicialSimple = false;
+    if (tipo === "INICIAL" && puesto === "DIRECTIVO") {
+      this.isCheckedCheckBoxInicial = false;
+      this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = false;
       this.isDisabledButtonModificacionSimple = true;
       this.isDisabledButtonModificacionCompleta = true;
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
-      if (puesto === "OPERATIVO") {
-        this.isCheckedCheckBoxInicial = true;
-        this.isCheckedCheckBoxModificacion = false;
-        this.isCheckedCheckBoxConclusion = false;
-      } 
-      else {
-        this.isCheckedCheckBoxInicial = false;
-        this.isCheckedCheckBoxModificacion = false;
-        this.isCheckedCheckBoxConclusion = false;
-      }
     }
-    else if (tipo === "MODIFICACIÓN") {
+    else if(tipo === "INICIAL" && puesto === "OPERATIVO") {
+      this.isCheckedCheckBoxInicial = true;
+      this.isDisabledButtonInicialSimple = false;
+      this.isDisabledButtonInicialCompleta = true;
+      this.isDisabledButtonModificacionSimple = true;
+      this.isDisabledButtonModificacionCompleta = true;
+      this.isDisabledButtonConclusionSimple = true;
+      this.isDisabledButtonConclusionCompleta = true;
+    }
+    else if(tipo === "MODIFICACIÓN" && puesto === "DIRECTIVO") {
+      this.isCheckedCheckBoxModificacion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
-      this.isDisabledButtonModificacionSimple = false;
+      this.isDisabledButtonModificacionSimple = true;
       this.isDisabledButtonModificacionCompleta = false;
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
-      if (puesto === "OPERATIVO") {
-        this.isCheckedCheckBoxInicial = false;
-        this.isCheckedCheckBoxModificacion = true;
-        this.isCheckedCheckBoxConclusion = false;
-      } 
-      else {
-        this.isCheckedCheckBoxInicial = false;
-        this.isCheckedCheckBoxModificacion = false;
-        this.isCheckedCheckBoxConclusion = false;
-      }
     }
-    else if (tipo === "CONCLUSIÓN") {
+    else if(tipo === "MODIFICACIÓN" && puesto === "OPERATIVO") {
+      this.isCheckedCheckBoxModificacion = true;
+      this.isDisabledButtonInicialSimple = true;
+      this.isDisabledButtonInicialCompleta = true;
+      this.isDisabledButtonModificacionSimple = false;
+      this.isDisabledButtonModificacionCompleta = true;
+      this.isDisabledButtonConclusionSimple = true;
+      this.isDisabledButtonConclusionCompleta = true;
+    }
+    else if(tipo === "CONCLUSIÓN" && puesto === "DIRECTIVO") {
+      this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
       this.isDisabledButtonModificacionCompleta = true;
-      this.isDisabledButtonConclusionSimple = false;
+      this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = false;
-      if (puesto === "OPERATIVO") {
-        this.isCheckedCheckBoxInicial = false;
-        this.isCheckedCheckBoxModificacion = false;
-        this.isCheckedCheckBoxConclusion = true;
-      } 
-      else {
-        this.isCheckedCheckBoxInicial = false;
-        this.isCheckedCheckBoxModificacion = false;
-        this.isCheckedCheckBoxConclusion = false;
-      }
+    }
+    else if(tipo === "CONCLUSIÓN" && puesto === "OPERATIVO") {
+      this.isCheckedCheckBoxConclusion = true;
+      this.isDisabledButtonInicialSimple = false;
+      this.isDisabledButtonInicialCompleta = true;
+      this.isDisabledButtonModificacionSimple = true;
+      this.isDisabledButtonModificacionCompleta = true;
+      this.isDisabledButtonConclusionSimple = false;
+      this.isDisabledButtonConclusionCompleta = true;
+    }
+    else{
+      this.isDisabledButtonInicialSimple = true;
+      this.isDisabledButtonInicialCompleta = true;
+      this.isDisabledButtonModificacionSimple = true;
+      this.isDisabledButtonModificacionCompleta = true;
+      this.isDisabledButtonConclusionSimple = true;
+      this.isDisabledButtonConclusionCompleta = true;
     }
   }
     ngOnInit() {
