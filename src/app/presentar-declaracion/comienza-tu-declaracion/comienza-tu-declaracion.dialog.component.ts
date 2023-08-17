@@ -30,7 +30,6 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
-
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
@@ -52,14 +51,6 @@ export class DialogElementsExampleDialog implements OnInit {
   isDisabledButtonConclusionSimple: boolean = true;
   isDisabledButtonConclusionCompleta: boolean = true;
 
-
-  /* comprobarMes() {
-     if (this.mes === 5) {
-       //this.isDisabledModificacion = false;
-     }
-   }
- */
-  //constructor(public dialog: MatDialog) {}
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
@@ -145,7 +136,7 @@ export class DialogElementsExampleDialog implements OnInit {
       });
     }
     closeDialog() {
-      this.dialogRef.close({ data: '' })
+      //this.dialogRef.close({ data: '' })
     }
 
     fillForm(datosComponenteForm: DatosDialog | undefined) {
@@ -157,6 +148,3 @@ export class DialogElementsExampleDialog implements OnInit {
     }
   }
 
-function Input() {
-  throw new Error('Function not implemented.');
-}
