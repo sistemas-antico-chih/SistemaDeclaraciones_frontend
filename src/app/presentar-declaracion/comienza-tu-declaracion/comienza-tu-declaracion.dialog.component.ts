@@ -136,7 +136,8 @@ export class DialogElementsExampleDialog implements OnInit {
       });
     }
     closeDialog() {
-      //this.dialogRef.close({ data: '' })
+      this.dialogRef.close({ data: '' })
+
     }
 
     fillForm(datosComponenteForm: DatosDialog | undefined) {
