@@ -62,7 +62,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarDeclaracion(value: any) {
-    console.log('value ' + value);
+    //console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
@@ -146,8 +146,8 @@ export class DialogElementsExampleDialog implements OnInit {
      }
     url = '/' + tipo;
     this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
-    console.log(tipo);
-    console.log(url+'/situacion-patrimonial/datos-generales');
+    console.log('tipo: '+tipo);
+    console.log('url: '+url+'/situacion-patrimonial/datos-generales');
     /*
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
