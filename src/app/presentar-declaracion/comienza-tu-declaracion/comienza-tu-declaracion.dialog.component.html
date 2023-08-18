@@ -11,8 +11,8 @@
             <mat-label>Tipo de declaración </mat-label>
             <mat-icon matPrefix>star</mat-icon>
             <mat-select formControlName="tipoDeclaracion" required (selectionChange)="validarDeclaracion($event.value)">
-              <mat-option *ngFor="let tipo of tipoDeclaracionCatalogo" [value]="tipo">
-                {{ tipo | replace: '_':' ' }}
+              <mat-option *ngFor="let tipo of tipoDeclaracionCatalogo" [value]="tipo.clave">
+                {{ tipo.valor | replace: '_':' ' }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -60,9 +60,11 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
+                    
+          <!--[routerLink]="['/inicial/simplificada/situacion-patrimonial']"-->
           <mat-checkbox color="primary" #cbInicialSimplificada [disabled]="isDisabledCheckBoxInicial" [checked]="isCheckedCheckBoxInicial" >Declaración simplificada</mat-checkbox>
           <button *ngIf="cbInicialSimplificada.checked" id="btnInicialSimple" mat-raised-button color="primary" 
-           [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()" [disabled]="isDisabledButtonInicialSimple"> 
+            (click)="closeDialog()" [disabled]="isDisabledButtonInicialSimple"> 
             <small>Comenzar declaración simplificada</small>
           </button>
 

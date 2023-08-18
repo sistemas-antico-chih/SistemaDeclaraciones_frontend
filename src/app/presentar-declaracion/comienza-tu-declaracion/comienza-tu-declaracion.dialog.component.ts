@@ -66,7 +66,7 @@ export class DialogElementsExampleDialog implements OnInit {
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
-    if (tipo === "INICIAL" && puesto === "DIRECTIVO") {
+    if (tipo === "inicial" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxInicial = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = false;
@@ -75,7 +75,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "INICIAL" && puesto === "OPERATIVO") {
+    else if (tipo === "inicial" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxInicial = true;
       this.isDisabledButtonInicialSimple = false;
       this.isDisabledButtonInicialCompleta = true;
@@ -84,7 +84,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "MODIFICACIÓN" && puesto === "DIRECTIVO") {
+    else if (tipo === "modificacion" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxModificacion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -93,7 +93,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "MODIFICACIÓN" && puesto === "OPERATIVO") {
+    else if (tipo === "modificacion" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxModificacion = true;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -102,7 +102,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "CONCLUSIÓN" && puesto === "DIRECTIVO") {
+    else if (tipo === "conclusion" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -111,7 +111,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = false;
     }
-    else if (tipo === "CONCLUSIÓN" && puesto === "OPERATIVO") {
+    else if (tipo === "conclusion" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxConclusion = true;
       this.isDisabledButtonInicialSimple = false;
       this.isDisabledButtonInicialCompleta = true;
@@ -137,7 +137,7 @@ export class DialogElementsExampleDialog implements OnInit {
     });
   }
   closeDialog() {
-     var tipo = this.datosDialogForm.get('tipoDeclaracion').value.toLowerCase();
+     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
      const puesto = this.datosDialogForm.get('puesto').value;
 
      let url ='/'+tipo;
