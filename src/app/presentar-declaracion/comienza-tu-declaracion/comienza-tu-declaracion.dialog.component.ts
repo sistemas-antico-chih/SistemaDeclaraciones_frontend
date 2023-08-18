@@ -137,7 +137,7 @@ export class DialogElementsExampleDialog implements OnInit {
     });
   }
   closeDialog() {
-     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+     var tipo = this.datosDialogForm.get('tipoDeclaracion').value.toLowerCase();
      const puesto = this.datosDialogForm.get('puesto').value;
 
      let url ='/'+tipo;
@@ -145,8 +145,9 @@ export class DialogElementsExampleDialog implements OnInit {
        url += '/simplificada';
      }
     url = '/' + tipo;
-    this.router.navigate([url + '/situacion-patrimonial/'])
-    console.log(url+'/situacion-patrimonial/');
+    this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
+    console.log(tipo);
+    console.log(url+'/situacion-patrimonial/datos-generales');
     /*
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
