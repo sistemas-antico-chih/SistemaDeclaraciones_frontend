@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '@shared/dialog/dialog.component';
 import { Router } from '@angular/router';
 //import { Catalogo, DatosDialog } from '@models/declaracion';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,6 +11,7 @@ import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 import puesto from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import { findOption } from '@utils/utils';
+import { validarRFC } from '@app/auth/signup/signup.validador';
 
 
 @Component({
@@ -52,6 +54,7 @@ export class DialogElementsExampleDialog implements OnInit {
   isDisabledButtonConclusionCompleta: boolean = true;
 
   constructor(
+    private dialog: MatDialog,
     private router: Router,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
@@ -62,7 +65,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarDeclaracion(value: any) {
-    //console.log('value ' + value);
+    console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
@@ -137,23 +140,18 @@ export class DialogElementsExampleDialog implements OnInit {
     });
   }
   closeDialog() {
-     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
-     const puesto = this.datosDialogForm.get('puesto').value;
+    var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+    const puesto = this.datosDialogForm.get('puesto').value;
 
-     let url ='/'+tipo;
-     if(puesto === "OPERATIVO"){
-       url += '/simplificada';
-     }
-    url = '/' + tipo;
-    this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
-    console.log('tipo: '+tipo);
-    console.log('url: '+url+'/situacion-patrimonial/datos-generales');
-    /*
-    let url = '/' + this.tipoDeclaracion;
-    if (this.declaracionSimplificada) url += '/simplificada';
-    let isDirty = this.datosGeneralesForm.dirty;
-
-    if (isDirty) {
+    if (this.isValid()) {
+      let url = '/' + tipo;
+      if (puesto === "OPERATIVO") {
+        url += '/simplificada';
+      }
+      url = '/' + tipo;
+      this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
+    }
+    else {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -162,15 +160,14 @@ export class DialogElementsExampleDialog implements OnInit {
           trueText: 'Continuar',
         },
       });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
-      });
-    } else {
-      this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+      this.dialogRef.close({ data: '' })
     }
-    */
+
     this.dialogRef.close({ data: '' })
+  }
+
+  isValid(){
+    return true;
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
