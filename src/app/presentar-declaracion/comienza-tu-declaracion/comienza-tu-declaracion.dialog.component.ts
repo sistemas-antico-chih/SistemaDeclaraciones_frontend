@@ -142,13 +142,18 @@ export class DialogElementsExampleDialog implements OnInit {
   closeDialog() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
+    console.log('puesto: '+puesto);
 
     if (this.isValid()) {
+      console.log('llega 1 ');
       let url = '/' + tipo;
       if (puesto === "OPERATIVO") {
+        console.log('llega 2 ');
         url += '/simplificada';
+      }else{
+        url = '/' + tipo;
       }
-      url = '/' + tipo;
+      console.log('llega 3 ');
       this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
     }
     else {
