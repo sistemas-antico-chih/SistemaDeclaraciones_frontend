@@ -65,8 +65,10 @@
            [routerLink]="['/inicial/simplificada/situacion-patrimonial']" (click)="closeDialog()" [disabled]="isDisabledButtonInicialSimple"> 
             <small>Comenzar declaración simplificada</small>
           </button>
+
+          <!--[routerLink]="['/inicial/situacion-patrimonial']"-->
           <button *ngIf="!cbInicialSimplificada.checked" mat-raised-button color="primary" #btnInicialCompleta
-            [routerLink]="['/inicial/situacion-patrimonial']"  (click)="closeDialog()" [disabled]="isDisabledButtonInicialCompleta">
+             (click)="closeDialog()" [disabled]="isDisabledButtonInicialCompleta">
             Comenzar declaración
           </button>
         </mat-card-actions>

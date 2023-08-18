@@ -35,7 +35,7 @@ export class DialogElementsExampleDialog implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
-  
+
   isDisabledCheckBoxInicial: boolean = true;
   isDisabledCheckBoxModificacion: boolean = true;
   isDisabledCheckBoxConclusion: boolean = true;
@@ -74,7 +74,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if(tipo === "INICIAL" && puesto === "OPERATIVO") {
+    else if (tipo === "INICIAL" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxInicial = true;
       this.isDisabledButtonInicialSimple = false;
       this.isDisabledButtonInicialCompleta = true;
@@ -83,7 +83,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if(tipo === "MODIFICACIÓN" && puesto === "DIRECTIVO") {
+    else if (tipo === "MODIFICACIÓN" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxModificacion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -92,7 +92,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if(tipo === "MODIFICACIÓN" && puesto === "OPERATIVO") {
+    else if (tipo === "MODIFICACIÓN" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxModificacion = true;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -101,7 +101,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if(tipo === "CONCLUSIÓN" && puesto === "DIRECTIVO") {
+    else if (tipo === "CONCLUSIÓN" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -110,7 +110,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = false;
     }
-    else if(tipo === "CONCLUSIÓN" && puesto === "OPERATIVO") {
+    else if (tipo === "CONCLUSIÓN" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxConclusion = true;
       this.isDisabledButtonInicialSimple = false;
       this.isDisabledButtonInicialCompleta = true;
@@ -119,7 +119,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = false;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else{
+    else {
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
@@ -128,24 +128,45 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionCompleta = true;
     }
   }
-    ngOnInit() {
-      this.datosDialogForm = this.formBuilder.group({
-        tipoDeclaracion: [null, [Validators.required]],
-        fechaTomaPosesion: [null, [Validators.required]],
-        puesto: [null, [Validators.required]],
-      });
-    }
-    closeDialog() {
-      this.dialogRef.close({ data: '' })
-
-    }
-
-    fillForm(datosComponenteForm: DatosDialog | undefined) {
-      this.datosDialogForm.patchValue(datosComponenteForm || {});
-
-    }
-    confirmSaveInfo() {
-      console.log("boton guardar");
-    }
+  ngOnInit() {
+    this.datosDialogForm = this.formBuilder.group({
+      tipoDeclaracion: [null, [Validators.required]],
+      fechaTomaPosesion: [null, [Validators.required]],
+      puesto: [null, [Validators.required]],
+    });
   }
+  closeDialog() {
+    /*
+    let url = '/' + this.tipoDeclaracion;
+    if (this.declaracionSimplificada) url += '/simplificada';
+    let isDirty = this.datosGeneralesForm.dirty;
+
+    if (isDirty) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Tienes cambios sin guardar',
+          message: '¿Deseas continuar?',
+          falseText: 'Cancelar',
+          trueText: 'Continuar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+      });
+    } else {
+      this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+    }
+    */
+    this.dialogRef.close({ data: '' })
+  }
+
+  fillForm(datosComponenteForm: DatosDialog | undefined) {
+    this.datosDialogForm.patchValue(datosComponenteForm || {});
+
+  }
+  confirmSaveInfo() {
+    console.log("boton guardar");
+  }
+}
 
