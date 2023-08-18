@@ -145,8 +145,8 @@ export class DialogElementsExampleDialog implements OnInit {
        url += '/simplificada';
      }
     url = '/' + tipo;
-    console.log(url);
-    this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante'])
+    this.router.navigate([url + '/situacion-patrimonial/'])
+    console.log(url+'/situacion-patrimonial/');
     /*
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
