@@ -52,6 +52,7 @@ export class DialogElementsExampleDialog implements OnInit {
   isDisabledButtonConclusionCompleta: boolean = true;
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -136,6 +137,16 @@ export class DialogElementsExampleDialog implements OnInit {
     });
   }
   closeDialog() {
+     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+     const puesto = this.datosDialogForm.get('puesto').value;
+
+     let url ='/'+tipo;
+     if(puesto === "OPERATIVO"){
+       url += '/simplificada';
+     }
+    url = '/' + tipo;
+    console.log(url);
+    this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante'])
     /*
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
