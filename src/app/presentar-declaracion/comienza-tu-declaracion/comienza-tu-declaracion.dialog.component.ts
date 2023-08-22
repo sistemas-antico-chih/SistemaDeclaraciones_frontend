@@ -148,13 +148,15 @@ export class DialogElementsExampleDialog implements OnInit {
       let url = '/' + tipo;
       if (puesto === "OPERATIVO") {
         url += '/simplificada';
+        this.dialogRef.close({ data: '' })
       }else{
         url = '/' + tipo;
       }
       this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
+      this.dialogRef.close({ data: '' })
     }
     else {
-      const dialogRef = this.dialog.open(DialogComponent, {
+      const dialogReff = this.dialog.open(DialogComponent, {
         data: {
           title: 'Es necesario realizar una Declaración INICIAL',
           //message: '¿Deseas continuar?',
@@ -162,10 +164,10 @@ export class DialogElementsExampleDialog implements OnInit {
           //trueText: 'Continuar',
         },
       });
-      //this.dialogRef.close({ data: '' })
+      dialogReff.close({ data: '' })
     }
 
-    this.dialogRef.close({ data: '' })
+    //this.dialogRef.close({ data: '' })
   }
 
   isValid(){
