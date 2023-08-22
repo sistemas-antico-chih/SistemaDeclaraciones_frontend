@@ -154,17 +154,15 @@ export class DialogElementsExampleDialog implements OnInit {
       this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
     }
     else {
-      console.log("llega else")
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          title: 'Tienes cambios sin guardar',
-          message: '¿Deseas continuar?',
-          falseText: 'Cancelar',
-          trueText: 'Continuar',
+          title: 'Es necesario realizar una Declaración INICIAL',
+          //message: '¿Deseas continuar?',
+          falseText: 'Continuar',
+          //trueText: 'Continuar',
         },
       });
-      console.log("llega aqui")
-      this.dialogRef.close({ data: '' })
+      //this.dialogRef.close({ data: '' })
     }
 
     this.dialogRef.close({ data: '' })
