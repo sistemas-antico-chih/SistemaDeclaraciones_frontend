@@ -145,18 +145,16 @@ export class DialogElementsExampleDialog implements OnInit {
     console.log('puesto: '+puesto);
 
     if (this.isValid()) {
-      console.log('llega 1 ');
       let url = '/' + tipo;
       if (puesto === "OPERATIVO") {
-        console.log('llega 2 ');
         url += '/simplificada';
       }else{
         url = '/' + tipo;
       }
-      console.log('llega 3 ');
       this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
     }
     else {
+      console.log("llega else")
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -165,6 +163,7 @@ export class DialogElementsExampleDialog implements OnInit {
           trueText: 'Continuar',
         },
       });
+      console.log("llega aqui")
       this.dialogRef.close({ data: '' })
     }
 
@@ -172,7 +171,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   isValid(){
-    return true;
+    return false;
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
