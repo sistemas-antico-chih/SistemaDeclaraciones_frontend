@@ -158,10 +158,10 @@ export class DialogElementsExampleDialog implements OnInit {
     else {
       const dialogReff = this.dialog.open(DialogComponent, {
         data: {
-          title: 'Es necesario realizar una Declaración INICIAL',
-          message: 'Se requiere tener una declaración de tipo INICIAL',
-          falseText: 'Continuar',
-          //trueText: 'Continuar',
+          title: 'No es posible iniciar la declaración',
+          message: 'Es necesario que exista una declaración de tipo INICIAL',
+          //falseText: 'Cancelar',
+          trueText: 'Continuar',
         },
       });
       //dialogReff.close({ data: '' })
