@@ -167,7 +167,7 @@ export class DialogElementsExampleDialog implements OnInit {
       //dialogReff.close({ data: '' })
     }
 
-    this.dialogRef.close({ data: '' })
+    //this.dialogRef.close({ data: '' })
   }
 
   isValid(){
