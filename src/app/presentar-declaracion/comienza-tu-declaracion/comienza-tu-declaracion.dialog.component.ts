@@ -164,10 +164,10 @@ export class DialogElementsExampleDialog implements OnInit {
           //trueText: 'Continuar',
         },
       });
-      dialogReff.close({ data: '' })
+      //dialogReff.close({ data: '' })
     }
 
-    //this.dialogRef.close({ data: '' })
+    this.dialogRef.close({ data: '' })
   }
 
   isValid(){
