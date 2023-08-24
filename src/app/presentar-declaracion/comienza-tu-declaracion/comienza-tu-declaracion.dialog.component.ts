@@ -171,7 +171,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   isValid(){
-    return false;
+    return true;
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
