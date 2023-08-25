@@ -28,8 +28,8 @@ export class DialogElementsExampleDialog implements OnInit {
   errorMatcher = new DeclarationErrorStateMatcher();
 
   //entePublicoCatalogo = entePublico;
-  
-  tipoDeclaracionCatalogo = tipoDeclaracion;
+  tipoDeclaracion: String = null;
+  //tipoDeclaracionCatalogo = tipoDeclaracion;
   puestoCatalogo = puesto;
   isLoading = false;
 
@@ -67,12 +67,12 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarDeclaracion(value: any) {
     console.log('value ' + value);
-    const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
     const fechaTomaPosesion = this.datosDialogForm.get('fechaTomaPosesion');
-    console.log(tipo);
+    console.log(tipoDeclaracion);
 
-    if (tipo === "inicial" && puesto === "DIRECTIVO") {
+    if (tipoDeclaracion === "inicial" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxInicial = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = false;
@@ -81,7 +81,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "inicial" && puesto === "OPERATIVO") {
+    else if (tipoDeclaracion === "inicial" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxInicial = true;
       this.isDisabledButtonInicialSimple = false;
       this.isDisabledButtonInicialCompleta = true;
@@ -90,7 +90,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "modificacion" && puesto === "DIRECTIVO") {
+    else if (tipoDeclaracion === "modificacion" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxModificacion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -99,7 +99,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "modificacion" && puesto === "OPERATIVO") {
+    else if (tipoDeclaracion === "modificacion" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxModificacion = true;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -108,7 +108,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipo === "conclusion" && puesto === "DIRECTIVO") {
+    else if (tipoDeclaracion === "conclusion" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
@@ -117,7 +117,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = false;
     }
-    else if (tipo === "conclusion" && puesto === "OPERATIVO") {
+    else if (tipoDeclaracion === "conclusion" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxConclusion = true;
       this.isDisabledButtonInicialSimple = false;
       this.isDisabledButtonInicialCompleta = true;
@@ -142,6 +142,7 @@ export class DialogElementsExampleDialog implements OnInit {
       puesto: [null, [Validators.required]],
     });
 
+    //this.tipoDeclaracion=this.datosDialogForm.get('tipoDeclaracion').value;
     //this.datosDialogForm.get('tipoDeclaracion').value=null;
   }
   closeDialog() {
