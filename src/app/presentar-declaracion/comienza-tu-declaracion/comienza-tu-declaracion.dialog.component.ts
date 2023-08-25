@@ -70,6 +70,7 @@ export class DialogElementsExampleDialog implements OnInit {
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
     const fechaTomaPosesion = this.datosDialogForm.get('fechaTomaPosesion');
+    console.log(tipo);
 
     if (tipo === "inicial" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxInicial = false;

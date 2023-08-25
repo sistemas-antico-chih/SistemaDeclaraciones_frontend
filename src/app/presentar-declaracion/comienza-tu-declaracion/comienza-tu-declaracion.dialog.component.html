@@ -11,14 +11,14 @@
             <mat-label>Tipo de declaración </mat-label>
             <mat-icon matPrefix>star</mat-icon>
             <mat-select formControlName="tipoDeclaracion" required (selectionChange)="validarDeclaracion($event.value)">
-              <mat-option *ngFor="let tipo of tipoDeclaracionCatalogo" [value]="tipo.clave">
+              <mat-option *ngFor="var tipo of tipoDeclaracionCatalogo" [value]="tipo.clave">
                 {{ tipo.valor | replace: '_':' ' }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           
           <mat-form-field  appearance="fill">
-            <mat-label >{{tipo.value}} Fecha de toma de posesión/conclusión</mat-label>
+            <mat-label >{{tipoDeclaracionCatalogo}} Fecha de toma de posesión/conclusión</mat-label>
             <input
               [errorStateMatcher]="errorMatcher"
               matInput
