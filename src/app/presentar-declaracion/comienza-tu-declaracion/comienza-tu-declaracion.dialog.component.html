@@ -17,10 +17,10 @@
             </mat-select>
           </mat-form-field>
           
-          <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}" appearance="fill">
+          <mat-form-field  appearance="fill">
             <mat-label>Fecha de toma de posesión/conclusión</mat-label>
             <input
-             *ngIf="cbInicialSimplificada.checked"
+             *ngIf="!cbInicialSimplificada.checked"
               [errorStateMatcher]="errorMatcher"
               matInput
               [matDatepicker]="picker"
