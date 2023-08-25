@@ -18,9 +18,8 @@
           </mat-form-field>
           
           <mat-form-field  appearance="fill">
-            <mat-label>Fecha de toma de posesión/conclusión</mat-label>
+            <mat-label >{{tipo.clave}} Fecha de toma de posesión/conclusión</mat-label>
             <input
-             *ngIf="!cbInicialSimplificada.checked"
               [errorStateMatcher]="errorMatcher"
               matInput
               [matDatepicker]="picker"
