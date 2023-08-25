@@ -20,10 +20,11 @@
           <mat-form-field  appearance="fill">
             <mat-label 
               [(ngModel)]="tipoDeclaracion" 
+              [hidden]="fechaInicial"
               id="labelFecha"
-              *ngIf="tipoDeclaracion=inicial"
+              *ngIf="tipoDeclaracion=='inicial'" 
             >  
-            Fecha de toma de posesión/conclusión 
+            Fecha de toma de posesión
             </mat-label>
             <input
               [errorStateMatcher]="errorMatcher"
