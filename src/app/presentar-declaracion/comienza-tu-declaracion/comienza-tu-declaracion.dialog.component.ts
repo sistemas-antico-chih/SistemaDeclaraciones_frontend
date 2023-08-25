@@ -28,7 +28,7 @@ export class DialogElementsExampleDialog implements OnInit {
   errorMatcher = new DeclarationErrorStateMatcher();
 
   //entePublicoCatalogo = entePublico;
-  fechaTomaPosesion: String = null;
+  
   tipoDeclaracionCatalogo = tipoDeclaracion;
   puestoCatalogo = puesto;
   isLoading = false;
