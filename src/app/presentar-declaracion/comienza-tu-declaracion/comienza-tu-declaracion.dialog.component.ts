@@ -29,7 +29,7 @@ export class DialogElementsExampleDialog implements OnInit {
 
   //entePublicoCatalogo = entePublico;
   tipoDeclaracion: String = null;
-  //tipoDeclaracionCatalogo = tipoDeclaracion;
+  tipoDeclaracionCatalogo = tipoDeclaracion;
   puestoCatalogo = puesto;
   isLoading = false;
 
