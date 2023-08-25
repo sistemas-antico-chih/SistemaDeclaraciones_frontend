@@ -28,6 +28,7 @@ export class DialogElementsExampleDialog implements OnInit {
   errorMatcher = new DeclarationErrorStateMatcher();
 
   //entePublicoCatalogo = entePublico;
+  fechaTomaPosesion: String = null;
   tipoDeclaracionCatalogo = tipoDeclaracion;
   puestoCatalogo = puesto;
   isLoading = false;
@@ -68,6 +69,7 @@ export class DialogElementsExampleDialog implements OnInit {
     console.log('value ' + value);
     const tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
+    const fechaTomaPosesion = this.datosDialogForm.get('fechaTomaPosesion');
 
     if (tipo === "inicial" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxInicial = false;
