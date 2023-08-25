@@ -18,7 +18,7 @@
           </mat-form-field>
           
           <mat-form-field  appearance="fill">
-            <mat-label [value]="tipo.clave" >{{tipo}} Fecha de toma de posesión/conclusión</mat-label>
+            <mat-label [(ngModel)]="tipoDeclaracion" >{{tipoDeclaracion}} Fecha de toma de posesión/conclusión</mat-label>
             <input
               [errorStateMatcher]="errorMatcher"
               matInput

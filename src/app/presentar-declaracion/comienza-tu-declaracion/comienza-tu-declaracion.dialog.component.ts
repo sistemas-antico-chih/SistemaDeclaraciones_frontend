@@ -141,6 +141,8 @@ export class DialogElementsExampleDialog implements OnInit {
       fechaTomaPosesion: [null, [Validators.required]],
       puesto: [null, [Validators.required]],
     });
+
+    //this.datosDialogForm.get('tipoDeclaracion').value=null;
   }
   closeDialog() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
