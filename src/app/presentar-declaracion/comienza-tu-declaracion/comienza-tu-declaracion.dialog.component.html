@@ -18,7 +18,7 @@
           </mat-form-field>
           
           <mat-form-field  appearance="fill">
-            <mat-label [(ngModel)]="tipoDeclaracion" >{{tipoDeclaracion}} Fecha de toma de posesión/conclusión</mat-label>
+            <mat-label [(ngModel)]="tipoDeclaracion" >Fecha de toma de posesión/conclusión {{tipoDeclaracion}} </mat-label>
             <input
               [errorStateMatcher]="errorMatcher"
               matInput
@@ -28,7 +28,7 @@
               formControlName="fechaTomaPosesion"
               required
             />
-            <mat-hint>dd/mm/yyyy</mat-hint>
+            <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy {{tipoDeclaracion}} </mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker ></mat-datepicker>
           </mat-form-field>
