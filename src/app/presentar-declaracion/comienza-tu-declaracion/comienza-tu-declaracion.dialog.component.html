@@ -17,9 +17,14 @@
             </mat-select>
           </mat-form-field>
           
+          <div 
+            formGroupName="groupInicial"
+            *ngIf="datosDialogForm.value.tipoDeclaracion === 'modificacion'"
+          >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
             <mat-label>Fecha de toma de posesión</mat-label>
             <input
+              id="tbFechaInicial"
               [errorStateMatcher]="errorMatcher"
               matInput
               [matDatepicker]="picker"
@@ -32,13 +37,16 @@
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker ></mat-datepicker>
           </mat-form-field>
+          </div>
 
           <div 
-          *ngIf="datosDialogForm.value.tipoDeclaracion === 'modificacion'"
-        >
+            formGroupName="groupModificacion"
+            *ngIf="datosDialogForm.value.tipoDeclaracion === 'modificacion'"
+          >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
             <mat-label>Año de la declaración de modificación</mat-label>
             <input
+              id="tbFechaModificacion"
               [errorStateMatcher]="errorMatcher"
               matInput
               [matDatepicker]="picker"
@@ -54,11 +62,13 @@
         </div>
           
           <div 
+            formGroupName="groupConclusion"
             *ngIf="datosDialogForm.value.tipoDeclaracion === 'conclusion'"
           >
             <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
               <mat-label>Fecha de conclusion de empleo</mat-label>
               <input
+                id="tbFechaConclusion"
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="picker"

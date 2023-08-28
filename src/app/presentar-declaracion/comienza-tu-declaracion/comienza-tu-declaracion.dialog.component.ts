@@ -34,6 +34,10 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
+  tbFechaInicial: boolean =true;
+  tbFechaModificacion: boolean =false;
+  tbFechaConclusion: boolean =false;
+
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
@@ -143,10 +147,13 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarFecha(value: any){
     //console.log("llega validarFecha "+value);
-    const tbFechaInicial = '';
+    //const groupInicial = fideicomiso.get('fideicomitente');;
     switch (value) {
       case 'inicial':
         console.log("llega switch "+value);
+        this.tbFechaInicial = true;        
+        this.tbFechaModificacion = false;    
+        this.tbFechaConclusion = false;        
         /*
         tbFechaInicial.reset();
         tbFechaInicial.enable();
@@ -156,6 +163,9 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'modificacion':
         console.log("llega switch "+value);
+        this.tbFechaInicial = false;        
+        this.tbFechaModificacion = true;    
+        this.tbFechaConclusion = false; 
         /*
         tbFechaModificacion.reset();
         tbFechaModificacion.enable();
@@ -165,6 +175,9 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'conclusion':
         console.log("llega switch "+value);
+        this.tbFechaInicial = false;        
+        this.tbFechaModificacion = false;    
+        this.tbFechaConclusion = true; 
         /*
         tbFechaConclusion.reset();
         tbFechaConclusion.enable();
