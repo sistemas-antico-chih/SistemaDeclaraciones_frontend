@@ -68,7 +68,9 @@ export class DialogElementsExampleDialog implements OnInit {
   
   cambioValores(value: any) {
     this.validarDeclaracion(value);
-    this.validarFecha(valueFecha);
+    if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
+      this.validarFecha(value);
+    }
   }
 
   validarDeclaracion(value: any){
