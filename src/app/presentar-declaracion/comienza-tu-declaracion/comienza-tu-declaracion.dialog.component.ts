@@ -68,9 +68,7 @@ export class DialogElementsExampleDialog implements OnInit {
   
   cambioValores(value: any) {
     this.validarDeclaracion();
-    console.log('value ' + value);
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
-      console.log('llega if ' + value);
       this.validarFecha(value);
     }
   }
@@ -144,7 +142,45 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarFecha(value: any){
-    console.log("llega validarFecha "+value);
+    //console.log("llega validarFecha "+value);
+    const tbFechaInicial = '';
+    switch (value) {
+      case 'inicial':
+        console.log("llega switch "+value);
+        /*
+        tbFechaInicial.reset();
+        tbFechaInicial.enable();
+        tbFechaModificacion.disable();
+        tbFechaConclusion.disable();
+        */
+        break;
+      case 'modificacion':
+        console.log("llega switch "+value);
+        /*
+        tbFechaModificacion.reset();
+        tbFechaModificacion.enable();
+        tbFechaInicial.disable();
+        tbFechaConclusion.disable();
+        */
+        break;
+      case 'conclusion':
+        console.log("llega switch "+value);
+        /*
+        tbFechaConclusion.reset();
+        tbFechaConclusion.enable();
+        tbFechaInicial.disable();
+        tbFechaModificacion.disable();
+        */
+        break;
+      default:
+        console.log("llega switch "+value);
+        /*
+        tbFechaInicial.disable();
+        tbFechaModificacion.disable();
+        tbFechaConclusion.disable();
+        */
+        break;
+    }
   }
 
   ngOnInit() {
@@ -153,13 +189,6 @@ export class DialogElementsExampleDialog implements OnInit {
       fechaTomaPosesion: [null, [Validators.required]],
       puesto: [null, [Validators.required]],
     });
-
-   /* const tipoDeclaracionForm = this.datosDialogForm.get('datosDialogForm.tipoDeclaracion');
-    tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value :any) => {
-      this.tipoDeclaracionChanged(value);
-    });*/
-    //this.tipoDeclaracion=this.datosDialogForm.get('tipoDeclaracion').value;
-    //this.datosDialogForm.get('tipoDeclaracion').value=null;
   }
 
   /*tipoDeclaracionChanged(value: string) {
@@ -170,19 +199,19 @@ export class DialogElementsExampleDialog implements OnInit {
     const fideicomisario = fideicomiso.get('fideicomisario');
 
     switch (value) {
-      case 'inicial':
+      case 'FIDEICOMITENTE':
         fideicomitente.reset();
         fideicomitente.enable();
         fiduciario.disable();
         fideicomisario.disable();
         break;
-      case 'modificacion':
+      case 'FIDUCIARIO':
         fideicomitente.disable();
         fiduciario.reset();
         fiduciario.enable();
         fideicomisario.disable();
         break;
-      case 'conclusion':
+      case 'FIDEICOMISARIO':
         fideicomitente.disable();
         fiduciario.disable();
         fideicomisario.reset();
