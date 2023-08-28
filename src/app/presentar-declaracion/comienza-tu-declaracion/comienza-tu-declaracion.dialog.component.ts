@@ -144,7 +144,7 @@ export class DialogElementsExampleDialog implements OnInit {
     });
 
     const tipoDeclaracionForm = this.datosDialogForm.get('datosDialogForm.tipoDeclaracion');
-    tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+    tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value :any) => {
       this.tipoDeclaracionChanged(value);
     });
     //this.tipoDeclaracion=this.datosDialogForm.get('tipoDeclaracion').value;
