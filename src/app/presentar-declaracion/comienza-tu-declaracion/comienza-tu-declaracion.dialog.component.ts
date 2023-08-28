@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { DialogComponent } from '@shared/dialog/dialog.component';
 import { Router } from '@angular/router';
 //import { Catalogo, DatosDialog } from '@models/declaracion';
+import { UntilDestroy, untilDestroyed } from '@core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
@@ -64,7 +65,7 @@ export class DialogElementsExampleDialog implements OnInit {
   ) {
     //this.createForm();
   }
-
+  
   validarDeclaracion(value: any) {
     console.log('value ' + value);
     const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
@@ -142,9 +143,49 @@ export class DialogElementsExampleDialog implements OnInit {
       puesto: [null, [Validators.required]],
     });
 
+    const tipoDeclaracionForm = this.datosDialogForm.get('datosDialogForm.tipoDeclaracion');
+    tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      this.tipoDeclaracionChanged(value);
+    });
     //this.tipoDeclaracion=this.datosDialogForm.get('tipoDeclaracion').value;
     //this.datosDialogForm.get('tipoDeclaracion').value=null;
   }
+
+  tipoDeclaracionChanged(value: string) {
+    console.log('llega: '+value)
+    /*const fideicomiso = this.fideicomisosForm.get('fideicomiso');
+    const fideicomitente = fideicomiso.get('fideicomitente');
+    const fiduciario = fideicomiso.get('fiduciario');
+    const fideicomisario = fideicomiso.get('fideicomisario');
+
+    switch (value) {
+      case 'inicial':
+        fideicomitente.reset();
+        fideicomitente.enable();
+        fiduciario.disable();
+        fideicomisario.disable();
+        break;
+      case 'modificacion':
+        fideicomitente.disable();
+        fiduciario.reset();
+        fiduciario.enable();
+        fideicomisario.disable();
+        break;
+      case 'conclusion':
+        fideicomitente.disable();
+        fiduciario.disable();
+        fideicomisario.reset();
+        fideicomisario.enable();
+        break;
+      default:
+        fideicomitente.disable();
+        fiduciario.disable();
+        fideicomisario.disable();
+        break;
+    }*/
+  }
+
+
   closeDialog() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
