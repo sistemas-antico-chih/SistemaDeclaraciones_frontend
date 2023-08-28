@@ -66,7 +66,12 @@ export class DialogElementsExampleDialog implements OnInit {
     //this.createForm();
   }
   
-  validarDeclaracion(value: any) {
+  cambioValores(value: any) {
+    this.validarDeclaracion(value);
+    this.validarFecha(valueFecha);
+  }
+
+  validarDeclaracion(value: any){
     console.log('value ' + value);
     const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
@@ -136,6 +141,11 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionCompleta = true;
     }
   }
+
+  validarFecha(value: any){
+    console.log("llega "+value);
+  }
+
   ngOnInit() {
     this.datosDialogForm = this.formBuilder.group({
       tipoDeclaracion: [null, [Validators.required]],
@@ -143,15 +153,15 @@ export class DialogElementsExampleDialog implements OnInit {
       puesto: [null, [Validators.required]],
     });
 
-    const tipoDeclaracionForm = this.datosDialogForm.get('datosDialogForm.tipoDeclaracion');
+   /* const tipoDeclaracionForm = this.datosDialogForm.get('datosDialogForm.tipoDeclaracion');
     tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value :any) => {
       this.tipoDeclaracionChanged(value);
-    });
+    });*/
     //this.tipoDeclaracion=this.datosDialogForm.get('tipoDeclaracion').value;
     //this.datosDialogForm.get('tipoDeclaracion').value=null;
   }
 
-  tipoDeclaracionChanged(value: string) {
+  /*tipoDeclaracionChanged(value: string) {
     console.log('llega: '+value)
     /*const fideicomiso = this.fideicomisosForm.get('fideicomiso');
     const fideicomitente = fideicomiso.get('fideicomitente');
@@ -182,8 +192,8 @@ export class DialogElementsExampleDialog implements OnInit {
         fiduciario.disable();
         fideicomisario.disable();
         break;
-    }*/
-  }
+    }
+  }*/
 
 
   closeDialog() {
