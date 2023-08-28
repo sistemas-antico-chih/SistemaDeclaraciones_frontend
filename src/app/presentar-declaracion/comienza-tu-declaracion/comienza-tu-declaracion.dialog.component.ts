@@ -67,7 +67,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
   
   cambioValores(value: any) {
-    this.validarDeclaracion(value);
+    this.validarDeclaracion();
     console.log('value ' + value);
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
       console.log('llega if ' + value);
@@ -75,11 +75,9 @@ export class DialogElementsExampleDialog implements OnInit {
     }
   }
 
-  validarDeclaracion(value: any){
-    //console.log('value ' + value);
+  validarDeclaracion(){
     const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
-    //console.log(tipoDeclaracion);
 
     if (tipoDeclaracion === "inicial" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxInicial = false;
