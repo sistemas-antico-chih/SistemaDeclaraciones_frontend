@@ -28,10 +28,30 @@
               formControlName="fechaTomaPosesion"
               required
             />
-            <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy {{tipoDeclaracion}} </mat-hint>
+            <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker ></mat-datepicker>
           </mat-form-field>
+
+          <div 
+          *ngIf="datosDialogForm.value.tipoDeclaracion === 'modificacion'"
+        >
+          <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
+            <mat-label>Año de la declaración de modificación</mat-label>
+            <input
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              [matDatepicker]="picker"
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="fechaTomaPosesion"
+              required
+            />
+            <mat-hint [(ngModel)]="tipoDeclaracion" >yyyy</mat-hint>
+            <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker ></mat-datepicker>
+          </mat-form-field>
+        </div>
           
           <div 
             *ngIf="datosDialogForm.value.tipoDeclaracion === 'conclusion'"
@@ -47,7 +67,7 @@
                 formControlName="fechaTomaPosesion"
                 required
               />
-              <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy {{tipoDeclaracion}} </mat-hint>
+              <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker ></mat-datepicker>
             </mat-form-field>
