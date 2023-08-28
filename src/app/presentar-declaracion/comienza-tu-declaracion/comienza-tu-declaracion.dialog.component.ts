@@ -68,17 +68,18 @@ export class DialogElementsExampleDialog implements OnInit {
   
   cambioValores(value: any) {
     this.validarDeclaracion(value);
+    console.log('value ' + value);
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
+      console.log('llega if ' + value);
       this.validarFecha(value);
     }
   }
 
   validarDeclaracion(value: any){
-    console.log('value ' + value);
+    //console.log('value ' + value);
     const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
-    const fechaTomaPosesion = this.datosDialogForm.get('fechaTomaPosesion');
-    console.log(tipoDeclaracion);
+    //console.log(tipoDeclaracion);
 
     if (tipoDeclaracion === "inicial" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxInicial = false;
@@ -145,7 +146,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarFecha(value: any){
-    console.log("llega "+value);
+    console.log("llega validarFecha "+value);
   }
 
   ngOnInit() {
