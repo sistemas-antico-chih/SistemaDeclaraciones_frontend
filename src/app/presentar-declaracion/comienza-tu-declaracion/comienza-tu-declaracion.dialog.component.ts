@@ -152,6 +152,10 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarFecha(value: any) {
     console.log("llega validarFecha "+value);
+   // const fideicomiso = this.fideicomisosForm.get('fideicomiso');
+   // const fideicomitente = fideicomiso.get('fideicomitente');
+   // const fiduciario = fideicomiso.get('fiduciario');
+   // const fideicomisario = fideicomiso.get('fideicomisario');
     //const groupInicial = fideicomiso.get('fideicomitente');;
     switch (value) {
       case 'inicial':
@@ -189,6 +193,11 @@ export class DialogElementsExampleDialog implements OnInit {
         tbFechaInicial.disable();
         tbFechaModificacion.disable();
         */
+        break;
+      default:
+        this.tbFechaInicial = false;
+        this.tbFechaModificacion = false;
+        this.tbFechaConclusion = false;
         break;
     }
   }
