@@ -34,9 +34,9 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
-  //tbFechaInicial: boolean = true;
-  //tbFechaModificacion: boolean = false;
-  //tbFechaConclusion: boolean = false;
+  fechaInicial: string = null;
+  fechaModificacion: string  = null;
+  fechaConclusion: string = null;
 
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
@@ -72,10 +72,8 @@ export class DialogElementsExampleDialog implements OnInit {
 
   cambioValores(value: any) {
     this.validarDeclaracion();
-    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
-
+    //const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion') {
-      console.log("llega if "+value);
       this.validarFecha(value);
     }
   }
@@ -150,8 +148,12 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarFecha(value: any) {
     console.log("llega validarFecha "+value);
-    const fechaTomaPosesion = this.datosDialogForm.get('fechaTomaPosesion').value;
-    console.log('fechaTomaPosesion '+fechaTomaPosesion);
+    const fechaInicial = this.datosDialogForm.get('fechaInicial').value;
+    const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
+    const fechaConclusion = this.datosDialogForm.get('fechaConclusion').value;
+    console.log('fechaInicial '+fechaInicial);
+    console.log('fechaModificacion '+fechaModificacion);
+    console.log('fechaConclusion '+fechaConclusion);
    /* const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion');
     const groupInicial = tipoDeclaracion.get('inicial');
     const groupModificacion = tipoDeclaracion.get('modificacion');;
@@ -160,6 +162,10 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
+        fechaInicial.reset();
+        fechaInicial.enable()
+        fechaModificacion.disable();
+        fechaConclusion.disable();
         /*
         groupInicial.reset();
         groupInicial.enable();
