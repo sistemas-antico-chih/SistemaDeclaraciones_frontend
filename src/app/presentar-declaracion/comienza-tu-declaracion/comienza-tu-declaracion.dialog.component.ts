@@ -148,10 +148,13 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarFecha(value: any) {
     console.log("llega validarFecha "+value);
-    const fechaTomaPosesion = this.datosDialogForm.get('fechaTomaPosesion').value;
+    const fechaInicial = this.datosDialogForm.get('fechaInicial').value;
     const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
     const fechaConclusion = this.datosDialogForm.get('fechaConclusion').value;
-    console.log('fechaTomaPosesion '+fechaTomaPosesion);
+    console.log('fechaInicial '+fechaInicial);
+    console.log('fechaModificacion '+fechaModificacion);
+    console.log('fechaConclusion '+fechaConclusion);
+
 
    /* const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion');
     const groupInicial = tipoDeclaracion.get('inicial');
@@ -161,7 +164,7 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
-        //this.datosDialogForm.fechaTomaPosesion.value='';
+        
         /*
         groupInicial.reset();
         groupInicial.enable();
@@ -171,6 +174,7 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'modificacion':
         console.log("llega switch " + value);
+        this.datosDialogForm.control.fechaInicial.setValue('31/12/2222')
         /*
         groupInicial.disable();
         groupModificacion.reset();
@@ -198,7 +202,10 @@ export class DialogElementsExampleDialog implements OnInit {
   ngOnInit() {
     this.datosDialogForm = this.formBuilder.group({
       tipoDeclaracion: [null, [Validators.required]],
-      fechaTomaPosesion: [null, [Validators.required]],
+      //fechaTomaPosesion: [null, [Validators.required]],
+      fechaInicial: [null, [Validators.required]],
+      fechaModificacion: [null, [Validators.required]],
+      fechaConclusion: [null, [Validators.required]],
       puesto: [null, [Validators.required]],
     });
   }
