@@ -19,16 +19,13 @@
           </mat-form-field>
           
           <div 
-            *ngIf="datosDialogForm.value.tipoDeclaracion === 'inicial'"
+            *ngIf="datosDialogForm.value.tipoDeclaracion === 'inicial22'"
           >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
             <mat-label>Fecha de toma de posesión</mat-label>
             <input
-            [errorStateMatcher]="errorMatcher"
             matInput
-            formControlName="fechaTomaPosesion"
             />
-            <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker ></mat-datepicker>
           </mat-form-field>
