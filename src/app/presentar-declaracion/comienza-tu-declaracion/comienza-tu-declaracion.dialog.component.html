@@ -3,7 +3,7 @@
 <div mat-dialog-actions>
   
   <div class="contenedor">
-    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosDialogForm" [ngClass]="{ hidden: !editMode }">
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosDialogForm" >
       <!-- Primer bloque -->
       <!---->
       <div>
@@ -19,7 +19,6 @@
           </mat-form-field>
           
           <div 
-            formGroupName="groupInicial"
             *ngIf="datosDialogForm.value.tipoDeclaracion === 'inicial'"
           >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
