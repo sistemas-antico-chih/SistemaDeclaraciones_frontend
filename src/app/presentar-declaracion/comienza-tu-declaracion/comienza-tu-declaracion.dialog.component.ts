@@ -34,9 +34,9 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
-  tbFechaInicial: boolean =true;
-  tbFechaModificacion: boolean =false;
-  tbFechaConclusion: boolean =false;
+  tbFechaInicial: boolean = true;
+  tbFechaModificacion: boolean = false;
+  tbFechaConclusion: boolean = false;
 
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
@@ -69,15 +69,20 @@ export class DialogElementsExampleDialog implements OnInit {
   ) {
     //this.createForm();
   }
-  
+
   cambioValores(value: any) {
     this.validarDeclaracion();
-    /*if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
-      this.validarFecha(value);
-    }*/
+    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
+
+    if (value === 'inicial' || value === 'modificacion' || value === 'conclusion') {
+      console.log("llega if "+value);
+      tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+        this.validarFecha(value);
+      });
+    }
   }
 
-  validarDeclaracion(){
+  validarDeclaracion() {
     const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
@@ -145,15 +150,15 @@ export class DialogElementsExampleDialog implements OnInit {
     }
   }
 
-  validarFecha(value: any){
-    //console.log("llega validarFecha "+value);
+  validarFecha(value: any) {
+    console.log("llega validarFecha "+value);
     //const groupInicial = fideicomiso.get('fideicomitente');;
     switch (value) {
       case 'inicial':
-        console.log("llega switch "+value);
-        this.tbFechaInicial = true;        
-        this.tbFechaModificacion = false;    
-        this.tbFechaConclusion = false;        
+        console.log("llega switch " + value);
+        this.tbFechaInicial = true;
+        this.tbFechaModificacion = false;
+        this.tbFechaConclusion = false;
         /*
         tbFechaInicial.reset();
         tbFechaInicial.enable();
@@ -162,10 +167,10 @@ export class DialogElementsExampleDialog implements OnInit {
         */
         break;
       case 'modificacion':
-        console.log("llega switch "+value);
-        this.tbFechaInicial = false;        
-        this.tbFechaModificacion = true;    
-        this.tbFechaConclusion = false; 
+        console.log("llega switch " + value);
+        this.tbFechaInicial = false;
+        this.tbFechaModificacion = true;
+        this.tbFechaConclusion = false;
         /*
         tbFechaModificacion.reset();
         tbFechaModificacion.enable();
@@ -174,10 +179,10 @@ export class DialogElementsExampleDialog implements OnInit {
         */
         break;
       case 'conclusion':
-        console.log("llega switch "+value);
-        this.tbFechaInicial = false;        
-        this.tbFechaModificacion = false;    
-        this.tbFechaConclusion = true; 
+        console.log("llega switch " + value);
+        this.tbFechaInicial = false;
+        this.tbFechaModificacion = false;
+        this.tbFechaConclusion = true;
         /*
         tbFechaConclusion.reset();
         tbFechaConclusion.enable();
@@ -186,10 +191,10 @@ export class DialogElementsExampleDialog implements OnInit {
         */
         break;
       default:
-        console.log("llega switch "+value);
-        this.tbFechaInicial = true;        
-        this.tbFechaModificacion = false;    
-        this.tbFechaConclusion = false;  
+        console.log("llega switch " + value);
+        this.tbFechaInicial = true;
+        this.tbFechaModificacion = false;
+        this.tbFechaConclusion = false;
         break;
     }
   }
@@ -240,14 +245,14 @@ export class DialogElementsExampleDialog implements OnInit {
   closeDialog() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
-    console.log('puesto: '+puesto);
+    console.log('puesto: ' + puesto);
 
     if (this.isValid()) {
       let url = '/' + tipo;
       if (puesto === "OPERATIVO") {
         url += '/simplificada';
         this.dialogRef.close({ data: '' })
-      }else{
+      } else {
         url = '/' + tipo;
       }
       this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
@@ -268,7 +273,7 @@ export class DialogElementsExampleDialog implements OnInit {
     //this.dialogRef.close({ data: '' })
   }
 
-  isValid(){
+  isValid() {
     return true;
   }
 
