@@ -26,15 +26,13 @@
             <input
             [errorStateMatcher]="errorMatcher"
             matInput
-            [matDatepicker]="picker"
             [min]="minDate"
             [max]="maxDate"
             formControlName="fechaTomaPosesion"
             required
             />
-            
-            <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <!--
+            <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker ></mat-datepicker>
             -->
           </mat-form-field>
