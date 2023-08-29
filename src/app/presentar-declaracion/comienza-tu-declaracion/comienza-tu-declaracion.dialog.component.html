@@ -18,7 +18,6 @@
           </mat-form-field>
           
           <div 
-            formGroupName="groupInicial"
             *ngIf="datosDialogForm.value.tipoDeclaracion === 'inicial'"
           >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
@@ -40,8 +39,7 @@
           </div>
 
           <div 
-            formGroupName="groupModificacion"
-            *ngIf="datosDialogForm.value.tipoDeclaracion === 'modificacion1'"
+            *ngIf="datosDialogForm.value.tipoDeclaracion === 'modificacion'"
           >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
             <mat-label>Año de la declaración de modificación</mat-label>
@@ -62,8 +60,7 @@
         </div>
           
           <div 
-            formGroupName="groupConclusion"
-            *ngIf="datosDialogForm.value.tipoDeclaracion === 'conclusion1'"
+            *ngIf="datosDialogForm.value.tipoDeclaracion === 'conclusion'"
           >
             <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
               <mat-label>Fecha de conclusion de empleo</mat-label>
