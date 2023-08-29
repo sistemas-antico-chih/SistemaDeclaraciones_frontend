@@ -187,11 +187,9 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       default:
         console.log("llega switch "+value);
-        /*
-        tbFechaInicial.disable();
-        tbFechaModificacion.disable();
-        tbFechaConclusion.disable();
-        */
+        this.tbFechaInicial = true;        
+        this.tbFechaModificacion = false;    
+        this.tbFechaConclusion = false;  
         break;
     }
   }
