@@ -19,7 +19,7 @@
           </mat-form-field>
           
           <div 
-            *ngIf="datosDialogForm.value.tipoDeclaracion == 'inicial' && datosDialogForm.value.tipoDeclaracion ==null"
+            *ngIf="datosDialogForm.value.tipoDeclaracion == 'inicial' || datosDialogForm.value.tipoDeclaracion ==null"
           >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
             <mat-label>Fecha de toma de posesión</mat-label>
