@@ -150,7 +150,7 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarFecha(value: any) {
     console.log("llega validarFecha "+value);
-    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion');
+    const declaracionGroup = this.datosDialogForm.get('tipoDeclaracion');
     const groupInicial = tipoDeclaracion.get('inicial');
     const groupModificacion = tipoDeclaracion.get('modificacion');;
     const groupConclusion = tipoDeclaracion.get('conclusion');;
