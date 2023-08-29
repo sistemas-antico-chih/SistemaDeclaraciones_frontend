@@ -4,124 +4,8 @@
   
   <div class="contenedor">
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosDialogForm" [ngClass]="{ hidden: !editMode }">
-      <div class="padding-agregar" formGroupName="declaracionGroup">
-        <mat-divider></mat-divider>
-        <p>Fideicomiso</p>
-        <!-- Datos -->
-        <div class="grid-3-col grid-margin">
-          <mat-form-field appearance="fill">
-            <mat-label>Tipo de Operacion</mat-label>
-            <mat-icon matPrefix>beenhere</mat-icon>
-            <mat-select formControlName="tipoOperacion" required>
-              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
-                {{ tipoOperacion | replace: '_':' ' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="grid-2-col grid-margin">
-          <mat-form-field matTooltip="{{ tooltipData.participacionFideicomisos }}" appearance="fill">
-            <mat-label>Participación en Fideicomisos</mat-label>
-            <mat-icon matPrefix>beenhere</mat-icon>
-            <mat-select formControlName="tipoRelacion" required>
-              <mat-option *ngFor="let relacion of relacionCatalogo" [value]="relacion">
-                {{ relacion | replace: '_':' ' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field matTooltip="{{ tooltipData.tipoFideicomiso }}" appearance="fill">
-            <mat-label>Tipo de Fideicomisos</mat-label>
-            <mat-icon matPrefix>person</mat-icon>
-            <mat-select formControlName="tipoFideicomiso" required>
-              <mat-option *ngFor="let tipoFideicomiso of tipoFideicomisoCatalogo" [value]="tipoFideicomiso">
-                {{ tipoFideicomiso }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field matTooltip="{{ tooltipData.tipoParticipacion }}" appearance="fill">
-            <mat-label>Tipo de Participación</mat-label>
-            <mat-icon matPrefix>account_balance_wallet</mat-icon>
-            <mat-select formControlName="tipoParticipacion" required>
-              <mat-option *ngFor="let tipoParticipacion of tipoParticipacionCatalogo" [value]="tipoParticipacion">
-                {{ tipoParticipacion | replace: '_':' ' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field matTooltip="{{ tooltipData.rfcFideicomiso }}" appearance="fill">
-            <mat-label>RFC del Fideicomiso</mat-label>
-            <mat-icon matPrefix>fingerprint</mat-icon>
-            <input
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              #input_rfc_fideicomiso
-              type="text"
-              formControlName="rfcFideicomiso"
-              minlength="12"
-              maxlength="13"
-              required
-            />
-            <mat-hint align="end">{{ input_rfc_fideicomiso.value?.length || 0 }}/12-13</mat-hint>
-          </mat-form-field>
-        </div>
-
-        <div
-          class="grid-3-col grid-margin"
-          formGroupName="fideicomitente"
-          *ngIf="fideicomisosForm.value.fideicomiso.tipoParticipacion === 'FIDEICOMITENTE'"
-        >
-          <mat-radio-group matTooltip="{{ tooltipData.fideicomitente }}" class="checkbox" formControlName="tipoPersona">
-            <p class="question double-col">Fideicomitente</p>
-            <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Persona Física</mat-radio-button>
-            <mat-radio-button value="MORAL">Persona Moral</mat-radio-button>
-          </mat-radio-group>
-          <mat-form-field matTooltip="{{ tooltipData.nombreRazonSocialFideicomitente }}" appearance="fill">
-            <mat-label>Nombre o razón social del Fideicomitente</mat-label>
-            <mat-icon matPrefix class="no-public">person</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombreRazonSocial" />
-          </mat-form-field>
-          <mat-form-field matTooltip="{{ tooltipData.rfcFideicomitente }}" appearance="fill">
-            <mat-label>RFC del Fideicomitente</mat-label>
-            <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-            <input
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              #input_rfc
-              type="text"
-              maxlength="13"
-              formControlName="rfc"
-            />
-            <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/12-13</mat-hint>
-          </mat-form-field>
-        </div>
-
-        <div
-          class="grid-2-col grid-margin"
-          formGroupName="fiduciario"
-          *ngIf="fideicomisosForm.value.fideicomiso.tipoParticipacion === 'FIDUCIARIO'"
-        >
-          <mat-form-field matTooltip="{{ tooltipData.nombreRazonSocialFiduciario }}" appearance="fill">
-            <mat-label>Nombre del Fiduciario</mat-label>
-            <mat-icon matPrefix class="no-public">person</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombreRazonSocial" />
-          </mat-form-field>
-
-          <mat-form-field matTooltip="{{ tooltipData.rfcFiduciario }}" appearance="fill">
-            <mat-label>RFC del Fiduciario</mat-label>
-            <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-            <input
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              #input_rfc_fiduciario
-              type="text"
-              formControlName="rfc"
-            />
-            <mat-hint align="end">{{ input_rfc_fiduciario.value?.length || 0 }}/13</mat-hint>
-          </mat-form-field>
-        </div>
       <!-- Primer bloque -->
-      <!--
+      <!---->
       <div>
         <div class="grid-2-col">
           <mat-form-field appearance="fill">
@@ -154,46 +38,7 @@
             <mat-datepicker #picker ></mat-datepicker>
           </mat-form-field>
           </div>
-
-          <div 
-            formGroupName="groupModificacion"
-            *ngIf="datosDialogForm.value.tipoDeclaracion === 'modificacion'"
-          >
-          <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
-            <mat-label>Año de la declaración de modificación</mat-label>
-            <input
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              [matDatepicker]="picker"
-              formControlName="fechaTomaPosesion"
-              required
-            />
-            <mat-hint [(ngModel)]="tipoDeclaracion" >yyyy</mat-hint>
-            <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker ></mat-datepicker>
-          </mat-form-field>
-        </div>
           
-          <div 
-            formGroupName="groupConclusion"
-            *ngIf="datosDialogForm.value.tipoDeclaracion === 'conclusion'"
-          >
-            <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
-              <mat-label>Fecha de conclusion de empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="picker"
-                [min]="minDate"
-                [max]="maxDate"
-                formControlName="fechaTomaPosesion"
-                required
-              />
-              <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy</mat-hint>
-              <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker ></mat-datepicker>
-            </mat-form-field>
-          </div>
           
           <mat-form-field  appearance="fill">
             <mat-label>Seleccionar un puesto</mat-label>
@@ -205,7 +50,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-      </div>-->
+      </div>
     </form>
 
     
