@@ -34,9 +34,9 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
-  tbFechaInicial: boolean = true;
-  tbFechaModificacion: boolean = false;
-  tbFechaConclusion: boolean = false;
+  //tbFechaInicial: boolean = true;
+  //tbFechaModificacion: boolean = false;
+  //tbFechaConclusion: boolean = false;
 
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
@@ -150,43 +150,37 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarFecha(value: any) {
     console.log("llega validarFecha "+value);
-   // const fideicomiso = this.fideicomisosForm.get('fideicomiso');
-   // const fideicomitente = fideicomiso.get('fideicomitente');
-   // const fiduciario = fideicomiso.get('fiduciario');
-   // const fideicomisario = fideicomiso.get('fideicomisario');
-    //const groupInicial = fideicomiso.get('fideicomitente');;
+    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion');
+    const groupInicial = tipoDeclaracion.get('inicial');
+    const groupModificacion = tipoDeclaracion.get('modificacion');;
+    const groupConclusion = tipoDeclaracion.get('conclusion');;
+
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
-        /*
-        tbFechaInicial.reset();
-        tbFechaInicial.enable();
-        tbFechaModificacion.disable();
-        tbFechaConclusion.disable();
-        */
+        groupInicial.reset();
+        groupInicial.enable();
+        groupModificacion.disable();
+        groupConclusion.disable();
         break;
       case 'modificacion':
         console.log("llega switch " + value);
-        /*
-        tbFechaModificacion.reset();
-        tbFechaModificacion.enable();
-        tbFechaInicial.disable();
-        tbFechaConclusion.disable();
-        */
+        groupInicial.disable();
+        groupModificacion.reset();
+        groupModificacion.enable();
+        groupConclusion.disable();
         break;
       case 'conclusion':
         console.log("llega switch " + value);
-        /*
-        tbFechaConclusion.reset();
-        tbFechaConclusion.enable();
-        tbFechaInicial.disable();
-        tbFechaModificacion.disable();
-        */
+        groupInicial.disable();
+        groupModificacion.disable();
+        groupConclusion.reset();
+        groupConclusion.enable();
         break;
       default:
-        this.tbFechaInicial = false;
-        this.tbFechaModificacion = false;
-        this.tbFechaConclusion = false;
+        groupInicial.disable();
+        groupModificacion.disable();
+        groupConclusion.disable();
         break;
     }
   }

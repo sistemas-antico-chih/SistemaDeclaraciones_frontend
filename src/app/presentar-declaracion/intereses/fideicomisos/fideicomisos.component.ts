@@ -141,6 +141,7 @@ export class FideicomisosComponent implements OnInit {
     const tipoParticipacion = this.fideicomisosForm.get('fideicomiso.tipoParticipacion');
 
     tipoParticipacion.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      console.log('2 '+value);
       this.tipoParticipacionChanged(value);
     });
   }
@@ -337,6 +338,7 @@ export class FideicomisosComponent implements OnInit {
     const fideicomitente = fideicomiso.get('fideicomitente');
     const fiduciario = fideicomiso.get('fiduciario');
     const fideicomisario = fideicomiso.get('fideicomisario');
+    console.log(value);
 
     switch (value) {
       case 'FIDEICOMITENTE':
