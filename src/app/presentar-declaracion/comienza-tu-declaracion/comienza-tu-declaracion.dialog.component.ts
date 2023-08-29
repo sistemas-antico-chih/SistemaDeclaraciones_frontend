@@ -161,7 +161,7 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
-        this.datosDialogForm.fechaTomaPosesion.value='';
+        //this.datosDialogForm.fechaTomaPosesion.value='';
         /*
         groupInicial.reset();
         groupInicial.enable();
