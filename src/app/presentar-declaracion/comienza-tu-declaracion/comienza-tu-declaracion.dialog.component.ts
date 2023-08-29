@@ -72,8 +72,7 @@ export class DialogElementsExampleDialog implements OnInit {
   
   cambioValores(value: any) {
     this.validarDeclaracion();
-    console.log("sin validarFecha")
-   /* if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
+    /*if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
       this.validarFecha(value);
     }*/
   }
