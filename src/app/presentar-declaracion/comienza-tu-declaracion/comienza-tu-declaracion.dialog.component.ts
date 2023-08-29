@@ -72,9 +72,9 @@ export class DialogElementsExampleDialog implements OnInit {
   
   cambioValores(value: any) {
     this.validarDeclaracion();
-    if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
+   /* if (value === 'inicial' || value === 'modificacion' || value === 'conclusion'){
       this.validarFecha(value);
-    }
+    }*/
   }
 
   validarDeclaracion(){
