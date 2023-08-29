@@ -11,7 +11,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Tipo de declaración </mat-label>
             <mat-icon matPrefix>star</mat-icon>
-            <mat-select formControlName="tipoDeclaracion" ng-model="tipoDeclaracion" required (selectionChange)="cambioValores($event.value)">
+            <mat-select formControlName="tipoDeclaracion" required (selectionChange)="cambioValores($event.value)">
               <mat-option *ngFor="let tipo of tipoDeclaracionCatalogo" [value]="tipo.clave">
                 {{ tipo.valor | replace: '_':' ' }}
               </mat-option>
@@ -19,13 +19,12 @@
           </mat-form-field>
           
           <div 
-            *ngIf="tipoDeclaracion === 'inicial'"
+            *ngIf="datosDialogForm.value.tipoDeclaracion == 'inicial' && datosDialogForm.value.tipoDeclaracion !=null"
           >
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
             <mat-label>Fecha de toma de posesión</mat-label>
             <input
             matInput
-            required
             />
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker ></mat-datepicker>
