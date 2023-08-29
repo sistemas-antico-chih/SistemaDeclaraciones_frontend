@@ -34,9 +34,9 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
-  fechaInicial: string = null;
-  fechaModificacion: string  = null;
-  fechaConclusion: string = null;
+  //fechaInicial: string = null;
+  //fechaModificacion: string  = null;
+  //fechaConclusion: string = null;
 
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
@@ -148,12 +148,11 @@ export class DialogElementsExampleDialog implements OnInit {
 
   validarFecha(value: any) {
     console.log("llega validarFecha "+value);
-    const fechaInicial = this.datosDialogForm.get('fechaInicial').value;
+    const fechaTomaPosesion = this.datosDialogForm.get('fechaTomaPosesion').value;
     const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
     const fechaConclusion = this.datosDialogForm.get('fechaConclusion').value;
-    console.log('fechaInicial '+fechaInicial);
-    console.log('fechaModificacion '+fechaModificacion);
-    console.log('fechaConclusion '+fechaConclusion);
+    console.log('fechaTomaPosesion '+fechaTomaPosesion);
+
    /* const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion');
     const groupInicial = tipoDeclaracion.get('inicial');
     const groupModificacion = tipoDeclaracion.get('modificacion');;
@@ -162,10 +161,7 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
-        fechaInicial.reset();
-        fechaInicial.enable()
-        fechaModificacion.disable();
-        fechaConclusion.disable();
+        this.datosDialogForm.set('this.datosDialogForm.get').value='';
         /*
         groupInicial.reset();
         groupInicial.enable();
@@ -206,41 +202,6 @@ export class DialogElementsExampleDialog implements OnInit {
       puesto: [null, [Validators.required]],
     });
   }
-
-  /*tipoDeclaracionChanged(value: string) {
-    console.log('llega: '+value)
-    /*const fideicomiso = this.fideicomisosForm.get('fideicomiso');
-    const fideicomitente = fideicomiso.get('fideicomitente');
-    const fiduciario = fideicomiso.get('fiduciario');
-    const fideicomisario = fideicomiso.get('fideicomisario');
-
-    switch (value) {
-      case 'FIDEICOMITENTE':
-        fideicomitente.reset();
-        fideicomitente.enable();
-        fiduciario.disable();
-        fideicomisario.disable();
-        break;
-      case 'FIDUCIARIO':
-        fideicomitente.disable();
-        fiduciario.reset();
-        fiduciario.enable();
-        fideicomisario.disable();
-        break;
-      case 'FIDEICOMISARIO':
-        fideicomitente.disable();
-        fiduciario.disable();
-        fideicomisario.reset();
-        fideicomisario.enable();
-        break;
-      default:
-        fideicomitente.disable();
-        fiduciario.disable();
-        fideicomisario.disable();
-        break;
-    }
-  }*/
-
 
   closeDialog() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
