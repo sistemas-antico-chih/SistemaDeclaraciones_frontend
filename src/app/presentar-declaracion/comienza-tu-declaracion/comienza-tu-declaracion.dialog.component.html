@@ -24,9 +24,9 @@
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
             <mat-label>Fecha de toma de posesión</mat-label>
             <input
-              [errorStateMatcher]="errorMatcher"
-              formControlName="fechaTomaPosesion"
-              required
+            [errorStateMatcher]="errorMatcher"
+            matInput
+            formControlName="fechaTomaPosesion"
             />
             <mat-hint [(ngModel)]="tipoDeclaracion" >dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
