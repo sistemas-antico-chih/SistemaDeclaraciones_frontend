@@ -154,35 +154,41 @@ export class DialogElementsExampleDialog implements OnInit {
     const groupInicial = tipoDeclaracion.get('inicial');
     const groupModificacion = tipoDeclaracion.get('modificacion');;
     const groupConclusion = tipoDeclaracion.get('conclusion');;
-
+    */
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
+        /*
         groupInicial.reset();
         groupInicial.enable();
         groupModificacion.disable();
         groupConclusion.disable();
+        */
         break;
       case 'modificacion':
         console.log("llega switch " + value);
+        /*
         groupInicial.disable();
         groupModificacion.reset();
         groupModificacion.enable();
         groupConclusion.disable();
+        */
         break;
       case 'conclusion':
         console.log("llega switch " + value);
+        /*
         groupInicial.disable();
         groupModificacion.disable();
         groupConclusion.reset();
         groupConclusion.enable();
+        */
         break;
       default:
-        groupInicial.disable();
-        groupModificacion.disable();
-        groupConclusion.disable();
+        //groupInicial.disable();
+        //groupModificacion.disable();
+        //groupConclusion.disable();
         break;
-    }*/
+    }
   }
 
   ngOnInit() {
