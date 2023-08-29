@@ -76,9 +76,7 @@ export class DialogElementsExampleDialog implements OnInit {
 
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion') {
       console.log("llega if "+value);
-      tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value: any) => {
-        this.validarFecha(value);
-      });
+      this.validarFecha(value);
     }
   }
 
@@ -160,9 +158,6 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
-        this.tbFechaInicial = true;
-        this.tbFechaModificacion = false;
-        this.tbFechaConclusion = false;
         /*
         tbFechaInicial.reset();
         tbFechaInicial.enable();
@@ -172,9 +167,6 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'modificacion':
         console.log("llega switch " + value);
-        this.tbFechaInicial = false;
-        this.tbFechaModificacion = true;
-        this.tbFechaConclusion = false;
         /*
         tbFechaModificacion.reset();
         tbFechaModificacion.enable();
@@ -184,9 +176,6 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'conclusion':
         console.log("llega switch " + value);
-        this.tbFechaInicial = false;
-        this.tbFechaModificacion = false;
-        this.tbFechaConclusion = true;
         /*
         tbFechaConclusion.reset();
         tbFechaConclusion.enable();
