@@ -36,6 +36,44 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           </div>
+
+          <div 
+          *ngIf="datosDialogForm.value.tipoDeclaracion == 'modificacion'"
+        >
+        <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
+          <mat-label>Fecha de toma de posesión</mat-label>
+          <input
+          [errorStateMatcher]="errorMatcher"
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          formControlName="fechaTomaPosesion"
+          required
+          />
+          <mat-hint>yyyy</mat-hint>
+          <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        </div>
+
+        <div 
+        *ngIf="datosDialogForm.value.tipoDeclaracion == 'conclusion'"
+      >
+      <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
+        <mat-label>Fecha de conclusión del encargo</mat-label>
+        <input
+        [errorStateMatcher]="errorMatcher"
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        formControlName="fechaTomaPosesion"
+        required
+        />
+        <mat-hint>dd/mm/yyyy</mat-hint>
+        <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      </div>
           
           
           <mat-form-field  appearance="fill">
