@@ -76,7 +76,7 @@ export class DialogElementsExampleDialog implements OnInit {
 
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion') {
       console.log("llega if "+value);
-      tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      tipoDeclaracion.valueChanges.pipe(untilDestroyed(this)).subscribe((value: any) => {
         this.validarFecha(value);
       });
     }
@@ -189,12 +189,6 @@ export class DialogElementsExampleDialog implements OnInit {
         tbFechaInicial.disable();
         tbFechaModificacion.disable();
         */
-        break;
-      default:
-        console.log("llega switch " + value);
-        this.tbFechaInicial = true;
-        this.tbFechaModificacion = false;
-        this.tbFechaConclusion = false;
         break;
     }
   }
