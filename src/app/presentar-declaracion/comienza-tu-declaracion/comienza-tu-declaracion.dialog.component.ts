@@ -213,10 +213,9 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   isValid() {
-    console.log('tipoDeclaracion: '+tipo);
+    console.log('tipoDeclaracion: '+this.tipo);
 
-
-    switch (tipo) {
+    switch (this.tipo) {
       case 'inicial':
         console.log("llega switch ini");
       break;
