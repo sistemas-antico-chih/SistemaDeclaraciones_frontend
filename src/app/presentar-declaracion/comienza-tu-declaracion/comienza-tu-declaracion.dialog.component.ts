@@ -125,7 +125,7 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     else if (tipoDeclaracion === "conclusion" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxConclusion = true;
-      this.isDisabledButtonInicialSimple = false;
+      this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
       this.isDisabledButtonModificacionCompleta = true;
