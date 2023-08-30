@@ -159,8 +159,8 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'modificacion':
         console.log("llega switch " + value);
-        for(let i=2019; this.anio>i; i--){
-          this.anios.push(i);
+        for(let i=2019; this.anio > i; this.anio--){
+          this.anios.push(this.anio);
         }
         console.log('añios: '+this.anios);
         this.datosDialogForm.controls.fechaInicial.setValue('');
