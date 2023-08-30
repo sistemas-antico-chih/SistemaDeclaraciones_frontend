@@ -21,7 +21,7 @@
           <div 
             *ngIf="datosDialogForm.value.tipoDeclaracion == 'inicial' || datosDialogForm.value.tipoDeclaracion ==null"
           >
-          <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
+          <mat-form-field matTooltip="{{ tooltipData.fechaInicial }}"  appearance="fill">
             <mat-label>Fecha de toma de posesión</mat-label>
             <input
             [errorStateMatcher]="errorMatcher"
@@ -47,19 +47,19 @@
           <div 
           *ngIf="datosDialogForm.value.tipoDeclaracion == 'modificacion'"
         >
-        <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
+        <mat-form-field matTooltip="{{ tooltipData.fechaModificacion }}"  appearance="fill">
           <mat-label>Año de la declaración de modificación</mat-label>
           <input
           [errorStateMatcher]="errorMatcher"
           matInput
-          [matDatepicker]="pickerModifiacion"
+          [matDatepicker]="pickerModificacion"
           [min]="2018"
           [max]="anio"
           formControlName="fechaModificacion"
           required
           />
           <mat-hint>yyyy</mat-hint>
-          <mat-datepicker-toggle matPrefix [for]="pickerModifiacion"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matPrefix [for]="pickerModificacion"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         </div>
@@ -67,7 +67,7 @@
         <div 
         *ngIf="datosDialogForm.value.tipoDeclaracion == 'conclusion'"
       >
-      <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}"  appearance="fill">
+      <mat-form-field matTooltip="{{ tooltipData.fechaConclusion }}"  appearance="fill">
         <mat-label>Fecha de conclusión del encargo</mat-label>
         <input
         [errorStateMatcher]="errorMatcher"

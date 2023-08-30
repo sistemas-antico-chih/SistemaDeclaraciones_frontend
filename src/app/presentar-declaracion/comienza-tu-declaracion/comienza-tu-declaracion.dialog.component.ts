@@ -3,16 +3,15 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { DialogComponent } from '@shared/dialog/dialog.component';
 import { Router } from '@angular/router';
 //import { Catalogo, DatosDialog } from '@models/declaracion';
-import { UntilDestroy, untilDestroyed } from '@core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
+//import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import puesto from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
-import { findOption } from '@utils/utils';
-import { validarRFC } from '@app/auth/signup/signup.validador';
+import { tooltipData } from '@static/tooltips/situacion-patrimonial/crear_declaracion';
+
 
 
 @Component({
@@ -204,7 +203,7 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
     }
   }
-  
+
   ngOnInit(): void {}
 
   createForm() {
