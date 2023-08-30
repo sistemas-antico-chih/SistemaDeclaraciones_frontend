@@ -37,6 +37,7 @@ export class DialogElementsExampleDialog implements OnInit {
   //fechaModificacion: string  = null;
   //fechaConclusion: string = null;
 
+  anios: number[] = [];
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
@@ -175,6 +176,10 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'modificacion':
         console.log("llega switch " + value);
+        for(let i=2019; i<=this.anio; i++){
+          this.anios.push(i);
+        }
+        console.log('this.anios: '+this.anios);
         this.datosDialogForm.controls.fechaInicial.setValue('');
         this.datosDialogForm.controls.fechaConclusion.setValue('');
         /*
