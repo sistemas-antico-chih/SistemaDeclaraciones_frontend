@@ -27,15 +27,10 @@ export class DialogElementsExampleDialog implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  //entePublicoCatalogo = entePublico;
   tipoDeclaracion: String = null;
   tipoDeclaracionCatalogo = tipoDeclaracion;
   puestoCatalogo = puesto;
   isLoading = false;
-
-  //fechaInicial: string = null;
-  //fechaModificacion: string  = null;
-  //fechaConclusion: string = null;
 
   anios: number[] = [];
   minDate = new Date(1980, 1, 1);
@@ -156,49 +151,25 @@ export class DialogElementsExampleDialog implements OnInit {
     console.log('fechaModificacion '+fechaModificacion);
     console.log('fechaConclusion '+fechaConclusion);
 
-
-   /* const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion');
-    const groupInicial = tipoDeclaracion.get('inicial');
-    const groupModificacion = tipoDeclaracion.get('modificacion');;
-    const groupConclusion = tipoDeclaracion.get('conclusion');;
-    */
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
         this.datosDialogForm.controls.fechaModificacion.setValue('');
         this.datosDialogForm.controls.fechaConclusion.setValue('');
-        /*
-        groupInicial.reset();
-        groupInicial.enable();
-        groupModificacion.disable();
-        groupConclusion.disable();
-        */
         break;
       case 'modificacion':
         console.log("llega switch " + value);
-        for(let i=2019; i<=this.anio; i++){
+        for(let i=2019; this.anio>i; i--){
           this.anios.push(i);
         }
-        console.log('this.anios: '+this.anios);
+        console.log('añios: '+this.anios);
         this.datosDialogForm.controls.fechaInicial.setValue('');
         this.datosDialogForm.controls.fechaConclusion.setValue('');
-        /*
-        groupInicial.disable();
-        groupModificacion.reset();
-        groupModificacion.enable();
-        groupConclusion.disable();
-        */
         break;
       case 'conclusion':
         console.log("llega switch " + value);
         this.datosDialogForm.controls.fechaInicial.setValue('');
         this.datosDialogForm.controls.fechaModificacion.setValue('');
-        /*
-        groupInicial.disable();
-        groupModificacion.disable();
-        groupConclusion.reset();
-        groupConclusion.enable();
-        */
         break;
       default:
         console.log("llega break " + value);
@@ -214,7 +185,6 @@ export class DialogElementsExampleDialog implements OnInit {
   createForm() {
     this.datosDialogForm = this.formBuilder.group({
       tipoDeclaracion: [null, [Validators.required]],
-      //fechaTomaPosesion: [null, [Validators.required]],
       fechaInicial: [null, [Validators.required]],
       fechaModificacion: [null, [Validators.required]],
       fechaConclusion: [null, [Validators.required]],
@@ -243,7 +213,6 @@ export class DialogElementsExampleDialog implements OnInit {
         data: {
           title: 'No es posible iniciar la declaración',
           message: 'Es necesario que exista una declaración de tipo INICIAL',
-          //falseText: 'Cancelar',
           trueText: 'Continuar',
         },
       });

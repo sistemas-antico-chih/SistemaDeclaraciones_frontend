@@ -30,15 +30,17 @@
             </mat-form-field>
           </div>
           
+          <div *ngIf="datosDialogForm.value.tipoDeclaracion == 'modificacion'">
           <mat-form-field appearance="fill">
             <mat-label>Seleccionar año de la declaración de modificación</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
             <mat-select formControlName="fechaModificacion" required>
-              <mat-option *ngFor="let anio of anios" [value]="anio">
-                {{ anio }}
+              <mat-option *ngFor="let a of anios" [value]="a">
+                {{ a }}
               </mat-option>
             </mat-select>
           </mat-form-field>
+          </div>
           <!--
           <div *ngIf="datosDialogForm.value.tipoDeclaracion == 'modificacion'">
             <mat-form-field matTooltip="{{ tooltipData.fechaModificacion }}"  appearance="fill">
