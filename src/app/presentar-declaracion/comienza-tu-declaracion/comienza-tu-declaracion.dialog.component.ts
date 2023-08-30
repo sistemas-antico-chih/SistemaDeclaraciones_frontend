@@ -174,7 +174,7 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'modificacion':
         console.log("llega switch " + value);
-        this.datosDialogForm.control.fechaInicial.setValue('31/12/2222')
+        this.datosDialogForm.controls.fechaInicial.setValue('31/12/2222');
         /*
         groupInicial.disable();
         groupModificacion.reset();
