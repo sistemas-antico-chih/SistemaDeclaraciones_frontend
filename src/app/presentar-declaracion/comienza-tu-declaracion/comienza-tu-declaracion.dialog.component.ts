@@ -219,14 +219,18 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
+        return false;
       break;
       case 'modificacion':
         console.log("llega switch modif");
+        return false;
       break;
       case 'conclusion':
         console.log("llega switch fin");
+        return false;
       break;
     }
+    return true;
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
