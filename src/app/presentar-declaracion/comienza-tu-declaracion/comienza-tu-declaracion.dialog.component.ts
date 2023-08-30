@@ -76,6 +76,7 @@ export class DialogElementsExampleDialog implements OnInit {
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion') {
       this.validarFecha(value);
     }
+    //console.log(this.validarFecha)
   }
 
   validarDeclaracion() {
@@ -164,7 +165,8 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (value) {
       case 'inicial':
         console.log("llega switch " + value);
-        
+        this.datosDialogForm.controls.fechaModificacion.setValue('');
+        this.datosDialogForm.controls.fechaConclusion.setValue('');
         /*
         groupInicial.reset();
         groupInicial.enable();
@@ -174,7 +176,8 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'modificacion':
         console.log("llega switch " + value);
-        this.datosDialogForm.controls.fechaInicial.setValue('31/12/2222');
+        this.datosDialogForm.controls.fechaInicial.setValue('');
+        this.datosDialogForm.controls.fechaConclusion.setValue('');
         /*
         groupInicial.disable();
         groupModificacion.reset();
@@ -184,6 +187,8 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
       case 'conclusion':
         console.log("llega switch " + value);
+        this.datosDialogForm.controls.fechaInicial.setValue('');
+        this.datosDialogForm.controls.fechaModificacion.setValue('');
         /*
         groupInicial.disable();
         groupModificacion.disable();
@@ -192,9 +197,10 @@ export class DialogElementsExampleDialog implements OnInit {
         */
         break;
       default:
-        //groupInicial.disable();
-        //groupModificacion.disable();
-        //groupConclusion.disable();
+        console.log("llega break " + value);
+        this.datosDialogForm.controls.fechaInicial.setValue('');
+        this.datosDialogForm.controls.fechaModificacion.setValue('');
+        this.datosDialogForm.controls.fechaConclusion.setValue('');
         break;
     }
   }
