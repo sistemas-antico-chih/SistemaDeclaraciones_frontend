@@ -213,9 +213,10 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   isValid() {
-    console.log('tipoDeclaracion: '+this.tipo);
+    var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+    console.log('tipoDeclaracion: '+tipo);
 
-    switch (this.tipo) {
+    switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
       break;
