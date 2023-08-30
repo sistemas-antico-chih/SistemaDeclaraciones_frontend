@@ -31,6 +31,12 @@
             formControlName="fechaInicial"
             required
             />
+           <!--
+            <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
+            <mat-error *ngIf="signupForm.controls.curp.invalid && signupForm.controls.curp.touched">
+              <span translate>Ingrese una CURP válida</span>
+            </mat-error>
+            -->
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -45,8 +51,8 @@
           <input
           [errorStateMatcher]="errorMatcher"
           matInput
-          [min]="minDate"
-          [max]="maxDate"
+          [min]="2018"
+          [max]="anio"
           formControlName="fechaModificacion"
           required
           />

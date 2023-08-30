@@ -67,7 +67,7 @@ export class DialogElementsExampleDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
 
   ) {
-    //this.createForm();
+    this.createForm();
   }
 
   cambioValores(value: any) {
@@ -204,8 +204,10 @@ export class DialogElementsExampleDialog implements OnInit {
         break;
     }
   }
+  
+  ngOnInit(): void {}
 
-  ngOnInit() {
+  createForm() {
     this.datosDialogForm = this.formBuilder.group({
       tipoDeclaracion: [null, [Validators.required]],
       //fechaTomaPosesion: [null, [Validators.required]],
