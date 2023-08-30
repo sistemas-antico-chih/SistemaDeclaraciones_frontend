@@ -143,36 +143,27 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarFecha(value: any) {
-    console.log("llega validarFecha "+value);
     const fechaInicial = this.datosDialogForm.get('fechaInicial').value;
     const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
     const fechaConclusion = this.datosDialogForm.get('fechaConclusion').value;
-    console.log('fechaInicial '+fechaInicial);
-    console.log('fechaModificacion '+fechaModificacion);
-    console.log('fechaConclusion '+fechaConclusion);
 
     switch (value) {
       case 'inicial':
-        console.log("llega switch " + value);
         this.datosDialogForm.controls.fechaModificacion.setValue('');
         this.datosDialogForm.controls.fechaConclusion.setValue('');
         break;
       case 'modificacion':
-        console.log("llega switch " + value);
         for(let i=2019; this.anio > i; this.anio--){
           this.anios.push(this.anio);
         }
-        console.log('añios: '+this.anios);
         this.datosDialogForm.controls.fechaInicial.setValue('');
         this.datosDialogForm.controls.fechaConclusion.setValue('');
         break;
       case 'conclusion':
-        console.log("llega switch " + value);
         this.datosDialogForm.controls.fechaInicial.setValue('');
         this.datosDialogForm.controls.fechaModificacion.setValue('');
         break;
       default:
-        console.log("llega break " + value);
         this.datosDialogForm.controls.fechaInicial.setValue('');
         this.datosDialogForm.controls.fechaModificacion.setValue('');
         this.datosDialogForm.controls.fechaConclusion.setValue('');
@@ -195,7 +186,6 @@ export class DialogElementsExampleDialog implements OnInit {
   closeDialog() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
-    console.log('puesto: ' + puesto);
 
     if (this.isValid()) {
       let url = '/' + tipo;
@@ -223,7 +213,20 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   isValid() {
-    return true;
+    console.log('tipoDeclaracion: '+tipo);
+
+
+    switch (tipo) {
+      case 'inicial':
+        console.log("llega switch ini");
+      break;
+      case 'modificacion':
+        console.log("llega switch modif");
+      break;
+      case 'conclusion':
+        console.log("llega switch fin");
+      break;
+    }
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {

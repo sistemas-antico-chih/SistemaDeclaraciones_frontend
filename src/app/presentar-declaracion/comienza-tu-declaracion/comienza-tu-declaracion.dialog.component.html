@@ -33,7 +33,7 @@
           <div *ngIf="datosDialogForm.value.tipoDeclaracion == 'modificacion'">
           <mat-form-field appearance="fill">
             <mat-label>Seleccionar año de la declaración de modificación</mat-label>
-            <mat-icon matPrefix>dnaccount_balances</mat-icon>
+            <mat-icon matPrefix>account_balances</mat-icon>
             <mat-select formControlName="fechaModificacion" required>
               <mat-option *ngFor="let a of anios" [value]="a">
                 {{ a }}
