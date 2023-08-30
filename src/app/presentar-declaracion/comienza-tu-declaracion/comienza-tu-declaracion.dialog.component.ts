@@ -187,7 +187,7 @@ export class DialogElementsExampleDialog implements OnInit {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
-    if (this.isValid()) {
+    if (isValid()) {
       let url = '/' + tipo;
       if (puesto === "OPERATIVO") {
         url += '/simplificada';
