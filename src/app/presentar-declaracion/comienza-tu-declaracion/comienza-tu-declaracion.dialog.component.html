@@ -26,6 +26,7 @@
             <input
             [errorStateMatcher]="errorMatcher"
             matInput
+            [matDatepicker]="pickerInicial"
             [min]="minDate"
             [max]="maxDate"
             formControlName="fechaInicial"
@@ -38,7 +39,7 @@
             </mat-error>
             -->
             <mat-hint>dd/mm/yyyy</mat-hint>
-            <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matPrefix [for]="pickerInicial"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           </div>
@@ -51,13 +52,14 @@
           <input
           [errorStateMatcher]="errorMatcher"
           matInput
+          [matDatepicker]="pickerModifiacion"
           [min]="2018"
           [max]="anio"
           formControlName="fechaModificacion"
           required
           />
           <mat-hint>yyyy</mat-hint>
-          <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matPrefix [for]="pickerModifiacion"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         </div>
@@ -70,13 +72,14 @@
         <input
         [errorStateMatcher]="errorMatcher"
         matInput
+        [matDatepicker]="pickerConclusion"
         [min]="minDate"
         [max]="maxDate"
         formControlName="fechaConclusion"
         required
         />
         <mat-hint>dd/mm/yyyy</mat-hint>
-        <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matPrefix [for]="pickerConclusion"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       </div>
