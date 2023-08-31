@@ -235,10 +235,12 @@ export class DialogElementsExampleDialog implements OnInit {
       case 'inicial':
         console.log("llega switch ini");
         verificarDeclaracionInicial();
-        if(verificarDeclaracionInicial())
+        /*
+        if(this.verificarDeclaracionInicial())
           return true;
         else
           return false;
+        */
       break;
       case 'modificacion':
         console.log("llega switch modif");
