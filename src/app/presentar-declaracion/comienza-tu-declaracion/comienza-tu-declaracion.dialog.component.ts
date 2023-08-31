@@ -43,8 +43,8 @@ export class DialogElementsExampleDialog implements OnInit {
   isDisabledCheckBoxModificacion: boolean = true;
   isDisabledCheckBoxConclusion: boolean = true;
 
-  isCheckedCheckBoxModificacion: boolean = false;
   isCheckedCheckBoxInicial: boolean = false;
+  isCheckedCheckBoxModificacion: boolean = false;
   isCheckedCheckBoxConclusion: boolean = false;
 
   isDisabledButtonInicialSimple: boolean = true;
@@ -80,6 +80,8 @@ export class DialogElementsExampleDialog implements OnInit {
 
     if (tipoDeclaracion === "inicial" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxInicial = false;
+      this.isCheckedCheckBoxModificacion = false;
+      this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = false;
       this.isDisabledButtonModificacionSimple = true;
@@ -89,6 +91,8 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     else if (tipoDeclaracion === "inicial" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxInicial = true;
+      this.isCheckedCheckBoxModificacion = false;
+      this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = false;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
@@ -98,6 +102,8 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     else if (tipoDeclaracion === "modificacion" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxModificacion = false;
+      this.isCheckedCheckBoxInicial = false;
+      this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
@@ -107,6 +113,8 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     else if (tipoDeclaracion === "modificacion" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxModificacion = true;
+      this.isCheckedCheckBoxInicial = false;
+      this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = false;
@@ -116,6 +124,8 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     else if (tipoDeclaracion === "conclusion" && puesto === "DIRECTIVO") {
       this.isCheckedCheckBoxConclusion = false;
+      this.isCheckedCheckBoxInicial = false;
+      this.isCheckedCheckBoxModificacion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
@@ -125,6 +135,8 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     else if (tipoDeclaracion === "conclusion" && puesto === "OPERATIVO") {
       this.isCheckedCheckBoxConclusion = true;
+      this.isCheckedCheckBoxInicial = false;
+      this.isCheckedCheckBoxModificacion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
@@ -133,6 +145,9 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionCompleta = true;
     }
     else {
+      this.isCheckedCheckBoxInicial = false;
+      this.isCheckedCheckBoxModificacion = false;
+      this.isCheckedCheckBoxConclusion = false;
       this.isDisabledButtonInicialSimple = true;
       this.isDisabledButtonInicialCompleta = true;
       this.isDisabledButtonModificacionSimple = true;
@@ -219,7 +234,11 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
-        return false;
+        verificarDeclaracionInicial();
+        if(verificarDeclaracionInicial())
+          return true;
+        else
+          return false;
       break;
       case 'modificacion':
         console.log("llega switch modif");
@@ -231,6 +250,10 @@ export class DialogElementsExampleDialog implements OnInit {
       break;
     }
     return true;
+  }
+
+  verificarDeclaracionInicial(){
+    
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
