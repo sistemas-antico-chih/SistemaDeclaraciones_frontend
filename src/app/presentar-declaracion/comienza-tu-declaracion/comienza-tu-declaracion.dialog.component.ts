@@ -234,13 +234,13 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
-        /*
+        
         verificarDeclaracionInicial();
         if(this.verificarDeclaracionInicial())
           return true;
         else
           return false;
-        */
+        
       break;
       case 'modificacion':
         console.log("llega switch modif");
@@ -255,7 +255,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   verificarDeclaracionInicial(){
-    
+    return true;
   }
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
