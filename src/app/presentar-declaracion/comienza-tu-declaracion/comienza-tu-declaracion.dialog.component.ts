@@ -9,7 +9,9 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import { Apollo } from 'apollo-angular';
-import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
+//import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
+import gql from 'graphql-tag';
+
 
 import puesto from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
@@ -178,7 +180,7 @@ export class DialogElementsExampleDialog implements OnInit {
         this.datosDialogForm.controls.fechaConclusion.setValue('');
         break;
       case 'modificacion':
-        for(let i=2019; this.anio > i; this.anio--){
+        for (let i = 2019; this.anio > i; this.anio--) {
           this.anios.push(this.anio);
         }
         this.datosDialogForm.controls.fechaInicial.setValue('');
@@ -196,7 +198,7 @@ export class DialogElementsExampleDialog implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   createForm() {
     this.datosDialogForm = this.formBuilder.group({
@@ -239,56 +241,64 @@ export class DialogElementsExampleDialog implements OnInit {
 
   isValid() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
-    console.log('tipoDeclaracion: '+tipo);
+    console.log('tipoDeclaracion: ' + tipo);
 
     switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
-        
+
         //this.verificarDeclaracionInicial();
-        if(this.verificarDeclaracionInicial())
+        if (this.verificarDeclaracionInicial(tipo))
           return true;
         else
           return false;
-        
-      break;
+
+        break;
       case 'modificacion':
         console.log("llega switch modif");
         return false;
-      break;
+        break;
       case 'conclusion':
         console.log("llega switch fin");
         return false;
-      break;
+        break;
     }
     return true;
   }
 
-  async verificarDeclaracionInicial(){
+  async verificarDeclaracionInicial(tipo: string) {
     console.log("llega a verificacionDeclaracionInicial()")
-    /*try {
+    try {
       const { data }: any = await this.apollo
         .query({
-          query: statsTipoQuery,
+          //query: statsTipoQuery,
+          query: gql`
+            query statsTipo($tipoDeclaracion: TipoDeclaracion!) {
+              statsTipo(tipoDeclaracion: $tipoDeclaracion) {
+                tipoDeclaracion
+                total
+              }
+            }
+          `,
           variables: {
-            tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
+            tipoDeclaracion: tipo.toUpperCase(),
             //total: !this.declaracionSimplificada,
           },
         })
         .toPromise();
       this.declaraciones = data.stats.total || 0;
       this.declaracionesIniciales = data.statsTipo.total;
-      
+
     } catch (error) {
       console.log(error);
       return false;
-    }*/
-    
-    console.log("declaracionesIniciales: "+this.declaracionesIniciales);
-    if (this.declaracionesIniciales = 0){
+    }
+
+    console.log("declaracionesIniciales: " + this.declaracionesIniciales);
+    if (this.declaracionesIniciales = 0) {
       return true;
     }
-    else{
+    else {
       return false;
     }
     return true;
