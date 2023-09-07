@@ -266,7 +266,7 @@ export class DialogElementsExampleDialog implements OnInit {
 
   async verificarDeclaracionInicial(){
     console.log("llega a verificacionDeclaracionInicial()")
-    try {
+    /*try {
       const { data }: any = await this.apollo
         .query({
           query: statsTipoQuery,
@@ -282,7 +282,7 @@ export class DialogElementsExampleDialog implements OnInit {
     } catch (error) {
       console.log(error);
       return false;
-    }
+    }*/
 
     console.log("declaracionesIniciales: "+this.declaracionesIniciales);
     if (this.declaracionesIniciales = 0){
