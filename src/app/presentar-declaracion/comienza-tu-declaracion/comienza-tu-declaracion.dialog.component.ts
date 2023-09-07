@@ -264,7 +264,7 @@ export class DialogElementsExampleDialog implements OnInit {
     return true;
   }
 
-  verificarDeclaracionInicial(){
+  async verificarDeclaracionInicial(){
     console.log("llega a verificacionDeclaracionInicial()")
     try {
       const { data }: any = await this.apollo
