@@ -1219,13 +1219,13 @@ export const participacionTomaDecisionesQuery = gql`
     }
   }
 `;
-
+/*
 export const statsTipoQuery = gql`
   query statsTipo($tipoDeclaracion: TipoDeclaracion!, $anioEjercicio: Int) {
     statsTipo(tipoDeclaracion: $tipoDeclaracion, anioEjercicio: $anioEjercicio) {
       tipoDeclaracion
       total
-      }
     }
   }
 `;
+*/

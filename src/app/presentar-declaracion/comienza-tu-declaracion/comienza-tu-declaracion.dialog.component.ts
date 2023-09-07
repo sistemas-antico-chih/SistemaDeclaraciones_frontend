@@ -283,7 +283,7 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-
+    
     console.log("declaracionesIniciales: "+this.declaracionesIniciales);
     if (this.declaracionesIniciales = 0){
       return true;
