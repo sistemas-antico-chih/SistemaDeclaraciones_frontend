@@ -67,7 +67,7 @@ export class DialogElementsExampleDialog implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
-    private apollo: Apollo
+    private apollo: Apollo,
     @Inject(MAT_DIALOG_DATA) public data: any
 
   ) {
