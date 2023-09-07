@@ -286,9 +286,12 @@ export class DialogElementsExampleDialog implements OnInit {
           },
         })
         .toPromise();
-      this.declaraciones = data.stats.total || 0;
+      this.declaraciones = data.statsTipo.total || 0;
       this.declaracionesIniciales = data.statsTipo.total;
-
+      
+      console.log("declaraciones: "+this.declaraciones);
+      console.log("declaracionesIniciales: "+this.declaracionesIniciales);
+      
     } catch (error) {
       console.log(error);
       return false;
