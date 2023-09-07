@@ -8,6 +8,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
+import { Apollo } from 'apollo-angular';
+import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
+
 import puesto from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/crear_declaracion';
@@ -21,6 +24,11 @@ import { tooltipData } from '@static/tooltips/situacion-patrimonial/crear_declar
 })
 
 export class DialogElementsExampleDialog implements OnInit {
+
+  declaraciones = 0;
+  declaracionesIniciales = 0;
+  declaracionesModificacion = 0;
+  declaracionesFinales = 0;
 
   datosDialogForm: FormGroup;
 
@@ -59,10 +67,12 @@ export class DialogElementsExampleDialog implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
+    private apollo: Apollo
     @Inject(MAT_DIALOG_DATA) public data: any
 
   ) {
     this.createForm();
+
   }
 
   cambioValores(value: any) {
@@ -235,7 +245,7 @@ export class DialogElementsExampleDialog implements OnInit {
       case 'inicial':
         console.log("llega switch ini");
         
-        verificarDeclaracionInicial();
+        //this.verificarDeclaracionInicial();
         if(this.verificarDeclaracionInicial())
           return true;
         else
@@ -255,8 +265,67 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   verificarDeclaracionInicial(){
+    console.log("llega a verificacionDeclaracionInicial()")
+    try {
+      const { data }: any = await this.apollo
+        .query({
+          query: statsTipoQuery,
+          variables: {
+            tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
+            //total: !this.declaracionSimplificada,
+          },
+        })
+        .toPromise();
+      this.declaraciones = data.stats.total || 0;
+      this.declaracionesIniciales = data.statsTipo.total;
+      
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+
+    console.log("declaracionesIniciales: "+this.declaracionesIniciales);
+    if (this.declaracionesIniciales = 0){
+      return true;
+    }
+    else{
+      return false;
+    }
     return true;
   }
+
+  /*
+  async saveInfo() {
+    try {
+      this.isLoading = true;
+      const declaracion = {
+        datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
+      };
+
+      const { errors } = await this.apollo
+        .mutate({
+          mutation: declaracionMutation,
+          variables: {
+            id: this.declaracionId,
+            declaracion,
+          },
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.isLoading = false;
+      this.openSnackBar('Información actualizada', 'Aceptar');
+    } catch (error) {
+      console.log(error);
+      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+    }
+  }
+  */
+
+
 
   fillForm(datosComponenteForm: DatosDialog | undefined) {
     this.datosDialogForm.patchValue(datosComponenteForm || {});
