@@ -1220,7 +1220,7 @@ export const participacionTomaDecisionesQuery = gql`
   }
 `;
 
-export const statsTipoQuery = gql`
+/*export const statsTipoQuery = gql`
   query statsTipo {
     statsTipo {
       counters{
@@ -1230,3 +1230,4 @@ export const statsTipoQuery = gql`
     }
   }
 `;
+*/

@@ -246,8 +246,8 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
-
-        this.verificarDeclaracionInicial();
+        const valida = this.verificarDeclaracionInicial();
+        console.log("funcion valia "+valida);
         if (this.verificarDeclaracionInicial())
           return true;
         else
@@ -266,13 +266,13 @@ export class DialogElementsExampleDialog implements OnInit {
     return true;
   }
 
-  async verificarDeclaracionInicial() {
+  async verificarDeclaracionInicial():Promise<boolean> {
     console.log("llega a verificacionDeclaracionInicial()")
     try {
       const { data }: any = await this.apollo
         .query({
-          query: statsTipoQuery,
-          /*query: gql`
+         // query: statsTipoQuery,
+          query: gql`
             query statsTipo($tipoDeclaracion: TipoDeclaracion!) {
               statsTipo(tipoDeclaracion: $tipoDeclaracion) {
                 tipoDeclaracion
@@ -280,7 +280,7 @@ export class DialogElementsExampleDialog implements OnInit {
               }
             }
           `,
-          */
+          
           /*variables: {
             tipoDeclaracion: tipo.toUpperCase(),
             //total: !this.declaracionSimplificada,
@@ -288,24 +288,27 @@ export class DialogElementsExampleDialog implements OnInit {
         })
         .toPromise();
       this.declaraciones = data.statsTipo.total || 0;
-      this.declaracionesIniciales = data.statsTipo.total;
+      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
+      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
       
       console.log("statsTipoQuery: "+statsTipoQuery);
       console.log("declaraciones: "+this.declaraciones);
       console.log("declaracionesIniciales: "+this.declaracionesIniciales);
+      console.log("declaracionesFinales: " + this.declaracionesFinales);
+
       
     } catch (error) {
       console.log(error);
       return false;
     }
 
-    console.log("declaracionesIniciales: " + this.declaracionesIniciales);
-    if (this.declaracionesIniciales = 0) {
+    //return  this.declaracionesIniciales - this.declaracionesFinales
+    if ( this.declaracionesIniciales - this.declaracionesFinales === 0){
       return true;
     }
-    else {
+    else 
       return false;
-    }
+      
   }
 
   /*
