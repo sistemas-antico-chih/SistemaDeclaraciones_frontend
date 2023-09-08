@@ -12,7 +12,6 @@ import { Apollo } from 'apollo-angular';
 //import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
 import gql from 'graphql-tag';
 
-import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
 import puesto from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/crear_declaracion';
