@@ -209,11 +209,12 @@ export class DialogElementsExampleDialog implements OnInit {
     });
   }
 
-  closeDialog() {
+  async closeDialog() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
 
-    if (this.isValid()) {
+    if (await this.isValid()) {
+      console.log("closeDiaglo isValid IF");
       let url = '/' + tipo;
       if (puesto === "OPERATIVO") {
         url += '/simplificada';
@@ -225,6 +226,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.dialogRef.close({ data: '' })
     }
     else {
+      console.log("closeDiaglo isValid else");
       const dialogReff = this.dialog.open(DialogComponent, {
         data: {
           title: 'No es posible iniciar la declaración',
