@@ -290,7 +290,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
       
-      console.log("statsTipoQuery: "+statsTipoQuery);
+      //console.log("statsTipoQuery: "+statsTipoQuery);
       console.log("declaraciones: "+this.declaraciones);
       console.log("declaracionesIniciales: "+this.declaracionesIniciales);
       console.log("declaracionesFinales: " + this.declaracionesFinales);
