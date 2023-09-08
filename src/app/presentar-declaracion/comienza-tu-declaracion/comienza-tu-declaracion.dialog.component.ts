@@ -290,6 +290,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsTipo.total || 0;
       this.declaracionesIniciales = data.statsTipo.total;
       
+      console.log("statsTipoQuery: "+statsTipoQuery);
       console.log("declaraciones: "+this.declaraciones);
       console.log("declaracionesIniciales: "+this.declaracionesIniciales);
       
@@ -305,7 +306,6 @@ export class DialogElementsExampleDialog implements OnInit {
     else {
       return false;
     }
-    return true;
   }
 
   /*
