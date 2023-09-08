@@ -238,16 +238,16 @@ export class DialogElementsExampleDialog implements OnInit {
     //this.dialogRef.close({ data: '' })
   }
 
-  isValid() {
+  async isValid() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
-    console.log('tipoDeclaracion: ' + tipo);
+    //console.log('tipoDeclaracion: ' + tipo);
 
     switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
-        const valida =  this.verificarDeclaracionInicial();
-        console.log("funcion valida "+valida);
-        if (valida)
+        const valida = await this.verificarDeclaracionInicial();
+        console.log("funcion valida: "+valida);
+        if (valida === 0)
           return true;
         else
           return false;
