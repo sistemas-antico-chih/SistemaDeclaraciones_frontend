@@ -274,7 +274,7 @@ export class DialogElementsExampleDialog implements OnInit {
           query: gql`
             query statsTipo {
               statsTipo {
-                counter{
+                counters{
                   tipoDeclaracion
                   count
                 }
