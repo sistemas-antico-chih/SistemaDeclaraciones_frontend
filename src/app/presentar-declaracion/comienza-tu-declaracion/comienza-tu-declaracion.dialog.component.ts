@@ -12,7 +12,7 @@ import { Apollo } from 'apollo-angular';
 //import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
 import gql from 'graphql-tag';
 
-
+import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
 import puesto from '@static/catalogos/catalogoPuestos.json';
 import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/crear_declaracion';
@@ -247,8 +247,8 @@ export class DialogElementsExampleDialog implements OnInit {
       case 'inicial':
         console.log("llega switch ini");
 
-        //this.verificarDeclaracionInicial();
-        if (this.verificarDeclaracionInicial(tipo))
+        this.verificarDeclaracionInicial();
+        if (this.verificarDeclaracionInicial())
           return true;
         else
           return false;
@@ -266,13 +266,13 @@ export class DialogElementsExampleDialog implements OnInit {
     return true;
   }
 
-  async verificarDeclaracionInicial(tipo: string) {
+  async verificarDeclaracionInicial() {
     console.log("llega a verificacionDeclaracionInicial()")
     try {
       const { data }: any = await this.apollo
         .query({
-          //query: statsTipoQuery,
-          query: gql`
+          query: statsTipoQuery,
+          /*query: gql`
             query statsTipo($tipoDeclaracion: TipoDeclaracion!) {
               statsTipo(tipoDeclaracion: $tipoDeclaracion) {
                 tipoDeclaracion
@@ -280,10 +280,11 @@ export class DialogElementsExampleDialog implements OnInit {
               }
             }
           `,
-          variables: {
+          */
+          /*variables: {
             tipoDeclaracion: tipo.toUpperCase(),
             //total: !this.declaracionSimplificada,
-          },
+          },*/
         })
         .toPromise();
       this.declaraciones = data.statsTipo.total || 0;
