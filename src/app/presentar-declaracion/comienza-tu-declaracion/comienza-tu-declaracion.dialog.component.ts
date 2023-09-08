@@ -247,11 +247,10 @@ export class DialogElementsExampleDialog implements OnInit {
         console.log("llega switch ini");
         const valida = await this.verificarDeclaracionInicial();
         console.log("funcion valida: "+valida);
-        if (valida === 0)
+        if (valida)
           return true;
         else
           return false;
-
         break;
       case 'modificacion':
         console.log("llega switch modif");
@@ -299,16 +298,16 @@ export class DialogElementsExampleDialog implements OnInit {
       
     } catch (error) {
       console.log(error);
-      return 0;
+      return false;
     }
 
-    return  this.declaracionesIniciales - this.declaracionesFinales
-    /*if ( this.declaracionesIniciales - this.declaracionesFinales === 0){
+    //return  this.declaracionesIniciales - this.declaracionesFinales
+    if ( this.declaracionesIniciales - this.declaracionesFinales === 0){
       return true;
     }
     else 
       return false;
-      */
+    
   }
 
   /*
