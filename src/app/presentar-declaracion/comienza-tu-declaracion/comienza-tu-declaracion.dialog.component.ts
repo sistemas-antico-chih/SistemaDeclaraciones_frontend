@@ -272,10 +272,12 @@ export class DialogElementsExampleDialog implements OnInit {
         .query({
          // query: statsTipoQuery,
           query: gql`
-            query statsTipo($tipoDeclaracion: TipoDeclaracion!) {
-              statsTipo(tipoDeclaracion: $tipoDeclaracion) {
-                tipoDeclaracion
-                total
+            query statsTipo {
+              statsTipo {
+                counter{
+                  tipoDeclaracion
+                  count
+                }
               }
             }
           `,
