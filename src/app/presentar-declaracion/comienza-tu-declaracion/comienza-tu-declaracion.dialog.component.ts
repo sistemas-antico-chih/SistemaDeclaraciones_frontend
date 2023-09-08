@@ -245,9 +245,9 @@ export class DialogElementsExampleDialog implements OnInit {
     switch (tipo) {
       case 'inicial':
         console.log("llega switch ini");
-        const valida = this.verificarDeclaracionInicial();
-        console.log("funcion valia "+valida);
-        if (this.verificarDeclaracionInicial())
+        const valida =  this.verificarDeclaracionInicial();
+        console.log("funcion valida "+valida);
+        if (valida)
           return true;
         else
           return false;
@@ -265,7 +265,7 @@ export class DialogElementsExampleDialog implements OnInit {
     return true;
   }
 
-  async verificarDeclaracionInicial():Promise<boolean> {
+  async verificarDeclaracionInicial() {
     console.log("llega a verificacionDeclaracionInicial()")
     try {
       const { data }: any = await this.apollo
@@ -293,23 +293,22 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
       
       //console.log("statsTipoQuery: "+statsTipoQuery);
-      console.log("declaraciones: "+this.declaraciones);
       console.log("declaracionesIniciales: "+this.declaracionesIniciales);
       console.log("declaracionesFinales: " + this.declaracionesFinales);
-
+      console.log("declaraciones resta: "+(this.declaracionesIniciales-this.declaracionesFinales));
       
     } catch (error) {
       console.log(error);
-      return false;
+      return 0;
     }
 
-    //return  this.declaracionesIniciales - this.declaracionesFinales
-    if ( this.declaracionesIniciales - this.declaracionesFinales === 0){
+    return  this.declaracionesIniciales - this.declaracionesFinales
+    /*if ( this.declaracionesIniciales - this.declaracionesFinales === 0){
       return true;
     }
     else 
       return false;
-      
+      */
   }
 
   /*
