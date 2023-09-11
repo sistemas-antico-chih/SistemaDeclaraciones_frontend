@@ -83,7 +83,6 @@ export class DialogElementsExampleDialog implements OnInit {
     if (value === 'inicial' || value === 'modificacion' || value === 'conclusion') {
       this.validarFecha(value);
     }
-    //console.log(this.validarFecha)
   }
 
   validarDeclaracion() {
@@ -216,7 +215,6 @@ export class DialogElementsExampleDialog implements OnInit {
     const puesto = this.datosDialogForm.get('puesto').value;
 
     if (await this.isValid()) {
-      console.log("closeDiaglo isValid IF");
       let url = '/' + tipo;
       if (puesto === "OPERATIVO") {
         url += '/simplificada';
@@ -282,8 +280,6 @@ export class DialogElementsExampleDialog implements OnInit {
   async isValid() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
-
-    //console.log('tipoDeclaracion: ' + tipo);
 
     switch (tipo) {
       case 'inicial':
@@ -390,14 +386,8 @@ export class DialogElementsExampleDialog implements OnInit {
         })
         .toPromise();
       this.declaraciones = data.statsModif.counters.count || 0;
-      /*this.declaracionesModificacionCompleta.push({
-        anioEjercicio: fechaModificacion,
-        declaracionCompleta: true,
-        count: data.statsTipo.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
-      })*/
-      this.declaracionesModificacionCompleta = data.statsTipo.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
-      this.declaraciones = data.statsModif.counters.count || 0;
-      this.declaracionesModificacionSimple = data.statsTipo.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
+      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
+      this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
       
     } catch (error) {
       console.log(error);
