@@ -42,7 +42,7 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
-  
+  anios: number[] = [];
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
