@@ -229,7 +229,7 @@ export class DialogElementsExampleDialog implements OnInit {
       switch (tipo) {
         case "inicial":
           const dialogRefInicial = this.dialog.open(DialogComponent, {
-            height: '300px',
+            height: '180px',
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo INICIAL',
