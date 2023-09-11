@@ -229,8 +229,9 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log("closeDiaglo isValid else");
       const dialogReff = this.dialog.open(DialogComponent, {
         data: {
-          title: 'No es posible iniciar la declaración',
-          message: 'Es necesario que exista una declaración de tipo INICIAL',
+          title: 'No es posible iniciar la declaración de tipo INICIAL',
+          message: 'Actualmente existe firmada una declaración de tipo INICIAL \n '+
+             + ' sin embargo no existe firmada la declaración de tipo CONCLUSIÓN correspondiente',
           trueText: 'Continuar',
         },
       });
@@ -246,27 +247,21 @@ export class DialogElementsExampleDialog implements OnInit {
 
     switch (tipo) {
       case 'inicial':
-        console.log("llega switch ini");
-        const valida = await this.verificarDeclaracionInicial();
-        console.log("funcion valida: "+valida);
-        if (valida === 0){
-          console.log("llega if");
+        const validaInicial = await this.verificarDeclaracionInicial();
+        if (validaInicial)
           return true;
-        }
-        else{
-          console.log ("llega else");
+        else
           return false;
-        }
-          
-        break;
       case 'modificacion':
         console.log("llega switch modif");
         return false;
         break;
       case 'conclusion':
-        console.log("llega switch fin");
-        return false;
-        break;
+        const validaConclusion = await this.verificarDeclaracionConclusion();
+        if (validaConclusion)
+        return true;
+      else
+        return false
     }
     return true;
   }
@@ -298,7 +293,6 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
       
-      //console.log("statsTipoQuery: "+statsTipoQuery);
       console.log("declaracionesIniciales: "+this.declaracionesIniciales);
       console.log("declaracionesFinales: " + this.declaracionesFinales);
       console.log("declaraciones resta: "+(this.declaracionesIniciales-this.declaracionesFinales));
@@ -307,16 +301,56 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return 0;
     }
-
-    return  this.declaracionesIniciales - this.declaracionesFinales;
-    /*if ( this.declaracionesIniciales - this.declaracionesFinales === 0){
+    //return  this.declaracionesIniciales - this.declaracionesFinales;
+    if ( this.declaracionesIniciales - this.declaracionesFinales === 0)
       return true;
-    }
     else 
       return false;
-    */
+    
   }
 
+    async verificarDeclaracionConclusion() {
+    console.log("llega a verificarDeclaracionConclusion()")
+    try {
+      const { data }: any = await this.apollo
+        .query({
+         // query: statsTipoQuery,
+          query: gql`
+            query statsTipo {
+              statsTipo {
+                counters{
+                  tipoDeclaracion
+                  count
+                }
+              }
+            }
+          `,
+          
+          /*variables: {
+            tipoDeclaracion: tipo.toUpperCase(),
+            //total: !this.declaracionSimplificada,
+          },*/
+        })
+        .toPromise();
+      this.declaraciones = data.statsTipo.total || 0;
+      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
+      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
+      
+      console.log("declaracionesIniciales: "+this.declaracionesIniciales);
+      console.log("declaracionesFinales: " + this.declaracionesFinales);
+      console.log("declaraciones resta: "+(this.declaracionesIniciales-this.declaracionesFinales));
+      
+    } catch (error) {
+      console.log(error);
+      return 0;
+    }
+    //return  this.declaracionesIniciales - this.declaracionesFinales;
+    if ( this.declaracionesIniciales - this.declaracionesFinales === 0)
+      return false;
+    else 
+      return true;
+    
+  }
   /*
   async saveInfo() {
     try {
