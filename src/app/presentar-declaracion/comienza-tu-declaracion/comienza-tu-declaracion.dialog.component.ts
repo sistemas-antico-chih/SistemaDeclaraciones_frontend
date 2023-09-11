@@ -28,7 +28,8 @@ export class DialogElementsExampleDialog implements OnInit {
 
   declaraciones = 0;
   declaracionesIniciales = 0;
-  declaracionesModificacion = 0;
+  declaracionesModificacionCompleta = 0;
+  declaracionesModificacionSimple = 0;
   declaracionesFinales = 0;
 
   datosDialogForm: FormGroup;
@@ -41,7 +42,7 @@ export class DialogElementsExampleDialog implements OnInit {
   puestoCatalogo = puesto;
   isLoading = false;
 
-  anios: number[] = [];
+  
   minDate = new Date(1980, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
@@ -240,12 +241,13 @@ export class DialogElementsExampleDialog implements OnInit {
           });
           break;
         case "modificacion":
+          const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
           const dialogRefModificacion = this.dialog.open(DialogComponent, {
             height: '230px',
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo MODIFICACIÓN',
-              message: 'Actualmente existe firmada una declaración de tipo INICIAL, sin embargo no existe firmada la declaración de tipo CONCLUSIÓN correspondiente',
+              message: `Ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion} completa y simplificada, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
               trueText: 'Continuar',
             },
           });
@@ -279,6 +281,8 @@ export class DialogElementsExampleDialog implements OnInit {
 
   async isValid() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+    const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
+
     //console.log('tipoDeclaracion: ' + tipo);
 
     switch (tipo) {
@@ -289,7 +293,7 @@ export class DialogElementsExampleDialog implements OnInit {
         else
           return false;
       case 'modificacion':
-        const validaModificacion = await this.verificarDeclaracionModificacion();
+        const validaModificacion = await this.verificarDeclaracionModificacion(fechaModificacion);
         if (validaModificacion)
           return true;
         else
@@ -308,7 +312,6 @@ export class DialogElementsExampleDialog implements OnInit {
     try {
       const { data }: any = await this.apollo
         .query({
-          // query: statsTipoQuery,
           query: gql`
             query statsTipo {
               statsTipo {
@@ -319,38 +322,29 @@ export class DialogElementsExampleDialog implements OnInit {
               }
             }
           `,
-
           /*variables: {
             tipoDeclaracion: tipo.toUpperCase(),
             //total: !this.declaracionSimplificada,
           },*/
         })
         .toPromise();
-      this.declaraciones = data.statsTipo.total || 0;
+      this.declaraciones = data.statsTipo.counters.count || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
 
-      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
-      console.log("declaracionesFinales: " + this.declaracionesFinales);
-      console.log("declaraciones resta: " + (this.declaracionesIniciales - this.declaracionesFinales));
-
     } catch (error) {
       console.log(error);
-      return 0;
+      return false;
     }
-    //return  this.declaracionesIniciales - this.declaracionesFinales;
     if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return true;
     else
-      return false;
-
   }
 
   async verificarDeclaracionConclusion() {
     try {
       const { data }: any = await this.apollo
         .query({
-          // query: statsTipoQuery,
           query: gql`
             query statsTipo {
               statsTipo {
@@ -361,73 +355,58 @@ export class DialogElementsExampleDialog implements OnInit {
               }
             }
           `,
-
-          /*variables: {
-            tipoDeclaracion: tipo.toUpperCase(),
-            //total: !this.declaracionSimplificada,
-          },*/
         })
         .toPromise();
-      this.declaraciones = data.statsTipo.total || 0;
+      this.declaraciones = data.statsTipo.counters.count || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
 
-      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
-      console.log("declaracionesFinales: " + this.declaracionesFinales);
-      console.log("declaraciones resta: " + (this.declaracionesIniciales - this.declaracionesFinales));
-
     } catch (error) {
       console.log(error);
-      return 0;
+      return false;
     }
-    //return  this.declaracionesIniciales - this.declaracionesFinales;
     if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return false;
     else
       return true;
-
   }
 
-  async verificarDeclaracionModificacion() {
+  async verificarDeclaracionModificacion(fechaModificacion: any) {
     try {
       const { data }: any = await this.apollo
         .query({
-          // query: statsTipoQuery,
           query: gql`
-            query statsTipo {
-              statsTipo {
+            query statsModif {
+              statsModif {
                 counters{
-                  tipoDeclaracion
+                  anioEjercicio
+                  declaracionCompleta
                   count
                 }
               }
             }
           `,
-
-          /*variables: {
-            tipoDeclaracion: tipo.toUpperCase(),
-            //total: !this.declaracionSimplificada,
-          },*/
         })
         .toPromise();
-      this.declaraciones = data.statsTipo.total || 0;
-      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
-      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
-
-      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
-      console.log("declaracionesFinales: " + this.declaracionesFinales);
-      console.log("declaraciones resta: " + (this.declaracionesIniciales - this.declaracionesFinales));
-
+      this.declaraciones = data.statsModif.counters.count || 0;
+      /*this.declaracionesModificacionCompleta.push({
+        anioEjercicio: fechaModificacion,
+        declaracionCompleta: true,
+        count: data.statsTipo.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
+      })*/
+      this.declaracionesModificacionCompleta = data.statsTipo.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
+      this.declaraciones = data.statsModif.counters.count || 0;
+      this.declaracionesModificacionSimple = data.statsTipo.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
+      
     } catch (error) {
       console.log(error);
-      return 0;
+      return false;
     }
     //return  this.declaracionesIniciales - this.declaracionesFinales;
-    if (this.declaracionesIniciales - this.declaracionesFinales === 0)
-      return false;
-    else
+    if (this.declaracionesModificacionCompleta === 1 && this.declaracionesModificacionSimple === 1)
       return true;
-
+    else
+      return false;
   }
   /*
   async saveInfo() {
