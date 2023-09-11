@@ -226,15 +226,44 @@ export class DialogElementsExampleDialog implements OnInit {
       this.dialogRef.close({ data: '' })
     }
     else {
-      console.log("closeDiaglo isValid else");
-      const dialogReff = this.dialog.open(DialogComponent, {
+      switch (tipo) {
+        case "inicial":
+          const dialogRefInicial = this.dialog.open(DialogComponent, {
+            data: {
+              title: 'No es posible iniciar la declaración de tipo INICIAL',
+              message: 'Es neceario que exista la declaración firmada de tipo CONCLUSIÓN correspondiente, en caso de alguna duda favor de dirigirse a su Órano Interno de Control.',
+              trueText: 'Continuar',
+            },
+          });
+          break;
+        case "modificacion":
+          const dialogRefModificacion = this.dialog.open(DialogComponent, {
+            data: {
+              title: 'No es posible iniciar la declaración de tipo MODIFICACIÓN',
+              message: 'Actualmente existe firmada una declaración de tipo INICIAL, sin embargo no existe firmada la declaración de tipo CONCLUSIÓN correspondiente',
+              trueText: 'Continuar',
+            },
+          });
+          break;
+        case "conclusion":
+          const dialogRefConclusion = this.dialog.open(DialogComponent, {
+            data: {
+              title: 'No es posible iniciar la declaración de tipo CONCLUSIÓN',
+              message: 'Es necesario que exista una declaración firmada de tipo INICIAL para poder realizar una declaración de tipo CONCLUSIÓN, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.',
+              trueText: 'Continuar',
+            },
+          });
+          break;
+      }
+
+
+      /*const dialogReff = this.dialog.open(DialogComponent, {
         data: {
           title: 'No es posible iniciar la declaración de tipo INICIAL',
-          message: 'Actualmente existe firmada una declaración de tipo INICIAL \n '+
-             + ' sin embargo no existe firmada la declaración de tipo CONCLUSIÓN correspondiente',
+          message: 'Actualmente existe firmada una declaración de tipo INICIAL, sin embargo no existe firmada la declaración de tipo CONCLUSIÓN correspondiente',   
           trueText: 'Continuar',
         },
-      });
+      });*/
       //dialogReff.close({ data: '' })
     }
 
@@ -259,9 +288,9 @@ export class DialogElementsExampleDialog implements OnInit {
       case 'conclusion':
         const validaConclusion = await this.verificarDeclaracionConclusion();
         if (validaConclusion)
-        return true;
-      else
-        return false
+          return true;
+        else
+          return false
     }
     return true;
   }
@@ -271,7 +300,7 @@ export class DialogElementsExampleDialog implements OnInit {
     try {
       const { data }: any = await this.apollo
         .query({
-         // query: statsTipoQuery,
+          // query: statsTipoQuery,
           query: gql`
             query statsTipo {
               statsTipo {
@@ -282,7 +311,7 @@ export class DialogElementsExampleDialog implements OnInit {
               }
             }
           `,
-          
+
           /*variables: {
             tipoDeclaracion: tipo.toUpperCase(),
             //total: !this.declaracionSimplificada,
@@ -292,29 +321,29 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsTipo.total || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
-      
-      console.log("declaracionesIniciales: "+this.declaracionesIniciales);
+
+      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
       console.log("declaracionesFinales: " + this.declaracionesFinales);
-      console.log("declaraciones resta: "+(this.declaracionesIniciales-this.declaracionesFinales));
-      
+      console.log("declaraciones resta: " + (this.declaracionesIniciales - this.declaracionesFinales));
+
     } catch (error) {
       console.log(error);
       return 0;
     }
     //return  this.declaracionesIniciales - this.declaracionesFinales;
-    if ( this.declaracionesIniciales - this.declaracionesFinales === 0)
+    if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return true;
-    else 
+    else
       return false;
-    
+
   }
 
-    async verificarDeclaracionConclusion() {
+  async verificarDeclaracionConclusion() {
     console.log("llega a verificarDeclaracionConclusion()")
     try {
       const { data }: any = await this.apollo
         .query({
-         // query: statsTipoQuery,
+          // query: statsTipoQuery,
           query: gql`
             query statsTipo {
               statsTipo {
@@ -325,7 +354,7 @@ export class DialogElementsExampleDialog implements OnInit {
               }
             }
           `,
-          
+
           /*variables: {
             tipoDeclaracion: tipo.toUpperCase(),
             //total: !this.declaracionSimplificada,
@@ -335,21 +364,21 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsTipo.total || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
-      
-      console.log("declaracionesIniciales: "+this.declaracionesIniciales);
+
+      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
       console.log("declaracionesFinales: " + this.declaracionesFinales);
-      console.log("declaraciones resta: "+(this.declaracionesIniciales-this.declaracionesFinales));
-      
+      console.log("declaraciones resta: " + (this.declaracionesIniciales - this.declaracionesFinales));
+
     } catch (error) {
       console.log(error);
       return 0;
     }
     //return  this.declaracionesIniciales - this.declaracionesFinales;
-    if ( this.declaracionesIniciales - this.declaracionesFinales === 0)
+    if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return false;
-    else 
+    else
       return true;
-    
+
   }
   /*
   async saveInfo() {
