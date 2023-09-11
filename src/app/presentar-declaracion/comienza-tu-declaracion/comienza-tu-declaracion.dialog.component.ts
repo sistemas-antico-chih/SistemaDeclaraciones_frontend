@@ -339,6 +339,7 @@ export class DialogElementsExampleDialog implements OnInit {
     if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return true;
     else
+      return false;
   }
 
   async verificarDeclaracionConclusion() {
