@@ -388,7 +388,8 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsModif.counters.count || 0;
       this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
       this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
-      
+      console.log('declaracionesCompleta: '+this.declaracionesModificacionCompleta);
+      console.log('declaracionesSimple: '+this.declaracionesModificacionSimple);
     } catch (error) {
       console.log(error);
       return false;
