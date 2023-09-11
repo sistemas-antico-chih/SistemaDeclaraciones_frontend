@@ -229,8 +229,8 @@ export class DialogElementsExampleDialog implements OnInit {
       switch (tipo) {
         case "inicial":
           const dialogRefInicial = this.dialog.open(DialogComponent, {
-            height: '40px',
-            width: '90px',
+            height: '300px',
+            width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo INICIAL',
               message: 'Es neceario que exista la declaración firmada de tipo CONCLUSIÓN correspondiente, en caso de alguna duda favor de dirigirse a su Órano Interno de Control.',
