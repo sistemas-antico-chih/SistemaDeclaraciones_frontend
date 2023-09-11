@@ -88,8 +88,11 @@ export class DialogElementsExampleDialog implements OnInit {
   validarDeclaracion() {
     const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
+    const fechaInicial = this.datosDialogForm.get('fechaInicial').value;
+    const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
+    const fechaConclusion = this.datosDialogForm.get('fechaConclusion').value;
 
-    if (tipoDeclaracion === "inicial" && puesto === "DIRECTIVO") {
+    if (tipoDeclaracion === "inicial" && puesto === "DIRECTIVO" && fechaInicial != null) {
       this.isCheckedCheckBoxInicial = false;
       this.isCheckedCheckBoxModificacion = false;
       this.isCheckedCheckBoxConclusion = false;
@@ -100,7 +103,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipoDeclaracion === "inicial" && puesto === "OPERATIVO") {
+    else if (tipoDeclaracion === "inicial" && puesto === "OPERATIVO" && fechaInicial != null) {
       this.isCheckedCheckBoxInicial = true;
       this.isCheckedCheckBoxModificacion = false;
       this.isCheckedCheckBoxConclusion = false;
@@ -111,7 +114,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipoDeclaracion === "modificacion" && puesto === "DIRECTIVO") {
+    else if (tipoDeclaracion === "modificacion" && puesto === "DIRECTIVO" && fechaModificacion != null) {
       this.isCheckedCheckBoxModificacion = false;
       this.isCheckedCheckBoxInicial = false;
       this.isCheckedCheckBoxConclusion = false;
@@ -122,7 +125,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipoDeclaracion === "modificacion" && puesto === "OPERATIVO") {
+    else if (tipoDeclaracion === "modificacion" && puesto === "OPERATIVO" && fechaModificacion != null) {
       this.isCheckedCheckBoxModificacion = true;
       this.isCheckedCheckBoxInicial = false;
       this.isCheckedCheckBoxConclusion = false;
@@ -133,7 +136,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = true;
     }
-    else if (tipoDeclaracion === "conclusion" && puesto === "DIRECTIVO") {
+    else if (tipoDeclaracion === "conclusion" && puesto === "DIRECTIVO" && fechaConclusion != null) {
       this.isCheckedCheckBoxConclusion = false;
       this.isCheckedCheckBoxInicial = false;
       this.isCheckedCheckBoxModificacion = false;
@@ -144,7 +147,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.isDisabledButtonConclusionSimple = true;
       this.isDisabledButtonConclusionCompleta = false;
     }
-    else if (tipoDeclaracion === "conclusion" && puesto === "OPERATIVO") {
+    else if (tipoDeclaracion === "conclusion" && puesto === "OPERATIVO" && fechaConclusion != null) {
       this.isCheckedCheckBoxConclusion = true;
       this.isCheckedCheckBoxInicial = false;
       this.isCheckedCheckBoxModificacion = false;
@@ -169,9 +172,7 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   validarFecha(value: any) {
-    const fechaInicial = this.datosDialogForm.get('fechaInicial').value;
-    const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
-    const fechaConclusion = this.datosDialogForm.get('fechaConclusion').value;
+
 
     switch (value) {
       case 'inicial':
@@ -229,7 +230,7 @@ export class DialogElementsExampleDialog implements OnInit {
       switch (tipo) {
         case "inicial":
           const dialogRefInicial = this.dialog.open(DialogComponent, {
-            height: '180px',
+            height: '220px',
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo INICIAL',
@@ -240,6 +241,8 @@ export class DialogElementsExampleDialog implements OnInit {
           break;
         case "modificacion":
           const dialogRefModificacion = this.dialog.open(DialogComponent, {
+            height: '220px',
+            width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo MODIFICACIÓN',
               message: 'Actualmente existe firmada una declaración de tipo INICIAL, sin embargo no existe firmada la declaración de tipo CONCLUSIÓN correspondiente',
@@ -249,6 +252,8 @@ export class DialogElementsExampleDialog implements OnInit {
           break;
         case "conclusion":
           const dialogRefConclusion = this.dialog.open(DialogComponent, {
+            height: '220px',
+            width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo CONCLUSIÓN',
               message: 'Es necesario que exista una declaración firmada de tipo INICIAL para poder realizar una declaración de tipo CONCLUSIÓN, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.',
