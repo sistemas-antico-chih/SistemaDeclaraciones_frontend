@@ -290,16 +290,16 @@ export class DialogElementsExampleDialog implements OnInit {
           return false;
       case 'modificacion':
         if (puesto === "DIRECTIVO"){
+          console.log ("llega aqui 1");
           const validaModificacion = await this.verificarDeclaracionModificacionCompleta(fechaModificacion);
-
           if (validaModificacion)
             return true;
           else
             return false
         }
         if ( puesto === "OPERATIVO"){
+          console.log("llega aqui 2");
           const validaModificacion = await this.verificarDeclaracionModificacionSimple(fechaModificacion);
-
           if (validaModificacion)
             return true;
           else
