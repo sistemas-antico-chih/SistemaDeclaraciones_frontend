@@ -519,7 +519,6 @@ export class DialogElementsExampleDialog implements OnInit {
 
     this.declaracionId = data?.declaracion._id;
     this.anio_ejercicio = data?.declaracion.anioEjercicio;
-    this.fillForm(data?.declaracion.datosGenerales);
   } catch (error) {
     console.log(error);
     //this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
