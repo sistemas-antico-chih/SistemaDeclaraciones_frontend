@@ -9,7 +9,9 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import { Apollo } from 'apollo-angular';
-//import { statsTipoQuery, declaracionMutation } from '@api/declaracion';
+import {  DeclaracionOutput } from '@models/declaracion';
+import { datosGeneralesQuery } from '@api/declaracion';
+
 import gql from 'graphql-tag';
 
 import puesto from '@static/catalogos/catalogoPuestos.json';
@@ -31,6 +33,10 @@ export class DialogElementsExampleDialog implements OnInit {
   declaracionesModificacionCompleta = 0;
   declaracionesModificacionSimple = 0;
   declaracionesFinales = 0;
+
+  declaracionSimplificada = false;
+  declaracionId: string = null;
+  anio_ejercicio: number = null;
 
   datosDialogForm: FormGroup;
 
@@ -74,7 +80,7 @@ export class DialogElementsExampleDialog implements OnInit {
 
   ) {
     this.createForm();
-
+    //this.getUserInfo();
   }
 
   cambioValores(value: any) {
@@ -280,10 +286,7 @@ export class DialogElementsExampleDialog implements OnInit {
   async isValid() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const puesto = this.datosDialogForm.get('puesto').value;
-
     const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
-    console.log('tipo: '+tipo);
-    console.log('puesto: '+puesto);
 
     switch (tipo) {
       case 'inicial':
@@ -294,7 +297,6 @@ export class DialogElementsExampleDialog implements OnInit {
           return false;
       case 'modificacion':
         if (puesto === "DIRECTIVO"){
-          console.log ("llega aqui 1");
           const validaModificacion = await this.verificarDeclaracionModificacionCompleta(fechaModificacion);
           if (validaModificacion)
             return true;
@@ -302,7 +304,6 @@ export class DialogElementsExampleDialog implements OnInit {
             return false
         }
         if ( puesto === "OPERATIVO"){
-          console.log("llega aqui 2");
           const validaModificacion = await this.verificarDeclaracionModificacionSimple(fechaModificacion);
           if (validaModificacion)
             return true;
@@ -347,8 +348,10 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales === 0)
+    if (this.declaracionesIniciales - this.declaracionesFinales === 0){
+      await this.crearDeclaracion();
       return true;
+    }
     else
       return false;
   }
@@ -379,8 +382,10 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return false;
-    else
+    else{
+     
       return true;
+    }
   }
 
   async verificarDeclaracionModificacionCompleta(fechaModificacion: any) {
@@ -407,8 +412,10 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesModificacionCompleta === 0)
+    if (this.declaracionesModificacionCompleta === 0){
+      
       return true;
+    }
     else
       return false;
   }
@@ -437,8 +444,10 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesModificacionSimple === 0)
+    if (this.declaracionesModificacionSimple === 0){
+     
       return true;
+    }
     else
       return false;
   }
@@ -472,9 +481,51 @@ export class DialogElementsExampleDialog implements OnInit {
     }
   }
   */
+ async crearDeclaracion(){
+  try {
+    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
+    const puesto = this.datosDialogForm.get('puesto').value;
+    if(puesto==="DIRECTIVO")
+      this.declaracionSimplificada=false;
+    else 
+      this.declaracionSimplificada=true
+   
+    console.log("declaracionsimplificada: "+this.declaracionSimplificada);
+    switch(tipoDeclaracion){
+      case "inicial":
+       this.anio_ejercicio = this.datosDialogForm.get('fechaInicial').value.substring(6,4);
+       break;
+      case "modificacion":
+        this.anio_ejercicio = this.datosDialogForm.get('fechaModificacion').value;
+        break;
+      case "conlcusion":
+        this.anio_ejercicio = this.datosDialogForm.get('fechaConclusion').value.substring(6,4);
+        break;
+      }
+    const { data, errors } = await this.apollo
+      .query<DeclaracionOutput>({
+        query: datosGeneralesQuery,
+        variables: {
+          tipoDeclaracion: tipoDeclaracion.toUpperCase(),
+          declaracionCompleta: !this.declaracionSimplificada,
+          anioEjercicio: this.anio_ejercicio
+        },
+      })
+      .toPromise();
 
+    if (errors) {
+      throw errors;
+    }
 
-
+    this.declaracionId = data?.declaracion._id;
+    this.anio_ejercicio = data?.declaracion.anioEjercicio;
+    this.fillForm(data?.declaracion.datosGenerales);
+  } catch (error) {
+    console.log(error);
+    //this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+  }
+}
+  
   fillForm(datosComponenteForm: DatosDialog | undefined) {
     this.datosDialogForm.patchValue(datosComponenteForm || {});
 
