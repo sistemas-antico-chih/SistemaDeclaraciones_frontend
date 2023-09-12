@@ -500,7 +500,7 @@ export class DialogElementsExampleDialog implements OnInit {
         this.anio_ejercicio = this.datosDialogForm.get('fechaModificacion').value;
         break;
       case "conlcusion":
-        this.anio_ejercicio = this.datosDialogForm.get('fechaConclusion').value.substring(6,4);
+        this.anio_ejercicio = new Date(this.datosDialogForm.get('fechaConclusion').value).getFullYear();
         break;
       }
     const { data, errors } = await this.apollo
