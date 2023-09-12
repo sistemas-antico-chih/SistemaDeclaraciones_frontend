@@ -245,7 +245,7 @@ export class DialogElementsExampleDialog implements OnInit {
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo MODIFICACIÓN',
-              message: `Ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion} completa y simplificada, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
+              message: `Ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion}, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
               trueText: 'Continuar',
             },
           });
