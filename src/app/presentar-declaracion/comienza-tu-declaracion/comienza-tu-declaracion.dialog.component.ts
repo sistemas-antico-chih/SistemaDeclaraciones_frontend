@@ -279,6 +279,8 @@ export class DialogElementsExampleDialog implements OnInit {
 
   async isValid() {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
+    const puesto = this.datosDialogForm.get('puesto').value;
+
     const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
     console.log('tipo: '+tipo);
     console.log('puesto: '+puesto);
