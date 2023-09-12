@@ -281,6 +281,7 @@ export class DialogElementsExampleDialog implements OnInit {
     var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
     const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
     console.log('tipo: '+tipo);
+    console.log('puesto: '+puesto);
 
     switch (tipo) {
       case 'inicial':
