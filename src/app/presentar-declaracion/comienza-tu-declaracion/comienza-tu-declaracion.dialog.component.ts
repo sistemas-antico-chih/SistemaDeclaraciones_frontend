@@ -383,7 +383,7 @@ export class DialogElementsExampleDialog implements OnInit {
     if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return false;
     else{
-     
+      await this.crearDeclaracion();
       return true;
     }
   }
@@ -413,7 +413,7 @@ export class DialogElementsExampleDialog implements OnInit {
       return false;
     }
     if (this.declaracionesModificacionCompleta === 0){
-      
+      await this.crearDeclaracion();
       return true;
     }
     else
@@ -445,7 +445,7 @@ export class DialogElementsExampleDialog implements OnInit {
       return false;
     }
     if (this.declaracionesModificacionSimple === 0){
-     
+      await this.crearDeclaracion();
       return true;
     }
     else
