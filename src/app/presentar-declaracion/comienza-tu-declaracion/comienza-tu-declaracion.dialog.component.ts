@@ -490,11 +490,9 @@ export class DialogElementsExampleDialog implements OnInit {
     else 
       this.declaracionSimplificada=true
    
-    console.log("declaracionsimplificada: "+this.declaracionSimplificada);
     switch(tipoDeclaracion){
       case "inicial":
        this.anio_ejercicio = new Date(this.datosDialogForm.get('fechaInicial').value).getFullYear();
-       console.log('anio_ejercicio: '+this.anio_ejercicio);
        break;
       case "modificacion":
         this.anio_ejercicio = this.datosDialogForm.get('fechaModificacion').value;
