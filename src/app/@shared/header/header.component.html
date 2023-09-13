@@ -5,7 +5,7 @@
   <div fxFlex></div>
   <div>
     <a href="assets/documents/manual_atencion_usuarios.pdf"; target="_blank">MANUAL DE ATENCIÓN</a>
-    <button><a href="assets/documents/manual_atencion_usuarios.pdf"; target="_blank">MANUAL DE ATENCIÓN</a></button>
+    <!--<button><a href="assets/documents/manual_atencion_usuarios.pdf"; target="_blank">MANUAL DE ATENCIÓN</a></button>-->
     <button mat-button (click)="goToPDF('assets/documents/manual_atencion_usuarios.pdf')">MANUAL DE ATENCIÓN 1</button>
     <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/usuarios')">USUARIOS</button>
     <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('comienza-tu-declaracion')">
