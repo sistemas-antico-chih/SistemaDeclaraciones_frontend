@@ -4,11 +4,11 @@
   <div class="title">Declaraciones Patrimoniales <br />Municipales a excepción de <del>Juárez</del></div>
   <div fxFlex></div>
   <div>
-    <!--<a href="assets/documents/manual_atencion_usuarios_S1.pdf" target="_blank">MANUAL DE ATENCIÓN</a>
+    <a href="assets/documents/manual_atencion_usuarios_S1.pdf" target="_blank">MANUAL DE ATENCIÓN</a>
     <a target="_blank">
       <button mat-button (click)="goTo('assets/documents/manual_atencion_usuarios_S1.pdf')"> MANUAL DE USUARIOS</button>
-    </a>-->
-    <!--<button mat-button (click)="goTo('assets/documents/manual_atencion_usuarios_S1.pdf')">MANUAL DE ATENCIÓN 1</button>-->
+    </a>
+    <button mat-button (click)="goTo('assets/documents/manual_atencion_usuarios_S1.pdf')">MANUAL DE ATENCIÓN 1</button>
     <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/usuarios')">USUARIOS</button>
     <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('comienza-tu-declaracion')">
       COMIENZA TU DECLARACIÓN
