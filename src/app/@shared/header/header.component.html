@@ -4,6 +4,8 @@
   <div class="title">Declaración Patrimonial <br />Municipio de Cd. Juárez</div>
   <div fxFlex></div>
   <div>
+    <button mat-button (click)="goToPDF('assets/documents/manual_atencion_usuarios_S1.pdf')">MANUAL DE ATENCIÓN</button>
+
     <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/usuarios')">USUARIOS</button>
     <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('comienza-tu-declaracion')">
       COMIENZA TU DECLARACIÓN
