@@ -25,17 +25,13 @@ export class HeaderComponent implements OnInit {
   }
 
   goTo(route: string) {
-    console.log('route: '+route);
     this.router.navigate([`/${route}`], { replaceUrl: true });
-    console.log('probando: '+this.router.navigate([`/${route}`], { replaceUrl: true }));
   }
 
-  /*goToPDF(route: string) {
-    console.log('route: '+route);
+  goToPDF(route: string) {
     const url = this.router.createUrlTree([`/${route}`]);
-    console.log('url: '+url);
     window.open(url.toString(), '_blank');
-  }*/
+  }
 
   ngOnInit() {}
 
