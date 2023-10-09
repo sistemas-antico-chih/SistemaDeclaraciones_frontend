@@ -213,9 +213,8 @@
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoInversionCatalogo"
-                  [value]="{ tipo: sub.tipoInversion, clave: sub.clave, valor: sub.valor }"
+                  [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
-                <div *ngIF="sub.tipoInversion === 'BANC'" ></div>
                   {{ sub.valor }}
                 </mat-option>
               </mat-select>

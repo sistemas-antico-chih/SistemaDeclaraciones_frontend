@@ -60,6 +60,7 @@ export class InversionesComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -71,6 +72,7 @@ export class InversionesComponent implements OnInit {
     this.createForm();
     this.getUserInfo();
   }
+
 
   addItem() {
     this.inversionesCuentasValoresForm.reset();
@@ -321,6 +323,8 @@ export class InversionesComponent implements OnInit {
         .get('inversion.tipoInversion')
         .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
     }
+
+    console.log(this.inversionesCuentasValoresForm.inversion.tipoInversion.clave);
 
     if (titular) {
       this.inversionesCuentasValoresForm
