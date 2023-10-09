@@ -206,13 +206,13 @@
             <mat-form-field
               matTooltip="{{ tooltipData.bancaria }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'BANC'"
             >
+            <!--*ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'BANC'"-->
               <mat-label>Bancaria</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required >
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoInversionCatalogo; #sub.clave='BANC'"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}

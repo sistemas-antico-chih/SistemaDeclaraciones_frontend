@@ -75,10 +75,10 @@ export class InversionesComponent implements OnInit  {
   cambioValores(value: any) {
     console.log("clave: "+value.clave);
     console.log("valor: "+value.valor);
-    //this.subTipoInversionCatalogo = SubTipoInversion;
+    const subTipoInversionCatalogo = SubTipoInversion;
     console.log(this.subTipoInversionCatalogo);
-    /*findSubTipo(this.subTipoInversionCatalogo: any[]): any[] {
-      return people.filter(p => p.age < 18);
+   /* findSubTipo(subTipoInversionCatalogo: any[]): any[] {
+      return subTipoInversionCatalogo.filter(p => p.tipoInversion = value.clave);
     }*/
   }
 
