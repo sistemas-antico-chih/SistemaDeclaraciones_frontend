@@ -316,13 +316,17 @@ export class InversionesComponent implements OnInit {
   setSelectedOptions() {
     const { tipoInversion, titular } = this.inversionesCuentasValoresForm.value.inversion;
 
+    console.log("tipo inversion 1: "+tipoInversion);
+    console.log("subtipo 1: "+this.subTipoInversionCatalogo);
+
     if (tipoInversion) {
       this.inversionesCuentasValoresForm
         .get('inversion.tipoInversion')
         .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
-      console.log("tipo inversion: "+tipoInversion);
-      console.log("subtipo: "+this.subTipoInversionCatalogo);
     }
+
+    console.log("tipo inversion 2: "+tipoInversion);
+    console.log("subtipo 2: "+this.subTipoInversionCatalogo);
 
     if (titular) {
       this.inversionesCuentasValoresForm
