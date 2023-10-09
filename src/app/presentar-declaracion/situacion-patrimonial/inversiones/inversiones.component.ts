@@ -61,12 +61,12 @@ export class InversionesComponent implements OnInit, PipeTransform  {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
   
-  @Pipe({
+  /*@Pipe({
     name: 'disponiblePipe',
   })
   transform(data: any[]) {
     return this.subTipoInversionCatalogo.filter((subTipo: { tipoInversion: any[]; }) => subTipo.tipoInversion == data);
-  }
+  }*/
 
   constructor(
     private apollo: Apollo,
