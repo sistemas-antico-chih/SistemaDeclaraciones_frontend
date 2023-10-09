@@ -206,7 +206,7 @@
             <mat-form-field
               matTooltip="{{ tooltipData.bancaria }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion.clave === 'BANC'"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'BANC'"
             >
               <mat-label>Bancaria</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -223,7 +223,7 @@
             <mat-form-field
               matTooltip="{{ tooltipData.fondosInversion }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion.clave === 'FINV'"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'FINV'"
             >
               <mat-label>Fondos de Inversión</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -240,7 +240,7 @@
             <mat-form-field
               matTooltip="{{ tooltipData.organizacionesPrivadasMercantiles }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion.clave === 'ORPM'"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'ORPM'"
             >
               <mat-label>Organizaciones Privadas y/o Mercantiles</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -257,7 +257,7 @@
             <mat-form-field
               matTooltip="{{ tooltipData.posesionMonedasMetales }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion.clave === 'POMM'"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'POMM'"
             >
               <mat-label>Posesión de Monedas y/o Metales</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -274,7 +274,7 @@
             <mat-form-field
               matTooltip="{{ tooltipData.seguros }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion.clave === 'SEGR'"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'SEGR'"
             >
               <mat-label>Seguros</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -291,7 +291,7 @@
             <mat-form-field
               matTooltip="{{ tooltipData.valoresBursatiles }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion.clave === 'VBUR'"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'VBUR'"
             >
               <mat-label>Valores Bursátiles</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -308,7 +308,7 @@
             <mat-form-field
               matTooltip="{{ tooltipData.aforesOtros }}"
               appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion.clave === 'AFOT'"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'AFOT'"
             >
               <mat-label>Afores y otros</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
