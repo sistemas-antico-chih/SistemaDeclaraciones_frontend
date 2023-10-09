@@ -324,7 +324,7 @@ export class InversionesComponent implements OnInit {
         .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
     }
 
-    console.log(this.inversionesCuentasValoresForm.inversion.tipoInversion.clave);
+    //console.log(this.inversionesCuentasValoresForm.inversion.tipoInversion.clave);
 
     if (titular) {
       this.inversionesCuentasValoresForm
