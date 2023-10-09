@@ -212,7 +212,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required (selectionChange)="cambioValores($event.value)">
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo(subTipo)"
+                  *ngFor="let sub of subTipoInversionCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
