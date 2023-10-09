@@ -27,14 +27,14 @@ import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
-import { Pipe, PipeTransform } from '@angular/core';
+//import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-inversiones',
   templateUrl: './inversiones.component.html',
   styleUrls: ['./inversiones.component.scss'],
 })
-export class InversionesComponent implements OnInit, PipeTransform  {
+export class InversionesComponent implements OnInit  {
   aclaraciones = false;
   inversionesCuentasValoresForm: FormGroup;
   editMode = false;
@@ -87,7 +87,7 @@ export class InversionesComponent implements OnInit, PipeTransform  {
     console.log("catalogo: "+this.subTipoInversionCatalogo);
     console.log("catalogo: 2"+subTipoInversionCatalogo);
 
-    this.transform(value);
+    //this.transform(value);
     //subTipoInversionCatalogo.anotherArray.filter((unit) => unit.label.indexOf(val) > -1)
 
     
