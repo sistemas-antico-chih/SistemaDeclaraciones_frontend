@@ -320,6 +320,8 @@ export class InversionesComponent implements OnInit {
       this.inversionesCuentasValoresForm
         .get('inversion.tipoInversion')
         .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
+      console.log("tipo inversion: "+tipoInversion);
+      console.log("subtipo: "+this.subTipoInversionCatalogo);
     }
 
     if (titular) {
