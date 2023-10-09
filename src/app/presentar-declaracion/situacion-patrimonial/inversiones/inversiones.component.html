@@ -214,9 +214,9 @@
                
                 <mat-option
                   *ngFor="let sub of subTipoInversionCatalogo"
-                  [value]="{ clave: sub.clave, valor: sub.valor }"
+                  [value]="{ tipo: sub.tipoInversion, clave: sub.clave, valor: sub.valor }"
                 >
-                <div *ngIF="clave === 'BANC'" ></div>
+                <div *ngIF="sub.tipoInversion === 'BANC'" ></div>
                   {{ sub.valor }}
                 </mat-option>
               </mat-select>

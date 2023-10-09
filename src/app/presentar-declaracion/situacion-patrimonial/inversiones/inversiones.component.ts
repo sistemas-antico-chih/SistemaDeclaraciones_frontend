@@ -27,13 +27,14 @@ import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-inversiones',
   templateUrl: './inversiones.component.html',
   styleUrls: ['./inversiones.component.scss'],
 })
-export class InversionesComponent implements OnInit  {
+export class InversionesComponent implements OnInit, PipeTransform  {
   aclaraciones = false;
   inversionesCuentasValoresForm: FormGroup;
   editMode = false;
@@ -59,6 +60,13 @@ export class InversionesComponent implements OnInit  {
   tipoOperacionCatalogo = TipoOperacion;
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+  
+  @Pipe({
+    name: 'disponiblePipe',
+  })
+  transform(data: any[]) {
+    return this.subTipoInversionCatalogo.filter((subTipo: { tipoInversion: any[]; }) => subTipo.tipoInversion == data);
+  }
 
   constructor(
     private apollo: Apollo,
@@ -78,6 +86,8 @@ export class InversionesComponent implements OnInit  {
     const subTipoInversionCatalogo = SubTipoInversion;
     console.log("catalogo: "+this.subTipoInversionCatalogo);
     console.log("catalogo: 2"+subTipoInversionCatalogo);
+
+    this.transform(value);
     //subTipoInversionCatalogo.anotherArray.filter((unit) => unit.label.indexOf(val) > -1)
 
     
@@ -221,7 +231,7 @@ export class InversionesComponent implements OnInit  {
         },
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result: any) => {
         if (result) this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/adeudos']);
       });
     } else {
@@ -261,7 +271,7 @@ export class InversionesComponent implements OnInit  {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         const inversion = [...this.inversion.slice(0, index), ...this.inversion.slice(index + 1)];
         const aclaracionesObservaciones = this.inversionesCuentasValoresForm.value.aclaracionesObservaciones;
