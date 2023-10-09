@@ -33,7 +33,7 @@ import TipoOperacion from '@static/catalogos/tipoOperacion.json';
   templateUrl: './inversiones.component.html',
   styleUrls: ['./inversiones.component.scss'],
 })
-export class InversionesComponent implements OnInit {
+export class InversionesComponent implements OnInit  {
   aclaraciones = false;
   inversionesCuentasValoresForm: FormGroup;
   editMode = false;
@@ -70,6 +70,16 @@ export class InversionesComponent implements OnInit {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
     this.getUserInfo();
+  }
+
+  cambioValores(value: any) {
+    console.log("value: "+value);
+    console.log("clave: "+value.clave);
+    console.log("valor: "+value.valor);
+    console.log(this.subTipoInversionCatalogo.tipoInversion);
+    /*findSubTipo(this.subTipoInversionCatalogo: any[]): any[] {
+      return people.filter(p => p.age < 18);
+    }*/
   }
 
   addItem() {
@@ -316,17 +326,11 @@ export class InversionesComponent implements OnInit {
   setSelectedOptions() {
     const { tipoInversion, titular } = this.inversionesCuentasValoresForm.value.inversion;
 
-    console.log("tipo inversion 1: "+tipoInversion);
-    console.log("subtipo 1: "+this.subTipoInversionCatalogo);
-
-    if (tipoInversion) {
+   if (tipoInversion) {
       this.inversionesCuentasValoresForm
         .get('inversion.tipoInversion')
         .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
     }
-
-    console.log("tipo inversion 2: "+tipoInversion);
-    console.log("subtipo 2: "+this.subTipoInversionCatalogo);
 
     if (titular) {
       this.inversionesCuentasValoresForm
