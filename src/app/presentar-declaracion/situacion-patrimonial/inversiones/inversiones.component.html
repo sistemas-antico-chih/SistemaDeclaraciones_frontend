@@ -196,7 +196,7 @@
             <mat-form-field matTooltip="{{ tooltipData.tipoInverson }}" appearance="fill">
               <mat-label>Tipo de Inversión/Activo</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="tipoInversion" required (selectionChange)="cambioValores($event.value)"> 
+              <mat-select formControlName="tipoInversion" required>
                 <mat-option *ngFor="let tipoInversion of tipoInversionCatalogo" [value]="tipoInversion">
                   {{ tipoInversion.valor }}
                 </mat-option>
@@ -206,12 +206,11 @@
             <mat-form-field
               matTooltip="{{ tooltipData.bancaria }}"
               appearance="fill"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'BANC'"
             >
-            <!--*ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'BANC'"-->
               <mat-label>Bancaria</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required >
-               
+              <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoInversionCatalogo"
                   [value]="{ tipo: sub.tipoInversion, clave: sub.clave, valor: sub.valor }"
