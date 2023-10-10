@@ -10,6 +10,7 @@ import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoInversion from '@static/catalogos/tipoInversion.json';
+import SubTipoInversion from '@static/catalogos/SubTipoInversion.json';
 import SubTipoInversionAfores from '@static/catalogos/SubTipoInversionAfores.json';
 import SubTipoInversionBancaria from '@static/catalogos/subTipoInversionBancaria.json';
 import SubTipoInversionFondos from '@static/catalogos/SubTipoInversionFondos.json';
@@ -49,7 +50,8 @@ export class InversionesComponent implements OnInit {
   isLoading = false;
 
   tipoInversionCatalogo = TipoInversion;
-  //subTipoInversionCatalogo = SubTipoInversion;
+ 
+  subTipoInversionCatalogo = SubTipoInversion;
   subTipoAforesCatalogo = SubTipoInversionAfores;
   subTipoBancariaCatalogo = SubTipoInversionBancaria;
   subTipoFondosCatalogo = SubTipoInversionFondos;
