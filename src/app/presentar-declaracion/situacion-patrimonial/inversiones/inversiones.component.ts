@@ -27,6 +27,7 @@ import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 @Component({
   selector: 'app-inversiones',
@@ -73,6 +74,12 @@ export class InversionesComponent implements OnInit {
     this.getUserInfo();
   }
 
+  search(value: string) {
+    let filter = this.subTipoInversionCatalogo.filter((item: {tipoInversion: string, clave: string, valor: string; }) =>
+      item.tipoInversion
+    );
+    return [...filter];
+  }
 
   addItem() {
     this.inversionesCuentasValoresForm.reset();
@@ -360,3 +367,7 @@ export class InversionesComponent implements OnInit {
     this.aclaraciones = value;
   }
 }
+function item(item: any, arg1: (any: any) => any) {
+  throw new Error('Function not implemented.');
+}
+
