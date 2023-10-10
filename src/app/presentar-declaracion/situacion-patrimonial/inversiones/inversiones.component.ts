@@ -93,7 +93,7 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm.reset();
     this.editMode = true;
     this.editIndex = null;
-    console.log("subTipoInversion: "+this.subTipoInversionCatalogo);
+    console.log("subTipoInversion: "+this.subTipoAforesCatalogo);
   }
 
   localizacionChanged(value: string) {
