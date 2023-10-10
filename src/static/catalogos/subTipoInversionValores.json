@@ -1,0 +1,6 @@
+[
+  { "tipoInversion": "VBUR", "clave": "ADER", "valor": "ACCIONES Y DERIVADOS" },
+  { "tipoInversion": "VBUR", "clave": "ABAN", "valor": "ACEPTACIONES BANCARIAS" },
+  { "tipoInversion": "VBUR", "clave": "BGUB", "valor": "BONOS GUBERNAMENTALES" },
+  { "tipoInversion": "VBUR", "clave": "PCOM", "valor": "PAPEL COMERCIAL" }
+]

@@ -1,0 +1,5 @@
+[
+  { "tipoInversion": "SEGR", "clave": "SSIN", "valor": "SEGURO DE SEPARACIÓN INDIVIDUALIZADO" },
+  { "tipoInversion": "SEGR", "clave": "SEGI", "valor": "SEGURO DE INVERSIÓN" },
+  { "tipoInversion": "SEGR", "clave": "SEGV", "valor": "SEGURO DE VIDA" }
+]
