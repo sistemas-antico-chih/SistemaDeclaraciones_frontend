@@ -10,7 +10,14 @@ import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoInversion from '@static/catalogos/tipoInversion.json';
-import SubTipoInversion from '@static/catalogos/subTipoInversion.json';
+import SubTipoInversionAfores from '@static/catalogos/SubTipoInversionAfores.json';
+import SubTipoInversionBancaria from '@static/catalogos/subTipoInversionBancaria.json';
+import SubTipoInversionFondos from '@static/catalogos/SubTipoInversionFondos.json';
+import SubTipoInversionMetales from '@static/catalogos/SubTipoInversionMetales.json';
+import SubTipoInversionOrganizaciones from '@static/catalogos/SubTipoInversionOrganizaciones.json';
+import SubTipoInversionSeguros from '@static/catalogos/SubTipoInversionSeguros.json';
+import SubTipoInversionValores from '@static/catalogos/SubTipoInversionValores.json';
+
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
 import TitularBien from '@static/catalogos/titularBien.json';
 import FormaPago from '@static/catalogos/formaPago.json';
@@ -27,7 +34,6 @@ import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
-import { MatSelectFilterModule } from 'mat-select-filter';
 
 @Component({
   selector: 'app-inversiones',
@@ -43,7 +49,15 @@ export class InversionesComponent implements OnInit {
   isLoading = false;
 
   tipoInversionCatalogo = TipoInversion;
-  subTipoInversionCatalogo = SubTipoInversion;
+  //subTipoInversionCatalogo = SubTipoInversion;
+  subTipoAforesCatalogo = SubTipoInversionAfores;
+  subTipoBancariaCatalogo = SubTipoInversionBancaria;
+  subTipoFondosCatalogo = SubTipoInversionFondos;
+  subTipoMetalesCatalogo = SubTipoInversionMetales;
+  subTipoOrganizacionesCatalogo = SubTipoInversionOrganizaciones;
+  subTipoSegurosCatalogo = SubTipoInversionSeguros;
+  subTipoValoresCatalogo = SubTipoInversionValores;
+
   
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
@@ -74,14 +88,6 @@ export class InversionesComponent implements OnInit {
     this.createForm();
     this.getUserInfo();
   }
-
-  
-  /*search(value: string) {
-    let filter = this.subTipoInversionCatalogo.filter((item: {tipoInversion: string, clave: string, valor: string; }) =>
-      item.tipoInversion
-    );
-    return [...filter];
-  }*/
 
   addItem() {
     this.inversionesCuentasValoresForm.reset();
