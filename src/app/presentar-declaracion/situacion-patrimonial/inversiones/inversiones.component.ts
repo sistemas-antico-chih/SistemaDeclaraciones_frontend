@@ -44,6 +44,7 @@ export class InversionesComponent implements OnInit {
 
   tipoInversionCatalogo = TipoInversion;
   subTipoInversionCatalogo = SubTipoInversion;
+  
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
   formaPagoCatalogo = FormaPago;
@@ -74,17 +75,19 @@ export class InversionesComponent implements OnInit {
     this.getUserInfo();
   }
 
-  search(value: string) {
+  
+  /*search(value: string) {
     let filter = this.subTipoInversionCatalogo.filter((item: {tipoInversion: string, clave: string, valor: string; }) =>
       item.tipoInversion
     );
     return [...filter];
-  }
+  }*/
 
   addItem() {
     this.inversionesCuentasValoresForm.reset();
     this.editMode = true;
     this.editIndex = null;
+    console.log("subTipoInversion: "+this.subTipoInversionCatalogo);
   }
 
   localizacionChanged(value: string) {
