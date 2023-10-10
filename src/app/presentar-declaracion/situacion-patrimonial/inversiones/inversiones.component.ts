@@ -10,14 +10,15 @@ import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoInversion from '@static/catalogos/tipoInversion.json';
-import SubTipoInversion from '@static/catalogos/SubTipoInversion.json';
-import SubTipoInversionAfores from '@static/catalogos/SubTipoInversionAfores.json';
-import SubTipoInversionBancaria from '@static/catalogos/subTipoInversionBancaria.json';
-import SubTipoInversionFondos from '@static/catalogos/SubTipoInversionFondos.json';
-import SubTipoInversionMetales from '@static/catalogos/SubTipoInversionMetales.json';
-import SubTipoInversionOrganizaciones from '@static/catalogos/SubTipoInversionOrganizaciones.json';
-import SubTipoInversionSeguros from '@static/catalogos/SubTipoInversionSeguros.json';
-import SubTipoInversionValores from '@static/catalogos/SubTipoInversionValores.json';
+import SubTipoInversion from '@static/catalogos/subTipoInversion.json';
+import SubTipoInversionAfores from '@static/catalogos/subTipoInversionAfores.json';
+/*import SubTipoInversionBancaria from '@static/catalogos/subTipoInversionBancaria.json';
+import SubTipoInversionFondos from '@static/catalogos/subTipoInversionFondos.json';
+import SubTipoInversionMetales from '@static/catalogos/subTipoInversionMetales.json';
+import SubTipoInversionOrganizaciones from '@static/catalogos/subTipoInversionOrganizaciones.json';
+import SubTipoInversionSeguros from '@static/catalogos/subTipoInversionSeguros.json';
+import SubTipoInversionValores from '@static/catalogos/subTipoInversionValores.json';
+*/
 
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
 import TitularBien from '@static/catalogos/titularBien.json';
@@ -50,16 +51,17 @@ export class InversionesComponent implements OnInit {
   isLoading = false;
 
   tipoInversionCatalogo = TipoInversion;
- 
   subTipoInversionCatalogo = SubTipoInversion;
+
+
   subTipoAforesCatalogo = SubTipoInversionAfores;
-  subTipoBancariaCatalogo = SubTipoInversionBancaria;
+  /*subTipoBancariaCatalogo = SubTipoInversionBancaria;
   subTipoFondosCatalogo = SubTipoInversionFondos;
   subTipoMetalesCatalogo = SubTipoInversionMetales;
   subTipoOrganizacionesCatalogo = SubTipoInversionOrganizaciones;
   subTipoSegurosCatalogo = SubTipoInversionSeguros;
   subTipoValoresCatalogo = SubTipoInversionValores;
-
+  */
   
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
