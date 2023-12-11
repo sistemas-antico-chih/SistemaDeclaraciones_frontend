@@ -13,7 +13,8 @@ import { datosEmpleoCargoComisionQuery, declaracionMutation } from '@api/declara
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput } from '@models/declaracion';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
-import Estados from '@static/catalogos/estadoFijo.json';
+import Estados from '@static/catalogos/estados.json';
+import EstadoFijo from '@static/catalogos/estadoFijo.json';
 import Municipios from '@static/catalogos/municipios.json';
 import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
 import Paises from '@static/catalogos/paises.json';
@@ -40,6 +41,7 @@ export class DatosEmpleoComponent implements OnInit {
   nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
   ambitoPublicoCatalogo = AmbitoPublico;
   estadosCatalogo = Estados;
+  estadoFijoCatalogo = EstadoFijo;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
 
