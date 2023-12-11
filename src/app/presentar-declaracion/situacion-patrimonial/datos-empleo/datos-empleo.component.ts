@@ -94,7 +94,6 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   createForm() {
-
     this.datosEmpleoCargoComisionForm = this.formBuilder.group({
       nivelOrdenGobierno: [null, [Validators.required]],
       ambitoPublico: [null, [Validators.required]],
