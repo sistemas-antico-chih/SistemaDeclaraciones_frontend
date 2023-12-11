@@ -58,6 +58,8 @@ export class DatosEmpleoComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
+  optionValue="CHIHUAHUA";
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -71,6 +73,7 @@ export class DatosEmpleoComponent implements OnInit {
 
     this.createForm();
     this.getUserInfo();
+
   }
 
   confirmSaveInfo() {

@@ -360,14 +360,13 @@
             <mat-form-field appearance="fill">
               <mat-label>Entidad Federativa</mat-label>
               <mat-icon matPrefix>public</mat-icon>
-              <mat-select formControlName="entidadFederativa" required>
-                
-                <mat-option >CHIHUAHUA</mat-option>
-                <!--
+              <mat-select formControlName="entidadFederativa" required [value]="optionValue">
+              
+      
                 <mat-option *ngFor="let opt of estadosCatalogo" [value]="opt">
                   {{ opt.valor }}
                 </mat-option>
-                -->
+      
 
               </mat-select>
             </mat-form-field>
