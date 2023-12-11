@@ -13,7 +13,7 @@ import { datosEmpleoCargoComisionQuery, declaracionMutation } from '@api/declara
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput } from '@models/declaracion';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
-import Estados from '@static/catalogos/estados.json';
+import Estados from '@static/catalogos/estadoFijo.json';
 import Municipios from '@static/catalogos/municipios.json';
 import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
 import Paises from '@static/catalogos/paises.json';
@@ -57,9 +57,7 @@ export class DatosEmpleoComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
-
-  optionValue="CHIHUAHUA";
-
+  
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -94,6 +92,7 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   createForm() {
+
     this.datosEmpleoCargoComisionForm = this.formBuilder.group({
       nivelOrdenGobierno: [null, [Validators.required]],
       ambitoPublico: [null, [Validators.required]],
