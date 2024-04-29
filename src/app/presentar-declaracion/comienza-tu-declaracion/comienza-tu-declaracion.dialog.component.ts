@@ -53,7 +53,8 @@ export class DialogElementsExampleDialog implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
-
+ 
+  ngOnInit(): void {}
 
   constructor(
     private dialog: MatDialog,
