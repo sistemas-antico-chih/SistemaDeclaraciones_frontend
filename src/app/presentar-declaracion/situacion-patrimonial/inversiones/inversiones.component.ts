@@ -11,6 +11,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoInversion from '@static/catalogos/tipoInversion.json';
 import SubTipoInversion from '@static/catalogos/subTipoInversion.json';
+import SubTipoInversionAfores from '@static/catalogos/subTipoInversionAfores.json';
+import SubTipoInversionBancaria from '@static/catalogos/subTipoInversionBancaria.json';
+import SubTipoInversionFondos from '@static/catalogos/subTipoInversionFondos.json';
+import SubTipoInversionMetales from '@static/catalogos/subTipoInversionMetales.json';
+import SubTipoInversionOrganizaciones from '@static/catalogos/subTipoInversionOrganizaciones.json';
+import SubTipoInversionSeguros from '@static/catalogos/subTipoInversionSeguros.json';
+import SubTipoInversionValores from '@static/catalogos/subTipoInversionValores.json';
+
+
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
 import TitularBien from '@static/catalogos/titularBien.json';
 import FormaPago from '@static/catalogos/formaPago.json';
@@ -26,6 +35,7 @@ import { DeclaracionOutput, Inversion, InversionesCuentasValores } from '@models
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @Component({
   selector: 'app-inversiones',
@@ -42,6 +52,17 @@ export class InversionesComponent implements OnInit {
 
   tipoInversionCatalogo = TipoInversion;
   subTipoInversionCatalogo = SubTipoInversion;
+
+
+  subTipoAforesCatalogo = SubTipoInversionAfores;
+  subTipoBancariaCatalogo = SubTipoInversionBancaria;
+  subTipoFondosCatalogo = SubTipoInversionFondos;
+  subTipoMetalesCatalogo = SubTipoInversionMetales;
+  subTipoOrganizacionesCatalogo = SubTipoInversionOrganizaciones;
+  subTipoSegurosCatalogo = SubTipoInversionSeguros;
+  subTipoValoresCatalogo = SubTipoInversionValores;
+  
+  
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
   formaPagoCatalogo = FormaPago;
@@ -55,9 +76,10 @@ export class InversionesComponent implements OnInit {
   tipoDomicilio: string;
 
   declaracionId: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
 
   constructor(
     private apollo: Apollo,
@@ -75,6 +97,7 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm.reset();
     this.editMode = true;
     this.editIndex = null;
+    console.log("subTipoInversion: "+this.subTipoAforesCatalogo);
   }
 
   localizacionChanged(value: string) {
@@ -100,6 +123,7 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm = this.formBuilder.group({
       ninguno: [false],
       inversion: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoInversion: [null, [Validators.required]],
         subTipoInversion: [null, [Validators.required]],
         titular: [null, [Validators.required]],
@@ -320,6 +344,8 @@ export class InversionesComponent implements OnInit {
         .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
     }
 
+    //console.log(this.inversionesCuentasValoresForm.inversion.tipoInversion.clave);
+
     if (titular) {
       this.inversionesCuentasValoresForm
         .get('inversion.titular')
@@ -354,3 +380,7 @@ export class InversionesComponent implements OnInit {
     this.aclaraciones = value;
   }
 }
+function item(item: any, arg1: (any: any) => any) {
+  throw new Error('Function not implemented.');
+}
+

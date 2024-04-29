@@ -164,6 +164,7 @@ export const adeudosPasivosQuery = gql`
       adeudosPasivos {
         ninguno
         adeudo {
+          tipoOperacion
           titular {
             clave
             valor
@@ -209,6 +210,7 @@ export const bienesInmueblesQuery = gql`
       bienesInmuebles {
         ninguno
         bienInmueble {
+          tipoOperacion
           tipoInmueble {
             clave
             valor
@@ -282,6 +284,13 @@ export const bienesInmueblesQuery = gql`
           }
         }
         aclaracionesObservaciones
+        valores {
+          indice
+          superficieConstruccion
+          superficieTerreno
+          valorAdquisicion
+          formaAdquisicion
+        }
       }
     }
   }
@@ -294,6 +303,7 @@ export const bienesMueblesQuery = gql`
       bienesMuebles {
         ninguno
         bienMueble {
+          tipoOperacion
           titular {
             clave
             valor
@@ -370,6 +380,7 @@ export const datosDependientesEconomicosQuery = gql`
       datosDependientesEconomicos {
         ninguno
         dependienteEconomico {
+          tipoOperacion
           nombre
           primerApellido
           segundoApellido
@@ -496,8 +507,8 @@ export const datosEmpleoCargoComisionQuery = gql`
 `;
 
 export const datosGeneralesQuery = gql`
-  query declaracion($tipoDeclaracion: TipoDeclaracion!, $declaracionCompleta: Boolean) {
-    declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta) {
+  query declaracion($tipoDeclaracion: TipoDeclaracion!, $declaracionCompleta: Boolean, $anioEjercicio: Int) {
+    declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta, anioEjercicio: $anioEjercicio) {
       _id
       anioEjercicio
       datosGenerales {
@@ -538,6 +549,7 @@ export const datosParejaQuery = gql`
     declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta) {
       _id
       datosPareja {
+        tipoOperacion
         ninguno
         nombre
         primerApellido
@@ -777,6 +789,7 @@ export const inversionesCuentasValoresQuery = gql`
       inversionesCuentasValores {
         ninguno
         inversion {
+          tipoOperacion
           tipoInversion {
             clave
             valor
@@ -818,6 +831,7 @@ export const prestamoComodatoQuery = gql`
       prestamoComodato {
         ninguno
         prestamo {
+          tipoOperacion
           tipoBien {
             inmueble {
               tipoInmueble {
@@ -886,6 +900,7 @@ export const vehiculosQuery = gql`
       vehiculos {
         ninguno
         vehiculo {
+          tipoOperacion
           tipoVehiculo {
             clave
             valor
@@ -949,6 +964,7 @@ export const apoyosQuery = gql`
       apoyos {
         ninguno
         apoyo {
+          tipoOperacion
           tipoPersona
           beneficiarioPrograma {
             clave
@@ -1203,3 +1219,15 @@ export const participacionTomaDecisionesQuery = gql`
     }
   }
 `;
+
+/*export const statsTipoQuery = gql`
+  query statsTipo {
+    statsTipo {
+      counters{
+        tipoDeclaracion
+        count
+      }
+    }
+  }
+`;
+*/

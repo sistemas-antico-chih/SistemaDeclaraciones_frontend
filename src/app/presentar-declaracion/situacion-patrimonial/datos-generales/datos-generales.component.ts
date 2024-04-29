@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
@@ -30,7 +30,16 @@ export class DatosGeneralesComponent implements OnInit {
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
+  minimo: number = 2020;
+  maximo: number = 2023;
   anio_ejercicio: number = null;
+  //anioEjercicioForm!:  FormGroup;
+  //anio_ejercicio: number = 2024;
+  /*anioEjercicioForm : any = new FormGroup({
+    anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
+  });
+  */
+
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -42,6 +51,7 @@ export class DatosGeneralesComponent implements OnInit {
   declaracionSimplificada = false;
   tipoDeclaracion: string = null;
   declaracionId: string = null;
+
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
@@ -77,12 +87,19 @@ export class DatosGeneralesComponent implements OnInit {
       }
     });
   }
-
+  
   createForm() {
+    /*const anioEjercicioForm = new FormGroup({
+      anio_ejercicio : new FormControl(''),
+    });*/
+    /*this.anioEjercicioForm = this.formBuilder.group({
+      anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
+    });
+    */
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
-      primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      segundoApellido: [null, [Validators.pattern(/^\S.*\S$/)]],
+      primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
+      segundoApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
       curp: [
         null,
         [
@@ -117,7 +134,8 @@ export class DatosGeneralesComponent implements OnInit {
       nacionalidad: [null, [Validators.required, Validators.pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/i)]], //solo letras, incluyendo acentos
       aclaracionesObservaciones: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
     });
-
+    
+   
     const situacionPersonal = this.datosGeneralesForm.get('situacionPersonalEstadoCivil');
     situacionPersonal.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       const regimenMatrimonial = this.datosGeneralesForm.get('regimenMatrimonial');
@@ -180,6 +198,7 @@ export class DatosGeneralesComponent implements OnInit {
     return form;
   }
 
+
   inputsAreValid(): boolean {
     if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
       return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
@@ -222,9 +241,9 @@ export class DatosGeneralesComponent implements OnInit {
   async saveInfo() {
     try {
       this.isLoading = true;
-
       const declaracion = {
         datosGenerales: this.finalForm,
+        //anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
         anioEjercicio: this.anio_ejercicio,
       };
 
@@ -277,3 +296,4 @@ export class DatosGeneralesComponent implements OnInit {
     this.aclaraciones = value;
   }
 }
+

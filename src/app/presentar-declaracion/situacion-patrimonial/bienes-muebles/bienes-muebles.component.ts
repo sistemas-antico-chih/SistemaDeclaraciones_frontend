@@ -20,7 +20,7 @@ import Monedas from '@static/catalogos/monedas.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bienes-muebles';
 
 import { BienMueble, BienesMuebles, DeclaracionOutput } from '@models/declaracion';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { findOption } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
@@ -47,11 +47,17 @@ export class BienesMueblesComponent implements OnInit {
   monedasCatalogo = Monedas;
 
   tipoDeclaracion: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   declaracionId: string = null;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDate = new Date(1960, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -81,6 +87,7 @@ export class BienesMueblesComponent implements OnInit {
     this.bienesMueblesForm = this.formBuilder.group({
       ninguno: [false],
       bienMueble: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         titular: [[], Validators.required],
         tipoBien: [null, [Validators.required]],
         transmisor: this.formBuilder.group({

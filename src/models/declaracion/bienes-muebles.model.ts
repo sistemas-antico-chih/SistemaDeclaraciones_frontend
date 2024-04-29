@@ -1,7 +1,9 @@
 import { Catalogo, Monto, Tercero, Transmisor } from './common.model';
 import { FormaPago } from './types';
+import { TipoOperacion } from './types';
 
 export interface BienMueble {
+  tipoOperacion?: TipoOperacion;
   titular: Catalogo[];
   tipoBien: Catalogo;
   transmisor: Transmisor[];

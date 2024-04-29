@@ -1,11 +1,7 @@
 <div class="section-main-container">
   <mat-card class="form-card">
-    <section-header
-      section="I. Declaración de situación patrimonial"
-      [simplificada]="declaracionSimplificada"
-      progress="4.5"
-      type="{{ tipoDeclaracion }}"
-    ></section-header>
+    <section-header section="I. Declaración de situación patrimonial" [simplificada]="declaracionSimplificada"
+      progress="4.5" type="{{ tipoDeclaracion }}"></section-header>
 
     <mat-divider></mat-divider>
 
@@ -20,99 +16,105 @@
       resaltados <span class="no-public-inline"></span> no serán públicos.
     </p>
 
+
     <div class="grid-3-col">
       <mat-form-field appearance="fill">
-        <mat-label>Año del ejercicio</mat-label>
+        <mat-label>Año de la declaración</mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
-        <input
-          [errorStateMatcher]="errorMatcher"
-          matInput
-          type="number"
-          [(ngModel)]="anio_ejercicio"
-          min="0"
-          max="{{ currentYear }}"
-          placeholder="{{ currentYear }}"
-        />
+        <input class="form-control" 
+        [errorStateMatcher]="errorMatcher" 
+        id="anio_ejercicio" 
+        name="anio_ejercicio"
+        matInput type="number" 
+        [(ngModel)]="anio_ejercicio" 
+        min="2015" 
+        max="currentYear"
+        placeholder="{{ currentYear }}" 
+        minlength="4" 
+        required />
+        <!--<div *ngIf="anio_ejercicio.invalid < 2000 && (anio_ejercicio.dirty || anio_ejercicio.touched)" class="alert alert-danger">
+          <div *ngIf="anio_ejercicio.errors?.['required']">
+            Name is required.
+          </div>
+          <div *ngIf="anio_ejercicio.errors?.['minlength']">
+            Name must be at least 4 characters long.
+          </div>
+          <div *ngIf="anio_ejercicio.errors?.['forbiddenName']">
+            Name cannot be Bob.
+          </div>
+        </div>
+      -->
       </mat-form-field>
     </div>
+
+    <!--
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="anioEjercicioForm">
+      <div class="grid-3-col">
+        <mat-form-field appearance="fill">
+          <mat-label>Año de la declaración</mat-label>
+          <mat-icon matPrefix>date_range</mat-icon>
+          <input
+            [errorStateMatcher]="errorMatcher"
+            matInput type="number"
+            formControlName="anio_ejercicio"
+            placeholder="{{ currentYear }}"
+          />
+        </mat-form-field>
+      </div>
+    </form>
+    -->
+
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm">
       <div class="grid-3-col grid-margin">
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Nombre</mat-label>
           <mat-icon matPrefix>person</mat-icon>
-          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombre" required />
+          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombre" required readonly />
         </mat-form-field>
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Primer Apellido</mat-label>
           <mat-icon matPrefix>person</mat-icon>
-          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="primerApellido" required />
+          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="primerApellido" readonly />
         </mat-form-field>
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Segundo Apellido</mat-label>
           <mat-icon matPrefix>person</mat-icon>
-          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="segundoApellido" />
+          <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="segundoApellido" readonly />
         </mat-form-field>
 
         <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill">
           <mat-label>CURP</mat-label>
           <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-          <input
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            #input_curp
-            maxlength="18"
-            type="text"
-            formControlName="curp"
-            required
-          />
+          <input [errorStateMatcher]="errorMatcher" matInput #input_curp maxlength="18" type="text"
+            formControlName="curp" required readonly />
           <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
         </mat-form-field>
 
         <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill" formGroupName="rfc">
           <mat-label>RFC</mat-label>
           <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-          <input
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            #input_rfc
-            maxlength="10"
-            type="text"
-            formControlName="rfc"
-            required
-          />
+          <input [errorStateMatcher]="errorMatcher" matInput #input_rfc maxlength="10" type="text" formControlName="rfc"
+            required readonly />
           <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/10</mat-hint>
         </mat-form-field>
         <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill" formGroupName="rfc">
           <mat-label>Homoclave</mat-label>
           <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-          <input
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            #input_homoclave
-            maxlength="3"
-            type="text"
-            formControlName="homoClave"
-            required
-          />
+          <input [errorStateMatcher]="errorMatcher" matInput #input_homoclave maxlength="3" type="text"
+            formControlName="homoClave" required readonly />
           <mat-hint align="end">{{ input_homoclave.value?.length || 0 }}/3</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="grid-2-col grid-margin">
-        <mat-form-field
-          matTooltip="{{ tooltipData.correoInstitucional }}"
-          appearance="fill"
-          formGroupName="correoElectronico"
-        >
+        <mat-form-field matTooltip="{{ tooltipData.correoInstitucional }}" appearance="fill"
+          formGroupName="correoElectronico">
           <mat-label>Correo Electrónico Institucional</mat-label>
           <mat-icon matPrefix>mail</mat-icon>
           <input [errorStateMatcher]="errorMatcher" matInput type="email" formControlName="institucional" />
         </mat-form-field>
-        <mat-form-field
-          matTooltip="{{ tooltipData.correoPersonal }}"
-          appearance="fill"
-          formGroupName="correoElectronico"
-        >
+        <mat-form-field matTooltip="{{ tooltipData.correoPersonal }}" appearance="fill"
+          formGroupName="correoElectronico">
           <mat-label>Correo Electrónico Personal / Alterno</mat-label>
           <mat-icon matPrefix class="no-public">mail</mat-icon>
           <input [errorStateMatcher]="errorMatcher" matInput type="email" formControlName="personal" required />
@@ -121,29 +123,15 @@
         <mat-form-field matTooltip="{{ tooltipData.telefonoCasa }}" appearance="fill" formGroupName="telefono">
           <mat-label>Número Telefónico de Casa</mat-label>
           <mat-icon matPrefix class="no-public">local_phone</mat-icon>
-          <input
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            #input_tel_casa
-            maxlength="10"
-            type="tel"
-            formControlName="casa"
-            required
-          />
+          <input [errorStateMatcher]="errorMatcher" matInput #input_tel_casa maxlength="10" type="tel"
+            formControlName="casa" required />
           <mat-hint align="end">{{ input_tel_casa.value?.length || 0 }}/10</mat-hint>
         </mat-form-field>
         <mat-form-field matTooltip="{{ tooltipData.telefonoCelular }}" appearance="fill" formGroupName="telefono">
           <mat-label>Número Celular Personal</mat-label>
           <mat-icon matPrefix class="no-public">stay_primary_portrait</mat-icon>
-          <input
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            #input_tel_celular
-            maxlength="10"
-            type="tel"
-            formControlName="celularPersonal"
-            required
-          />
+          <input [errorStateMatcher]="errorMatcher" matInput #input_tel_celular maxlength="10" type="tel"
+            formControlName="celularPersonal" required />
           <mat-hint align="end">{{ input_tel_celular.value?.length || 0 }}/10</mat-hint>
         </mat-form-field>
 
@@ -166,20 +154,12 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field
-          [ngClass]="{ hidden: datosGeneralesForm.value.regimenMatrimonial?.clave !== 'OTR' }"
-          appearance="fill"
-        >
+        <mat-form-field [ngClass]="{ hidden: datosGeneralesForm.value.regimenMatrimonial?.clave !== 'OTR' }"
+          appearance="fill">
           <mat-label>Especifique Régimen Matrimonial</mat-label>
           <mat-icon matPrefix class="no-public">people</mat-icon>
-          <input
-            [errorStateMatcher]="errorMatcher"
-            #otroRegimenMatrimonial
-            matInput
-            minlength="1"
-            type="text"
-            required
-          />
+          <input [errorStateMatcher]="errorMatcher" #otroRegimenMatrimonial matInput minlength="1" type="text"
+            required />
         </mat-form-field>
 
         <mat-form-field matTooltip="{{ tooltipData.paisNacimiento }}" appearance="fill">
@@ -218,13 +198,8 @@
 
         <mat-form-field appearance="fill" class="grid-margin">
           <mat-icon matPrefix class="aclaraciones-no-public">speaker_notes</mat-icon>
-          <textarea
-            maxlength="500"
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            formControlName="aclaracionesObservaciones"
-            rows="10"
-          ></textarea>
+          <textarea maxlength="500" [errorStateMatcher]="errorMatcher" matInput
+            formControlName="aclaracionesObservaciones" rows="10"></textarea>
         </mat-form-field>
       </div>
 
@@ -233,15 +208,13 @@
         <button mat-raised-button color="primary" type="button" (click)="datosGeneralesForm.reset()">
           LIMPIAR FORMULARIO
         </button>
-        <button
-          mat-raised-button
-          color="primary"
-          [disabled]="datosGeneralesForm.invalid || !inputsAreValid() || isLoading"
-        >
+        <button mat-raised-button color="primary"
+          [disabled]="datosGeneralesForm.invalid || !inputsAreValid() || isLoading">
           GUARDAR CAMBIOS
         </button>
       </div>
     </form>
+
 
     <mat-divider></mat-divider>
 

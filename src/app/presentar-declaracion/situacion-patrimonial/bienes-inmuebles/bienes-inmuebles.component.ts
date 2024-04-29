@@ -21,10 +21,10 @@ import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import Paises from '@static/catalogos/paises.json';
 import Monedas from '@static/catalogos/monedas.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput } from '@models/declaracion';
+import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -55,7 +55,7 @@ export class BienesInmueblesComponent implements OnInit {
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
   monedasCatalogo = Monedas;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio = 'MEXICO';
 
@@ -63,6 +63,14 @@ export class BienesInmueblesComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDate = new Date(1940, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes, this.dia);
+
+  valores: ValorDeclarante[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -92,6 +100,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.bienesInmueblesForm = this.formBuilder.group({
       ninguno: [false],
       bienInmueble: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoInmueble: [null, [Validators.required]],
         titular: [[], [Validators.required]],
         porcentajePropiedad: [
@@ -249,7 +258,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   noProperty() {
     this.saveInfo({ ninguno: true });
@@ -284,10 +293,17 @@ export class BienesInmueblesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
+
+        let array : any =[];
+        array = this.deleteValoresDeclarante(bienInmueble);
+        let valores = array;
+
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
+          valores,
         });
       }
     });
@@ -335,25 +351,93 @@ export class BienesInmueblesComponent implements OnInit {
     bienInbueble.get(selectedType).enable();
   }
 
+
   saveItem() {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.bienesInmueblesForm.value.bienInmueble;
 
+    const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    let valores = [...this.valores];
+    let bandera = false;
+
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
+      if (valorTitular.titular.clave === "DEC") {
+        const valor = this.saveValoresDeclarante();
+        valores = [...valores, valor];
+      }
     } else {
       bienInmueble[this.editIndex] = newItem;
+      bandera = true;
     }
 
+
     this.isLoading = true;
+
+    if (bandera){
+      let array : any =[];
+      array = this.updateValoresDeclarante(bienInmueble);
+      valores = array;
+    }
 
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
+      valores,
     });
 
     this.isLoading = false;
+  }
+
+  saveValoresDeclarante() {
+
+    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
+    let valor = {
+      "indice": indice,
+      "superficieConstruccion": newItem.superficieConstruccion.valor,
+      "superficieTerreno": newItem.superficieTerreno.valor,
+      "valorAdquisicion": newItem.valorAdquisicion.valor,
+      "formaAdquisicion": newItem.formaAdquisicion.clave,
+    };
+    return valor;
+  }
+
+  deleteValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular[0].clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
+        };
+        valores.push(valor);
+      }
+    }
+    return valores;
+  }
+
+  updateValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular.clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
+        };
+        valores.push(valor);
+      }
+    }
+    return valores;
   }
 
   setEditMode() {
@@ -390,6 +474,8 @@ export class BienesInmueblesComponent implements OnInit {
 
   setupForm(bienesInmuebles: BienesInmuebles) {
     this.bienInmueble = bienesInmuebles.bienInmueble;
+    this.valores = bienesInmuebles.valores;
+
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
     if (bienesInmuebles.ninguno) {

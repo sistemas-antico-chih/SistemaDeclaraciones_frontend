@@ -276,10 +276,22 @@
       <!-- Agregar empleo, cargo o comisión -->
       <div class="padding-agregar" formGroupName="dependienteEconomico">
         <mat-divider></mat-divider>
-
+        <p>Datos del dependiente económico</p>
+        <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <!-- Datos dependiente -->
         <div class="">
-          <h2>Agregar datos del dependiente económico</h2>
+          <h2>Datos del dependiente económico</h2>
           <div class="grid-3-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
               <mat-label>Nombre</mat-label>
@@ -311,6 +323,8 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerNacimiento"
+                [min]="minDate"
+                [max]="maxDate"
                 formControlName="fechaNacimiento"
                 required
               />
@@ -353,6 +367,7 @@
                 minlength="10"
                 maxlength="13"
                 formControlName="rfc"
+                required
               />
               <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/10-13</mat-hint>
             </mat-form-field>
@@ -376,6 +391,7 @@
                 type="text"
                 maxlength="18"
                 formControlName="curp"
+                required
               />
               <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             </mat-form-field>
@@ -714,6 +730,8 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerPublicIngreso"
+                [min]="minDate"
+                [max]="maxDate"
                 formControlName="fechaIngreso"
                 required
               />
@@ -816,6 +834,8 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerOtroIngreso"
+                [min]="minDate"
+                [max]="maxDate"
                 formControlName="fechaIngreso"
                 required
               />

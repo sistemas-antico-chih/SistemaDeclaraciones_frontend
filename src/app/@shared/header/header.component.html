@@ -1,9 +1,11 @@
 <mat-toolbar>
-  <img class="pdn-logo" src="assets/pdn.png" alt="PDN" (click)="goTo('')" />
+  <img class="pdn-logo" src="assets/sesea.png" alt="PDE" (click)="goTo('')" />
   <div class="divider"></div>
-  <div class="title">Declaración Patrimonial <br />y de Intereses</div>
+  <div class="title">Declaraciones Patrimoniales <br />Municipales a excepción de <del>Juárez</del></div>
   <div fxFlex></div>
   <div>
+    <button mat-button (click)="goToPDF('assets/documents/manual_atencion_usuarios_S1.pdf')">MANUAL DE ATENCIÓN</button>
+  
     <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/usuarios')">USUARIOS</button>
     <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('comienza-tu-declaracion')">
       COMIENZA TU DECLARACIÓN

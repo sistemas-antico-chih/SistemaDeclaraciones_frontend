@@ -11,6 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import InstitucionesCatalogo from '@static/custom/instituciones.json';
 
+import { validarCURP, validarRFC } from '../signup/signup.validador';
+
 const log = new Logger('Signup');
 
 @UntilDestroy()
@@ -91,7 +93,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   private createForm() {
     this.signupForm = this.formBuilder.group({
       nombre: ['', Validators.required],
-      primerApellido: ['', Validators.required],
+      primerApellido: [''],
       segundoApellido: [''],
       username: [
         '',
@@ -106,15 +108,17 @@ export class SignupComponent implements OnInit, OnDestroy {
         '',
         [
           Validators.required,
+          validarCURP,
           Validators.pattern(
             /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
           ),
         ],
-      ],
+      ],updatedOn: 'change',
       rfc: [
         '',
         [
           Validators.required,
+          validarRFC,
           Validators.pattern(
             /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
           ),

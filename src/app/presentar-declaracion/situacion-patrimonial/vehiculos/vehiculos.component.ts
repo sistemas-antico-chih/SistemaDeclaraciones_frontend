@@ -27,6 +27,7 @@ import { DeclaracionOutput, Vehiculo, Vehiculos } from '@models/declaracion';
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @Component({
   selector: 'app-vehiculos',
@@ -57,9 +58,16 @@ export class VehiculosComponent implements OnInit {
   tipoDomicilio: string;
 
   declaracionId: string = null;
+  tipoOperacionCatalogo = TipoOperacion;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDate = new Date(1950, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -105,6 +113,7 @@ export class VehiculosComponent implements OnInit {
     this.vehiculosForm = this.formBuilder.group({
       ninguno: [false],
       vehiculo: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoVehiculo: [null, [Validators.required]],
         titular: [null, [Validators.required]],
         transmisor: this.formBuilder.group({

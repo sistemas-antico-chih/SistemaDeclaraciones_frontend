@@ -1,0 +1,86 @@
+<h1 mat-dialog-title>Declaración a prsentar</h1>
+<!--<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>-->
+<div mat-dialog-actions>
+
+  <div class="contenedor">
+
+    <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
+      <mat-card class="info" fxFlex="30" fxLayout="column">
+        <mat-card-content fxFlex="grow">
+          <p class="title">Declaración inicial</p>
+          <p>
+            <span class="resaltar">Plazo: </span>Dentro de los sesenta días naturales siguientes a la toma de posesión
+            con motivo del Ingreso al servicio público por primera vez o reingreso al servicio público después de
+            sesenta días naturales de la conclusión de su último encargo.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+
+          <!--[routerLink]="['/inicial/simplificada/situacion-patrimonial']"-->
+          <mat-checkbox color="primary" #inicialSimplificada >Declaración simplificada</mat-checkbox>
+          <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary"
+            (click)="closeDialog('/inicial/simplificada/situacion-patrimonial')" >
+            <small>Comenzar declaración simplificada</small>
+          </button>
+
+          <!--[routerLink]="['/inicial/situacion-patrimonial']"-->
+          <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/inicial/situacion-patrimonial')" >
+            Comenzar declaración
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card class="info" fxFlex="30" fxLayout="column">
+        <mat-card-content fxFlex="grow">
+          <p class="title">Declaración de Modificación</p>
+          <p>
+            <span class="resaltar">Plazo: </span>Durante el mes de mayo de cada año, siempre y cuando haya laborado al
+            menos un día del año inmediato anterior.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+
+          <!--[routerLink]="['/modificacion/simplificada/situacion-patrimonial']"-->
+          <mat-checkbox color="primary" #cbModificacionSimplificada>Declaración simplificada</mat-checkbox>
+          <button *ngIf="cbModificacionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/modificacion/simplificada/situacion-patrimonial')">
+            <small>Comenzar declaración simplificada</small>
+          </button>
+
+          <!--[routerLink]="['/modificacion/situacion-patrimonial']" -->
+          <button *ngIf="!cbModificacionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/modificacion/situacion-patrimonial')" >
+            Comenzar declaración
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card class="info" fxFlex="30" fxLayout="column">
+        <mat-card-content fxFlex="grow">
+          <p class="title">Declaración de Conclusión</p>
+          <p>
+            <span class="resaltar">Plazo: </span>Dentro de los sesenta días naturales siguientes a la conclusión del
+            encargo.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+
+          <!--[routerLink]="['/conclusion/simplificada/situacion-patrimonial']"-->
+          <mat-checkbox color="primary" #cbConclusionSimplificada>Declaración simplificada</mat-checkbox>
+          <button *ngIf="cbConclusionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/conclusion/simplificada/situacion-patrimonial')">
+            <small>Comenzar declaración simplificada</small>
+          </button>
+
+          <!--[routerLink]="['/conclusion/situacion-patrimonial']" -->
+          <button *ngIf="!cbConclusionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/conclusion/situacion-patrimonial')">
+            Comenzar declaración
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+
+  <button mat-button mat-dialog-close>Close</button>
+</div>

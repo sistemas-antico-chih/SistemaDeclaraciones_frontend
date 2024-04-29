@@ -26,6 +26,7 @@ import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-dependiente';
 import { findOption } from '@utils/utils';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -58,7 +59,7 @@ export class DatosDependienteComponent implements OnInit {
   paisesCatalogo = Paises;
   parentescoRelacionCatalogo = ParentescoRelacion;
   sectorCatalogo = Sector;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio: string = null;
 
@@ -66,6 +67,12 @@ export class DatosDependienteComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDate = new Date(1960, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -119,6 +126,7 @@ export class DatosDependienteComponent implements OnInit {
     this.datosDependientesEconomicosForm = this.formBuilder.group({
       ninguno: [false],
       dependienteEconomico: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         segundoApellido: [null, [Validators.pattern(/^\S.*\S$/)]],
@@ -496,12 +504,8 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const {
-      actividadLaboral,
-      parentescoRelacion,
-      domicilioExtranjero,
-      domicilioMexico,
-    } = this.datosDependientesEconomicosForm.value.dependienteEconomico;
+    const { actividadLaboral, parentescoRelacion, domicilioExtranjero, domicilioMexico } =
+      this.datosDependientesEconomicosForm.value.dependienteEconomico;
 
     if (actividadLaboral) {
       this.datosDependientesEconomicosForm
@@ -514,9 +518,8 @@ export class DatosDependienteComponent implements OnInit {
         .setValue(findOption(this.parentescoRelacionCatalogo, parentescoRelacion.clave));
     }
     if (actividadLaboral.clave == 'PRI' || actividadLaboral.clave === 'OTR') {
-      const {
-        sector,
-      } = this.datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro;
+      const { sector } =
+        this.datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro;
       if (sector) {
         this.datosDependientesEconomicosForm
           .get('dependienteEconomico.actividadLaboralSectorPrivadoOtro.sector')

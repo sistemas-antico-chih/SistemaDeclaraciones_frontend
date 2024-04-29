@@ -176,7 +176,20 @@
       <!-- Agregar  -->
       <div class="padding-agregar" formGroupName="inversion">
         <mat-divider></mat-divider>
-        <h2>Agregar inversión</h2>
+        <p>Inversión</p>
+        <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <h2>Inversión</h2>
         <!-- Agregar -->
         <div class="">
           <div class="grid-4-col grid-margin">
@@ -199,7 +212,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoBancariaCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
@@ -216,7 +229,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoFondosCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
@@ -233,7 +246,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoOrganizacionesCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
@@ -250,7 +263,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoMetalesCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
@@ -267,7 +280,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoSegurosCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
@@ -284,7 +297,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoValoresCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
@@ -301,7 +314,7 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoInversionCatalogo"
+                  *ngFor="let sub of subTipoAforesCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}

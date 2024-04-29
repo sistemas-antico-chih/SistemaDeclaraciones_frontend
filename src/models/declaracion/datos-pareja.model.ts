@@ -6,8 +6,10 @@ import {
   DomicilioMexico,
 } from './common.model';
 import { LugarResidencia, RelacionConDeclarante } from './types';
+import { TipoOperacion } from './types';
 
 export interface DatosPareja {
+  tipoOperacion?: TipoOperacion;
   ninguno?: boolean;
   nombre?: string;
   primerApellido?: string;

@@ -23,6 +23,7 @@ export const adeudosPasivosMutation = gql`
       adeudosPasivos {
         ninguno
         adeudo {
+          tipoOperacion
           titular {
             clave
             valor
@@ -68,6 +69,7 @@ export const bienesInmueblesMutation = gql`
       bienesInmuebles {
         ninguno
         bienInmueble {
+          tipoOperacion
           tipoInmueble {
             clave
             valor
@@ -141,6 +143,13 @@ export const bienesInmueblesMutation = gql`
           }
         }
         aclaracionesObservaciones
+        valores {
+          indice
+          superficieConstruccion
+          superficieTerreno
+          valorAdquisicion
+          formaAdquisicion
+        }
       }
     }
   }
@@ -153,6 +162,7 @@ export const bienesMueblesMutation = gql`
       bienesMuebles {
         ninguno
         bienMueble {
+          tipoOperacion
           titular {
             clave
             valor
@@ -231,6 +241,7 @@ export const datosDependientesEconomicosMutation = gql`
       datosDependientesEconomicos {
         ninguno
         dependienteEconomico {
+          tipoOperacion
           nombre
           primerApellido
           segundoApellido
@@ -312,6 +323,7 @@ export const datosParejaMutation = gql`
     declaracion(id: $id, declaracion: $declaracion) {
       _id
       datosPareja {
+        tipoOperacion
         ninguno
         nombre
         primerApellido
@@ -443,6 +455,7 @@ export const inversionesCuentasValoresMutation = gql`
       inversionesCuentasValores {
         ninguno
         inversion {
+          tipoOperacion
           tipoInversion {
             clave
             valor
@@ -484,6 +497,7 @@ export const prestamoComodatoMutation = gql`
       prestamoComodato {
         ninguno
         prestamo {
+          tipoOperacion
           tipoBien {
             inmueble {
               tipoInmueble {
@@ -552,6 +566,7 @@ export const vehiculosMutation = gql`
       vehiculos {
         ninguno
         vehiculo {
+          tipoOperacion
           tipoVehiculo {
             clave
             valor
@@ -615,6 +630,7 @@ export const apoyosMutation = gql`
       apoyos {
         ninguno
         apoyo {
+          tipoOperacion
           tipoPersona
           beneficiarioPrograma {
             clave

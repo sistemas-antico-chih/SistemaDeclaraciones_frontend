@@ -141,8 +141,20 @@
       <!-- Agregar empleo, cargo o comisión -->
       <div class="padding-agregar" formGroupName="participacion">
         <mat-divider></mat-divider>
-
+        <p>Toma de decisiones</p>
         <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="grid-2-col grid-margin">
           <mat-form-field matTooltip="{{ tooltipData.declaranteParejaDependiente }}" appearance="fill">
             <mat-label>Tipo de relación</mat-label>
@@ -211,12 +223,15 @@
             <input
               [errorStateMatcher]="errorMatcher"
               matInput
-              type="text"
-              placeholder="DD/MM/AAAA"
+              [matDatepicker]="pickerInicioParticipacion"
+              [min]="minDate"
+              [max]="maxDate"
               formControlName="fechaInicioParticipacion"
               required
             />
             <mat-hint>dd/mm/yyyy</mat-hint>
+            <mat-datepicker-toggle matPrefix [for]="pickerInicioParticipacion"></mat-datepicker-toggle>
+            <mat-datepicker #pickerInicioParticipacion></mat-datepicker>
           </mat-form-field>
         </div>
 

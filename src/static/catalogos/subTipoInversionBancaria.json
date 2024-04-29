@@ -1,0 +1,8 @@
+[
+  { "tipoInversion": "BANC", "clave": "CNOM", "valor": "CUENTA DE NÓMINA" },
+  { "tipoInversion": "BANC", "clave": "CAHO", "valor": "CUENTA DE AHORRO" },
+  { "tipoInversion": "BANC", "clave": "CCHE", "valor": "CUENTA DE CHEQUES" },
+  { "tipoInversion": "BANC", "clave": "CMAS", "valor": "CUENTA MAESTRA" },
+  { "tipoInversion": "BANC", "clave": "CEJE", "valor": "CUENTA EJE" },
+  { "tipoInversion": "BANC", "clave": "DPLA", "valor": "DEPÓSITO A PLAZOS" }
+]

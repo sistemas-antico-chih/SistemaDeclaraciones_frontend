@@ -212,10 +212,22 @@
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="adeudo">
         <mat-divider></mat-divider>
-
+        <p>Adeudo/Pasivo</p>
+        <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <!-- Datos adeudo -->
         <div class="">
-          <h2>Agregar adeudo/pasivo</h2>
+          <h2>Adeudo/Pasivo</h2>
           <div class="grid-2-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.tipoAdeudo }}" appearance="fill">
               <mat-label>Tipo de adeudo</mat-label>
@@ -260,6 +272,8 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerAdquisicion"
+                [min]="minDate"
+                [max]="maxDate"
                 formControlName="fechaAdquisicion"
                 required
               />

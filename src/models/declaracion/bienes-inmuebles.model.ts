@@ -1,7 +1,17 @@
 import { Catalogo, DomicilioExtranjero, DomicilioMexico, Monto, Superficie, Tercero, Transmisor } from './common.model';
 import { FormaPago, ValorConformeA } from './types';
+import { TipoOperacion } from './types';
+
+export interface ValorDeclarante{
+  indice: number;
+  superficieConstruccion: number;
+  superficieTerreno: number;
+  valorAdquisicion: number;
+  formaAdquisicion: string;
+}
 
 export interface BienInmueble {
+  tipoOperacion?: TipoOperacion;
   tipoInmueble: Catalogo;
   titular: Catalogo[];
   porcentajePropiedad: number;
@@ -24,4 +34,5 @@ export interface BienesInmuebles {
   ninguno?: boolean;
   bienInmueble?: BienInmueble[];
   aclaracionesObservaciones?: string;
+  valores?: ValorDeclarante[];
 }
