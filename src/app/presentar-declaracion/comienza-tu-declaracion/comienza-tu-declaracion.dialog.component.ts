@@ -38,7 +38,6 @@ export class DialogElementsExampleDialog implements OnInit {
   declaracionId: string = null;
   anio_ejercicio: number = null;
 
-  datosDialogForm: FormGroup;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
@@ -55,22 +54,6 @@ export class DialogElementsExampleDialog implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
-  btnInicialSimple: string =null;
-
-  isDisabledCheckBoxInicial: boolean = true;
-  isDisabledCheckBoxModificacion: boolean = true;
-  isDisabledCheckBoxConclusion: boolean = true;
-
-  isCheckedCheckBoxInicial: boolean = false;
-  isCheckedCheckBoxModificacion: boolean = false;
-  isCheckedCheckBoxConclusion: boolean = false;
-
-  isDisabledButtonInicialSimple: boolean = true;
-  isDisabledButtonInicialCompleta: boolean = true;
-  isDisabledButtonModificacionSimple: boolean = true;
-  isDisabledButtonModificacionCompleta: boolean = true;
-  isDisabledButtonConclusionSimple: boolean = true;
-  isDisabledButtonConclusionCompleta: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -343,10 +326,6 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 }
   
-  fillForm(datosComponenteForm: DatosDialog | undefined) {
-    this.datosDialogForm.patchValue(datosComponenteForm || {});
-
-  }
   confirmSaveInfo() {
     console.log("boton guardar");
   }
