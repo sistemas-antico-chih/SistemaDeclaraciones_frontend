@@ -30,81 +30,25 @@
     <button class="presentar" mat-button (click)="openDialog()">Presentar declaración</button>
 
    
-    <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
-    ATENTO AVISO
-
-A LAS PERSONAS SERVIDORAS PÚBLICAS DECLARANTES USUARIAS DEL SISTEMA Declara Net
-
-Presentarán la declaración “simplificada”, cuando su nivel jerárquico sea menor al de jefe de departamento o bien, cuando realicen funciones de: análisis, apoyo, compilación, ejecución, operación, producción y/o seguimiento, cuando no sea posible identificar el nivel de equivalencia.
-
-Deberán presentar la declaración "completa", cuando su nivel jerárquico sea igual o mayor al de jefe de departamento, o bien, cuando realicen funciones de: administración, autorización, aprobación, comprobación, control, coordinación, determinación, dirección, evaluación, interpretación y/o mando, cuando no sea posible identificar el nivel de equivalencia.
-
-En caso de duda, diríjase al área de recursos humanos de su dependencia, entidad o empresa productiva del Estado. 
+    <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px" style="text-align:justify;">
+    <strong>ATENTO AVISO A LAS PERSONAS SERVIDORAS PÚBLICAS DECLARANTES USUARIAS DEL SISTEMA 1 DE EVOLUCIÓN
+      PATRIMONIAL Y DE DECLARACIOÓN DE INTERESES.-
+    </strong>
+      Presentarán la declaración <span class="resaltar">"simplificada",</span> cuando su nivel jerárquico sea 
+      menor al de jefe de departamento u homólogo. En los casos en que no sea posible determinar el nivel de 
+      equivalencia, se considerarán niveles jerárquicos menores a jefe de departamento, cuando la persona 
+      servidora públicas declarante realice funciones de: análisis, apoyo, compilación, ejecución, operación, 
+      producción y/o seguimiento.
+      <br>
+      Deberán presentar la declaración <span class="resaltar">"completa",</span> cuando el nivel jerárquico sea
+      igual o mayor al de jefe de departamento u homólogo. En los casos en que no sea posible determinar el 
+      nivel de equivalencia, se considerará homólogo a jefe de departamento la persona servidora pública 
+      declarante que realice funciones de: administración, autorización, aprobación, comprobación, control, 
+      coordinación, determinación, dirección, evaluación, interpretación y/o mando.
+      <br>
+      En caso de duda, respecto de su nivel jerárquico diríjase al área de recursos humanos de su dependencia,
+      organismo o Municipio.
     </div>
-    <!-- 
-    <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
-      <mat-card class="info" fxFlex="30" fxLayout="column">
-        <mat-card-content fxFlex="grow">
-          <p class="title">Declaración inicial</p>
-          <p>
-            <span class="resaltar">Plazo: </span>Dentro de los sesenta días naturales siguientes a la toma de posesión
-            con motivo del Ingreso al servicio público por primera vez o reingreso al servicio público después de
-            sesenta días naturales de la conclusión de su último encargo.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <mat-checkbox color="primary" #inicialSimplificada>Declaración simplificada</mat-checkbox>
-          <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/inicial/simplificada/situacion-patrimonial']">
-            <small>Comenzar declaración simplificada</small>
-          </button>
-          <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/inicial/situacion-patrimonial']">
-            Comenzar declaración
-          </button>
-        </mat-card-actions>
-      </mat-card>
-      <mat-card class="info" fxFlex="30" fxLayout="column">
-        <mat-card-content fxFlex="grow">
-          <p class="title">Declaración de Modificación</p>
-          <p>
-            <span class="resaltar">Plazo: </span>Durante el mes de mayo de cada año, siempre y cuando haya laborado al
-            menos un día del año inmediato anterior.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <mat-checkbox color="primary" #modificacionSimplificada>Declaración simplificada</mat-checkbox>
-          <button *ngIf="modificacionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/modificacion/simplificada/situacion-patrimonial']">
-            <small>Comenzar declaración simplificada</small>
-          </button>
-          <button *ngIf="!modificacionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/modificacion/situacion-patrimonial']">
-            Comenzar declaración
-          </button>
-        </mat-card-actions>
-      </mat-card>
-      <mat-card class="info" fxFlex="30" fxLayout="column">
-        <mat-card-content fxFlex="grow">
-          <p class="title">Declaración de Conclusión</p>
-          <p>
-            <span class="resaltar">Plazo: </span>Dentro de los sesenta días naturales siguientes a la conclusión del
-            encargo.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <mat-checkbox color="primary" #conclusionSimplificada>Declaración simplificada</mat-checkbox>
-          <button *ngIf="conclusionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/conclusion/simplificada/situacion-patrimonial']">
-            <small>Comenzar declaración simplificada</small>
-          </button>
-          <button *ngIf="!conclusionSimplificada.checked" mat-raised-button color="primary"
-            [routerLink]="['/conclusion/situacion-patrimonial']">
-            Comenzar declaración
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>-->
   </div>
   <app-footer></app-footer>
 </div>

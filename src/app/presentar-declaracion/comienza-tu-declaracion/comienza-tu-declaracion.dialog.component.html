@@ -3,93 +3,6 @@
 <div mat-dialog-actions>
 
   <div class="contenedor">
-    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosDialogForm">
-      <!-- Primer bloque -->
-      <!---->
-      <div>
-        <div class="grid-2-col">
-          <mat-form-field appearance="fill">
-            <mat-label>Tipo de declaración </mat-label>
-            <mat-icon matPrefix>star</mat-icon>
-            <mat-select formControlName="tipoDeclaracion" required (selectionChange)="cambioValores($event.value)">
-              <mat-option *ngFor="let tipo of tipoDeclaracionCatalogo" [value]="tipo.clave">
-                {{ tipo.valor | replace: '_':' ' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div
-            *ngIf="datosDialogForm.value.tipoDeclaracion == 'inicial' || datosDialogForm.value.tipoDeclaracion ==null">
-            <mat-form-field matTooltip="{{ tooltipData.fechaInicial }}" appearance="fill">
-              <mat-label>Fecha de toma de posesión</mat-label>
-              <input [errorStateMatcher]="errorMatcher" matInput [matDatepicker]="pickerInicial" [min]="minDate"
-                [max]="maxDate" formControlName="fechaInicial" required />
-              <mat-hint>dd/mm/yyyy</mat-hint>
-              <mat-datepicker-toggle matPrefix [for]="pickerInicial"></mat-datepicker-toggle>
-              <mat-datepicker #pickerInicial></mat-datepicker>
-            </mat-form-field>
-          </div>
-          
-          <div *ngIf="datosDialogForm.value.tipoDeclaracion == 'modificacion'">
-          <mat-form-field appearance="fill">
-            <mat-label>Seleccionar año de la declaración de modificación</mat-label>
-            <mat-icon matPrefix>account_balances</mat-icon>
-            <mat-select formControlName="fechaModificacion" required>
-              <mat-option *ngFor="let a of anios" [value]="a">
-                {{ a }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          </div>
-          <!--
-          <div *ngIf="datosDialogForm.value.tipoDeclaracion == 'modificacion'">
-            <mat-form-field matTooltip="{{ tooltipData.fechaModificacion }}"  appearance="fill">
-            <mat-label>Año de la declaración de modificación</mat-label>
-              <input
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              [min]="2018"
-              [max]="anio"
-              formControlName="fechaModificacion"
-              #fecha_modificacion
-              required
-              />
-            <mat-hint align="end">{{ fecha_modificacion.value?.length || 0 }}/4</mat-hint>
-            <mat-error *ngIf="datosDialogForm.controls.fechaModificacion.invalid && datosDialogForm.controls.fechaModificacion.touched">
-              <span translate>Ingrese un año válido</span>
-            </mat-error>
-            <mat-hint>yyyy</mat-hint>
-            <mat-datepicker-toggle matPrefix [for]="pickerModificacion"></mat-datepicker-toggle>
-            <mat-datepicker #pickerModificacion></mat-datepicker>
-            </mat-form-field>
-          </div>
-          -->
-
-          <div *ngIf="datosDialogForm.value.tipoDeclaracion == 'conclusion'">
-            <mat-form-field matTooltip="{{ tooltipData.fechaConclusion }}" appearance="fill">
-              <mat-label>Fecha de conclusión del encargo</mat-label>
-              <input [errorStateMatcher]="errorMatcher" matInput [matDatepicker]="pickerConclusion" [min]="minDate"
-                [max]="maxDate" formControlName="fechaConclusion" required />
-              <mat-hint>dd/mm/yyyy</mat-hint>
-              <mat-datepicker-toggle matPrefix [for]="pickerConclusion"></mat-datepicker-toggle>
-              <mat-datepicker #pickerConclusion></mat-datepicker>
-            </mat-form-field>
-          </div>
-
-
-          <mat-form-field appearance="fill">
-            <mat-label>Seleccionar un puesto</mat-label>
-            <mat-icon matPrefix>dns</mat-icon>
-            <mat-select formControlName="puesto" required (selectionChange)="cambioValores($event.value)">
-              <mat-option *ngFor="let p of puestoCatalogo" [value]="p.clave">
-                {{ p.valor }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-    </form>
-
 
     <div class="grid-margin" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="35px">
       <mat-card class="info" fxFlex="30" fxLayout="column">
@@ -104,16 +17,15 @@
         <mat-card-actions>
 
           <!--[routerLink]="['/inicial/simplificada/situacion-patrimonial']"-->
-          <mat-checkbox color="primary" #cbInicialSimplificada [disabled]="isDisabledCheckBoxInicial"
-            [checked]="isCheckedCheckBoxInicial">Declaración simplificada</mat-checkbox>
-          <button *ngIf="cbInicialSimplificada.checked" id="btnInicialSimple" mat-raised-button color="primary"
-            (click)="closeDialog()" [disabled]="isDisabledButtonInicialSimple">
+          <mat-checkbox color="primary" #inicialSimplificada >Declaración simplificada</mat-checkbox>
+          <button *ngIf="inicialSimplificada.checked" mat-raised-button color="primary"
+            (click)="closeDialog('/inicial/simplificada/situacion-patrimonial')" >
             <small>Comenzar declaración simplificada</small>
           </button>
 
           <!--[routerLink]="['/inicial/situacion-patrimonial']"-->
-          <button *ngIf="!cbInicialSimplificada.checked" mat-raised-button color="primary" #btnInicialCompleta
-            (click)="closeDialog()" [disabled]="isDisabledButtonInicialCompleta">
+          <button *ngIf="!inicialSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/inicial/situacion-patrimonial')" >
             Comenzar declaración
           </button>
         </mat-card-actions>
@@ -129,16 +41,15 @@
         <mat-card-actions>
 
           <!--[routerLink]="['/modificacion/simplificada/situacion-patrimonial']"-->
-          <mat-checkbox color="primary" #cbModificacionSimplificada [disabled]="isDisabledCheckBoxModificacion"
-            [checked]="isCheckedCheckBoxModificacion">Declaración simplificada</mat-checkbox>
-          <button *ngIf="cbModificacionSimplificada.checked" mat-raised-button color="primary" #btnInicialSimple
-            id="btnInicialSimple" (click)="closeDialog()" [disabled]="isDisabledButtonModificacionSimple">
+          <mat-checkbox color="primary" #cbModificacionSimplificada>Declaración simplificada</mat-checkbox>
+          <button *ngIf="cbModificacionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/modificacion/simplificada/situacion-patrimonial')">
             <small>Comenzar declaración simplificada</small>
           </button>
 
           <!--[routerLink]="['/modificacion/situacion-patrimonial']" -->
-          <button *ngIf="!cbModificacionSimplificada.checked" mat-raised-button color="primary" (click)="closeDialog()"
-            [disabled]="isDisabledButtonModificacionCompleta">
+          <button *ngIf="!cbModificacionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/modificacion/situacion-patrimonial')" >
             Comenzar declaración
           </button>
         </mat-card-actions>
@@ -154,16 +65,15 @@
         <mat-card-actions>
 
           <!--[routerLink]="['/conclusion/simplificada/situacion-patrimonial']"-->
-          <mat-checkbox color="primary" #cbConclusionSimplificada [disabled]="isDisabledCheckBoxConclusion"
-            [checked]="isCheckedCheckBoxConclusion">Declaración simplificada</mat-checkbox>
-          <button *ngIf="cbConclusionSimplificada.checked" mat-raised-button color="primary" (click)="closeDialog()"
-            [disabled]="isDisabledButtonConclusionSimple">
+          <mat-checkbox color="primary" #cbConclusionSimplificada>Declaración simplificada</mat-checkbox>
+          <button *ngIf="cbConclusionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/conclusion/simplificada/situacion-patrimonial')">
             <small>Comenzar declaración simplificada</small>
           </button>
 
           <!--[routerLink]="['/conclusion/situacion-patrimonial']" -->
-          <button *ngIf="!cbConclusionSimplificada.checked" mat-raised-button color="primary" (click)="closeDialog()"
-            [disabled]="isDisabledButtonConclusionCompleta">
+          <button *ngIf="!cbConclusionSimplificada.checked" mat-raised-button color="primary" 
+            (click)="closeDialog('/conclusion/situacion-patrimonial')">
             Comenzar declaración
           </button>
         </mat-card-actions>

@@ -79,7 +79,7 @@
       "cargo": "PRESIDENTE MUNICIPAL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE CAMARGO",
     "clave": "MUN_CAM",
     "servidor_publico_recibe": {
@@ -91,11 +91,11 @@
     "ente_publico": "MUNICIPIO DE CARICHÍ",
     "clave": "MUN_ASC",
     "servidor_publico_recibe": {
-      "nombre": "C. MARÍA GUADALUPE TERÁN RASCÓN",
+      "nombre": "C.P. BERENICE RODRÍGUEZ GUTIÉRREZ",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-{
+  {
     "ente_publico": "MUNICIPIO DE CASAS GRANDES",
     "clave": "MUN_CGR",
     "servidor_publico_recibe": {
@@ -247,7 +247,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE HUEJOTITÁN",
     "clave": "MUN_HUE",
     "servidor_publico_recibe": {
@@ -295,7 +295,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE LÓPEZ",
     "clave": "MUN_LOP",
     "servidor_publico_recibe": {
@@ -351,7 +351,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE MORELOS",
     "clave": "MUN_MOR",
     "servidor_publico_recibe": {
@@ -439,7 +439,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE SAN FRANCISCO DE BORJA",
     "clave": "MUN_BOR",
     "servidor_publico_recibe": {
