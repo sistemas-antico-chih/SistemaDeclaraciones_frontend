@@ -68,29 +68,22 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   async closeDialog(route: string) {
-    console.log("route: "+route);
+    //console.log("route: "+route);
     var splits=route.split("/");
-    console.log("splits: "+ splits);
+    console.log("año: "+new Date().getFullYear+" mes: "+new Date().getMonth()+" dia "+new Date().getDate())
+    console.log("mes modif: "+new Date().getMonth()+1)
+    
     var tipoDeclaracion=splits[1];
     var formaDeclaracion=splits[2];
-    //console.log("splits[0]: "+splits[0]),
-    //console.log("splits[1]: "+splits[1]);
-    //console.log("splits[2]: "+splits[2]);
-    //console.log("tipoDeclaracion: "+tipoDeclaracion);
-    //console.log("formaDeclaracion: "+formaDeclaracion);
+    
     if(splits[2] =="simplificada"){
       formaDeclaracion='simplificada';
-      console.log("formaDec: "+formaDeclaracion);
-      console.log("llegaSimple");
     }
     else{
       formaDeclaracion="completa";
-      console.log("formaDec: "+formaDeclaracion);
-      console.log("llegaenCompleta");
     }
     
     if (await this.isValid(tipoDeclaracion, formaDeclaracion)){
-      console.log(this.isValid);
       this.router.navigate([`/${route}`], { replaceUrl: true });
       this.dialogRef.close({ data: '' })
     }
@@ -299,16 +292,12 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
  async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string){
-   console.log("crearDec: "+tipoDeclaracion);
-   console.log("crearDeclara: "+formaDeclaracion);
   try {
     if(formaDeclaracion==="completa"){
       this.declaracionSimplificada=false;
-      console.log ("llegaCompleta");
     }
     else{
       this.declaracionSimplificada=true
-      console.log ("llegaSimple");
     } 
     
     const { data, errors } = await this.apollo
