@@ -80,9 +80,13 @@ export class DialogElementsExampleDialog implements OnInit {
     //console.log("formaDeclaracion: "+formaDeclaracion);
     if(splits[2]="simplificada"){
       formaDeclaracion='simplificada';
+      console.log("formaDec: "+formaDeclaracion);
+      console.log("llegaSimple");
     }
     else{
       formaDeclaracion="completa";
+      console.log("formaDec: "+formaDeclaracion);
+      console.log("llegaenCompleta");
     }
     
     if (await this.isValid(tipoDeclaracion, formaDeclaracion)){
