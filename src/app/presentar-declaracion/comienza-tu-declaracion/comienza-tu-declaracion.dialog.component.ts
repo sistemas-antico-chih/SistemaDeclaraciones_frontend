@@ -71,6 +71,8 @@ export class DialogElementsExampleDialog implements OnInit {
     var splits=route.split("/")
     var tipoDeclaracion=splits[0];
     var formaDeclaracion;
+    console.log(tipoDeclaracion);
+    console.log(formaDeclaracion);
     if(splits[2]){
       formaDeclaracion='simplificada';
     }
