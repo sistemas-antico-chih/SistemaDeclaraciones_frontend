@@ -68,9 +68,9 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   async closeDialog(route: string) {
-    //console.log("route: "+route);
+    console.log("route: "+route);
     var splits=route.split("/");
-    //console.log("splits: "+ splits);
+    console.log("splits: "+ splits);
     var tipoDeclaracion=splits[1];
     var formaDeclaracion=splits[2];
     //console.log("splits[0]: "+splits[0]),
@@ -78,7 +78,7 @@ export class DialogElementsExampleDialog implements OnInit {
     //console.log("splits[2]: "+splits[2]);
     //console.log("tipoDeclaracion: "+tipoDeclaracion);
     //console.log("formaDeclaracion: "+formaDeclaracion);
-    if(splits[2]="simplificada"){
+    if(splits[2] =="simplificada"){
       formaDeclaracion='simplificada';
       console.log("formaDec: "+formaDeclaracion);
       console.log("llegaSimple");
