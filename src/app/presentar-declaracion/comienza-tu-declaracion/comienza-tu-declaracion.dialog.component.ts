@@ -70,11 +70,14 @@ export class DialogElementsExampleDialog implements OnInit {
     console.log("route: "+route);
     var splits=route.split("/");
     console.log("splits: "+ splits);
-    var tipoDeclaracion=splits[0];
-    var formaDeclaracion;
+    var tipoDeclaracion=splits[1];
+    var formaDeclaracion=splits[2];
+    console.log("splits[0]: "+splits[0]),
+    console.log("splits[1]: "+splits[1]);
+    console.log("splits[2]: "+splits[2]);
     console.log("tipoDeclaracion: "+tipoDeclaracion);
     console.log("formaDeclaracion: "+formaDeclaracion);
-    if(splits[1]="simplificada"){
+    if(splits[2]="simplificada"){
       formaDeclaracion='simplificada';
     }
     else{
