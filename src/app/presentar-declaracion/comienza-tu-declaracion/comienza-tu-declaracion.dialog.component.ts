@@ -68,12 +68,13 @@ export class DialogElementsExampleDialog implements OnInit {
 
   async closeDialog(route: string) {
     console.log(route);
-    var splits=route.split("/")
+    var splits=route.split("/", 2);
+    console.log("splits: "+splits);
     var tipoDeclaracion=splits[0];
     var formaDeclaracion;
-    console.log(tipoDeclaracion);
-    console.log(formaDeclaracion);
-    if(splits[2]){
+    console.log("tipoDeclaracion: "+tipoDeclaracion);
+    console.log("formaDeclaracion: "+formaDeclaracion);
+    if(splits[1]="simplificada"){
       formaDeclaracion='simplificada';
     }
     else{
@@ -126,7 +127,6 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   async isValid(tipoDeclaracion: string, formaDeclaracion: string) {
-    var formaDeclaracion=formaDeclaracion;
     switch (tipoDeclaracion) {
       case 'inicial':
         const validaInicial = await this.verificarDeclaracionInicial(tipoDeclaracion, formaDeclaracion);
