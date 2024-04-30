@@ -36,7 +36,8 @@ export class DialogElementsExampleDialog implements OnInit {
 
   declaracionSimplificada = false;
   declaracionId: string = null;
-  anio_ejercicio: number = null;
+  anio_ejercicio: number = new Date().getFullYear();
+
 
 
   tooltipData = tooltipData;
@@ -85,6 +86,7 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     
     if (await this.isValid(tipoDeclaracion, formaDeclaracion)){
+      console.log(this.isValid);
       this.router.navigate([`/${route}`], { replaceUrl: true });
       this.dialogRef.close({ data: '' })
     }
@@ -103,13 +105,13 @@ export class DialogElementsExampleDialog implements OnInit {
           });
           break;
         case "modificacion":
-          const fechaModificacion = this.anio-1;
+          const fechaModificacion = this.anio;
           const dialogRefModificacion = this.dialog.open(DialogComponent, {
             height: '240px',
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo MODIFICACIÓN',
-              message: `Ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion}, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
+              message: `No cuenta con una declaración de tipo INICIAL o ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion}, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
               trueText: 'Continuar',
             },
           });
@@ -301,13 +303,13 @@ export class DialogElementsExampleDialog implements OnInit {
    
     switch(tipoDeclaracion){
       case "inicial":
-       this.anio_ejercicio = this.anio+1;
+       this.anio_ejercicio = this.anio;
        break;
       case "modificacion":
         this.anio_ejercicio = this.anio;
         break;
       case "conlcusion":
-        this.anio_ejercicio = this.anio+1;
+        this.anio_ejercicio = this.anio;
         break;
       }
     const { data, errors } = await this.apollo
