@@ -295,27 +295,18 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
  async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string){
+   console.log("crearDec: "+tipoDeclaracion);
+   console.log("crearDeclara: "+formaDeclaracion);
   try {
     if(formaDeclaracion==="completa"){
       this.declaracionSimplificada=false;
+      console.log ("llegaCompleta");
     }
     else{
       this.declaracionSimplificada=true
+      console.log ("llegaSimple");
     } 
-    /*switch(tipoDeclaracion){
-      case "inicial":
-       this.anio_ejercicio = this.anio;
-       break;
-      case "modificacion":
-        this.anio_ejercicio = this.anio;
-        break;
-      case "conlcusion":
-        this.anio_ejercicio = this.anio;
-        break;
-      }
-    */
-    console.log("anio_ejercicio: "+this.anio_ejercicio);
-    console.log("anio: "+this.anio);
+    
     const { data, errors } = await this.apollo
       .query<DeclaracionOutput>({
         query: datosGeneralesQuery,
