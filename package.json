@@ -2,9 +2,12 @@
   "name": "declaraciones-patrimoniales",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "^10"
+  },
   "scripts": {
     "ng": "ng",
-    "build": "npm run write:env -s && ng build --prod",
+    "build": "npm run write:env -s && ng build --prod --base-href='./'",
     "start": "npm run write:env -s && ng serve --proxy-config proxy.conf.js",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "npm run write:env -s && ng test",
