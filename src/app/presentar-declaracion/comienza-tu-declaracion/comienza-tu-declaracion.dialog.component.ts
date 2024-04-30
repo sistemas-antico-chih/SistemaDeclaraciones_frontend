@@ -67,9 +67,9 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   async closeDialog(route: string) {
-    console.log(route);
-    var splits=route.split("/", 2);
-    console.log("splits: "+splits);
+    console.log("route: "+route);
+    var splits=route.split("/");
+    console.log("splits: "+ splits);
     var tipoDeclaracion=splits[0];
     var formaDeclaracion;
     console.log("tipoDeclaracion: "+tipoDeclaracion);
