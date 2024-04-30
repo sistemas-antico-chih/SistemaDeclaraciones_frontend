@@ -302,7 +302,7 @@ export class DialogElementsExampleDialog implements OnInit {
     else{
       this.declaracionSimplificada=true
     } 
-    switch(tipoDeclaracion){
+    /*switch(tipoDeclaracion){
       case "inicial":
        this.anio_ejercicio = this.anio;
        break;
@@ -313,6 +313,9 @@ export class DialogElementsExampleDialog implements OnInit {
         this.anio_ejercicio = this.anio;
         break;
       }
+    */
+    console.log("anio_ejercicio: "+this.anio_ejercicio);
+    console.log("anio: "+this.anio);
     const { data, errors } = await this.apollo
       .query<DeclaracionOutput>({
         query: datosGeneralesQuery,
