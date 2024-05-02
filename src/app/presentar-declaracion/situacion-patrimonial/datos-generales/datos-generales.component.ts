@@ -13,7 +13,7 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 import { UntilDestroy, untilDestroyed } from '@core';
 import { DatosGenerales, DeclaracionOutput } from '@models/declaracion';
 import Nacionalidades from '@static/catalogos/nacionalidades.json';
-import Paises from '@static/catalogos/paises.json';
+import Paises from '@static/catalogos/paisesMX.json';
 import SituacionPersonalEstadoCivil from '@static/catalogos/situacionPersonalEstadoCivil.json';
 import RegimenMatrimonial from '@static/catalogos/regimenMatrimonial.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-generales';
