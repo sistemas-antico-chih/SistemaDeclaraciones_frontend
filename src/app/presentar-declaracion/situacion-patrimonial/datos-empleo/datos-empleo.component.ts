@@ -14,6 +14,7 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput } from '@models/declaracion';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import Estados from '@static/catalogos/estados.json';
+import EstadoFijo from '@static/catalogos/EstadoFijo.json';
 import Municipios from '@static/catalogos/municipios.json';
 import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
 import Paises from '@static/catalogos/paises.json';
@@ -39,7 +40,7 @@ export class DatosEmpleoComponent implements OnInit {
 
   nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
   ambitoPublicoCatalogo = AmbitoPublico;
-  estadosCatalogo = Estados;
+  estadosCatalogo = EstadoFijo;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
 
@@ -56,7 +57,7 @@ export class DatosEmpleoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes, this.dia);
 
   constructor(
     private apollo: Apollo,

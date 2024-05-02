@@ -69,10 +69,10 @@ export class DialogElementsExampleDialog implements OnInit {
 
   async closeDialog(route: string) {
     //console.log("route: "+route);
-    var mesesillo:number=new Date().getMonth()+1;
+    //var mesesillo:number=new Date().getMonth()+1;
     var splits=route.split("/");
-    console.log("año: "+new Date().getFullYear+" mes: "+new Date().getMonth()+" dia "+new Date().getDate())
-    console.log("mes modif: "+mesesillo+1)
+    //console.log("año: "+new Date().getFullYear+" mes: "+new Date().getMonth()+" dia "+new Date().getDate())
+    //console.log("mes modif: "+mesesillo+1)
     
     var tipoDeclaracion=splits[1];
     var formaDeclaracion=splits[2];
