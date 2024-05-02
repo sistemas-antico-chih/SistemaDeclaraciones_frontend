@@ -53,7 +53,7 @@ export class DialogElementsExampleDialog implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes-1, this.dia);
  
   ngOnInit(): void {}
 
@@ -69,9 +69,10 @@ export class DialogElementsExampleDialog implements OnInit {
 
   async closeDialog(route: string) {
     //console.log("route: "+route);
+    var mesesillo=new Date().getMonth()+
     var splits=route.split("/");
     console.log("año: "+new Date().getFullYear+" mes: "+new Date().getMonth()+" dia "+new Date().getDate())
-    console.log("mes modif: "+new Date().getMonth()+1)
+    console.log("mes modif: "+parseInt(mesesillo)+1)
     
     var tipoDeclaracion=splits[1];
     var formaDeclaracion=splits[2];
