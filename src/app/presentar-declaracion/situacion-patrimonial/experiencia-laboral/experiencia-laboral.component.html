@@ -313,7 +313,8 @@
               #input_rfc
               type="text"
               formControlName="rfc"
-              maxlength="12"
+              minlength="12"
+              maxlength="13"
               required
             />
             <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/12</mat-hint>

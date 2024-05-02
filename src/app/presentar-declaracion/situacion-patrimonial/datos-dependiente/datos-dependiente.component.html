@@ -364,7 +364,7 @@
                 matInput
                 #input_rfc
                 type="text"
-                minlength="10"
+                minlength="12"
                 maxlength="13"
                 formControlName="rfc"
                 required
@@ -783,7 +783,8 @@
                 matInput
                 #input_rfc_sprivado
                 type="text"
-                maxlength="12"
+                minlength="12"
+                maxlength="13"
                 formControlName="rfc"
               />
               <mat-hint align="end">{{ input_rfc_sprivado.value?.length || 0 }}/12</mat-hint>
