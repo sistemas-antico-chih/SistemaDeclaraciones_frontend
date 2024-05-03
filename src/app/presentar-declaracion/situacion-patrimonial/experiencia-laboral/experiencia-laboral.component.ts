@@ -142,7 +142,7 @@ export class ExperienciaLaboralComponent implements OnInit {
   }
 
   createForm() {
-    this.experienciaLaboralForm = this.formBuilder.group({,
+    this.experienciaLaboralForm = this.formBuilder.group({
       ninguno: [false],
       experiencia: this.formBuilder.group({
         ambitoSector: [null, [Validators.required]],
@@ -171,7 +171,7 @@ export class ExperienciaLaboralComponent implements OnInit {
         sector: [null, [Validators.required]],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-    },{});
+    });
 
    // this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
     const ambitoSector = this.experienciaLaboralForm.get('experiencia.ambitoSector');
