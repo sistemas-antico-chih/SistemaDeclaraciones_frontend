@@ -152,7 +152,7 @@ export class ExperienciaLaboralComponent implements OnInit {
         areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        fechaIngreso: [null, [Validators.required, validarFechaInicial]],
+        fechaIngreso: [null, [Validators.required]],
         fechaEgreso: [null, [Validators.required, validarFechas]],
         ubicacion: [null, [Validators.required]],
         nombreEmpresaSociedadAsociacion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
