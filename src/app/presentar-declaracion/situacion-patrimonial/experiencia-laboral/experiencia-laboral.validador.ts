@@ -9,10 +9,10 @@ export function validarFechaInicial(control: FormControl) {
 
 
 export function validarFechas(control: FormControl) {
-    //var fechaIni = this.fechaIngreso;
+    var fechaIni = this.fechaIngreso;
     var fechaFinal = control.value;
     console.log("control 2: " + control.value);
-    //console.log("control 3: " + fechaIni);
+    console.log("control 3: " + fechaIni);
     if (!fechaFinal)
         return false;
     /*console.log("control 2: " + control.value);
