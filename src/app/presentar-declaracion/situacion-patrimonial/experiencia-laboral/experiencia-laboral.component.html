@@ -356,11 +356,9 @@
               matInput
               formControlName="fechaIngreso"
               [matDatepicker]="pickerOtroIngreso"
-              [min]="ahora"
+              [min]="minDate"
               [max]="maxDate"
               required
-              [(ngModel)]="fechaIngreso"
-              (gModelChange)="cambioFecha()" 
             />
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="pickerOtroIngreso"></mat-datepicker-toggle>
@@ -373,10 +371,9 @@
               matInput
               formControlName="fechaEgreso"
               [matDatepicker]="pickerOtroEgreso"
-              [min]="deshabilitar"
+              [min]="minDate"
               [max]="maxDate"
               required
-              [(ngModel)]="fechaEgreso"
             />
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="pickerOtroEgreso"></mat-datepicker-toggle>
