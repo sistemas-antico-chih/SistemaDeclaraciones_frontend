@@ -175,6 +175,8 @@ export class ExperienciaLaboralComponent implements OnInit {
         sector: [null, [Validators.required]],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+    },{
+      validator: this.validarFechas("fechaIngreso","fechaEgreso");
     });
 
     this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
@@ -185,6 +187,30 @@ export class ExperienciaLaboralComponent implements OnInit {
         this.ambitoSectorChanged(value.clave);
       }
     });
+  }
+
+  validarFechas(fechaIngreso: string, fechaEgreso:string){
+    console.log("llega 1");
+    return (formGroup: FormGroup) =>{
+      const fingreso=formGroup.controls[fechaIngreso];
+      const fegreso=formGroup.controls[fechaEgreso];
+
+      console.log("llega 2");
+
+      if(fegreso.errors && !fegreso.error.validarFechas){
+        console.log("llega 3");
+        return;
+      }
+
+      if(Date.parse(fingreso.value) > Date.parse(fegreso.value)){
+        console.log("llega 4");
+        fegreso.setErrors({validarFechas:true});
+      }
+      else{
+        console.log("llega 5");
+        fegreso.setErrors(null);
+      }
+    };
   }
 
   cambioFecha() {
