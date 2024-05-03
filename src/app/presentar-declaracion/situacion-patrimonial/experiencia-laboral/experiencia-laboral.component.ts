@@ -12,7 +12,7 @@ import { experienciaLaboralMutation, experienciaLaboralQuery } from '@api/declar
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 
-import { validarFechas } from '../experiencia-laboral/experiencia-laboral.validador';
+import { validarFechaInicial, validarFechas } from '../experiencia-laboral/experiencia-laboral.validador';
 import { DeclaracionOutput } from '@models/declaracion/declaracion.model';
 import { Experiencia, ExperienciaLaboral } from '@models/declaracion/experiencia-laboral.model';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
@@ -152,7 +152,7 @@ export class ExperienciaLaboralComponent implements OnInit {
         areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        fechaIngreso: [null, [Validators.required]],
+        fechaIngreso: [null, [Validators.required, validarFechaInicial]],
         fechaEgreso: [null, [Validators.required, validarFechas]],
         ubicacion: [null, [Validators.required]],
         nombreEmpresaSociedadAsociacion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
