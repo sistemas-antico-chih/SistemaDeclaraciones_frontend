@@ -12,7 +12,7 @@ import { experienciaLaboralMutation, experienciaLaboralQuery } from '@api/declar
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 
-import { validarFechaInicial, validarFechas } from '../experiencia-laboral/experiencia-laboral.validador';
+import { validarFechas } from '../experiencia-laboral/experiencia-laboral.validador';
 import { DeclaracionOutput } from '@models/declaracion/declaracion.model';
 import { Experiencia, ExperienciaLaboral } from '@models/declaracion/experiencia-laboral.model';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';

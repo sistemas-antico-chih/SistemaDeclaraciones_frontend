@@ -8,11 +8,11 @@ import { FormControl } from '@angular/forms';
 }
 */
 
-export function validarFechas(fechaInicial:string, control: FormControl) {
-    console.log("control 2: " + control.value);
+export function validarFechas(fechaInicial:string, control: string) {
+    console.log("control 2: " + control);
     console.log("xx: "+ fechaInicial);
 
-    let fechaFinal = control.value;
+    let fechaFinal = control;
     console.log("fechaInicial: " + this.fechaInicial);
 
     if ( !fechaFinal)
