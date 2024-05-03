@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 
 export function validarFechas(control: FormControl) {
     console.log("control 2: " + control.value);
-    console.log("xx: "+control.fechaIngreso.value);
+    console.log("xx: "+ fechaIngreso.value);
 
     let fechaFinal = control.value;
     console.log("fechaInicial: " + this.fechaInicial);

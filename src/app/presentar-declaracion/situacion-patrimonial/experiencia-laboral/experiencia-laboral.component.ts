@@ -60,6 +60,11 @@ export class ExperienciaLaboralComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes-1, this.dia);
 
+
+  ahora: any;
+  deshabilitar: any;
+  fechaIngreso: any;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -153,7 +158,7 @@ export class ExperienciaLaboralComponent implements OnInit {
         empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         fechaIngreso: [null, [Validators.required]],
-        fechaEgreso: [null, [Validators.required, validarFechas]],
+        fechaEgreso: [null, [Validators.required]],
         ubicacion: [null, [Validators.required]],
         nombreEmpresaSociedadAsociacion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         rfc: [
@@ -171,6 +176,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     });
 
+    this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
     const ambitoSector = this.experienciaLaboralForm.get('experiencia.ambitoSector');
 
     ambitoSector.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
@@ -179,6 +185,10 @@ export class ExperienciaLaboralComponent implements OnInit {
       }
     });
   }
+
+  cambioFecha() {
+	  this.deshabilitar = this.fechaIngreso
+	}
 
   editItem(index: number) {
     this.setEditMode();
