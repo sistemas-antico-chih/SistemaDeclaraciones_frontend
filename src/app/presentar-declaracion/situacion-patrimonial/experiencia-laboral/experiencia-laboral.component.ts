@@ -197,7 +197,7 @@ export class ExperienciaLaboralComponent implements OnInit {
 
       console.log("llega 2");
 
-      if(fegreso.errors && !fegreso.error.validarFechas){
+      if(fegreso.errors && !fegreso.errors.validarFechas){
         console.log("llega 3");
         return;
       }
