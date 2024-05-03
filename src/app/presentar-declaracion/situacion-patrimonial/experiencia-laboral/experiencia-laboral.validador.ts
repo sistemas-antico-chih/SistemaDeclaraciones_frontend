@@ -8,9 +8,9 @@ import { FormControl } from '@angular/forms';
 }
 */
 
-export function validarFechas(control: FormControl) {
+export function validarFechas(fechaInicial:string, control: FormControl) {
     console.log("control 2: " + control.value);
-    console.log("xx: "+ fechaIngreso.value);
+    console.log("xx: "+ fechaInicial);
 
     let fechaFinal = control.value;
     console.log("fechaInicial: " + this.fechaInicial);
