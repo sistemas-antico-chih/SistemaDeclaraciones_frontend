@@ -194,9 +194,11 @@ export class ExperienciaLaboralComponent implements OnInit {
     console.log("fechaIngreso: "+fechaIngreso);
     console.log("fechaEgreso: "+fechaEgreso);
 
-    return (formGroup: FormGroup) =>{
-      const fingreso=formGroup.controls["experiencia.fechaIngreso"];
-      const fegreso=formGroup.controls["experiencia.fechaEgreso"];
+    return (experienciaLaboralForm: FormGroup) =>{
+      const fingreso=experienciaLaboralForm.controls["experiencia.fechaIngreso"];
+      const fegreso=experienciaLaboralForm.controls["experiencia.fechaEgreso"];
+
+
 
       console.log("llega 2");
       console.log("fingreso: "+fingreso);
