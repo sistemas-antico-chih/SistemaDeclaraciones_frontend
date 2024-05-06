@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 
 export function validarFechas(control: FormControl) {
     console.log ("llega aqui");
-    let fechaInicial = control.get('fechaIngreso');
-    let fechaFinal = control.get('fechaEgreso');
+    let fechaInicial = control.get('experiencia.fechaIngreso');
+    let fechaFinal = control.get('experiencia.fechaEgreso');
     console.log("control 2: " + fechaInicial.value);
     console.log("control 3: " + fechaFinal.value);
     if (!fechaFinal)
