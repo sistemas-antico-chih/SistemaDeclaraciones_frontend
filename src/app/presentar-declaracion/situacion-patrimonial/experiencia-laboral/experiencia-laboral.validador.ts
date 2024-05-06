@@ -9,8 +9,8 @@ export const validarFechas: ValidatorFn = (control: FormGroup): ValidationErrors
     console.log("fechaInicial: "+fechaInicial);
     console.log("fechaFinal: "+fechaFinal);
 
-    fechaInicial=Date.parse(fechaInicial)
-    fechaFinal=Date.parse(fechaFinal)
+    fechaInicial= new Date(fechaInicial)
+    fechaFinal=new Date(fechaFinal)
 
     console.log("fechaInicial 2: "+fechaInicial);
     console.log("fechaFinal 2: "+fechaFinal);
