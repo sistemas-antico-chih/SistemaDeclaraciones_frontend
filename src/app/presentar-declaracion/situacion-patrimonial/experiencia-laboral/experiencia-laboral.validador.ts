@@ -1,4 +1,4 @@
-import { FormGroup, ValidationErrors, ValidatorFn, Date } from '@angular/forms';
+import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 
 export const validarFechas: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
