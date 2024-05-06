@@ -381,7 +381,7 @@
             <mat-datepicker #pickerOtroEgreso></mat-datepicker>
 
             
-            <mat-error *ngIf="experienciaLaboralForm.controls.experiencia.Date.parse(fechaIngreso) > experienciaLaboralForm.controls.experiencia.Date.parse(fechaEgreso)">
+            <mat-error *ngIf="experienciaLaboralForm.controls.experiencia.fechaIngreso > experienciaLaboralForm.controls.experiencia.fechaEgreso">
               <span translate>Verifique las fehcas ingresadas</span>
             </mat-error>
             
