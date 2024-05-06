@@ -1,42 +1,19 @@
-import { FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 
-export const validarFechas: ValidatorFn = (control: FormControl) : ValidationErrors | null => {
-    console.log ("llega aqui");
+export const validarFechas: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+    console.log("llega¡¡");
     let fechaInicial = control.get('experiencia.fechaIngreso');
     let fechaFinal = control.get('experiencia.fechaEgreso');
-    console.log("control 2: " + fechaInicial.value);
-    console.log("control 3: " + fechaFinal.value);
-    
-    if (!fechaFinal)
-        return false;
-    /*console.log("control 2: " + control.value);
-    console.log("xx: "+ fechaInicial);
+  
+    console.log("fechaInicial: "+fechaInicial);
+    console.log("fechaFinal: "+fechaFinal);
 
-    let fechaFinal = control.value;
-    console.log("fechaInicial: " + this.fechaInicial);
+    fechaInicial=Date.parse(fechaInicial)
+    fechaFinal=Date.parse(fechaFinal)
 
-    if ( !fechaFinal)
-        return false;
+    console.log("fechaInicial 2: "+fechaInicial);
+    console.log("fechaFinal 2: "+fechaFinal);
 
-
-    function comparar(fechaInicial: any, fechaFinal: any) {
-        
-        if (Date.parse(fechaInicial) < Date.parse(fechaFinal)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-
-    }
-
-    if (comparar)
-        //return false;
-        return { 'validarFechas': true };
-
-    //return true; //Validado
-    return null;
-    */
-}
-
+    return fechaInicial < fechaFinal ? null : { 'fechaErronea': true };
+  };
