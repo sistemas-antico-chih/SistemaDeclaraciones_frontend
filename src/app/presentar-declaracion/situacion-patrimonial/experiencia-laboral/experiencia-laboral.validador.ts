@@ -3,9 +3,12 @@ import { FormGroup, ValidationErrors, ValidatorFn, Date } from '@angular/forms';
 
 export const validarFechas: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     console.log("llega¡¡");
-    let fechaInicial = control.get('experiencia.fechaIngreso').split("/");
-    let fechaFinal = control.get('experiencia.fechaEgreso').split("/");
+    let fechaIni = control.get('experiencia.fechaIngreso');
+    let fechaFin = control.get('experiencia.fechaEgreso');
   
+    let fechaInicial = fechaIni.split("/")
+    let fechaFinal = fechaFin.split("/")
+
     console.log("fechaInicial: "+fechaInicial);
     console.log("fechaFinal: "+fechaFinal);
 
