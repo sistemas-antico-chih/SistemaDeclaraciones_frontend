@@ -12,7 +12,6 @@ import { experienciaLaboralMutation, experienciaLaboralQuery } from '@api/declar
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 
-import { validarFechas } from '../experiencia-laboral/experiencia-laboral.validador';
 import { DeclaracionOutput } from '@models/declaracion/declaracion.model';
 import { Experiencia, ExperienciaLaboral } from '@models/declaracion/experiencia-laboral.model';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
@@ -166,7 +165,7 @@ export class ExperienciaLaboralComponent implements OnInit {
           null,
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3-4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
@@ -176,7 +175,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     },{
-      validator: this.validarFechas ("fechaIngreso", "fechaEgreso")
+      validator: this.validarFechas ("experiencia.fechaIngreso", "experiencia.fechaEgreso")
     });
 
     //this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
@@ -190,32 +189,17 @@ export class ExperienciaLaboralComponent implements OnInit {
   }
 
   validarFechas(fechaIngreso: string, fechaEgreso:string){
-    console.log("llega 1");
-    console.log("fechaIngreso: "+fechaIngreso);
-    console.log("fechaEgreso: "+fechaEgreso);
-
     return (formGroup: FormGroup) =>{
-      const fingreso=formGroup.get("experiencia.fechaIngreso");
-      const fegreso=formGroup.get("experiencia.fechaEgreso");
-
-
-
-      console.log("llega 2");
-      console.log("fingreso: "+fingreso);
-      console.log("fegreso: "+fegreso);
-
-
+      const fingreso=formGroup.get(fechaIngreso);
+      const fegreso=formGroup.get(fechaEgreso);
       if(fegreso.errors && !fegreso.errors.validarFechas){
-        console.log("llega 3");
         return;
       }
 
-      if(Date.parse(fingreso.value) > Date.parse(fegreso.value)){
-        console.log("llega 4");
+      if(Date.parse(fingreso.value) >= Date.parse(fegreso.value)){
         fegreso.setErrors({validarFechas:true});
       }
       else{
-        console.log("llega 5");
         fegreso.setErrors(null);
       }
     };
