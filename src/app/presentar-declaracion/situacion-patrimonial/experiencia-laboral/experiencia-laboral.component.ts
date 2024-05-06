@@ -166,7 +166,7 @@ export class ExperienciaLaboralComponent implements OnInit {
           null,
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3-4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
@@ -189,14 +189,14 @@ export class ExperienciaLaboralComponent implements OnInit {
     });
   }
 
-  /*validarFechas(fechaIngreso: string, fechaEgreso:string){
+  validarFechas(fechaIngreso: string, fechaEgreso:string){
     console.log("llega 1");
     console.log("fechaIngreso: "+fechaIngreso);
     console.log("fechaEgreso: "+fechaEgreso);
 
-    return (experienciaLaboralForm: FormGroup) =>{
-      const fingreso=experienciaLaboralForm.controls["experiencia.fechaIngreso"];
-      const fegreso=experienciaLaboralForm.controls["experiencia.fechaEgreso"];
+    return (formGroup: FormGroup) =>{
+      const fingreso=formGroup.controls["experiencia.fechaIngreso"];
+      const fegreso=formGroup.controls["experiencia.fechaEgreso"];
 
 
 
@@ -220,7 +220,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       }
     };
   }
- */
+ 
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.experiencia[index]);
