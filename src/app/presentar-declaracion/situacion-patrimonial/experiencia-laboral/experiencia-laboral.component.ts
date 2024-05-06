@@ -159,7 +159,7 @@ export class ExperienciaLaboralComponent implements OnInit {
         fechaIngreso: [null, [Validators.required, 
           ]],
         fechaEgreso: [null, [Validators.required, 
-          validarFechas]],
+          ]],
         ubicacion: [null, [Validators.required]],
         nombreEmpresaSociedadAsociacion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         rfc: [
@@ -175,11 +175,11 @@ export class ExperienciaLaboralComponent implements OnInit {
         sector: [null, [Validators.required]],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-    }/*,{
-      validator: this.validarFechas("fechaIngreso","fechaEgreso")
-    }*/);
+    },{
+      validator: validarFechas
+    });
 
-    this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
+    //this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
     const ambitoSector = this.experienciaLaboralForm.get('experiencia.ambitoSector');
 
     ambitoSector.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
