@@ -375,10 +375,12 @@
               [min]="minDate"
               [max]="maxDate"
               required
-            />
+              #fechaEgreso="ngModel"            />
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="pickerOtroEgreso"></mat-datepicker-toggle>
             <mat-datepicker #pickerOtroEgreso></mat-datepicker>
+            
+            <mat-error class="mat-error" *ngIf="form.fechaEgreso.errors.validarFechas">Las contraseñas debden de coincidir</mat-error>
           </mat-form-field>
 
           <mat-form-field matTooltip="{{ tooltipData.lugarDondeSeUbica }}" appearance="fill">
