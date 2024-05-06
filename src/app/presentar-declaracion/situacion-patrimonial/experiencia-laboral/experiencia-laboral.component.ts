@@ -12,7 +12,7 @@ import { experienciaLaboralMutation, experienciaLaboralQuery } from '@api/declar
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 
-import { validarFechaInicial, validarFechas } from '../experiencia-laboral/experiencia-laboral.validador';
+import { validarFechas } from '../experiencia-laboral/experiencia-laboral.validador';
 import { DeclaracionOutput } from '@models/declaracion/declaracion.model';
 import { Experiencia, ExperienciaLaboral } from '@models/declaracion/experiencia-laboral.model';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
@@ -159,7 +159,7 @@ export class ExperienciaLaboralComponent implements OnInit {
         fechaIngreso: [null, [Validators.required, 
           ]],
         fechaEgreso: [null, [Validators.required, 
-          ]],
+          validarFechas]],
         ubicacion: [null, [Validators.required]],
         nombreEmpresaSociedadAsociacion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         rfc: [
@@ -175,9 +175,9 @@ export class ExperienciaLaboralComponent implements OnInit {
         sector: [null, [Validators.required]],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-    },{
+    }/*,{
       validator: this.validarFechas("fechaIngreso","fechaEgreso")
-    });
+    }*/);
 
     this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
     const ambitoSector = this.experienciaLaboralForm.get('experiencia.ambitoSector');
@@ -189,7 +189,7 @@ export class ExperienciaLaboralComponent implements OnInit {
     });
   }
 
-  validarFechas(fechaIngreso: string, fechaEgreso:string){
+  /*validarFechas(fechaIngreso: string, fechaEgreso:string){
     console.log("llega 1");
     console.log("fechaIngreso: "+fechaIngreso);
     console.log("fechaEgreso: "+fechaEgreso);
@@ -220,11 +220,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       }
     };
   }
-
-  cambioFecha() {
-	  this.deshabilitar = this.fechaIngreso
-	}
-
+ */
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.experiencia[index]);

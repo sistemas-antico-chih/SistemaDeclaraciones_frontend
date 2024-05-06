@@ -1,17 +1,12 @@
 import { FormControl } from '@angular/forms';
 
-export function validarFechaInicial(control: FormControl) {
-    var fechaIncial = control.value;
-    //console.log("control 1: " + control.value);
-    if (!fechaIncial)
-        return false;
-}
-
 
 export function validarFechas(control: FormControl) {
-    
-    var fechaFinal = control.value;
-    console.log("control 2: " + control.value);
+    console.log ("llega aqui");
+    let fechaInicial = control.get('fechaIngreso');
+    let fechaFinal = control.get('fechaEgreso');
+    console.log("control 2: " + fechaInicial.value);
+    console.log("control 3: " + fechaFinal.value);
     if (!fechaFinal)
         return false;
     /*console.log("control 2: " + control.value);
