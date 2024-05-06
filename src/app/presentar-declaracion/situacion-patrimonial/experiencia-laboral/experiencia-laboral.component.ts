@@ -191,11 +191,17 @@ export class ExperienciaLaboralComponent implements OnInit {
 
   validarFechas(fechaIngreso: string, fechaEgreso:string){
     console.log("llega 1");
+    console.log("fechaIngreso: "+fechaIngreso);
+    console.log("fechaEgreso: "+fechaEgreso);
+
     return (formGroup: FormGroup) =>{
       const fingreso=formGroup.controls[fechaIngreso];
       const fegreso=formGroup.controls[fechaEgreso];
 
       console.log("llega 2");
+      console.log("fingreso: "+fingreso);
+      console.log("fegreso: "+fegreso);
+
 
       if(fegreso.errors && !fegreso.errors.validarFechas){
         console.log("llega 3");
