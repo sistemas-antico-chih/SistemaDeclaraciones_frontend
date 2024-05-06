@@ -176,7 +176,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     },{
-      validator: this.validarFechas ("fehcaIngreso", "fechaEgreso")
+      validator: this.validarFechas ("fechaIngreso", "fechaEgreso")
     });
 
     //this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
@@ -195,8 +195,8 @@ export class ExperienciaLaboralComponent implements OnInit {
     console.log("fechaEgreso: "+fechaEgreso);
 
     return (formGroup: FormGroup) =>{
-      const fingreso=formGroup.controls["experiencia.fechaIngreso"];
-      const fegreso=formGroup.controls["experiencia.fechaEgreso"];
+      const fingreso=formGroup.get("experiencia.fechaIngreso");
+      const fegreso=formGroup.get("experiencia.fechaEgreso");
 
 
 
