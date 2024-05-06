@@ -175,9 +175,9 @@ export class ExperienciaLaboralComponent implements OnInit {
         sector: [null, [Validators.required]],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-    }/*,{
+    },{
       validator: this.validarFechas("fechaIngreso","fechaEgreso")
-    }*/);
+    });
 
     this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
     const ambitoSector = this.experienciaLaboralForm.get('experiencia.ambitoSector');
@@ -189,7 +189,7 @@ export class ExperienciaLaboralComponent implements OnInit {
     });
   }
 
-  /*validarFechas(fechaIngreso: string, fechaEgreso:string){
+  validarFechas(fechaIngreso: string, fechaEgreso:string){
     console.log("llega 1");
     return (formGroup: FormGroup) =>{
       const fingreso=formGroup.controls[fechaIngreso];
@@ -215,7 +215,7 @@ export class ExperienciaLaboralComponent implements OnInit {
 
   cambioFecha() {
 	  this.deshabilitar = this.fechaIngreso
-	}*/
+	}
 
   editItem(index: number) {
     this.setEditMode();
