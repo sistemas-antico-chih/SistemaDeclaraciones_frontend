@@ -1,7 +1,7 @@
-import { FormControl, ValidationErrors, validatorFn } from '@angular/forms';
+import { FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 
-export const validarFechas: validatorFn = (control: FormControl) : ValidationErrors | null => {
+export const validarFechas: ValidatorFn = (control: FormControl) : ValidationErrors | null => {
     console.log ("llega aqui");
     let fechaInicial = control.get('experiencia.fechaIngreso');
     let fechaFinal = control.get('experiencia.fechaEgreso');
