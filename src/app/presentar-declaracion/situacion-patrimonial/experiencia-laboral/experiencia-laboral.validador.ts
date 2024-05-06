@@ -3,8 +3,8 @@ import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export const validarFechas: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     console.log("llega¡¡");
-    let fechaIni = control.get('experiencia.fechaIngreso');
-    let fechaFin = control.get('experiencia.fechaEgreso');
+    let fechaIni = control.get('experiencia.fechaIngreso').value;
+    let fechaFin = control.get('experiencia.fechaEgreso').value;
   
     //let fechaInicial = fechaIni.split("/")
     //let fechaFinal = fechaFin.split("/")
