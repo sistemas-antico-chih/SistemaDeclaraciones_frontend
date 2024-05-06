@@ -176,7 +176,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     },{
-      validator: validarFechas
+      validator: validarFechas ("fehcaIngreso", "fechaEgreso")
     });
 
     //this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
