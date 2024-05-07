@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
@@ -71,7 +71,7 @@ export class DatosParejaComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes-1, this.dia);
   hidden: string = 'false';
- // costAccount: FormGroup = new FormGroup(null);
+  rfc: FormControl = new FormControl(null);
 
   constructor(
     private apollo: Apollo,
@@ -88,8 +88,8 @@ export class DatosParejaComponent implements OnInit {
     console.log("llega!!");
     this.hidden = event;
     if (event == "true") {
-      this.datosParejaForm.rfc.setValidators([Validators.required]);
-      this.datosParejaForm.rfc.updateValueAndValidity();
+      this.rfc.setValidators([Validators.required]);
+      this.rfc.updateValueAndValidity();
     } else {
       this.datosParejaForm.rfc.clearValidators();
       this.datosParejaForm.rfc.updateValueAndValidity();
