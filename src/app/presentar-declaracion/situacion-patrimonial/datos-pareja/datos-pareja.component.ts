@@ -259,7 +259,7 @@ export class DatosParejaComponent implements OnInit {
     } else {
       console.log("llega TRUE!!");
       this.datosParejaForm.get("rfc").clearValidators();
-      this.datosParejaForm.getU("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
       this.datosParejaForm.get("rfc").disable();
       //rfc: new FormControl({value: '', disabled:true})
     }
