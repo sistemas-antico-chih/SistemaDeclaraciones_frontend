@@ -70,6 +70,8 @@ export class DatosParejaComponent implements OnInit {
   mes: number = new Date().getMonth();
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes-1, this.dia);
+  hidden: string = 'false';
+ // costAccount: FormGroup = new FormGroup(null);
 
   constructor(
     private apollo: Apollo,
@@ -80,6 +82,19 @@ export class DatosParejaComponent implements OnInit {
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
+  }
+
+  radioChange(event:any) {
+    console.log("llega!!");
+    this.hidden = event;
+    if (event == "true") {
+      this.datosParejaForm.rfc.setValidators([Validators.required]);
+      this.datosParejaForm.rfc.updateValueAndValidity();
+    } else {
+      this.datosParejaForm.rfc.clearValidators();
+      this.datosParejaForm.rfc.updateValueAndValidity();
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
   }
 
   actividadLaboralChanged(value: any) {
@@ -139,7 +154,7 @@ export class DatosParejaComponent implements OnInit {
         ],
       ],
       relacionConDeclarante: [null, [Validators.required]],
-      ciudadanoExtranjero: [false, [Validators.required]],
+      ciudadanoExtranjero: [null, [Validators.required]],
       curp: [
         null,
         [
@@ -247,6 +262,8 @@ export class DatosParejaComponent implements OnInit {
     });
   }
 
+
+  
   fillForm(datosPareja: DatosPareja) {
     this.datosParejaForm.patchValue(datosPareja || {});
     this.tipoDomicilio = datosPareja.lugarDondeReside;

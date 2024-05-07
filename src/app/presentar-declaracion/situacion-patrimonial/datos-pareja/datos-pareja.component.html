@@ -392,11 +392,13 @@
               matTooltip="{{ tooltipData.ciudadanoExtranjero }}"
               class="checkbox"
               formControlName="ciudadanoExtranjero"
+              (change)="radioChange($event.value)"
             >
               <p class="question double-col"><span class="no-public-inline"></span> ¿Es ciudadano extranjero?</p>
               <mat-radio-button [value]="true">Sí</mat-radio-button>
               <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
+            
 
             <div class="hidden"></div>
             <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill">
