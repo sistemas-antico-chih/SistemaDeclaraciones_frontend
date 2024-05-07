@@ -256,7 +256,7 @@ export class DatosParejaComponent implements OnInit {
     console.log(event);
     console.log("111: "+this.ciudadanoExtranjero);
     console.log("222: "+!this.ciudadanoExtranjero);
-    if (event.value == "true") {
+    if (this.ciudadanoExtranjero == true) {
       console.log("llega TRUE!!");
       this.datosParejaForm["rfc"].setValidators([Validators.required]);
       this.datosParejaForm["rfc"].updateValueAndValidity();
@@ -264,6 +264,7 @@ export class DatosParejaComponent implements OnInit {
       console.log("llega FALSE!!");
       this.datosParejaForm["rfc"].clearValidators();
       this.datosParejaForm["rfc"].updateValueAndValidity();
+      this.datosParejaForm["rfc"].hidden;
     }
     console.log("Requerido", this.datosParejaForm.errors);
   }
