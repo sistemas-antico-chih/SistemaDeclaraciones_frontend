@@ -254,12 +254,12 @@ export class DatosParejaComponent implements OnInit {
     this.hidden = event;
     if (event == "true") {
       console.log("llega TRUE!!");
-      this.datosParejaForm.rfc.setValidators([Validators.required]);
-      this.datosParejaForm.rfc.updateValueAndValidity();
+      this.datosParejaForm["rfc"].setValidators([Validators.required]);
+      this.datosParejaForm["rfc"].updateValueAndValidity();
     } else {
       console.log("llega FALSE!!");
-      this.datosParejaForm.rfc.clearValidators();
-      this.datosParejaForm.rfc.updateValueAndValidity();
+      this.datosParejaForm["rfc"].clearValidators();
+      this.datosParejaForm["rfc"].updateValueAndValidity();
     }
     console.log("Requerido", this.datosParejaForm.errors);
   }
