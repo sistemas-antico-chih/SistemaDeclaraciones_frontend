@@ -255,12 +255,15 @@ export class DatosParejaComponent implements OnInit {
     this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
     console.log(this.active)
-    if (this.ciudadanoExtranjero == false) {
+    if (this.active == false) {
       console.log("llega extranjero!!");
       console.log(this.active)
       this.datosParejaForm.get("rfc").setValidators([Validators.required]);
       this.datosParejaForm.get("rfc").enable();
       this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("curp").setValidators([Validators.required]);
+      this.datosParejaForm.get("curp").enable();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
     } else {
       console.log("llega TRUE!!");
       console.log(this.active)
@@ -268,6 +271,10 @@ export class DatosParejaComponent implements OnInit {
       this.datosParejaForm.get("rfc").updateValueAndValidity();
       this.datosParejaForm.get("rfc").disable();
       this.datosParejaForm.get("rfc").hidden();
+      this.datosParejaForm.get("curp").clearValidators();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+      this.datosParejaForm.get("curp").disable();
+      this.datosParejaForm.get("curp").hidden();
       //rfc: new FormControl({value: '', disabled:true})
     }
     console.log("Requerido", this.datosParejaForm.errors);
