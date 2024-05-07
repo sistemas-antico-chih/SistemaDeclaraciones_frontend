@@ -74,6 +74,11 @@ export class DatosDependienteComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
 
+  hidden: string = 'false';
+  
+  extranjero: boolean;
+  active: boolean;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -255,6 +260,35 @@ export class DatosDependienteComponent implements OnInit {
     lugarDondeReside.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       this.lugarDondeResideChanged(value);
     });
+  }
+
+  radioChange(event:any) {
+    this.hidden = event;
+    this.active = this.datosDependientesEconomicosForm.controls['extranjero'].value;
+    console.log(this.active)
+    if (this.active == false) {
+      console.log("llega extranjero!!");
+      console.log(this.active)
+      this.datosDependientesEconomicosForm.get("rfc").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.get("rfc").enable();
+      this.datosDependientesEconomicosForm.get("rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("curp").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.get("curp").enable();
+      this.datosDependientesEconomicosForm.get("curp").updateValueAndValidity();
+    } else {
+      console.log("llega TRUE!!");
+      console.log(this.active)
+      this.datosDependientesEconomicosForm.get("rfc").clearValidators();
+      this.datosDependientesEconomicosForm.get("rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("rfc").disable();
+      
+      this.datosDependientesEconomicosForm.get("curp").clearValidators();
+      this.datosDependientesEconomicosForm.get("curp").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("curp").disable();
+      
+      //rfc: new FormControl({value: '', disabled:true})
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
   }
 
   editItem(index: number) {
