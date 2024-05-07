@@ -72,6 +72,7 @@ export class DatosParejaComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes-1, this.dia);
   hidden: string = 'false';
   rfc: FormControl = new FormControl(null);
+  ciudadanoExtranjero: boolean=false;
 
   constructor(
     private apollo: Apollo,
@@ -252,7 +253,9 @@ export class DatosParejaComponent implements OnInit {
   radioChange(event:any) {
     console.log("llega!!");
     this.hidden = event;
-    console.log(event.value);
+    console.log(event);
+    console.log("111: "+this.ciudadanoExtranjero);
+    console.log("222: "+!this.ciudadanoExtranjero);
     if (event.value == "true") {
       console.log("llega TRUE!!");
       this.datosParejaForm["rfc"].setValidators([Validators.required]);
