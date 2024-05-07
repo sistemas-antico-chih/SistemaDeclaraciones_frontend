@@ -371,7 +371,7 @@
             </mat-form-field>
           </div>
 
-          <div class="grid-3-col grid-margin">
+          <div class="grid-3-col grid-margin" >
             <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill">
               <mat-label>RFC</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
@@ -384,7 +384,7 @@
                 maxlength="13"
                 formControlName="rfc"
                 required
-                [ngClass]="{ hidden: datosParejaForm.value.ciudadanoExtranjero? == 'true' }"
+                
               />
               <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             </mat-form-field>
@@ -402,7 +402,7 @@
             </mat-radio-group>
             
 
-            <div class="hidden"></div>
+            <div class="hidden" [ngClass]="{ hidden: datosParejaForm.value.ciudadanoExtranjero? === 'true' }"></div>
             <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill">
               <mat-label>CURP</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
@@ -414,7 +414,7 @@
                 type="text"
                 formControlName="curp"
                 required
-                [ngClass]="{ hidden: datosParejaForm.value.ciudadanoExtranjero? == 'true' }"
+                
               />
               <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             </mat-form-field>
