@@ -251,20 +251,16 @@ export class DatosParejaComponent implements OnInit {
   }
 
   radioChange(event:any) {
-    console.log("llega!!");
     this.hidden = event;
-    console.log(event);
-    console.log("111: "+this.ciudadanoExtranjero);
-    console.log("222: "+!this.ciudadanoExtranjero);
-    if (this.ciudadanoExtranjero == true) {
-      console.log("llega TRUE!!");
-      this.datosParejaForm["rfc"].setValidators([Validators.required]);
-      this.datosParejaForm["rfc"].updateValueAndValidity();
+    if (this.ciudadanoExtranjero == false) {
+      console.log("llega extranjero!!");
+      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
     } else {
-      console.log("llega FALSE!!");
-      this.datosParejaForm["rfc"].clearValidators();
-      this.datosParejaForm["rfc"].updateValueAndValidity();
-      this.datosParejaForm["rfc"].hidden;
+      console.log("llega TRUE!!");
+      this.datosParejaForm.get("rfc").clearValidators();
+      this.datosParejaForm.getU("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").disable();
       //rfc: new FormControl({value: '', disabled:true})
     }
     console.log("Requerido", this.datosParejaForm.errors);
