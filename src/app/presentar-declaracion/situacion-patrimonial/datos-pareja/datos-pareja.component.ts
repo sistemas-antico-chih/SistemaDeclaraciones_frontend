@@ -71,8 +71,9 @@ export class DatosParejaComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes-1, this.dia);
   hidden: string = 'false';
-  rfc: FormControl = new FormControl(null);
-  ciudadanoExtranjero: boolean=false;
+  
+  ciudadanoExtranjero: boolean;
+  active: boolean;
 
   constructor(
     private apollo: Apollo,
@@ -252,15 +253,16 @@ export class DatosParejaComponent implements OnInit {
 
   radioChange(event:any) {
     this.hidden = event;
-    console.log(this.ciudadanoExtranjero)
+    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
+    console.log(this.active)
     if (this.ciudadanoExtranjero == false) {
       console.log("llega extranjero!!");
-      console.log(this.ciudadanoExtranjero)
+      console.log(this.active)
       this.datosParejaForm.get("rfc").setValidators([Validators.required]);
       this.datosParejaForm.get("rfc").updateValueAndValidity();
     } else {
       console.log("llega TRUE!!");
-      console.log(this.ciudadanoExtranjero)
+      console.log(this.active)
       this.datosParejaForm.get("rfc").clearValidators();
       this.datosParejaForm.get("rfc").updateValueAndValidity();
       this.datosParejaForm.get("rfc").disable();

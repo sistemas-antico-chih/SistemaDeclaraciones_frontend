@@ -394,6 +394,7 @@
               class="checkbox"
               formControlName="ciudadanoExtranjero"
               (change)="radioChange($event.value)"
+              [(ngModel)]="ciudadanoExtranjero"
             >
               <p class="question double-col"><span class="no-public-inline"></span> ¿Es ciudadano extranjero?</p>
               <mat-radio-button [value]="true">Sí</mat-radio-button>
