@@ -384,6 +384,7 @@
                 maxlength="13"
                 formControlName="rfc"
                 required
+                [hidden]
               />
               <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             </mat-form-field>
@@ -412,7 +413,7 @@
                 type="text"
                 formControlName="curp"
                 required
-                hidden
+                [attr.hidden]
               />
               <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             </mat-form-field>
