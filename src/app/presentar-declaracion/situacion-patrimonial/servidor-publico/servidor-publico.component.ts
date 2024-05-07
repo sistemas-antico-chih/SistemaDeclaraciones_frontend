@@ -300,6 +300,8 @@ export class ServidorPublicoComponent implements OnInit {
         moneda: ['MXN'],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+    },{
+      validator: this.validarFechas ("fechaIngreso", "fechaConclusion")
     });
 
     this.actividadAnualAnteriorForm.valueChanges
@@ -341,6 +343,23 @@ export class ServidorPublicoComponent implements OnInit {
           formFields.forEach((field) => this.actividadAnualAnteriorForm.get(field).disable());
         }
       });
+  }
+
+  validarFechas(fechaIngreso: string, fechaEgreso:string){
+    return (formGroup: FormGroup) =>{
+      const fingreso=formGroup.get(fechaIngreso);
+      const fegreso=formGroup.get(fechaEgreso);
+      if(fegreso.errors && !fegreso.errors.validarFechas){
+        return;
+      }
+
+      if(Date.parse(fingreso.value) >= Date.parse(fegreso.value)){
+        fegreso.setErrors({validarFechas:true});
+      }
+      else{
+        fegreso.setErrors(null);
+      }
+    };
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {

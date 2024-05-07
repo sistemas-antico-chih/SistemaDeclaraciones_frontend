@@ -381,7 +381,7 @@
             <mat-datepicker #pickerOtroEgreso></mat-datepicker>
             
             <mat-error class="mat-error"
-             *ngIf="fechaEgreso.errors.validarFechas">
+             *ngIf="fechaEgreso.errors.validarFechas && fechaEgreso.touched">
              Las contraseñas debden de coincidir
             </mat-error>
           </mat-form-field>
