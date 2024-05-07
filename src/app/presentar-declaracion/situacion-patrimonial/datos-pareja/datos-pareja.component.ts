@@ -91,8 +91,8 @@ export class DatosParejaComponent implements OnInit {
       this.rfc.setValidators([Validators.required]);
       this.rfc.updateValueAndValidity();
     } else {
-      this.datosParejaForm.rfc.clearValidators();
-      this.datosParejaForm.rfc.updateValueAndValidity();
+      this.rfc.clearValidators();
+      this.rfc.updateValueAndValidity();
     }
     console.log("Requerido", this.datosParejaForm.errors);
   }
