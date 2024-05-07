@@ -252,12 +252,15 @@ export class DatosParejaComponent implements OnInit {
 
   radioChange(event:any) {
     this.hidden = event;
+    console.log(this.ciudadanoExtranjero)
     if (this.ciudadanoExtranjero == false) {
       console.log("llega extranjero!!");
+      console.log(this.ciudadanoExtranjero)
       this.datosParejaForm.get("rfc").setValidators([Validators.required]);
       this.datosParejaForm.get("rfc").updateValueAndValidity();
     } else {
       console.log("llega TRUE!!");
+      console.log(this.ciudadanoExtranjero)
       this.datosParejaForm.get("rfc").clearValidators();
       this.datosParejaForm.get("rfc").updateValueAndValidity();
       this.datosParejaForm.get("rfc").disable();
