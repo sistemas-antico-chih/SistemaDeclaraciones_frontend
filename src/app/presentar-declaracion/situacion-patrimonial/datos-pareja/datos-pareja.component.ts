@@ -252,7 +252,8 @@ export class DatosParejaComponent implements OnInit {
   radioChange(event:any) {
     console.log("llega!!");
     this.hidden = event;
-    if (event == "true") {
+    console.log(event.value);
+    if (event.value == "true") {
       console.log("llega TRUE!!");
       this.datosParejaForm["rfc"].setValidators([Validators.required]);
       this.datosParejaForm["rfc"].updateValueAndValidity();
