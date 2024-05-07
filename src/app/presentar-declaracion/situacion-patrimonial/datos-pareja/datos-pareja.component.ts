@@ -84,19 +84,6 @@ export class DatosParejaComponent implements OnInit {
     this.createForm();
   }
 
-  radioChange(event:any) {
-    console.log("llega!!");
-    this.hidden = event;
-    if (event == "true") {
-      this.rfc.setValidators([Validators.required]);
-      this.rfc.updateValueAndValidity();
-    } else {
-      this.rfc.clearValidators();
-      this.rfc.updateValueAndValidity();
-    }
-    console.log("Requerido", this.datosParejaForm.errors);
-  }
-
   actividadLaboralChanged(value: any) {
     const actividadLaboralSectorPublico = this.datosParejaForm.get('actividadLaboralSectorPublico');
     const actividadLaboralSectorPrivadoOtro = this.datosParejaForm.get('actividadLaboralSectorPrivadoOtro');
@@ -262,8 +249,22 @@ export class DatosParejaComponent implements OnInit {
     });
   }
 
-
+  radioChange(event:any) {
+    console.log("llega!!");
+    this.hidden = event;
+    if (event == "true") {
+      console.log("llega TRUE!!");
+      this.datosParejaForm.rfc.setValidators([Validators.required]);
+      this.datosParejaForm.rfc.updateValueAndValidity();
+    } else {
+      console.log("llega FALSE!!");
+      this.datosParejaForm.rfc.clearValidators();
+      this.datosParejaForm.rfc.updateValueAndValidity();
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
+  }
   
+
   fillForm(datosPareja: DatosPareja) {
     this.datosParejaForm.patchValue(datosPareja || {});
     this.tipoDomicilio = datosPareja.lugarDondeReside;
