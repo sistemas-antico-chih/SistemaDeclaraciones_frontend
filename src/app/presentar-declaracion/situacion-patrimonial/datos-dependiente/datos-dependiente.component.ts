@@ -288,7 +288,7 @@ export class DatosDependienteComponent implements OnInit {
       
       //rfc: new FormControl({value: '', disabled:true})
     }
-    console.log("Requerido", this.datosParejaForm.errors);
+    console.log("Requerido", this.datosDependientesEconomicosForm.errors);
   }
 
   editItem(index: number) {
