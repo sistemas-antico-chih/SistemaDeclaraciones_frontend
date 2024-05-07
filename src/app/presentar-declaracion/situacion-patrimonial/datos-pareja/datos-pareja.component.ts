@@ -259,6 +259,7 @@ export class DatosParejaComponent implements OnInit {
       console.log("llega extranjero!!");
       console.log(this.active)
       this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").enable();
       this.datosParejaForm.get("rfc").updateValueAndValidity();
     } else {
       console.log("llega TRUE!!");
@@ -266,6 +267,7 @@ export class DatosParejaComponent implements OnInit {
       this.datosParejaForm.get("rfc").clearValidators();
       this.datosParejaForm.get("rfc").updateValueAndValidity();
       this.datosParejaForm.get("rfc").disable();
+      this.datosParejaForm.get("rfc").hidden();
       //rfc: new FormControl({value: '', disabled:true})
     }
     console.log("Requerido", this.datosParejaForm.errors);
