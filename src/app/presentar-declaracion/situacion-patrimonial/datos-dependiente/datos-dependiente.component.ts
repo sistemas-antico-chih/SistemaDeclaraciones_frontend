@@ -263,13 +263,13 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   radioChange(event:any) {
-    console.log("llega a radioChange")
+    //console.log("llega a radioChange")
     this.hidden = event;
     this.active = this.datosDependientesEconomicosForm.get('dependienteEconomico.extranjero').value;
-    console.log(this.active)
+    //console.log(this.active)
     if (this.active == false) {
-      console.log("llega extranjerooo!!");
-      console.log(this.active)
+      //console.log("llega extranjerooo!!");
+      //console.log(this.active)
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").setValidators([Validators.required]);
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").enable();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
@@ -277,7 +277,7 @@ export class DatosDependienteComponent implements OnInit {
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").enable();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
     } else {
-      console.log("llega TRUE!!");
+      //console.log("llega TRUE!!");
       console.log(this.active)
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").clearValidators();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
