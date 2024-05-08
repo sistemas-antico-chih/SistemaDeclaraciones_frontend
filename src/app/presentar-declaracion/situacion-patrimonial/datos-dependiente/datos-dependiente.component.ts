@@ -265,7 +265,7 @@ export class DatosDependienteComponent implements OnInit {
   radioChange(event:any) {
     console.log("llega a radioChange")
     this.hidden = event;
-    this.active = this.datosDependientesEconomicosForm.controls['dependienteEconomico.extranjero'].value;
+    this.active = this.datosDependientesEconomicosForm.get('dependienteEconomico.extranjero').value;
     console.log(this.active)
     if (this.active == false) {
       console.log("llega extranjerooo!!");
