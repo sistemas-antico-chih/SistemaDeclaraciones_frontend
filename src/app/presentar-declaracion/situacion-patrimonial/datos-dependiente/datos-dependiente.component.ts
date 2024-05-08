@@ -263,28 +263,29 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   radioChange(event:any) {
+    console.log("llega a radioChange")
     this.hidden = event;
-    this.active = this.datosDependientesEconomicosForm.controls['extranjero'].value;
+    this.active = this.datosDependientesEconomicosForm.dependienteEconomico.controls['extranjero'].value;
     console.log(this.active)
     if (this.active == false) {
       console.log("llega extranjerooo!!");
       console.log(this.active)
-      this.datosDependientesEconomicosForm.get("rfc").setValidators([Validators.required]);
-      this.datosDependientesEconomicosForm.get("rfc").enable();
-      this.datosDependientesEconomicosForm.get("rfc").updateValueAndValidity();
-      this.datosDependientesEconomicosForm.get("curp").setValidators([Validators.required]);
-      this.datosDependientesEconomicosForm.get("curp").enable();
-      this.datosDependientesEconomicosForm.get("curp").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("rfc").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("rfc").enable();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("curp").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("curp").enable();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("curp").updateValueAndValidity();
     } else {
       console.log("llega TRUE!!");
       console.log(this.active)
-      this.datosDependientesEconomicosForm.get("rfc").clearValidators();
-      this.datosDependientesEconomicosForm.get("rfc").updateValueAndValidity();
-      this.datosDependientesEconomicosForm.get("rfc").disable();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("rfc").clearValidators();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("rfc").disable();
       
-      this.datosDependientesEconomicosForm.get("curp").clearValidators();
-      this.datosDependientesEconomicosForm.get("curp").updateValueAndValidity();
-      this.datosDependientesEconomicosForm.get("curp").disable();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("curp").clearValidators();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("curp").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.dependienteEconomico.get("curp").disable();
       
       //rfc: new FormControl({value: '', disabled:true})
     }
