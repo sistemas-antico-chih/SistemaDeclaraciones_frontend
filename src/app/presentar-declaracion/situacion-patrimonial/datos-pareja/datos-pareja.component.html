@@ -373,7 +373,7 @@
 
           <div class="grid-3-col grid-margin" >
             <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill"
-            [ngClass]="{'hidden': active === true}">
+            >
               <mat-label>RFC</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
               <input
@@ -404,7 +404,7 @@
 
             <div class="hidden"></div>
             <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill"  
-            [ngClass]="{'hidden': active === true}">
+            >
               <mat-label>CURP</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
               <input
@@ -415,7 +415,6 @@
                 type="text"
                 formControlName="curp"
                 required
-               
               />
               <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             </mat-form-field>
