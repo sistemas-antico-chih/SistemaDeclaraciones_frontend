@@ -301,12 +301,24 @@
     <!-- Formulario -->
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosParejaForm" [ngClass]="{ hidden: !editMode }">
       <mat-divider></mat-divider>
-
+      <p>Datos de la Pareja</p>
+      <!-- Datos -->
+      <div class="grid-3-col grid-margin">
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de Operacion</mat-label>
+          <mat-icon matPrefix>beenhere</mat-icon>
+          <mat-select formControlName="tipoOperacion" required>
+            <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+              {{ tipoOperacion | replace: '_':' ' }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div class="padding-agregar">
         <!-- Agregar Pareja -->
         <!-- Datos pareja -->
         <div class="">
-          <h2>Agregar pareja</h2>
+          <h2>Datos de la Pareja</h2>
           <div class="grid-3-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
               <mat-label>Nombre(s)</mat-label>
@@ -338,6 +350,8 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerNacimiento"
+                [min]="minDatePareja"
+                [max]="maxDate"
                 formControlName="fechaNacimiento"
                 required
               />
@@ -357,8 +371,9 @@
             </mat-form-field>
           </div>
 
-          <div class="grid-3-col grid-margin">
-            <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill">
+          <div class="grid-3-col grid-margin" >
+            <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill"
+            [ngClass]="{'hidden': active === true}">
               <mat-label>RFC</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
               <input
@@ -366,8 +381,10 @@
                 matInput
                 #input_rfc
                 type="text"
+                minlength="12"
                 maxlength="13"
                 formControlName="rfc"
+                required
               />
               <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             </mat-form-field>
@@ -376,14 +393,18 @@
               matTooltip="{{ tooltipData.ciudadanoExtranjero }}"
               class="checkbox"
               formControlName="ciudadanoExtranjero"
+              (change)="radioChange($event.value)"
+              [(ngModel)]="ciudadanoExtranjero"
             >
               <p class="question double-col"><span class="no-public-inline"></span> ¿Es ciudadano extranjero?</p>
               <mat-radio-button [value]="true">Sí</mat-radio-button>
               <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
+            
 
             <div class="hidden"></div>
-            <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill">
+            <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill"  
+            [ngClass]="{'hidden': active === true}">
               <mat-label>CURP</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
               <input
@@ -393,11 +414,13 @@
                 maxlength="18"
                 type="text"
                 formControlName="curp"
+                required
+               
               />
               <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             </mat-form-field>
           </div>
-
+          {{active}}
           <div class="grid-2-col grid-margin">
             <mat-radio-group
               matTooltip="{{ tooltipData.dependienteEconomico }}"
@@ -753,6 +776,8 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerPublicIngreso"
+                [min]="minDate"
+                [max]="maxDate"
                 formControlName="fechaIngreso"
                 required
               />
@@ -796,7 +821,8 @@
                 #input_rfc_empresa
                 type="text"
                 formControlName="rfc"
-                maxlength="12"
+                minlength="12"
+                maxlength="13"
               />
               <mat-hint align="end">{{ input_rfc_empresa.value?.length || 0 }}/12</mat-hint>
             </mat-form-field>
@@ -843,6 +869,8 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerOtroIngreso"
+                [min]="minDate"
+                [max]="maxDate"
                 formControlName="fechaIngreso"
                 required
               />

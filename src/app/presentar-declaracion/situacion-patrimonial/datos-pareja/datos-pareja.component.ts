@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
@@ -69,7 +69,11 @@ export class DatosParejaComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth();
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  hidden: string = 'false';
+  
+  ciudadanoExtranjero: boolean;
+  active: boolean;
 
   constructor(
     private apollo: Apollo,
@@ -139,7 +143,7 @@ export class DatosParejaComponent implements OnInit {
         ],
       ],
       relacionConDeclarante: [null, [Validators.required]],
-      ciudadanoExtranjero: [false, [Validators.required]],
+      ciudadanoExtranjero: [null, [Validators.required]],
       curp: [
         null,
         [
@@ -193,7 +197,7 @@ export class DatosParejaComponent implements OnInit {
           { disabled: true, value: null },
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
@@ -246,6 +250,36 @@ export class DatosParejaComponent implements OnInit {
       this.lugarDondeResideChanged(value);
     });
   }
+
+  radioChange(event:any) {
+    this.hidden = event;
+    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
+    console.log(this.active)
+    if (this.active == false) {
+      console.log("llega extranjero!!");
+      console.log(this.active)
+      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").enable();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("curp").setValidators([Validators.required]);
+      this.datosParejaForm.get("curp").enable();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+    } else {
+      console.log("llega TRUE!!");
+      console.log(this.active)
+      this.datosParejaForm.get("rfc").clearValidators();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").disable();
+      
+      this.datosParejaForm.get("curp").clearValidators();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+      this.datosParejaForm.get("curp").disable();
+      
+      //rfc: new FormControl({value: '', disabled:true})
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
+  }
+  
 
   fillForm(datosPareja: DatosPareja) {
     this.datosParejaForm.patchValue(datosPareja || {});
