@@ -267,7 +267,7 @@ export class DatosDependienteComponent implements OnInit {
     this.active = this.datosDependientesEconomicosForm.controls['extranjero'].value;
     console.log(this.active)
     if (this.active == false) {
-      console.log("llega extranjero!!");
+      console.log("llega extranjerooo!!");
       console.log(this.active)
       this.datosDependientesEconomicosForm.get("rfc").setValidators([Validators.required]);
       this.datosDependientesEconomicosForm.get("rfc").enable();
