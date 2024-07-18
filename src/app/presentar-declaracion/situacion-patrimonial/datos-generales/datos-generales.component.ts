@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { datosGeneralesQuery, declaracionMutation } from '@api/declaracion';
+import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 import { DatosGenerales, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
@@ -151,7 +151,6 @@ export class DatosGeneralesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
-  /*
   async getUserDataQuery() {
     const credentials = JSON.parse(localStorage.getItem('credentials'));
     const rfc = credentials.user.rfc.slice(0, 10);
@@ -160,8 +159,7 @@ export class DatosGeneralesComponent implements OnInit {
 
     this.datosGeneralesForm.patchValue({ ...dataUser } || {});
   }
-  */
-
+  
   async getLastUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -220,7 +218,6 @@ export class DatosGeneralesComponent implements OnInit {
 
     return form;
   }
-
 
   inputsAreValid(): boolean {
     if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
