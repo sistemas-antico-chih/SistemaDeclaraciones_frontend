@@ -548,8 +548,8 @@ export const datosEmpleoCargoComisionQuery = gql`
 `;
 
 export const datosGeneralesQuery = gql`
-  query declaracion($tipoDeclaracion: TipoDeclaracion!, $declaracionCompleta: Boolean, $anioEjercicio: Int) {
-    declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta, anioEjercicio: $anioEjercicio) {
+  query declaracion($tipoDeclaracion: TipoDeclaracion!, $declaracionCompleta: Boolean) {
+    declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta) {
       _id
       anioEjercicio
       datosGenerales {
