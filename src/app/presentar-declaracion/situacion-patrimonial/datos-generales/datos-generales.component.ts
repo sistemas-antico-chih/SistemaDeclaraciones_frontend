@@ -64,7 +64,7 @@ export class DatosGeneralesComponent implements OnInit {
 
     this.createForm();
     this.getUserInfo();
-    //this.getUserDataQuery();
+    this.getUserDataQuery();
   }
 
   confirmSaveInfo() {
