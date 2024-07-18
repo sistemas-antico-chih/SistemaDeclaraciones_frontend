@@ -37,8 +37,16 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
         console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
 
         switch (err.extensions?.code) {
-          // when an AuthenticationError is thrown in a resolver
-          case 'Unauthorized':
+           // when error is for expored token
+           case 'Unauthorized':
+            // when error is for expored token
+            if (message === 'Your token is expired') {
+              localStorage.setItem('credentials', null);
+              alert('Tu sesión ha expirado');
+              window.location.replace('/');
+              break;
+            }
+
             return fromPromise(getNewToken()).flatMap((res) => {
               // retry the request, returning the new observable
               return forward(operation);

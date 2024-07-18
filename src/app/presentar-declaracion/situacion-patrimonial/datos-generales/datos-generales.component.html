@@ -18,51 +18,16 @@
 
 
     <div class="grid-3-col">
-      <mat-form-field appearance="fill">
-        <mat-label>Año de la declaración</mat-label>
+      <mat-form-field matTooltip="{{ tooltipData.anio_ejercicio }}" appearance="fill">
+        <mat-label>Año del ejercicio</mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
-        <input class="form-control" 
-        [errorStateMatcher]="errorMatcher" 
-        id="anio_ejercicio" 
-        name="anio_ejercicio"
-        matInput type="number" 
-        [(ngModel)]="anio_ejercicio" 
-        min="2015" 
-        max="currentYear"
-        placeholder="{{ currentYear }}" 
-        minlength="4" 
-        required />
-        <!--<div *ngIf="anio_ejercicio.invalid < 2000 && (anio_ejercicio.dirty || anio_ejercicio.touched)" class="alert alert-danger">
-          <div *ngIf="anio_ejercicio.errors?.['required']">
-            Name is required.
-          </div>
-          <div *ngIf="anio_ejercicio.errors?.['minlength']">
-            Name must be at least 4 characters long.
-          </div>
-          <div *ngIf="anio_ejercicio.errors?.['forbiddenName']">
-            Name cannot be Bob.
-          </div>
-        </div>
-      -->
+        <mat-select [(ngModel)]="anio_ejercicio" required>
+          <mat-option *ngFor="let num of array_anio_ejercicio" [value]="num">
+            {{ num }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
-
-    <!--
-    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="anioEjercicioForm">
-      <div class="grid-3-col">
-        <mat-form-field appearance="fill">
-          <mat-label>Año de la declaración</mat-label>
-          <mat-icon matPrefix>date_range</mat-icon>
-          <input
-            [errorStateMatcher]="errorMatcher"
-            matInput type="number"
-            formControlName="anio_ejercicio"
-            placeholder="{{ currentYear }}"
-          />
-        </mat-form-field>
-      </div>
-    </form>
-    -->
 
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm">
       <div class="grid-3-col grid-margin">

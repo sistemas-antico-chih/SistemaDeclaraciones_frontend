@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { datosGeneralesQuery, declaracionMutation } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
+import { DatosGenerales, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
 import { DatosGenerales, DeclaracionOutput } from '@models/declaracion';
 import Nacionalidades from '@static/catalogos/nacionalidades.json';
 import Paises from '@static/catalogos/paisesMX.json';
@@ -26,20 +27,12 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./datos-generales.component.scss'],
 })
 export class DatosGeneralesComponent implements OnInit {
+  array_anio_ejercicio: Array<number> = [];
   aclaraciones = false;
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
-  minimo: number = 2020;
-  maximo: number = 2023;
   anio_ejercicio: number = null;
-  //anioEjercicioForm!:  FormGroup;
-  //anio_ejercicio: number = 2024;
-  /*anioEjercicioForm : any = new FormGroup({
-    anio_ejercicio : new FormControl(['', Validators.min(this.minimo), Validators.max(this.maximo)]),
-  });
-  */
-
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -51,7 +44,6 @@ export class DatosGeneralesComponent implements OnInit {
   declaracionSimplificada = false;
   tipoDeclaracion: string = null;
   declaracionId: string = null;
-
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
@@ -67,8 +59,13 @@ export class DatosGeneralesComponent implements OnInit {
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
 
+    for (let index = 0; index < 5; index++) {
+      this.array_anio_ejercicio.push(this.currentYear - index);
+    }
+
     this.createForm();
     this.getUserInfo();
+    //this.getUserDataQuery();
   }
 
   confirmSaveInfo() {
@@ -89,13 +86,6 @@ export class DatosGeneralesComponent implements OnInit {
   }
   
   createForm() {
-    /*const anioEjercicioForm = new FormGroup({
-      anio_ejercicio : new FormControl(''),
-    });*/
-    /*this.anioEjercicioForm = this.formBuilder.group({
-      anio_ejercicio:['', Validators.min(this.minimo), Validators.max(this.maximo) ]
-    });
-    */
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
       primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
@@ -135,7 +125,6 @@ export class DatosGeneralesComponent implements OnInit {
       aclaracionesObservaciones: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
     });
     
-   
     const situacionPersonal = this.datosGeneralesForm.get('situacionPersonalEstadoCivil');
     situacionPersonal.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       const regimenMatrimonial = this.datosGeneralesForm.get('regimenMatrimonial');
@@ -163,6 +152,36 @@ export class DatosGeneralesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  /*
+  async getUserDataQuery() {
+    const credentials = JSON.parse(localStorage.getItem('credentials'));
+    const rfc = credentials.user.rfc.slice(0, 10);
+    const homo = credentials.user.rfc.slice(10, 13);
+    const dataUser = { ...credentials.user, rfc: { rfc, homoClave: homo } };
+
+    this.datosGeneralesForm.patchValue({ ...dataUser } || {});
+  }
+  */
+
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDeclaracionDatosGenerales,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.fillForm(data?.lastDeclaracion.datosGenerales);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -181,7 +200,12 @@ export class DatosGeneralesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
-      this.fillForm(data?.declaracion.datosGenerales);
+
+      if (data.declaracion.datosGenerales === null) {
+        this.getLastUserInfo();
+      } else {
+        this.fillForm(data?.declaracion.datosGenerales);
+      }
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -204,7 +228,8 @@ export class DatosGeneralesComponent implements OnInit {
       return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
     }
 
-    return true;
+    return typeof this.anio_ejercicio === 'number';
+    // return true;
   }
 
   formHasChanges() {

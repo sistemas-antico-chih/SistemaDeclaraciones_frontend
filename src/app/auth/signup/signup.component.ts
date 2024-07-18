@@ -8,8 +8,8 @@ import { Logger, UntilDestroy, untilDestroyed } from '@core';
 import { AuthenticationService } from '../authentication.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-import InstitucionesCatalogo from '@static/custom/instituciones.json';
+import { CatalogosService } from '@app/services/catalogos.service';
+//import InstitucionesCatalogo from '@static/custom/instituciones.json';
 
 import { validarCURP, validarRFC } from '../signup/signup.validador';
 
@@ -27,24 +27,30 @@ export class SignupComponent implements OnInit, OnDestroy {
   signupForm!: FormGroup;
   isLoading = false;
 
-  institucionesCatalogo = InstitucionesCatalogo;
+  institucionesCatalogo: any[];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private catalogoService: CatalogosService
   ) {
     this.createForm();
-    if (this.institucionesCatalogo?.length) {
-      this.signupForm.get('institucion').enable();
-    }
+    this.loadInstituciones();
   }
 
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  async loadInstituciones() {
+    this.institucionesCatalogo = await this.catalogoService.getInstituciones().then((data) => data);
+    if (this.institucionesCatalogo?.length) {
+      this.signupForm.get('institucion').enable();
+    }
+  }
 
   signup() {
     this.isLoading = true;
