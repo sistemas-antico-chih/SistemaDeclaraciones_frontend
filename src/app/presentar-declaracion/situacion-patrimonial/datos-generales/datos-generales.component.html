@@ -1,7 +1,11 @@
 <div class="section-main-container">
   <mat-card class="form-card">
-    <section-header section="I. Declaración de situación patrimonial" [simplificada]="declaracionSimplificada"
-      progress="4.5" type="{{ tipoDeclaracion }}"></section-header>
+    <section-header 
+      section="I. Declaración de situación patrimonial"
+      [simplificada]="declaracionSimplificada"
+      progress="4.5"
+      type="{{ tipoDeclaracion }}"
+    ></section-header>
 
     <mat-divider></mat-divider>
 
@@ -15,7 +19,6 @@
       Todos los campos * son obligatorios. Los datos de terceros, siempre y cuando sean personas físicas, y los campos
       resaltados <span class="no-public-inline"></span> no serán públicos.
     </p>
-
 
     <div class="grid-3-col">
       <mat-form-field matTooltip="{{ tooltipData.anio_ejercicio }}" appearance="fill">
@@ -179,7 +182,6 @@
         </button>
       </div>
     </form>
-
 
     <mat-divider></mat-divider>
 
