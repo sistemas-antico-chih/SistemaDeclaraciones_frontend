@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { prestamoComodatoMutation, prestamoComodatoQuery } from '@api/declaracion';
+import { prestamoComodatoMutation, prestamoComodatoQuery, lastPrestamoComodatoQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
@@ -21,7 +21,7 @@ import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/prestamo-terceros';
 
-import { Catalogo, DeclaracionOutput, Prestamo, PrestamoComodato } from '@models/declaracion';
+import { Catalogo, DeclaracionOutput, Prestamo, PrestamoComodato, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -279,6 +279,25 @@ export class PrestamosTercerosComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastPrestamoComodatoQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.prestamoComodato);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -291,11 +310,14 @@ export class PrestamosTercerosComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.prestamoComodato) {
+      if (data.declaracion.prestamoComodato === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.prestamoComodato);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 

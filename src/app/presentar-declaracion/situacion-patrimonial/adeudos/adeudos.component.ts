@@ -3,13 +3,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { adeudosPasivosMutation, adeudosPasivosQuery } from '@api/declaracion';
+import { adeudosPasivosMutation, adeudosPasivosQuery, lastAdeudosPasivosQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Adeudo, AdeudosPasivos, DeclaracionOutput, MexicoExtranjero } from '@models/declaracion';
+import { Adeudo, AdeudosPasivos, DeclaracionOutput, MexicoExtranjero, LastDeclaracionOutput, } from '@models/declaracion';
 
 import TipoAdeudo from '@static/catalogos/tipoAdeudo.json';
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
@@ -165,6 +165,25 @@ export class AdeudosComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastAdeudosPasivosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.adeudosPasivos);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -177,11 +196,14 @@ export class AdeudosComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.adeudosPasivos) {
+      if (data.declaracion.adeudosPasivos === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.adeudosPasivos);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 

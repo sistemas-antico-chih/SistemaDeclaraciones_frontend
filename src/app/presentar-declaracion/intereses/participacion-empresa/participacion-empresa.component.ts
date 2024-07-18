@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { participacionMutation, participacionQuery } from '@api/declaracion';
+import { participacionMutation, participacionQuery, lastParticipacionQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
@@ -20,7 +20,7 @@ import Sector from '@static/catalogos/sector.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/participacion-empresa';
 
-import { DeclaracionOutput, Participacion, Participaciones } from '@models/declaracion';
+import { DeclaracionOutput, Participacion, Participaciones, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -168,6 +168,25 @@ export class ParticipacionEmpresaComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastParticipacionQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.participacion);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -180,13 +199,17 @@ export class ParticipacionEmpresaComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.participacion) {
+      if (data.declaracion.participacion === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.participacion);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
+
 
   formHasChanges() {
     let isDirty = this.participacionForm.dirty;

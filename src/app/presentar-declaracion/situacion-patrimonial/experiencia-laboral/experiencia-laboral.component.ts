@@ -8,11 +8,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { experienciaLaboralMutation, experienciaLaboralQuery } from '@api/declaracion';
+import { experienciaLaboralMutation, experienciaLaboralQuery, lastExperienciaLaboralQuery } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 
-import { DeclaracionOutput } from '@models/declaracion/declaracion.model';
+import { DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion/declaracion.model';
 import { Experiencia, ExperienciaLaboral } from '@models/declaracion/experiencia-laboral.model';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import AmbitoSector from '@static/catalogos/ambitoSector.json';
@@ -226,6 +226,25 @@ export class ExperienciaLaboralComponent implements OnInit {
     this.setSelectedOptions(experiencia);
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastExperienciaLaboralQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.experienciaLaboral);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -243,9 +262,13 @@ export class ExperienciaLaboralComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.setupForm(data?.declaracion.experienciaLaboral);
+      if (data?.declaracion.experienciaLaboral === null) {
+        this.getLastUserInfo();
+      } else {
+        this.setupForm(data?.declaracion.experienciaLaboral);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
