@@ -59,7 +59,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (this.institucionesCatalogo?.length) {
       signupForm.institucion = {
         clave: signupForm.institucion.clave,
-        valor: signupForm.institucion.ente_publico,
+        valor: signupForm.institucion.valor,
       };
     }
 
