@@ -12,7 +12,6 @@ import { datosGeneralesQuery, declaracionMutation } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 import { DatosGenerales, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
-import { DatosGenerales, DeclaracionOutput } from '@models/declaracion';
 import Nacionalidades from '@static/catalogos/nacionalidades.json';
 import Paises from '@static/catalogos/paisesMX.json';
 import SituacionPersonalEstadoCivil from '@static/catalogos/situacionPersonalEstadoCivil.json';
