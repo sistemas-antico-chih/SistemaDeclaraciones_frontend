@@ -175,7 +175,6 @@ export class DomicilioDeclaranteComponent implements OnInit {
     let isDirty = this.domicilioDeclaranteForm.dirty;
     console.log(isDirty);
 
-
     if (isDirty) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
