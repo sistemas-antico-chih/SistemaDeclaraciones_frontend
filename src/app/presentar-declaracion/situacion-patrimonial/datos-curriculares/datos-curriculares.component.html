@@ -1,11 +1,7 @@
 <div class="section-main-container">
   <mat-card class="form-card">
-    <section-header
-      section="I. Declaración de situación patrimonial"
-      [simplificada]="declaracionSimplificada"
-      progress="13.5"
-      type="{{ tipoDeclaracion }}"
-    ></section-header>
+    <section-header section="I. Declaración de situación patrimonial" [simplificada]="declaracionSimplificada"
+      progress="13.5" type="{{ tipoDeclaracion }}"></section-header>
 
     <mat-divider></mat-divider>
 
@@ -84,6 +80,10 @@
     </div>
 
     <div class="boton-agregar" *ngIf="escolaridad.length && !editMode">
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" [disabled]="datosCurricularesDeclaranteForm.invalid || isLoading">
+        GUARDAR CAMBIOS
+      </button>
       <button mat-raised-button color="primary" (click)="addItem()">AGREGAR ESCOLARIDAD</button>
     </div>
 
@@ -100,11 +100,8 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field
-            matTooltip="{{ tooltipData.institucionEducativa }}"
-            appearance="fill"
-            formGroupName="institucionEducativa"
-          >
+          <mat-form-field matTooltip="{{ tooltipData.institucionEducativa }}" appearance="fill"
+            formGroupName="institucionEducativa">
             <mat-label>Institución Educativa</mat-label>
             <mat-icon matPrefix>school</mat-icon>
             <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombre" required />
@@ -138,24 +135,14 @@
           <mat-form-field matTooltip="{{ tooltipData.fechaObtencionDocumento }}" appearance="fill">
             <mat-label>Fecha de obtención de documento</mat-label>
             <!--<input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="fechaObtencion" />-->
-            <input
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              [matDatepicker]="picker"
-              [min]="minDate"
-              [max]="maxDate"
-              formControlName="fechaObtencion"
-              required
-            />
+            <input [errorStateMatcher]="errorMatcher" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+              formControlName="fechaObtencion" required />
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <mat-form-field
-            matTooltip="{{ tooltipData.lugarInstitucionEducativa }}"
-            appearance="fill"
-            formGroupName="institucionEducativa"
-          >
+          <mat-form-field matTooltip="{{ tooltipData.lugarInstitucionEducativa }}" appearance="fill"
+            formGroupName="institucionEducativa">
             <mat-label>Lugar dónde se ubica la Institución Educativa</mat-label>
             <mat-icon matPrefix>public</mat-icon>
             <mat-select formControlName="ubicacion" required>
@@ -168,10 +155,6 @@
 
       <mat-grid-list *ngIf="!aclaraciones" cols="15" rowHeight="100px">
         <mat-grid-tile class="content-left" colspan="15">
-          <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-          <button mat-raised-button color="primary" [disabled]="datosCurricularesDeclaranteForm.invalid || isLoading">
-            GUARDAR CAMBIOS
-          </button>
           <button mat-raised-button type="button" class="text-primary" (click)="toggleAclaraciones(true)">
             AGREGAR ACLARACIONES / OBSERVACIONES
           </button>
@@ -186,25 +169,15 @@
 
         <mat-form-field appearance="fill" class="grid-margin">
           <mat-icon matPrefix class="aclaraciones-no-public">speaker_notes</mat-icon>
-          <textarea
-            maxlength="500"
-            [errorStateMatcher]="errorMatcher"
-            matInput
-            formControlName="aclaracionesObservaciones"
-            rows="10"
-          ></textarea>
+          <textarea maxlength="500" [errorStateMatcher]="errorMatcher" matInput
+            formControlName="aclaracionesObservaciones" rows="10"></textarea>
         </mat-form-field>
       </div>
 
       <div class="boton text-right">
         <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-        <button
-          mat-raised-button
-          color="primary"
-          type="button"
-          *ngIf="escolaridad.length && editMode"
-          (click)="cancelEditMode()"
-        >
+        <button mat-raised-button color="primary" type="button" *ngIf="escolaridad.length && editMode"
+          (click)="cancelEditMode()">
           CANCELAR
         </button>
         <button mat-raised-button color="primary" type="button" (click)="datosCurricularesDeclaranteForm.reset()">
