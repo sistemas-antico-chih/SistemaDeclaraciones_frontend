@@ -47,23 +47,6 @@ export class DatosGeneralesComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  mensaje() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Guuuaardar cambios',
-        message: '',
-        trueText: 'Guuaardar',
-        falseText: 'Caancelar',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.saveInfo();
-      }
-    });
-  }
-
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -82,6 +65,24 @@ export class DatosGeneralesComponent implements OnInit {
     this.createForm();
     this.getUserInfo();
     this.getUserDataQuery();
+  }
+
+  mensaje() {
+    console.log("llegaa")
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Guuuaardar cambios',
+        message: '',
+        trueText: 'Guuaardar',
+        falseText: 'Caancelar',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.saveInfo();
+      }
+    });
   }
 
   confirmSaveInfo() {
