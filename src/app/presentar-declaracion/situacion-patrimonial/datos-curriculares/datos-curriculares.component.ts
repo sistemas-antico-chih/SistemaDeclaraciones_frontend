@@ -75,6 +75,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   addItem() {
+    console.log("addItem");
     this.datosCurricularesDeclaranteForm.reset();
     this.setAclaraciones(this.aclaracionesText);
     this.editMode = true;
@@ -82,6 +83,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   cancelEditMode() {
+    console.log("cancelItem");
     this.editMode = false;
     this.editIndex = null;
   }
@@ -100,6 +102,7 @@ export class DatosCurricularesComponent implements OnInit {
   } */
 
   createForm() {
+    console.log("createForm");
     this.datosCurricularesDeclaranteForm = this.formBuilder.group({
       escolaridad: this.formBuilder.group({
         nivel: [null, [Validators.required]],
@@ -117,18 +120,21 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   editItem(index: number) {
+    console.log("editItem");
     this.setEditMode();
     this.fillForm(this.escolaridad[index]);
     this.editIndex = index;
   }
 
   fillForm(escolaridad: Escolaridad) {
+    console.log("fillForm");
     this.datosCurricularesDeclaranteForm.get('escolaridad').patchValue(escolaridad);
     this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
+    console.log("getLastUserInfo");
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
@@ -148,6 +154,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   async getUserInfo() {
+    console.log("getUserInfo");
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
@@ -200,6 +207,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("ngOnInit");
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: 'Guarde la información de cada sección',
@@ -227,6 +235,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   removeItem(index: number) {
+    console.log("removeItem");
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: 'Eliminar elemento',
@@ -249,6 +258,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   async saveInfo(form: DatosCurricularesDeclarante) {
+    console.log("saveInfo");
     try {
       const declaracion = {
         datosCurricularesDeclarante: form,
@@ -278,7 +288,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   saveItem() {
-    console.log("llegaa");
+    console.log("saveItem");
     let escolaridad = [...this.escolaridad];
     const aclaracionesObservaciones = this.datosCurricularesDeclaranteForm.value.aclaracionesObservaciones;
     const newItem = this.datosCurricularesDeclaranteForm.value.escolaridad;
@@ -300,7 +310,8 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   saveItems() {
-    console.log("llegaa");
+    console.log("saveItemss");
+    console.log("llegaando");
     let escolaridad = [...this.escolaridad];
     
     const aclaracionesObservaciones = this.datosCurricularesDeclaranteForm.value.aclaracionesObservaciones;
@@ -311,9 +322,7 @@ export class DatosCurricularesComponent implements OnInit {
     } else {
       escolaridad[this.editIndex] = newItem;
     }*/
-
     this.isLoading = true;
-
     this.saveInfo({
       escolaridad,
       aclaracionesObservaciones,
@@ -329,12 +338,14 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   setEditMode() {
+    console.log("setEditMode");
     this.datosCurricularesDeclaranteForm.reset();
     this.editMode = true;
     this.editIndex = null;
   }
 
   setSelectedOptions() {
+    console.log("setSelectedOptions");
     const { nivel } = this.datosCurricularesDeclaranteForm.value.escolaridad;
 
     if (nivel) {
@@ -345,6 +356,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   setupForm(datosCurricularesDeclarante: DatosCurricularesDeclarante) {
+    console.log("setupForm");
     this.escolaridad = datosCurricularesDeclarante?.escolaridad || [];
     const aclaraciones = datosCurricularesDeclarante?.aclaracionesObservaciones;
 
@@ -356,6 +368,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   toggleAclaraciones(value: boolean) {
+    console.log("toogleAclaraciones");
     const aclaraciones = this.datosCurricularesDeclaranteForm.get('aclaracionesObservaciones');
     if (value) {
       aclaraciones.enable();
