@@ -252,13 +252,12 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      console.log("llegaa")
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          title: 'Guuuaardar cambios',
-          message: '',
-          trueText: 'Guuaardar',
-          falseText: 'Caancelar',
+          title: 'Guardar información',
+          message: 'Recuerde guardar la información de la sección',
+          trueText: 'Aceptar',
+          falseText: '',
         },
       });
       dialogRef.afterClosed().subscribe((result) => {
