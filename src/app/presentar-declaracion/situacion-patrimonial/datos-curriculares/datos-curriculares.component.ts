@@ -278,6 +278,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   saveItem() {
+    console.log("llegaa");
     let escolaridad = [...this.escolaridad];
     const aclaracionesObservaciones = this.datosCurricularesDeclaranteForm.value.aclaracionesObservaciones;
     const newItem = this.datosCurricularesDeclaranteForm.value.escolaridad;

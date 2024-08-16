@@ -81,8 +81,8 @@
 
     <div class="boton-agregar" *ngIf="escolaridad.length && !editMode">
       <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-      <button mat-raised-button color="primary" (click)="saveItem()">
-        GUARDAR CAMBIOS
+      <button mat-raised-button color="primary" (click)="editItem(i)">
+        GUARDAR -CAMBIOS--
       </button>
       <button mat-raised-button color="primary" (click)="addItem()">AGREGAR ESCOLARIDAD</button>
     </div>
