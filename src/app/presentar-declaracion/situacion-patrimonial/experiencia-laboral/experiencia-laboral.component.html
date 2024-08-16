@@ -179,6 +179,10 @@
         class="boton-agregar"
         *ngIf="(experiencia.length > 0 && experiencia.length < 5 && !editMode) || experienciaLaboralForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="saveItems()">
+        GUARDAR CAMBIOS
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR EXPERIENCIA</button>
       </div>
     </div>
