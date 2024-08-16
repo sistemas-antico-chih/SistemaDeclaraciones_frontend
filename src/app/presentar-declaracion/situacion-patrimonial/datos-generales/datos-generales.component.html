@@ -5,6 +5,7 @@
       [simplificada]="declaracionSimplificada"
       progress="4.5"
       type="{{ tipoDeclaracion }}"
+      (load)="mensaje()"
     ></section-header>
 
     <mat-divider></mat-divider>
@@ -32,7 +33,7 @@
       </mat-form-field>
     </div>
 
-    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm" (load)="mensaje()">
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm" >
       <div class="grid-3-col grid-margin">
         <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
           <mat-label>Nombre</mat-label>
