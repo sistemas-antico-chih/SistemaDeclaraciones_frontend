@@ -431,7 +431,7 @@ export class ExperienciaLaboralComponent implements OnInit {
     this.isLoading = false;
   }
 
-  saveItem() {
+  saveItems() {
     let experiencia = [...this.experiencia];
     const aclaracionesObservaciones = this.experienciaLaboralForm.value.aclaracionesObservaciones;
     this.isLoading = true;
