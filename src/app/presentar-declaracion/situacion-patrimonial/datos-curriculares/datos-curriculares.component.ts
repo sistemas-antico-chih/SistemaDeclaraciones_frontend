@@ -299,6 +299,29 @@ export class DatosCurricularesComponent implements OnInit {
     this.isLoading = false;
   }
 
+  saveItems() {
+    console.log("llegaa");
+    let escolaridad = [...this.escolaridad];
+    
+    const aclaracionesObservaciones = this.datosCurricularesDeclaranteForm.value.aclaracionesObservaciones;
+    /*const newItem = this.datosCurricularesDeclaranteForm.value.escolaridad;
+
+    if (this.editIndex === null) {
+      escolaridad = [...escolaridad, newItem];
+    } else {
+      escolaridad[this.editIndex] = newItem;
+    }*/
+
+    this.isLoading = true;
+
+    this.saveInfo({
+      escolaridad,
+      aclaracionesObservaciones,
+    });
+
+    this.isLoading = false;
+  }
+
   setAclaraciones(aclaraciones?: string) {
     this.datosCurricularesDeclaranteForm.get('aclaracionesObservaciones').patchValue(aclaraciones || null);
     this.aclaracionesText = aclaraciones || null;
