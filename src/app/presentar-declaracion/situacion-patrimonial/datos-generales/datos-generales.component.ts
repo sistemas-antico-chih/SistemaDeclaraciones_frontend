@@ -67,16 +67,7 @@ export class DatosGeneralesComponent implements OnInit {
     this.getUserDataQuery();
   }
 
-  mensaje() {
-    console.log("llegaa")
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Guuuaardar cambios',
-        message: '',
-        trueText: 'Guuaardar',
-        falseText: 'Caancelar',
-      },
-    });
+  
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -269,7 +260,18 @@ export class DatosGeneralesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    mensaje() {
+      console.log("llegaa")
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Guuuaardar cambios',
+          message: '',
+          trueText: 'Guuaardar',
+          falseText: 'Caancelar',
+        },
+      });
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
