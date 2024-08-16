@@ -67,15 +67,6 @@ export class DatosGeneralesComponent implements OnInit {
     this.getUserDataQuery();
   }
 
-  
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.saveInfo();
-      }
-    });
-  }
-
   confirmSaveInfo() {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
@@ -261,7 +252,6 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    mensaje() {
       console.log("llegaa")
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
@@ -270,6 +260,11 @@ export class DatosGeneralesComponent implements OnInit {
           trueText: 'Guuaardar',
           falseText: 'Caancelar',
         },
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.saveInfo();
+        }
       });
   }
 
