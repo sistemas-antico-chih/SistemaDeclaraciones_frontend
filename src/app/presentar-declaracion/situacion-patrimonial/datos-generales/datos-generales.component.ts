@@ -47,7 +47,7 @@ export class DatosGeneralesComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  confirmSaveInfo2() {
+  mensaje() {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: 'Guuuaardar cambios',
