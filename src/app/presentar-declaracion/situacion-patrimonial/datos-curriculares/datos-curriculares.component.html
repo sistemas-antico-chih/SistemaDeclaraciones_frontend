@@ -168,6 +168,10 @@
 
       <mat-grid-list *ngIf="!aclaraciones" cols="15" rowHeight="100px">
         <mat-grid-tile class="content-left" colspan="15">
+          <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+          <button mat-raised-button color="primary" [disabled]="datosCurricularesDeclaranteForm.invalid || isLoading">
+            GUARDAR CAMBIOS
+          </button>
           <button mat-raised-button type="button" class="text-primary" (click)="toggleAclaraciones(true)">
             AGREGAR ACLARACIONES / OBSERVACIONES
           </button>

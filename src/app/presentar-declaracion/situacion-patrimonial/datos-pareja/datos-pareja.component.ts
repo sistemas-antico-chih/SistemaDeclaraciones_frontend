@@ -424,6 +424,14 @@ export class DatosParejaComponent implements OnInit {
   }
 
   async ngOnInit() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Guarde la información de cada sección',
+        //message: '',
+        trueText: 'Aceptar',
+        falseText: '',
+      },
+    });
     this.getUserInfo();
   }
 

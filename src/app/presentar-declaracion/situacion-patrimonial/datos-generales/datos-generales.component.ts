@@ -254,17 +254,12 @@ export class DatosGeneralesComponent implements OnInit {
   ngOnInit(): void {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          title: 'Guarde la información en cada sección',
+          title: 'Guarde la información de cada sección',
           //message: '',
           trueText: 'Aceptar',
           falseText: '',
         },
       });
-      /*dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.saveInfo();
-        }
-      });*/
   }
 
   openSnackBar(message: string, action: string = null) {

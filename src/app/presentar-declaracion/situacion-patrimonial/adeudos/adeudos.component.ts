@@ -227,7 +227,16 @@ export class AdeudosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Guarde la información de cada sección',
+        //message: '',
+        trueText: 'Aceptar',
+        falseText: '',
+      },
+    });
+}
 
   noDebts() {
     this.saveInfo({ ninguno: true });

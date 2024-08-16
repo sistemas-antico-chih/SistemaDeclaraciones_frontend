@@ -249,7 +249,16 @@ export class ClientesPrincipalesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Guarde la información de cada sección',
+        //message: '',
+        trueText: 'Aceptar',
+        falseText: '',
+      },
+    });
+}
 
   noClients() {
     this.saveInfo({ ninguno: true });

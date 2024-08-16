@@ -226,7 +226,16 @@ export class FideicomisosComponent implements OnInit {
     return result;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Guarde la información de cada sección',
+        //message: '',
+        trueText: 'Aceptar',
+        falseText: '',
+      },
+    });
+}
 
   noExperience() {
     this.saveInfo({ ninguno: true });
