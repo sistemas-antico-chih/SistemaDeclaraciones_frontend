@@ -78,12 +78,12 @@
       </div>
       <p class="vertical-margin-25">{{ aclaracionesText }}</p>
     </div>
-
-    <div class="boton-agregar" *ngIf="escolaridad.length && !editMode">
-      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      
+    <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
       <button mat-raised-button color="primary" (click)="saveItem()">
         GUARDAR -CAMBIOS--
       </button>
+    <div class="boton-agregar" *ngIf="escolaridad.length && !editMode">
       <button mat-raised-button color="primary" (click)="addItem()">AGREGAR ESCOLARIDAD</button>
     </div>
 
