@@ -18,12 +18,7 @@
       anteriores.
     </p>
 
-    <div class="boton-agregar">
-    <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-    <button mat-raised-button color="primary" (click)="checkPartner()">
-      GUARDAR CAMBIOS
-    </button>
-  </div>
+    
     <!-- Botones iniciales -->
     <div *ngIf="!editMode && !datosParejaForm.value.ninguno && !pareja">
       <mat-grid-list cols="2" rowHeight="150px">
@@ -302,6 +297,13 @@
       </div>
     </div>
 
+    <div class="boton-agregar">
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkPartner()">
+        GUARDAR CAMBIOS
+      </button>
+    </div>
+        
     <!-- Formulario -->
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosParejaForm" [ngClass]="{ hidden: !editMode }">
       <mat-divider></mat-divider>
