@@ -428,7 +428,8 @@ export class DatosParejaComponent implements OnInit {
   }
 
   checkPartner(){
-      if (this.datosParejaForm?.get('ninguno')===false){
+    const form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
+      if (form.nombre !== null){
         console.log("llegaaa!!");
         const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
         this.isLoading = true;
