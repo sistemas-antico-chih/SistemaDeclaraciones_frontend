@@ -18,7 +18,7 @@ import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Paises from '@static/catalogos/paises.json';
 import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json';
 import Sector from '@static/catalogos/sector.json';
@@ -34,7 +34,7 @@ import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 })
 export class DatosParejaComponent implements OnInit {
   aclaraciones = false;
-
+  datosPareja:DatosPareja[]=[];
   datosParejaForm: FormGroup;
   editMode = false;
   estado: Catalogo = null;
@@ -254,10 +254,7 @@ export class DatosParejaComponent implements OnInit {
   radioChange(event:any) {
     this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
-    console.log(this.active)
     if (this.active == false) {
-      console.log("llega extranjero!!");
-      console.log(this.active)
       this.datosParejaForm.get("rfc").setValidators([Validators.required]);
       this.datosParejaForm.get("rfc").enable();
       this.datosParejaForm.get("rfc").updateValueAndValidity();
@@ -265,17 +262,12 @@ export class DatosParejaComponent implements OnInit {
       this.datosParejaForm.get("curp").enable();
       this.datosParejaForm.get("curp").updateValueAndValidity();
     } else {
-      console.log("llega TRUE!!");
-      console.log(this.active)
       this.datosParejaForm.get("rfc").clearValidators();
       this.datosParejaForm.get("rfc").updateValueAndValidity();
       this.datosParejaForm.get("rfc").disable();
-      
       this.datosParejaForm.get("curp").clearValidators();
       this.datosParejaForm.get("curp").updateValueAndValidity();
       this.datosParejaForm.get("curp").disable();
-      
-      //rfc: new FormControl({value: '', disabled:true})
     }
     console.log("Requerido", this.datosParejaForm.errors);
   }
@@ -435,6 +427,33 @@ export class DatosParejaComponent implements OnInit {
     this.getUserInfo();
   }
 
+  checkPartner(){
+      
+      const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo(this.finalForm);
+      /*this.saveInfo({
+        tipoOperacion: this.datosParejaForm.value.tipoOperacion,
+        ninguno: this.datosParejaForm.value.tipoOperacion,
+        nombre: this.datosParejaForm.value.tipoOperacion,
+        primerApellido:,
+        segundoApellido:,
+        fechaNacimiento:,
+        rfc:,
+        relacionConDeclarante:,
+        ciudadanoExtranjero:,
+        curp:,
+        esDependienteEconomico:,
+        habitaDomicilioDeclarante
+        aclaracionesObservaciones,
+      });*/
+      this.isLoading = false;
+  }
+
+  noPartner(){
+    this.saveInfo({ninguno:true})
+  }
+
   noCouple() {
     this.saveInfo({ ninguno: true });
   }
@@ -475,7 +494,6 @@ export class DatosParejaComponent implements OnInit {
   async saveInfo(form: DatosPareja) {
     try {
       this.isLoading = true;
-
       const declaracion = {
         datosPareja: form,
       };

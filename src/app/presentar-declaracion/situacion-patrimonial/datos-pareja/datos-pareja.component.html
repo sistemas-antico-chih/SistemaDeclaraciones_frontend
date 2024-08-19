@@ -1,10 +1,7 @@
 <div class="section-main-container">
   <mat-card class="form-card">
-    <section-header
-      section="I. Declaración de situación patrimonial"
-      progress="27"
-      type="{{ tipoDeclaracion }}"
-    ></section-header>
+    <section-header section="I. Declaración de situación patrimonial" progress="27"
+      type="{{ tipoDeclaracion }}"></section-header>
 
     <mat-divider></mat-divider>
 
@@ -150,7 +147,7 @@
                   Nivel:
                   <span class="resaltar">{{
                     pareja.actividadLaboralSectorPublico.nivelOrdenGobierno | replace: '_':' '
-                  }}</span>
+                    }}</span>
                 </p>
               </div>
               <div class="paragraph-flex">
@@ -159,7 +156,7 @@
                   Ámbito:
                   <span class="resaltar">{{
                     pareja.actividadLaboralSectorPublico.ambitoPublico | replace: '_':' '
-                  }}</span>
+                    }}</span>
                 </p>
               </div>
               <div class="paragraph-flex double-row">
@@ -244,7 +241,7 @@
                   Fecha de ingreso:
                   <span class="size-16">{{
                     pareja.actividadLaboralSectorPrivadoOtro?.fechaIngreso | date: 'dd/MM/yyyy'
-                  }}</span>
+                    }}</span>
                 </p>
               </div>
 
@@ -290,9 +287,14 @@
           <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
           <button mat-button color="primary" (click)="editMode = true">Modificar</button>
           <button mat-button color="primary" (click)="removeItem()">Eliminar</button>
+          <button mat-button color="primary" (click)="checkPartner()">Guardar</button>
         </mat-card-actions>
       </mat-card>
 
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="noPartner()">
+        GUARDAR CAMBIOS
+      </button>
       <div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PAREJA</button>
       </div>
@@ -328,13 +330,8 @@
             <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
               <mat-label>Primer Apellido</mat-label>
               <mat-icon matPrefix class="no-public">person</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="primerApellido"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="primerApellido"
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.nombre }}" appearance="fill">
               <mat-label>Segundo Apellido</mat-label>
@@ -346,15 +343,8 @@
           <div class="grid-2-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.fechaNacimiento }}" appearance="fill">
               <mat-label>Fecha de Nacimiento</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerNacimiento"
-                [min]="minDatePareja"
-                [max]="maxDate"
-                formControlName="fechaNacimiento"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput [matDatepicker]="pickerNacimiento"
+                [min]="minDatePareja" [max]="maxDate" formControlName="fechaNacimiento" required />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerNacimiento">
               </mat-datepicker-toggle>
@@ -371,72 +361,44 @@
             </mat-form-field>
           </div>
 
-          <div class="grid-3-col grid-margin" >
-            <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill"
-            >
+          <div class="grid-3-col grid-margin">
+            <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill">
               <mat-label>RFC</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                #input_rfc
-                type="text"
-                minlength="12"
-                maxlength="13"
-                formControlName="rfc"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput #input_rfc type="text" minlength="12" maxlength="13"
+                formControlName="rfc" required />
               <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             </mat-form-field>
 
-            <mat-radio-group
-              matTooltip="{{ tooltipData.ciudadanoExtranjero }}"
-              class="checkbox"
-              formControlName="ciudadanoExtranjero"
-              (change)="radioChange($event.value)"
-              [(ngModel)]="ciudadanoExtranjero"
-            >
+            <mat-radio-group matTooltip="{{ tooltipData.ciudadanoExtranjero }}" class="checkbox"
+              formControlName="ciudadanoExtranjero" (change)="radioChange($event.value)"
+              [(ngModel)]="ciudadanoExtranjero">
               <p class="question double-col"><span class="no-public-inline"></span> ¿Es ciudadano extranjero?</p>
               <mat-radio-button [value]="true">Sí</mat-radio-button>
               <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
-            
+
 
             <div class="hidden"></div>
-            <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill"  
-            >
+            <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill">
               <mat-label>CURP</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                #input_curp
-                maxlength="18"
-                type="text"
-                formControlName="curp"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput #input_curp maxlength="18" type="text"
+                formControlName="curp" required />
               <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             </mat-form-field>
           </div>
-          
+
           <div class="grid-2-col grid-margin">
-            <mat-radio-group
-              matTooltip="{{ tooltipData.dependienteEconomico }}"
-              class="checkbox"
-              formControlName="esDependienteEconomico"
-            >
+            <mat-radio-group matTooltip="{{ tooltipData.dependienteEconomico }}" class="checkbox"
+              formControlName="esDependienteEconomico">
               <p class="question double-col"><span class="no-public-inline"></span> ¿Es dependiente económico?</p>
               <mat-radio-button [value]="true">Sí</mat-radio-button>
               <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
 
-            <mat-radio-group
-              matTooltip="{{ tooltipData.domicilioDependiente }}"
-              class="checkbox"
-              formControlName="habitaDomicilioDeclarante"
-              #input_domicilio_declarante
-            >
+            <mat-radio-group matTooltip="{{ tooltipData.domicilioDependiente }}" class="checkbox"
+              formControlName="habitaDomicilioDeclarante" #input_domicilio_declarante>
               <p class="question double-col">
                 <span class="no-public-inline"></span> ¿Habita en el domicilio del declarante?
               </p>
@@ -471,41 +433,24 @@
               <mat-form-field appearance="fill">
                 <mat-label>Número Exterior</mat-label>
                 <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  type="text"
-                  formControlName="numeroExterior"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="numeroExterior"
+                  required />
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile colspan="3">
               <mat-form-field appearance="fill">
                 <mat-label>Número Interior</mat-label>
                 <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  #input_ni
-                  type="text"
-                  formControlName="numeroInterior"
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput #input_ni type="text"
+                  formControlName="numeroInterior" />
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile colspan="3">
               <mat-form-field appearance="fill">
                 <mat-label>Código Postal</mat-label>
                 <mat-icon matPrefix class="no-public">markunread_mailbox</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  #input_cp
-                  maxlength="5"
-                  type="text"
-                  formControlName="codigoPostal"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput #input_cp maxlength="5" type="text"
+                  formControlName="codigoPostal" required />
                 <mat-hint align="end">{{ input_cp.value?.length || 0 }}/5</mat-hint>
               </mat-form-field>
             </mat-grid-tile>
@@ -536,24 +481,14 @@
               <mat-form-field appearance="fill">
                 <mat-label>Colonia</mat-label>
                 <mat-icon matPrefix class="no-public">location_city</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  #input_localidad
-                  type="text"
-                  formControlName="coloniaLocalidad"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput #input_localidad type="text"
+                  formControlName="coloniaLocalidad" required />
               </mat-form-field>
             </mat-grid-tile>
           </mat-grid-list>
 
-          <mat-grid-list
-            *ngIf="tipoDomicilio === 'EXTRANJERO'"
-            cols="15"
-            rowHeight="100px"
-            formGroupName="domicilioExtranjero"
-          >
+          <mat-grid-list *ngIf="tipoDomicilio === 'EXTRANJERO'" cols="15" rowHeight="100px"
+            formGroupName="domicilioExtranjero">
             <mat-grid-tile colspan="6">
               <mat-form-field appearance="fill">
                 <mat-label>Calle</mat-label>
@@ -565,41 +500,24 @@
               <mat-form-field appearance="fill">
                 <mat-label>Numero Exterior</mat-label>
                 <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  type="text"
-                  formControlName="numeroExterior"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="numeroExterior"
+                  required />
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile colspan="3">
               <mat-form-field appearance="fill">
                 <mat-label>Numero Interior</mat-label>
                 <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  #input_ni
-                  type="text"
-                  formControlName="numeroInterior"
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput #input_ni type="text"
+                  formControlName="numeroInterior" />
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile colspan="3">
               <mat-form-field appearance="fill">
                 <mat-label>Código Postal</mat-label>
                 <mat-icon matPrefix class="no-public">markunread_mailbox</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  #input_cp
-                  maxlength="5"
-                  type="text"
-                  formControlName="codigoPostal"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput #input_cp maxlength="5" type="text"
+                  formControlName="codigoPostal" required />
                 <mat-hint align="end">{{ input_cp.value?.length || 0 }}/5</mat-hint>
               </mat-form-field>
             </mat-grid-tile>
@@ -619,28 +537,16 @@
               <mat-form-field appearance="fill">
                 <mat-label>Estado/Provincia</mat-label>
                 <mat-icon matPrefix class="no-public">public</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  #input_ep
-                  type="text"
-                  formControlName="estadoProvincia"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput #input_ep type="text"
+                  formControlName="estadoProvincia" required />
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile colspan="5">
               <mat-form-field appearance="fill">
                 <mat-label>Ciudad/Localidad</mat-label>
                 <mat-icon matPrefix class="no-public">beenhere</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  #input_cl
-                  type="text"
-                  formControlName="ciudadLocalidad"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput #input_cl type="text"
+                  formControlName="ciudadLocalidad" required />
               </mat-form-field>
             </mat-grid-tile>
           </mat-grid-list>
@@ -658,29 +564,17 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field
-              appearance="fill"
-              class="double-col"
-              [ngClass]="{ hidden: datosParejaForm.value.actividadLaboral?.clave !== 'OTR' }"
-            >
+            <mat-form-field appearance="fill" class="double-col"
+              [ngClass]="{ hidden: datosParejaForm.value.actividadLaboral?.clave !== 'OTR' }">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">star</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                #otroActividadLaboral
-                matInput
-                type="text"
-                minlength="2"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" #otroActividadLaboral matInput type="text" minlength="2"
+                required />
             </mat-form-field>
           </div>
           <!-- Publico -->
-          <div
-            class="grid-2-col grid-margin"
-            *ngIf="datosParejaForm.value.actividadLaboral?.clave === 'PUB'"
-            formGroupName="actividadLaboralSectorPublico"
-          >
+          <div class="grid-2-col grid-margin" *ngIf="datosParejaForm.value.actividadLaboral?.clave === 'PUB'"
+            formGroupName="actividadLaboralSectorPublico">
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.nivelOrdenGobierno }}" appearance="fill">
               <mat-label>Nivel/Orden de Gobierno </mat-label>
               <mat-icon matPrefix class="no-public">aspect_ratio</mat-icon>
@@ -702,61 +596,34 @@
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.nombreEntePublico }}" appearance="fill">
               <mat-label>Nombre del ente Público/Nombre de la empresa, sociedad o asociación</mat-label>
               <mat-icon matPrefix class="no-public">dns</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="nombreEntePublico"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombreEntePublico"
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.areaAdscripcion }}" appearance="fill">
               <mat-label>Área de Adscripción/Área</mat-label>
               <mat-icon matPrefix class="no-public">wb_iridescent</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="areaAdscripcion"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="areaAdscripcion"
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.empleoCargoComision }}" appearance="fill">
               <mat-label>Empleo, cargo o comisión</mat-label>
               <mat-icon matPrefix class="no-public">work</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="empleoCargoComision"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="empleoCargoComision"
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.especifiqueFuncionPrincipal }}" appearance="fill">
               <mat-label>Especifique función principal</mat-label>
               <mat-icon matPrefix class="no-public">speaker_notes</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="funcionPrincipal"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="funcionPrincipal"
+                required />
             </mat-form-field>
 
             <div class="grid-2-col" formGroupName="salarioMensualNeto">
               <mat-form-field matTooltip="{{ tooltipData.sectorPublico.salarioMensualNeto }}" appearance="fill">
                 <mat-label>Salario Mensual Neto</mat-label>
                 <mat-icon matPrefix class="no-public">account_balance_wallet</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  type="number"
-                  formControlName="valor"
-                  min="0"
-                  pattern="\d+"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0"
+                  pattern="\d+" required />
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Tipo de Moneda</mat-label>
@@ -771,15 +638,8 @@
 
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.fechaIngreso }}" appearance="fill">
               <mat-label>Fecha de ingreso al empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerPublicIngreso"
-                [min]="minDate"
-                [max]="maxDate"
-                formControlName="fechaIngreso"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput [matDatepicker]="pickerPublicIngreso" [min]="minDate"
+                [max]="maxDate" formControlName="fechaIngreso" required />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerPublicIngreso">
               </mat-datepicker-toggle>
@@ -787,69 +647,39 @@
             </mat-form-field>
           </div>
           <!-- otro y privado -->
-          <div
-            class="grid-2-col grid-margin"
-            [ngClass]="{
+          <div class="grid-2-col grid-margin" [ngClass]="{
               hidden: !(
                 datosParejaForm.value.actividadLaboral?.clave === 'PRI' ||
                 datosParejaForm.value.actividadLaboral?.clave === 'OTR'
               )
-            }"
-            formGroupName="actividadLaboralSectorPrivadoOtro"
-          >
-            <mat-form-field
-              matTooltip="{{ tooltipData.sectorPrivado.nombreEmpresaSociedadAsociacion }}"
-              appearance="fill"
-            >
+            }" formGroupName="actividadLaboralSectorPrivadoOtro">
+            <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.nombreEmpresaSociedadAsociacion }}"
+              appearance="fill">
               <mat-label>Nombre de la empresa, sociedad o asociación</mat-label>
               <mat-icon matPrefix class="no-public">speaker_notes</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="nombreEmpresaSociedadAsociacion"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput type="text"
+                formControlName="nombreEmpresaSociedadAsociacion" required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.rfc }}" appearance="fill">
               <mat-label>RFC</mat-label>
               <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                #input_rfc_empresa
-                type="text"
-                formControlName="rfc"
-                minlength="12"
-                maxlength="13"
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput #input_rfc_empresa type="text" formControlName="rfc"
+                minlength="12" maxlength="13" />
               <mat-hint align="end">{{ input_rfc_empresa.value?.length || 0 }}/12</mat-hint>
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.empleoCargoComision }}" appearance="fill">
               <mat-label>Empleo, cargo o comisión</mat-label>
               <mat-icon matPrefix class="no-public">work</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="empleoCargoComision"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="empleoCargoComision"
+                required />
             </mat-form-field>
 
             <div class="grid-2-col" formGroupName="salarioMensualNeto">
               <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.salarioMensualNeto }}" appearance="fill">
                 <mat-label>Salario Mensual Neto</mat-label>
                 <mat-icon matPrefix class="no-public">account_balance_wallet</mat-icon>
-                <input
-                  [errorStateMatcher]="errorMatcher"
-                  matInput
-                  type="number"
-                  formControlName="valor"
-                  min="0"
-                  pattern="\d+"
-                  required
-                />
+                <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0"
+                  pattern="\d+" required />
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Tipo de Moneda</mat-label>
@@ -864,25 +694,15 @@
 
             <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.fechaIngreso }}" appearance="fill">
               <mat-label>Fecha de ingreso al empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerOtroIngreso"
-                [min]="minDate"
-                [max]="maxDate"
-                formControlName="fechaIngreso"
-                required
-              />
+              <input [errorStateMatcher]="errorMatcher" matInput [matDatepicker]="pickerOtroIngreso" [min]="minDate"
+                [max]="maxDate" formControlName="fechaIngreso" required />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerOtroIngreso">
               </mat-datepicker-toggle>
               <mat-datepicker #pickerOtroIngreso></mat-datepicker>
             </mat-form-field>
-            <mat-radio-group
-              matTooltip="{{ tooltipData.sectorPrivado.proveedorContratistaGobierno }}"
-              class="checkbox"
-              formControlName="proveedorContratistaGobierno"
-            >
+            <mat-radio-group matTooltip="{{ tooltipData.sectorPrivado.proveedorContratistaGobierno }}" class="checkbox"
+              formControlName="proveedorContratistaGobierno">
               <p class="question"><span class="no-public-inline"></span> ¿Es proveedor o contratista de gobierno?</p>
               <mat-radio-button [value]="true">Sí</mat-radio-button>
               <mat-radio-button [value]="false">No</mat-radio-button>
@@ -896,10 +716,8 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field
-              appearance="fill"
-              [ngClass]="{ hidden: datosParejaForm.value.actividadLaboralSectorPrivadoOtro?.sector?.clave !== 'OTRO' }"
-            >
+            <mat-form-field appearance="fill"
+              [ngClass]="{ hidden: datosParejaForm.value.actividadLaboralSectorPrivadoOtro?.sector?.clave !== 'OTRO' }">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">assistant</mat-icon>
               <input [errorStateMatcher]="errorMatcher" #otroSector matInput type="text" required />
@@ -918,19 +736,11 @@
             <button mat-raised-button color="primary" (click)="toggleAclaraciones(false)">CANCELAR</button>
           </div>
 
-          <mat-form-field
-            matTooltip="{{ tooltipData.aclaracionesObservaciones }}"
-            appearance="fill"
-            class="grid-margin"
-          >
+          <mat-form-field matTooltip="{{ tooltipData.aclaracionesObservaciones }}" appearance="fill"
+            class="grid-margin">
             <mat-icon matPrefix class="aclaraciones-no-public">speaker_notes</mat-icon>
-            <textarea
-              maxlength="500"
-              [errorStateMatcher]="errorMatcher"
-              matInput
-              formControlName="aclaracionesObservaciones"
-              rows="10"
-            ></textarea>
+            <textarea maxlength="500" [errorStateMatcher]="errorMatcher" matInput
+              formControlName="aclaracionesObservaciones" rows="10"></textarea>
           </mat-form-field>
         </div>
 
@@ -939,11 +749,8 @@
           <button mat-raised-button color="primary" type="button" (click)="datosParejaForm.reset()">
             LIMPIAR FORMULARIO
           </button>
-          <button
-            mat-raised-button
-            color="primary"
-            [disabled]="datosParejaForm.invalid || !inputsAreValid() || isLoading"
-          >
+          <button mat-raised-button color="primary"
+            [disabled]="datosParejaForm.invalid || !inputsAreValid() || isLoading">
             GUARDAR CAMBIOS
           </button>
         </div>
