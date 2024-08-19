@@ -433,6 +433,7 @@ export class DatosParejaComponent implements OnInit {
         console.log("llegaaa!!");
         const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
         this.isLoading = true;
+        this.saveInfo({tipoOperacion: "AGREGAR"});   
         this.saveInfo(this.finalForm);
         this.saveInfo(aclaracionesObservaciones);
         this.isLoading = false;
