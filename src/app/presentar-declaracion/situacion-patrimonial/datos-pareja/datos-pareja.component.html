@@ -290,7 +290,8 @@
           <!--<button mat-button color="primary" (click)="checkPartner()">Guardar</button>-->
         </mat-card-actions>
       </mat-card>
-      <div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">
+      <!--<div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">-->
+      <div class="boton-agregar" *ngIf="!editMode"></div>
         <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
         <button mat-raised-button color="primary" (click)="checkPartner()">
           GUARDAR CAMBIOS
