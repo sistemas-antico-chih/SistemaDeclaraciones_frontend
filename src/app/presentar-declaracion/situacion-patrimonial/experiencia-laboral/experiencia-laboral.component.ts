@@ -340,10 +340,13 @@ export class ExperienciaLaboralComponent implements OnInit {
   }
 
   checkItems() {
+    console.log("checkItems")
     let experiencia = [...this.experiencia];
-    if (experiencia.length = 0) {
-      this.noExperience();
+    if (experiencia.length === 0) {
+      console.log("ninguno: true")
+      this.saveInfo({ninguno: true});
     } else {
+      console.log("guarda -> saveInfo ")
       const aclaracionesObservaciones = this.experienciaLaboralForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo({
