@@ -18,6 +18,12 @@
       anteriores.
     </p>
 
+    <div class="boton-agregar">
+    <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+    <button mat-raised-button color="primary" (click)="checkPartner()">
+      GUARDAR CAMBIOS
+    </button>
+  </div>
     <!-- Botones iniciales -->
     <div *ngIf="!editMode && !datosParejaForm.value.ninguno && !pareja">
       <mat-grid-list cols="2" rowHeight="150px">
@@ -290,11 +296,7 @@
           <!--<button mat-button color="primary" (click)="checkPartner()">Guardar</button>-->
         </mat-card-actions>
       </mat-card>
-      <div class="boton-agregar"></div>
-      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-      <button mat-raised-button color="primary" (click)="checkPartner()">
-        GUARDAR CAMBIOS
-      </button>
+
       <div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PAREJA</button>
       </div>
