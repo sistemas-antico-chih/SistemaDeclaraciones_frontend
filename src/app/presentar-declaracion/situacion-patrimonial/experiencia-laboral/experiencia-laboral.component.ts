@@ -57,11 +57,11 @@ export class ExperienciaLaboralComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   ahora: any;
-	deshabilitar: any; 
-	fechaIngreso: string;
+  deshabilitar: any;
+  fechaIngreso: string;
 
   constructor(
     private apollo: Apollo,
@@ -155,10 +155,10 @@ export class ExperienciaLaboralComponent implements OnInit {
         areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        fechaIngreso: [null, [Validators.required, 
-          ]],
-        fechaEgreso: [null, [Validators.required, 
-          ]],
+        fechaIngreso: [null, [Validators.required,
+        ]],
+        fechaEgreso: [null, [Validators.required,
+        ]],
         ubicacion: [null, [Validators.required]],
         nombreEmpresaSociedadAsociacion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         rfc: [
@@ -174,8 +174,8 @@ export class ExperienciaLaboralComponent implements OnInit {
         sector: [null, [Validators.required]],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-    },{
-      validator: this.validarFechas ("experiencia.fechaIngreso", "experiencia.fechaEgreso")
+    }, {
+      validator: this.validarFechas("experiencia.fechaIngreso", "experiencia.fechaEgreso")
     });
 
     //this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
@@ -188,23 +188,23 @@ export class ExperienciaLaboralComponent implements OnInit {
     });
   }
 
-  validarFechas(fechaIngreso: string, fechaEgreso:string){
-    return (formGroup: FormGroup) =>{
-      const fingreso=formGroup.get(fechaIngreso);
-      const fegreso=formGroup.get(fechaEgreso);
-      if(fegreso.errors && !fegreso.errors.validarFechas){
+  validarFechas(fechaIngreso: string, fechaEgreso: string) {
+    return (formGroup: FormGroup) => {
+      const fingreso = formGroup.get(fechaIngreso);
+      const fegreso = formGroup.get(fechaEgreso);
+      if (fegreso.errors && !fegreso.errors.validarFechas) {
         return;
       }
 
-      if(Date.parse(fingreso.value) >= Date.parse(fegreso.value)){
-        fegreso.setErrors({validarFechas:true});
+      if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
+        fegreso.setErrors({ validarFechas: true });
       }
-      else{
+      else {
         fegreso.setErrors(null);
       }
     };
   }
- 
+
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.experiencia[index]);
@@ -337,7 +337,22 @@ export class ExperienciaLaboralComponent implements OnInit {
         falseText: '',
       },
     });
-}
+  }
+
+  checkItems() {
+    let experiencia = [...this.experiencia];
+    if (experiencia.length = 0) {
+      this.noExperience();
+    } else {
+      const aclaracionesObservaciones = this.experienciaLaboralForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        experiencia,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 
   noExperience() {
     this.saveInfo({ ninguno: true });
