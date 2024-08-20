@@ -188,6 +188,7 @@ export const lastDatosParejaQuery = gql`
     lastDeclaracion {
       _id
       datosPareja {
+        tipoOperacion
         ninguno
         nombre
         primerApellido
