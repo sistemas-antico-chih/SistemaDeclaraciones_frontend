@@ -426,45 +426,7 @@ export class DatosParejaComponent implements OnInit {
     });
     this.getUserInfo();
   }
-
-  checkPartner(){
-    let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    //console.log("llega 1");
-    //console
-    //let tipo_operacion=
-    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
-    let algo = this.datosParejaForm.get('tipoOperacion').get('domicilioMexico').get('numeroInterior')
-    console.log("algo: "+algo);
-    
-    //console.log("llega 2");
-    //console.log("tipoOperacion "+tipo_operacion)
-      if (form.nombre !== null){
-        const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
-        this.isLoading = true;
-        this.saveInfo(this.finalForm);
-        this.saveInfo(aclaracionesObservaciones);
-        this.isLoading = false;
-      }else{
-        console.log("else");
-        this.saveInfo({ninguno:true})
-      } 
-      /*this.saveInfo({
-        tipoOperacion: this.datosParejaForm.value.tipoOperacion,
-        ninguno: this.datosParejaForm.value.tipoOperacion,
-        nombre: this.datosParejaForm.value.tipoOperacion,
-        primerApellido:,
-        segundoApellido:,
-        fechaNacimiento:,
-        rfc:,
-        relacionConDeclarante:,
-        ciudadanoExtranjero:,
-        curp:,
-        esDependienteEconomico:,
-        habitaDomicilioDeclarante
-        aclaracionesObservaciones,
-      });*/
-  }
-
+  
   noCouple() {
     this.saveInfo({ ninguno: true });
   }
@@ -593,4 +555,28 @@ export class DatosParejaComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkPartner(){
+    let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
+    //console.log("llega 1");
+    //console
+    //let tipo_operacion=
+    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    let algo = this.datosParejaForm.get('domicilioMexico').get('numeroInterior')
+    console.log("algo: "+algo);
+    
+    //console.log("llega 2");
+    //console.log("tipoOperacion "+tipo_operacion)
+      if (form.nombre !== null){
+        const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
+        this.isLoading = true;
+        this.saveInfo(this.finalForm);
+        this.saveInfo(aclaracionesObservaciones);
+        this.isLoading = false;
+      }else{
+        console.log("else");
+        this.saveInfo({ninguno:true})
+      } 
+  }
+
 }

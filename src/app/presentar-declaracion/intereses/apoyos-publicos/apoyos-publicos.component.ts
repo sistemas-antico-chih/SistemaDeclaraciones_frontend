@@ -13,7 +13,7 @@ import { Apoyo, Apoyos, DeclaracionOutput, LastDeclaracionOutput } from '@models
 import { findOption } from '@utils/utils';
 
 import beneficiarioPrograma from '@static/catalogos/beneficiariosPrograma.json';
-import NivelGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import TiposApoyo from '@static/catalogos/tipoApoyo.json';
 import RecepcionApoyo from '@static/catalogos/formaRecepcion.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';

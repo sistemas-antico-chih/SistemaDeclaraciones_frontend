@@ -30,7 +30,7 @@ import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Paises from '@static/catalogos/paises.json';
 import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 import Sector from '@static/catalogos/sector.json';
