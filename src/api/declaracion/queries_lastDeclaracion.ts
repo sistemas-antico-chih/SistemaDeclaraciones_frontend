@@ -270,6 +270,7 @@ export const lastDatosDependientesEconomicosQuery = gql`
       datosDependientesEconomicos {
         ninguno
         dependienteEconomico {
+          tipoOperacion
           nombre
           primerApellido
           segundoApellido

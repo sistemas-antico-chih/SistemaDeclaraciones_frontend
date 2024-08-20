@@ -8,18 +8,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { 
-  datosDependientesEconomicosMutation, 
+import {
+  datosDependientesEconomicosMutation,
   datosDependientesEconomicosQuery,
   lastDatosDependientesEconomicosQuery
 } from '@api/declaracion';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { 
-  Catalogo, 
-  DependienteEconomico, 
-  DatosDependientesEconomicos, 
+import {
+  Catalogo,
+  DependienteEconomico,
+  DatosDependientesEconomicos,
   DeclaracionOutput,
   LastDeclaracionOutput
 } from '@models/declaracion';
@@ -85,7 +85,7 @@ export class DatosDependienteComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes, this.dia);
 
   hidden: string = 'false';
-  
+
   extranjero: boolean;
   active: boolean;
 
@@ -272,7 +272,7 @@ export class DatosDependienteComponent implements OnInit {
     });
   }
 
-  radioChange(event:any) {
+  radioChange(event: any) {
     //console.log("llega a radioChange")
     this.hidden = event;
     this.active = this.datosDependientesEconomicosForm.get('dependienteEconomico.extranjero').value;
@@ -292,11 +292,11 @@ export class DatosDependienteComponent implements OnInit {
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").clearValidators();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").disable();
-      
+
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").clearValidators();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").disable();
-      
+
       //rfc: new FormControl({value: '', disabled:true})
     }
     console.log("Requerido", this.datosDependientesEconomicosForm.errors);
@@ -467,7 +467,22 @@ export class DatosDependienteComponent implements OnInit {
         falseText: '',
       },
     });
-}
+  }
+
+  checkItems(){
+    let dependienteEconomico = [...this.dependienteEconomico];
+    if (dependienteEconomico.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      const aclaracionesObservaciones = this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        dependienteEconomico,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 
   noDependent() {
     this.saveInfo({ ninguno: true });
