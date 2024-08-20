@@ -493,4 +493,22 @@ export class PrestamosTercerosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let prestamo = [...this.prestamo];
+    if (prestamo.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < prestamo.length; i++) {
+        prestamo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        prestamo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }

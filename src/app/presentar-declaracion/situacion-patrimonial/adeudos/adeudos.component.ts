@@ -369,4 +369,22 @@ export class AdeudosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let adeudo = [...this.adeudo];
+    if (adeudo.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < adeudo.length; i++) {
+        adeudo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.adeudosPasivosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        adeudo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }

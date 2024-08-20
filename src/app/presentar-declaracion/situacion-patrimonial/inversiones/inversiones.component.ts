@@ -421,6 +421,25 @@ export class InversionesComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let inversion = [...this.inversion];
+    if (inversion.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < inversion.length; i++) {
+        inversion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.inversionesCuentasValoresForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        inversion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
 }
 function item(item: any, arg1: (any: any) => any) {
   throw new Error('Function not implemented.');
