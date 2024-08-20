@@ -466,6 +466,7 @@ export class DatosParejaComponent implements OnInit {
 
   async saveInfo(form: DatosPareja) {
     try {
+      console.log("saveInfo");
       this.isLoading = true;
       const declaracion = {
         datosPareja: form,
@@ -488,6 +489,7 @@ export class DatosParejaComponent implements OnInit {
       this.isLoading = false;
       this.editMode = false;
 
+      console.log("llega");
       if (data?.declaracion.datosPareja) {
         this.setupForm(data?.declaracion.datosPareja);
       }
@@ -495,7 +497,7 @@ export class DatosParejaComponent implements OnInit {
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
-      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+      //this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
 
@@ -559,7 +561,7 @@ export class DatosParejaComponent implements OnInit {
   checkPartner(){
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
     this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
-    console.log(this.finalForm);
+    //console.log(this.finalForm);
       if (form.nombre !== null){
         const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
         this.isLoading = true;
