@@ -288,26 +288,17 @@
           <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
           <button mat-button color="primary" (click)="editMode = true">Modificar</button>
           <button mat-button color="primary" (click)="removeItem()">Eliminar</button>
-          <!--<button mat-button color="primary" (click)="checkPartner()">Guardar</button>-->
         </mat-card-actions>
       </mat-card>
 
       <!--<div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">-->
       <div class="boton-agregar" *ngIf="pareja || datosParejaForm.value.ninguno"  >
         <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-        <button mat-raised-button color="primary" (click)="checkPartner()">
+        <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: !editMode }"">
           -GUARDAR-
         </button>
       </div>
 
-      <!--
-      <div class="boton-agregar" *ngIf="!editMode ">
-        --AGREGAR OTRO BOTON DE GUARDAR CAMBIOS--
-        <button mat-raised-button color="primary" (click)="checkPartner()">
-          GUARDAR CAMBIOS
-        </button>
-      </div>
-       -->
     </div>
     <!-- Formulario -->
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosParejaForm" [ngClass]="{ hidden: !editMode }">
