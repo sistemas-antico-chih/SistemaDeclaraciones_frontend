@@ -470,10 +470,14 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   checkItems(){
+    //let depEconomico = this.datosDependientesEconomicosForm.get('dependienteEconomico');
     let dependienteEconomico = [...this.dependienteEconomico];
     if (dependienteEconomico.length === 0) {
       this.saveInfo({ninguno: true});
     } else {
+      for (let i = 0; i < dependienteEconomico.length; i++) {
+        dependienteEconomico[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
       const aclaracionesObservaciones = this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo({
