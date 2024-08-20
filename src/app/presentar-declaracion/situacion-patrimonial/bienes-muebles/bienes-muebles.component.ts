@@ -370,4 +370,22 @@ export class BienesMueblesComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let bienMueble = [...this.bienMueble];
+    if (bienMueble.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < bienMueble.length; i++) {
+        bienMueble[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.bienesMueblesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        bienMueble,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }
