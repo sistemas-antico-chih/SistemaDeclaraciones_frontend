@@ -411,4 +411,23 @@ export class VehiculosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  
+  checkItems(){
+    let vehiculo = [...this.vehiculo];
+    if (vehiculo.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < vehiculo.length; i++) {
+        vehiculo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.vehiculosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        vehiculo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }

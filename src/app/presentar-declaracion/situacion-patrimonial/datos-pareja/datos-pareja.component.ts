@@ -435,7 +435,7 @@ export class DatosParejaComponent implements OnInit {
     this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
     let algo = this.datosParejaForm.get('tipoOperacion').get('domicilioMexico').get('numeroInterior')
     console.log("algo: "+algo);
-    if(algo === null || algo ==='')
+    if(algo === null)
       algo = 0;
     //console.log("llega 2");
     //console.log("tipoOperacion "+tipo_operacion)
