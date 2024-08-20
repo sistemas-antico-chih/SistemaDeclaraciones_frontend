@@ -99,6 +99,10 @@
         class="boton-agregar grid-margin"
         *ngIf="(fideicomiso.length && !editMode) || fideicomisosForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        -GUARDAR-
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR FIDEICOMISO</button>
       </div>
     </div>

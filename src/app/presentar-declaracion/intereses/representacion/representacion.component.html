@@ -133,6 +133,10 @@
       </mat-card>
 
       <div class="boton-agregar" *ngIf="(representacion.length && !editMode) || representacionForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          -GUARDAR-
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar Representación</button>
       </div>
     </div>

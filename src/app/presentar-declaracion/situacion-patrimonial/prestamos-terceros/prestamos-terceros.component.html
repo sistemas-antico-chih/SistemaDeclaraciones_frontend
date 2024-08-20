@@ -230,6 +230,10 @@
         class="boton-agregar grid-margin"
         *ngIf="(prestamo?.length && !editMode) || prestamoComodatoForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        -GUARDAR-
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar préstamo o comodato</button>
       </div>
     </div>

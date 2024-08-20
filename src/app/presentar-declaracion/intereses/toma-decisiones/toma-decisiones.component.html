@@ -132,6 +132,10 @@
         class="boton-agregar"
         *ngIf="(participacion.length && !editMode) || participacionTomaDecisionesForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        -GUARDAR-
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PARTICIPACIÓN</button>
       </div>
     </div>
