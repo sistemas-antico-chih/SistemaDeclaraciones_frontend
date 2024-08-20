@@ -46,10 +46,6 @@
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
           <div class="boton-agregar">
-            <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-            <button mat-raised-button color="primary" (click)="checkItems()">
-              -GUARDAR-
-            </button>
             <button mat-raised-button color="primary" (click)="addItem()">Agregar Bien Inmueble</button>
           </div>
         </mat-grid-tile>
@@ -243,6 +239,10 @@
         </mat-card-actions>
       </mat-card>
       <div class="boton-agregar" *ngIf="(bienInmueble.length && !editMode) || bienesInmueblesForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          -GUARDAR-
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar Bien Inmueble</button>
       </div>
     </div>

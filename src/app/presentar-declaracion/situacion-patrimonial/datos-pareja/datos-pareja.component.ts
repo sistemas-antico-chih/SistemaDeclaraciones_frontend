@@ -466,7 +466,6 @@ export class DatosParejaComponent implements OnInit {
 
   async saveInfo(form: DatosPareja) {
     try {
-      console.log("saveInfo");
       this.isLoading = true;
       const declaracion = {
         datosPareja: form,
@@ -483,6 +482,7 @@ export class DatosParejaComponent implements OnInit {
         .toPromise();
 
       if (errors) {
+        console.log("llega error");
         throw errors;
       }
 
