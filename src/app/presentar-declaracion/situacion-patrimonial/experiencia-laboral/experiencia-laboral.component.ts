@@ -17,7 +17,7 @@ import { Experiencia, ExperienciaLaboral } from '@models/declaracion/experiencia
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import AmbitoSector from '@static/catalogos/ambitoSector.json';
 import Extranjero from '@static/catalogos/extranjero.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/experiencia-laboral';
 import { findOption } from '@utils/utils';
