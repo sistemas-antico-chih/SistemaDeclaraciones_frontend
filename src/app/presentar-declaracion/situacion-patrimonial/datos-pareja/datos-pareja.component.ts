@@ -429,11 +429,13 @@ export class DatosParejaComponent implements OnInit {
 
   checkPartner(){
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    console.log("llega 1");
-    console
-    let tipo_operacion=this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
-    console.log("llega 2");
-    console.log("tipoOperacion "+tipo_operacion)
+    //console.log("llega 1");
+    //console
+    //let tipo_operacion=
+    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    this.datosParejaForm.get('tipoOperacion').get('domicilioMexico').get('numeroInterior').setValue(0)
+    //console.log("llega 2");
+    //console.log("tipoOperacion "+tipo_operacion)
       if (form.nombre !== null){
         const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
         this.isLoading = true;

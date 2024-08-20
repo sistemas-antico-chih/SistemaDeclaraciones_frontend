@@ -354,6 +354,7 @@ export const lastBienesInmueblesQuery = gql`
       bienesInmuebles {
         ninguno
         bienInmueble {
+          tipoOperacion
           tipoInmueble {
             clave
             valor
@@ -439,6 +440,7 @@ export const lastVehiculosQuery = gql`
       vehiculos {
         ninguno
         vehiculo {
+          tipoOperacion
           tipoVehiculo {
             clave
             valor
@@ -500,6 +502,7 @@ export const lastBienesMueblesQuery = gql`
       bienesMuebles {
         ninguno
         bienMueble {
+          tipoOperacion
           titular {
             clave
             valor
@@ -551,6 +554,7 @@ export const lastInversionesCuentasValoresQuery = gql`
       inversionesCuentasValores {
         ninguno
         inversion {
+          tipoOperacion
           tipoInversion {
             clave
             valor
@@ -592,6 +596,7 @@ export const lastAdeudosPasivosQuery = gql`
       adeudosPasivos {
         ninguno
         adeudo {
+          tipoOperacion
           titular {
             clave
             valor
@@ -637,6 +642,7 @@ export const lastPrestamoComodatoQuery = gql`
       prestamoComodato {
         ninguno
         prestamo {
+          tipoOperacion
           tipoBien {
             inmueble {
               tipoInmueble {
@@ -781,6 +787,7 @@ export const lastApoyosQuery = gql`
       apoyos {
         ninguno
         apoyo {
+          tipoOperacion
           tipoPersona
           beneficiarioPrograma {
             clave

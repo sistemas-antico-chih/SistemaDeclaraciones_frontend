@@ -422,6 +422,24 @@ export class BienesInmueblesComponent implements OnInit {
     this.isLoading = false;
   }
 
+  checkItems(){
+    let bienInmueble = [...this.bienInmueble];
+    if (bienInmueble.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < bienInmueble.length; i++) {
+        bienInmueble[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        bienInmueble,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
   saveValoresDeclarante() {
 
     const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
