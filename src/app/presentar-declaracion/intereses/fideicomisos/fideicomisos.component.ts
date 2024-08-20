@@ -405,4 +405,22 @@ export class FideicomisosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let fideicomiso = [...this.fideicomiso];
+    if (fideicomiso.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < fideicomiso.length; i++) {
+        fideicomiso[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.fideicomisosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        fideicomiso,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }

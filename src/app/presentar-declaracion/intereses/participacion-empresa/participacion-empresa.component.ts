@@ -383,4 +383,22 @@ export class ParticipacionEmpresaComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let participacion = [...this.participacion];
+    if (participacion.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < participacion.length; i++) {
+        participacion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.participacionForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        participacion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }

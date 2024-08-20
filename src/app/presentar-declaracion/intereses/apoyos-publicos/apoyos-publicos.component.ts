@@ -321,4 +321,22 @@ export class ApoyosPublicosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let apoyo = [...this.apoyo];
+    if (apoyo.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < apoyo.length; i++) {
+        apoyo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.apoyosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        apoyo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }

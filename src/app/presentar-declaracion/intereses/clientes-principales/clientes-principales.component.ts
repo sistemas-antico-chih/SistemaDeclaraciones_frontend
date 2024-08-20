@@ -412,4 +412,22 @@ export class ClientesPrincipalesComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let cliente = [...this.cliente];
+    if (cliente.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < cliente.length; i++) {
+        cliente[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.clientesPrincipalesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        cliente,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }

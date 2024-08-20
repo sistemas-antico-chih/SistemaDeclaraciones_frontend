@@ -381,4 +381,22 @@ export class RepresentacionComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems(){
+    let representacion = [...this.representacion];
+    if (representacion.length === 0) {
+      this.saveInfo({ninguno: true});
+    } else {
+      for (let i = 0; i < representacion.length; i++) {
+        representacion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.representacionForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        representacion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 }
