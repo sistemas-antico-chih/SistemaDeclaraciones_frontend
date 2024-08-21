@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
@@ -252,9 +252,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      //let mensajes=["Recuerde Guardar la información del registro", "dando clic en el botón correspondiente"]
-      let br='</br>'
-      const dialogRef = this.dialog.open(DialogComponent, {
+      const dialogRef = this.dialog.open(DialogComponentMensaje, {
         data: {
           title: '',
           messageAviso: `Recuerde Guardar la información del registro,`,
