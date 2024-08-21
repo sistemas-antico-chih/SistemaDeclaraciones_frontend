@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { declaracionMutation, actividadAnualAnteriorQuery } from '@api/declaracion';
@@ -64,7 +64,7 @@ export class ServidorPublicoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -300,8 +300,8 @@ export class ServidorPublicoComponent implements OnInit {
         moneda: ['MXN'],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-    },{
-      validator: this.validarFechas ("fechaIngreso", "fechaConclusion")
+    }, {
+      validator: this.validarFechas("fechaIngreso", "fechaConclusion")
     });
 
     this.actividadAnualAnteriorForm.valueChanges
@@ -345,18 +345,18 @@ export class ServidorPublicoComponent implements OnInit {
       });
   }
 
-  validarFechas(fechaIngreso: string, fechaEgreso:string){
-    return (formGroup: FormGroup) =>{
-      const fingreso=formGroup.get(fechaIngreso);
-      const fegreso=formGroup.get(fechaEgreso);
-      if(fegreso.errors && !fegreso.errors.validarFechas){
+  validarFechas(fechaIngreso: string, fechaEgreso: string) {
+    return (formGroup: FormGroup) => {
+      const fingreso = formGroup.get(fechaIngreso);
+      const fegreso = formGroup.get(fechaEgreso);
+      if (fegreso.errors && !fegreso.errors.validarFechas) {
         return;
       }
 
-      if(Date.parse(fingreso.value) >= Date.parse(fegreso.value)){
-        fegreso.setErrors({validarFechas:true});
+      if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
+        fegreso.setErrors({ validarFechas: true });
       }
-      else{
+      else {
         fegreso.setErrors(null);
       }
     };
@@ -542,15 +542,16 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {

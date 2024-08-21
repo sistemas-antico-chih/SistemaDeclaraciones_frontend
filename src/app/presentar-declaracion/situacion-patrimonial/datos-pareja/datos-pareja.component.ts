@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosParejaMutation, datosParejaQuery, lastDatosParejaQuery } from '@api/declaracion';
@@ -34,7 +34,7 @@ import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 })
 export class DatosParejaComponent implements OnInit {
   aclaraciones = false;
-  datosPareja:DatosPareja[]=[];
+  datosPareja: DatosPareja[] = [];
   datosParejaForm: FormGroup;
   editMode = false;
   estado: Catalogo = null;
@@ -69,9 +69,9 @@ export class DatosParejaComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth();
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
   hidden: string = 'false';
-  
+
   ciudadanoExtranjero: boolean;
   active: boolean;
 
@@ -251,7 +251,7 @@ export class DatosParejaComponent implements OnInit {
     });
   }
 
-  radioChange(event:any) {
+  radioChange(event: any) {
     this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
     if (this.active == false) {
@@ -271,7 +271,7 @@ export class DatosParejaComponent implements OnInit {
     }
     console.log("Requerido", this.datosParejaForm.errors);
   }
-  
+
 
   fillForm(datosPareja: DatosPareja) {
     this.datosParejaForm.patchValue(datosPareja || {});
@@ -415,18 +415,18 @@ export class DatosParejaComponent implements OnInit {
     this.tipoDomicilio = value;
   }
 
-  async ngOnInit() {
-    const dialogRef = this.dialog.open(DialogComponent, {
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-    this.getUserInfo();
   }
-  
+
   noCouple() {
     this.saveInfo({ ninguno: true });
   }
@@ -558,20 +558,20 @@ export class DatosParejaComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkPartner(){
+  checkPartner() {
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
     this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
     //console.log(this.finalForm);
-      if (form.nombre !== null){
-        const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
-        this.isLoading = true;
-        this.saveInfo(this.finalForm);
-        this.saveInfo(aclaracionesObservaciones);
-        this.isLoading = false;
-      }else{
-        console.log("else");
-        this.saveInfo({ninguno:true})
-      } 
+    if (form.nombre !== null) {
+      const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo(this.finalForm);
+      this.saveInfo(aclaracionesObservaciones);
+      this.isLoading = false;
+    } else {
+      console.log("else");
+      this.saveInfo({ ninguno: true })
+    }
   }
 
 }

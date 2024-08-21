@@ -6,7 +6,7 @@ import { Apollo } from 'apollo-angular';
 import { adeudosPasivosMutation, adeudosPasivosQuery, lastAdeudosPasivosQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Adeudo, AdeudosPasivos, DeclaracionOutput, MexicoExtranjero, LastDeclaracionOutput, } from '@models/declaracion';
@@ -62,7 +62,7 @@ export class AdeudosComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -228,15 +228,16 @@ export class AdeudosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   noDebts() {
     this.saveInfo({ ninguno: true });
@@ -370,10 +371,10 @@ export class AdeudosComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkItems(){
+  checkItems() {
     let adeudo = [...this.adeudo];
     if (adeudo.length === 0) {
-      this.saveInfo({ninguno: true});
+      this.saveInfo({ ninguno: true });
     } else {
       for (let i = 0; i < adeudo.length; i++) {
         adeudo[i].tipoOperacion = 'SIN_CAMBIOS';

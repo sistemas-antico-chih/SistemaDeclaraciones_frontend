@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { fideicomisosMutation, fideicomisosQuery, lastFideicomisosQuery } from '@api/declaracion';
@@ -227,15 +227,16 @@ export class FideicomisosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   noExperience() {
     this.saveInfo({ ninguno: true });
@@ -406,10 +407,10 @@ export class FideicomisosComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkItems(){
+  checkItems() {
     let fideicomiso = [...this.fideicomiso];
     if (fideicomiso.length === 0) {
-      this.saveInfo({ninguno: true});
+      this.saveInfo({ ninguno: true });
     } else {
       for (let i = 0; i < fideicomiso.length; i++) {
         fideicomiso[i].tipoOperacion = 'SIN_CAMBIOS';

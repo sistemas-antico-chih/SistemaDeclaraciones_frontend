@@ -6,7 +6,7 @@ import { Apollo } from 'apollo-angular';
 import { bienesInmueblesMutation, bienesInmueblesQuery, lastBienesInmueblesQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -68,7 +68,7 @@ export class BienesInmueblesComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   valores: ValorDeclarante[] = [];
 
@@ -282,15 +282,16 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   noProperty() {
     this.saveInfo({ ninguno: true });
@@ -326,7 +327,7 @@ export class BienesInmueblesComponent implements OnInit {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
 
-        let array : any =[];
+        let array: any = [];
         array = this.deleteValoresDeclarante(bienInmueble);
         let valores = array;
 
@@ -407,8 +408,8 @@ export class BienesInmueblesComponent implements OnInit {
 
     this.isLoading = true;
 
-    if (bandera){
-      let array : any =[];
+    if (bandera) {
+      let array: any = [];
       array = this.updateValoresDeclarante(bienInmueble);
       valores = array;
     }
@@ -422,10 +423,10 @@ export class BienesInmueblesComponent implements OnInit {
     this.isLoading = false;
   }
 
-  checkItems(){
+  checkItems() {
     let bienInmueble = [...this.bienInmueble];
     if (bienInmueble.length === 0) {
-      this.saveInfo({ninguno: true});
+      this.saveInfo({ ninguno: true });
     } else {
       for (let i = 0; i < bienInmueble.length; i++) {
         bienInmueble[i].tipoOperacion = 'SIN_CAMBIOS';

@@ -6,7 +6,7 @@ import { MatSelect } from '@angular/material/select';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { clientesPrincipalesMutation, clientesPrincipalesQuery, lastClientesPrincipalesQuery } from '@api/declaracion';
@@ -250,15 +250,16 @@ export class ClientesPrincipalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   noClients() {
     this.saveInfo({ ninguno: true });
@@ -413,10 +414,10 @@ export class ClientesPrincipalesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkItems(){
+  checkItems() {
     let cliente = [...this.cliente];
     if (cliente.length === 0) {
-      this.saveInfo({ninguno: true});
+      this.saveInfo({ ninguno: true });
     } else {
       for (let i = 0; i < cliente.length; i++) {
         cliente[i].tipoOperacion = 'SIN_CAMBIOS';

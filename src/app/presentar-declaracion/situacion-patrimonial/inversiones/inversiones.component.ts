@@ -3,14 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { 
-  inversionesCuentasValoresMutation, 
+import {
+  inversionesCuentasValoresMutation,
   inversionesCuentasValoresQuery,
   lastInversionesCuentasValoresQuery
 } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoInversion from '@static/catalogos/tipoInversion.json';
@@ -71,8 +71,8 @@ export class InversionesComponent implements OnInit {
   subTipoOrganizacionesCatalogo = SubTipoInversionOrganizaciones;
   subTipoSegurosCatalogo = SubTipoInversionSeguros;
   subTipoValoresCatalogo = SubTipoInversionValores;
-  
-  
+
+
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
   formaPagoCatalogo = FormaPago;
@@ -107,7 +107,7 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm.reset();
     this.editMode = true;
     this.editIndex = null;
-    console.log("subTipoInversion: "+this.subTipoAforesCatalogo);
+    console.log("subTipoInversion: " + this.subTipoAforesCatalogo);
   }
 
   localizacionChanged(value: string) {
@@ -271,15 +271,16 @@ export class InversionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   noInvestments() {
     this.saveInfo({ ninguno: true });
@@ -422,10 +423,10 @@ export class InversionesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkItems(){
+  checkItems() {
     let inversion = [...this.inversion];
     if (inversion.length === 0) {
-      this.saveInfo({ninguno: true});
+      this.saveInfo({ ninguno: true });
     } else {
       for (let i = 0; i < inversion.length; i++) {
         inversion[i].tipoOperacion = 'SIN_CAMBIOS';

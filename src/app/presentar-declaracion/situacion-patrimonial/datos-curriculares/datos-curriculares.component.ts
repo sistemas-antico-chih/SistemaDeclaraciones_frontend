@@ -7,18 +7,18 @@ import { Moment } from 'moment';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { 
-  datosCurricularesMutation, 
-  datosCurricularesDeclaranteQuery, 
-  lastDatosCurricularesDeclaranteQuery 
+import {
+  datosCurricularesMutation,
+  datosCurricularesDeclaranteQuery,
+  lastDatosCurricularesDeclaranteQuery
 } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { 
+import {
   DatosCurricularesDeclarante,
-  DeclaracionOutput, 
+  DeclaracionOutput,
   Escolaridad,
   LastDeclaracionOutput
 } from '@models/declaracion';
@@ -58,7 +58,7 @@ export class DatosCurricularesComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -200,15 +200,16 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {

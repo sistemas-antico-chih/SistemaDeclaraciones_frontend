@@ -27,6 +27,7 @@ import { ReplacePipe } from './pipes/replace.pipe';
   exports: [
     LoaderComponent,
     DialogComponent,
+    DialogComponentMensaje,
     FooterComponent,
     HeaderComponent,
     PaginatorComponent,

@@ -6,7 +6,7 @@ import { Apollo } from 'apollo-angular';
 import { prestamoComodatoMutation, prestamoComodatoQuery, lastPrestamoComodatoQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -342,15 +342,16 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   noLoans() {
     this.saveInfo({ ninguno: true });
@@ -494,10 +495,10 @@ export class PrestamosTercerosComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkItems(){
+  checkItems() {
     let prestamo = [...this.prestamo];
     if (prestamo.length === 0) {
-      this.saveInfo({ninguno: true});
+      this.saveInfo({ ninguno: true });
     } else {
       for (let i = 0; i < prestamo.length; i++) {
         prestamo[i].tipoOperacion = 'SIN_CAMBIOS';

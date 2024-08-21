@@ -3,14 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { 
-  participacionTomaDecisionesMutation, 
-  participacionTomaDecisionesQuery, 
+import {
+  participacionTomaDecisionesMutation,
+  participacionTomaDecisionesQuery,
   lastParticipacionTomaDecisionesQuery
 } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -23,11 +23,11 @@ import Estados from '@static/catalogos/estados.json';
 
 import { tooltipData } from '@static/tooltips/intereses/toma-descisiones';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
-import { 
-  DeclaracionOutput, 
-  ParticipacionTD, 
+import {
+  DeclaracionOutput,
+  ParticipacionTD,
   ParticipacionTomaDecisiones,
-  LastDeclaracionOutput 
+  LastDeclaracionOutput
 } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
@@ -67,7 +67,7 @@ export class TomaDecisionesComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -250,15 +250,16 @@ export class TomaDecisionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
-        title: 'Guarde la información de cada sección',
-        //message: '',
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        falseText: '',
+        //falseText: '',
       },
     });
-}
+  }
 
   noTomaDecisiones() {
     this.saveInfo({ ninguno: true });
@@ -400,10 +401,10 @@ export class TomaDecisionesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkItems(){
+  checkItems() {
     let participacion = [...this.participacion];
     if (participacion.length === 0) {
-      this.saveInfo({ninguno: true});
+      this.saveInfo({ ninguno: true });
     } else {
       for (let i = 0; i < participacion.length; i++) {
         participacion[i].tipoOperacion = 'SIN_CAMBIOS';
