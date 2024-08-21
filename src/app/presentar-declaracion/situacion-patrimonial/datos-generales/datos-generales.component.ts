@@ -253,10 +253,11 @@ export class DatosGeneralesComponent implements OnInit {
 
   ngOnInit(): void {
       //let mensajes=["Recuerde Guardar la información del registro", "dando clic en el botón correspondiente"]
+      let br='</br>'
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: '',
-          messageAviso: "REcuerda \\n guardar \\algo",
+          messageAviso: `REcu</br>erda \\n guardar ${br} algo`,
           trueText: 'Aceptar',
           //falseText: '',
         },
