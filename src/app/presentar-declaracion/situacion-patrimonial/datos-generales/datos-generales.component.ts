@@ -254,11 +254,11 @@ export class DatosGeneralesComponent implements OnInit {
   ngOnInit(): void {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          title: '\nGuarde la información de cada sección',
-          //message: '',
+          title: '<br>Guarde la información de cada sección',
+          message: 'Guarde la información',
           trueText: 'Aceptar',
           falseText: '',
-          fontSize: 44
+          setTextSize: 44
         },
       });
   }
