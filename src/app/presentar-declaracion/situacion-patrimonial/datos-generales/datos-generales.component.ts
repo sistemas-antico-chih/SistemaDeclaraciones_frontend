@@ -6,6 +6,7 @@ import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponentPrueba } from '@shared/dialog_prueba/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
@@ -252,13 +253,12 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      const dialogRef = this.dialog.open(DialogComponent, {
+      const dialogRef = this.dialog.open(DialogComponentPrueba, {
         data: {
-          title: '<br>Guarde la información de cada sección',
+          title: '\n Guarde la información de cada sección',
           message: 'Guarde la información',
           trueText: 'Aceptar',
           falseText: '',
-          setTextSize: 44
         },
       });
   }
