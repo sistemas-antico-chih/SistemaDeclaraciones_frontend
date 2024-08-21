@@ -3,8 +3,8 @@
   <p>{{ data.message }}</p>
 </div>
 <div mat-dialog-content class="cuerpo">
-  <p>{{ data.messageAviso }}</p>
-  <p>{{ data.messageAviso2 }}</p>
+  {{ data.messageAviso }}<br/>
+  {{ data.messageAviso2 }}
 </div>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close *ngIf="data.falseText">{{ data.falseText }}</button>
