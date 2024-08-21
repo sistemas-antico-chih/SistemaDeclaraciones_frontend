@@ -1,6 +1,9 @@
 <h1 mat-dialog-title>{{ data.title }}</h1>
 <div mat-dialog-content>
-  <p class="cuerpo">{{ data.message }}</p>
+  <p>{{ data.message }}</p>
+</div>
+<div mat-dialog-content>
+  <p class="cuerpo">{{ data.messageAviso }}</p>
 </div>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close *ngIf="data.falseText">{{ data.falseText }}</button>
