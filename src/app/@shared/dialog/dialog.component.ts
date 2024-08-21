@@ -5,6 +5,7 @@ export interface DialogData {
   title: string;
   message: string;
   messageAviso: string;
+  messageAviso2: string;
   trueText: string;
   falseText: string;
 }
