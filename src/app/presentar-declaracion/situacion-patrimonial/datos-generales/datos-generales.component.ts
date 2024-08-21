@@ -258,6 +258,7 @@ export class DatosGeneralesComponent implements OnInit {
           //message: '',
           trueText: 'Aceptar',
           falseText: '',
+          fontSize: 44
         },
       });
   }
