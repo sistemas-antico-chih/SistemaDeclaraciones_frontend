@@ -255,7 +255,7 @@ export class DatosGeneralesComponent implements OnInit {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: '',
-          messageAviso: 'Guarde la información',
+          messageAviso: 'Recuerde GUARDAR la información de la sección,\n dando clic en el botón de \'GUARDAR CAMBIOS\'',
           trueText: 'Aceptar',
           //falseText: '',
         },
