@@ -2,12 +2,6 @@
 <div mat-dialog-content>
   <p>{{ data.message }}</p>
 </div>
-<!--
-<div mat-dialog-content class="cuerpo">
-  {{ data.messageAviso }}<br/>
-  {{ data.messageAviso2 }}
-</div>
--->
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close *ngIf="data.falseText">{{ data.falseText }}</button>
   <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{ data.trueText }}</button>

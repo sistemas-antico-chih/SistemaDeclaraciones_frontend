@@ -1,7 +1,13 @@
 <h1 mat-dialog-title>{{ data.title }}</h1>
+<!--
 <div mat-dialog-content class="cuerpo">
   {{ data.messageAviso }}<br/>
   {{ data.messageAviso2 }}
+</div>
+-->
+<div mat-dialog-content class="cuerpo">
+  Recuerde Guardar la información del registro,<br/>
+  dando clic en el botón correspondiente.
 </div>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close *ngIf="data.falseText">{{ data.falseText }}</button>
