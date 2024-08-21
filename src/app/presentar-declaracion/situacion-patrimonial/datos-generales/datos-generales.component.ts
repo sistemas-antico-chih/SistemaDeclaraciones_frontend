@@ -257,7 +257,7 @@ export class DatosGeneralesComponent implements OnInit {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: '',
-          messageAviso: `REcu</br>erda \\n guardar ${br} algo`,
+          messageAviso: `REcu</br>er"+ "<br/>"+"  da \\n gua<br>rdar ${br}</br> alo`,
           trueText: 'Aceptar',
           //falseText: '',
         },
