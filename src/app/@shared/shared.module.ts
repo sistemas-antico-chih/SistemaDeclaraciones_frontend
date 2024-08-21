@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { LoaderComponent } from './loader/loader.component';
 
-import { DialogComponent } from './dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from './dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { PaginatorComponent } from './paginator/paginator.component';
@@ -17,6 +17,7 @@ import { ReplacePipe } from './pipes/replace.pipe';
   declarations: [
     LoaderComponent,
     DialogComponent,
+    DialogComponentMensaje,
     FooterComponent,
     HeaderComponent,
     PaginatorComponent,
