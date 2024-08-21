@@ -6,7 +6,7 @@ import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
-import { DialogComponentPrueba } from '@shared/dialog_prueba/dialog.component';
+import { DialogComponentPrueba } from '@shared/dialog_prueba/dialog_prueba.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
