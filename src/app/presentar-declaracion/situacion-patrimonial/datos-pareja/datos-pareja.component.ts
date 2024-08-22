@@ -73,6 +73,7 @@ export class DatosParejaComponent implements OnInit {
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
+    this.getUserInfo();
   }
 
   actividadLaboralChanged(value: any) {
@@ -515,7 +516,7 @@ export class DatosParejaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserInfo();
+    //this.getUserInfo();
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
