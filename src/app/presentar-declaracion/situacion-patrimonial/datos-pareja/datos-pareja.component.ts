@@ -558,7 +558,7 @@ export class DatosParejaComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  checkPartner() {
+  /*checkPartner() {
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
     this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
     //console.log(this.finalForm);
@@ -572,6 +572,6 @@ export class DatosParejaComponent implements OnInit {
       console.log("else");
       this.saveInfo({ ninguno: true })
     }
-  }
+  }*/
 
 }
