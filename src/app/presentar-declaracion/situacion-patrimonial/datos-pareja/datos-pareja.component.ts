@@ -276,7 +276,9 @@ export class DatosParejaComponent implements OnInit {
   }
 
   async getLastUserInfo() {
+    console.log("getLAs");
     try {
+      console.log("getLAsss1");
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
           query: lastDatosParejaQuery,
@@ -548,13 +550,13 @@ export class DatosParejaComponent implements OnInit {
     console.log("Requerido", this.datosParejaForm.errors);
   }
 
- /* checkPartner() {
+  checkPartner() {
     console.log("llega")
     //let form = JSON.parse(JSON.stringify(this.finalForm.value)); // Deep copy
     console.log("llega2")
     //this.finalForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
     console.log(this.finalForm);
-   /* if (form.nombre !== null) {
+    /*if (form.nombre !== null) {
       const aclaracionesObservaciones = this.finalForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo(this.finalForm);
@@ -563,9 +565,9 @@ export class DatosParejaComponent implements OnInit {
     } else {
       console.log("else");
       this.saveInfo({ ninguno: true })
-    }
+    }*/
       this.saveInfo({ ninguno: true })
-  }*/
+  }
 
   ngOnInit(): void {
     //this.getUserInfo();
