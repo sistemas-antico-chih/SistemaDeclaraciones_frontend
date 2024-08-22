@@ -53,6 +53,7 @@ export class DatosParejaComponent implements OnInit {
   monedasCatalogo = Monedas;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
+  tipoOperacionCatalogo = TipoOperacion;
 
   pareja: DatosPareja = null;
 
@@ -562,7 +563,7 @@ export class DatosParejaComponent implements OnInit {
       this.saveInfo({ ninguno: true })
     }
   }
-  
+
   ngOnInit(): void {
     //this.getUserInfo();
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
