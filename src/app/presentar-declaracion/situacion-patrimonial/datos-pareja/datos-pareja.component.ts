@@ -549,11 +549,13 @@ export class DatosParejaComponent implements OnInit {
   }
 
   checkPartner() {
-    let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
-    //console.log(this.finalForm);
+    console.log("llega")
+    let form = JSON.parse(JSON.stringify(this.finalForm.value)); // Deep copy
+    console.log("llega2")
+    this.finalForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    console.log(this.finalForm);
     if (form.nombre !== null) {
-      const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
+      const aclaracionesObservaciones = this.finalForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo(this.finalForm);
       this.saveInfo(aclaracionesObservaciones);
