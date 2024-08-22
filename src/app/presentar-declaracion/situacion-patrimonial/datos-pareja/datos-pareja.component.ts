@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
+import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosParejaMutation, datosParejaQuery, lastDatosParejaQuery } from '@api/declaracion';
@@ -24,7 +24,6 @@ import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json'
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
-import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -34,7 +33,7 @@ import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 })
 export class DatosParejaComponent implements OnInit {
   aclaraciones = false;
-  datosPareja: DatosPareja[] = [];
+
   datosParejaForm: FormGroup;
   editMode = false;
   estado: Catalogo = null;
@@ -53,7 +52,7 @@ export class DatosParejaComponent implements OnInit {
   monedasCatalogo = Monedas;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
-  tipoOperacionCatalogo = TipoOperacion;
+
   pareja: DatosPareja = null;
 
   tipoDeclaracion: string = null;
@@ -63,17 +62,6 @@ export class DatosParejaComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
-
-  minDatePareja = new Date(1940, 1, 1);
-  minDate = new Date(1960, 1, 1);
-  anio: number = new Date().getFullYear();
-  mes: number = new Date().getMonth();
-  dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes - 1, this.dia);
-  hidden: string = 'false';
-
-  ciudadanoExtranjero: boolean;
-  active: boolean;
 
   constructor(
     private apollo: Apollo,
@@ -128,7 +116,6 @@ export class DatosParejaComponent implements OnInit {
 
   createForm() {
     this.datosParejaForm = this.formBuilder.group({
-      tipoOperacion: [null, [Validators.required]],
       ninguno: [false],
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
@@ -143,7 +130,7 @@ export class DatosParejaComponent implements OnInit {
         ],
       ],
       relacionConDeclarante: [null, [Validators.required]],
-      ciudadanoExtranjero: [null, [Validators.required]],
+      ciudadanoExtranjero: [false, [Validators.required]],
       curp: [
         null,
         [
@@ -197,7 +184,7 @@ export class DatosParejaComponent implements OnInit {
           { disabled: true, value: null },
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
@@ -250,28 +237,6 @@ export class DatosParejaComponent implements OnInit {
       this.lugarDondeResideChanged(value);
     });
   }
-
-  radioChange(event: any) {
-    this.hidden = event;
-    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
-    if (this.active == false) {
-      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
-      this.datosParejaForm.get("rfc").enable();
-      this.datosParejaForm.get("rfc").updateValueAndValidity();
-      this.datosParejaForm.get("curp").setValidators([Validators.required]);
-      this.datosParejaForm.get("curp").enable();
-      this.datosParejaForm.get("curp").updateValueAndValidity();
-    } else {
-      this.datosParejaForm.get("rfc").clearValidators();
-      this.datosParejaForm.get("rfc").updateValueAndValidity();
-      this.datosParejaForm.get("rfc").disable();
-      this.datosParejaForm.get("curp").clearValidators();
-      this.datosParejaForm.get("curp").updateValueAndValidity();
-      this.datosParejaForm.get("curp").disable();
-    }
-    console.log("Requerido", this.datosParejaForm.errors);
-  }
-
 
   fillForm(datosPareja: DatosPareja) {
     this.datosParejaForm.patchValue(datosPareja || {});
@@ -344,7 +309,6 @@ export class DatosParejaComponent implements OnInit {
     }
   }
 
-
   get finalForm() {
     const form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
 
@@ -415,16 +379,8 @@ export class DatosParejaComponent implements OnInit {
     this.tipoDomicilio = value;
   }
 
-  ngOnInit(): void {
-    const dialogRef = this.dialog.open(DialogComponentMensaje, {
-      data: {
-        title: '',
-        messageAviso: `Recuerde Guardar la información del registro,`,
-        messageAviso2: `dando clic en el botón correspondiente`,
-        trueText: 'Aceptar',
-        //falseText: '',
-      },
-    });
+  async ngOnInit() {
+    this.getUserInfo();
   }
 
   noCouple() {
@@ -467,6 +423,7 @@ export class DatosParejaComponent implements OnInit {
   async saveInfo(form: DatosPareja) {
     try {
       this.isLoading = true;
+
       const declaracion = {
         datosPareja: form,
       };
@@ -482,14 +439,12 @@ export class DatosParejaComponent implements OnInit {
         .toPromise();
 
       if (errors) {
-        console.log("llega error");
         throw errors;
       }
 
       this.isLoading = false;
       this.editMode = false;
 
-      console.log("llega");
       if (data?.declaracion.datosPareja) {
         this.setupForm(data?.declaracion.datosPareja);
       }
@@ -497,7 +452,7 @@ export class DatosParejaComponent implements OnInit {
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
-      //this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
 
@@ -557,21 +512,4 @@ export class DatosParejaComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
-
-  /*checkPartner() {
-    let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
-    //console.log(this.finalForm);
-    if (form.nombre !== null) {
-      const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
-      this.isLoading = true;
-      this.saveInfo(this.finalForm);
-      this.saveInfo(aclaracionesObservaciones);
-      this.isLoading = false;
-    } else {
-      console.log("else");
-      this.saveInfo({ ninguno: true })
-    }
-  }*/
-
 }
