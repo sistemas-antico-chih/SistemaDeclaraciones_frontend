@@ -548,7 +548,7 @@ export class DatosParejaComponent implements OnInit {
     console.log("Requerido", this.datosParejaForm.errors);
   }
 
-  checkPartner() {
+ /* checkPartner() {
     console.log("llega")
     //let form = JSON.parse(JSON.stringify(this.finalForm.value)); // Deep copy
     console.log("llega2")
@@ -563,9 +563,9 @@ export class DatosParejaComponent implements OnInit {
     } else {
       console.log("else");
       this.saveInfo({ ninguno: true })
-    }*/
+    }
       this.saveInfo({ ninguno: true })
-  }
+  }*/
 
   ngOnInit(): void {
     //this.getUserInfo();
