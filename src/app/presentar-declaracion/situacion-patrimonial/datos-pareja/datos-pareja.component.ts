@@ -550,11 +550,11 @@ export class DatosParejaComponent implements OnInit {
 
   checkPartner() {
     console.log("llega")
-    let form = JSON.parse(JSON.stringify(this.finalForm.value)); // Deep copy
+    //let form = JSON.parse(JSON.stringify(this.finalForm.value)); // Deep copy
     console.log("llega2")
-    this.finalForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    //this.finalForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
     console.log(this.finalForm);
-    if (form.nombre !== null) {
+   /* if (form.nombre !== null) {
       const aclaracionesObservaciones = this.finalForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo(this.finalForm);
@@ -563,7 +563,8 @@ export class DatosParejaComponent implements OnInit {
     } else {
       console.log("else");
       this.saveInfo({ ninguno: true })
-    }
+    }*/
+      this.saveInfo({ ninguno: true })
   }
 
   ngOnInit(): void {
