@@ -294,6 +294,7 @@
       </mat-card>
 
       <div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">
+       <!-- <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: editMode }"></button> -->
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PAREJA</button>
       </div>
     </div>
@@ -366,21 +367,20 @@
                 matInput
                 #input_rfc
                 type="text"
+                minlength="12"
                 maxlength="13"
                 formControlName="rfc"
               />
               <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             </mat-form-field>
 
-            <mat-radio-group
-              matTooltip="{{ tooltipData.ciudadanoExtranjero }}"
-              class="checkbox"
-              formControlName="ciudadanoExtranjero"
-            >
-              <p class="question double-col"><span class="no-public-inline"></span> ¿Es ciudadano extranjero?</p>
-              <mat-radio-button [value]="true">Sí</mat-radio-button>
-              <mat-radio-button [value]="false">No</mat-radio-button>
-            </mat-radio-group>
+            <mat-radio-group matTooltip="{{ tooltipData.ciudadanoExtranjero }}" class="checkbox"
+                formControlName="ciudadanoExtranjero" (change)="radioChange($event.value)"
+                [(ngModel)]="ciudadanoExtranjero">
+                <p class="question double-col"><span class="no-public-inline"></span> ¿Es ciudadano extranjero?</p>
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
 
             <div class="hidden"></div>
             <mat-form-field matTooltip="{{ tooltipData.curp }}" appearance="fill">
@@ -749,13 +749,13 @@
 
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.fechaIngreso }}" appearance="fill">
               <mat-label>Fecha de ingreso al empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerPublicIngreso"
-                formControlName="fechaIngreso"
-                required
-              />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                matInput [matDatepicker]="pickerPublicIngreso" 
+                [min]="minDate"
+                [max]="maxDate" 
+                formControlName="fechaIngreso" 
+                required />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerPublicIngreso">
               </mat-datepicker-toggle>
