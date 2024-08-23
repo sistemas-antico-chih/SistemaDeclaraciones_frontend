@@ -545,7 +545,7 @@ export class DatosParejaComponent implements OnInit {
     }
     console.log("Requerido", this.datosParejaForm.errors);
   }
-  
+
   ngOnInit(): void {
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
@@ -560,10 +560,10 @@ export class DatosParejaComponent implements OnInit {
 
   checkPartner() {
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    this.finalForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
     //console.log(this.finalForm);
     if (form.nombre !== null) {
-      const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
+      const aclaracionesObservaciones = this.finalForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo(this.finalForm);
       this.saveInfo(aclaracionesObservaciones);
