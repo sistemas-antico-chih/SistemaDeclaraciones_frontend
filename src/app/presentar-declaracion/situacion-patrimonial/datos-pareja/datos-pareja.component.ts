@@ -74,6 +74,7 @@ export class DatosParejaComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   hidden: string = 'false';
+  ciudadanoExtranjero: boolean;
   active: boolean;
 
   constructor(
