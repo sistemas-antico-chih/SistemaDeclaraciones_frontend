@@ -560,18 +560,24 @@ export class DatosParejaComponent implements OnInit {
 
   checkPartner() {
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    //this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
-    //console.log(this.finalForm);
+    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    console.log(this.finalForm);
+    console.log();
+    console.log();
+    console.log(this.datosParejaForm);
+    console.log();
+    console.log();
+    console.log(form)
     if (form.nombre !== null) {
       const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
       this.isLoading = true;
-      //this.saveInfo(this.finalForm);
-      this.saveInfo({
+      this.saveInfo(this.finalForm);
+      /*this.saveInfo({
         tipoOperacion:"SIN_CAMBIOS",
         ninguno: false,
         nombre: "flaka",
         actividadLaboral:form.get('actividadLaboral')
-      })
+      })*/
       this.saveInfo(aclaracionesObservaciones);
       this.isLoading = false;
     } else {
