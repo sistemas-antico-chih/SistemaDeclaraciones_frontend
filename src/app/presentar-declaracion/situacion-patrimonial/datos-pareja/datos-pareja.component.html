@@ -295,13 +295,13 @@
 
       <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS
       <div class="boton-agregar" *ngIf="!editMode">
-        <button mat-raised-button color="primary" (click)="checkPartner()">
+        <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: editMode }">
           -GUARDAR-
         </button>
       </div>-->
 
       <div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">
-        <button mat-raised-button color="primary" (click)="checkPartner()">
+        <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: editMode }">
           -GUARDAR-
         </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PAREJA</button>
