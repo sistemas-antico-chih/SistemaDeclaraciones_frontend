@@ -566,7 +566,7 @@ export class DatosParejaComponent implements OnInit {
       const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo(this.finalForm);
-      this.saveInfo(aclaracionesObservaciones);
+      //this.saveInfo(aclaracionesObservaciones);
       this.isLoading = false;
     } else {
       this.saveInfo({ ninguno: true })
