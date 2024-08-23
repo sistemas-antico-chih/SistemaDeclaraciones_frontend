@@ -560,13 +560,13 @@ export class DatosParejaComponent implements OnInit {
 
   checkPartner() {
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    //this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
     //console.log(this.finalForm);
     if (form.nombre !== null) {
       const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
       let datpsPareja: FormGroup;
       datpsPareja={
-        tipoOperacion:"SIN_CAMBIOS",
+        //tipoOperacion:"SIN_CAMBIOS",
         ninguno: false,
         nombre: "flaka"
       }
