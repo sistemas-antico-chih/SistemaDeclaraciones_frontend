@@ -464,7 +464,7 @@ export class DatosParejaComponent implements OnInit {
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
-      //this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
 
@@ -545,7 +545,7 @@ export class DatosParejaComponent implements OnInit {
     }
     console.log("Requerido", this.datosParejaForm.errors);
   }
-
+  
   ngOnInit(): void {
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
