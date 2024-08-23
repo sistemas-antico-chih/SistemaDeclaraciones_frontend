@@ -83,7 +83,7 @@ export class DatosGeneralesComponent implements OnInit {
       }
     });
   }
-  
+
   createForm() {
     this.datosGeneralesForm = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
@@ -123,7 +123,7 @@ export class DatosGeneralesComponent implements OnInit {
       nacionalidad: [null, [Validators.required, Validators.pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/i)]], //solo letras, incluyendo acentos
       aclaracionesObservaciones: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
     });
-    
+
     const situacionPersonal = this.datosGeneralesForm.get('situacionPersonalEstadoCivil');
     situacionPersonal.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       const regimenMatrimonial = this.datosGeneralesForm.get('regimenMatrimonial');
@@ -159,7 +159,7 @@ export class DatosGeneralesComponent implements OnInit {
 
     this.datosGeneralesForm.patchValue({ ...dataUser } || {});
   }
-  
+
   async getLastUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -251,18 +251,6 @@ export class DatosGeneralesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-      const dialogRef = this.dialog.open(DialogComponentMensaje, {
-        data: {
-          title: '',
-          messageAviso: `Recuerde Guardar la información del registro,`,
-          messageAviso2: `dando clic en el botón correspondiente`,
-          trueText: 'Aceptar',
-          //falseText: '',
-        },
-      });
-  }
-
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
       duration: 5000,
@@ -325,6 +313,18 @@ export class DatosGeneralesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
   }
 }
 

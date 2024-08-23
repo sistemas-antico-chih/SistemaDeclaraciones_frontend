@@ -75,7 +75,7 @@ export class DatosParejaComponent implements OnInit {
 
   hidden: string = 'false';
   active: boolean;
-  
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -85,6 +85,7 @@ export class DatosParejaComponent implements OnInit {
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
+    this.getUserInfo();
   }
 
   actividadLaboralChanged(value: any) {
@@ -544,7 +545,15 @@ export class DatosParejaComponent implements OnInit {
     console.log("Requerido", this.datosParejaForm.errors);
   }
   
-  async ngOnInit() {
-    this.getUserInfo();
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
   }
 }
