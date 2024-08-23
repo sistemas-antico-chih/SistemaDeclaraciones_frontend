@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosParejaMutation, datosParejaQuery, lastDatosParejaQuery } from '@api/declaracion';
@@ -24,6 +24,8 @@ import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json'
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+
 
 @UntilDestroy()
 @Component({
@@ -52,6 +54,7 @@ export class DatosParejaComponent implements OnInit {
   monedasCatalogo = Monedas;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
+  tipoOperacionCatalogo = TipoOperacion;
 
   pareja: DatosPareja = null;
 
@@ -124,6 +127,7 @@ export class DatosParejaComponent implements OnInit {
 
   createForm() {
     this.datosParejaForm = this.formBuilder.group({
+      tipoOperacion: [null, [Validators.required]],
       ninguno: [false],
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
