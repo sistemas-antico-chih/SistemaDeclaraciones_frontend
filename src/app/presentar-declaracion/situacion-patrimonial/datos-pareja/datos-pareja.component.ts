@@ -569,7 +569,8 @@ export class DatosParejaComponent implements OnInit {
       this.saveInfo({
         tipoOperacion:"SIN_CAMBIOS",
         ninguno: false,
-        nombre: "flaka"
+        nombre: "flaka",
+        actividadLaboral:form.get('actividadLaboral')
       })
       this.saveInfo(aclaracionesObservaciones);
       this.isLoading = false;
