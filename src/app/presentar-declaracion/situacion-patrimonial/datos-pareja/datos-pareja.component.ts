@@ -72,8 +72,10 @@ export class DatosParejaComponent implements OnInit {
   mes: number = new Date().getMonth();
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
-  //hidden: string = 'false';
 
+  hidden: string = 'false';
+  active: boolean;
+  
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -391,10 +393,6 @@ export class DatosParejaComponent implements OnInit {
     this.tipoDomicilio = value;
   }
 
-  async ngOnInit() {
-    this.getUserInfo();
-  }
-
   noCouple() {
     this.saveInfo({ ninguno: true });
   }
@@ -523,5 +521,30 @@ export class DatosParejaComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  radioChange(event: any) {
+    this.hidden = event;
+    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
+    if (this.active == false) {
+      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").enable();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("curp").setValidators([Validators.required]);
+      this.datosParejaForm.get("curp").enable();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+    } else {
+      this.datosParejaForm.get("rfc").clearValidators();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").disable();
+      this.datosParejaForm.get("curp").clearValidators();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+      this.datosParejaForm.get("curp").disable();
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
+  }
+  
+  async ngOnInit() {
+    this.getUserInfo();
   }
 }
