@@ -464,7 +464,7 @@ export class DatosParejaComponent implements OnInit {
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
-      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+      //this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
 
@@ -569,7 +569,6 @@ export class DatosParejaComponent implements OnInit {
       this.saveInfo(aclaracionesObservaciones);
       this.isLoading = false;
     } else {
-      console.log("else");
       this.saveInfo({ ninguno: true })
     }
   }
