@@ -334,12 +334,13 @@
           <div class="grid-2-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.fechaNacimiento }}" appearance="fill">
               <mat-label>Fecha de Nacimiento</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerNacimiento"
-                formControlName="fechaNacimiento"
-                required
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                matInput [matDatepicker]="pickerNacimiento"
+                [min]="minDatePareja" 
+                [max]="maxDate" 
+                formControlName="fechaNacimiento" 
+                required 
               />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerNacimiento">
@@ -749,12 +750,13 @@
 
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.fechaIngreso }}" appearance="fill">
               <mat-label>Fecha de ingreso al empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerPublicIngreso"
-                formControlName="fechaIngreso"
-                required
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                matInput [matDatepicker]="pickerPublicIngreso" 
+                [min]="minDate"
+                [max]="maxDate" 
+                formControlName="fechaIngreso" 
+                required 
               />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerPublicIngreso">
@@ -839,12 +841,13 @@
 
             <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.fechaIngreso }}" appearance="fill">
               <mat-label>Fecha de ingreso al empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerOtroIngreso"
-                formControlName="fechaIngreso"
-                required
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                matInput [matDatepicker]="pickerOtroIngreso" 
+                [min]="minDate"
+                [max]="maxDate" 
+                formControlName="fechaIngreso" 
+                required 
               />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerOtroIngreso">
