@@ -464,7 +464,7 @@ export class DatosParejaComponent implements OnInit {
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
-      //this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
 
@@ -564,8 +564,15 @@ export class DatosParejaComponent implements OnInit {
     //console.log(this.finalForm);
     if (form.nombre !== null) {
       const aclaracionesObservaciones = this.datosParejaForm.value.aclaracionesObservaciones;
+      let datpsPareja: FormGroup;
+      datpsPareja={
+        tipoOperacion:"SIN_CAMBIOS",
+        ninguno: false,
+        nombre: "flaka"
+      }
       this.isLoading = true;
       //this.saveInfo(this.finalForm);
+      this.saveInfo(datpsPareja);
       this.saveInfo(aclaracionesObservaciones);
       this.isLoading = false;
     } else {
