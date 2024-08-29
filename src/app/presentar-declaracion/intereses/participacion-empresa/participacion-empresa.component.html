@@ -29,10 +29,6 @@
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
           <div class="boton-agregar">
-            <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-            <button mat-raised-button color="primary" (click)="checkItems()">
-              GUARDAR
-            </button>
             <button mat-raised-button color="primary" (click)="addItem()">Agregar participación</button>
           </div>
         </mat-grid-tile>
@@ -129,6 +125,10 @@
       </mat-card>
 
       <div class="boton-agregar" *ngIf="(participacion.length && !editMode) || participacionForm.value.ninguno">
+         <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+         <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PARTICIPACIÓN</button>
       </div>
     </div>
