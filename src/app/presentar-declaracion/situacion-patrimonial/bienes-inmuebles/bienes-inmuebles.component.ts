@@ -559,15 +559,15 @@ export class BienesInmueblesComponent implements OnInit {
     if (event === "NINGUNO"){
       console.log("llega true");
       //this.bienesInmueblesForm.patchValue({tercero: null});
-      this.bienesInmueblesForm.get("bienInmueble").get("tercero").setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("nombreRazonSocial").disable();
-      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("rfc").disable();
+      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("rfc").disable();
     }
     else{
       console.log("llega false");
       //this.bienesInmueblesForm.get('tercero').setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("nombreRazonSocial").enable();
-      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("rfc").enable();
+      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("rfc").enable();
     }
   }
 }
