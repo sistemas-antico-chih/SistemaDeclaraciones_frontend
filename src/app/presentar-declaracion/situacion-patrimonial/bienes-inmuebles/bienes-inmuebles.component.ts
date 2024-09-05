@@ -72,6 +72,10 @@ export class BienesInmueblesComponent implements OnInit {
 
   valores: ValorDeclarante[] = [];
 
+  hidden: string = 'false';
+  tipoPersona: boolean;
+  active: boolean;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -548,5 +552,12 @@ export class BienesInmueblesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  radioChange(event: any) {
+    console.log(event);
+    if (event === "NINGUNO"){
+      this.bienesInmueblesForm.get('tercero').setValue([]);
+    }
   }
 }
