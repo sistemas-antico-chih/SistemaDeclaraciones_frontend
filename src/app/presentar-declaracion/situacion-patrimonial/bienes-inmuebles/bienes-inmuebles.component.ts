@@ -555,16 +555,19 @@ export class BienesInmueblesComponent implements OnInit {
   radioChange(event: any) {
     console.log(event);
     //this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
-
+    console.log("llega *****");
+    //console.log(this.bienesInmueblesForm.get("bienInmueble.tercero"));
     if (event === "NINGUNO"){
       console.log("llega true");
       //this.bienesInmueblesForm.patchValue({tercero: null});
-      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("nombreRazonSocial").disable();
-      this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("rfc").disable();
+      //this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue("bienInmueble.tercero[0]");
+      console.log(this.bienesInmueblesForm.get("bienInmueble.transmisor"));
+      //this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("nombreRazonSocial").disable();
+      //this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("rfc").disable();
     }
     else{
       console.log("llega false");
+      console.log(this.bienesInmueblesForm.get("bienInmueble").get("transmisor"));
       //this.bienesInmueblesForm.get('tercero').setValue(null);
       this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("nombreRazonSocial").enable();
       this.bienesInmueblesForm.get("bienInmueble").get("transmisor").get("tercero").get("rfc").enable();
