@@ -298,12 +298,13 @@
           <div class="grid-3-col grid-margin" formGroupName="tercero">
             <mat-radio-group 
               matTooltip="{{ tooltipData.tercero }}" 
-              class="checkbox" 
+              class="tercero" 
               formControlName="tipoPersona"
               >
               <p class="question double-col">Tercero</p>
-              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Persona Física</mat-radio-button>
-              <mat-radio-button value="MORAL">Persona Moral</mat-radio-button>
+              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Física</mat-radio-button>
+              <mat-radio-button value="MORAL">Moral</mat-radio-button>
+              <mat-radio-button value="MORAL">Ninguno</mat-radio-button>
             </mat-radio-group>
             <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill">
               <mat-label>Nombre del Tercero o Terceros</mat-label>
