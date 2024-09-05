@@ -72,10 +72,6 @@ export class BienesInmueblesComponent implements OnInit {
 
   valores: ValorDeclarante[] = [];
 
-  hidden: string = 'false';
-  tipoPersona: boolean;
-  active: boolean;
-
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -556,17 +552,20 @@ export class BienesInmueblesComponent implements OnInit {
 
   radioChange(event: any) {
     console.log(event);
+    this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
+
     if (event === "NINGUNO"){
       console.log("llega true");
-      this.bienesInmueblesForm.controls.tercero.setValue(null);
-      this.bienesInmueblesForm.get("nombreRazonSocial").disable();
-      this.bienesInmueblesForm.get("rfc").disable();
+      //this.bienesInmueblesForm.patchValue({tercero: null});
+      this.bienesInmueblesForm.get("bienInmueble").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble").get("nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("bienInmueble").get("rfc").disable();
     }
     else{
       console.log("llega false");
       //this.bienesInmueblesForm.get('tercero').setValue(null);
-      this.bienesInmueblesForm.get("nombreRazonSocial").enable();
-      this.bienesInmueblesForm.get("rfc").enable();
+      this.bienesInmueblesForm.get("bienInmueble").get("nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("bienInmueble").get("rfc").enable();
     }
   }
 }
