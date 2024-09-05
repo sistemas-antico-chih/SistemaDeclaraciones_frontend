@@ -72,6 +72,8 @@ export class BienesInmueblesComponent implements OnInit {
 
   valores: ValorDeclarante[] = [];
 
+  tipoPersona: string;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
