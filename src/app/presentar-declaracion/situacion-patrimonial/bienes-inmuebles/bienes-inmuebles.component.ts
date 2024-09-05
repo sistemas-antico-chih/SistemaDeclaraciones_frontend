@@ -552,22 +552,22 @@ export class BienesInmueblesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  radioChange(event: any) {
-    console.log(event);
-    this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
+  radioChange(tipoPersona: any) {
+    console.log(tipoPersona);
+    //this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
 
-    if (event === "NINGUNO"){
+    if (tipoPersona === "NINGUNO"){
       console.log("llega true");
       //this.bienesInmueblesForm.patchValue({tercero: null});
-      this.bienesInmueblesForm.get("bienInmueble").setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble").get("nombreRazonSocial").disable();
-      this.bienesInmueblesForm.get("bienInmueble").get("rfc").disable();
+      this.bienesInmueblesForm.get("bienInmueble").get("tercero").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("rfc").disable();
     }
     else{
       console.log("llega false");
       //this.bienesInmueblesForm.get('tercero').setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble").get("nombreRazonSocial").enable();
-      this.bienesInmueblesForm.get("bienInmueble").get("rfc").enable();
+      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("bienInmueble").get("tercero").get("rfc").enable();
     }
   }
 }
