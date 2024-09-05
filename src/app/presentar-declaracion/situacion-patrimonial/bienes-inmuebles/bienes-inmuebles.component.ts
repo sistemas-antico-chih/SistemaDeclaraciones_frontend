@@ -552,11 +552,11 @@ export class BienesInmueblesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  radioChange(tipoPersona: any) {
-    console.log(tipoPersona);
+  radioChange(event: any) {
+    console.log(event);
     //this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
 
-    if (tipoPersona === "NINGUNO"){
+    if (event === "NINGUNO"){
       console.log("llega true");
       //this.bienesInmueblesForm.patchValue({tercero: null});
       this.bienesInmueblesForm.get("bienInmueble").get("tercero").setValue(null);
