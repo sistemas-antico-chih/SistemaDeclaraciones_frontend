@@ -16,5 +16,10 @@ h3 {
 }
 
 .tercero{
-  flex-direction: column;
+  display: -ms-inline-grid;
+  
+}
+
+.tercero mat-radio-button {
+  padding-right: 8PX;
 }
