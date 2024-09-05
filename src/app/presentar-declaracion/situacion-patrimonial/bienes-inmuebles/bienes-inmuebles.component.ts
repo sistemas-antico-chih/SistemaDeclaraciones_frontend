@@ -557,7 +557,14 @@ export class BienesInmueblesComponent implements OnInit {
   radioChange(event: any) {
     console.log(event);
     if (event === "NINGUNO"){
-      this.bienesInmueblesForm.get('tercero').setValue([]);
+      this.bienesInmueblesForm.get('tercero').setValue(null);
+      this.bienesInmueblesForm.get("nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("rfc").disable();
+    }
+    else{
+      //this.bienesInmueblesForm.get('tercero').setValue(null);
+      this.bienesInmueblesForm.get("nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("rfc").enable();
     }
   }
 }
