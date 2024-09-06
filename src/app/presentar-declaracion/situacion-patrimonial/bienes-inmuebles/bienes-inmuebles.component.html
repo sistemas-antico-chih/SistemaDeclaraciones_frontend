@@ -300,8 +300,7 @@
               matTooltip="{{ tooltipData.tercero }}" 
               class="tercero" 
               formControlName="tipoPersona"
-              (change)="radioChange($event.value)"
-              [(ngModel)]="tipoPersona">
+              (change)="radioChange($event.value)">
               <p class="question double-col">Copropiedad tipo persona de Tercero</p>
               <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Física</mat-radio-button>&nbsp;&nbsp;
               <mat-radio-button value="MORAL">Moral</mat-radio-button>&nbsp;&nbsp;
