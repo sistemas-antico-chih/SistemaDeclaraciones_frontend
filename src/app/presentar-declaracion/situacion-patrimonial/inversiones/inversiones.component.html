@@ -338,6 +338,18 @@
 
           <!-- Tercero -->
           <div class="grid-4-col grid-margin" formGroupName="tercero">
+            <mat-form-field matTooltip="{{ tooltipData.tercero }}" appearance="fill">
+              <mat-label>Persona Física o Moral</mat-label>
+              <mat-icon matPrefix>person</mat-icon>
+              <mat-select 
+                formControlName="tipoPersona"
+                (change)="radioChange($event.value)"
+                [(ngModel)]="tipoPersona">
+                <mat-option value="FISICA"> Física </mat-option>
+                <mat-option value="MORAL"> Moral </mat-option>
+                <mat-option value="NINGUNO"> Ninguno </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill" class="double-col">
               <mat-label>Nombre del Tercero o Terceros</mat-label>
               <mat-icon matPrefix>person</mat-icon>
@@ -356,14 +368,6 @@
                 maxlength="13"
               />
               <mat-hint align="end">{{ input_rfc_tercero.value?.length || 0 }}/13</mat-hint>
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.tercero }}" appearance="fill">
-              <mat-label>Persona Física o Moral</mat-label>
-              <mat-icon matPrefix>person</mat-icon>
-              <mat-select formControlName="tipoPersona">
-                <mat-option value="FISICA"> Física </mat-option>
-                <mat-option value="MORAL"> Moral </mat-option>
-              </mat-select>
             </mat-form-field>
           </div>
 

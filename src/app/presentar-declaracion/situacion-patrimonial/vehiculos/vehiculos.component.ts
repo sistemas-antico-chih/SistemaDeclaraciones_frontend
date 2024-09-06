@@ -69,6 +69,8 @@ export class VehiculosComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
+  tipoPersona: string;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -429,6 +431,17 @@ export class VehiculosComponent implements OnInit {
         aclaracionesObservaciones,
       });
       this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO"){
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").disable();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").disable();
+    }
+    else{
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").enable();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").enable();
     }
   }
 }

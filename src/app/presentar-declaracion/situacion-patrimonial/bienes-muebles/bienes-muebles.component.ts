@@ -59,6 +59,8 @@ export class BienesMueblesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
+  tipoPersona: String;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -387,6 +389,17 @@ export class BienesMueblesComponent implements OnInit {
         aclaracionesObservaciones,
       });
       this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO"){
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").disable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").disable();
+    }
+    else{
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").enable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").enable();
     }
   }
 }

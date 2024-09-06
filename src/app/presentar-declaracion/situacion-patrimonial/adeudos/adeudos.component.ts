@@ -64,6 +64,8 @@ export class AdeudosComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
+  tipoPersona: String
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -386,6 +388,17 @@ export class AdeudosComponent implements OnInit {
         aclaracionesObservaciones,
       });
       this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO"){
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").disable();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").disable();
+    }
+    else{
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").enable();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").enable();
     }
   }
 }

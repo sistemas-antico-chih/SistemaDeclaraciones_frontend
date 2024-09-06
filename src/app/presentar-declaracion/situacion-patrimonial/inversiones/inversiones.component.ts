@@ -90,6 +90,7 @@ export class InversionesComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  tipoPersona: String;
 
   constructor(
     private apollo: Apollo,
@@ -438,6 +439,17 @@ export class InversionesComponent implements OnInit {
         aclaracionesObservaciones,
       });
       this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO"){
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
+    }
+    else{
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").enable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").enable();
     }
   }
 
