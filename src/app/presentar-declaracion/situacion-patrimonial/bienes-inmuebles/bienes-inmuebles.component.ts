@@ -72,7 +72,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   valores: ValorDeclarante[] = [];
 
-  tipoPersonaTercero: string;
+  tipoPersona: string;
 
   constructor(
     private apollo: Apollo,
@@ -559,7 +559,7 @@ export class BienesInmueblesComponent implements OnInit {
     //console.log(this.bienesInmueblesForm.get("bienInmueble.tercero"));
     if (event === "NINGUNO"){
       console.log("llega true");
-      this.bienesInmueblesForm.get("bienInmueble.tercero").setValue(null);
+      //this.bienesInmueblesForm.get("bienInmueble.tercero").setValue(null);
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
     }
