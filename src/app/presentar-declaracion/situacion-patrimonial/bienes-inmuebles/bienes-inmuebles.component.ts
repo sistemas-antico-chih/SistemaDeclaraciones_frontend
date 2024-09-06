@@ -72,7 +72,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   valores: ValorDeclarante[] = [];
 
-  //tipoPersona: string;
+  tipoPersonaTercero: string;
 
   constructor(
     private apollo: Apollo,
