@@ -250,10 +250,12 @@ export class DialogElementsExampleDialog implements OnInit {
       return false;
     }
     if (this.declaracionesModificacionCompleta === 0 && (this.declaracionesIniciales - this.declaracionesFinales)>0){
+      console.log("llega creacion");
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
     else
+    console.log("llega false");
       return false;
   }
 
