@@ -242,6 +242,8 @@ export class DialogElementsExampleDialog implements OnInit {
         .toPromise();
       this.declaraciones = data.statsModif.counters.count || 0;
       this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
+      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
+      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
       //this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
       console.log("declaraciones: "+this.declaraciones);
       console.log("declaracionesModificacion: "+this.declaracionesModificacionCompleta);
@@ -280,8 +282,9 @@ export class DialogElementsExampleDialog implements OnInit {
         })
         .toPromise();
       this.declaraciones = data.statsModif.counters.count || 0;
-      //this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
       this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
+      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
+      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
     } catch (error) {
       console.log(error);
       return false;
