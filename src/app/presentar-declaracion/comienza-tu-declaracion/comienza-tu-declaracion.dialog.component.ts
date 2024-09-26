@@ -245,6 +245,8 @@ export class DialogElementsExampleDialog implements OnInit {
       //this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
       console.log("declaraciones: "+this.declaraciones);
       console.log("declaracionesModificacion: "+this.declaracionesModificacionCompleta);
+      console.log("declaracionesIniciales: "+this.declaracionesIniciales);
+      console.log("declaracionesFinales: "+this.declaracionesFinales);
     } catch (error) {
       console.log(error);
       return false;
