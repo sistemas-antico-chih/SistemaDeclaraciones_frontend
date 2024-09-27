@@ -9,7 +9,7 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import { Apollo } from 'apollo-angular';
-import {  DeclaracionOutput } from '@models/declaracion';
+import { DeclaracionOutput } from '@models/declaracion';
 import { datosGeneralesQuery } from '@api/declaracion';
 
 import gql from 'graphql-tag';
@@ -53,9 +53,9 @@ export class DialogElementsExampleDialog implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
- 
-  ngOnInit(): void {}
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  ngOnInit(): void { }
 
   constructor(
     private dialog: MatDialog,
@@ -68,18 +68,18 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   async closeDialog(route: string) {
-    var splits=route.split("/");    
-    var tipoDeclaracion=splits[1];
-    var formaDeclaracion=splits[2];
-    
-    if(splits[2] =="simplificada"){
-      formaDeclaracion='simplificada';
+    var splits = route.split("/");
+    var tipoDeclaracion = splits[1];
+    var formaDeclaracion = splits[2];
+
+    if (splits[2] == "simplificada") {
+      formaDeclaracion = 'simplificada';
     }
-    else{
-      formaDeclaracion="completa";
+    else {
+      formaDeclaracion = "completa";
     }
-    
-    if (await this.isValid(tipoDeclaracion, formaDeclaracion)){
+
+    if (await this.isValid(tipoDeclaracion, formaDeclaracion)) {
       this.router.navigate([`/${route}`], { replaceUrl: true });
       this.dialogRef.close({ data: '' })
     }
@@ -133,7 +133,7 @@ export class DialogElementsExampleDialog implements OnInit {
         else
           return false;
       case 'modificacion':
-        if (formaDeclaracion === "completa"){
+        if (formaDeclaracion === "completa") {
           console.log("llega switch")
           const validaModificacion = await this.verificarDeclaracionModificacionCompleta(this.anio, tipoDeclaracion, formaDeclaracion);
           if (validaModificacion)
@@ -141,13 +141,13 @@ export class DialogElementsExampleDialog implements OnInit {
           else
             return false
         }
-        if ( formaDeclaracion === "simplificada"){
+        if (formaDeclaracion === "simplificada") {
           const validaModificacion = await this.verificarDeclaracionModificacionSimple(this.anio, tipoDeclaracion, formaDeclaracion);
           if (validaModificacion)
             return true;
           else
             return false
-        }        
+        }
       case 'conclusion':
         const validaConclusion = await this.verificarDeclaracionConclusion(tipoDeclaracion, formaDeclaracion);
         if (validaConclusion)
@@ -182,7 +182,7 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales === 0){
+    if (this.declaracionesIniciales - this.declaracionesFinales === 0) {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
@@ -216,13 +216,13 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return false;
-    else{
+    else {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
   }
 
-  async verificarDeclaracionModificacionCompleta(fechaModificacion: any, 
+  async verificarDeclaracionModificacionCompleta(fechaModificacion: any,
     tipoDeclaracion: string, formaDeclaracion: string) {
     try {
       const { data }: any = await this.apollo
@@ -241,26 +241,39 @@ export class DialogElementsExampleDialog implements OnInit {
         })
         .toPromise();
       this.declaraciones = data.statsModif.counters.count || 0;
-      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
-      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
-      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
-      //this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
-      console.log("declaraciones: "+this.declaraciones);
-      console.log("declaracionesModificacion: "+this.declaracionesModificacionCompleta);
-      console.log("declaracionesIniciales: "+this.declaracionesIniciales);
-      console.log("declaracionesFinales: "+this.declaracionesFinales);
+      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+      const { dataTipo }: any = await this.apollo
+        .query({
+          query: gql`
+            query statsTipo {
+              statsTipo {
+                counters{
+                  tipoDeclaracion
+                  count
+                }
+              }
+            }
+          `,
+        })
+        .toPromise();
+      this.declaracionesIniciales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
+      this.declaracionesFinales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
+      console.log("declaraciones: " + this.declaraciones);
+      console.log("declaracionesModificacion: " + this.declaracionesModificacionCompleta);
+      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
+      console.log("declaracionesFinales: " + this.declaracionesFinales);
     } catch (error) {
       console.log(error);
       return false;
     }
-    if (this.declaracionesModificacionCompleta === 0 && (this.declaracionesIniciales - this.declaracionesFinales)>0){
+    if (this.declaracionesModificacionCompleta === 0 && (this.declaracionesIniciales - this.declaracionesFinales) > 0) {
       console.log("llega creacion");
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
     else
-    console.log("llega false");
-      return false;
+      console.log("llega false");
+    return false;
   }
 
   async verificarDeclaracionModificacionSimple(fechaModificacion: any,
@@ -281,53 +294,73 @@ export class DialogElementsExampleDialog implements OnInit {
           `,
         })
         .toPromise();
-      this.declaraciones = data.statsModif.counters.count || 0;
-      this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
-      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
-      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
+        this.declaraciones = data.statsModif.counters.count || 0;
+        this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+        const { dataTipo }: any = await this.apollo
+          .query({
+            query: gql`
+              query statsTipo {
+                statsTipo {
+                  counters{
+                    tipoDeclaracion
+                    count
+                  }
+                }
+              }
+            `,
+          })
+          .toPromise();
+        this.declaracionesIniciales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
+        this.declaracionesFinales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
+        console.log("declaraciones: " + this.declaraciones);
+        console.log("declaracionesModificacion: " + this.declaracionesModificacionCompleta);
+        console.log("declaracionesIniciales: " + this.declaracionesIniciales);
+        console.log("declaracionesFinales: " + this.declaracionesFinales);
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+      if (this.declaracionesModificacionCompleta === 0 && (this.declaracionesIniciales - this.declaracionesFinales) > 0) {
+        console.log("llega creacion");
+        await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
+        return true;
+      }
+      else
+        console.log("llega false");
+      return false;
+    }
+
+  async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string) {
+    try {
+      if (formaDeclaracion === "completa") {
+        this.declaracionSimplificada = false;
+      }
+      else {
+        this.declaracionSimplificada = true
+      }
+
+      const { data, errors } = await this.apollo
+        .query<DeclaracionOutput>({
+          query: datosGeneralesQuery,
+          variables: {
+            tipoDeclaracion: tipoDeclaracion.toUpperCase(),
+            declaracionCompleta: !this.declaracionSimplificada,
+            anioEjercicio: this.anio_ejercicio
+          },
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.declaracionId = data?.declaracion._id;
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
     } catch (error) {
       console.log(error);
-      return false;
     }
-    if (this.declaracionesModificacionSimple === 0 && (this.declaracionesIniciales - this.declaracionesFinales)>0){
-      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
-      return true;
-    }
-    else
-      return false;
   }
 
- async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string){
-  try {
-    if(formaDeclaracion==="completa"){
-      this.declaracionSimplificada=false;
-    }
-    else{
-      this.declaracionSimplificada=true
-    } 
-    
-    const { data, errors } = await this.apollo
-      .query<DeclaracionOutput>({
-        query: datosGeneralesQuery,
-        variables: {
-          tipoDeclaracion: tipoDeclaracion.toUpperCase(),
-          declaracionCompleta: !this.declaracionSimplificada,
-          anioEjercicio: this.anio_ejercicio
-        },
-      })
-      .toPromise();
-
-    if (errors) {
-      throw errors;
-    }
-
-    this.declaracionId = data?.declaracion._id;
-    this.anio_ejercicio = data?.declaracion.anioEjercicio;
-  } catch (error) {
-    console.log(error);
-  }
-}
-  
   confirmSaveInfo() {
     console.log("boton guardar");
   }
