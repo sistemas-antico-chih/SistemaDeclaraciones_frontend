@@ -241,6 +241,9 @@ export class DialogElementsExampleDialog implements OnInit {
           `,
         })
         .toPromise();
+
+        console.log("llega verficacion 2");
+
       this.declaraciones = data.statsModif.counters.count || 0;
       this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
       const { dataTipo }: any = await this.apollo
@@ -257,6 +260,8 @@ export class DialogElementsExampleDialog implements OnInit {
           `,
         })
         .toPromise();
+        console.log("llega verficacion 3");
+
       this.declaracionesIniciales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
       console.log("declaraciones: " + this.declaraciones);
