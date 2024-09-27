@@ -225,6 +225,7 @@ export class DialogElementsExampleDialog implements OnInit {
   async verificarDeclaracionModificacionCompleta(fechaModificacion: any,
     tipoDeclaracion: string, formaDeclaracion: string) {
     try {
+      console.log("llega verficacion");
       const { data }: any = await this.apollo
         .query({
           query: gql`
