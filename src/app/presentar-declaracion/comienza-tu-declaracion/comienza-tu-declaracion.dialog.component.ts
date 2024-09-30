@@ -242,26 +242,16 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
 
-      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
-      console.log("declaracionesFinales: " + this.declaracionesFinales)
       return this.declaracionesIniciales - this.declaracionesFinales;
     } catch (error) {
       console.log(error);
       return false;
     }
-
-    /*if (this.declaracionesIniciales - this.declaracionesFinales === 0)
-      return false;
-    else {
-      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
-      return true;
-    }*/
   }
 
   async verificarDeclaracionModificacionCompleta(fechaModificacion: any,
     tipoDeclaracion: string, formaDeclaracion: string) {
     try {
-      console.log("llega verficacion");
       const { data }: any = await this.apollo
         .query({
           query: gql`
@@ -278,23 +268,18 @@ export class DialogElementsExampleDialog implements OnInit {
         })
         .toPromise();
 
-      console.log("llega verficacion 2");
-
       this.declaraciones = data.statsModif.counters.count || 0;
       this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
-      console.log("funcion: "+this.contarDeclaracionesInicialConclusion())
-
+    
     } catch (error) {
       console.log(error);
       return false;
     }
     if (this.contarDeclaracionesInicialConclusion()){
-      console.log("llega creacion");
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
     else
-      console.log("llega false");
     return false;
   }
 
@@ -316,40 +301,20 @@ export class DialogElementsExampleDialog implements OnInit {
           `,
         })
         .toPromise();
-      this.declaraciones = data.statsModif.counters.count || 0;
-      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
-      const { dataTipo }: any = await this.apollo
-        .query({
-          query: gql`
-              query statsTipo {
-                statsTipo {
-                  counters{
-                    tipoDeclaracion
-                    count
-                  }
-                }
-              }
-            `,
-        })
-        .toPromise();
-      this.declaracionesIniciales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
-      this.declaracionesFinales = dataTipo.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
-      console.log("declaraciones: " + this.declaraciones);
-      console.log("declaracionesModificacion: " + this.declaracionesModificacionCompleta);
-      console.log("declaracionesIniciales: " + this.declaracionesIniciales);
-      console.log("declaracionesFinales: " + this.declaracionesFinales);
-    } catch (error) {
-      console.log(error);
+
+        this.declaraciones = data.statsModif.counters.count || 0;
+        this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+      
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+      if (this.contarDeclaracionesInicialConclusion()){
+        await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
+        return true;
+      }
+      else
       return false;
-    }
-    if (this.declaracionesModificacionCompleta === 0 && (this.declaracionesIniciales - this.declaracionesFinales) > 0) {
-      console.log("llega creacion");
-      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
-      return true;
-    }
-    else
-      console.log("llega false");
-    return false;
   }
 
   async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string) {
