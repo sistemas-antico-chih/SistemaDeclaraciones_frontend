@@ -19,7 +19,7 @@ import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import Estados from '@static/catalogos/estados.json';
 import EstadoFijo from '@static/catalogos/estadoFijo.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernojson';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
 import Paises from '@static/catalogos/paises.json';
 import entePublico from '@static/catalogos/entePublico.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
