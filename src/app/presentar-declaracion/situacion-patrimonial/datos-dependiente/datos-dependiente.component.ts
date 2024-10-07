@@ -55,7 +55,7 @@ export class DatosDependienteComponent implements OnInit {
   isLoading = false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
-  @ViewChild('otroParentesco') otroParentesco: ElementRef;
+  //@ViewChild('otroParentesco') otroParentesco: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
 
   actividadLaboralCatalogo = ActividadLaboral;
