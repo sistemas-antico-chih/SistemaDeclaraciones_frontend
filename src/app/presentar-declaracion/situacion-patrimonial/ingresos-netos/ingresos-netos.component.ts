@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -33,6 +33,9 @@ export class IngresosNetosComponent implements OnInit {
   aclaraciones = false;
   ingresosForm: FormGroup;
   isLoading = false;
+
+
+  @ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
 
   otrosIngresosDeclarante = 0;
   ingresoNetoDeclarante = 0;
