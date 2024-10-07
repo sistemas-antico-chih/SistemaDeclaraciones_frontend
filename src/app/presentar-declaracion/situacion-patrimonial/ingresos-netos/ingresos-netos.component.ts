@@ -484,4 +484,25 @@ export class IngresosNetosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  get finalForm() {
+    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+
+    if (form.otroTipoInstrumento?.clave === 'OTR') {
+      form.otroTipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
+    }
+
+    return form;
+  }
+
+  inputsAreValid(): boolean {
+    let result = true;
+
+    if (this.ingresosForm.value.otroTipoInstrumento?.clave === 'OTR') {
+      result = result && this.otroTipoInstrumento.nativeElement.value?.match(/^\S.*\S$/);
+    }
+
+    return result;
+  }
+
 }
