@@ -145,10 +145,10 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-form-field
+              <mat-form-field 
               appearance="fill"
               class="double-col"
-              [ngClass]="{ hidden: ingresosForm.value.tipoInstrumento?.clave !== 'OTRO' }"
+              [ngClass]="{ hidden: ingresosForm.value.actividadFinanciera.tipoInstrumento.clave === 'OTRO' }"
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">star</mat-icon>
