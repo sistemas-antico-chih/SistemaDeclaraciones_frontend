@@ -32,21 +32,23 @@
       centavos y sin ceros a la izquierda.
     </p>
 
-    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="ingresosForm">
-      <div class="bloque">
-        <mat-select formControlName="tipoInstrumentoPrueba"
+     <mat-select formControlName="tipoInstrumentoPrueba"
         (change)="selectChange($event.value)"
-        [(ngModel)]="tipoInstrumentoPrueba">
+        [(ngModel)]="tipoInstrumentoPrueba"
+        #tipoInstrumentoPrueba>
         <mat-option value="inicial2">inicial2</mat-option> 
         <mat-option value="modificacion2">modificacion2</mat-option> 
         <mat-option value="conclusion2">conclusion2</mat-option> 
       </mat-select>
 
-      <label class="step-title">
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="ingresosForm">
+      <div class="bloque">
+      <!--
           <span *ngIf="tipoInstrumentoPrueba === 'inicial2'">(situación INICIAL)</span>
           <span *ngIf="tipoInstrumentoPrueba === 'modificacion2'">(MODIFICACION)</span>
           <span *ngIf="tipoInstrumentoPrueba === 'conclusion2'">(CONCLUSION)</span>
       </label>
+      -->
         <h3>
           I.Remuneración neta del declarante por su cargo público (por Concepto de sueldos, honorarios, compensaciones,
           bonos y otras Prestaciones) (cantidades netas después de impuestos)
