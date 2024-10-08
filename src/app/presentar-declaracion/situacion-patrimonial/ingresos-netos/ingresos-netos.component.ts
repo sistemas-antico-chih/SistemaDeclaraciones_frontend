@@ -78,7 +78,7 @@ export class IngresosNetosComponent implements OnInit {
       })
     );
     console.log ("llega? 2");
-    console.log(this.ingresosForm.actividadFinanciera.value);
+    console.log(this.ingresosForm.value);
     console.log(this.actividadFinanciera.value)
   }
 
