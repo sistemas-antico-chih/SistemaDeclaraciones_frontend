@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { declaracionMutation, ingresosQuery } from '@api/declaracion';
@@ -424,7 +424,7 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
   }
-  
+
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
       duration: 5000,
