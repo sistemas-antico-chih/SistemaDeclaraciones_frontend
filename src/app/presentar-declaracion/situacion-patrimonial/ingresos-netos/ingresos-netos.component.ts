@@ -413,8 +413,18 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
-
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+  
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
       duration: 5000,
