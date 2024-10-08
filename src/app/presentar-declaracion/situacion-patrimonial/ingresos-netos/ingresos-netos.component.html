@@ -33,11 +33,11 @@
     </p>
 
      <mat-select formControlName="tipoInstrumentoPrueba"
-        (change)="selectChange($event.value)"
+        (selectionChange)="selectChange($event.value)"
         [(ngModel)]="tipoInstrumentoPrueba">
-        <mat-option value="inicial2">inicial2</mat-option> 
-        <mat-option value="modificacion2">modificacion2</mat-option> 
-        <mat-option value="conclusion2">conclusion2</mat-option> 
+        <mat-option [value]="inicial2">inicial2</mat-option> 
+        <mat-option [value]="modificacion2">modificacion2</mat-option> 
+        <mat-option [value]="conclusion2">conclusion2</mat-option> 
       </mat-select>
 
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="ingresosForm">
