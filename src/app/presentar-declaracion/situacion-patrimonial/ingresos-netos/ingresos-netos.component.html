@@ -127,6 +127,15 @@
               </mat-form-field>
               -->
               
+
+              <label class="step-title">
+                {{ declaracionSimplificada ? '6.' : '8.' }} Ingresos netos del declarante, pareja y/o dependiente económicos
+                <span *ngIf="tipoDeclaracion === 'inicial'">(situación actual)</span>
+                <span *ngIf="tipoDeclaracion === 'modificacion'">(entre el 1 de enero y 31 de diciembre del año inmediato
+                  anterior)</span>
+                <span *ngIf="tipoDeclaracion === 'conclusion'">(del año en curso a la fecha de conclusión del empleo)</span>
+              </label>
+
               <mat-form-field appearance="fill" class="double-col"
                 *ngIf="ingresosForm.value.actividadFinanciera?.actividades?.clave === 'OTRO'">
                 <mat-label>Especifique</mat-label>
@@ -134,12 +143,6 @@
                 <input [errorStateMatcher]="errorMatcher" #otroTipoInstrumento matInput type="text" minlength="2"
                   required />
               </mat-form-field>
-
-              <mat-select formControlName="subTipoInversion" required>
-                <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" [value]="instrumento">
-                  {{ instrumento.valor }}
-                </mat-option>
-              </mat-select>
               
             </div>
             <button class="delete-button" mat-button type="button" color="warn"
