@@ -485,7 +485,7 @@ export class IngresosNetosComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  get finalForm() {
+  /*get finalForm() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log("llega? finalForm")
 
@@ -504,6 +504,6 @@ export class IngresosNetosComponent implements OnInit {
     }
 
     return result;
-  }
+  }*/
 
 }
