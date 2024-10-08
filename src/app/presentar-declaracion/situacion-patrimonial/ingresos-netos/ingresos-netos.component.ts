@@ -35,7 +35,7 @@ export class IngresosNetosComponent implements OnInit {
   isLoading = false;
 
 
-  @ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
+  //@ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
 
   otrosIngresosDeclarante = 0;
   ingresoNetoDeclarante = 0;
@@ -485,25 +485,5 @@ export class IngresosNetosComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  /*get finalForm() {
-    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log("llega? finalForm")
-
-    if (form.otroTipoInstrumento?.clave === 'OTR') {
-      form.otroTipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
-    }
-
-    return form;
-  }
-
-  inputsAreValid(): boolean {
-    let result = true;
-
-    if (this.ingresosForm.value.otroTipoInstrumento?.clave === 'OTR') {
-      result = result && this.otroTipoInstrumento.nativeElement.value?.match(/^\S.*\S$/);
-    }
-
-    return result;
-  }*/
 
 }
