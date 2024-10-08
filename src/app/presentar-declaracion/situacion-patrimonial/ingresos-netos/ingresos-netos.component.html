@@ -127,13 +127,18 @@
               </mat-form-field>
               -->
               
+              <mat-select formControlName="tipoInstrumentoPrueba">
+                <mat-option value="inicial2">inicial2</mat-option> 
+                <mat-option value="modificacion2">modificacion2</mat-option> 
+                <mat-option value="conclusion2">conclusion2</mat-option> 
+              </mat-select>
 
               <label class="step-title">
                 {{ declaracionSimplificada ? '6.' : '8.' }} Ingresos netos del declarante, pareja y/o dependiente económicos
-                <span *ngIf="tipoDeclaracion === 'inicial'">(situación actual)</span>
-                <span *ngIf="tipoDeclaracion === 'modificacion'">(entre el 1 de enero y 31 de diciembre del año inmediato
+                <span *ngIf="tipoInstrumentoPrueba === 'inicial2'">(situación actual)</span>
+                <span *ngIf="tipoInstrumentoPrueba === 'modificacion2'">(entre el 1 de enero y 31 de diciembre del año inmediato
                   anterior)</span>
-                <span *ngIf="tipoDeclaracion === 'conclusion'">(del año en curso a la fecha de conclusión del empleo)</span>
+                <span *ngIf="tipoInstrumentoPrueba === 'conclusion2'">(del año en curso a la fecha de conclusión del empleo)</span>
               </label>
 
               <mat-form-field appearance="fill" class="double-col"
