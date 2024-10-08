@@ -231,7 +231,7 @@ export class IngresosNetosComponent implements OnInit {
         valor: [0, [Validators.pattern(/^\d+$/), Validators.min(0)]],
         moneda: ['MXN'],
       }),
-      tipoInstrumentoPrueba: this.formBuilder.group({}),
+ //     tipoInstrumentoPrueba: this.formBuilder.group({}),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     });
 

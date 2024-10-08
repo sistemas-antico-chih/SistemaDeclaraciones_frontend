@@ -134,9 +134,9 @@
               </mat-select>
 
               <label class="step-title" 
-                formControlName="tipoInstrumentoPrueba"
+                formControlName="selectTipoInstrumentoPrueba"
                 (change)="selectChange($event.value)"
-                [(ngModel)]="tipoInstrumentoPrueba">
+                [(ngModel)]="selectTipoInstrumentoPrueba">
                   <span *ngIf="tipoInstrumentoPrueba === 'inicial2'">(situación INICIAL)</span>
                   <span *ngIf="tipoInstrumentoPrueba === 'modificacion2'">(MODIFICACION)</span>
                   <span *ngIf="tipoInstrumentoPrueba === 'conclusion2'">(CONCLUSION)</span>
