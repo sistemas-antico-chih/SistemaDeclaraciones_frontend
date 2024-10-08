@@ -66,6 +66,8 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   addActividadFinanciera() {
+    console.log ("llega? 1");
+
     this.actividadFinanciera.push(
       this.formBuilder.group({
         remuneracion: this.formBuilder.group({
@@ -75,6 +77,9 @@ export class IngresosNetosComponent implements OnInit {
         tipoInstrumento: [null, [Validators.required]],
       })
     );
+    console.log ("llega? 2");
+    console.log(this.ingresosForm.actividadFinanciera.value);
+    console.log(this.actividadFinanciera.value)
   }
 
   addActividadIndustrialComercialEmpresarial() {
