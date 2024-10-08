@@ -66,8 +66,6 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   addActividadFinanciera() {
-    console.log ("llega? 1");
-
     this.actividadFinanciera.push(
       this.formBuilder.group({
         remuneracion: this.formBuilder.group({
@@ -77,9 +75,6 @@ export class IngresosNetosComponent implements OnInit {
         tipoInstrumento: [null, [Validators.required]],
       })
     );
-    console.log ("llega? 2");
-    //console.log(this.ingresosForm.value);
-    //console.log(this.actividadFinanciera.value)
   }
 
   addActividadIndustrialComercialEmpresarial() {
@@ -492,8 +487,7 @@ export class IngresosNetosComponent implements OnInit {
 
   get finalForm() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log("llega?");
-    console.log(this.ingresosForm.value.actividadFinanciera.otroTipoInstrumento.clave);
+    console.log("llega? finalForm")
 
     if (form.otroTipoInstrumento?.clave === 'OTR') {
       form.otroTipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
