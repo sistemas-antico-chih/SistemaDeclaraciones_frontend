@@ -133,11 +133,13 @@
                 <mat-option value="conclusion2">conclusion2</mat-option> 
               </mat-select>
 
-              <label class="step-title">
-                {{ declaracionSimplificada ? '6.' : '8.' }} Ingresos netos del declarante, pareja y/o dependiente económicos
-                <span *ngIf="tipoInstrumentoPrueba === 'inicial2'">(situación INICIAL)</span>
-                <span *ngIf="tipoInstrumentoPrueba === 'modificacion2'">(MODIFICACION)</span>
-                <span *ngIf="tipoInstrumentoPrueba === 'conclusion2'">(CONCLUSION)</span>
+              <label class="step-title" 
+                formControlName="tipoInstrumentoPrueba"
+                (change)="selectChange($event.value)"
+                [(ngModel)]="tipoInstrumentoPrueba">
+                  <span *ngIf="tipoInstrumentoPrueba === 'inicial2'">(situación INICIAL)</span>
+                  <span *ngIf="tipoInstrumentoPrueba === 'modificacion2'">(MODIFICACION)</span>
+                  <span *ngIf="tipoInstrumentoPrueba === 'conclusion2'">(CONCLUSION)</span>
               </label>
 
               <mat-form-field appearance="fill" class="double-col"

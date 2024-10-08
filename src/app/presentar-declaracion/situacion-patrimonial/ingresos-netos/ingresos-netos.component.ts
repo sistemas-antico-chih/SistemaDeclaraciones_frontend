@@ -483,4 +483,27 @@ export class IngresosNetosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  selectChange(event: any) {
+    console.log(event);
+    /*this.hidden = event;
+    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
+    if (this.active == false) {
+      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").enable();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("curp").setValidators([Validators.required]);
+      this.datosParejaForm.get("curp").enable();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+    } else {
+      this.datosParejaForm.get("rfc").clearValidators();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").disable();
+      this.datosParejaForm.get("curp").clearValidators();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+      this.datosParejaForm.get("curp").disable();
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
+    */
+  }
 }
