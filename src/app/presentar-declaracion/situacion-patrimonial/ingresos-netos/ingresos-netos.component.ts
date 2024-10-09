@@ -30,7 +30,7 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
-  tipoInstrumentoPrueba: number = 10 ;
+  tipoInstrumentoPrueba: String;
   //selectTipoInstrumentoPrueba: string;
 
   aclaraciones = false;
