@@ -30,7 +30,7 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
-  tipoInstrumentoPrueba: string = "inicial22";
+  tipoInstrumentoPrueba: string = "inicial2";
   selectTipoInstrumentoPrueba: string;
 
   aclaraciones = false;
@@ -487,6 +487,8 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   selectChange(event: any) {
+    console.log(event);
+    this.tipoInstrumentoPrueba=event;
     console.log(event);
     /*this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
