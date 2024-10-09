@@ -486,9 +486,9 @@ export class IngresosNetosComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  /*selectChange(event: any) {
+  selectChange(event: any) {
     console.log(event);
-    this.tipoInstrumentoPrueba=event;
+    this.valor=event;
     console.log(event);
     /*this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
@@ -508,6 +508,6 @@ export class IngresosNetosComponent implements OnInit {
       this.datosParejaForm.get("curp").disable();
     }
     console.log("Requerido", this.datosParejaForm.errors);
-    
-  }*/
+    */
+  }
 }
