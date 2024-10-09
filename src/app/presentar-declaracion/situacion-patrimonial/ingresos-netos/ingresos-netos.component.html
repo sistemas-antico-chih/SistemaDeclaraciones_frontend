@@ -123,7 +123,7 @@
                 <mat-label>Especifique</mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
-                  
+                  formControlName="otroTipoInstrumento" 
                   matInput type="text" minlength="2"
                   required />
               </mat-form-field>
@@ -139,13 +139,6 @@
               </mat-select>
               -->
               
-              <mat-form-field appearance="fill" class="double-col"
-                *ngIf="ingresosForm.value.actividadFinanciera?.actividades?.clave === 'OTRO'">
-                <mat-label>Especifique</mat-label>
-                <mat-icon matPrefix class="no-public">star</mat-icon>
-                <input [errorStateMatcher]="errorMatcher" #otroTipoInstrumento matInput type="text" minlength="2"
-                  required />
-              </mat-form-field>
               
             </div>
             <button class="delete-button" mat-button type="button" color="warn"
