@@ -30,8 +30,8 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
-  valor: number = 10 ;
-  selectTipoInstrumentoPrueba: string;
+  tipoInstrumentoPrueba: number = 10 ;
+  //selectTipoInstrumentoPrueba: string;
 
   aclaraciones = false;
   ingresosForm: FormGroup;
@@ -487,8 +487,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   selectChange(event: any) {
-    console.log(event);
-    this.valor=event;
+    this.tipoInstrumentoPrueba=event;
     console.log(event);
     /*this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
