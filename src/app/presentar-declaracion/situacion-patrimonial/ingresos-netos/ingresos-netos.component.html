@@ -34,19 +34,6 @@
 
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="ingresosForm">
       <div class="bloque">
-        
-        <mat-select #tipoInstrumentoPrueba>
-          <mat-option value="inicial2">inicial2</mat-option> 
-          <mat-option value="modificacion2">modificacion2</mat-option> 
-          <mat-option value="conclusion2">conclusion2</mat-option> 
-        </mat-select>
-
-        <p>por aqui debe andar abajito</p>
-        <!--        
-          <span *ngIf="tipoInstrumentoPrueba === 'inicial2'">(situación INICIAL)</span>
-          <span *ngIf="tipoInstrumentoPrueba === 'modificacion2'">(MODIFICACION)</span>
-          <span *ngIf="tipoInstrumentoPrueba === 'conclusion2'">(CONCLUSION)</span>
-        -->
         <h3>
           I.Remuneración neta del declarante por su cargo público (por Concepto de sueldos, honorarios, compensaciones,
           bonos y otras Prestaciones) (cantidades netas después de impuestos)
@@ -139,6 +126,17 @@
                   required />
               </mat-form-field>
               -->
+              <mat-select #tipoInstrumentoPrueba>
+                <mat-option value="inicial2">inicial2</mat-option> 
+                <mat-option value="modificacion2">modificacion2</mat-option> 
+                <mat-option value="conclusion2">conclusion2</mat-option> 
+              </mat-select>
+      
+              <p>por aqui debe andar abajito</p>
+                      
+                <span *ngIf="valor === 0">(situación INICIAL)</span>
+                <span *ngIf="valor === 10">(MODIFICACION)</span>
+                <span *ngIf="valor === 100">(CONCLUSION)</span>
               
 
 
