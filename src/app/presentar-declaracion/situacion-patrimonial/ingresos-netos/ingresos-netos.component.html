@@ -126,7 +126,7 @@
                   required />
               </mat-form-field>
               -->
-              <mat-select #tipoInstrumentoPrueba (selectionChange)="selectChange($event.value)">
+              <mat-select #tipoInstrumentoPrueba (selectionChange)="selectChange($event.value)" [(ngModel)]="tipoInstrumentoPrueba">
                 <mat-option value="0">inicial2</mat-option> 
                 <mat-option value="10">modificacion2</mat-option> 
                 <mat-option value="100">conclusion2</mat-option> 
