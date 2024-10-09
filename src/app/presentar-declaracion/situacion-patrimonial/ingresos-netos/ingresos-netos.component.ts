@@ -30,7 +30,7 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
-  tipoInstrumentoPrueba: String;
+  otroTipoInstrumentoPrueba: String;
   //selectTipoInstrumentoPrueba: string;
 
   aclaraciones = false;
@@ -486,7 +486,7 @@ export class IngresosNetosComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  selectChange(event: any) {
+ /* selectChange(event: any) {
     this.tipoInstrumentoPrueba=event;
     console.log(event);
     /*this.hidden = event;
@@ -507,6 +507,6 @@ export class IngresosNetosComponent implements OnInit {
       this.datosParejaForm.get("curp").disable();
     }
     console.log("Requerido", this.datosParejaForm.errors);
-    */
-  }
+    
+  }*/
 }
