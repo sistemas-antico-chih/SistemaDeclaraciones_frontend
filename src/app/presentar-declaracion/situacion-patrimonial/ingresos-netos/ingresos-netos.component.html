@@ -126,21 +126,21 @@
                   required />
               </mat-form-field>
               -->
-              <mat-select #tipoInstrumentoPrueba 
+              <mat-select  
                formControlName="tipoInstrumentoPrueba"
                (selectionChange)="selectChange($event.value)"
                [(ngModel)]="tipoInstrumentoPrueba">
-                <mat-option value="0">inicial2</mat-option> 
-                <mat-option value="10">modificacion2</mat-option> 
-                <mat-option value="100">conclusion2</mat-option> 
+                <mat-option value="inicial">inicial2</mat-option> 
+                <mat-option value="modificacion">modificacion2</mat-option> 
+                <mat-option value="conclusion">conclusion2</mat-option> 
               </mat-select>
       
               <p>por aqui debe andar abajito</p>
-                      
-                <span *ngIf="tipoInstrumentoPrueba === '0'">(situación INICIAL)</span>
-                <span *ngIf="tipoInstrumentoPrueba === '10'">(MODIFICACION)</span>
-                <span *ngIf="tipoInstrumentoPrueba === '100'">(CONCLUSION)</span>
-              
+                <!--      
+                <span *ngIf="tipoInstrumentoPrueba === 'inicial'">(situación INICIAL)</span>
+                <span *ngIf="tipoInstrumentoPrueba === 'modificacion'">(MODIFICACION)</span>
+                <span *ngIf="tipoInstrumentoPrueba === 'conclusion">(CONCLUSION)</span>
+              |-->
 
 
               <mat-form-field appearance="fill" class="double-col"
