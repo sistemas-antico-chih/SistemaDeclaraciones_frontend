@@ -32,7 +32,7 @@
       centavos y sin ceros a la izquierda.
     </p>
 
-     <mat-select formControlName="tipoInstrumentoPrueba"
+     <mat-select [formControlName]="tipoInstrumentoPrueba"
         (selectionChange)="selectChange($event.value)"
         [(ngModel)]="tipoInstrumentoPrueba"
         placeholder="Seleccionar...">
