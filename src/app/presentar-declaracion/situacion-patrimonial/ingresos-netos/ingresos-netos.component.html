@@ -118,9 +118,11 @@
               </mat-form-field>
               
               
-              <mat-form-field appearance="fill" class="double-col"
+              <mat-form-field 
+                appearance="fill" 
+                class="double-col"
                 [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave === 'OTRO' }">
-                <mat-label>Especifique</mat-label>
+                <mat-label>Especifique {{tipoInstrumento.value}} {{tipoInstrumento}}
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
                   #otroTipoInstrumento
