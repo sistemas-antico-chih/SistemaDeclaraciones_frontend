@@ -111,7 +111,9 @@
                 <mat-label>Tipo de instrumento que generó el rendimiento o ganancia</mat-label>
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
                 <mat-select formControlName="tipoInstrumento">
-                  <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" [value]="instrumento">
+                  <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
+                  [value]="instrumento"
+                  #tipoInstrumentoSelect>
                     {{ instrumento.valor }}
                   </mat-option>
                 </mat-select>
@@ -122,7 +124,7 @@
                 appearance="fill" 
                 class="double-col"
                 [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave === 'OTRO' }">
-                <mat-label>Especifique {{ actividadFinanciera.value }} </mat-label>
+                <mat-label>Especifique {{ tipoInstrumentoSelect.value }} </mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
                   #otroTipoInstrumento
