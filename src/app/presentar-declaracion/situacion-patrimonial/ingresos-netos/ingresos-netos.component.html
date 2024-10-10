@@ -122,7 +122,7 @@
                 appearance="fill" 
                 class="double-col"
                 [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave === 'OTRO' }">
-                <mat-label>Especifique {{ instrumento.valor }} </mat-label>
+                <mat-label>Especifique {{ tipoInstrumento}} </mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
                   #otroTipoInstrumento
