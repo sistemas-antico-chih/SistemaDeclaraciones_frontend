@@ -119,12 +119,12 @@
                 </mat-select>
               </mat-form-field>
               
-              VALOR ALGO {{instrumento}}
+              VALOR ALGO {{}}
 
               <mat-form-field 
                 appearance="fill" 
                 class="double-col"
-                [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave !== 'OTRO' }">
+                [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave === 'OTRO' }">
                 <mat-label>Especifique  </mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 

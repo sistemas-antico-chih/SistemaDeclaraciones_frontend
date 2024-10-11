@@ -310,6 +310,7 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
+        console.log("llega2");
         const { tipoInstrumento } = formArray.at(index).value;
         formArray
           .at(index)
