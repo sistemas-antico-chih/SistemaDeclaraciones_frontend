@@ -112,7 +112,8 @@
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
                 <mat-select formControlName="tipoInstrumento">
                   <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
-                  [value]="instrumento">
+                  [value]="instrumento"
+                  [(ngModel)]="tipoInstrumentoSelect">
                     {{ instrumento.valor }}
                   </mat-option>
                 </mat-select>
