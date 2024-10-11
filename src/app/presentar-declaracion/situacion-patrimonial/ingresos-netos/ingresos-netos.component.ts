@@ -489,7 +489,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   selectChange(event: any) {
-    this.otroTipoInstrumento=event;
+    this.tipoInstrumento=event;
     console.log(event);
     /*this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
