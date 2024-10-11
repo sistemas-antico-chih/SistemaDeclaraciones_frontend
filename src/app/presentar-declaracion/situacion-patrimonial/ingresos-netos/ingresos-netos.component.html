@@ -110,7 +110,8 @@
                 appearance="fill">
                 <mat-label>Tipo de instrumento que generó el rendimiento o ganancia</mat-label>
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
-                <mat-select formControlName="tipoInstrumento">
+                <mat-select formControlName="tipoInstrumento"
+                  [(ngModel)]="tipoInstrumento">
                   <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
                   [value]="instrumento">
                     {{ instrumento.valor }}
