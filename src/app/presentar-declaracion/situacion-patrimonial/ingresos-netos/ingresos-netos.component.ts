@@ -31,7 +31,7 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   tipoInstrumento: String;
-  @ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
+  //@ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
   //selectTipoInstrumentoPrueba: string;
 
   aclaraciones = false;
@@ -489,7 +489,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   selectChange(event: any) {
-    this.tipoInstrumento=event;
+    //this.tipoInstrumento=event;
     console.log(event);
     /*this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
