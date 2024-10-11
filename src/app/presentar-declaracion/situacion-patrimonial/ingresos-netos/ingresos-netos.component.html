@@ -112,8 +112,7 @@
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
                 <mat-select formControlName="tipoInstrumento">
                   <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
-                  [value]="instrumento"
-                  [(ngModel)]="tipoInstrumentoSelect">
+                  [value]="instrumento">
                     {{ instrumento.valor }}
                   </mat-option>
                 </mat-select>
@@ -128,6 +127,7 @@
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
                   matInput type="text" minlength="2"
+                  [(ngModel)]="otroTipoInstrumento"
                   required />
               </mat-form-field>
               
