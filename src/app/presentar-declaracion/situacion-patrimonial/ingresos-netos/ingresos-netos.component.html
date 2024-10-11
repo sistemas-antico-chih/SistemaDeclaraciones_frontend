@@ -124,10 +124,10 @@
                 appearance="fill" 
                 class="double-col"
                 [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave === 'OTRO' }">
-                <mat-label>Especifique {{ tipoInstrumentoSelect }} </mat-label>
+                <mat-label>Especifique  </mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
-                  
+                  [(ngModel)]="otroTipoInstrumento"
                   matInput type="text" minlength="2"
                   required />
               </mat-form-field>
