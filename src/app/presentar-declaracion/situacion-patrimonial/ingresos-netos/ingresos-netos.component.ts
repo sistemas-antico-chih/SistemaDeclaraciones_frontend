@@ -499,10 +499,10 @@ export class IngresosNetosComponent implements OnInit {
       this.isHidden=false;
     }
     //this.tipoInstrumento=event;
-    this.tipoInstrumento=event.clave;
-    this.otroTipoInstrumento.nativeElement.value=event.valor
+    //this.tipoInstrumento=event.clave;
+    //this.otroTipoInstrumento.nativeElement.value=event.valor
     //this.otroSector.nativeElement.value = datosPareja.actividadLaboralSectorPrivadoOtro?.sector?.valor;
-    console.log(this.tipoInstrumento);
+    //console.log(this.tipoInstrumento);
     console.log();
     console.log(event);
     console.log();
