@@ -490,15 +490,17 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   selectChange(event: any) {
+    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); 
     //this.otroTipoInstrumento.nativeElement.value="OTRO";
     //console.log(this.otroTipoInstrumento.typeof)
-    this.otroTipoInstrumento.nativeElement.value="OTRO";
+    console.log(form);
+    //this.otroTipoInstrumento.nativeElement.value="OTRO";
     if(event.clave === "OTRO"){
-      this.otroTipoInstrumento.nativeElement.hidden=false;
+      //this.otroTipoInstrumento.nativeElement.hidden=false;
       this.isHidden=false;
     }
     else{
-      this.otroTipoInstrumento.nativeElement.hidden=true;
+      //this.otroTipoInstrumento.nativeElement.hidden=true;
       this.isHidden=true;
     }
     //this.tipoInstrumento=event;
