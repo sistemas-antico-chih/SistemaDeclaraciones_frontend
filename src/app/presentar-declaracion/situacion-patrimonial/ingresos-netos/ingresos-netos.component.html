@@ -128,7 +128,7 @@
                 <mat-label>Especifique  </mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
-                  [(ngModel)]="otroTipoInstrumento"
+                  #otroTipoInstrumento
                   matInput type="text" minlength="2"
                   required />
               </mat-form-field>
