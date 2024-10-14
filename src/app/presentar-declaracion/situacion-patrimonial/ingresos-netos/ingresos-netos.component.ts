@@ -489,6 +489,12 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   selectChange(event: any) {
+    if(event.clave === "OTRO"){
+      this.otroTipoInstrumento.nativeElement.hidden=false;
+    }
+    else{
+      this.otroTipoInstrumento.nativeElement.hidden=true;
+    }
     //this.tipoInstrumento=event;
     this.tipoInstrumento=event.clave;
     this.otroTipoInstrumento.nativeElement.value=event.valor
