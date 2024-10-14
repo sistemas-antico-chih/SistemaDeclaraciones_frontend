@@ -33,6 +33,7 @@ export class IngresosNetosComponent implements OnInit {
   tipoInstrumento: String;
   @ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
   //selectTipoInstrumentoPrueba: string;
+  isHidden = false;
 
   aclaraciones = false;
   ingresosForm: FormGroup;
@@ -491,9 +492,11 @@ export class IngresosNetosComponent implements OnInit {
   selectChange(event: any) {
     if(event.clave === "OTRO"){
       this.otroTipoInstrumento.nativeElement.hidden=false;
+      this.isHidden=true;
     }
     else{
       this.otroTipoInstrumento.nativeElement.hidden=true;
+      this.isHidden=false;
     }
     //this.tipoInstrumento=event;
     this.tipoInstrumento=event.clave;

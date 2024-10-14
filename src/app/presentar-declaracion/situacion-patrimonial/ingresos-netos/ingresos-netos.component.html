@@ -124,7 +124,7 @@
               <mat-form-field 
                 appearance="fill" 
                 class="double-col"
-                [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave !== 'OTRO' }">
+                *ngIf="!isHidden">
                 <mat-label>Especifique  </mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
@@ -134,6 +134,8 @@
               </mat-form-field>
               
               <!--
+              *ngIf="bienesInmueblesForm.value.bienInmueble.transmisor?.relacion?.clave === 'OTRO'"
+              [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave !== 'OTRO' }"
               <mat-select  
                formControlName="tipoInstrumentoPrueba"
                (selectionChange)="selectChange($event.value)"
