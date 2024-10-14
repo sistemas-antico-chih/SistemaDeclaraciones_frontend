@@ -111,7 +111,7 @@
                 <mat-label>Tipo de instrumento que generó el rendimiento o ganancia</mat-label>
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
                 <mat-select formControlName="tipoInstrumento"
-                  [(ngModel)]="tipoInstrumento"
+                  
                   (selectionChange)="selectChange($event.value)">
                   <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
                   [value]="instrumento">
@@ -129,7 +129,7 @@
                 <mat-label>Especifique  </mat-label>
                 <mat-icon matPrefix class="no-public">star</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" 
-                  [(ngModel)]="otroTipoInstrumento"
+                  
                   matInput type="text" minlength="2"
                   required />
               </mat-form-field>
