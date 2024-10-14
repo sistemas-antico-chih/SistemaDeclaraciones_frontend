@@ -33,7 +33,7 @@ export class IngresosNetosComponent implements OnInit {
   tipoInstrumento: String;
   @ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
   //selectTipoInstrumentoPrueba: string;
-  isHidden = false;
+  isHidden = true;
 
   aclaraciones = false;
   ingresosForm: FormGroup;
@@ -496,17 +496,11 @@ export class IngresosNetosComponent implements OnInit {
     }
     else{
       this.otroTipoInstrumento.nativeElement.hidden=true;
-      this.otroTipoInstrumento.nativeElement.disabled
       this.isHidden=true;
+      this.otroTipoInstrumento=event.valor;
     }
     //this.tipoInstrumento=event;
-    //this.tipoInstrumento=event.clave;
-    //this.otroTipoInstrumento.nativeElement.value=event.valor
-    //this.otroSector.nativeElement.value = datosPareja.actividadLaboralSectorPrivadoOtro?.sector?.valor;
-    //console.log(this.tipoInstrumento);
-    console.log();
-    console.log(event);
-    console.log();
+
     console.log(event.valor);
     /*this.hidden = event;
     this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
