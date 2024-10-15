@@ -112,7 +112,7 @@
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
                 <mat-select formControlName="tipoInstrumento"
                   [(ngModel)]="tipoInstrumento"
-                  (selectionChange)="selectChange($event.value)">
+                  >
                   <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
                   [value]="instrumento">
                     {{ instrumento.valor }}
@@ -121,6 +121,9 @@
               </mat-form-field>
               
               <!--
+
+              (selectionChange)="selectChange($event.value)"
+
               <mat-form-field 
                 appearance="fill" 
                 class="double-col"
