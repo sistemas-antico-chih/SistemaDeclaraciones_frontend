@@ -31,7 +31,7 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   tipoInstrumento: String;
-  @ViewChildren('otroTipoInstrumento') ViewChildren!: QueryList<'otroTipoInstrumento'>;
+  @ViewChildren('otroTipoInstrumento') ViewChildren!: QueryList<ElementRef>;
   //selectTipoInstrumentoPrueba: string;
   isHidden = true;
 
