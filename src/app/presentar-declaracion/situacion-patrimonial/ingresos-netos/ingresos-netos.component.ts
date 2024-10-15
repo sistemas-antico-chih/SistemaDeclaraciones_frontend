@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { declaracionMutation, ingresosQuery } from '@api/declaracion';
@@ -30,6 +30,11 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
+  tipoInstrumento: String;
+  @ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
+  //selectTipoInstrumentoPrueba: string;
+  isHidden = true;
+
   aclaraciones = false;
   ingresosForm: FormGroup;
   isLoading = false;
@@ -305,6 +310,7 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
+        console.log("llega2");
         const { tipoInstrumento } = formArray.at(index).value;
         formArray
           .at(index)
@@ -413,7 +419,17 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
@@ -470,5 +486,43 @@ export class IngresosNetosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  selectChange(event: any) {
+    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); 
+    //this.otroTipoInstrumento.nativeElement.value="OTRO";
+    //console.log(this.otroTipoInstrumento.typeof)
+    console.log(form);
+    //this.otroTipoInstrumento.nativeElement.value="OTRO";
+    if(event.clave === "OTRO"){
+      //this.otroTipoInstrumento.nativeElement.hidden=false;
+      this.isHidden=false;
+    }
+    else{
+      //this.otroTipoInstrumento.nativeElement.hidden=true;
+      this.isHidden=true;
+    }
+    //this.tipoInstrumento=event;
+
+    console.log(event.valor);
+    /*this.hidden = event;
+    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
+    if (this.active == false) {
+      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").enable();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("curp").setValidators([Validators.required]);
+      this.datosParejaForm.get("curp").enable();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+    } else {
+      this.datosParejaForm.get("rfc").clearValidators();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").disable();
+      this.datosParejaForm.get("curp").clearValidators();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+      this.datosParejaForm.get("curp").disable();
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
+    */
   }
 }
