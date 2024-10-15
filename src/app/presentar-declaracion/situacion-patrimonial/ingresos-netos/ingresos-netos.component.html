@@ -100,56 +100,35 @@
         <div formArrayName="actividades">
           <div *ngFor="let actividad of actividadFinanciera.controls; let i = index">
             <div class="grid-2-col" [formGroupName]="i">
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.actividadFinanciera }}"
-                appearance="fill" formGroupName="remuneracion">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.actividadFinanciera }}"
+                appearance="fill"
+                formGroupName="remuneracion"
+              >
                 <mat-label>Monto</mat-label>
                 <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0" />
                 <mat-icon matPrefix>attach_money</mat-icon>
               </mat-form-field>
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.tipoInstrumento }}"
-                appearance="fill">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.tipoInstrumento }}"
+                appearance="fill"
+              >
                 <mat-label>Tipo de instrumento que generó el rendimiento o ganancia</mat-label>
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
-                <mat-select formControlName="tipoInstrumento"
-                  [(ngModel)]="tipoInstrumento"
-                  >
-                  <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
-                  [value]="instrumento">
+                <mat-select formControlName="tipoInstrumento">
+                  <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" [value]="instrumento">
                     {{ instrumento.valor }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              
-              <!--
-
-              (selectionChange)="selectChange($event.value)"
-
-              <mat-form-field 
-                appearance="fill" 
-                class="double-col"
-                *ngIf="!isHidden">
-                <mat-label>Especifique  </mat-label>
-                <mat-icon matPrefix class="no-public">star</mat-icon>
-                <input [errorStateMatcher]="errorMatcher" 
-                  
-                  matInput type="text" minlength="2"
-                  required />
-              </mat-form-field>
-              -->
-              <!--
-              <mat-form-field
-              appearance="fill"
-              [ngClass]="{ hidden: actividadFinanciera.value.tipoInstrumento?.clave !== 'OTRO' }"
-            >
-              <mat-label>Especifique</mat-label>
-              <mat-icon matPrefix class="no-public">assistant</mat-icon>
-              <input [errorStateMatcher]="errorMatcher"  matInput type="text" required />
-            </mat-form-field>
-              -->
-
             </div>
-            <button class="delete-button" mat-button type="button" color="warn"
-              (click)="deleteFormArrayItem('actividadFinanciera', i)">
+            <button
+              class="delete-button"
+              mat-button
+              type="button"
+              color="warn"
+              (click)="deleteFormArrayItem('actividadFinanciera', i)"
+            >
               Eliminar <mat-icon matSofix>delete</mat-icon>
             </button>
           </div>
