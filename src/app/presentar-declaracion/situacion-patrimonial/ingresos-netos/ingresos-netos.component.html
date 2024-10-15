@@ -1,7 +1,11 @@
 <div class="section-main-container">
   <mat-card class="form-card">
-    <section-header section="I. Declaración de situación patrimonial" [simplificada]="declaracionSimplificada"
-      progress="36" type="{{ tipoDeclaracion }}"></section-header>
+    <section-header
+      section="I. Declaración de situación patrimonial"
+      [simplificada]="declaracionSimplificada"
+      progress="36"
+      type="{{ tipoDeclaracion }}"
+    ></section-header>
 
     <mat-divider></mat-divider>
 
@@ -9,8 +13,9 @@
       <label class="step-title">
         {{ declaracionSimplificada ? '6.' : '8.' }} Ingresos netos del declarante, pareja y/o dependiente económicos
         <span *ngIf="tipoDeclaracion === 'inicial'">(situación actual)</span>
-        <span *ngIf="tipoDeclaracion === 'modificacion'">(entre el 1 de enero y 31 de diciembre del año inmediato
-          anterior)</span>
+        <span *ngIf="tipoDeclaracion === 'modificacion'"
+          >(entre el 1 de enero y 31 de diciembre del año inmediato anterior)</span
+        >
         <span *ngIf="tipoDeclaracion === 'conclusion'">(del año en curso a la fecha de conclusión del empleo)</span>
       </label>
     </mat-toolbar>
@@ -21,12 +26,15 @@
       Todos los campos * son obligatorios. Los datos de terceros, siempre y cuando sean personas físicas, y los campos
       resaltados <span class="no-public-inline"></span> no serán públicos.
       <span *ngIf="tipoDeclaracion === 'inicial'">
-        Para la declaración de inicio los ingresos a reportar son mensuales.</span>
+        Para la declaración de inicio los ingresos a reportar son mensuales.</span
+      >
       <span *ngIf="tipoDeclaracion === 'modificacion'">
-        Para la declaración de modificación los ingresos a reportar son los del año inmediato anterior.</span>
+        Para la declaración de modificación los ingresos a reportar son los del año inmediato anterior.</span
+      >
       <span *ngIf="tipoDeclaracion === 'conclusion'">
         Para la declaración de conclusión los ingresos a reportar son los que recibió durante el año hasta la fecha de
-        la conclusión del empleo, cargo o comisión.</span>
+        la conclusión del empleo, cargo o comisión.</span
+      >
       <br />
       Es necesario capturar cantidades después de impuestos, <b>EN PESOS MEXICANOS</b>, sin comas, sin puntos, sin
       centavos y sin ceros a la izquierda.
@@ -39,8 +47,12 @@
           bonos y otras Prestaciones) (cantidades netas después de impuestos)
         </h3>
         <div class="grid-2-col">
-          <mat-form-field matTooltip="{{ tooltipData.RemuneracionNeta }}" appearance="fill"
-            formGroupName="remuneracionMensualCargoPublico" class="grid-item">
+          <mat-form-field
+            matTooltip="{{ tooltipData.RemuneracionNeta }}"
+            appearance="fill"
+            formGroupName="remuneracionMensualCargoPublico"
+            class="grid-item"
+          >
             <mat-label>Monto</mat-label>
             <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0" />
             <mat-icon matPrefix>attach_money</mat-icon>
@@ -62,27 +74,39 @@
         <div formArrayName="actividades">
           <div *ngFor="let actividad of actividadIndustrialComercialEmpresarial.controls; let i = index">
             <div class="grid-3-col" [formGroupName]="i">
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.actividadIndustrial.actividadIndustrial }}"
-                appearance="fill" formGroupName="remuneracion">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.actividadIndustrial.actividadIndustrial }}"
+                appearance="fill"
+                formGroupName="remuneracion"
+              >
                 <mat-label>Monto</mat-label>
                 <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0" />
                 <mat-icon matPrefix>attach_money</mat-icon>
               </mat-form-field>
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.actividadIndustrial.nombreRazonSocial }}"
-                appearance="fill">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.actividadIndustrial.nombreRazonSocial }}"
+                appearance="fill"
+              >
                 <mat-label>Nombre o razón social</mat-label>
                 <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombreRazonSocial" />
                 <mat-icon matPrefix>dns</mat-icon>
               </mat-form-field>
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.actividadIndustrial.tipoNegocio }}"
-                appearance="fill">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.actividadIndustrial.tipoNegocio }}"
+                appearance="fill"
+              >
                 <mat-label>Tipo de Negocio</mat-label>
                 <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="tipoNegocio" />
                 <mat-icon matPrefix>aspect_ratio</mat-icon>
               </mat-form-field>
             </div>
-            <button class="delete-button" mat-button type="button" color="warn"
-              (click)="deleteFormArrayItem('actividadIndustrialComercialEmpresarial', i)">
+            <button
+              class="delete-button"
+              mat-button
+              type="button"
+              color="warn"
+              (click)="deleteFormArrayItem('actividadIndustrialComercialEmpresarial', i)"
+            >
               Eliminar <mat-icon matSofix>delete</mat-icon>
             </button>
           </div>
@@ -100,56 +124,35 @@
         <div formArrayName="actividades">
           <div *ngFor="let actividad of actividadFinanciera.controls; let i = index">
             <div class="grid-2-col" [formGroupName]="i">
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.actividadFinanciera }}"
-                appearance="fill" formGroupName="remuneracion">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.actividadFinanciera }}"
+                appearance="fill"
+                formGroupName="remuneracion"
+              >
                 <mat-label>Monto</mat-label>
                 <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0" />
                 <mat-icon matPrefix>attach_money</mat-icon>
               </mat-form-field>
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.tipoInstrumento }}"
-                appearance="fill">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.actividadFinanciera.tipoInstrumento }}"
+                appearance="fill"
+              >
                 <mat-label>Tipo de instrumento que generó el rendimiento o ganancia</mat-label>
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
-                <mat-select formControlName="tipoInstrumento"
-                  [(ngModel)]="tipoInstrumento"
-                  (selectionChange)="selectChange($event.value)">
-                  <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" 
-                  [value]="instrumento">
+                <mat-select formControlName="tipoInstrumento">
+                  <mat-option *ngFor="let instrumento of tipoInstrumentoCatalogo" [value]="instrumento">
                     {{ instrumento.valor }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              
-
-              <mat-form-field 
-                appearance="fill" 
-                class="double-col"
-                *ngIf="!isHidden">
-                <mat-label>Especifique  </mat-label>
-                <mat-icon matPrefix class="no-public">star</mat-icon>
-                <input [errorStateMatcher]="errorMatcher" 
-                  #otroTipoInstrumento
-                  matInput type="text" minlength="2"
-                  required />
-              </mat-form-field>
-              
-              <!--
-              *ngIf="bienesInmueblesForm.value.bienInmueble.transmisor?.relacion?.clave === 'OTRO'"
-              [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave !== 'OTRO' }"
-              <mat-select  
-               formControlName="tipoInstrumentoPrueba"
-               (selectionChange)="selectChange($event.value)"
-               [(ngModel)]="tipoInstrumentoPrueba">
-                <mat-option value="inicial">inicial2</mat-option> 
-                <mat-option value="modificacion">modificacion2</mat-option> 
-                <mat-option value="conclusion">conclusion2</mat-option> 
-              </mat-select>
-              -->
-              
-              
             </div>
-            <button class="delete-button" mat-button type="button" color="warn"
-              (click)="deleteFormArrayItem('actividadFinanciera', i)">
+            <button
+              class="delete-button"
+              mat-button
+              type="button"
+              color="warn"
+              (click)="deleteFormArrayItem('actividadFinanciera', i)"
+            >
               Eliminar <mat-icon matSofix>delete</mat-icon>
             </button>
           </div>
@@ -169,8 +172,11 @@
         <div formArrayName="servicios">
           <div *ngFor="let servicio of serviciosProfesionales.controls; let i = index">
             <div class="grid-2-col" [formGroupName]="i">
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.servicios.servicios }}" appearance="fill"
-                formGroupName="remuneracion">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.servicios.servicios }}"
+                appearance="fill"
+                formGroupName="remuneracion"
+              >
                 <mat-label>Monto</mat-label>
                 <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0" />
                 <mat-icon matPrefix>attach_money</mat-icon>
@@ -181,8 +187,13 @@
                 <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="tipoServicio" />
               </mat-form-field>
             </div>
-            <button class="delete-button" mat-button type="button" color="warn"
-              (click)="deleteFormArrayItem('serviciosProfesionales', i)">
+            <button
+              class="delete-button"
+              mat-button
+              type="button"
+              color="warn"
+              (click)="deleteFormArrayItem('serviciosProfesionales', i)"
+            >
               Eliminar <mat-icon matSofix>delete</mat-icon>
             </button>
           </div>
@@ -200,21 +211,31 @@
         <div formArrayName="ingresos">
           <div *ngFor="let ingreso of otrosIngresos.controls; let i = index">
             <div class="grid-2-col" [formGroupName]="i">
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.otrosIngresos.otrosIngresos }}" appearance="fill"
-                formGroupName="remuneracion">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.otrosIngresos.otrosIngresos }}"
+                appearance="fill"
+                formGroupName="remuneracion"
+              >
                 <mat-label>Monto</mat-label>
                 <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0" />
                 <mat-icon matPrefix>attach_money</mat-icon>
               </mat-form-field>
-              <mat-form-field matTooltip="{{ tooltipData.otrosIngresos.otrosIngresos.especificarTipoIngreso }}"
-                appearance="fill">
+              <mat-form-field
+                matTooltip="{{ tooltipData.otrosIngresos.otrosIngresos.especificarTipoIngreso }}"
+                appearance="fill"
+              >
                 <mat-label>Especificar tipo de ingreso (arrendamiento, regalías, sorteos, etc.)</mat-label>
                 <mat-icon matPrefix>wb_iridescent</mat-icon>
                 <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="tipoIngreso" />
               </mat-form-field>
             </div>
-            <button class="delete-button" mat-button type="button" color="warn"
-              (click)="deleteFormArrayItem('otrosIngresos', i)">
+            <button
+              class="delete-button"
+              mat-button
+              type="button"
+              color="warn"
+              (click)="deleteFormArrayItem('otrosIngresos', i)"
+            >
               Eliminar <mat-icon matSofix>delete</mat-icon>
             </button>
           </div>
@@ -237,8 +258,11 @@
       <div class="bloque" formGroupName="ingresoMensualNetoParejaDependiente">
         <h3>B. Ingreso neto de la pareja y/o dependientes económicos (después de impuestos)</h3>
         <div class="grid-2-col">
-          <mat-form-field matTooltip="{{ tooltipData.ingresoNetoParejaDependientes }}" appearance="fill"
-            class="grid-item">
+          <mat-form-field
+            matTooltip="{{ tooltipData.ingresoNetoParejaDependientes }}"
+            appearance="fill"
+            class="grid-item"
+          >
             <mat-label>Monto</mat-label>
             <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0" />
             <mat-icon matPrefix class="no-public">attach_money</mat-icon>
@@ -271,8 +295,13 @@
 
         <mat-form-field matTooltip="{{ tooltipData.aclaracionesObservaciones }}" appearance="fill" class="grid-margin">
           <mat-icon matPrefix class="aclaraciones-no-public">speaker_notes</mat-icon>
-          <textarea maxlength="500" [errorStateMatcher]="errorMatcher" matInput
-            formControlName="aclaracionesObservaciones" rows="10"></textarea>
+          <textarea
+            maxlength="500"
+            [errorStateMatcher]="errorMatcher"
+            matInput
+            formControlName="aclaracionesObservaciones"
+            rows="10"
+          ></textarea>
         </mat-form-field>
       </div>
 
