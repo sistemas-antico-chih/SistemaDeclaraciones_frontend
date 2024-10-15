@@ -120,7 +120,7 @@
                 </mat-select>
               </mat-form-field>
               
-              <!--
+              
               <mat-form-field 
                 appearance="fill" 
                 class="double-col"
@@ -132,9 +132,8 @@
                   matInput type="text" minlength="2"
                   required />
               </mat-form-field>
-              -->
-
               
+              <!--
               <mat-form-field
               appearance="fill"
               [ngClass]="{ hidden: actividadFinanciera.value.tipoInstrumento?.clave !== 'OTRO' }"
@@ -143,22 +142,8 @@
               <mat-icon matPrefix class="no-public">assistant</mat-icon>
               <input [errorStateMatcher]="errorMatcher"  matInput type="text" required />
             </mat-form-field>
-              
-              
-              <!--
-              *ngIf="bienesInmueblesForm.value.bienInmueble.transmisor?.relacion?.clave === 'OTRO'"
-              [ngClass]="{ hidden: actividadFinanciera.value.actividades?.tipoInstrumento?.clave !== 'OTRO' }"
-              <mat-select  
-               formControlName="tipoInstrumentoPrueba"
-               (selectionChange)="selectChange($event.value)"
-               [(ngModel)]="tipoInstrumentoPrueba">
-                <mat-option value="inicial">inicial2</mat-option> 
-                <mat-option value="modificacion">modificacion2</mat-option> 
-                <mat-option value="conclusion">conclusion2</mat-option> 
-              </mat-select>
               -->
-              
-              
+
             </div>
             <button class="delete-button" mat-button type="button" color="warn"
               (click)="deleteFormArrayItem('actividadFinanciera', i)">

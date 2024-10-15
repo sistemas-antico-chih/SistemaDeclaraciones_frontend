@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChildren, Directive, QueryList } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -31,7 +31,7 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   tipoInstrumento: String;
-  @ViewChild('otroTipoInstrumento') otroTipoInstrumento: ElementRef;
+  @ViewChildren('otroTipoInstrumento') ViewChildren!: QueryList<'otroTipoInstrumento'>;
   //selectTipoInstrumentoPrueba: string;
   isHidden = true;
 
