@@ -448,6 +448,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   get finalIngresosForm() {
+    console.log("llega finalIngresos")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
 
     if (form.actividadFinanciera?.tipoInstrumento?.clave === 'OTRO') {
@@ -459,8 +460,9 @@ export class IngresosNetosComponent implements OnInit {
 
   async saveInfo(form: Ingresos) {
     try {
+      console.log("llega saveInfor")
       this.isLoading = true;
-      form=this.finalIngresosForm
+      form=this.finalIngresosForm();
       const declaracion = {
         //ingresos: this.finalIngresosForm,
         ingresos: form,
