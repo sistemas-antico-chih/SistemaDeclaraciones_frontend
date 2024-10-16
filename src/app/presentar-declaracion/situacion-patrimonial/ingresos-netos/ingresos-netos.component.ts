@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChildren, Directive, QueryList } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -30,9 +30,10 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
-  tipoInstrumento: String;
-  @ViewChildren('otroTipoInstrumento') ViewChildren!: QueryList<ElementRef>;
-  //selectTipoInstrumentoPrueba: string;
+  
+  //@ViewChildren('otroTipoInstrumento') ViewChildren!: QueryList<ElementRef>;
+  @ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;
+  
   isHidden = true;
 
   aclaraciones = false;
@@ -310,7 +311,6 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
-        console.log("llega2");
         const { tipoInstrumento } = formArray.at(index).value;
         formArray
           .at(index)
@@ -447,11 +447,22 @@ export class IngresosNetosComponent implements OnInit {
     });
   }
 
+  get finalIngresosForm() {
+    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+
+    if (form.actividadFinanciera?.tipoInstrumento?.clave === 'OTRO') {
+      form.actividadFinanciera.tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
+    }
+    console.log(form.a);
+    return form;
+  }
+
   async saveInfo(form: Ingresos) {
     try {
       this.isLoading = true;
-
+      form=this.finalIngresosForm
       const declaracion = {
+        //ingresos: this.finalIngresosForm,
         ingresos: form,
       };
 

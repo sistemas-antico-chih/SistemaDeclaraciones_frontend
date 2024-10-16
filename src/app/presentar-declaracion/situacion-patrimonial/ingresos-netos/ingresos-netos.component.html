@@ -122,21 +122,7 @@
                 </mat-select>
               </mat-form-field>
 
-              <!--
-              <div *ngFor="let i of ite">
-                <mat-form-field 
-                appearance="fill" 
-                class="double-col"
-                *ngIf="!isHidden">
-                <mat-label>Especifique  </mat-label>
-                <mat-icon matPrefix class="no-public">star</mat-icon>
-                <input [errorStateMatcher]="errorMatcher" 
-                  name="otroTipoInstrumento.[i]"
-                  matInput type="text" minlength="2"
-                  required />
-              </mat-form-field>
-              </div>
-              -->
+              {{actividad}}
               <mat-form-field
               appearance="fill"
               class="double-col"
@@ -147,7 +133,8 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">assistant</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" #otroSector matInput type="text" required />
+              <input [errorStateMatcher]="errorMatcher" #otroTipoInstrumento
+               matInput type="text" required />
             </mat-form-field>
 
             </div>
