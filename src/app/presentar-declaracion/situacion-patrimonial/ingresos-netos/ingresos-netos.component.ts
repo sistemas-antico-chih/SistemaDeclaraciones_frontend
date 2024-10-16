@@ -451,8 +451,9 @@ export class IngresosNetosComponent implements OnInit {
     console.log("llega finalIngresos")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log(form.actividadFinanciera);
-    console.log("");
-    if (form.actividadFinanciera?.tipoInstrumento?.clave === 'OTRO') {
+    console.log(form.actividadFinanciera.length);
+    
+    if (form.actividadFinanciera.tipoInstrumento.clave === 'OTRO') {
       console.log("llega if");
       form.actividadFinanciera.tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
     }
@@ -469,6 +470,7 @@ export class IngresosNetosComponent implements OnInit {
         //ingresos: this.finalIngresosForm,
         ingresos: form,
       };
+      console.log("llega saveInfo2")
 
       const { errors } = await this.apollo
         .mutate({
