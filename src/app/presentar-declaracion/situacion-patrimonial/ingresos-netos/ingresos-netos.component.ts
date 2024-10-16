@@ -462,7 +462,7 @@ export class IngresosNetosComponent implements OnInit {
     try {
       console.log("llega saveInfor")
       this.isLoading = true;
-      form=this.finalIngresosForm();
+      form=this.finalIngresosForm;
       const declaracion = {
         //ingresos: this.finalIngresosForm,
         ingresos: form,
