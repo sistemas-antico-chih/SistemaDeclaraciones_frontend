@@ -450,11 +450,12 @@ export class IngresosNetosComponent implements OnInit {
   get finalIngresosForm() {
     console.log("llega finalIngresos")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-
+    console.log(form.actividadFinanciera);
+    console.log("");
     if (form.actividadFinanciera?.tipoInstrumento?.clave === 'OTRO') {
       form.actividadFinanciera.tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
     }
-    console.log(form.a);
+    console.log(form.actividadFinanciera);
     return form;
   }
 
