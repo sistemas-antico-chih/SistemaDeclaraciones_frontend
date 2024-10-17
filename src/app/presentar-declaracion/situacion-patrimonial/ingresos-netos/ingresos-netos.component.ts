@@ -31,13 +31,13 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
-  @ViewChild(`otroTipoInstrumento`) otroTipoInstrumento3:ElementRef;  
-  //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
+  //@ViewChild(`otroTipoInstrumento`) otroTipoInstrumento3:ElementRef;  
+  //@ViewChild('otroTipoInstrumento',{static:true}) otroTipoInstrumento:ElementRef;  
 //  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
  // @ViewChild('otroTipoInstrumento4') otroTipoInstrumento4:ElementRef;  
  // @ViewChild('otroTipoInstrumento5') otroTipoInstrumento5:ElementRef;  
   
-  //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<any>;
+  @ViewChildren('otroTipoInstrumento') inputRef: QueryList<IngresosNetosComponent>;
 
   isHidden = true;
 
@@ -463,7 +463,7 @@ export class IngresosNetosComponent implements OnInit {
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         console.log("llega dentro IF")
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento3.nativeElement.value;
+        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.inputRef.nativeElement.value;
       }
     }
     
