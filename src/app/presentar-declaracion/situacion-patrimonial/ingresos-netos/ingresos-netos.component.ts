@@ -31,13 +31,16 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
+  
+  //otroTipoInstrumento: otroTipoInstrumento[] = [];
   //@ViewChild(`otroTipoInstrumento`) otroTipoInstrumento3:ElementRef;  
-  //@ViewChild('otroTipoInstrumento',{static:true}) otroTipoInstrumento:ElementRef;  
-//  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
+  @ViewChild('otroTipoInstrumento1') otroTipoInstrumento1:ElementRef; 
+  @ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef; 
+  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
  // @ViewChild('otroTipoInstrumento4') otroTipoInstrumento4:ElementRef;  
  // @ViewChild('otroTipoInstrumento5') otroTipoInstrumento5:ElementRef;  
   
-  @ViewChildren('otroTipoInstrumento') inputRef: QueryList<IngresosNetosComponent>;
+  //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<IngresosNetosComponent>;
 
   isHidden = true;
 
@@ -459,11 +462,26 @@ export class IngresosNetosComponent implements OnInit {
     console.log(form.actividadFinanciera.actividades.length);
     //let actividad=form.actividadFinanciera.actividades;
     
+
     
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         console.log("llega dentro IF")
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.inputRef.nativeElement.value;
+        switch (j){
+          case 1: 
+          form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
+          break;
+          case 2: 
+          form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento2.nativeElement.value;
+          break;
+          case 3: 
+          form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento3.nativeElement.value;
+          break;
+        }
+
+        
+        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
+        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.inputRef.toArray().nativeElement.value;
       }
     }
     
