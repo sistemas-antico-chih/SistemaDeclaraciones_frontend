@@ -32,7 +32,7 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento!: QueryList<ElementRef>;
-  @ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;
+  @ViewChild('otroTipoInstrumento[i]') otroTipoInstrumento[i]:ElementRef;
   
   isHidden = true;
 
