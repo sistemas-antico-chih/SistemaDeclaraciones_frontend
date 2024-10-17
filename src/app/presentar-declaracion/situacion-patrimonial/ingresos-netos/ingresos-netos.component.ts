@@ -36,7 +36,7 @@ export class IngresosNetosComponent implements OnInit {
  // @ViewChild('otroTipoInstrumento4') otroTipoInstrumento4:ElementRef;  
  // @ViewChild('otroTipoInstrumento5') otroTipoInstrumento5:ElementRef;  
   
-  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento!: QueryList<ElementRef>;
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento!: QueryList<nativeElement>;
 
   isHidden = true;
 
