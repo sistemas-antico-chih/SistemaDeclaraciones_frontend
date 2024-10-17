@@ -452,13 +452,13 @@ export class IngresosNetosComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log(form.actividadFinanciera);
     console.log(form.actividadFinanciera.actividades.length);
-    let actividad=form.actividadFinanciera.actividades;
+    //let actividad=form.actividadFinanciera.actividades;
     
     
-    for (let i = 0; i < actividad.length; i++) {
-      if (actividad[i].tipoInstrumento.clave === "OTRO") {
+    for (let i = 0; i < form.actividadFinanciera.actividades.length; i++) {
+      if (form.actividadFinanciera.actividades[i].tipoInstrumento.clave === "OTRO") {
         console.log("llega dentro IF")
-        form.actividadFinanciera.actividades[i].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
+        form.actividadFinanciera.actividades[i].tipoInstrumento.valor = this.otroTipoInstrumento[i].nativeElement.value;
       }
     }
     
