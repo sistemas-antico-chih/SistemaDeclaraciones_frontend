@@ -451,8 +451,23 @@ export class IngresosNetosComponent implements OnInit {
     console.log("llega finalIngresos")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log(form.actividadFinanciera);
-    console.log(form.actividadFinanciera.length);
+    console.log(form.actividadFinanciera.actividades.length);
     
+    /*
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular[0].clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
+        };
+        valores.push(valor);
+      }
+    }
+    */
+   
     if (form.actividadFinanciera.tipoInstrumento.clave === 'OTRO') {
       console.log("llega if");
       form.actividadFinanciera.tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
