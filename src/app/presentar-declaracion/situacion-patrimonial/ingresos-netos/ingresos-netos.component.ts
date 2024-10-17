@@ -30,8 +30,9 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
-  @ViewChild('otroTipoInstrumento{{i}}') otroTipoInstrumento:ElementRef;  
-//  @ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef;  
+  index:number=0;
+  @ViewChild(`otroTipoInstrumento`) otroTipoInstrumento:ElementRef;  
+  //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 //  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
  // @ViewChild('otroTipoInstrumento4') otroTipoInstrumento4:ElementRef;  
  // @ViewChild('otroTipoInstrumento5') otroTipoInstrumento5:ElementRef;  
