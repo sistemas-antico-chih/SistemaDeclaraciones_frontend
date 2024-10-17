@@ -30,10 +30,14 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
+  @ViewChild('otroTipoInstrumento{{i}}') otroTipoInstrumento:ElementRef;  
+//  @ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef;  
+//  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
+ // @ViewChild('otroTipoInstrumento4') otroTipoInstrumento4:ElementRef;  
+ // @ViewChild('otroTipoInstrumento5') otroTipoInstrumento5:ElementRef;  
   
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento!: QueryList<ElementRef>;
-  @ViewChild('otroTipoInstrumento{{i}}') otroTipoInstrumento:ElementRef;
-  
+
   isHidden = true;
 
   aclaraciones = false;
@@ -458,7 +462,7 @@ export class IngresosNetosComponent implements OnInit {
     for (let i = 0; i < form.actividadFinanciera.actividades.length; i++) {
       if (form.actividadFinanciera.actividades[i].tipoInstrumento.clave === "OTRO") {
         console.log("llega dentro IF")
-        form.actividadFinanciera.actividades[i].tipoInstrumento.valor = this.otroTipoInstrumento[i].nativeElement.value
+        form.actividadFinanciera.actividades[i].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value
       }
     }
     
