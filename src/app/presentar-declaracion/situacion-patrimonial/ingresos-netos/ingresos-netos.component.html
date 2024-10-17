@@ -130,10 +130,9 @@
                   actividad.value.tipoInstrumento?.clave !== 'OTRO'
               }"
             >
-            {{i}}&nbsp;{{otroTipoInstrumento}}
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">assistant</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" #otroTipoInstrumento.[i]
+              <input [errorStateMatcher]="errorMatcher" #otroTipoInstrumento[i]
                matInput type="text" required />
             </mat-form-field>
 
