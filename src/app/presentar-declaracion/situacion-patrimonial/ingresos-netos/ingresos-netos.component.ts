@@ -459,10 +459,10 @@ export class IngresosNetosComponent implements OnInit {
     //let actividad=form.actividadFinanciera.actividades;
     
     
-    for (let i = 0; i < form.actividadFinanciera.actividades.length; i++) {
-      if (form.actividadFinanciera.actividades[i].tipoInstrumento.clave === "OTRO") {
+    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         console.log("llega dentro IF")
-        form.actividadFinanciera.actividades[i].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value
+        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento[j].nativeElement.value;
       }
     }
     
