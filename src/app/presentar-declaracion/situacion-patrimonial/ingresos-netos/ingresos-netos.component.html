@@ -132,11 +132,12 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">assistant</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" #otroTtipoInstrumento{{i}}
+              <input [errorStateMatcher]="errorMatcher" #otroTtipoInstrumento
                matInput type="text" required />
             </mat-form-field>
 
             </div>
+            {{otroTipoInstrumento{{i}}}}
             <button
               class="delete-button"
               mat-button
