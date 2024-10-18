@@ -32,7 +32,9 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
 
-  @ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
+  @ViewChild('otroTipoInstrumento1') otroTipoInstrumento1:ElementRef;  
+  @ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef;  
+  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
 
   isHidden = true;
 
@@ -454,13 +456,30 @@ export class IngresosNetosComponent implements OnInit {
     console.log(form.actividadFinanciera.actividades.length);
     //let actividad=form.actividadFinanciera.actividades;
     
-    
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        console.log("llega dentro IF")
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
+        switch (j+1){
+          case 1:
+            console.log("llega qui1");
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
+            break;
+          case 2:
+              console.log("llega qui2");
+              form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento2.nativeElement.value;
+              break;
+          case 3:
+            console.log("llega qui3");
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento3.nativeElement.value;
+            break;  
+        }
       }
     }
+    
+    /*for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
+        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
+      }
+    }*/
     
     console.log(form.actividadFinanciera);
     return form;
