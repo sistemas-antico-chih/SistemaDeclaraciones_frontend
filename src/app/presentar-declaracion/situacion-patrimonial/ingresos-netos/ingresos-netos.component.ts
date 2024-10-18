@@ -32,7 +32,7 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
 
-  @ViewChild('otroTipoInstrumento1') otroTipoInstrumento1:ElementRef;  
+  @ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
   //@ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef;  
   //@ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
 
@@ -477,7 +477,7 @@ export class IngresosNetosComponent implements OnInit {
     
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
+        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
       }
     }
     
@@ -487,14 +487,12 @@ export class IngresosNetosComponent implements OnInit {
 
   async saveInfo(form: Ingresos) {
     try {
-      console.log("llega saveInfor")
+
       this.isLoading = true;
       form=this.finalIngresosForm;
       const declaracion = {
-        //ingresos: this.finalIngresosForm,
         ingresos: form,
       };
-      console.log("llega saveInfo2")
 
       const { errors } = await this.apollo
         .mutate({
