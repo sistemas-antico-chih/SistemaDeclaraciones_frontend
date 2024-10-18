@@ -31,16 +31,8 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
-  
-  //otroTipoInstrumento: otroTipoInstrumento[] = [];
-  //@ViewChild(`otroTipoInstrumento`) otroTipoInstrumento3:ElementRef;  
-  @ViewChild('otroTipoInstrumento1') otroTipoInstrumento1:ElementRef; 
-  @ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef; 
-  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
- // @ViewChild('otroTipoInstrumento4') otroTipoInstrumento4:ElementRef;  
- // @ViewChild('otroTipoInstrumento5') otroTipoInstrumento5:ElementRef;  
-  
-  @ViewChildren('otroTipoInstrumento3') otroTipoInstrumento: QueryList<IngresosNetosComponent>;
+
+  @ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
   isHidden = true;
 
@@ -462,46 +454,11 @@ export class IngresosNetosComponent implements OnInit {
     console.log(form.actividadFinanciera.actividades.length);
     //let actividad=form.actividadFinanciera.actividades;
     
-    const arreglo=this.otroTipoInstrumento.toArray();
-    console.log("longitud: "+arreglo.length);
-    console.log("valores: "+arreglo.values);
-    console.log(this.otroTipoInstrumento1);
-    console.log("algo");
-
+    
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         console.log("llega dentro IF")
-        console.log(this.otroTipoInstrumento1.nativeElement.value);
-        console.log(this.otroTipoInstrumento2.nativeElement.value);
-        console.log(this.otroTipoInstrumento3.nativeElement.value);
-        console.log("llega dentro I2F")
-        switch (j){
-          case 1: 
-          if(this.otroTipoInstrumento1 !== undefined){
-            console.log("llega switch1");
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
-            console.log(this.otroTipoInstrumento1.nativeElement.value);
-          }
-          break;
-          case 2: 
-          if(this.otroTipoInstrumento2 !== undefined){
-            console.log("llega switch2");
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento2.nativeElement.value;
-            console.log(this.otroTipoInstrumento2.nativeElement.value);
-          }
-          break;
-          case 3: 
-          if(this.otroTipoInstrumento3 !== undefined){
-            console.log("llega switch3");
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento3.nativeElement.value;
-            console.log(this.otroTipoInstrumento3.nativeElement.value);
-          }
-          break;
-        }
-
-        
-        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
-        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.inputRef.toArray().nativeElement.value;
+        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
       }
     }
     
