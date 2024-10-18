@@ -132,7 +132,7 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">assistant</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" id="'otroTipoInstrumento'+i"
+              <input [errorStateMatcher]="errorMatcher" [(ngmodel)]="'otroTipoInstrumento'+i"
                matInput type="text" required />
             </mat-form-field>
 
