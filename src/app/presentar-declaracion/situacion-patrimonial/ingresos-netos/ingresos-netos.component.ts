@@ -471,13 +471,16 @@ export class IngresosNetosComponent implements OnInit {
         console.log("llega dentro IF")
         switch (j){
           case 1: 
-          form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
+          if(this.otroTipoInstrumento1 !== undefined)
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
           break;
           case 2: 
-          form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento2.nativeElement.value;
+          if(this.otroTipoInstrumento2 !== undefined)
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento2.nativeElement.value;
           break;
           case 3: 
-          form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento3.nativeElement.value;
+          if(this.otroTipoInstrumento3 !== undefined)
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento3.nativeElement.value;
           break;
         }
 
