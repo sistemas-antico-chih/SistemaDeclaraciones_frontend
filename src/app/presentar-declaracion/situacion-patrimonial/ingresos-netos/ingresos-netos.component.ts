@@ -33,8 +33,8 @@ export class IngresosNetosComponent implements OnInit {
   index:number=0;
 
   @ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
-  //@ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef;  
-  //@ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
+
+ // @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
 
   isHidden = true;
 
@@ -480,8 +480,16 @@ export class IngresosNetosComponent implements OnInit {
         form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
       }
     }
-    
-    console.log(form.actividadFinanciera);
+
+      /*for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+        if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
+          this.otroTipoInstrumento.forEach(function (value: any) {
+            console.log(value);
+        });
+        }
+      }*/
+
+    //console.log(form.actividadFinanciera);
     return form;
   }
 
