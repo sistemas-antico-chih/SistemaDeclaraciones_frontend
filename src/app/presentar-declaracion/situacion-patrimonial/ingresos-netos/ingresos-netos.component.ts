@@ -33,8 +33,8 @@ export class IngresosNetosComponent implements OnInit {
   index:number=0;
 
   @ViewChild('otroTipoInstrumento1') otroTipoInstrumento1:ElementRef;  
-  @ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef;  
-  @ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
+  //@ViewChild('otroTipoInstrumento2') otroTipoInstrumento2:ElementRef;  
+  //@ViewChild('otroTipoInstrumento3') otroTipoInstrumento3:ElementRef;  
 
   isHidden = true;
 
@@ -456,7 +456,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log(form.actividadFinanciera.actividades.length);
     //let actividad=form.actividadFinanciera.actividades;
     
-    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+   /* for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         switch (j+1){
           case 1:
@@ -473,13 +473,13 @@ export class IngresosNetosComponent implements OnInit {
             break;  
         }
       }
-    }
+    }*/
     
-    /*for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
       }
-    }*/
+    }
     
     console.log(form.actividadFinanciera);
     return form;
