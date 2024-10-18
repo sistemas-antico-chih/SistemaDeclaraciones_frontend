@@ -463,8 +463,10 @@ export class IngresosNetosComponent implements OnInit {
     //let actividad=form.actividadFinanciera.actividades;
     
     const arreglo=this.otroTipoInstrumento.toArray();
-    console.log(arreglo.length);
-    console.log(arreglo.values);
+    console.log("longitud: "+arreglo.length);
+    console.log("valores: "+arreglo.values);
+    console.log(this.otroTipoInstrumento1);
+    console.log("algo");
 
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
@@ -474,6 +476,7 @@ export class IngresosNetosComponent implements OnInit {
           if(this.otroTipoInstrumento1 !== undefined){
             console.log("llega switch1");
             form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
+            console.log(this.otroTipoInstrumento1);
           }
           break;
           case 2: 
