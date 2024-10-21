@@ -32,7 +32,6 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
 
-  Signal: Signal;
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
