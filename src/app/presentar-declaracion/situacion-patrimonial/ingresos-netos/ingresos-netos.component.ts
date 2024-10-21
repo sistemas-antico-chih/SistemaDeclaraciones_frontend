@@ -483,7 +483,7 @@ export class IngresosNetosComponent implements OnInit {
         });
       }
     }
-    console.log(arreglo[0].nativeElement);
+    console.log(arreglo[0].nativeElement.id);
     console.log("******");
     console.log(arreglo);
 
