@@ -479,7 +479,7 @@ export class IngresosNetosComponent implements OnInit {
             //this.otroTipoInstrumento.nativeElement.value
             //form.actividadFinanciera.actividades[j].tipoInstrumento.valor
             console.log("******");
-            console.log(arreglo.nativeElement);
+            console.log(arreglo.Input);
           }
         });
       }
