@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList, Signal } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -35,6 +35,8 @@ export class IngresosNetosComponent implements OnInit {
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
+  inputElementList: Signal<readonly ElementRef[]> = ViewChildren('otroTipoInstrumento');
+
 
   isHidden = true;
 
@@ -483,8 +485,9 @@ export class IngresosNetosComponent implements OnInit {
 
       for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
         if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
+        console.log(this.inputElementList);
         let arreglo = this.otroTipoInstrumento.toArray();
+        //let ref: ElementRef<HTMLInputElement> = arreglo.find(el: any => el.nativeElement.id == item.title)
         console.log(arreglo);
         console.log(arreglo.length);
           this.otroTipoInstrumento.forEach(function (value: any) {
