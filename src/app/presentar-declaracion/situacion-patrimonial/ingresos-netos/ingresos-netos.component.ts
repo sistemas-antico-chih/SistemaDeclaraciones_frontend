@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList, Input } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -32,9 +32,12 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
 
+  @Input() itemList:any=[];
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<any>;  
+
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
-  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
+//  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
  // inputElementList: Signal<readonly ElementRef[]> = ViewChildren('otroTipoInstrumento');
 
 
