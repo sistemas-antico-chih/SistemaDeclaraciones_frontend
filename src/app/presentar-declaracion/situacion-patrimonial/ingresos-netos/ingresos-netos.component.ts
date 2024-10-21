@@ -492,11 +492,13 @@ export class IngresosNetosComponent implements OnInit {
         let arreglo = this.otroTipoInstrumento.toArray();
         //let ref: ElementRef<HTMLInputElement> = arreglo.find(el: any => el.nativeElement.id == item.title)
         console.log(arreglo);
-        console.log(arreglo.length);
+        console.log("arreglo.length");
           this.otroTipoInstrumento.forEach(function (value: any) {
             if(value !== undefined){
-              console.log(value+" "+j);
+              console.log(j);
+              console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
               form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento"+j
+              //this.otroTipoInstrumento.nativeElement.value
             }
         });
         }
