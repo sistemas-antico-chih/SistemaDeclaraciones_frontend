@@ -36,7 +36,7 @@ export class IngresosNetosComponent implements OnInit {
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
-  inputElementList: Signal<readonly ElementRef[]> = ViewChildren('otroTipoInstrumento');
+ // inputElementList: Signal<readonly ElementRef[]> = ViewChildren('otroTipoInstrumento');
 
 
   isHidden = true;
@@ -486,7 +486,7 @@ export class IngresosNetosComponent implements OnInit {
 
       for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
         if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        console.log(this.inputElementList);
+        //console.log(this.inputElementList);
         let arreglo = this.otroTipoInstrumento.toArray();
         //let ref: ElementRef<HTMLInputElement> = arreglo.find(el: any => el.nativeElement.id == item.title)
         console.log(arreglo);
@@ -494,7 +494,7 @@ export class IngresosNetosComponent implements OnInit {
           this.otroTipoInstrumento.forEach(function (value: any) {
             if(value !== undefined){
               console.log(value+" "+j);
-              //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
+              form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.textContent
             }
         });
         }
