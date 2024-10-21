@@ -496,7 +496,7 @@ export class IngresosNetosComponent implements OnInit {
           this.otroTipoInstrumento.forEach(function (value: any) {
             if(value !== undefined){
               console.log(value+" "+j);
-              form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "this.otroTipoInstrumento.nativeElement.textContent"
+              form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento"+j
             }
         });
         }
