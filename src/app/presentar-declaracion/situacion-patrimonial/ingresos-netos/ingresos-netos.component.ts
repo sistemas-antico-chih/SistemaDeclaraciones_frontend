@@ -32,9 +32,9 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index:number=0;
 
-  @ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
+  //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
- // @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
 
   isHidden = true;
 
@@ -475,19 +475,22 @@ export class IngresosNetosComponent implements OnInit {
       }
     }*/
     
-    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+    /*for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
       }
-    }
+    }*/
 
-      /*for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+      for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
         if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
           this.otroTipoInstrumento.forEach(function (value: any) {
-            console.log(value);
+            if(value !== undefined){
+              console.log(value+" "+j);
+            }
+            console.log("nohabia: "+j);
         });
         }
-      }*/
+      }
 
     //console.log(form.actividadFinanciera);
     return form;
