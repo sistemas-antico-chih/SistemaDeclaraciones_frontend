@@ -461,14 +461,16 @@ export class IngresosNetosComponent implements OnInit {
     //console.log(form.actividadFinanciera.actividades.length);
 
     let arreglo = this.otroTipoInstrumento.toArray();
+    
+    console.log("arreglo");
     console.log(arreglo);
     console.log("arreglo.length");
-    console.log(this.otroTipoInstrumento.nativeElement);
+    console.log(this.otroTipoInstrumento);
     console.log("arreglo.length");
 
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        console.log(this.otroTipoInstrumento.id);
+        //console.log(this.otroTipoInstrumento.id);
         //let ref: ElementRef<HTMLInputElement> = arreglo.find(el: any => el.nativeElement.id == item.title)
 
         this.otroTipoInstrumento.forEach(function (value: any) {
