@@ -463,7 +463,7 @@ export class IngresosNetosComponent implements OnInit {
     let arreglo = this.otroTipoInstrumento.toArray();
     console.log(arreglo);
     console.log("arreglo.length");
-    console.log(this.otroTipoInstrumento.id);
+    console.log(this.otroTipoInstrumento.nativeElement);
     console.log("arreglo.length");
 
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
