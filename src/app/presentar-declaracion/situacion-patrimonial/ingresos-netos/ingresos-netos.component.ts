@@ -30,15 +30,15 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
-  index:number=0;
+  index: number = 0;
 
-  @Input() itemList:any=[];
-  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<any>;  
+  @Input() itemList: any = [];
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<any>;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
-//  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
- // inputElementList: Signal<readonly ElementRef[]> = ViewChildren('otroTipoInstrumento');
+  //  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
+  // inputElementList: Signal<readonly ElementRef[]> = ViewChildren('otroTipoInstrumento');
 
 
   isHidden = true;
@@ -458,51 +458,29 @@ export class IngresosNetosComponent implements OnInit {
     console.log("llega finalIngresos")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log(form.actividadFinanciera);
-    console.log(form.actividadFinanciera.actividades.length);
-    //let actividad=form.actividadFinanciera.actividades;
-    
-   /* for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
-      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        switch (j+1){
-          case 1:
-            console.log("llega qui1");
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento1.nativeElement.value;
-            break;
-          case 2:
-              console.log("llega qui2");
-              form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento2.nativeElement.value;
-              break;
-          case 3:
-            console.log("llega qui3");
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento3.nativeElement.value;
-            break;  
-        }
-      }
-    }*/
-    
-    /*for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
-      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = this.otroTipoInstrumento.nativeElement.value;
-      }
-    }*/
+    //console.log(form.actividadFinanciera.actividades.length);
 
-      for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
-        if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        //console.log(this.inputElementList);
-        let arreglo = this.otroTipoInstrumento.toArray();
+    let arreglo = this.otroTipoInstrumento.toArray();
+    console.log(arreglo);
+    console.log("arreglo.length");
+    console.log(this.otroTipoInstrumento.id);
+    console.log("arreglo.length");
+
+    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
+        console.log(this.otroTipoInstrumento.id);
         //let ref: ElementRef<HTMLInputElement> = arreglo.find(el: any => el.nativeElement.id == item.title)
-        console.log(arreglo);
-        console.log("arreglo.length");
-          this.otroTipoInstrumento.forEach(function (value: any) {
-            if(value !== undefined){
-              console.log(j);
-              console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
-              form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento"+j
-              //this.otroTipoInstrumento.nativeElement.value
-            }
+
+        this.otroTipoInstrumento.forEach(function (value: any) {
+          if (value !== undefined) {
+            console.log(j);
+            console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento" + j
+            //this.otroTipoInstrumento.nativeElement.value
+          }
         });
-        }
       }
+    }
 
     //console.log(form.actividadFinanciera);
     return form;
@@ -512,7 +490,7 @@ export class IngresosNetosComponent implements OnInit {
     try {
 
       this.isLoading = true;
-      form=this.finalIngresosForm;
+      form = this.finalIngresosForm;
       const declaracion = {
         ingresos: form,
       };
