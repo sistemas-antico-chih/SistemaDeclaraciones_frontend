@@ -466,9 +466,9 @@ export class IngresosNetosComponent implements OnInit {
     console.log("******");
     let idx =arreglo[0].nativeElement.id;
     console.log(idx);
-    let xx=document.getElementById(idx);
+    let xx=document.getElementById(idx) as HTMLInputElement;
     console.log("******");
-    console.log(xx.nodeValue);
+    console.log(xx.value);
     
     //const element = arreglo.find((item:any) => item?.id === 'mat-input-24');
     //console.log(element);
