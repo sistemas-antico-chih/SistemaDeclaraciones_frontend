@@ -466,7 +466,12 @@ export class IngresosNetosComponent implements OnInit {
     //console.log(arreglo);
     //console.log("arreglo.length");
     //console.log(this.otroTipoInstrumento);
-    //console.log("arreglo.length");
+    console.log(arreglo[0]);
+    console.log("******");
+    console.log(arreglo[0].nativeElement.id);
+    console.log("******");
+    let texto=document.getElementById(arreglo[0].nativeElement.id.value);
+    console.log(texto);
 
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
@@ -483,11 +488,7 @@ export class IngresosNetosComponent implements OnInit {
         });
       }
     }
-    console.log("******");
-    console.log(arreglo[0].nativeElement.id);
-    console.log("******");
-    let texto=document.getElementById(arreglo[0].nativeElement.id.value);
-    console.log(texto);
+    
     //console.log(arreglo);
 
     //console.log(form.actividadFinanciera);
