@@ -474,9 +474,12 @@ export class IngresosNetosComponent implements OnInit {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         this.otroTipoInstrumento.forEach(function (value: any) {
           if (value !== undefined) {
+            console.log("llega foreach")
             let arr = document.getElementById(arreglo[j]) as HTMLInputElement;
             console.log(arr);
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = document.getElementById(arreglo[j]) as HTMLInputElement;
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = arr.value
+            console.log("******");
+            console.log(arr.value);
           }
         });
       }
