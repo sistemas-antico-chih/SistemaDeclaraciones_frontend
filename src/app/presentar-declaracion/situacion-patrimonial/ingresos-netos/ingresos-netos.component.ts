@@ -471,10 +471,13 @@ export class IngresosNetosComponent implements OnInit {
     //let texto3=document.getElementById(arreglo[0].nativeElement.id).id;
     console.log(texto);
     console.log("******");
+    let texto3=document.getElementById(arreglo[0])
     ///console.log(texto.innerHTML);
-    
+    let t3=document.querySelector('.mat-input-20');
     console.log(texto2);
-    //console.log(texto3);
+    const element = arreglo.find((item:any) => item?.input === 'mat-input-24');
+
+    console.log(t3);
     
 
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
