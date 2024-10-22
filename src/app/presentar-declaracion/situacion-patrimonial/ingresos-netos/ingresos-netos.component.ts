@@ -475,7 +475,7 @@ export class IngresosNetosComponent implements OnInit {
     let texto3=document.getElementById(arreglo[0].nativeElement.id).id;
     console.log(texto);
     console.log("******");
-    console.log(texto.innerHTML);
+    ///console.log(texto.innerHTML);
     
     console.log(texto2);
     console.log(texto3);
