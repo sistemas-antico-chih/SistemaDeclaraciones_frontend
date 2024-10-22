@@ -466,12 +466,16 @@ export class IngresosNetosComponent implements OnInit {
     //console.log(arreglo);
     //console.log("arreglo.length");
     //console.log(this.otroTipoInstrumento);
-    console.log(arreglo[0]);
+    //console.log(arreglo[0]);
     console.log("******");
     console.log(arreglo[0].nativeElement.id);
     console.log("******");
-    let texto=document.getElementById(arreglo[0].nativeElement.id.value);
+    let texto=document.getElementById(arreglo[0].nativeElement.id).getAttributeNames;
+    let texto2=document.getElementById(arreglo[0].nativeElement.id).innerHTML;
+    let texto3=document.getElementById(arreglo[0].nativeElement.id).id;
     console.log(texto);
+    console.log(texto2);
+    console.log(texto3);
 
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
