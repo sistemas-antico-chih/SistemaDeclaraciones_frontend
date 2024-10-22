@@ -486,7 +486,8 @@ export class IngresosNetosComponent implements OnInit {
     console.log("******");
     console.log(arreglo[0].nativeElement.id);
     console.log("******");
-    console.log(arreglo[0].nativeElement.id.value);
+    let texto=document.getElementById(arreglo[0].nativeElement.id);
+    console.log(texto);
     //console.log(arreglo);
 
     //console.log(form.actividadFinanciera);
