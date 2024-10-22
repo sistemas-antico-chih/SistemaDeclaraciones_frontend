@@ -461,8 +461,6 @@ export class IngresosNetosComponent implements OnInit {
     //console.log(form.actividadFinanciera.actividades.length);
 
     let arreglo = this.otroTipoInstrumento.toArray();
-    let prueba = this.otroTipoInstrumento.nativeElement as HTMLInputElement;
-    console.log("prueba: "+prueba);
 
     console.log(arreglo[0]);
     console.log("******");
