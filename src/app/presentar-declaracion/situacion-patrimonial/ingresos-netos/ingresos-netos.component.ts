@@ -465,9 +465,8 @@ export class IngresosNetosComponent implements OnInit {
     console.log(arreglo[0]);
     console.log("******");
     let idx =arreglo[0].nativeElement.id;
-    console.log("******");
+    console.log(idx);
     let xx=document.getElementById(idx);
-    console.log("******");
     console.log("******");
     console.log(xx.nodeValue);
     
