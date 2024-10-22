@@ -471,33 +471,30 @@ export class IngresosNetosComponent implements OnInit {
     let xx=document.getElementById(idx) as HTMLInputElement;
     console.log("******");
     console.log(xx.value);
-    
-    //const element = arreglo.find((item:any) => item?.id === 'mat-input-24');
-    //console.log(element);
-
-    
-    
-
+    //let arr [];
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-
         this.otroTipoInstrumento.forEach(function (value: any) {
           if (value !== undefined) {
-            //console.log("llega aqui");
-            //console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento" + j
-            //this.otroTipoInstrumento.nativeElement.value
-            //form.actividadFinanciera.actividades[j].tipoInstrumento.valor
-
+            let arr = document.getElementById(arreglo[j]) as HTMLInputElement;
+            console.log(arr);
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = document.getElementById(arreglo[j]) as HTMLInputElement;
           }
         });
       }
     }
-    
-    //console.log(arreglo);
-
-    //console.log(form.actividadFinanciera);
     return form;
+
+    /*this.otroTipoInstrumento.forEach(function (value: any) {
+      if (value !== undefined) {
+        //console.log("llega aqui");
+        //console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
+        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento" + j
+        //this.otroTipoInstrumento.nativeElement.value
+        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor
+
+      }
+    });*/
   }
 
   async saveInfo(form: Ingresos) {
