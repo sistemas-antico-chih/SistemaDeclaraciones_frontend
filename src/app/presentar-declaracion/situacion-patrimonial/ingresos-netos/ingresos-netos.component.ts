@@ -462,19 +462,19 @@ export class IngresosNetosComponent implements OnInit {
 
     let arreglo = this.otroTipoInstrumento.toArray();
 
-    console.log("arreglo");
-    console.log(arreglo);
-    console.log("arreglo.length");
-    console.log(this.otroTipoInstrumento);
-    console.log("arreglo.length");
+    //console.log("arreglo");
+    //console.log(arreglo);
+    //console.log("arreglo.length");
+    //console.log(this.otroTipoInstrumento);
+    //console.log("arreglo.length");
 
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
 
         this.otroTipoInstrumento.forEach(function (value: any) {
           if (value !== undefined) {
-            console.log("llega aqui");
-            console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
+            //console.log("llega aqui");
+            //console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
             form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento" + j
             //this.otroTipoInstrumento.nativeElement.value
             //form.actividadFinanciera.actividades[j].tipoInstrumento.valor
@@ -483,9 +483,11 @@ export class IngresosNetosComponent implements OnInit {
         });
       }
     }
+    console.log("******");
     console.log(arreglo[0].nativeElement.id);
     console.log("******");
-    console.log(arreglo);
+    console.log(arreglo[0].nativeElement.id.value);
+    //console.log(arreglo);
 
     //console.log(form.actividadFinanciera);
     return form;
