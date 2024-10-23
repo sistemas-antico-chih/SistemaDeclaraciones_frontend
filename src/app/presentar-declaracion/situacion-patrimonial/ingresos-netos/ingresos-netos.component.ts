@@ -314,6 +314,8 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
+        console.log("datatata");
+        console.log(data);
         const actividades = this.ingresosForm.get('actividadFinanciera').get('actividades'); // Deep copy
         //const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         
@@ -322,13 +324,13 @@ export class IngresosNetosComponent implements OnInit {
         
         let obValores;
         let valorHtml;
-        let arreglo = this.otroTipoInstrumento.toArray();
-        console.log("arreglo")
-        console.log(arreglo);
-        console.log(arreglo.length)
+        
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
+        //obValores = arreglo[j].nativeElement.id;
+        //valorHtml = document.getElementById(obValores) as HTMLInputElement;
+        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
 
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
@@ -337,11 +339,11 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        
         if (tipoInstrumento?.clave === "OTRO") {
-          
           console.log("llega");
-
+          let valorHTML=document.getElementById("mat-input-20") as HTMLInputElement
+          valorHTML.value="bbbbbvvvva1d"
+          console.log(valorHTML);
         }
       }
     }
@@ -488,8 +490,7 @@ export class IngresosNetosComponent implements OnInit {
           if (value !== undefined) {
             obValores = arreglo[j].nativeElement.id;
             valorHtml = document.getElementById(obValores) as HTMLInputElement;
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
-
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
           }
         });
       }
