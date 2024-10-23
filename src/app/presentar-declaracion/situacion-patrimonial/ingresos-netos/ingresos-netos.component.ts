@@ -341,9 +341,9 @@ export class IngresosNetosComponent implements OnInit {
 
         if (tipoInstrumento?.clave === "OTRO") {
           console.log("llega");
-          let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
-          valorHtml.value="bbbbbvvvva1d"
-          console.log(valorHtml);
+          //let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
+          //valorHtml.value="bbbbbvvvva1d"
+          //console.log(valorHtml);
         }
       }
     }
