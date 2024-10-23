@@ -37,10 +37,6 @@ export class IngresosNetosComponent implements OnInit {
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
 
-  //  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento:QueryList<ElementRef>;  
-  // inputElementList: Signal<readonly ElementRef[]> = ViewChildren('otroTipoInstrumento');
-
-
   isHidden = true;
 
   aclaraciones = false;
@@ -322,6 +318,7 @@ export class IngresosNetosComponent implements OnInit {
         let arreglo = this.otroTipoInstrumento.toArray();
         let obValores;
         let valorHtml;
+        console.log(arreglo);
 
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
@@ -331,19 +328,17 @@ export class IngresosNetosComponent implements OnInit {
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
         if (tipoInstrumento?.clave === "OTRO") {
-          console.log ("llega adentro")
+          console.log("llega adentro")
           for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
-            if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-              this.otroTipoInstrumento.forEach(function (value: any) {
-                if (value !== undefined) {
-                  console.log("llega adentro 2");
-                  obValores = arreglo[j].nativeElement.id;
-                  valorHtml = document.getElementById(obValores) as HTMLInputElement;
-                  form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
+            this.otroTipoInstrumento.forEach(function (value: any) {
+              if (value !== undefined) {
+                console.log("llega adentro 2");
+                obValores = arreglo[j].nativeElement.id;
+                valorHtml = document.getElementById(obValores) as HTMLInputElement;
+                form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
 
-                }
-              });
-            }
+              }
+            });
           }
         }
       }
@@ -459,6 +454,7 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
+
   }
 
   openSnackBar(message: string, action: string = null) {
@@ -538,18 +534,4 @@ export class IngresosNetosComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
-
-  /*
-  selectChange(event: any) {
-    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); 
-    console.log(form);
-    if(event.clave === "OTRO"){
-      this.isHidden=false;
-    }
-    else{
-      this.isHidden=true;
-    }
-    console.log(event.valor);
-  }
-  */
 }
