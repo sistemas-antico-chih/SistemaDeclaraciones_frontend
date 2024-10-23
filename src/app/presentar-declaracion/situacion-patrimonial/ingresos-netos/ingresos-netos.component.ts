@@ -316,17 +316,15 @@ export class IngresosNetosComponent implements OnInit {
       if (formArrayName === 'actividadFinanciera') {
         console.log("datatata");
         console.log(data);
-        const actividades = this.ingresosForm.get('actividadFinanciera').get('actividades'); // Deep copy
+        //const actividades = this.ingresosForm.get('actividadFinanciera').get('actividades'); // Deep copy
         //const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         
-        console.log("actividadFinanciera")
-        console.log(actividades);
-        
-        let obValores;
+        let obValores="mat-input-20";
         
         
         //obValores = arreglo[j].nativeElement.id;
-        //valorHtml = document.getElementById(obValores) as HTMLInputElement;
+        let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
+        console.log(valorHtml);
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
