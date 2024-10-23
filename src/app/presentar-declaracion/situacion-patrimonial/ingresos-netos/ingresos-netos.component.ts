@@ -339,21 +339,13 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        if (tipoInstrumento?.clave === "OTRO") {
-          data.forEach(function (value: any) {
-            if (value !== undefined) {
-             //this.otroTipoInstrumentoSolo.nativeElement.value="alguitooo"
-              console.log("llega: "+x);
-              x++;
-              //obValores = data.nativeElement.id;
-              //valorHtml = document.getElementById(obValores) as HTMLInputElement;
-              //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
-            }
-          });
+        for(let x=0; x < data.length; x++){
+          console.log('****')
+          console.log(data[x]);
+        }
           //let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
           //valorHtml.value="bbbbbvvvva1d"
           //console.log(valorHtml);
-        }
       }
     }
   }
