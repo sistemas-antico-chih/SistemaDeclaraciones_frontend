@@ -314,9 +314,11 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
-        const actividadFinanciera = this.otroTipoInstrumento;
+        const actividadFinanciera = this.otroTipoInstrumento.actividadFinanciera.value;
         const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+        console.log("actividadFinanciera")
         console.log(actividadFinanciera)
+        console.log(actividadFinanciera.length)
         console.log("form");
         console.log(form);
         console.log(form.length);
@@ -331,18 +333,20 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
+        let x=0;
         if (tipoInstrumento?.clave === "OTRO") {
           
           console.log("llega");
           /*for(let j = 0; j < this.otroTipoInstrumento.length; j++) {
             
           }*/
-         let x=0;
+         
           console.log(this.otroTipoInstrumento.length);
           this.otroTipoInstrumento.forEach(function (value: any) {
             if (value !== undefined) {
               console.log("aqui")
               console.log(x)
+              x++;
             }
           });
           //this.otroTipoInstrumento.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
