@@ -35,7 +35,7 @@ export class IngresosNetosComponent implements OnInit {
   @Input() itemList: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<any>;
 
-  //@ViewChild('otroTipoInstrumento') otroTipoInstrumento:ElementRef;  
+  @ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
   isHidden = true;
 
@@ -341,6 +341,7 @@ export class IngresosNetosComponent implements OnInit {
 
         if (tipoInstrumento?.clave === "OTRO") {
           console.log("llega");
+          this.otroTipoInstrumentoSolo.nativeElement.value="alguitooo"
           //let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
           //valorHtml.value="bbbbbvvvva1d"
           //console.log(valorHtml);
@@ -374,8 +375,6 @@ export class IngresosNetosComponent implements OnInit {
         default:
           break;
       }
-      console.log("data");
-      console.log(data);
       this.fillFormArray(section, dataArray);
     });
 
