@@ -314,7 +314,7 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
-        const actividadFinanciera = this.otroTipoInstrumento.actividadFinanciera.value;
+        const actividadFinanciera = JSON.parse(JSON.stringify(this.ingresosForm.actividadFinanciera.value)); // Deep copy
         const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         console.log("actividadFinanciera")
         console.log(actividadFinanciera)
