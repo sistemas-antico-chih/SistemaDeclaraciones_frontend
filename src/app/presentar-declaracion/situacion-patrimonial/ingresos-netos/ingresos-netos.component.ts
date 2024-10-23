@@ -331,7 +331,7 @@ export class IngresosNetosComponent implements OnInit {
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
-
+        let x=0;
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
         formArray
@@ -340,8 +340,16 @@ export class IngresosNetosComponent implements OnInit {
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
         if (tipoInstrumento?.clave === "OTRO") {
-          console.log("llega");
-          this.otroTipoInstrumentoSolo.nativeElement.value="alguitooo"
+          data.forEach(function (value: any) {
+            if (value !== undefined) {
+             this.otroTipoInstrumentoSolo.nativeElement.value="alguitooo"
+              console.log("llega: "+x);
+              x++;
+              //obValores = data.nativeElement.id;
+              //valorHtml = document.getElementById(obValores) as HTMLInputElement;
+              //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
+            }
+          });
           //let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
           //valorHtml.value="bbbbbvvvva1d"
           //console.log(valorHtml);
