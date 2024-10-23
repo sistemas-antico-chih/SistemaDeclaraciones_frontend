@@ -315,16 +315,20 @@ export class IngresosNetosComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const actividadFinanciera = this.ingresosForm.get('actividadFinanciera'); // Deep copy
-        const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+        //const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+        
         console.log("actividadFinanciera")
-        console.log(actividadFinanciera)
-        //console.log(actividadFinanciera.length)
-        console.log("form");
-        console.log(form);
-        console.log(form.length);
-
+        console.log(actividadFinanciera.actividades);
+        
         let obValores;
         let valorHtml;
+        let arreglo = this.otroTipoInstrumento.toArray();
+        console.log("arreglo")
+        console.log(arreglo);
+        console.log(arreglo.length)
+        //obValores = arreglo[j].nativeElement.id;
+        //valorHtml = document.getElementById(obValores) as HTMLInputElement;
+        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
 
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
@@ -333,35 +337,11 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        let x=0;
+        
         if (tipoInstrumento?.clave === "OTRO") {
           
           console.log("llega");
-          /*for(let j = 0; j < this.otroTipoInstrumento.length; j++) {
-            
-          }*/
-         
-          console.log(this.otroTipoInstrumento.length);
-          this.otroTipoInstrumento.forEach(function (value: any) {
-            if (value !== undefined) {
-              console.log("aqui")
-              console.log(x)
-              x++;
-            }
-          });
-          //this.otroTipoInstrumento.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
-          /*console.log("llega adentro")
-          for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
-            this.otroTipoInstrumento.forEach(function (value: any) {
-              if (value !== undefined) {
-                console.log("llega adentro 2");
-                obValores = arreglo[j].nativeElement.id;
-                valorHtml = document.getElementById(obValores) as HTMLInputElement;
-                form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
 
-              }
-            });
-          }*/
         }
       }
     }
