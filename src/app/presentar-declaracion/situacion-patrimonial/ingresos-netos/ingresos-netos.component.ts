@@ -314,7 +314,7 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
-        const actividadFinanciera = this.otroTipoInstrumento;
+        const actividadFinanciera = this.otroTipoInstrumento as HTMLInputElement;
         //const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         console.log(actividadFinanciera)
         
@@ -337,7 +337,10 @@ export class IngresosNetosComponent implements OnInit {
          let x=0;
           console.log(this.otroTipoInstrumento.length);
           this.otroTipoInstrumento.forEach(function (value: any) {
-            console.log(x)
+            if (value !== undefined) {
+              console.log(x)
+              
+            }
           });
           //this.otroTipoInstrumento.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
           /*console.log("llega adentro")
