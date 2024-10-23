@@ -318,7 +318,7 @@ export class IngresosNetosComponent implements OnInit {
         const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         console.log("actividadFinanciera")
         console.log(actividadFinanciera)
-        console.log(actividadFinanciera.length)
+        //console.log(actividadFinanciera.length)
         console.log("form");
         console.log(form);
         console.log(form.length);
