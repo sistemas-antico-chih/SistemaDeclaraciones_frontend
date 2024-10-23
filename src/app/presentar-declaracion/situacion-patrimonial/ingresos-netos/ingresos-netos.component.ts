@@ -328,7 +328,9 @@ export class IngresosNetosComponent implements OnInit {
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
         if (tipoInstrumento?.clave === "OTRO") {
-          console.log("llega adentro")
+          console.log(this.otroTipoInstrumento.nativeElement.value);
+          //this.otroTipoInstrumento.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
+          /*console.log("llega adentro")
           for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
             this.otroTipoInstrumento.forEach(function (value: any) {
               if (value !== undefined) {
@@ -339,7 +341,7 @@ export class IngresosNetosComponent implements OnInit {
 
               }
             });
-          }
+          }*/
         }
       }
     }
