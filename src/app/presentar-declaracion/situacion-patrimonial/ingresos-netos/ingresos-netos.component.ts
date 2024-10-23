@@ -342,7 +342,7 @@ export class IngresosNetosComponent implements OnInit {
         if (tipoInstrumento?.clave === "OTRO") {
           data.forEach(function (value: any) {
             if (value !== undefined) {
-             this.otroTipoInstrumentoSolo.nativeElement.value="alguitooo"
+             //this.otroTipoInstrumentoSolo.nativeElement.value="alguitooo"
               console.log("llega: "+x);
               x++;
               //obValores = data.nativeElement.id;
