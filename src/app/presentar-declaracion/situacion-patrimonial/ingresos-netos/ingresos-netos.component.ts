@@ -320,7 +320,6 @@ export class IngresosNetosComponent implements OnInit {
         let arreglo = this.otroTipoInstrumento.toArray();
         let obValores;
         let valorHtml;
-        console.log("arreglo: "+arreglo);
 
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
@@ -330,8 +329,10 @@ export class IngresosNetosComponent implements OnInit {
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
         if (tipoInstrumento?.clave === "OTRO") {
+          console.log("llega 22");
+          console.log(actividadFinanciera)
           console.log("llega");
-          //console.log(this.otroTipoInstrumento.nativeElement.value);
+          console.log(this.otroTipoInstrumento.nativeElement.id);
           //this.otroTipoInstrumento.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
           /*console.log("llega adentro")
           for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
