@@ -318,13 +318,34 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
-        console.log("llega fillForm")
+        const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+        let arreglo = this.otroTipoInstrumento.toArray();
+        let obValores;
+        let valorHtml;
+
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
         formArray
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
+
+        if (tipoInstrumento?.clave === "OTRO") {
+          console.log ("llega adentro")
+          for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+            if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
+              this.otroTipoInstrumento.forEach(function (value: any) {
+                if (value !== undefined) {
+                  console.log("llega adentro 2");
+                  obValores = arreglo[j].nativeElement.id;
+                  valorHtml = document.getElementById(obValores) as HTMLInputElement;
+                  form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
+
+                }
+              });
+            }
+          }
+        }
       }
     }
   }
@@ -466,9 +487,9 @@ export class IngresosNetosComponent implements OnInit {
         this.otroTipoInstrumento.forEach(function (value: any) {
           if (value !== undefined) {
             obValores = arreglo[j].nativeElement.id;
-            valorHtml=document.getElementById(obValores) as HTMLInputElement;
+            valorHtml = document.getElementById(obValores) as HTMLInputElement;
             form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
-            
+
           }
         });
       }
