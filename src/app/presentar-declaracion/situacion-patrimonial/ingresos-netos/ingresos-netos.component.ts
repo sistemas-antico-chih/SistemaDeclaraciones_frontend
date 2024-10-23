@@ -323,7 +323,7 @@ export class IngresosNetosComponent implements OnInit {
         console.log(actividades);
         
         let obValores;
-        let valorHtml;
+        
         
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
@@ -341,9 +341,9 @@ export class IngresosNetosComponent implements OnInit {
 
         if (tipoInstrumento?.clave === "OTRO") {
           console.log("llega");
-          let valorHTML=document.getElementById("mat-input-20") as HTMLInputElement
-          valorHTML.value="bbbbbvvvva1d"
-          console.log(valorHTML);
+          let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
+          valorHtml.value="bbbbbvvvva1d"
+          console.log(valorHtml);
         }
       }
     }
