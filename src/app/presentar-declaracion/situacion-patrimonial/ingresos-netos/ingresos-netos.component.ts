@@ -318,7 +318,9 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
+        console.log("llega fillForm")
         const { tipoInstrumento } = formArray.at(index).value;
+        console.log(tipoInstrumento);
         formArray
           .at(index)
           .get('tipoInstrumento')
@@ -455,33 +457,16 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   get finalIngresosForm() {
-    console.log("llega finalIngresos")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log(form.actividadFinanciera);
-    //console.log(form.actividadFinanciera.actividades.length);
-
     let arreglo = this.otroTipoInstrumento.toArray();
-
-    console.log(arreglo[0]);
-    console.log("******");
-    let idx =arreglo[0].nativeElement.id;
-    console.log(idx);
-    let xx=document.getElementById(idx) as HTMLInputElement;
-    console.log("******");
-    console.log(xx.value);
     let obValores;
     let valorHtml;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         this.otroTipoInstrumento.forEach(function (value: any) {
           if (value !== undefined) {
-            console.log("llega foreach")
             obValores = arreglo[j].nativeElement.id;
-            console.log("******");
-            console.log(obValores);
             valorHtml=document.getElementById(obValores) as HTMLInputElement;
-            console.log("******");
-            console.log(valorHtml)
             form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
             
           }
@@ -489,17 +474,6 @@ export class IngresosNetosComponent implements OnInit {
       }
     }
     return form;
-
-    /*this.otroTipoInstrumento.forEach(function (value: any) {
-      if (value !== undefined) {
-        //console.log("llega aqui");
-        //console.log(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = "otroTipoInstrumento" + j
-        //this.otroTipoInstrumento.nativeElement.value
-        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor
-
-      }
-    });*/
   }
 
   async saveInfo(form: Ingresos) {
