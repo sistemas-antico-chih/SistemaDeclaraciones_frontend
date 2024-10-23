@@ -372,6 +372,8 @@ export class IngresosNetosComponent implements OnInit {
         default:
           break;
       }
+      console.log("data");
+      console.log(data);
       this.fillFormArray(section, dataArray);
     });
 
