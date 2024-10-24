@@ -333,11 +333,13 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
+        console.log("form");
+        console.log(form);
         if(tipoInstrumento.clave === 'OTRO'){
-          console.log(arreglo);
-          elementId=form.actividadFinanciera.actividades[index].otroTipoInstrumento.nativeElement.id;
-          console.log("elementId");
-          console.log(elementId);
+          //console.log(arreglo);
+          //elementId=form.actividadFinanciera.actividades[index].otroTipoInstrumento.nativeElement.id;
+          //console.log("elementId");
+          //console.log(elementId);
           //obValores = arreglo[index].nativeElement.id;
           //valorHtml = document.getElementById(obValores) as HTMLInputElement;
           //form.actividadFinanciera.actividades[index].tipoInstrumento.valor = valorHtml.value;
