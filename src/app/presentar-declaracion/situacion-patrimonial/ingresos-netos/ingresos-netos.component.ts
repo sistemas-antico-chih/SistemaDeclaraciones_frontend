@@ -328,10 +328,10 @@ export class IngresosNetosComponent implements OnInit {
         console.log(obValores);
         
         //obValores = arreglo[j].nativeElement.id;
-        (document.getElementById(obValores) as HTMLInputElement).value = "alguillo";
-        //let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
+        //(document.getElementById(obValores) as HTMLInputElement).value = "alguillo";
+      ///let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
         ///console.log(valorHtml);
-        console.log((document.getElementById(obValores) as HTMLInputElement).value);
+       // console.log((document.getElementById(obValores) as HTMLInputElement).value);
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
