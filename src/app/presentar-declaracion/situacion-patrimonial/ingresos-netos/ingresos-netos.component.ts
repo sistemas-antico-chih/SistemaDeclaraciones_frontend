@@ -326,7 +326,7 @@ export class IngresosNetosComponent implements OnInit {
         const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         let elementId;
         console.log("***");
-        console.log(this.otroTipoInstrumento);
+        console.log(this.otroTipoInstrumento.nativeElement.id)
         let arreglo = this.otroTipoInstrumento.toArray();
         console.log (arreglo);
         console.log(arreglo.length)
