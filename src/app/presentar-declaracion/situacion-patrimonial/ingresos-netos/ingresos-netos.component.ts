@@ -340,9 +340,12 @@ export class IngresosNetosComponent implements OnInit {
         console.log(form);
         if(tipoInstrumento.clave === 'OTRO'){
           console.log("1");
-          (<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo";
+          //(<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo";
           console.log("2");
-          console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value);
+          //console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value);
+          console.log("3");
+          const user: string = document.querySelector<HTMLInputElement>('input[id="mat-input-20"]').value;
+          console.log(user);
           //console.log(arreglo);
           //elementId=form.actividadFinanciera.actividades[index].otroTipoInstrumento.nativeElement.id;
           //console.log("elementId");
