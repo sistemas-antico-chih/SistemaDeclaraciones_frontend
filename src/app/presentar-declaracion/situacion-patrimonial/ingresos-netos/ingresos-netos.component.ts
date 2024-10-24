@@ -314,19 +314,6 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
-        console.log("index");
-        console.log(index);
-        console.log("valor");
-        console.log(value);
-        console.log("datatata");
-        console.log(data);
-        
-        //const actividades = this.ingresosForm.get('actividadFinanciera').get('actividades'); // Deep copy
-        //const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-        
-        let obValores="mat-input-20";
-        console.log(obValores);
-        
         //obValores = arreglo[j].nativeElement.id;
         //(document.getElementById(obValores) as HTMLInputElement).value = "alguillo";
       ///let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
@@ -336,7 +323,9 @@ export class IngresosNetosComponent implements OnInit {
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
-        
+        const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+        let elementId;
+        let arreglo = this.otroTipoInstrumento.toArray();
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
         formArray
@@ -344,13 +333,15 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        /*for(let x=0; x < data.length; x++){
-          console.log('****')
-          console.log(data[x]);
-        }*/
-          //let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
-          //valorHtml.value="bbbbbvvvva1d"
-          //console.log(valorHtml);
+        if(tipoInstrumento.clave === 'OTRO'){
+          console.log(arreglo);
+          elementId=form.actividadFinanciera.actividades[index].otroTipoInstrumento.nativeElement.id;
+          console.log("elementId");
+          console.log(elementId);
+          //obValores = arreglo[index].nativeElement.id;
+          //valorHtml = document.getElementById(obValores) as HTMLInputElement;
+          //form.actividadFinanciera.actividades[index].tipoInstrumento.valor = valorHtml.value;
+        }
       }
     }
   }
