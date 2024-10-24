@@ -323,8 +323,10 @@ export class IngresosNetosComponent implements OnInit {
         console.log(obValores);
         
         //obValores = arreglo[j].nativeElement.id;
-        ///let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
+        (document.getElementById(obValores) as HTMLInputElement).value = "alguillo";
+        //let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
         ///console.log(valorHtml);
+        console.log((document.getElementById(obValores) as HTMLInputElement).value);
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
@@ -337,10 +339,10 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        for(let x=0; x < data.length; x++){
+        /*for(let x=0; x < data.length; x++){
           console.log('****')
           console.log(data[x]);
-        }
+        }*/
           //let valorHtml = document.getElementById("mat-input-20") as HTMLInputElement;
           //valorHtml.value="bbbbbvvvva1d"
           //console.log(valorHtml);
