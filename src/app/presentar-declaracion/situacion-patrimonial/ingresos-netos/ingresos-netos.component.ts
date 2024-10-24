@@ -320,16 +320,16 @@ export class IngresosNetosComponent implements OnInit {
         //const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         
         let obValores="mat-input-20";
-        
+        console.log(obValores);
         
         //obValores = arreglo[j].nativeElement.id;
-        let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
-        console.log(valorHtml);
+        ///let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
+        ///console.log(valorHtml);
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
         //obValores = arreglo[j].nativeElement.id;
         //valorHtml = document.getElementById(obValores) as HTMLInputElement;
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
-        let x=0;
+        
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
         formArray
