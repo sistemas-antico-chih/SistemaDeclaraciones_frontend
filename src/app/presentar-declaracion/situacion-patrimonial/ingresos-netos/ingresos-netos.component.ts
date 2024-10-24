@@ -35,7 +35,7 @@ export class IngresosNetosComponent implements OnInit {
   @Input() itemList: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<any>;
 
-  @ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
+  //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
   isHidden = true;
 
@@ -325,7 +325,11 @@ export class IngresosNetosComponent implements OnInit {
         //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
         const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         let elementId;
+        console.log("***");
+        console.log(this.otroTipoInstrumento);
         let arreglo = this.otroTipoInstrumento.toArray();
+        console.log (arreglo);
+        console.log(arreglo.length)
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
         formArray
