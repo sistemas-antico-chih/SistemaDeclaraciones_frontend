@@ -328,7 +328,7 @@ export class IngresosNetosComponent implements OnInit {
         console.log("***");
         console.log(this.otroTipoInstrumento);
         console.log("this.otroTipoInstrumento");
-        console.log(this.otroTipoInstrumento.ViewChildren);
+        //console.log(this.otroTipoInstrumento.ViewChildren);
         let arreglo = this.otroTipoInstrumento.toArray();
         console.log (arreglo);
         console.log(arreglo.length)
@@ -342,6 +342,7 @@ export class IngresosNetosComponent implements OnInit {
         console.log("form");
         console.log(form);
         if(tipoInstrumento.clave === 'OTRO'){
+          console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value);
           //console.log(arreglo);
           //elementId=form.actividadFinanciera.actividades[index].otroTipoInstrumento.nativeElement.id;
           //console.log("elementId");
