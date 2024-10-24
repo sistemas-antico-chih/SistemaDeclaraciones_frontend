@@ -32,7 +32,7 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index: number = 0;
 
-  @Input("mat-input-20") ids: any = [];
+  //@Input("mat-input-20") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<any>;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
@@ -326,10 +326,9 @@ export class IngresosNetosComponent implements OnInit {
         const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
         let elementId;
         console.log("***");
-        console.log(this.otroTipoInstrumento);
+        console.log(this.otroTipoInstrumento.length);
         console.log("this.otroTipoInstrumento");
-        console.log(this.ids);
-        console.log(this.ids.length);
+        
         //console.log(this.otroTipoInstrumento.ViewChildren);
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
@@ -346,7 +345,7 @@ export class IngresosNetosComponent implements OnInit {
           console.log("2");
           //console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value);
           console.log("3");
-          const user: string = document.querySelector<HTMLInputElement>('input[id="mat-input-20"]').value;
+          //const user: string = document.querySelector<HTMLInputElement>('input[id="mat-input-20"]').value;
           console.log(user);
           //console.log(arreglo);
           //elementId=form.actividadFinanciera.actividades[index].otroTipoInstrumento.nativeElement.id;
