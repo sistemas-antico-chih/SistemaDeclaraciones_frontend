@@ -32,7 +32,7 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index: number = 0;
 
-  @Input() itemList: any = [];
+  @Input() ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<any>;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
@@ -328,6 +328,8 @@ export class IngresosNetosComponent implements OnInit {
         console.log("***");
         console.log(this.otroTipoInstrumento);
         console.log("this.otroTipoInstrumento");
+        console.log(this.ids);
+        console.log(this.ids.length);
         //console.log(this.otroTipoInstrumento.ViewChildren);
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
