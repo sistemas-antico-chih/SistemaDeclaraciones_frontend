@@ -358,6 +358,16 @@ export class IngresosNetosComponent implements OnInit {
     console.log();
   }
 
+  ngAfterViewChecked(): void {
+    console.log("ngAfterViewChecked")
+    console.log(this.otroTipoInstrumento);
+    console.log(this.otroTipoInstrumento.length);
+    let arreglo=this.otroTipoInstrumento.toArray;
+    console.log(arreglo);
+    console.log("****")
+    console.log();
+  }
+
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
 
