@@ -359,6 +359,10 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
+ngAfterViewInit(): void {
+    console.log(this.otroTipoInstrumento);
+ }
+
  fillOtroTipoInstrumento(){
     console.log('llega aqui')
     let arreglo = this.otroTipoInstrumento.toArray();
