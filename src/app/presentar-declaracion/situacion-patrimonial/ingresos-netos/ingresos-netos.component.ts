@@ -324,53 +324,16 @@ export class IngresosNetosComponent implements OnInit {
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
-
-        let form = this.finalIngresosForm;
-        //console.log("form");
-        //console.log(form);
-        let algo;
-        const myElement: HTMLElement | null = document.getElementById('mat-input-') as HTMLElement;
-        algo=myElement;
-        console.log(algo);
-        
-        //console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo");
-
-        if(tipoInstrumento.clave === 'OTRO'){
-          console.log("1");
-          //(<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo";
-          //algo= (document.getElementById("mat-input-20") as HTMLInputElement).value;
-          //algo=(<HTMLInputElement>document.getElementById("mat-input-20")).value
-          
-          
-          //console.log("2");
-          //console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value);
-          //console.log("3");
-          //const user: string = document.querySelector<HTMLInputElement>('input[id="mat-input-20"]').value;
-          //console.log(user);
-          //console.log(arreglo);
-          //elementId=form.actividadFinanciera.actividades[index].otroTipoInstrumento.nativeElement.id;
-          //console.log("elementId");
-          //console.log(elementId);
-          //obValores = arreglo[index].nativeElement.id;
-          //valorHtml = document.getElementById(obValores) as HTMLInputElement;
-          //form.actividadFinanciera.actividades[index].tipoInstrumento.valor = valorHtml.value;
-        }
       }
     }
   }
 
-ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     console.log(this.otroTipoInstrumento);
- }
-
- fillOtroTipoInstrumento(){
-    console.log('llega aqui')
-    let arreglo = this.otroTipoInstrumento.toArray();
-    console.log("llega");
+    console.log(this.otroTipoInstrumento.length);
+    let arreglo=this.otroTipoInstrumento.toArray;
     console.log(arreglo);
-    return this.ingresosForm.get('actividadFinanciera.actividades') as FormArray;
   }
- 
 
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
