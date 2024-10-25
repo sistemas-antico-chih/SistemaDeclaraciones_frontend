@@ -314,31 +314,12 @@ export class IngresosNetosComponent implements OnInit {
       formArray.at(index).patchValue(value);
 
       if (formArrayName === 'actividadFinanciera') {
-        //obValores = arreglo[j].nativeElement.id;
-        //(document.getElementById(obValores) as HTMLInputElement).value = "alguillo";
-      ///let valorHtml = (document.getElementById(obValores) as HTMLInputElement).value;
-        ///console.log(valorHtml);
-       // console.log((document.getElementById(obValores) as HTMLInputElement).value);
-        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value
-        //obValores = arreglo[j].nativeElement.id;
-        //valorHtml = document.getElementById(obValores) as HTMLInputElement;
-        //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
-        const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-        let elementId;
-        console.log("***");
-        console.log(this.otroTipoInstrumento.length);
-        console.log("this.otroTipoInstrumento");
-        
-        //console.log(this.otroTipoInstrumento.ViewChildren);
         const { tipoInstrumento } = formArray.at(index).value;
         console.log(tipoInstrumento);
         formArray
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
-
-        console.log("form");
-        console.log(form);
         if(tipoInstrumento.clave === 'OTRO'){
           console.log("1");
           //(<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo";
@@ -358,6 +339,12 @@ export class IngresosNetosComponent implements OnInit {
       }
     }
   }
+
+  get fillOtroTipoInstrumento(){
+    console.log('llega aqui')
+    return this.ingresosForm.get('actividadFinanciera.actividades') as FormArray;
+  }
+ 
 
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
