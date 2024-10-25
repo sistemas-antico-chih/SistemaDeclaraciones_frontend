@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList, Input, Output } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -32,7 +32,7 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index: number = 0;
 
-  //@Input("mat-input-20") ids: any = [];
+  @Output("mat-input-20") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
@@ -329,10 +329,33 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    console.log("ngAfterViewInit")
     console.log(this.otroTipoInstrumento);
     console.log(this.otroTipoInstrumento.length);
     let arreglo=this.otroTipoInstrumento.toArray;
     console.log(arreglo);
+    console.log("****")
+    console.log();
+  }
+
+  ngAfterContentInit(): void {
+    console.log("ngAfterContentInit")
+    console.log(this.otroTipoInstrumento);
+    console.log(this.otroTipoInstrumento.length);
+    let arreglo=this.otroTipoInstrumento.toArray;
+    console.log(arreglo);
+    console.log("****")
+    console.log();
+  }
+
+  ngAfterContentChecked(): void {
+    console.log("ngAfterContentChecked")
+    console.log(this.otroTipoInstrumento);
+    console.log(this.otroTipoInstrumento.length);
+    let arreglo=this.otroTipoInstrumento.toArray;
+    console.log(arreglo);
+    console.log("****")
+    console.log();
   }
 
   fillForm(ingresos: Ingresos) {
