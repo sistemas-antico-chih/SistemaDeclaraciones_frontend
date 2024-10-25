@@ -246,6 +246,10 @@ export class IngresosNetosComponent implements OnInit {
       this.ingresoNetoDeclarante = form.remuneracionMensualCargoPublico.valor + this.otrosIngresosDeclarante;
       this.ingresosTotales = this.ingresoNetoDeclarante + form.ingresoMensualNetoParejaDependiente.valor;
     });
+
+
+    let arreglo = this.otroTipoInstrumento.toArray();
+    console.log(arreglo);
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
@@ -429,12 +433,6 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
-        console.log("this.fillForm.toString")
-        console.log(this.fillForm.toString);
-        console.log("this.fillFormArray")
-        console.log(this.fillFormArray)
-        console.log("this.fillIngresosForm")
-        console.log(this.finalIngresosForm)
       }
     } catch (error) {
       console.error(error);
