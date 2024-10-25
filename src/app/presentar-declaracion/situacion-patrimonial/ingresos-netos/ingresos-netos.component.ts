@@ -480,7 +480,7 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
-    console.log((document.getElementById("mat-input-20") as HTMLInputElement).value="alguix");
+    console.log((document.getElementById("mat-input-20") as HTMLInputElement).value="alguix".toString());
   }
 
   openSnackBar(message: string, action: string = null) {
