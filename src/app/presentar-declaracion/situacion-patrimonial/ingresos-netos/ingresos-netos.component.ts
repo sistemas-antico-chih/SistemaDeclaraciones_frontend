@@ -356,7 +356,7 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  get fillOtroTipoInstrumento(){
+ fillOtroTipoInstrumento(){
     console.log('llega aqui')
     let arreglo = this.otroTipoInstrumento.toArray();
     console.log("llega");
@@ -438,7 +438,7 @@ export class IngresosNetosComponent implements OnInit {
         console.log(arreglo);
 
         console.log("filForm 22")        
-        this.fillOtroTipoInstrumento();
+        this.fillOtroTipoInstrumento;
       }
     } catch (error) {
       console.error(error);
@@ -481,6 +481,8 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
+    console.log("ngOnInit")
+    this.fillOtroTipoInstrumento;
   }
 
   openSnackBar(message: string, action: string = null) {
