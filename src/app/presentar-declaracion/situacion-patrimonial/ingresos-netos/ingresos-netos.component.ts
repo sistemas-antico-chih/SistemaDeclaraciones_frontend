@@ -436,8 +436,9 @@ export class IngresosNetosComponent implements OnInit {
         console.log("filForm")
         let arreglo = this.otroTipoInstrumento.toArray();
         console.log(arreglo);
-        
-        this.fillOtroTipoInstrumento;
+
+        console.log("filForm 22")        
+        this.fillOtroTipoInstrumento();
       }
     } catch (error) {
       console.error(error);
