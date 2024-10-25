@@ -320,9 +320,12 @@ export class IngresosNetosComponent implements OnInit {
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
+
+        let algo;
         if(tipoInstrumento.clave === 'OTRO'){
           console.log("1");
-          //(<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo";
+          (<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo";
+          algo=(<HTMLInputElement>document.getElementById("mat-input-20")).value
           console.log("2");
           //console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value);
           console.log("3");
