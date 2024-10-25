@@ -33,7 +33,7 @@ export class IngresosNetosComponent implements OnInit {
   index: number = 0;
 
   //@Input("mat-input-20") ids: any = [];
-  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<any>;
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
@@ -480,12 +480,7 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
-
-    console.log("ngOnInit")
-    this.fillOtroTipoInstrumento;
-    let arreglo=this.otroTipoInstrumento.toArray();
-    console.log(arreglo);
-    console.log(arreglo.length);
+    console.log((document.getElementById("mat-input-20") as HTMLInputElement).value="alguix");
   }
 
   openSnackBar(message: string, action: string = null) {
