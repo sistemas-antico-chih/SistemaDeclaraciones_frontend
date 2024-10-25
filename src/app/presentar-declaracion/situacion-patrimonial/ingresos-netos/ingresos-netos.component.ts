@@ -329,9 +329,12 @@ export class IngresosNetosComponent implements OnInit {
         //console.log("form");
         //console.log(form);
         let algo;
-        const myElement: HTMLElement | null = document.getElementById('mat-input-1') as HTMLElement;
+        const myElement: HTMLElement | null = document.getElementById('mat-input-') as HTMLElement;
         algo=myElement;
         console.log(algo);
+        
+        //console.log((<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo");
+
         if(tipoInstrumento.clave === 'OTRO'){
           console.log("1");
           //(<HTMLInputElement>document.getElementById("mat-input-20")).value="lguillo";
@@ -433,12 +436,6 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
-        console.log("filForm")
-        let arreglo = this.otroTipoInstrumento.toArray();
-        console.log(arreglo);
-
-        console.log("filForm 22")        
-        this.fillOtroTipoInstrumento;
       }
     } catch (error) {
       console.error(error);
@@ -480,7 +477,6 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
-    console.log((document.getElementById("mat-input-20") as HTMLInputElement).value="alguix".toString());
   }
 
   openSnackBar(message: string, action: string = null) {
