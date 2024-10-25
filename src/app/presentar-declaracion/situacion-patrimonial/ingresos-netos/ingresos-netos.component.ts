@@ -497,7 +497,9 @@ export class IngresosNetosComponent implements OnInit {
 
   get finalIngresosForm() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+    console.log("final 1")
     let arreglo = this.otroTipoInstrumento.toArray();
+    console.log("final 2")
     let obValores;
     let valorHtml;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
