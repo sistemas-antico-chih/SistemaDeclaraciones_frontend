@@ -322,10 +322,10 @@ export class IngresosNetosComponent implements OnInit {
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
         let form = this.finalIngresosForm;
-        console.log("form");
-        console.log(form);
+        //console.log("form");
+        //console.log(form);
         let algo;
-        const myElement: HTMLElement | null = document.getElementById('mat-input-20') as HTMLElement;
+        const myElement: HTMLElement | null = document.getElementById('mat-input-1') as HTMLElement;
         algo=myElement;
         console.log(algo);
         if(tipoInstrumento.clave === 'OTRO'){
@@ -429,9 +429,12 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
-        console.log("this.fillForm")
-        console.log(this.fillForm)
-        console.log(this.fillForm.length)
+        console.log("this.fillForm.toString")
+        console.log(this.fillForm.toString);
+        console.log("this.fillFormArray")
+        console.log(this.fillFormArray)
+        console.log("this.fillIngresosForm")
+        console.log(this.finalIngresosForm)
       }
     } catch (error) {
       console.error(error);
