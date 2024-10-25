@@ -330,9 +330,7 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterViewInit(): void {
     console.log("ngAfterViewInit")
-    console.log(this.otroTipoInstrumento);
-    console.log(this.otroTipoInstrumento.length);
-    let arreglo=this.otroTipoInstrumento.toArray;
+    let arreglo=this.otroTipoInstrumento.toArray();
     console.log(arreglo);
     console.log("****")
     console.log();
@@ -340,9 +338,7 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterContentInit(): void {
     console.log("ngAfterContentInit")
-    console.log(this.otroTipoInstrumento);
-    console.log(this.otroTipoInstrumento.length);
-    let arreglo=this.otroTipoInstrumento.toArray;
+    let arreglo=this.otroTipoInstrumento.toArray();
     console.log(arreglo);
     console.log("****")
     console.log();
@@ -350,9 +346,7 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
-    console.log(this.otroTipoInstrumento);
-    console.log(this.otroTipoInstrumento.length);
-    let arreglo=this.otroTipoInstrumento.toArray;
+    let arreglo=this.otroTipoInstrumento.toArray();
     console.log(arreglo);
     console.log("****")
     console.log();
@@ -360,9 +354,7 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterViewChecked(): void {
     console.log("ngAfterViewChecked")
-    console.log(this.otroTipoInstrumento);
-    console.log(this.otroTipoInstrumento.length);
-    let arreglo=this.otroTipoInstrumento.toArray;
+    let arreglo=this.otroTipoInstrumento.toArray();
     console.log(arreglo);
     console.log("****")
     console.log();
