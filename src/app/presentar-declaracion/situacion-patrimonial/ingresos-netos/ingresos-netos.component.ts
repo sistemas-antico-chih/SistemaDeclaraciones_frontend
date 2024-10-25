@@ -354,6 +354,9 @@ export class IngresosNetosComponent implements OnInit {
 
   get fillOtroTipoInstrumento(){
     console.log('llega aqui')
+    let arreglo = this.otroTipoInstrumento.toArray();
+    console.log("llega");
+    console.log(arreglo);
     return this.ingresosForm.get('actividadFinanciera.actividades') as FormArray;
   }
  
@@ -426,6 +429,9 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
+        console.log("this.fillForm")
+        console.log(this.fillForm)
+        console.log(this.fillForm.length)
       }
     } catch (error) {
       console.error(error);
