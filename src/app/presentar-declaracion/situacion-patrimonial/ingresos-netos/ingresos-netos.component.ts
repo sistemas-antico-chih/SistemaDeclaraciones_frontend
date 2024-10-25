@@ -328,7 +328,7 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit(): void {
+  /*ngAfterViewInit(): void {
     console.log("ngAfterViewInit")
     let arreglo=this.otroTipoInstrumento.toArray();
     console.log(arreglo);
@@ -343,7 +343,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log("****")
     console.log();
   }
-
+  */
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     let arreglo=this.otroTipoInstrumento.toArray();
@@ -352,6 +352,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log();
   }
 
+  /*
   ngAfterViewChecked(): void {
     console.log("ngAfterViewChecked")
     let arreglo=this.otroTipoInstrumento.toArray();
@@ -359,7 +360,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log("****")
     console.log();
   }
-
+  */
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
 
