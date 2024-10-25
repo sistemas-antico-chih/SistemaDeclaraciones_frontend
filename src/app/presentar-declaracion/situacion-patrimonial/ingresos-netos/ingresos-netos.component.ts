@@ -344,13 +344,14 @@ export class IngresosNetosComponent implements OnInit {
     console.log();
   }
   */
-  ngAfterContentChecked(): void {
+
+  /*ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     let arreglo=this.otroTipoInstrumento.toArray();
     console.log(arreglo);
     console.log("****")
     console.log();
-  }
+  }*/
 
   /*
   ngAfterViewChecked(): void {
