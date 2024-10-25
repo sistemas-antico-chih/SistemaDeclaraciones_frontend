@@ -248,8 +248,8 @@ export class IngresosNetosComponent implements OnInit {
     });
 
 
-    let arreglo = this.otroTipoInstrumento.toArray();
-    console.log(arreglo);
+    //let arreglo = this.otroTipoInstrumento.toArray();
+    //console.log(arreglo);
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
@@ -433,6 +433,11 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
+        console.log("filForm")
+        let arreglo = this.otroTipoInstrumento.toArray();
+        console.log(arreglo);
+        
+        this.fillOtroTipoInstrumento;
       }
     } catch (error) {
       console.error(error);
