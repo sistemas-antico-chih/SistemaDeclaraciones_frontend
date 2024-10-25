@@ -324,44 +324,48 @@ export class IngresosNetosComponent implements OnInit {
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
+
+        
       }
     }
   }
 
-  /*ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     console.log("ngAfterViewInit")
-    let arreglo=this.otroTipoInstrumento.toArray();
-    console.log(arreglo);
+    //let arreglo=this.otroTipoInstrumento.toArray();
+    //console.log(arreglo);
     console.log("****")
     console.log();
   }
+  
 
   ngAfterContentInit(): void {
     console.log("ngAfterContentInit")
-    let arreglo=this.otroTipoInstrumento.toArray();
-    console.log(arreglo);
+    //let arreglo=this.otroTipoInstrumento.toArray();
+    //console.log(arreglo);
     console.log("****")
     console.log();
   }
-  */
+  
 
-  /*ngAfterContentChecked(): void {
+  ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
-    let arreglo=this.otroTipoInstrumento.toArray();
-    console.log(arreglo);
+    //let arreglo=this.otroTipoInstrumento.toArray();
+    //console.log(arreglo);
     console.log("****")
     console.log();
-  }*/
+  }
+  
 
-  /*
   ngAfterViewChecked(): void {
     console.log("ngAfterViewChecked")
-    let arreglo=this.otroTipoInstrumento.toArray();
-    console.log(arreglo);
+    //let arreglo=this.otroTipoInstrumento.toArray();
+    //console.log(arreglo);
     console.log("****")
     console.log();
   }
-  */
+  
+  
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
 
@@ -472,6 +476,8 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
   }
+
+
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
