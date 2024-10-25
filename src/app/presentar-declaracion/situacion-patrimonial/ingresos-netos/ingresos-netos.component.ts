@@ -483,6 +483,9 @@ export class IngresosNetosComponent implements OnInit {
 
     console.log("ngOnInit")
     this.fillOtroTipoInstrumento;
+    let arreglo=this.otroTipoInstrumento.toArray();
+    console.log(arreglo);
+    console.log(arreglo.length);
   }
 
   openSnackBar(message: string, action: string = null) {
