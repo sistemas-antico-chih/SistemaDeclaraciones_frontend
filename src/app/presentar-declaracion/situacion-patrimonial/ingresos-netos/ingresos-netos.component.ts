@@ -336,12 +336,14 @@ export class IngresosNetosComponent implements OnInit {
     
     if(tipoInstrumento.clave === "OTRO"){
       console.log(tipoInstrumento.valor);  
-      console.log(this.otroTipoInstrumento);  
+      //console.log(this.otroTipoInstrumento);  
       console.log("-----");
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      console.log(this.otroTipoInstrumento.value);
+      console.log(this.otroTipoInstrumento);
+      console.log("######");
+      console.log(this.finalIngresosForm.get('actividadesFinancieras.actividades'));
       //obValores = arreglo[j].nativeElement.id;
       //this.arrayHTMLOtroTipoInstrumento.push(tipoInstrumento.valor)
       //console.log(this.arrayHTMLOtroTipoInstrumento);
