@@ -351,7 +351,8 @@ export class IngresosNetosComponent implements OnInit {
         });
       }
     }
-    if(this.ingresosForm)
+    console.log(form);
+    console.log(this.ingresosForm)
     console.log("11");
     console.log(this.otroTipoInstrumento);
     console.log("****")
