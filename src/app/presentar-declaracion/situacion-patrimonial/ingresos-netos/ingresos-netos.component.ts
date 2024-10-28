@@ -33,7 +33,8 @@ export class IngresosNetosComponent implements OnInit {
   index: number = 0;
 
   @Output("otroTipoInstrumento") ids: any = [];
-  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
+  //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
+  otroTipoInstrumento=ViewChildren("otroTipoInstrumento");
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
@@ -250,6 +251,7 @@ export class IngresosNetosComponent implements OnInit {
 
     //let arreglo = this.otroTipoInstrumento.toArray();
     console.log("aqui form");
+    console.log(this.otroTipoInstrumento);
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
@@ -325,7 +327,7 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        console.log(ViewChildren);
+        console.log(this.otroTipoInstrumento);
       }
     }
   }
@@ -334,8 +336,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log("ngAfterViewInit")
     //let arreglo=this.otroTipoInstrumento.toArray();
     //console.log(arreglo);
-    console.log(this.ids);
-    console.log(this.ids.length);
+    console.log(this.otroTipoInstrumento);
     console.log("****")
     console.log();
   }
@@ -350,13 +351,13 @@ export class IngresosNetosComponent implements OnInit {
   }*/
   
 
-  /*ngAfterContentChecked(): void {
+  ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
-    let arreglo=this.ids;
+    console.log(this.otroTipoInstrumento);
     //console.log(arreglo);
     console.log("****")
     console.log();
-  }*/
+  }
   
 
   /*ngAfterViewChecked(): void {
