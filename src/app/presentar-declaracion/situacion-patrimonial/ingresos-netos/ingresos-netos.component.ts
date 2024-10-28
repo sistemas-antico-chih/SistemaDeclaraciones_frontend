@@ -331,38 +331,15 @@ export class IngresosNetosComponent implements OnInit {
   pasarIds(tipoInstrumento:any):void {
     console.log("llegaIds")
     console.log(tipoInstrumento);
-    console.log(this.otroTipoInstrumento);
-  }
-  ngAfterContentChecked(): void {
-    console.log("ngAfterContentChecked")
-    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log("final 1")
-    
-    //let arreglo = this.otroTipoInstrumento.toArray();
-    console.log(this.ingresosForm.get('actividadFinanciera.actividades'));
-    if (this.otroTipoInstrumento !== undefined || this.otroTipoInstrumento !=null){
+    let arreglo = this.otroTipoInstrumento.toArray();
+    if(tipoInstrumento.clave === "OTRO"){
       console.log(this.otroTipoInstrumento)
-      //const { tipoInstrumento } = formArray.at(index).value;
     }
-    
-    let x=0;
-    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
-      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        //obValores.push(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
-        this.otroTipoInstrumento.forEach(function (value: any) {
-          if (value !== undefined) {
-            
-            console.log(x);
-            x++;
-          //  (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
-            //obValores = arreglo[j].nativeElement.id;
-            //valorHtml = document.getElementById(obValores) as HTMLInputElement;
-            //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
-          }
-        });
-      }
-    }
+    console.log(this.otroTipoInstrumento);
+    (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
   }
+  
+  
   
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
