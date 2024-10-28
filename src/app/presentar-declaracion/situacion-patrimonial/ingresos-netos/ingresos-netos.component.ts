@@ -333,17 +333,21 @@ export class IngresosNetosComponent implements OnInit {
     console.log("ngAfterContentChecked")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log("final 1")
-    let arreglo = this.otroTipoInstrumento.toArray();
+    /*if(this.otroTipoInstrumento){
+      let arreglo = this.otroTipoInstrumento.toArray();
+    }*/
     console.log(this.ingresosForm.get('actividadFinanciera.actividades'));
     let obValores ;
     //let valorHtml ;
-    //let x=0;
+    let x=0;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
         this.otroTipoInstrumento.forEach(function (value: any) {
           if (value !== undefined) {
-            //console.log(x);
-            //x++;
+            console.log(x);
+            x++;
+            
+            let arreglo = this.otroTipoInstrumento.toArray();
             obValores = arreglo[j].nativeElement.id;
             (<HTMLInputElement> document.getElementById(obValores)).value=form.actividadFinanciera.actividades[j].tipoInstrumento.valor;
             //valorHtml = document.getElementById(obValores) as HTMLInputElement;
