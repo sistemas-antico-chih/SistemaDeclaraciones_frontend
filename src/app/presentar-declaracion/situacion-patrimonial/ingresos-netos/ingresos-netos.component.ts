@@ -252,7 +252,7 @@ export class IngresosNetosComponent implements OnInit {
 
     //let arreglo = this.otroTipoInstrumento.toArray();
     console.log("aqui form");
-    console.log(this.otroTipoInstrumento);
+    console.log(this.otroTipoInstrumento2);
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
@@ -328,6 +328,7 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
+
         console.log(this.otroTipoInstrumento);
       }
     }
@@ -355,8 +356,10 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
+    console.log("11");
     console.log(this.otroTipoInstrumento);
-    console.log(this.otroTipoInstrumento.toArray);
+    console.log("22")
+    console.log(this.otroTipoInstrumento2);
     //console.log(arreglo);
     console.log("****")
     console.log();
