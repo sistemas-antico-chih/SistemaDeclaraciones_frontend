@@ -248,11 +248,6 @@ export class IngresosNetosComponent implements OnInit {
       this.ingresoNetoDeclarante = form.remuneracionMensualCargoPublico.valor + this.otrosIngresosDeclarante;
       this.ingresosTotales = this.ingresoNetoDeclarante + form.ingresoMensualNetoParejaDependiente.valor;
     });
-
-
-    //let arreglo = this.otroTipoInstrumento.toArray();
-    console.log("aqui form");
-    console.log(this.otroTipoInstrumento2);
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
@@ -334,47 +329,14 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  /*ngAfterViewInit(): void {
-    console.log("ngAfterViewInit")
-    //let arreglo=this.otroTipoInstrumento.toArray();
-    //console.log(arreglo);
-    console.log(this.otroTipoInstrumento);
-    console.log("****")
-    console.log();
-  }*/
-  
-
-  ngAfterContentInit(): void {
-    console.log("ngAfterContentInit")
-    //let arreglo=this.otroTipoInstrumento.toArray();
-    console.log(this.otroTipoInstrumento2);
-    console.log(this.otroTipoInstrumento2.toArray);
-    console.log("****")
-    console.log();
-  }
-  
-
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     console.log("11");
     console.log(this.otroTipoInstrumento);
-    console.log("22")
-    console.log(this.otroTipoInstrumento2);
-    //console.log(arreglo);
     console.log("****")
     console.log();
   }
   
-
-  /*ngAfterViewChecked(): void {
-    console.log("ngAfterViewChecked")
-    //let arreglo=this.otroTipoInstrumento.toArray();
-    //console.log(arreglo);
-    console.log("****")
-    console.log();
-  }*/
-  
-
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
 
