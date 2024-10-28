@@ -332,10 +332,10 @@ export class IngresosNetosComponent implements OnInit {
 
   pasarIds(tipoInstrumento:any):void {
     console.log("llegaIds")
-    console.log(tipoInstrumento);
+    //console.log(tipoInstrumento);
     
     if(tipoInstrumento.clave === "OTRO"){
-      console.log(tipoInstrumento.valor);  
+      //console.log(tipoInstrumento.valor);  
       //console.log(this.otroTipoInstrumento);  
       console.log("-----");
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
