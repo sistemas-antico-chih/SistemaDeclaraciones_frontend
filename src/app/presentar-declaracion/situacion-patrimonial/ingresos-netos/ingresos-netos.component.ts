@@ -317,29 +317,27 @@ export class IngresosNetosComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
-        console.log(tipoInstrumento);
+        //console.log(tipoInstrumento);
         formArray
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        this.pasarIds();
+        this.pasarIds(tipoInstrumento);
       }
     }
   }
 
-  pasarIds():void {
+  pasarIds(tipoInstrumento:any):void {
     console.log("llegaIds")
+    console.log(tipoInstrumento);
+    console.log(this.otroTipoInstrumento);
   }
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log("final 1")
     
-
-    
-    
-
     //let arreglo = this.otroTipoInstrumento.toArray();
     console.log(this.ingresosForm.get('actividadFinanciera.actividades'));
     if (this.otroTipoInstrumento !== undefined || this.otroTipoInstrumento !=null){
