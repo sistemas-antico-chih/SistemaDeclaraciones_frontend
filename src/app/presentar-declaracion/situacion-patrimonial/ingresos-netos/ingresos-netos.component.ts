@@ -323,16 +323,14 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-
-        //console.log(this.otroTipoInstrumento);
-        if(tipoInstrumento.clave === "OTRO"){
-          console.log("entra");
-          (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
-        }
+        this.pasarIds();
       }
     }
   }
 
+  pasarIds():void {
+    console.log("llegaIds")
+  }
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
