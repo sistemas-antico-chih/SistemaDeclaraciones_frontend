@@ -335,10 +335,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log("final 1")
     //let arreglo = this.otroTipoInstrumento.toArray();
     console.log(this.ingresosForm.get('actividadFinanciera.actividades'));
-    console.log('----')
-    console.log(this.ingresosForm.get('actividadFinanciera.actividades') as FormArray);
-    //let obValores;
-    //let valorHtml;
+    
     let x=0;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
@@ -346,6 +343,7 @@ export class IngresosNetosComponent implements OnInit {
           if (value !== undefined) {
             console.log(x);
             x++;
+            (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
             //obValores = arreglo[j].nativeElement.id;
             //valorHtml = document.getElementById(obValores) as HTMLInputElement;
             //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
