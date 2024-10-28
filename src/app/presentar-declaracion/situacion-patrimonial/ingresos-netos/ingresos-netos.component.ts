@@ -337,7 +337,7 @@ export class IngresosNetosComponent implements OnInit {
       let arreglo = this.otroTipoInstrumento.toArray();
     }*/
     
-    let arreglo= this.ingresosForm.get('actividadFinanciera.actividades').toArray;
+    let arreglo= this.ingresosForm.get('actividadFinanciera.actividades');
     
     let obValores ;
     //let valorHtml ;
