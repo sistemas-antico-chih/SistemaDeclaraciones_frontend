@@ -32,7 +32,7 @@ import { findOption } from '@utils/utils';
 export class IngresosNetosComponent implements OnInit {
   index: number = 0;
 
-  @Output("mat-input-20") ids: any = [];
+  @Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
@@ -350,7 +350,7 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
-    let arreglo=this.otroTipoInstrumento.toArray();
+    let arreglo=this.ids;
     console.log(arreglo);
     console.log("****")
     console.log();
