@@ -33,8 +33,9 @@ export class IngresosNetosComponent implements OnInit {
   index: number = 0;
 
   @Output("otroTipoInstrumento") ids: any = [];
-  //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
-  otroTipoInstrumento=ViewChildren("otroTipoInstrumento");
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
+  
+  otroTipoInstrumento2=ViewChildren("otroTipoInstrumento");
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
@@ -332,28 +333,30 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit(): void {
+  /*ngAfterViewInit(): void {
     console.log("ngAfterViewInit")
     //let arreglo=this.otroTipoInstrumento.toArray();
     //console.log(arreglo);
     console.log(this.otroTipoInstrumento);
     console.log("****")
     console.log();
-  }
+  }*/
   
 
-  /*ngAfterContentInit(): void {
+  ngAfterContentInit(): void {
     console.log("ngAfterContentInit")
     //let arreglo=this.otroTipoInstrumento.toArray();
-    //console.log(arreglo);
+    console.log(this.otroTipoInstrumento2);
+    console.log(this.otroTipoInstrumento2.toArray);
     console.log("****")
     console.log();
-  }*/
+  }
   
 
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     console.log(this.otroTipoInstrumento);
+    console.log(this.otroTipoInstrumento.toArray);
     //console.log(arreglo);
     console.log("****")
     console.log();
