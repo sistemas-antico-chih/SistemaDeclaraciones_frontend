@@ -334,10 +334,12 @@ export class IngresosNetosComponent implements OnInit {
     let arreglo = this.otroTipoInstrumento.toArray();
     let x=0;
     if(tipoInstrumento.clave === "OTRO"){
+      console.log("entra");
       console.log(this.otroTipoInstrumento)
+      console.log("2")
       console.log(arreglo);
       (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
-      
+
     }
     //console.log(this.otroTipoInstrumento);
   }
