@@ -31,7 +31,8 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   index: number = 0;
-  arreglo: any=[];
+  arrayOtroTipoInstrumento: any=[];
+  arrayHTMLOtroTipoInstrumento: any=[];
 
   @Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
@@ -336,9 +337,14 @@ export class IngresosNetosComponent implements OnInit {
     if(tipoInstrumento.clave === "OTRO"){
       console.log(tipoInstrumento.valor);  
       console.log(this.otroTipoInstrumento);  
-      console.log("-----")
-      this.arreglo.push(tipoInstrumento.valor)
-      console.log(this.arreglo);
+      console.log("-----");
+      this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
+      console.log(this.arrayOtroTipoInstrumento);
+      console.log("******");
+      console.log(this.otroTipoInstrumento.value);
+      //obValores = arreglo[j].nativeElement.id;
+      //this.arrayHTMLOtroTipoInstrumento.push(tipoInstrumento.valor)
+      //console.log(this.arrayHTMLOtroTipoInstrumento);
     }
     
   }
