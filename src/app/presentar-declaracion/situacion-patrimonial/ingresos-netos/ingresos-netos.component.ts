@@ -331,13 +331,17 @@ export class IngresosNetosComponent implements OnInit {
   pasarIds(tipoInstrumento:any):void {
     console.log("llegaIds")
     console.log(tipoInstrumento);
+    let arreglo=[];
     if(tipoInstrumento.clave === "OTRO"){
       console.log(tipoInstrumento.valor);  
       console.log(this.otroTipoInstrumento);  
+      console.log("-----")
+      arreglo.push(tipoInstrumento.valor)
+      console.log(arreglo);
     }
     
   }
-  
+  /*
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
@@ -367,7 +371,7 @@ export class IngresosNetosComponent implements OnInit {
         });
       }
     }
-  }
+  }*/
   
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
