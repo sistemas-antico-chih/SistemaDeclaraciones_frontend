@@ -336,7 +336,9 @@ export class IngresosNetosComponent implements OnInit {
     /*if(this.otroTipoInstrumento){
       let arreglo = this.otroTipoInstrumento.toArray();
     }*/
-    console.log(this.ingresosForm.get('actividadFinanciera.actividades'));
+    
+    let arreglo= this.ingresosForm.get('actividadFinanciera.actividades').toArray;
+    
     let obValores ;
     //let valorHtml ;
     let x=0;
@@ -347,7 +349,7 @@ export class IngresosNetosComponent implements OnInit {
             console.log(x);
             x++;
             
-            let arreglo = this.otroTipoInstrumento.toArray();
+            
             obValores = arreglo[j].nativeElement.id;
             (<HTMLInputElement> document.getElementById(obValores)).value=form.actividadFinanciera.actividades[j].tipoInstrumento.valor;
             //valorHtml = document.getElementById(obValores) as HTMLInputElement;
