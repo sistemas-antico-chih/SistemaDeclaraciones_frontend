@@ -342,11 +342,21 @@ export class IngresosNetosComponent implements OnInit {
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
       console.log(this.otroTipoInstrumento);
-      console.log("######");
+      this.otroTipoInstrumento.forEach(function (value: any) {
+        if (value !== undefined) {
+          console.log(this.otroTipoInstrumento.nativeElement.id)
+          //obValores = arreglo[j].nativeElement.id;
+          //valorHtml = document.getElementById(obValores) as HTMLInputElement;
+          //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
+        }
+      });
+      console.log(this.otroTipoInstrumento.toArray());
+      /*console.log("######");
       console.log(this.ingresosForm.get('actividadesFinancieras.actividades'));
       console.log("######");
       const form = JSON.parse(JSON.stringify(this.ingresosForm.value));
       console.log(form);
+      */
       //obValores = arreglo[j].nativeElement.id;
       //this.arrayHTMLOtroTipoInstrumento.push(tipoInstrumento.valor)
       //console.log(this.arrayHTMLOtroTipoInstrumento);
