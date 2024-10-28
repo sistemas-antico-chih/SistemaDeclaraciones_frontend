@@ -334,36 +334,38 @@ export class IngresosNetosComponent implements OnInit {
     console.log("ngAfterViewInit")
     //let arreglo=this.otroTipoInstrumento.toArray();
     //console.log(arreglo);
+    console.log(this.ids);
+    console.log(this.ids.length);
     console.log("****")
     console.log();
   }
   
 
-  ngAfterContentInit(): void {
+  /*ngAfterContentInit(): void {
     console.log("ngAfterContentInit")
     //let arreglo=this.otroTipoInstrumento.toArray();
     //console.log(arreglo);
     console.log("****")
     console.log();
-  }
+  }*/
   
 
-  ngAfterContentChecked(): void {
+  /*ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
     let arreglo=this.ids;
-    console.log(arreglo);
+    //console.log(arreglo);
     console.log("****")
     console.log();
-  }
+  }*/
   
 
-  ngAfterViewChecked(): void {
+  /*ngAfterViewChecked(): void {
     console.log("ngAfterViewChecked")
     //let arreglo=this.otroTipoInstrumento.toArray();
     //console.log(arreglo);
     console.log("****")
     console.log();
-  }
+  }*/
   
 
   fillForm(ingresos: Ingresos) {
