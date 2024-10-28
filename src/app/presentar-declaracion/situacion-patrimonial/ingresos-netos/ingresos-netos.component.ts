@@ -338,7 +338,11 @@ export class IngresosNetosComponent implements OnInit {
     }*/
     
     let arreglo= this.ingresosForm.get('actividadFinanciera.actividades');
-    
+    console.log(arreglo);
+
+    //let arreglo= this.ingresosForm.get('actividadFinanciera.actividades');
+    console.log("-----")
+    console.log(form);
     let obValores ;
     //let valorHtml ;
     let x=0;
@@ -350,8 +354,8 @@ export class IngresosNetosComponent implements OnInit {
             x++;
             
             
-            obValores = arreglo[j].nativeElement.id;
-            (<HTMLInputElement> document.getElementById(obValores)).value=form.actividadFinanciera.actividades[j].tipoInstrumento.valor;
+            //obValores = arreglo[j].nativeElement.id;
+            //(<HTMLInputElement> document.getElementById(obValores)).value=form.actividadFinanciera.actividades[j].tipoInstrumento.valor;
             //valorHtml = document.getElementById(obValores) as HTMLInputElement;
             //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
           }
