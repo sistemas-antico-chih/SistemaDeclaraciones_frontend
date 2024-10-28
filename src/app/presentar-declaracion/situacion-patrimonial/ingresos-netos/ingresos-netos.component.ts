@@ -249,7 +249,7 @@ export class IngresosNetosComponent implements OnInit {
 
 
     //let arreglo = this.otroTipoInstrumento.toArray();
-    //console.log(arreglo);
+    console.log("aqui form");
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
@@ -325,7 +325,7 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        
+        console.log(ViewChildren);
       }
     }
   }
