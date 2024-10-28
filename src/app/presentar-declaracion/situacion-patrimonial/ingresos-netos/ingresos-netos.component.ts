@@ -324,7 +324,8 @@ export class IngresosNetosComponent implements OnInit {
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
 
-        console.log(this.otroTipoInstrumento);
+        //console.log(this.otroTipoInstrumento);
+        (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
       }
     }
   }
@@ -333,27 +334,28 @@ export class IngresosNetosComponent implements OnInit {
     console.log("ngAfterContentChecked")
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log("final 1")
+    
+
+    
+    
+
     //let arreglo = this.otroTipoInstrumento.toArray();
     console.log(this.ingresosForm.get('actividadFinanciera.actividades'));
-    let obValores = [];
-    let valorHtml = [];
-    console.log(form);
-    console.log(this.ingresosForm)
-    console.log("11");
-    console.log(this.otroTipoInstrumento);
-    console.log("****")
-    console.log();
+    if (this.otroTipoInstrumento !== undefined || this.otroTipoInstrumento !=null){
+      console.log(this.otroTipoInstrumento)
+      //const { tipoInstrumento } = formArray.at(index).value;
+    }
     
     let x=0;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
       if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
-        obValores.push(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
+        //obValores.push(form.actividadFinanciera.actividades[j].tipoInstrumento.valor);
         this.otroTipoInstrumento.forEach(function (value: any) {
           if (value !== undefined) {
             
             console.log(x);
             x++;
-            (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
+          //  (<HTMLInputElement> document.getElementById("mat-input-20")).value="alguito"
             //obValores = arreglo[j].nativeElement.id;
             //valorHtml = document.getElementById(obValores) as HTMLInputElement;
             //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
