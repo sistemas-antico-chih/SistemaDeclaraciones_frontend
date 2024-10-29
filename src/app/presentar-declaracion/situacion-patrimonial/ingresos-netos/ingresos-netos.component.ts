@@ -335,15 +335,16 @@ export class IngresosNetosComponent implements OnInit {
     //console.log(tipoInstrumento);
     
     if(tipoInstrumento.clave === "OTRO"){
-      //console.log(tipoInstrumento.valor);  
-      //console.log(this.otroTipoInstrumento);  
       console.log("-----");
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
       console.log(this.otroTipoInstrumento);
+      let x:any;
       this.otroTipoInstrumento.forEach(function (value: any) {
         if (value !== undefined) {
+          console.log(x);
+          x++;
           console.log(this.otroTipoInstrumento.nativeElement.id)
           //obValores = arreglo[j].nativeElement.id;
           //valorHtml = document.getElementById(obValores) as HTMLInputElement;
