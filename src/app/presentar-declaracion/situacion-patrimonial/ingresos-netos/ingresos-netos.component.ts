@@ -473,7 +473,7 @@ export class IngresosNetosComponent implements OnInit {
     this.otroTipoInstrumento2.forEach((element: any, index: any) => console.log(element, index));
     //console.log(this.otroTipoInstrumento._id);
     //console.log(this.otroTipoInstrumento.results);
-    console.log(this.otroTipoInstrumento.length);
+    console.log(this.otroTipoInstrumento2.length);
   }
 
   formHasChanges() {
