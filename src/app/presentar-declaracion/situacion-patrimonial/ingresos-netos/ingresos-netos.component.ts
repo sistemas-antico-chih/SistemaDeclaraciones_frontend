@@ -339,7 +339,7 @@ export class IngresosNetosComponent implements OnInit {
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      console.log(this.otroTipoInstrumento);
+      console.log(this.otroTipoInstrumento[0].nativeElement.id);
       let x:any;
       this.otroTipoInstrumento.forEach(function (value: any) {
         if (value !== undefined) {
@@ -351,7 +351,7 @@ export class IngresosNetosComponent implements OnInit {
           //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
         }
       });
-      console.log(this.otroTipoInstrumento.toArray());
+      //console.log(this.otroTipoInstrumento.toArray());
       /*console.log("######");
       console.log(this.ingresosForm.get('actividadesFinancieras.actividades'));
       console.log("######");
