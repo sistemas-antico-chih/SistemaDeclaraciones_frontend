@@ -328,7 +328,7 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        //this.pasarIds(tipoInstrumento);
+        this.pasarIds(tipoInstrumento);
       }
     }
   }
@@ -343,8 +343,15 @@ export class IngresosNetosComponent implements OnInit {
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
       console.log(this.otroTipoInstrumento);
-      console.log(Object.values(this.otroTipoInstrumento));
-      
+
+      let test=document.querySelectorAll('.OTI');
+      for(var i=0;i<test.length;i++)
+        {
+          console.log("entra");           
+          console.log(test[i]);
+          console.log(test[i].id);
+        }
+    
       //console.log(this.otroTipoInstrumento.ViewChildren);
       let x:any;
       /*this.otroTipoInstrumento.forEach(function (value: any) {
@@ -360,21 +367,6 @@ export class IngresosNetosComponent implements OnInit {
       });*/
     }  
   }
-  
-  /*ngAfterContentChecked(): void {
-    console.log("ngAfterContentChecked")
-    console.log(this.xx);
-    this.xx=this.xx+1;
-    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log(this.otroTipoInstrumento);
-    
-    //let arreglo = this.otroTipoInstrumento.toArray();
-    console.log(this.ingresosForm.get('actividadFinanciera.actividades'));
-    /*if (this.otroTipoInstrumento !== undefined || this.otroTipoInstrumento !=null){
-      console.log(this.otroTipoInstrumento)
-      //const { tipoInstrumento } = formArray.at(index).value;
-    }
-  }*/
   
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
@@ -511,10 +503,10 @@ export class IngresosNetosComponent implements OnInit {
   get finalIngresosForm() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log("finalIngresosForm")
-    console.log (this.otroTipoInstrumento);
+    //console.log (this.otroTipoInstrumento);
     let arreglo = this.otroTipoInstrumento.toArray();
-    console.log(arreglo);
-    console.log(Object.values(this.otroTipoInstrumento));
+    //console.log(arreglo);
+    //console.log(Object.values(this.otroTipoInstrumento));
     let obValores;
     let valorHtml;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
