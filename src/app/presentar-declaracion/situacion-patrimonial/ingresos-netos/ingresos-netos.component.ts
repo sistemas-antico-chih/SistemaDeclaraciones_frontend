@@ -469,8 +469,8 @@ export class IngresosNetosComponent implements OnInit {
   fillTipoInstrumento(ingresos: Ingresos){
     console.log("fillTipoInstrumento");
     //console.log(this.otroTipoInstrumento._id);
-    console.log(this.otroTipoInstrumento.results);
-    console.log(this.otroTipoInstrumento.toArray());
+    //console.log(this.otroTipoInstrumento.results);
+    console.log(this.otroTipoInstrumento.length);
   }
 
   formHasChanges() {
