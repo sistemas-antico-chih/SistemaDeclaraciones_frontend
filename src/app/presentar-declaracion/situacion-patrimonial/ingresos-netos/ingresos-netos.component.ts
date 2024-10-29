@@ -345,9 +345,6 @@ export class IngresosNetosComponent implements OnInit {
       console.log(this.otroTipoInstrumento);
       console.log(Object.values(this.otroTipoInstrumento));
       
-      console.log("++++++++")
-      console.log(this.finalIngresosForm);
-
       //console.log(this.otroTipoInstrumento.ViewChildren);
       let x:any;
       /*this.otroTipoInstrumento.forEach(function (value: any) {
@@ -452,6 +449,9 @@ export class IngresosNetosComponent implements OnInit {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
+    console.log("++++++++")
+    let form = this.finalIngresosForm;
+    console.log(form);
   }
 
   formHasChanges() {
