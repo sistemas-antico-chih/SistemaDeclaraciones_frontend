@@ -39,7 +39,7 @@ export class IngresosNetosComponent implements OnInit {
   @Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   
-  otroTipoInstrumento2=ViewChildren<ElementRef>("otroTipoInstrumento");
+  otroTipoInstrumento2=ViewChildren<QueryList>("otroTipoInstrumento");
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
