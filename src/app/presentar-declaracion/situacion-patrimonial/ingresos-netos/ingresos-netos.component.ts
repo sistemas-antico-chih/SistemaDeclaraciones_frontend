@@ -339,7 +339,9 @@ export class IngresosNetosComponent implements OnInit {
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      console.log(this.otroTipoInstrumento.ViewChildren);
+      let arreglo = this.otroTipoInstrumento.toArray();
+      console.log (arreglo);
+      //console.log(this.otroTipoInstrumento.ViewChildren);
       let x:any;
       this.otroTipoInstrumento.forEach(function (value: any) {
         if (value !== undefined) {
@@ -527,9 +529,9 @@ export class IngresosNetosComponent implements OnInit {
 
   get finalIngresosForm() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log("final 1")
+    //console.log("final 1")
     let arreglo = this.otroTipoInstrumento.toArray();
-    console.log("final 2")
+    //console.log("final 2")
     let obValores;
     let valorHtml;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
