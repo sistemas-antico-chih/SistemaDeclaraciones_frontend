@@ -328,7 +328,7 @@ export class IngresosNetosComponent implements OnInit {
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
 
-        this.pasarIds(tipoInstrumento);
+        //this.pasarIds(tipoInstrumento);
       }
     }
   }
@@ -345,9 +345,12 @@ export class IngresosNetosComponent implements OnInit {
       console.log(this.otroTipoInstrumento);
       console.log(Object.values(this.otroTipoInstrumento));
       
+      console.log("++++++++")
+      console.log(this.finalIngresosForm);
+
       //console.log(this.otroTipoInstrumento.ViewChildren);
       let x:any;
-      this.otroTipoInstrumento.forEach(function (value: any) {
+      /*this.otroTipoInstrumento.forEach(function (value: any) {
         if (value !== undefined) {
           console.log(value);
           console.log(x);
@@ -357,19 +360,8 @@ export class IngresosNetosComponent implements OnInit {
           //valorHtml = document.getElementById(obValores) as HTMLInputElement;
           //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
         }
-      });
-      //console.log(this.otroTipoInstrumento.toArray());
-      /*console.log("######");
-      console.log(this.ingresosForm.get('actividadesFinancieras.actividades'));
-      console.log("######");
-      const form = JSON.parse(JSON.stringify(this.ingresosForm.value));
-      console.log(form);
-      */
-      //obValores = arreglo[j].nativeElement.id;
-      //this.arrayHTMLOtroTipoInstrumento.push(tipoInstrumento.valor)
-      //console.log(this.arrayHTMLOtroTipoInstrumento);
-    }
-    
+      });*/
+    }  
   }
   
   /*ngAfterContentChecked(): void {
@@ -455,25 +447,11 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
-        //console.log("getUserInfo");
-        //console.log(TipoInstrumento);
-        //console.log(this.otroTipoInstrumento);
-        //console.log(this.otroTipoInstrumento.toArray());
-        //this.fillTipoInstrumento(data?.declaracion.ingresos);
       }
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
-  }
-
-  fillTipoInstrumento(ingresos: Ingresos){
-    console.log("fillTipoInstrumento");
-    console.log(this.otroTipoInstrumento2);
-    this.otroTipoInstrumento2.forEach((element: any, index: any) => console.log(element, index));
-    //console.log(this.otroTipoInstrumento._id);
-    //console.log(this.otroTipoInstrumento.results);
-    console.log(this.otroTipoInstrumento2.length);
   }
 
   formHasChanges() {
