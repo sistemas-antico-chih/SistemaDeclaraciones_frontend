@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Directive, QueryList, Input, Output } from '@angular/core';
+import { Component, ElementRef, OnInit, contentChildren, ViewChildren, Directive, QueryList, Input, Output } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -39,7 +39,7 @@ export class IngresosNetosComponent implements OnInit {
   @Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   
-  //otroTipoInstrumento2=ViewChildren<QueryList>("otroTipoInstrumento");
+  otroTipoInstrumento2=contentChildren<ElementRef>('otroTipoInstrumento');
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
@@ -468,8 +468,8 @@ export class IngresosNetosComponent implements OnInit {
 
   fillTipoInstrumento(ingresos: Ingresos){
     console.log("fillTipoInstrumento");
-    console.log(this.otroTipoInstrumento);
-    this.otroTipoInstrumento.forEach((element: any, index: any) => console.log(element, index));
+    console.log(this.otroTipoInstrumento2);
+    this.otroTipoInstrumento2.forEach((element: any, index: any) => console.log(element, index));
     //console.log(this.otroTipoInstrumento._id);
     //console.log(this.otroTipoInstrumento.results);
     console.log(this.otroTipoInstrumento.length);
