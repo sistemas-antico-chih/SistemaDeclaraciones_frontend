@@ -468,6 +468,7 @@ export class IngresosNetosComponent implements OnInit {
 
   fillTipoInstrumento(ingresos: Ingresos){
     console.log("fillTipoInstrumento");
+    this.otroTipoInstrumento.forEach((element: any, index: any) => console.log(element, index));
     //console.log(this.otroTipoInstrumento._id);
     //console.log(this.otroTipoInstrumento.results);
     console.log(this.otroTipoInstrumento.length);
