@@ -346,30 +346,12 @@ export class IngresosNetosComponent implements OnInit {
 
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0];
-      if (test) test.textContent = '';
+      console.log("aqui 1")
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+      
+      console.log("aqui 2")
       console.log(test);
 
-      /*for(var i=0;i<test.length;i++)
-        {
-          console.log("entra");           
-          console.log(test[i]);
-          console.log(test[i].id);
-        }
-     */
-      //console.log(this.otroTipoInstrumento.ViewChildren);
-      let x:any;
-      /*this.otroTipoInstrumento.forEach(function (value: any) {
-        if (value !== undefined) {
-          console.log(value);
-          console.log(x);
-          x++;
-          console.log(this.otroTipoInstrumento.nativeElement.id)
-          //obValores = arreglo[j].nativeElement.id;
-          //valorHtml = document.getElementById(obValores) as HTMLInputElement;
-          //form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value;
-        }
-      });*/
     }  
   }
   
