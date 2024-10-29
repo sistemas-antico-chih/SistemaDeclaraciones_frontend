@@ -34,6 +34,8 @@ export class IngresosNetosComponent implements OnInit {
   arrayOtroTipoInstrumento: any=[];
   arrayHTMLOtroTipoInstrumento: any=[];
 
+  xx: number =0;
+
   @Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   
@@ -371,6 +373,8 @@ export class IngresosNetosComponent implements OnInit {
   
   ngAfterContentChecked(): void {
     console.log("ngAfterContentChecked")
+    console.log(this.xx);
+    this.xx=this.xx+1;
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     console.log(this.otroTipoInstrumento);
     
@@ -454,11 +458,18 @@ export class IngresosNetosComponent implements OnInit {
         console.log(TipoInstrumento);
         console.log(this.otroTipoInstrumento);
         console.log(this.otroTipoInstrumento.toArray());
+        this.fillTipoInstrumento(data?.declaracion.ingresos);
       }
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
+  }
+
+  fillTipoInstrumento(ingresos: Ingresos){
+    console.log("fillTipoInstrumento");
+    console.log(this.otroTipoInstrumento);
+    console.log(this.otroTipoInstrumento.toArray());
   }
 
   formHasChanges() {
