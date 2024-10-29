@@ -455,11 +455,11 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
-        console.log("getUserInfo");
-        console.log(TipoInstrumento);
-        console.log(this.otroTipoInstrumento);
-        console.log(this.otroTipoInstrumento.toArray());
-        this.fillTipoInstrumento(data?.declaracion.ingresos);
+        //console.log("getUserInfo");
+        //console.log(TipoInstrumento);
+        //console.log(this.otroTipoInstrumento);
+        //console.log(this.otroTipoInstrumento.toArray());
+        //this.fillTipoInstrumento(data?.declaracion.ingresos);
       }
     } catch (error) {
       console.error(error);
