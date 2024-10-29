@@ -342,7 +342,7 @@ export class IngresosNetosComponent implements OnInit {
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      console.log(this.otroTipoInstrumento);
+      console.log(this.otroTipoInstrumento.first);
 
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
