@@ -340,6 +340,7 @@ export class IngresosNetosComponent implements OnInit {
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
       console.log(this.otroTipoInstrumento);
+      console.log(Object.values(this.otroTipoInstrumento));
       
       //console.log(this.otroTipoInstrumento.ViewChildren);
       let x:any;
