@@ -39,7 +39,7 @@ export class IngresosNetosComponent implements OnInit {
   @Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   
-  otroTipoInstrumento2=ViewChildren<QueryList>("otroTipoInstrumento");
+  //otroTipoInstrumento2=ViewChildren<QueryList>("otroTipoInstrumento");
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
@@ -468,7 +468,7 @@ export class IngresosNetosComponent implements OnInit {
 
   fillTipoInstrumento(ingresos: Ingresos){
     console.log("fillTipoInstrumento");
-    console.log(this.otroTipoInstrumento2);
+    console.log(this.otroTipoInstrumento);
     this.otroTipoInstrumento.forEach((element: any, index: any) => console.log(element, index));
     //console.log(this.otroTipoInstrumento._id);
     //console.log(this.otroTipoInstrumento.results);
