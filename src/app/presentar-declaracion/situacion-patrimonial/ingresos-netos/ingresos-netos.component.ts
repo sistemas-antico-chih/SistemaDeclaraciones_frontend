@@ -468,6 +468,9 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
+        console.log("getUserInfo");
+        console.log(this.otroTipoInstrumento);
+        console.log(this.otroTipoInstrumento.toArray());
       }
     } catch (error) {
       console.error(error);
@@ -531,9 +534,9 @@ export class IngresosNetosComponent implements OnInit {
 
   get finalIngresosForm() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    //console.log("final 1")
+    console.log("finalIngresosForm")
     let arreglo = this.otroTipoInstrumento.toArray();
-    //console.log("final 2")
+    console.log(arreglo);
     let obValores;
     let valorHtml;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
