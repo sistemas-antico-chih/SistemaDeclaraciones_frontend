@@ -344,16 +344,15 @@ export class IngresosNetosComponent implements OnInit {
       console.log("******");
       console.log(this.otroTipoInstrumento.first);
 
-      //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
-      //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
-      /*console.log("aqui 1")
-      if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
-        let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-        console.log(large);
-        let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-        console.log("pasarIds");
-        console.log(test);
-      }*/
+      if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
+        if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
+          let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+          console.log(large);
+          let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+          console.log("pasarIds");
+          console.log(test);
+        }
+      }
     }
   }
 
@@ -431,12 +430,14 @@ export class IngresosNetosComponent implements OnInit {
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
 
-    if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
-      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-      console.log(large);
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      console.log("getUserInfo");
-      console.log(test);
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
+      if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
+        let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+        console.log(large);
+        let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+        console.log("getUserInfo");
+        console.log(test);
+      }
     }
   }
 
@@ -475,22 +476,26 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
-      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-      console.log(large);
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      console.log("ngOnInit");
-      console.log(test);
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
+      if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
+        let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+        console.log(large);
+        let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+        console.log("ngOnInit");
+        console.log(test);
+      }
     }
   }
 
   ngAfterViewInit() {
-    if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
-      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-      console.log(large);
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      console.log("ngAfterViewInit");
-      console.log(test);
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
+      if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
+        let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+        console.log(large);
+        let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+        console.log("ngAfterViewInit");
+        console.log(test);
+      }
     }
   }
 
