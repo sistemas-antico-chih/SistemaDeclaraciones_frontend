@@ -344,7 +344,7 @@ export class IngresosNetosComponent implements OnInit {
       console.log("******");
       console.log(this.otroTipoInstrumento.first);
 
-      if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
+      /*if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
         if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
           let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
           console.log(large);
@@ -352,7 +352,7 @@ export class IngresosNetosComponent implements OnInit {
           console.log("pasarIds");
           console.log(test);
         }
-      }
+      }*/
     }
   }
 
