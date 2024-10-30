@@ -31,15 +31,15 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   index: number = 0;
-  arrayOtroTipoInstrumento: any=[];
-  arrayHTMLOtroTipoInstrumento: any=[];
+  arrayOtroTipoInstrumento: any = [];
+  arrayHTMLOtroTipoInstrumento: any = [];
 
-  xx: number =0;
+  xx: number = 0;
 
   @Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<'otroTipoInstrumento'>;
-  
+
   @ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
@@ -333,11 +333,11 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  pasarIds(tipoInstrumento:any):void {
+  pasarIds(tipoInstrumento: any): void {
     console.log("llegaIds")
     //console.log(tipoInstrumento);
-    
-    if(tipoInstrumento.clave === "OTRO"){
+
+    if (tipoInstrumento.clave === "OTRO") {
       console.log("-----");
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
@@ -347,14 +347,16 @@ export class IngresosNetosComponent implements OnInit {
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
       console.log("aqui 1")
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      
-      console.log("aqui 2")
-      console.log(test);
-
-    }  
+      if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
+        let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+        console.log(large);
+        let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+        console.log("pasarIds");
+        console.log(test);
+      }
+    }
   }
-  
+
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
 
@@ -428,9 +430,14 @@ export class IngresosNetosComponent implements OnInit {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
-    console.log("++++++++")
-    let form = this.finalIngresosForm;
-    console.log(form);
+
+    if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
+      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+      console.log(large);
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+      console.log("getUserInfo");
+      console.log(test);
+    }
   }
 
   formHasChanges() {
@@ -474,10 +481,14 @@ export class IngresosNetosComponent implements OnInit {
     */
   }
 
-  ngAfterViewInit(){
-    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    console.log("ngAfterViewInit");
-    console.log(test);
+  ngAfterViewInit() {
+    if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
+      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+      console.log(large);
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+      console.log("ngAfterViewInit");
+      console.log(test);
+    }
   }
 
 
