@@ -31,15 +31,15 @@ import { findOption } from '@utils/utils';
 })
 export class IngresosNetosComponent implements OnInit {
   index: number = 0;
-  arrayOtroTipoInstrumento: any=[];
-  arrayHTMLOtroTipoInstrumento: any=[];
+  arrayOtroTipoInstrumento: any = [];
+  arrayHTMLOtroTipoInstrumento: any = [];
 
-  xx: number =0;
+  xx: number = 0;
 
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<'otroTipoInstrumento'>;
-  
+
   @ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
 
   //large = document.querySelectorAll<HTMLInputElement>('.OTI').length || null;
@@ -336,27 +336,27 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  pasarIds(tipoInstrumento:any):void {
+  pasarIds(tipoInstrumento: any): void {
     console.log("llegaIds")
     //console.log(tipoInstrumento);
-    
-    if(tipoInstrumento.clave === "OTRO"){
+
+    if (tipoInstrumento.clave === "OTRO") {
       console.log("-----");
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
       //console.log(this.otroTipoInstrumento.first);
 
-      
+
       console.log("aqui 1")
-      
+
       console.log("aqui 2")
       //console.log(test);
 
 
-    }  
+    }
   }
-  
+
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
 
@@ -467,20 +467,36 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
+      console.log("entra if");
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+      console.log("ngOnInit");
+      console.log("test 1: " + test);
+      console.log("large 1: " + large)
+    }
+    else {
+      console.log("entra else")
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+      console.log("ngOnInit");
+      console.log("test 1: " + test);
+      console.log("large 1: " + large)
+    }
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
     let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
     console.log("ngOnInit");
-    console.log("test 1: "+ test);
-    console.log("large 1: "+ large)
-    
+    console.log("test 1: " + test);
+    console.log("large 1: " + large)
+
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
     let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
     console.log("ngOnInit");
-    console.log("test 2: "+ test);
-    console.log("large 2: "+ large)
+    console.log("test 2: " + test);
+    console.log("large 2: " + large)
   }
 
 
