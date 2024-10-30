@@ -430,8 +430,9 @@ export class IngresosNetosComponent implements OnInit {
     }
     console.log("++++++++")
     console.log("getUserInfo")
-    //let form = this.finalIngresosForm;
-    //console.log(form);
+    let test = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+    console.log("ngAfterViewInit");
+    console.log(test);
   }
 
   formHasChanges() {
