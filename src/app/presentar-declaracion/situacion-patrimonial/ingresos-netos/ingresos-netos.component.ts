@@ -428,7 +428,9 @@ export class IngresosNetosComponent implements OnInit {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
-    
+    console.log("++++++++")
+    let form = this.finalIngresosForm;
+    console.log(form);
   }
 
   formHasChanges() {
@@ -466,20 +468,15 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    /*let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
     console.log("ngOnInit");
     console.log(test);
-    */
   }
 
   ngAfterViewInit(){
-    if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined){
-      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-      console.log(large);
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      console.log("ngAfterViewInit");
-      console.log(test);
-    }
+    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    console.log("ngAfterViewInit");
+    console.log(test);
   }
 
 
