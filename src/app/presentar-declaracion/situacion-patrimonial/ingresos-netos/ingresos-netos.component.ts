@@ -415,6 +415,7 @@ export class IngresosNetosComponent implements OnInit {
         console.log(document.querySelectorAll<HTMLInputElement>('.OTI').length);
         this.fillForm(data?.declaracion.ingresos);
         console.log("2do")
+        console.log(document.querySelectorAll<HTMLInputElement>('.OTI').length);
       }
     } catch (error) {
       console.error(error);
