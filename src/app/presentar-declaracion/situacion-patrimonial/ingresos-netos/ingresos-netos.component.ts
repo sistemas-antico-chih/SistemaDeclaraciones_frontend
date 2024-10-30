@@ -36,14 +36,14 @@ export class IngresosNetosComponent implements OnInit {
 
   xx: number =0;
 
-  @Output("otroTipoInstrumento") ids: any = [];
+  //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<'otroTipoInstrumento'>;
   
   @ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
 
-  large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-  test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id
+  large = document.querySelectorAll<HTMLInputElement>('.OTI').length || null;
+  test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || null;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
