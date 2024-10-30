@@ -487,7 +487,7 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
+  /*ngAfterViewInit() {
     if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
       if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
         let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
@@ -497,7 +497,7 @@ export class IngresosNetosComponent implements OnInit {
        // console.log(test);
       }
     }
-  }
+  }*/
 
 
 
