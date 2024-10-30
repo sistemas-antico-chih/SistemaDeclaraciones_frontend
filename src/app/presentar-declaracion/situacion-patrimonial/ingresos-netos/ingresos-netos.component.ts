@@ -42,6 +42,9 @@ export class IngresosNetosComponent implements OnInit {
   
   @ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
 
+  large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+  test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id
+
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
   isHidden = true;
@@ -464,20 +467,20 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    /*let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+    //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    //let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
     console.log("ngOnInit");
-    console.log("test 1: "+test);
-    console.log("large 1: "+large)
-    */
+    console.log("test 1: "+ this.test);
+    console.log("large 1: "+ this.large)
+    
   }
 
   ngAfterViewInit(){
-    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+    //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    //let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
     console.log("ngOnInit");
-    console.log("test 2: "+test);
-    console.log("large 2: "+large)
+    console.log("test 2: "+ this.test);
+    console.log("large 2: "+this.large)
   }
 
 
