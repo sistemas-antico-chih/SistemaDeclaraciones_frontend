@@ -346,14 +346,14 @@ export class IngresosNetosComponent implements OnInit {
 
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
-      console.log("aqui 1")
+      /*console.log("aqui 1")
       if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
         let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
         console.log(large);
         let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
         console.log("pasarIds");
         console.log(test);
-      }
+      }*/
     }
   }
 
