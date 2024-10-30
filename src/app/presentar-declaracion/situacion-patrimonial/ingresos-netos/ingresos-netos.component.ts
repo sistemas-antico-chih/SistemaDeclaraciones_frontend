@@ -342,15 +342,15 @@ export class IngresosNetosComponent implements OnInit {
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      //console.log(this.otroTipoInstrumento.first);
+      console.log(this.otroTipoInstrumento.first);
 
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
-      //console.log("aqui 1")
-      //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+      console.log("aqui 1")
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
       
-      //console.log("aqui 2")
-      //console.log(test);
+      console.log("aqui 2")
+      console.log(test);
 
     }  
   }
@@ -429,17 +429,15 @@ export class IngresosNetosComponent implements OnInit {
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
     console.log("++++++++")
-    console.log("getUserInfo")
-    let test = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-    console.log("ngAfterViewInit");
-    console.log(test);
+    let form = this.finalIngresosForm;
+    console.log(form);
   }
 
   formHasChanges() {
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.ingresosForm.dirty;
-    console.log(isDirty);
+    //console.log(isDirty);
 
     if (isDirty) {
       const dialogRef = this.dialog.open(DialogComponent, {
@@ -469,6 +467,10 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
+
+    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    console.log("ngOnInit");
+    console.log(test);
   }
 
   ngAfterViewInit(){
