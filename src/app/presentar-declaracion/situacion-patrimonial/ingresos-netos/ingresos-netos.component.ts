@@ -412,7 +412,7 @@ export class IngresosNetosComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
         console.log("1ero")
-        console.log(document.querySelectorAll<HTMLInputElement>('.OTI').length;);
+        console.log(document.querySelectorAll<HTMLInputElement>('.OTI').length);
         this.fillForm(data?.declaracion.ingresos);
         console.log("2do")
       }
