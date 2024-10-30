@@ -342,7 +342,7 @@ export class IngresosNetosComponent implements OnInit {
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      console.log(this.otroTipoInstrumento.first);
+      //console.log(this.otroTipoInstrumento.first);
 
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
@@ -351,6 +351,8 @@ export class IngresosNetosComponent implements OnInit {
       
       console.log("aqui 2")
       console.log(test);
+      //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+
 
     }  
   }
