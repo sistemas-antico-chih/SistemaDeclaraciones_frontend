@@ -475,16 +475,6 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
-
-    if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
-      if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
-        let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-        console.log(large);
-        let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-        console.log("ngOnInit");
-        console.log(test);
-      }
-    }
   }
 
   /*ngAfterViewInit() {
