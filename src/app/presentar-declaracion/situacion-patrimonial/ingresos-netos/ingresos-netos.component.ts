@@ -342,7 +342,7 @@ export class IngresosNetosComponent implements OnInit {
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      //console.log(this.otroTipoInstrumento.first);
+      console.log(this.otroTipoInstrumento.first);
 
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI') as HTMLElement;
       //let test = this.otroTipoInstrumento.nativeElement.querySelectorAll('.OTI');
@@ -475,26 +475,19 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
-      let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-      console.log(large);
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      let test2 = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      console.log("ngOnInit");
-      console.log("test: " + test);
-      console.log("test2: " + test2);
-    }
+    /*let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    console.log("ngOnInit");
+    console.log(test);
+    */
   }
 
   ngAfterViewInit() {
     if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
       let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-      console.log("large: "+large);
+      console.log(large);
       let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-      let test2 = document.querySelectorAll<HTMLInputElement>('.OTI')[1].id;
       console.log("ngAfterViewInit");
-      console.log("test: " + test);
-      console.log("test2: " + test2);
+      console.log(test);
     }
   }
 
