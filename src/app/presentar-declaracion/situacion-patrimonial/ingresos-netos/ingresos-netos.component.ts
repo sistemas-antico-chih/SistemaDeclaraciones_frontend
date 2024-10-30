@@ -341,18 +341,6 @@ export class IngresosNetosComponent implements OnInit {
       console.log("-----");
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
-      console.log("******");
-      console.log(this.otroTipoInstrumento.first);
-
-      /*if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
-        if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
-          let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-          console.log(large);
-          let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-          console.log("pasarIds");
-          console.log(test);
-        }
-      }*/
     }
   }
 
@@ -430,7 +418,7 @@ export class IngresosNetosComponent implements OnInit {
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
 
-    /*if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')) {
       if (document.querySelectorAll<HTMLInputElement>('.OTI') !== undefined) {
         let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
         console.log(large);
@@ -438,7 +426,7 @@ export class IngresosNetosComponent implements OnInit {
         console.log("getUserInfo");
         //console.log(test);
       }
-    }*/
+    }
   }
 
   formHasChanges() {
