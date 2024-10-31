@@ -340,21 +340,15 @@ export class IngresosNetosComponent implements OnInit {
     console.log("llegaIds")
     //console.log(tipoInstrumento);
 
-    if (tipoInstrumento.clave === "OTRO") {
+    /*if (tipoInstrumento.clave === "OTRO") {
       console.log("-----");
       this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
       console.log(this.arrayOtroTipoInstrumento);
       console.log("******");
-      //console.log(this.otroTipoInstrumento.first);
+    }*/
 
-
-      console.log("aqui 1")
-
-      console.log("aqui 2")
-      //console.log(test);
-
-
-    }
+    this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
+    console.log(this.arrayOtroTipoInstrumento);
   }
 
   fillForm(ingresos: Ingresos) {
