@@ -450,15 +450,15 @@ export class IngresosNetosComponent implements OnInit {
     });
 
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+    //let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
     
     console.log("test 1: " + test);
-    console.log("large 1: " + large)
+    //console.log("large 1: " + large)
   
   }
 
   ngAfterViewInit() {
-    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+    //const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
     //console.log(form.actividadFinanciera.actividades)
     //console.log(form.actividadFinanciera.actividades.length)
     for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
@@ -466,9 +466,9 @@ export class IngresosNetosComponent implements OnInit {
       document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
     }
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
+    //let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
     console.log("test 2: " + test);
-    console.log("large 2: " + large)
+    //console.log("large 2: " + large)
   }
 
 
