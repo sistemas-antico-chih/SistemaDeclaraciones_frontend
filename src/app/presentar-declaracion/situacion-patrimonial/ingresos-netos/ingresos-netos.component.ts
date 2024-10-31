@@ -325,7 +325,6 @@ export class IngresosNetosComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
-        //console.log(tipoInstrumento);
         formArray
           .at(index)
           .get('tipoInstrumento')
@@ -337,9 +336,8 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   pasarIds(tipoInstrumento: any): void {
-    console.log("llegaIds")
     this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
-    console.log(this.arrayOtroTipoInstrumento);
+    //console.log(this.arrayOtroTipoInstrumento);
   }
 
   fillForm(ingresos: Ingresos) {
@@ -454,26 +452,24 @@ export class IngresosNetosComponent implements OnInit {
 
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
     let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-    console.log("ngOnInit");
-    console.log("test 1: " + test);
-    console.log("large 1: " + large)
+    
+    //console.log("test 1: " + test);
+    //console.log("large 1: " + large)
   
   }
 
   ngAfterViewInit() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log(form.actividadFinanciera.actividades)
-    console.log(form.actividadFinanciera.actividades.length)
+    //console.log(form.actividadFinanciera.actividades)
+    //console.log(form.actividadFinanciera.actividades.length)
     for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
       this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
       document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
     }
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
     let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
-    console.log("ngOnInit");
-    console.log("test 2: " + test);
-    console.log("large 2: " + large)
-    console.log(this.arrayHTMLOtroTipoInstrumento)
+    //console.log("test 2: " + test);
+    //console.log("large 2: " + large)
   }
 
 
@@ -496,11 +492,7 @@ export class IngresosNetosComponent implements OnInit {
 
   get finalIngresosForm() {
     const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    console.log("finalIngresosForm")
-    //console.log (this.otroTipoInstrumento);
     let arreglo = this.otroTipoInstrumento.toArray();
-    //console.log(arreglo);
-    //console.log(Object.values(this.otroTipoInstrumento));
     let obValores;
     let valorHtml;
     for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
