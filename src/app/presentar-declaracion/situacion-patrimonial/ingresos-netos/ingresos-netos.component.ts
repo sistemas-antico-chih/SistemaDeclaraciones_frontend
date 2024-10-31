@@ -338,15 +338,6 @@ export class IngresosNetosComponent implements OnInit {
 
   pasarIds(tipoInstrumento: any): void {
     console.log("llegaIds")
-    //console.log(tipoInstrumento);
-
-    /*if (tipoInstrumento.clave === "OTRO") {
-      console.log("-----");
-      this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
-      console.log(this.arrayOtroTipoInstrumento);
-      console.log("******");
-    }*/
-
     this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
     console.log(this.arrayOtroTipoInstrumento);
   }
@@ -470,6 +461,9 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+    console.log(form.actividadFinanciera.actividades)
+    console.log(form.actividadFinanciera.actividades.length)
     for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
       this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
       document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
