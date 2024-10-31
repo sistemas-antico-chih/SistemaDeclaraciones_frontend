@@ -282,7 +282,7 @@
               *ngIf="bienesInmueblesForm.value.bienInmueble?.tipoInmueble?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">wb_iridescent</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input [errorStateMatcher]="errorMatcher" #otroTipoInmueble matInput type="text" required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.titular }}" appearance="fill">
               <mat-label>Titular del Inmueble</mat-label>
@@ -396,7 +396,7 @@
               *ngIf="bienesInmueblesForm.value.bienInmueble.transmisor?.relacion?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input [errorStateMatcher]="errorMatcher" #otroParentesco matInput type="text" required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.valorAdquisicion }}" appearance="fill"
               formGroupName="valorAdquisicion">

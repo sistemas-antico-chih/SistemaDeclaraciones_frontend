@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -44,6 +44,9 @@ export class BienesInmueblesComponent implements OnInit {
   editIndex: number = null;
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
+
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   tipoInmuebleCatalogo = TipoInmueble;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -215,6 +218,13 @@ export class BienesInmueblesComponent implements OnInit {
     );
     if (bienInmueble.domicilioExtranjero) {
       this.tipoDomicilio = 'EXTRANJERO';
+    }
+
+    if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
+      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+    }
+    if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+      this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }
 
     this.setSelectedOptions();
@@ -556,6 +566,9 @@ export class BienesInmueblesComponent implements OnInit {
     if (event === "NINGUNO"){
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
     }
     else{
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
