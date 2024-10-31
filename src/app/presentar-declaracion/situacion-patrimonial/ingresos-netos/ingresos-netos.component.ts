@@ -470,8 +470,8 @@ export class IngresosNetosComponent implements OnInit {
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
     let large = document.querySelectorAll<HTMLInputElement>('.OTI').length;
     //console.log("ngOnInit");
-    //console.log("test 1: " + test);
-    //console.log("large 1: " + large)
+    console.log("test 1: " + test);
+    console.log("large 1: " + large)
   
   }
 
