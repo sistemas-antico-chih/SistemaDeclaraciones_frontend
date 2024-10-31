@@ -450,7 +450,7 @@ export class IngresosNetosComponent implements OnInit {
     });
 
     //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    console.log("test 1: " + document.querySelectorAll<HTMLInputElement>('.OTI')[0].id);  
+    console.log("test 1: " + document.querySelectorAll<HTMLInputElement>('.OTI')[0]);  
   }
 
   ngAfterViewInit() {
