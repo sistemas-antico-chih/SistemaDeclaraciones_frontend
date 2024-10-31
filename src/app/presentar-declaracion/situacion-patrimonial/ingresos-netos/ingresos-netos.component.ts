@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ContentChildren, ViewChildren, Directive, QueryList, Input, Output } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -34,13 +34,11 @@ export class IngresosNetosComponent implements OnInit {
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
 
-  xx: number = 0;
-
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<'otroTipoInstrumento'>;
 
-  @ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
+  //@ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
 
   //large = document.querySelectorAll<HTMLInputElement>('.OTI').length || null;
   //test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || null;

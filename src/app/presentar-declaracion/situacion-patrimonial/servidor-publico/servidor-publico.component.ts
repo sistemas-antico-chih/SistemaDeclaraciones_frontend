@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
@@ -32,6 +31,13 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./servidor-publico.component.scss'],
 })
 export class ServidorPublicoComponent implements OnInit {
+  index: number = 0;
+  arrayOtroTipoInstrumento: any = [];
+  arrayHTMLOtroTipoInstrumento: any = [];
+
+  //@Output("otroTipoInstrumento") ids: any = [];
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
+  
   aclaraciones = false;
   actividadAnualAnteriorForm: FormGroup;
   isLoading = false;
@@ -440,8 +446,15 @@ export class ServidorPublicoComponent implements OnInit {
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
+          
+          this.pasarIds(tipoInstrumento);
+
       }
     }
+  }
+
+  pasarIds(tipoInstrumento: any): void {
+    this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
   }
 
   fillForm(actividadAnualAnterior: ActividadAnualAnterior) {
@@ -551,6 +564,18 @@ export class ServidorPublicoComponent implements OnInit {
         //falseText: '',
       },
     });
+
+    //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    console.log("test 1: " + document.querySelectorAll<HTMLInputElement>('.OTI')[0].id);  
+  }
+
+  ngAfterViewInit() {
+    for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
+      this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
+      document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
+    }
+    //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    console.log("test 2: " + document.querySelectorAll<HTMLInputElement>('.OTI')[0].id);
   }
 
   openSnackBar(message: string, action: string = null) {
@@ -569,10 +594,29 @@ export class ServidorPublicoComponent implements OnInit {
     });
   }
 
+  get finalIngresosForm() {
+    const form = JSON.parse(JSON.stringify(this.actividadAnualAnteriorForm.value)); // Deep copy
+    let arreglo = this.otroTipoInstrumento.toArray();
+    let obValores;
+    let valorHtml;
+    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
+        this.otroTipoInstrumento.forEach(function (value: any) {
+          if (value !== undefined) {
+            obValores = arreglo[j].nativeElement.id;
+            valorHtml = document.getElementById(obValores) as HTMLInputElement;
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value.toUpperCase();
+          }
+        });
+      }
+    }
+    return form;
+  }
+
   async saveInfo(form: ActividadAnualAnterior) {
     try {
       this.isLoading = true;
-
+      form = this.finalIngresosForm;
       const declaracion = {
         actividadAnualAnterior: form,
       };
