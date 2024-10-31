@@ -222,6 +222,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
       this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      console.log("llega")
     }
     if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
