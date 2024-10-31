@@ -447,8 +447,8 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    console.log("test 1: " + document.querySelectorAll<HTMLInputElement>('.OTI')[0].id);  
+    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    console.log("test 1: " + test);  
   }
 
   ngAfterViewInit() {
@@ -456,8 +456,8 @@ export class IngresosNetosComponent implements OnInit {
       this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
       document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
     }
-    //let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    console.log("test 2: " + document.querySelectorAll<HTMLInputElement>('.OTI')[0].id);
+    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
+    console.log("test 2: " + test);
   }
 
 
