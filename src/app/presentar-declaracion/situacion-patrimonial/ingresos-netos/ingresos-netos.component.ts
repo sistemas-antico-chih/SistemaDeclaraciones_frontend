@@ -509,7 +509,7 @@ export class IngresosNetosComponent implements OnInit {
           if (value !== undefined) {
             obValores = arreglo[j].nativeElement.id;
             valorHtml = document.getElementById(obValores) as HTMLInputElement;
-            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value.toUpperCase;
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value.toUpperCase();
           }
         });
       }
