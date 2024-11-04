@@ -221,14 +221,15 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
       console.log("llega")
+      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
     }
-   /* if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+    if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+      console.log("entra2;")
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }
-   */
-    this.setSelectedOptions();
+   
+    //this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
