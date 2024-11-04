@@ -224,10 +224,10 @@ export class BienesInmueblesComponent implements OnInit {
       this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
       console.log("llega")
     }
-    if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+   /* if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }
-
+   */
     this.setSelectedOptions();
   }
 
@@ -443,8 +443,8 @@ export class BienesInmueblesComponent implements OnInit {
     if (form.tipoInmueble?.clave === 'OTRO') {
       form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
     }
-    if (form.transmisor[0].relacion?.clave === 'OTRO') {
-      form.transmisor[0].relacion.valor = this.otroParentesco.nativeElement.value;
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value;
     }
     
     return form;
