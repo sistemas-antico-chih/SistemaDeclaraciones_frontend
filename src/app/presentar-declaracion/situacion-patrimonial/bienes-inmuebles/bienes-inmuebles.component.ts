@@ -401,8 +401,9 @@ export class BienesInmueblesComponent implements OnInit {
   saveItem() {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-    const newItem = this.bienesInmueblesForm.value.bienInmueble;
-
+    //const newItem = this.bienesInmueblesForm.value.bienInmueble;
+    const newItem = this.finalBienesInmueblesForm;
+    
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
     let bandera = false;
@@ -417,7 +418,6 @@ export class BienesInmueblesComponent implements OnInit {
       bienInmueble[this.editIndex] = newItem;
       bandera = true;
     }
-
 
     this.isLoading = true;
 
@@ -434,6 +434,20 @@ export class BienesInmueblesComponent implements OnInit {
     });
 
     this.isLoading = false;
+  }
+
+
+  get finalBienesInmueblesForm() {
+    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
+
+    if (form.tipoInmueble?.clave === 'OTRO') {
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
+    }
+    if (form.tipoInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+      form.tipoInmueble.transmisor[0].relacion.valor = this.otroParentesco.nativeElement.value;
+    }
+    
+    return form;
   }
 
   checkItems() {
