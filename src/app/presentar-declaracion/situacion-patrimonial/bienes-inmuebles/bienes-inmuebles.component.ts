@@ -206,6 +206,11 @@ export class BienesInmueblesComponent implements OnInit {
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
+    
+    console.log(bienInmueble);
+    console.log(this.bienesInmueblesForm.get('bienInmueble'))
+
+    const bienesInmueblesForm = this.bienesInmueblesForm.get('bienInmueble');
 
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
@@ -220,10 +225,11 @@ export class BienesInmueblesComponent implements OnInit {
       this.tipoDomicilio = 'EXTRANJERO';
     }
 
-    if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
+    /*if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
       console.log("llega")
-      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
-    }
+      //this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+    }*/
+
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
       console.log("entra2;")
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
@@ -530,12 +536,6 @@ export class BienesInmueblesComponent implements OnInit {
     const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
-
-    /*if (tipoInmueble) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.tipoInmueble')
-        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
-    }*/
 
     if (tipoInmueble) { 
         console.log("llega")
