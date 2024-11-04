@@ -229,7 +229,7 @@ export class BienesInmueblesComponent implements OnInit {
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }
    
-    //this.setSelectedOptions();
+    this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
@@ -526,6 +526,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   setSelectedOptions() {
+    console.log("setSelectedOptions")
     const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;

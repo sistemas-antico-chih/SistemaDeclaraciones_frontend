@@ -462,6 +462,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log("test 2: " + test);
   }
 
+  /*
   ngAfterViewChecked(){
     console.log("ngAfterViewChecked");
   }
@@ -481,7 +482,7 @@ export class IngresosNetosComponent implements OnInit {
   ngOnChanges(){
     console.log("ngOnChanges");
   }
-
+  */
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
