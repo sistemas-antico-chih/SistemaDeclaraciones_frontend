@@ -220,15 +220,15 @@ export class BienesInmueblesComponent implements OnInit {
       this.tipoDomicilio = 'EXTRANJERO';
     }
 
-   /* if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
+    if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
       console.log("llega")
       this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
-    }*/
-    if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+    }
+    /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
       console.log("entra2;")
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
-    }
-   
+    }*/
+
     this.setSelectedOptions();
   }
 
@@ -404,7 +404,7 @@ export class BienesInmueblesComponent implements OnInit {
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     //const newItem = this.bienesInmueblesForm.value.bienInmueble;
     const newItem = this.finalBienesInmueblesForm;
-    
+
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
     let bandera = false;
@@ -447,7 +447,7 @@ export class BienesInmueblesComponent implements OnInit {
     if (form.transmisor.relacion?.clave === 'OTRO') {
       form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value;
     }
-    
+
     return form;
   }
 
@@ -531,11 +531,25 @@ export class BienesInmueblesComponent implements OnInit {
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
 
-    if (tipoInmueble) {
+    /*if (tipoInmueble) {
       this.bienesInmueblesForm
         .get('bienInmueble.tipoInmueble')
         .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+    }*/
+
+    if (tipoInmueble) {
+      if (this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave') !== 'OTRO') {
+        this.bienesInmueblesForm
+          .get('bienInmueble.tipoInmueble')
+          .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+      }
+      console.log("llega")
+      this.bienesInmueblesForm
+        .get('bienInmueble.tipoInmueble')
+        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+      this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.relacion.valor').setValue('algo');
     }
+
     if (titular) {
       this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
     }
@@ -580,14 +594,14 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    if (event === "NINGUNO"){
+    if (event === "NINGUNO") {
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue(null);
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
     }
-    else{
+    else {
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").enable();
     }
