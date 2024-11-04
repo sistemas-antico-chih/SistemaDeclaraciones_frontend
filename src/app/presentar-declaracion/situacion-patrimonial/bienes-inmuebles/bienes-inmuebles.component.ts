@@ -582,7 +582,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    if (event === "NINGUNOO2"){
+    if (event === "NINGUNO"){
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue(null);
