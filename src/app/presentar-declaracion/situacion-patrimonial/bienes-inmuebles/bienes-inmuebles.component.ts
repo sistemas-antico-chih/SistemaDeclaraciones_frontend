@@ -538,17 +538,13 @@ export class BienesInmueblesComponent implements OnInit {
     }*/
 
     if (tipoInmueble) {
-      if (this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').get('clave') !== 'OTRO') {
+      
+        console.log("llega")
+        console.log(tipoInmueble)
         this.bienesInmueblesForm
           .get('bienInmueble.tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
-      }
-      console.log("llega")
-      this.bienesInmueblesForm
-        .get('bienInmueble.tipoInmueble')
-        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
-      this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.relacion.valor').setValue('algo');
-    }
+      
 
     if (titular) {
       this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
