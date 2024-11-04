@@ -220,16 +220,18 @@ export class BienesInmueblesComponent implements OnInit {
       this.tipoDomicilio = 'EXTRANJERO';
     }
 
+
+    /*
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
       console.log("llega")
       this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
     }
-    /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+    if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
       console.log("entra2;")
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }*/
    
-    this.setSelectedOptions();
+    //this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
@@ -580,7 +582,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    if (event === "MORAL2"){
+    if (event === "NINGUNOO2"){
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue(null);
