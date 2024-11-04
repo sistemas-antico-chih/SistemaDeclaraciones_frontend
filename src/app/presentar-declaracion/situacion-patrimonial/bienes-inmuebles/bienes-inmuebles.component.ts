@@ -537,14 +537,13 @@ export class BienesInmueblesComponent implements OnInit {
         .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
     }*/
 
-    if (tipoInmueble) {
-      
+    if (tipoInmueble) { 
         console.log("llega")
         console.log(tipoInmueble)
         this.bienesInmueblesForm
           .get('bienInmueble.tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
-      
+    }
 
     if (titular) {
       this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
