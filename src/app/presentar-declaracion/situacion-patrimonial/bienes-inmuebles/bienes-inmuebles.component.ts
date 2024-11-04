@@ -538,7 +538,7 @@ export class BienesInmueblesComponent implements OnInit {
     }*/
 
     if (tipoInmueble) {
-      if (this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave') !== 'OTRO') {
+      if (this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').get('clave') !== 'OTRO') {
         this.bienesInmueblesForm
           .get('bienInmueble.tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
