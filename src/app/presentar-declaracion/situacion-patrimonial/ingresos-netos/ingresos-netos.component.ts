@@ -437,6 +437,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("ngOnInit");
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -452,6 +453,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    console.log("ngAfterViewInit");
     for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
       this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
       document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
@@ -460,6 +462,25 @@ export class IngresosNetosComponent implements OnInit {
     console.log("test 2: " + test);
   }
 
+  ngAfterViewChecked(){
+    console.log("ngAfterViewChecked");
+  }
+
+  ngAfterContentChecked(){
+    console.log("ngAfterContentChecked");
+  }
+
+  ngAfterContentInit(){
+    console.log("ngAfterContentInit");
+  }
+
+  ngDoCheck(){
+    console.log("ngDoCheck");
+  }
+
+  ngOnChanges(){
+    console.log("ngOnChanges");
+  }
 
 
   openSnackBar(message: string, action: string = null) {

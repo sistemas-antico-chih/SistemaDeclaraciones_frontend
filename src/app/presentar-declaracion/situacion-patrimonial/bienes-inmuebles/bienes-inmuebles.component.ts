@@ -443,8 +443,8 @@ export class BienesInmueblesComponent implements OnInit {
     if (form.tipoInmueble?.clave === 'OTRO') {
       form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
     }
-    if (form.tipoInmueble.transmisor[0].relacion?.clave === 'OTRO') {
-      form.tipoInmueble.transmisor[0].relacion.valor = this.otroParentesco.nativeElement.value;
+    if (form.transmisor[0].relacion?.clave === 'OTRO') {
+      form.transmisor[0].relacion.valor = this.otroParentesco.nativeElement.value;
     }
     
     return form;
