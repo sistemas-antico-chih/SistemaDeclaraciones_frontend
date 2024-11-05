@@ -548,7 +548,6 @@ export class BienesInmueblesComponent implements OnInit {
 
     if (tipoInmueble) { 
         console.log("llega select")
-        console.log(tipoInmueble)
         this.bienesInmueblesForm
           .get('tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
