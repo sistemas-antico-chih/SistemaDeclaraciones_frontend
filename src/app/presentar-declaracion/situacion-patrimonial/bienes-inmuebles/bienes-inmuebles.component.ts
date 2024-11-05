@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -205,22 +205,13 @@ export class BienesInmueblesComponent implements OnInit {
       .filter((field) => bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
     */
+
+    const bienesInmueblesForm = this.bienesInmueblesForm.get('bienInmueble');
+    bienesInmueblesForm.patchValue(bienInmueble || {});
+
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
     
-
-    console.log('bienInmueble')
-    console.log(bienInmueble);
-
-    console.log("form")
-    console.log(this.bienesInmueblesForm.get('bienInmueble'))
-
-    const bienesInmueblesForm = this.bienesInmueblesForm.get('bienInmueble');
-    console.log(bienInmueble.tipoInmueble.valor);
-
-    bienesInmueblesForm.patchValue(bienInmueble || {});
-
-
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
       this.tipoDomicilio = 'MEXICO';
@@ -235,11 +226,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-      console.log("llega IF")
-      if(this.otroTipoInmueble !== undefined){
         this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
-      }
-        //this.otroTipoInmueble.nativeElement.value = "alguillo"
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
