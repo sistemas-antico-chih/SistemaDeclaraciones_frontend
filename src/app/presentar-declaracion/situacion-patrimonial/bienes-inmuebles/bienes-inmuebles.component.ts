@@ -452,7 +452,8 @@ export class BienesInmueblesComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
 
     if (form.tipoInmueble?.clave === 'OTRO') {
-      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
+      //form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
+      form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
     if (form.transmisor.relacion?.clave === 'OTRO') {
       form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value;
