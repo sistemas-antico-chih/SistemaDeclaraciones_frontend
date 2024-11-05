@@ -239,7 +239,7 @@ export class BienesInmueblesComponent implements OnInit {
       if(this.otroTipoInmueble !== undefined){
         this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
       }
-        this.otroTipoInmueble.nativeElement.value = "alguillo"
+        //this.otroTipoInmueble.nativeElement.value = "alguillo"
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
@@ -247,7 +247,7 @@ export class BienesInmueblesComponent implements OnInit {
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }*/
 
-    this.setSelectedOptions();
+    //this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
@@ -543,7 +543,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.editIndex = null;
   }
 
-  setSelectedOptions() {
+  /*setSelectedOptions() {
     console.log("setSelectedOptions")
     const { tipoInmueble,  titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
@@ -573,7 +573,7 @@ export class BienesInmueblesComponent implements OnInit {
         .get('bienInmueble.transmisor.relacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion));
     }
-  }
+  }*/
 
   setupForm(bienesInmuebles: BienesInmuebles) {
     this.bienInmueble = bienesInmuebles.bienInmueble;
