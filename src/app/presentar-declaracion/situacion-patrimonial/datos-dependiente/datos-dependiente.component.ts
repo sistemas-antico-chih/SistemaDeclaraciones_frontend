@@ -386,10 +386,10 @@ export class DatosDependienteComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.datosDependientesEconomicosForm.value.dependienteEconomico)); // Deep copy
 
     if (form.actividadLaboral?.clave === 'OTR') {
-      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.toUpperCase();
+      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value.toUpperCase();
     }
     if (form.parentescoRelacion?.clave === 'OTRO') {
-      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.toUpperCase();
+      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
     }
     if (form.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
       form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
