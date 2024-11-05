@@ -238,6 +238,7 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("llega")
       console.log(bienInmueble.tipoInmueble.valor);
       //this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      this.otroTipoInmueble.nativeElement.value = "alguillo"
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
@@ -552,6 +553,9 @@ export class BienesInmueblesComponent implements OnInit {
         this.bienesInmueblesForm
           .get('bienInmueble.tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+        console.log(this.bienesInmueblesForm.bienInmueble.tipoInmueble.clave)
+        console.log(this.bienesInmueblesForm.bienInmueble.tipoInmueble.valor)
+        
     }
 
     if (titular) {
