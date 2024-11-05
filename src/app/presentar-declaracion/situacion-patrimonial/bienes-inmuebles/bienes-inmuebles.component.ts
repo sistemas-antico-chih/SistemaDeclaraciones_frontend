@@ -38,18 +38,17 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
-  bienesInmueblesForm: FormGroup;
+  aclaracionesText: string = null; bienesInmueblesForm: FormGroup;
   estado: Catalogo = null;
   editMode = false;
   editIndex: number = null;
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  //@ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
-  @ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
-
+  //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
 
 
   tipoInmuebleCatalogo = TipoInmueble;
@@ -96,6 +95,7 @@ export class BienesInmueblesComponent implements OnInit {
   addItem() {
     this.bienesInmueblesForm.reset();
     this.bienesInmueblesForm.get('ninguno').setValue(false);
+    this.setAclaraciones(this.aclaracionesText);
     this.editMode = true;
     this.editIndex = null;
   }
@@ -210,12 +210,14 @@ export class BienesInmueblesComponent implements OnInit {
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
     */
 
+    //los radio buttons
+
     const bienesInmueblesForm = this.bienesInmueblesForm.get('bienInmueble');
     bienesInmueblesForm.patchValue(bienInmueble || {});
 
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
-    
+
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
       this.tipoDomicilio = 'MEXICO';
@@ -230,8 +232,8 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-        //this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
-        document.querySelector<HTMLInputElement>('.OTI').value=bienInmueble.tipoInmueble?.valor;
+      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      //document.querySelector<HTMLInputElement>('.OTI').value = bienInmueble.tipoInmueble?.valor;
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
@@ -239,6 +241,7 @@ export class BienesInmueblesComponent implements OnInit {
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }*/
 
+    this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
   }
 
@@ -254,7 +257,9 @@ export class BienesInmueblesComponent implements OnInit {
         throw errors;
       }
 
-      this.setupForm(data?.lastDeclaracion.bienesInmuebles);
+      if (data?.lastDeclaracion.bienesInmuebles) {
+        this.setupForm(data?.lastDeclaracion.bienesInmuebles);
+      }
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
       // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -263,7 +268,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   async getUserInfo() {
     try {
-      const { data } = await this.apollo
+      const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
           query: bienesInmueblesQuery,
           variables: {
@@ -272,8 +277,11 @@ export class BienesInmueblesComponent implements OnInit {
         })
         .toPromise();
 
-      this.declaracionId = data.declaracion._id;
+      if (errors) {
+        throw errors;
+      }
 
+      this.declaracionId = data.declaracion._id;
       if (data.declaracion.bienesInmuebles === null) {
         this.getLastUserInfo();
       } else {
@@ -284,6 +292,57 @@ export class BienesInmueblesComponent implements OnInit {
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
+
+  get finalBienInmuebleForm() {
+    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
+
+    if (form.tipoInmueble?.clave === 'OTRO') {
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
+  }
+
+  inputsAreValid(): boolean {
+    let result = true;
+    const bienInmueble = this.bienesInmueblesForm.value.bienInmueble;
+
+    if (bienInmueble.actividadLaboral?.clave === 'OTR') {
+      result = result && this.otroTipoInmueble.nativeElement.value?.match(/^\S.*\S$/);
+    }
+    if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
+      result = result && this.otroParentesco.nativeElement.value?.match(/^\S.*\S$/);
+    }
+
+    console.log(result);
+    return result;
+  }
+
+  /*lugarDondeResideChanged(value: string) {
+    const domicilioMexico = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioMexico');
+    const domicilioExtranjero = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioExtranjero');
+
+    switch (value) {
+      case 'MEXICO':
+        domicilioMexico.enable();
+        domicilioExtranjero.disable();
+        break;
+      case 'EXTRANJERO':
+        domicilioMexico.disable();
+        domicilioExtranjero.enable();
+        break;
+      default:
+        domicilioMexico.disable();
+        domicilioExtranjero.disable();
+        break;
+    }
+
+    this.tipoDomicilio = value;
+  }*/
 
   formHasChanges() {
     let isDirty = this.bienesInmueblesForm.dirty;
@@ -315,6 +374,24 @@ export class BienesInmueblesComponent implements OnInit {
         //falseText: '',
       },
     });
+  }
+
+  checkItems() {
+    let bienInmueble = [...this.bienInmueble];
+    if (bienInmueble.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < bienInmueble.length; i++) {
+        bienInmueble[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        bienInmueble,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
   }
 
   noProperty() {
@@ -372,7 +449,7 @@ export class BienesInmueblesComponent implements OnInit {
         bienesInmuebles: form,
       };
 
-      const { data } = await this.apollo
+      const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
           mutation: bienesInmueblesMutation,
           variables: {
@@ -382,9 +459,13 @@ export class BienesInmueblesComponent implements OnInit {
         })
         .toPromise();
 
+      if (errors) {
+        throw errors;
+      }
+
       this.editMode = false;
-      if (data.declaracion.bienesInmuebles) {
-        this.setupForm(data.declaracion.bienesInmuebles);
+      if (data?.declaracion.bienesInmuebles) {
+        this.setupForm(data?.declaracion.bienesInmuebles);
       }
       this.presentSuccessAlert();
     } catch (error) {
@@ -393,27 +474,11 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  tipoDomicilioChanged(value: any) {
-    this.tipoDomicilio = value;
-
-    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
-    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
-    const bienInbueble = this.bienesInmueblesForm.get('bienInmueble');
-
-    const notSelected = bienInbueble.get(notSelectedType);
-
-    notSelected.disable();
-    notSelected.reset();
-
-    bienInbueble.get(selectedType).enable();
-  }
-
-
   saveItem() {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     //const newItem = this.bienesInmueblesForm.value.bienInmueble;
-    const newItem = this.finalBienesInmueblesForm;
+    const newItem = this.finalBienInmuebleForm;
 
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
@@ -447,37 +512,89 @@ export class BienesInmueblesComponent implements OnInit {
     this.isLoading = false;
   }
 
-
-  get finalBienesInmueblesForm() {
-    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
-
-    if (form.tipoInmueble?.clave === 'OTRO') {
-      //form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
-      form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
-    }
-    if (form.transmisor.relacion?.clave === 'OTRO') {
-      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value;
-    }
-
-    return form;
+  setAclaraciones(aclaraciones?: string) {
+    this.bienesInmueblesForm.get('aclaracionesObservaciones').patchValue(aclaraciones || null);
+    this.aclaracionesText = aclaraciones || null;
+    this.toggleAclaraciones(!!aclaraciones);
   }
 
-  checkItems() {
-    let bienInmueble = [...this.bienInmueble];
-    if (bienInmueble.length === 0) {
-      this.saveInfo({ ninguno: true });
-    } else {
-      for (let i = 0; i < bienInmueble.length; i++) {
-        bienInmueble[i].tipoOperacion = 'SIN_CAMBIOS';
-      }
-      const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-      this.isLoading = true;
-      this.saveInfo({
-        bienInmueble,
-        aclaracionesObservaciones,
-      });
-      this.isLoading = false;
+  setEditMode() {
+    this.bienesInmueblesForm.reset();
+    this.editMode = true;
+    this.editIndex = null;
+  }
+
+  setSelectedOptions() {
+    console.log("setSelectedOptions")
+    const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
+
+    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
+
+    if (tipoInmueble) {
+      console.log("llega select")
+      this.bienesInmueblesForm
+        .get('bienInmueble.tipoInmueble')
+        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
+      console.log(tipoInmueble.clave)
+      console.log(tipoInmueble.valor)
     }
+
+    if (titular) {
+      this.bienesInmueblesForm.get('bienInmueble.titular')
+        .setValue(findOption(this.titularBienCatalogo, titular[0]));
+    }
+    if (formaAdquisicion) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.formaAdquisicion')
+        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
+    }
+
+    if (relacion) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.transmisor.relacion')
+        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
+    }
+  }
+
+  setupForm(bienesInmuebles: BienesInmuebles) {
+    this.bienInmueble = bienesInmuebles.bienInmueble;
+    this.valores = bienesInmuebles.valores;
+
+    const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
+
+    if (bienesInmuebles.ninguno) {
+      this.bienesInmueblesForm.get('ninguno').patchValue(true);
+    }
+
+    if (aclaraciones) {
+      this.setAclaraciones(aclaraciones);
+    }
+  }
+
+  toggleAclaraciones(value: boolean) {
+    const aclaraciones = this.bienesInmueblesForm.get('aclaracionesObservaciones');
+    if (value) {
+      aclaraciones.enable();
+    } else {
+      aclaraciones.disable();
+      aclaraciones.reset();
+    }
+    this.aclaraciones = value;
+  }
+
+  tipoDomicilioChanged(value: any) {
+    this.tipoDomicilio = value;
+
+    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const bienInbueble = this.bienesInmueblesForm.get('bienInmueble');
+
+    const notSelected = bienInbueble.get(notSelectedType);
+
+    notSelected.disable();
+    notSelected.reset();
+
+    bienInbueble.get(selectedType).enable();
   }
 
   saveValoresDeclarante() {
@@ -528,72 +645,6 @@ export class BienesInmueblesComponent implements OnInit {
       }
     }
     return valores;
-  }
-
-  setEditMode() {
-    this.bienesInmueblesForm.reset();
-    this.editMode = true;
-    this.editIndex = null;
-  }
-
-  setSelectedOptions() {
-    console.log("setSelectedOptions")
-    const { tipoInmueble,  titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
-
-    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
-
-    if (tipoInmueble) { 
-        console.log("llega select")
-        this.bienesInmueblesForm
-          .get('bienInmueble.tipoInmueble')
-          .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
-        console.log(tipoInmueble.clave)
-        console.log(tipoInmueble.valor)
-        
-    }
-
-    if (titular) {
-      this.bienesInmueblesForm.get('bienInmueble.titular')
-       .setValue(findOption(this.titularBienCatalogo, titular[0]));
-    }
-    if (formaAdquisicion) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
-    }
-
-    if (relacion) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
-    }
-  }
-
-  setupForm(bienesInmuebles: BienesInmuebles) {
-    this.bienInmueble = bienesInmuebles.bienInmueble;
-    this.valores = bienesInmuebles.valores;
-
-    const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
-
-    if (bienesInmuebles.ninguno) {
-      this.bienesInmueblesForm.get('ninguno').patchValue(true);
-    }
-
-    if (aclaraciones) {
-      this.bienesInmueblesForm.get('aclaracionesObservaciones').setValue(aclaraciones);
-      this.toggleAclaraciones(true);
-    }
-  }
-
-  toggleAclaraciones(value: boolean) {
-    const aclaraciones = this.bienesInmueblesForm.get('aclaracionesObservaciones');
-    if (value) {
-      aclaraciones.enable();
-    } else {
-      aclaraciones.disable();
-      aclaraciones.reset();
-    }
-    this.aclaraciones = value;
   }
 
   radioChange(event: any) {

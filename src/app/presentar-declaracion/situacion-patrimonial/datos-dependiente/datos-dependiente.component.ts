@@ -386,13 +386,13 @@ export class DatosDependienteComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.datosDependientesEconomicosForm.value.dependienteEconomico)); // Deep copy
 
     if (form.actividadLaboral?.clave === 'OTR') {
-      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value;
+      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.toUpperCase();
     }
     if (form.parentescoRelacion?.clave === 'OTRO') {
-      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.value;
+      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.toUpperCase();
     }
     if (form.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
-      form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value;
+      form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
     }
 
     return form;
@@ -413,6 +413,7 @@ export class DatosDependienteComponent implements OnInit {
       result = result && this.otroSector.nativeElement.value?.match(/^\S.*\S$/);
     }
 
+    console.log(result);
     return result;
   }
 
