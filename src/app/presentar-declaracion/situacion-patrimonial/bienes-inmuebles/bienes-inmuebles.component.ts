@@ -238,7 +238,7 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("llega")
       console.log(bienInmueble.tipoInmueble.valor);
       //this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
-      this.otroTipoInmueble.nativeElement.value = "alguillo"
+      //this.otroTipoInmueble.nativeElement.value = "alguillo"
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
