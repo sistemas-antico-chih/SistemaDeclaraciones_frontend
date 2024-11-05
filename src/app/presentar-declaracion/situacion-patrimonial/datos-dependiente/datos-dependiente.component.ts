@@ -413,6 +413,7 @@ export class DatosDependienteComponent implements OnInit {
       result = result && this.otroSector.nativeElement.value?.match(/^\S.*\S$/);
     }
 
+    console.log("result");
     console.log(result);
     return result;
   }
