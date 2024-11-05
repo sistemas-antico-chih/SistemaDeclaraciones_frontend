@@ -398,6 +398,7 @@ export class DatosDependienteComponent implements OnInit {
     return form;
   }
 
+  
   inputsAreValid(): boolean {
     let result = true;
     const dependienteEconomico = this.datosDependientesEconomicosForm.value.dependienteEconomico;
