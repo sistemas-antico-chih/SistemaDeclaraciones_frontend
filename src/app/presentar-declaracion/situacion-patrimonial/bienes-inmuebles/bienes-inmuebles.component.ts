@@ -553,8 +553,8 @@ export class BienesInmueblesComponent implements OnInit {
         this.bienesInmueblesForm
           .get('bienInmueble.tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
-        console.log(this.bienesInmueblesForm.bienInmueble.tipoInmueble.clave)
-        console.log(this.bienesInmueblesForm.bienInmueble.tipoInmueble.valor)
+        console.log(tipoInmueble.clave)
+        console.log(tipoInmueble.valor)
         
     }
 
