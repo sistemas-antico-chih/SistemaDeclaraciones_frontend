@@ -233,10 +233,11 @@ export class BienesInmueblesComponent implements OnInit {
       this.tipoDomicilio = 'EXTRANJERO';
     }
 
+
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
       console.log("llega")
       console.log(bienInmueble.tipoInmueble.valor);
-      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      //this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
