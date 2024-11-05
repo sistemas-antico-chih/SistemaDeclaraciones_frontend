@@ -279,10 +279,10 @@
               </mat-select>
             </mat-form-field>
 
-            <!--*ngIf="bienesInmueblesForm.value.bienInmueble?.tipoInmueble?.clave === 'OTRO'"-->
+            <!--*ngIf="bienesInmueblesForm.value.bienInmueble?.tipoInmueble?.clave === 'OTRO'" 
+            class="double-col"-->
             <mat-form-field 
-              appearance="fill"
-              class="double-col"
+              appearance="fill"  
               [ngClass]="{
                 hidden: bienesInmueblesForm.value.bienInmueble?.tipoInmueble?.clave !== 'OTRO'
               }">
