@@ -204,9 +204,10 @@ export class BienesInmueblesComponent implements OnInit {
     /*Object.keys(bienInmueble)
       .filter((field) => bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
+    */
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
-    */
+    
 
     console.log('bienInmueble')
     console.log(bienInmueble);
@@ -232,7 +233,6 @@ export class BienesInmueblesComponent implements OnInit {
     if (bienInmueble.domicilioExtranjero) {
       this.tipoDomicilio = 'EXTRANJERO';
     }
-
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
       console.log("llega")
@@ -547,13 +547,13 @@ export class BienesInmueblesComponent implements OnInit {
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
 
-    /*if (tipoInmueble) { 
-        console.log("llega")
+    if (tipoInmueble) { 
+        console.log("llega select")
         console.log(tipoInmueble)
         this.bienesInmueblesForm
           .get('bienInmueble.tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
-    }*/
+    }
 
     if (titular) {
       this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
