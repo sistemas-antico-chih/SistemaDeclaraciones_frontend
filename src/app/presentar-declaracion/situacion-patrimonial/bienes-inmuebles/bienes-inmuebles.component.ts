@@ -216,7 +216,6 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(this.bienesInmueblesForm.get('bienInmueble'))
 
     const bienesInmueblesForm = this.bienesInmueblesForm.get('bienInmueble');
-    console.log(bienInmueble.tipoInmueble.valor);
 
     bienesInmueblesForm.patchValue(bienInmueble || {});
 
@@ -551,22 +550,22 @@ export class BienesInmueblesComponent implements OnInit {
         console.log("llega select")
         console.log(tipoInmueble)
         this.bienesInmueblesForm
-          .get('bienInmueble.tipoInmueble')
+          .get('tipoInmueble')
           .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
     }
 
     if (titular) {
-      this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.bienesInmueblesForm.get('titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
     }
     if (formaAdquisicion) {
       this.bienesInmueblesForm
-        .get('bienInmueble.formaAdquisicion')
+        .get('formaAdquisicion')
         .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
     }
 
     if (relacion) {
       this.bienesInmueblesForm
-        .get('bienInmueble.transmisor.relacion')
+        .get('transmisor.relacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion));
     }
   }
