@@ -40,8 +40,8 @@ export class IngresosNetosComponent implements OnInit {
 
   //@ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
 
-  large = document.querySelectorAll<HTMLInputElement>('.OTI').length || 0;
-  test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
+  //large = document.querySelectorAll<HTMLInputElement>('.OTI').length || 0;
+  //test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
 
   //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
@@ -438,8 +438,8 @@ export class IngresosNetosComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("ngOnInit");
-    console.log(this.test);
-    console.log(this.large);
+    //console.log(this.test);
+    //console.log(this.large);
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -456,8 +456,8 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterViewInit() {
     console.log("ngAfterViewInit");
-    console.log(this.test);
-    console.log(this.large);
+    //console.log(this.test);
+    //console.log(this.large);
     for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
       this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
       document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];

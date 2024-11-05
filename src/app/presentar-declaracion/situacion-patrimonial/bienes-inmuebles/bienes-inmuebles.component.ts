@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -45,8 +45,12 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  //@ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
+
+  @ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
+
+
 
   tipoInmuebleCatalogo = TipoInmueble;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -226,7 +230,8 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-        this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+        //this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+        document.querySelector<HTMLInputElement>('.OTI').value=bienInmueble.tipoInmueble?.valor;
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
@@ -234,7 +239,7 @@ export class BienesInmueblesComponent implements OnInit {
       this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
     }*/
 
-    //this.setSelectedOptions();
+    this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
@@ -530,7 +535,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.editIndex = null;
   }
 
-  /*setSelectedOptions() {
+  setSelectedOptions() {
     console.log("setSelectedOptions")
     const { tipoInmueble,  titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
@@ -540,27 +545,28 @@ export class BienesInmueblesComponent implements OnInit {
         console.log("llega select")
         this.bienesInmueblesForm
           .get('bienInmueble.tipoInmueble')
-          .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+          .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
         console.log(tipoInmueble.clave)
         console.log(tipoInmueble.valor)
         
     }
 
     if (titular) {
-      this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.bienesInmueblesForm.get('bienInmueble.titular')
+       .setValue(findOption(this.titularBienCatalogo, titular[0]));
     }
     if (formaAdquisicion) {
       this.bienesInmueblesForm
         .get('bienInmueble.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
     }
 
     if (relacion) {
       this.bienesInmueblesForm
         .get('bienInmueble.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
     }
-  }*/
+  }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
     this.bienInmueble = bienesInmuebles.bienInmueble;
