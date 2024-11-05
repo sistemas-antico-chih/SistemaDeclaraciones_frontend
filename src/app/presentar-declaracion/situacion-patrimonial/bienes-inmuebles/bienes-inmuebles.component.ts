@@ -45,7 +45,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
@@ -212,8 +212,8 @@ export class BienesInmueblesComponent implements OnInit {
 
     //los radio buttons
 
-    const bienesInmueblesForm = this.bienesInmueblesForm.get('bienInmueble');
-    bienesInmueblesForm.patchValue(bienInmueble || {});
+    const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
+    bienInmuebleForm.patchValue(bienInmueble || {});
 
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
