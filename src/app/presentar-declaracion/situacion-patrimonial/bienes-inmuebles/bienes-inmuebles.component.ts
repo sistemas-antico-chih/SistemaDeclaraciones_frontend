@@ -45,7 +45,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoInmueble') otroTipoInmueblee: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   tipoInmuebleCatalogo = TipoInmueble;
@@ -237,7 +237,7 @@ export class BienesInmueblesComponent implements OnInit {
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
       console.log("llega")
       console.log(bienInmueble.tipoInmueble.valor);
-      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      this.otroTipoInmueblee.nativeElement.value = bienInmueble.tipoInmueble?.valor;
       //this.otroTipoInmueble.nativeElement.value = "alguillo"
     }
 
@@ -459,7 +459,7 @@ export class BienesInmueblesComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
 
     if (form.tipoInmueble?.clave === 'OTRO') {
-      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
+      //form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value;
     }
     if (form.transmisor.relacion?.clave === 'OTRO') {
       form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value;
