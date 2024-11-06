@@ -324,7 +324,10 @@ export class DatosDependienteComponent implements OnInit {
       this.otroActividadLaboral.nativeElement.value = dependienteEconomico.actividadLaboral?.valor;
     }
     if (dependienteEconomico.parentescoRelacion?.clave === 'OTRO') {
+      console.log("otroParentesco")
+      console.log(this.otroParentesco)
       this.otroParentesco.nativeElement.value = dependienteEconomico.parentescoRelacion?.valor;
+      console.log(this.otroParentesco)
     }
     if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
       this.otroSector.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;

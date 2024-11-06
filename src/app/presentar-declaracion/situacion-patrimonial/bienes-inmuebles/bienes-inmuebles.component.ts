@@ -45,7 +45,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroInmueble') otroInmueble: ElementRef;
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
@@ -232,7 +232,11 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-      this.otroInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      console.log("otroTipoInmueble")
+      console.log(this.otroTipoInmueble)
+      console.log(this.otroParentesco)
+      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      console.log(this.otroTipoInmueble)
       //document.querySelector<HTMLInputElement>('.OTI').value = bienInmueble.tipoInmueble?.valor;
     }
 
@@ -297,7 +301,7 @@ export class BienesInmueblesComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
 
     if (form.tipoInmueble?.clave === 'OTRO') {
-      //form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
     if (form.transmisor.relacion?.clave === 'OTRO') {
