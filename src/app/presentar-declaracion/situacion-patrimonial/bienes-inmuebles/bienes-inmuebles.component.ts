@@ -58,9 +58,9 @@ import Sector from '@static/catalogos/sector.json';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-datos-dependiente',
-  templateUrl: './datos-dependiente.component.html',
-  styleUrls: ['./datos-dependiente.component.scss'],
+  selector: 'app-bienes-inmuebles',
+  templateUrl: './bienes-inmuebles.component.html',
+  styleUrls: ['./bienes-inmuebles.component.scss'],
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
