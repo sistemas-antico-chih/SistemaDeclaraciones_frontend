@@ -3,7 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { bienesInmueblesMutation, bienesInmueblesQuery, lastBienesInmueblesQuery } from '@api/declaracion';
+import { 
+  bienesInmueblesMutation, 
+  bienesInmueblesQuery, 
+  lastBienesInmueblesQuery,
+  datosDependientesEconomicosMutation,
+  datosDependientesEconomicosQuery,
+  lastDatosDependientesEconomicosQuery
+} from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
@@ -24,7 +31,24 @@ import Monedas from '@static/catalogos/monedas.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
+import { 
+  BienInmueble, 
+  BienesInmuebles, 
+  Catalogo, 
+  DeclaracionOutput, 
+  ValorDeclarante, 
+  LastDeclaracionOutput,
+  DependienteEconomico,
+  DatosDependientesEconomicos
+} from '@models/declaracion';
+
+import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
+import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
+import AmbitoSector from '@static/catalogos/ambitoSector.json';
+import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
+import Sector from '@static/catalogos/sector.json';
+
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
