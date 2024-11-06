@@ -297,7 +297,7 @@ export class BienesInmueblesComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
 
     if (form.tipoInmueble?.clave === 'OTRO') {
-      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
     if (form.transmisor.relacion?.clave === 'OTRO') {
@@ -312,7 +312,7 @@ export class BienesInmueblesComponent implements OnInit {
     const bienInmueble = this.bienesInmueblesForm.value.bienInmueble;
 
     if (bienInmueble.actividadLaboral?.clave === 'OTR') {
-      result = result && this.otroTipoInmueble.nativeElement.value?.match(/^\S.*\S$/);
+      //result = result && this.otroTipoInmueble.nativeElement.value?.match(/^\S.*\S$/);
     }
     if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
       result = result && this.otroParentesco.nativeElement.value?.match(/^\S.*\S$/);
