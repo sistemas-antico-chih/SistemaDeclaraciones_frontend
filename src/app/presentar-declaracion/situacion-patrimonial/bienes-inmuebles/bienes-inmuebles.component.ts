@@ -45,7 +45,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroInmueble') otroInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
@@ -232,7 +232,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      this.otroInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
       //document.querySelector<HTMLInputElement>('.OTI').value = bienInmueble.tipoInmueble?.valor;
     }
 
