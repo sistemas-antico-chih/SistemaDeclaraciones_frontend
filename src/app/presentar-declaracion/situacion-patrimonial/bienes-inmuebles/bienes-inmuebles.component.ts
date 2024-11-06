@@ -24,52 +24,37 @@ import Monedas from '@static/catalogos/monedas.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
+import { 
+  BienInmueble, 
+  BienesInmuebles, 
+  Catalogo, 
+  DeclaracionOutput, 
+  ValorDeclarante, 
+  LastDeclaracionOutput 
+} from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-
-
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
-import { Apollo } from 'apollo-angular';
-
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
 import {
   datosDependientesEconomicosMutation,
   datosDependientesEconomicosQuery,
   lastDatosDependientesEconomicosQuery
 } from '@api/declaracion';
-
-import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { UntilDestroy, untilDestroyed } from '@core';
 import {
-  Catalogo,
   DependienteEconomico,
   DatosDependientesEconomicos,
-  DeclaracionOutput,
-  LastDeclaracionOutput
 } from '@models/declaracion';
 import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import AmbitoSector from '@static/catalogos/ambitoSector.json';
-import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
-import Monedas from '@static/catalogos/monedas.json';
-import Municipios from '@static/catalogos/municipios.json';
+
+
 import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
-import Paises from '@static/catalogos/paises.json';
-import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
+
+
 import Sector from '@static/catalogos/sector.json';
-import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-dependiente';
-import { findOption } from '@utils/utils';
-import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
