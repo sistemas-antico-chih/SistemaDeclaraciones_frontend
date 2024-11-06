@@ -40,7 +40,7 @@ import { CatalogosService } from '../../services/catalogos.service';
     DatosDependienteComponent,
     BienesInmueblesComponent,
     VehiculosComponent,
-    BienesMueblesComponent,
+    //BienesMueblesComponent,
     AdeudosComponent,
     PrestamosTercerosComponent,
     InversionesComponent,
