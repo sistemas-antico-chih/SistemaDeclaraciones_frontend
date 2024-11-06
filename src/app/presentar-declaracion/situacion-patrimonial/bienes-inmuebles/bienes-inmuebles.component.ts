@@ -62,7 +62,7 @@ import Sector from '@static/catalogos/sector.json';
   templateUrl: './datos-dependiente.component.html',
   styleUrls: ['./datos-dependiente.component.scss'],
 })
-export class DatosDependienteComponent implements OnInit {
+export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
   aclaracionesText: string = null;
   datosDependientesEconomicosForm: FormGroup;
