@@ -1,21 +1,21 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatosDependienteComponent } from './datos-dependiente.component';
+import { BienesInmueblesComponent } from './bienes-inmuebles.component';
 
 describe('BienesInmueblesComponent', () => {
-  let component: DatosDependienteComponent;
-  let fixture: ComponentFixture<DatosDependienteComponent>;
+  let component: BienesInmueblesComponent;
+  let fixture: ComponentFixture<BienesInmueblesComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [DatosDependienteComponent],
+        declarations: [BienesInmueblesComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatosDependienteComponent);
+    fixture = TestBed.createComponent(BienesInmueblesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

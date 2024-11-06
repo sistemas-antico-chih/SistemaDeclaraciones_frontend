@@ -24,88 +24,61 @@ import Monedas from '@static/catalogos/monedas.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { 
-  BienInmueble, 
-  BienesInmuebles, 
-  Catalogo, 
-  DeclaracionOutput, 
-  ValorDeclarante, 
-  LastDeclaracionOutput 
-} from '@models/declaracion';
+import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import {
-  datosDependientesEconomicosMutation,
-  datosDependientesEconomicosQuery,
-  lastDatosDependientesEconomicosQuery
-} from '@api/declaracion';
-import {
-  DependienteEconomico,
-  DatosDependientesEconomicos,
-} from '@models/declaracion';
-import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
-import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
-import AmbitoSector from '@static/catalogos/ambitoSector.json';
-import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
-
-
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
-
-
-import Sector from '@static/catalogos/sector.json';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-datos-dependiente',
-  templateUrl: './datos-dependiente.component.html',
-  styleUrls: ['./datos-dependiente.component.scss'],
+  selector: 'app-bienes-inmuebles',
+  templateUrl: './bienes-inmuebles.component.html',
+  styleUrls: ['./bienes-inmuebles.component.scss'],
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
-  aclaracionesText: string = null;
-  datosDependientesEconomicosForm: FormGroup;
-  dependienteEconomico: DependienteEconomico[] = [];
-  editMode = false;
+  aclaracionesText: string = null; bienesInmueblesForm: FormGroup;
   estado: Catalogo = null;
+  editMode = false;
   editIndex: number = null;
+  bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
-  @ViewChild('otroSector') otroSector: ElementRef;
 
-  actividadLaboralCatalogo = ActividadLaboral;
-  ambitoPublicoCatalogo = AmbitoPublico;
-  ambitoSectorCatalogo = AmbitoSector;
-  estadosCatalogo = Estados;
-  lugarDondeResideCatalogo = LugarDondeReside;
-  monedasCatalogo = Monedas;
-  municipiosCatalogo = Municipios;
-  nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
-  paisesCatalogo = Paises;
+  //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
+
+
+  tipoInmuebleCatalogo = TipoInmueble;
+  formaAdquisicionCatalogo = FormaAdquisicion;
+  titularBienCatalogo = TitularBien;
+  formaPagoCatalogo = FormaPago;
   parentescoRelacionCatalogo = ParentescoRelacion;
-  sectorCatalogo = Sector;
+  valorConformeACatalogo = ValorConformeA;
+  estadosCatalogo = Estados;
+  municipiosCatalogo = Municipios;
+  paisesCatalogo = Paises;
+  monedasCatalogo = Monedas;
   tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
-  tipoDomicilio: string = null;
+  tipoDomicilio = 'MEXICO';
 
   declaracionId: string = null;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  minDate = new Date(1960, 1, 1);
+  minDate = new Date(1940, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
-  hidden: string = 'false';
+  valores: ValorDeclarante[] = [];
 
-  extranjero: boolean;
-  active: boolean;
+  tipoPersona: string;
 
   constructor(
     private apollo: Apollo,
@@ -119,32 +92,9 @@ export class BienesInmueblesComponent implements OnInit {
     this.getUserInfo();
   }
 
-  actividadLaboralChanged(value: any) {
-    const actividadLaboralSectorPublico = this.datosDependientesEconomicosForm.get(
-      'dependienteEconomico.actividadLaboralSectorPublico'
-    );
-
-    const actividadLaboralSectorPrivadoOtro = this.datosDependientesEconomicosForm.get(
-      'dependienteEconomico.actividadLaboralSectorPrivadoOtro'
-    );
-
-    const clave = value?.clave || null;
-
-    if (clave === 'PUB') {
-      actividadLaboralSectorPublico.enable();
-      actividadLaboralSectorPrivadoOtro.disable();
-    } else if (clave === 'PRI' || clave === 'OTR') {
-      actividadLaboralSectorPublico.disable();
-      actividadLaboralSectorPrivadoOtro.enable();
-    } else {
-      actividadLaboralSectorPublico.disable();
-      actividadLaboralSectorPrivadoOtro.disable();
-    }
-  }
-
   addItem() {
-    this.datosDependientesEconomicosForm.reset();
-    this.datosDependientesEconomicosForm.get('ninguno').patchValue(false);
+    this.bienesInmueblesForm.reset();
+    this.bienesInmueblesForm.get('ninguno').setValue(false);
     this.setAclaraciones(this.aclaracionesText);
     this.editMode = true;
     this.editIndex = null;
@@ -156,112 +106,87 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   createForm() {
-    this.datosDependientesEconomicosForm = this.formBuilder.group({
+    this.bienesInmueblesForm = this.formBuilder.group({
       ninguno: [false],
-      dependienteEconomico: this.formBuilder.group({
+      bienInmueble: this.formBuilder.group({
         tipoOperacion: [null, [Validators.required]],
-        nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        segundoApellido: [null, [Validators.pattern(/^\S.*\S$/)]],
-        fechaNacimiento: [null, [Validators.required]],
-        rfc: [
-          null,
-          [
-            Validators.required,
-            Validators.pattern(
-              /^([A-ZÑ&]{4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?(([A-Z\d]{2})([A\d]))?$/i
-            ),
-          ],
+        tipoInmueble: [null, [Validators.required]],
+        titular: [[], [Validators.required]],
+        porcentajePropiedad: [
+          0,
+          [Validators.required, Validators.pattern(/^\d+\.?\d{0,4}$/), Validators.min(0), Validators.max(100)],
         ],
-        parentescoRelacion: [null, [Validators.required]],
-        extranjero: [null, [Validators.required]],
-        curp: [
-          null,
-          [
-            Validators.pattern(
-              /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
-            ),
-          ],
-        ],
-        habitaDomicilioDeclarante: [null, [Validators.required]],
-        lugarDondeReside: [null, [Validators.required]],
-        domicilioMexico: this.formBuilder.group({
-          calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
-          coloniaLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
-          entidadFederativa: [{ disabled: true, value: null }, [Validators.required]],
-          codigoPostal: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        superficieTerreno: this.formBuilder.group({
+          valor: [0, [Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          unidad: ['m'],
         }),
-        domicilioExtranjero: this.formBuilder.group({
-          calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
-          ciudadLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          estadoProvincia: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          pais: [{ disabled: true, value: null }, [Validators.required]],
-          codigoPostal: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        superficieConstruccion: this.formBuilder.group({
+          valor: [0, [Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          unidad: ['m'],
         }),
-        actividadLaboral: [null, [Validators.required]],
-        actividadLaboralSectorPublico: this.formBuilder.group({
-          nivelOrdenGobierno: [{ disabled: true, value: null }, [Validators.required]],
-          ambitoPublico: [{ disabled: true, value: null }, [Validators.required]],
-          nombreEntePublico: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          areaAdscripcion: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          empleoCargoComision: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          funcionPrincipal: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          salarioMensualNeto: this.formBuilder.group({
-            valor: [
-              { disabled: true, value: 0 },
-              [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)],
-            ],
-            moneda: [{ disabled: true, value: null }, [Validators.required]],
-          }),
-          fechaIngreso: [{ disabled: true, value: null }, [Validators.required]],
-        }),
-        actividadLaboralSectorPrivadoOtro: this.formBuilder.group({
-          nombreEmpresaSociedadAsociacion: [
-            { disabled: true, value: null },
-            [Validators.required, Validators.pattern(/^\S.*\S$/)],
-          ],
-          empleoCargoComision: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+        tercero: this.formBuilder.group({
+          tipoPersona: [null],
+          nombreRazonSocial: [null, [Validators.pattern(/^\S.*\S?$/)]],
           rfc: [
-            { disabled: true, value: null },
+            null,
             [
               Validators.pattern(
                 /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
               ),
             ],
           ],
-          fechaIngreso: [{ disabled: true, value: null }, [Validators.required]],
-          sector: [{ disabled: true, value: null }, [Validators.required]],
-          salarioMensualNeto: this.formBuilder.group({
-            valor: [
-              { disabled: true, value: 0 },
-              [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)],
+        }),
+        transmisor: this.formBuilder.group({
+          tipoPersona: [null, [Validators.required]],
+          nombreRazonSocial: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+          rfc: [
+            null,
+            [
+              Validators.required,
+              Validators.pattern(
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              ),
             ],
-            moneda: [{ disabled: true, value: null }, [Validators.required]],
-          }),
-          proveedorContratistaGobierno: [{ disabled: true, value: false }],
+          ],
+          relacion: [null, [Validators.required]],
+        }),
+        formaAdquisicion: [null, [Validators.required]],
+        formaPago: [null, [Validators.required]],
+        valorAdquisicion: this.formBuilder.group({
+          valor: [0, [Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          moneda: ['MXN', [Validators.required]],
+        }),
+        fechaAdquisicion: [null, [Validators.required]],
+        datoIdentificacion: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+        valorConformeA: [null, [Validators.required]],
+        domicilioMexico: this.formBuilder.group({
+          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
+          coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+          municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
+          entidadFederativa: [null, [Validators.required]],
+          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        }),
+        domicilioExtranjero: this.formBuilder.group({
+          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
+          ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+          estadoProvincia: [null, [Validators.required]],
+          pais: [null, [Validators.required]],
+          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
         }),
       }),
-      aclaracionesObservaciones: [
-        { disabled: true, value: null },
-        [Validators.required, Validators.pattern(/^\S.*\S$/)],
-      ],
+      aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     });
 
-    const dependienteEconomico = this.datosDependientesEconomicosForm.get('dependienteEconomico');
+    this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
 
-    const actividadLaboral = dependienteEconomico.get('actividadLaboral');
-    actividadLaboral.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      this.actividadLaboralChanged(value);
-    });
-
-    const estado = dependienteEconomico.get('domicilioMexico.entidadFederativa');
+    const domicilioMexico = this.bienesInmueblesForm.get('bienInmueble').get('domicilioMexico');
+    const estado = domicilioMexico.get('entidadFederativa');
     estado.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      const municipio = dependienteEconomico.get('domicilioMexico.municipioAlcaldia');
+      const municipio = domicilioMexico.get('municipioAlcaldia');
 
       if (value) {
         municipio.enable();
@@ -271,85 +196,54 @@ export class BienesInmueblesComponent implements OnInit {
       }
       this.estado = value;
     });
-
-    const habitaDomicilioDeclarante = dependienteEconomico.get('habitaDomicilioDeclarante');
-    habitaDomicilioDeclarante.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      const lugarDondeReside = dependienteEconomico.get('lugarDondeReside');
-
-      if (value) {
-        lugarDondeReside.disable();
-        lugarDondeReside.reset();
-      } else {
-        lugarDondeReside.enable();
-      }
-    });
-
-    const lugarDondeReside = dependienteEconomico.get('lugarDondeReside');
-    lugarDondeReside.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      this.lugarDondeResideChanged(value);
-    });
-  }
-
-  radioChange(event: any) {
-    
-    this.hidden = event;
-    this.active = this.datosDependientesEconomicosForm.get('dependienteEconomico.extranjero').value;
-    
-    if (this.active == false) {
-      
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").setValidators([Validators.required]);
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").enable();
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").setValidators([Validators.required]);
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").enable();
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
-    } else {
-      
-      //console.log(this.active)
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").clearValidators();
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").disable();
-
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").clearValidators();
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
-      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").disable();
-
-      
-    }
-    //console.log("Requerido", this.datosDependientesEconomicosForm.errors);
   }
 
   editItem(index: number) {
     this.setEditMode();
-    this.fillForm(this.dependienteEconomico[index]);
+    this.fillForm(this.bienInmueble[index]);
     this.editIndex = index;
   }
 
-  fillForm(dependienteEconomico: DependienteEconomico) {
-    const dependienteEconomicoForm = this.datosDependientesEconomicosForm.get('dependienteEconomico');
+  fillForm(bienInmueble: BienInmueble) {
+    /*Object.keys(bienInmueble)
+      .filter((field) => bienInmueble[field] !== null)
+      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
+    */
 
-    dependienteEconomicoForm.patchValue(dependienteEconomico || {});
+    //los radio buttons
 
-    this.tipoDomicilio = dependienteEconomico.lugarDondeReside;
+    const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
+    bienInmuebleForm.patchValue(bienInmueble || {});
 
-    if (!dependienteEconomico.domicilioExtranjero) {
-      dependienteEconomicoForm.get('domicilioExtranjero').disable();
+    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
+    this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
+
+    ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
+    if (bienInmueble.domicilioMexico) {
+      this.tipoDomicilio = 'MEXICO';
     }
-    if (!dependienteEconomico.domicilioMexico) {
-      dependienteEconomicoForm.get('domicilioMexico').disable();
+    ifExistsEnableFields(
+      bienInmueble.domicilioExtranjero,
+      this.bienesInmueblesForm,
+      'bienInmueble.domicilioExtranjero'
+    );
+    if (bienInmueble.domicilioExtranjero) {
+      this.tipoDomicilio = 'EXTRANJERO';
     }
-    if (dependienteEconomico.actividadLaboral?.clave === 'OTR') {
-      this.otroActividadLaboral.nativeElement.value = dependienteEconomico.actividadLaboral?.valor;
-    }
-    if (dependienteEconomico.parentescoRelacion?.clave === 'OTRO') {
-      console.log("otroParentesco")
+
+    if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
+      console.log("otroTipoInmueble")
+      console.log(this.otroTipoInmueble)
       console.log(this.otroParentesco)
-      this.otroParentesco.nativeElement.value = dependienteEconomico.parentescoRelacion?.valor;
-      console.log(this.otroParentesco)
+      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
+      console.log(this.otroTipoInmueble)
+      //document.querySelector<HTMLInputElement>('.OTI').value = bienInmueble.tipoInmueble?.valor;
     }
-    if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
-      this.otroSector.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
-    }
+
+    /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
+      console.log("entra2;")
+      this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
+    }*/
 
     this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
@@ -359,7 +253,7 @@ export class BienesInmueblesComponent implements OnInit {
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
-          query: lastDatosDependientesEconomicosQuery,
+          query: lastBienesInmueblesQuery,
         })
         .toPromise();
 
@@ -367,8 +261,8 @@ export class BienesInmueblesComponent implements OnInit {
         throw errors;
       }
 
-      if (data?.lastDeclaracion.datosDependientesEconomicos) {
-        this.setupForm(data?.lastDeclaracion.datosDependientesEconomicos);
+      if (data?.lastDeclaracion.bienesInmuebles) {
+        this.setupForm(data?.lastDeclaracion.bienesInmuebles);
       }
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -380,7 +274,7 @@ export class BienesInmueblesComponent implements OnInit {
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
-          query: datosDependientesEconomicosQuery,
+          query: bienesInmueblesQuery,
           variables: {
             tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
           },
@@ -392,10 +286,10 @@ export class BienesInmueblesComponent implements OnInit {
       }
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.datosDependientesEconomicos === null) {
+      if (data.declaracion.bienesInmuebles === null) {
         this.getLastUserInfo();
       } else {
-        this.setupForm(data.declaracion.datosDependientesEconomicos);
+        this.setupForm(data.declaracion.bienesInmuebles);
       }
     } catch (error) {
       console.error(error);
@@ -403,43 +297,36 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  get finalDependienteEconomicoForm() {
-    const form = JSON.parse(JSON.stringify(this.datosDependientesEconomicosForm.value.dependienteEconomico)); // Deep copy
+  get finalBienInmuebleForm() {
+    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
 
-    if (form.actividadLaboral?.clave === 'OTR') {
-      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value.toUpperCase();
+    if (form.tipoInmueble?.clave === 'OTRO') {
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    if (form.parentescoRelacion?.clave === 'OTRO') {
-      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
-    }
-    if (form.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
-      form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
     }
 
     return form;
   }
 
-  
   inputsAreValid(): boolean {
     let result = true;
-    const dependienteEconomico = this.datosDependientesEconomicosForm.value.dependienteEconomico;
+    const bienInmueble = this.bienesInmueblesForm.value.bienInmueble;
 
-    if (dependienteEconomico.actividadLaboral?.clave === 'OTR') {
-      result = result && this.otroActividadLaboral.nativeElement.value?.match(/^\S.*\S$/);
+    if (bienInmueble.actividadLaboral?.clave === 'OTR') {
+      //result = result && this.otroTipoInmueble.nativeElement.value?.match(/^\S.*\S$/);
     }
-    if (dependienteEconomico.parentescoRelacion?.clave === 'OTRO') {
+    if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
       result = result && this.otroParentesco.nativeElement.value?.match(/^\S.*\S$/);
     }
-    if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
-      result = result && this.otroSector.nativeElement.value?.match(/^\S.*\S$/);
-    }
 
-    console.log("result");
     console.log(result);
     return result;
   }
 
-  lugarDondeResideChanged(value: string) {
+  /*lugarDondeResideChanged(value: string) {
     const domicilioMexico = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioMexico');
     const domicilioExtranjero = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioExtranjero');
 
@@ -459,10 +346,10 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     this.tipoDomicilio = value;
-  }
+  }*/
 
   formHasChanges() {
-    let isDirty = this.datosDependientesEconomicosForm.dirty;
+    let isDirty = this.bienesInmueblesForm.dirty;
     if (isDirty) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
@@ -474,10 +361,10 @@ export class BienesInmueblesComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/ingresos-netos']);
+        if (result) this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/vehiculos']);
       });
     } else {
-      this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/ingresos-netos']);
+      this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/vehiculos']);
     }
   }
 
@@ -494,25 +381,24 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   checkItems() {
-    //let depEconomico = this.datosDependientesEconomicosForm.get('dependienteEconomico');
-    let dependienteEconomico = [...this.dependienteEconomico];
-    if (dependienteEconomico.length === 0) {
+    let bienInmueble = [...this.bienInmueble];
+    if (bienInmueble.length === 0) {
       this.saveInfo({ ninguno: true });
     } else {
-      for (let i = 0; i < dependienteEconomico.length; i++) {
-        dependienteEconomico[i].tipoOperacion = 'SIN_CAMBIOS';
+      for (let i = 0; i < bienInmueble.length; i++) {
+        bienInmueble[i].tipoOperacion = 'SIN_CAMBIOS';
       }
-      const aclaracionesObservaciones = this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
+      const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo({
-        dependienteEconomico,
+        bienInmueble,
         aclaracionesObservaciones,
       });
       this.isLoading = false;
     }
   }
 
-  noDependent() {
+  noProperty() {
     this.saveInfo({ ninguno: true });
   }
 
@@ -525,7 +411,7 @@ export class BienesInmueblesComponent implements OnInit {
   presentSuccessAlert() {
     this.dialog.open(DialogComponent, {
       data: {
-        title: 'Información actualizada',
+        title: 'Operación exitosa',
         message: 'Se han guardado tus cambios',
         trueText: 'Aceptar',
       },
@@ -544,29 +430,32 @@ export class BienesInmueblesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const dependienteEconomico = [
-          ...this.dependienteEconomico.slice(0, index),
-          ...this.dependienteEconomico.slice(index + 1),
-        ];
+        const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
 
-        const aclaracionesObservaciones = this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
+        let array: any = [];
+        array = this.deleteValoresDeclarante(bienInmueble);
+        let valores = array;
+
+        const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+
         this.saveInfo({
-          dependienteEconomico,
+          bienInmueble,
           aclaracionesObservaciones,
+          valores,
         });
       }
     });
   }
 
-  async saveInfo(form: DatosDependientesEconomicos) {
+  async saveInfo(form: BienesInmuebles) {
     try {
       const declaracion = {
-        datosDependientesEconomicos: form,
+        bienesInmuebles: form,
       };
 
       const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
-          mutation: datosDependientesEconomicosMutation,
+          mutation: bienesInmueblesMutation,
           variables: {
             id: this.declaracionId,
             declaracion,
@@ -579,98 +468,106 @@ export class BienesInmueblesComponent implements OnInit {
       }
 
       this.editMode = false;
-      if (data?.declaracion.datosDependientesEconomicos) {
-        this.setupForm(data?.declaracion.datosDependientesEconomicos);
+      if (data?.declaracion.bienesInmuebles) {
+        this.setupForm(data?.declaracion.bienesInmuebles);
       }
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
-      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+      this.openSnackBar('ERROR: No se guardaron los cambios', 'Aceptar');
     }
   }
 
   saveItem() {
-    let dependienteEconomico = [...this.dependienteEconomico];
-    const aclaracionesObservaciones = this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
-    const newItem = this.finalDependienteEconomicoForm;
+    let bienInmueble = [...this.bienInmueble];
+    const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+    //const newItem = this.bienesInmueblesForm.value.bienInmueble;
+    const newItem = this.finalBienInmuebleForm;
+
+    const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    let valores = [...this.valores];
+    let bandera = false;
 
     if (this.editIndex === null) {
-      dependienteEconomico = [...dependienteEconomico, newItem];
+      bienInmueble = [...bienInmueble, newItem];
+      if (valorTitular.titular.clave === "DEC") {
+        const valor = this.saveValoresDeclarante();
+        valores = [...valores, valor];
+      }
     } else {
-      dependienteEconomico[this.editIndex] = newItem;
+      bienInmueble[this.editIndex] = newItem;
+      bandera = true;
     }
 
     this.isLoading = true;
 
+    if (bandera) {
+      let array: any = [];
+      array = this.updateValoresDeclarante(bienInmueble);
+      valores = array;
+    }
+
     this.saveInfo({
-      dependienteEconomico,
+      bienInmueble,
       aclaracionesObservaciones,
+      valores,
     });
 
     this.isLoading = false;
   }
 
   setAclaraciones(aclaraciones?: string) {
-    this.datosDependientesEconomicosForm.get('aclaracionesObservaciones').patchValue(aclaraciones || null);
+    this.bienesInmueblesForm.get('aclaracionesObservaciones').patchValue(aclaraciones || null);
     this.aclaracionesText = aclaraciones || null;
     this.toggleAclaraciones(!!aclaraciones);
   }
 
   setEditMode() {
-    this.datosDependientesEconomicosForm.reset();
-    this.datosDependientesEconomicosForm.get('ninguno').setValue(false);
+    this.bienesInmueblesForm.reset();
     this.editMode = true;
     this.editIndex = null;
   }
 
   setSelectedOptions() {
-    const { actividadLaboral, parentescoRelacion, domicilioExtranjero, domicilioMexico } =
-      this.datosDependientesEconomicosForm.value.dependienteEconomico;
+    console.log("setSelectedOptions")
+    const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
-    if (actividadLaboral) {
-      this.datosDependientesEconomicosForm
-        .get('dependienteEconomico.actividadLaboral')
-        .setValue(findOption(this.actividadLaboralCatalogo, actividadLaboral.clave));
-    }
-    if (parentescoRelacion) {
-      this.datosDependientesEconomicosForm
-        .get('dependienteEconomico.parentescoRelacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, parentescoRelacion.clave));
-    }
-    if (actividadLaboral.clave == 'PRI' || actividadLaboral.clave === 'OTR') {
-      const { sector } =
-        this.datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro;
-      if (sector) {
-        this.datosDependientesEconomicosForm
-          .get('dependienteEconomico.actividadLaboralSectorPrivadoOtro.sector')
-          .setValue(findOption(this.sectorCatalogo, sector.clave));
-      }
+    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
+
+    if (tipoInmueble) {
+      console.log("llega select")
+      this.bienesInmueblesForm
+        .get('bienInmueble.tipoInmueble')
+        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
+      console.log(tipoInmueble.clave)
+      console.log(tipoInmueble.valor)
     }
 
-    if (domicilioMexico) {
-      this.datosDependientesEconomicosForm
-        .get('dependienteEconomico.domicilioMexico.entidadFederativa')
-        .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa.clave));
-      this.datosDependientesEconomicosForm
-        .get('dependienteEconomico.domicilioMexico.municipioAlcaldia')
-        .setValue(
-          findOption(this.municipiosCatalogo[this.estado?.clave] || [], domicilioMexico.municipioAlcaldia.clave)
-        );
-      this.lugarDondeResideChanged('MEXICO');
-    } else if (domicilioExtranjero) {
-      this.datosDependientesEconomicosForm
-        .get('dependienteEconomico.domicilioExtranjero.pais')
-        .setValue(findOption(this.paisesCatalogo, domicilioExtranjero.pais).clave);
-      this.lugarDondeResideChanged('EXTRANJERO');
+    if (titular) {
+      this.bienesInmueblesForm.get('bienInmueble.titular')
+        .setValue(findOption(this.titularBienCatalogo, titular[0]));
+    }
+    if (formaAdquisicion) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.formaAdquisicion')
+        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
+    }
+
+    if (relacion) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.transmisor.relacion')
+        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
     }
   }
 
-  setupForm(datosDependientesEconomicos: DatosDependientesEconomicos) {
-    this.dependienteEconomico = datosDependientesEconomicos.dependienteEconomico;
-    const aclaraciones = datosDependientesEconomicos.aclaracionesObservaciones;
+  setupForm(bienesInmuebles: BienesInmuebles) {
+    this.bienInmueble = bienesInmuebles.bienInmueble;
+    this.valores = bienesInmuebles.valores;
 
-    if (datosDependientesEconomicos.ninguno) {
-      this.datosDependientesEconomicosForm.get('ninguno').patchValue(true);
+    const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
+
+    if (bienesInmuebles.ninguno) {
+      this.bienesInmueblesForm.get('ninguno').patchValue(true);
     }
 
     if (aclaraciones) {
@@ -679,7 +576,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   toggleAclaraciones(value: boolean) {
-    const aclaraciones = this.datosDependientesEconomicosForm.get('aclaracionesObservaciones');
+    const aclaraciones = this.bienesInmueblesForm.get('aclaracionesObservaciones');
     if (value) {
       aclaraciones.enable();
     } else {
@@ -687,5 +584,84 @@ export class BienesInmueblesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  tipoDomicilioChanged(value: any) {
+    this.tipoDomicilio = value;
+
+    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const bienInbueble = this.bienesInmueblesForm.get('bienInmueble');
+
+    const notSelected = bienInbueble.get(notSelectedType);
+
+    notSelected.disable();
+    notSelected.reset();
+
+    bienInbueble.get(selectedType).enable();
+  }
+
+  saveValoresDeclarante() {
+
+    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
+    const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
+    let valor = {
+      "indice": indice,
+      "superficieConstruccion": newItem.superficieConstruccion.valor,
+      "superficieTerreno": newItem.superficieTerreno.valor,
+      "valorAdquisicion": newItem.valorAdquisicion.valor,
+      "formaAdquisicion": newItem.formaAdquisicion.clave,
+    };
+    return valor;
+  }
+
+  deleteValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular[0].clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
+        };
+        valores.push(valor);
+      }
+    }
+    return valores;
+  }
+
+  updateValoresDeclarante(bienInmueble: any) {
+    let valores: any = [];
+    let valor = {};
+    for (let i = 0; i < bienInmueble.length; i++) {
+      if (bienInmueble[i].titular.clave === "DEC") {
+        valor = {
+          "indice": i,
+          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
+          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
+          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
+          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
+        };
+        valores.push(valor);
+      }
+    }
+    return valores;
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO") {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
+    }
+    else {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").enable();
+    }
   }
 }
