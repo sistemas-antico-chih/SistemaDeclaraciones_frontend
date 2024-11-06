@@ -11,7 +11,7 @@ import { DatosParejaComponent } from './datos-pareja/datos-pareja.component';
 import { DatosDependienteComponent } from './datos-dependiente/datos-dependiente.component';
 import { IngresosNetosComponent } from './ingresos-netos/ingresos-netos.component';
 import { ServidorPublicoComponent } from './servidor-publico/servidor-publico.component';
-//import { BienesInmueblesComponent } from './bienes-inmuebles/bienes-inmuebles.component';
+import { BienesInmueblesComponent } from './bienes-inmuebles/bienes-inmuebles.component';
 import { InversionesComponent } from './inversiones/inversiones.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
 import { BienesMueblesComponent } from './bienes-muebles/bienes-muebles.component';
@@ -66,11 +66,11 @@ const modules: Routes = [
     component: ServidorPublicoComponent,
     data: { title: marker('Servidor Público') },
   },
-  /*{
+  {
     path: 'bienes-inmuebles',
     component: BienesInmueblesComponent,
     data: { title: marker('Bienes Inmuebles') },
-  },*/
+  },
   {
     path: 'vehiculos',
     component: VehiculosComponent,

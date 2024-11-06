@@ -1,3 +1,36 @@
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { Apollo } from 'apollo-angular';
+import { bienesInmueblesMutation, bienesInmueblesQuery, lastBienesInmueblesQuery } from '@api/declaracion';
+
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { UntilDestroy, untilDestroyed } from '@core';
+
+import TipoInmueble from '@static/catalogos/tipoInmueble.json';
+import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
+import TitularBien from '@static/catalogos/titularBien.json';
+import FormaPago from '@static/catalogos/formaPago.json';
+import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
+import ValorConformeA from '@static/catalogos/valorConformeA.json';
+import Estados from '@static/catalogos/estados.json';
+import Municipios from '@static/catalogos/municipios.json';
+import Paises from '@static/catalogos/paises.json';
+import Monedas from '@static/catalogos/monedas.json';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
+
+import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
+
+import { findOption, ifExistsEnableFields } from '@utils/utils';
+
+import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';

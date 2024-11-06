@@ -18,7 +18,7 @@ import { IngresosNetosComponent } from './ingresos-netos/ingresos-netos.componen
 import { ServidorPublicoComponent } from './servidor-publico/servidor-publico.component';
 import { ExperienciaLaboralComponent } from './experiencia-laboral/experiencia-laboral.component';
 import { DatosDependienteComponent } from './datos-dependiente/datos-dependiente.component';
-//import { BienesInmueblesComponent } from './bienes-inmuebles/bienes-inmuebles.component';
+import { BienesInmueblesComponent } from './bienes-inmuebles/bienes-inmuebles.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
 import { BienesMueblesComponent } from './bienes-muebles/bienes-muebles.component';
 import { AdeudosComponent } from './adeudos/adeudos.component';
@@ -38,7 +38,7 @@ import { CatalogosService } from '../../services/catalogos.service';
     ServidorPublicoComponent,
     ExperienciaLaboralComponent,
     DatosDependienteComponent,
-    //BienesInmueblesComponent,
+    BienesInmueblesComponent,
     VehiculosComponent,
     BienesMueblesComponent,
     AdeudosComponent,
