@@ -71,7 +71,10 @@ export class BienesInmueblesComponent implements OnInit {
   tipoInmuebleCatalogo = TipoInmueble;
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
-  
+  formaPagoCatalogo = FormaPago;
+  parentescoRelacionCatalogo = ParentescoRelacion;
+  valorConformeACatalogo = ValorConformeA;
+
   actividadLaboralCatalogo = ActividadLaboral;
   ambitoPublicoCatalogo = AmbitoPublico;
   ambitoSectorCatalogo = AmbitoSector;
@@ -102,6 +105,9 @@ export class BienesInmueblesComponent implements OnInit {
 
   extranjero: boolean;
   active: boolean;
+
+  tipoPersona: string;
+
 
   constructor(
     private apollo: Apollo,
@@ -640,5 +646,20 @@ export class BienesInmueblesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  tipoDomicilioChanged(value: any) {
+    this.tipoDomicilio = value;
+
+    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const bienInbueble = this.bienesInmueblesForm.get('bienInmueble');
+
+    const notSelected = bienInbueble.get(notSelectedType);
+
+    notSelected.disable();
+    notSelected.reset();
+
+    bienInbueble.get(selectedType).enable();
   }
 }
