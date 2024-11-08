@@ -40,7 +40,7 @@
     </p>
 
     <!-- Botones iniciales -->
-    <div class="" *ngIf="!dependienteEconomico?.length && !editMode && !bienesInmueblesForm.value.ninguno">
+    <div class="" *ngIf="!bienInmueble?.length && !editMode && !bienesInmueblesForm.value.ninguno">
       <mat-grid-list cols="2" rowHeight="150px">
         <mat-grid-tile colspan="1">
           <div class="boton-agregar">
@@ -49,7 +49,7 @@
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
           <div class="boton-agregar">
-            <button mat-raised-button color="primary" (click)="addItem()">Agregar dependiente económico</button>
+            <button mat-raised-button color="primary" (click)="addItem()">Agregar Bien Inmueble</button>
           </div>
         </mat-grid-tile>
       </mat-grid-list>
@@ -57,11 +57,11 @@
 
     <!-- card de información -->
     <div class="">
-      <mat-card class="info text-center" *ngIf="bienesInmueblesForm.value.ninguno">
-        <h3 class="vertical-padding-50">Ningún dependiente económico</h3>
+      <mat-card class="info" *ngIf="bienesInmueblesForm.value.ninguno">
+        <p>Ningún bien inmueble</p>
       </mat-card>
 
-      <mat-card class="info" *ngFor="let d of dependienteEconomico; let i = index">
+      <mat-card class="info" *ngFor="let d of bienInmueble; let i = index">
         <mat-card-content class="">
           <p class="bg-no-public">Ningún campo será público</p>
 
@@ -283,7 +283,7 @@
 
       <div
         class="boton-agregar"
-        *ngIf="(dependienteEconomico.length && !editMode) || bienesInmueblesForm.value.ninguno"
+        *ngIf="(bienInmueble.length && !editMode) || bienesInmueblesForm.value.ninguno"
       >
         <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
       <button mat-raised-button color="primary" (click)="checkItems()">
@@ -296,7 +296,7 @@
     <!-- Formulario -->
     <form (ngSubmit)="saveItem()" [formGroup]="bienesInmueblesForm" [ngClass]="{ hidden: !editMode }">
       <!-- Agregar empleo, cargo o comisión -->
-      <div class="padding-agregar" formGroupName="dependienteEconomico">
+      <div class="padding-agregar" formGroupName="bienInmueble">
         <mat-divider></mat-divider>
         <p>Datos del dependiente económico</p>
         <!-- Datos -->
@@ -368,7 +368,7 @@
               appearance="fill"
               class="double-col"
               [ngClass]="{
-                hidden: bienesInmueblesForm.value.dependienteEconomico.parentescoRelacion?.clave !== 'OTRO'
+                hidden: bienesInmueblesForm.value.bienInmueble.parentescoRelacion?.clave !== 'OTRO'
               }"
             >
               <mat-label>Especifique</mat-label>
@@ -651,7 +651,7 @@
               appearance="fill"
               class="double-col"
               [ngClass]="{
-                hidden: bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave !== 'OTR'
+                hidden: bienesInmueblesForm.value.bienInmueble.actividadLaboral?.clave !== 'OTR'
               }"
             >
               <mat-label>Especifique</mat-label>
@@ -662,7 +662,7 @@
           <!-- Publico -->
           <div
             class="grid-2-col grid-margin"
-            *ngIf="bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave === 'PUB'"
+            *ngIf="bienesInmueblesForm.value.bienInmueble.actividadLaboral?.clave === 'PUB'"
             formGroupName="actividadLaboralSectorPublico"
           >
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.nivelOrdenGobierno }}" appearance="fill">
@@ -782,8 +782,8 @@
             class="grid-2-col grid-margin"
             [ngClass]="{
               hidden: !(
-                bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave === 'PRI' ||
-                bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave === 'OTR'
+                bienesInmueblesForm.value.bienInmueble.actividadLaboral?.clave === 'PRI' ||
+                bienesInmueblesForm.value.bienInmueble.actividadLaboral?.clave === 'OTR'
               )
             }"
             formGroupName="actividadLaboralSectorPrivadoOtro"
@@ -895,7 +895,7 @@
               class="double-col"
               [ngClass]="{
                 hidden:
-                  bienesInmueblesForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector
+                  bienesInmueblesForm.value.bienInmueble.actividadLaboralSectorPrivadoOtro?.sector
                     ?.clave !== 'OTRO'
               }"
             >

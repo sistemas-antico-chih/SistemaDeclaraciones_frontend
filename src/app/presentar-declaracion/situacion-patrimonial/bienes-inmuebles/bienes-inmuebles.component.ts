@@ -64,7 +64,7 @@ export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
   aclaracionesText: string = null;
   bienesInmueblesForm: FormGroup;
-  dependienteEconomico: DependienteEconomico[] = [];
+  bienInmueble: DependienteEconomico[] = [];
   editMode = false;
   estado: Catalogo = null;
   editIndex: number = null;
@@ -119,11 +119,11 @@ export class BienesInmueblesComponent implements OnInit {
 
   actividadLaboralChanged(value: any) {
     const actividadLaboralSectorPublico = this.bienesInmueblesForm.get(
-      'dependienteEconomico.actividadLaboralSectorPublico'
+      'bienInmueble.actividadLaboralSectorPublico'
     );
 
     const actividadLaboralSectorPrivadoOtro = this.bienesInmueblesForm.get(
-      'dependienteEconomico.actividadLaboralSectorPrivadoOtro'
+      'bienInmueble.actividadLaboralSectorPrivadoOtro'
     );
 
     const clave = value?.clave || null;
@@ -156,7 +156,7 @@ export class BienesInmueblesComponent implements OnInit {
   createForm() {
     this.bienesInmueblesForm = this.formBuilder.group({
       ninguno: [false],
-      dependienteEconomico: this.formBuilder.group({
+      bienInmueble: this.formBuilder.group({
         tipoOperacion: [null, [Validators.required]],
         nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
@@ -250,16 +250,16 @@ export class BienesInmueblesComponent implements OnInit {
       ],
     });
 
-    const dependienteEconomico = this.bienesInmueblesForm.get('dependienteEconomico');
+    const bienInmueble = this.bienesInmueblesForm.get('bienInmueble');
 
-    const actividadLaboral = dependienteEconomico.get('actividadLaboral');
+    const actividadLaboral = bienInmueble.get('actividadLaboral');
     actividadLaboral.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       this.actividadLaboralChanged(value);
     });
 
-    const estado = dependienteEconomico.get('domicilioMexico.entidadFederativa');
+    const estado = bienInmueble.get('domicilioMexico.entidadFederativa');
     estado.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      const municipio = dependienteEconomico.get('domicilioMexico.municipioAlcaldia');
+      const municipio = bienInmueble.get('domicilioMexico.municipioAlcaldia');
 
       if (value) {
         municipio.enable();
@@ -270,9 +270,9 @@ export class BienesInmueblesComponent implements OnInit {
       this.estado = value;
     });
 
-    const habitaDomicilioDeclarante = dependienteEconomico.get('habitaDomicilioDeclarante');
+    const habitaDomicilioDeclarante = bienInmueble.get('habitaDomicilioDeclarante');
     habitaDomicilioDeclarante.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      const lugarDondeReside = dependienteEconomico.get('lugarDondeReside');
+      const lugarDondeReside = bienInmueble.get('lugarDondeReside');
 
       if (value) {
         lugarDondeReside.disable();
@@ -282,7 +282,7 @@ export class BienesInmueblesComponent implements OnInit {
       }
     });
 
-    const lugarDondeReside = dependienteEconomico.get('lugarDondeReside');
+    const lugarDondeReside = bienInmueble.get('lugarDondeReside');
     lugarDondeReside.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       this.lugarDondeResideChanged(value);
     });
@@ -291,26 +291,26 @@ export class BienesInmueblesComponent implements OnInit {
   radioChange(event: any) {
     
     this.hidden = event;
-    this.active = this.bienesInmueblesForm.get('dependienteEconomico.extranjero').value;
+    this.active = this.bienesInmueblesForm.get('bienInmueble.extranjero').value;
     
     if (this.active == false) {
       
-      this.bienesInmueblesForm.get("dependienteEconomico.rfc").setValidators([Validators.required]);
-      this.bienesInmueblesForm.get("dependienteEconomico.rfc").enable();
-      this.bienesInmueblesForm.get("dependienteEconomico.rfc").updateValueAndValidity();
-      this.bienesInmueblesForm.get("dependienteEconomico.curp").setValidators([Validators.required]);
-      this.bienesInmueblesForm.get("dependienteEconomico.curp").enable();
-      this.bienesInmueblesForm.get("dependienteEconomico.curp").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").setValidators([Validators.required]);
+      this.bienesInmueblesForm.get("bienInmueble.rfc").enable();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.curp").setValidators([Validators.required]);
+      this.bienesInmueblesForm.get("bienInmueble.curp").enable();
+      this.bienesInmueblesForm.get("bienInmueble.curp").updateValueAndValidity();
     } else {
       
       //console.log(this.active)
-      this.bienesInmueblesForm.get("dependienteEconomico.rfc").clearValidators();
-      this.bienesInmueblesForm.get("dependienteEconomico.rfc").updateValueAndValidity();
-      this.bienesInmueblesForm.get("dependienteEconomico.rfc").disable();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").disable();
 
-      this.bienesInmueblesForm.get("dependienteEconomico.curp").clearValidators();
-      this.bienesInmueblesForm.get("dependienteEconomico.curp").updateValueAndValidity();
-      this.bienesInmueblesForm.get("dependienteEconomico.curp").disable();
+      this.bienesInmueblesForm.get("bienInmueble.curp").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.curp").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.curp").disable();
 
       
     }
@@ -319,34 +319,34 @@ export class BienesInmueblesComponent implements OnInit {
 
   editItem(index: number) {
     this.setEditMode();
-    this.fillForm(this.dependienteEconomico[index]);
+    this.fillForm(this.bienInmueble[index]);
     this.editIndex = index;
   }
 
-  fillForm(dependienteEconomico: DependienteEconomico) {
-    const dependienteEconomicoForm = this.bienesInmueblesForm.get('dependienteEconomico');
+  fillForm(bienInmueble: DependienteEconomico) {
+    const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
 
-    dependienteEconomicoForm.patchValue(dependienteEconomico || {});
+    bienInmuebleForm.patchValue(bienInmueble || {});
 
-    this.tipoDomicilio = dependienteEconomico.lugarDondeReside;
+    this.tipoDomicilio = bienInmueble.lugarDondeReside;
 
-    if (!dependienteEconomico.domicilioExtranjero) {
-      dependienteEconomicoForm.get('domicilioExtranjero').disable();
+    if (!bienInmueble.domicilioExtranjero) {
+      bienInmuebleForm.get('domicilioExtranjero').disable();
     }
-    if (!dependienteEconomico.domicilioMexico) {
-      dependienteEconomicoForm.get('domicilioMexico').disable();
+    if (!bienInmueble.domicilioMexico) {
+      bienInmuebleForm.get('domicilioMexico').disable();
     }
-    if (dependienteEconomico.actividadLaboral?.clave === 'OTR') {
-      this.otroActividadLaboral.nativeElement.value = dependienteEconomico.actividadLaboral?.valor;
+    if (bienInmueble.actividadLaboral?.clave === 'OTR') {
+      this.otroActividadLaboral.nativeElement.value = bienInmueble.actividadLaboral?.valor;
     }
-    if (dependienteEconomico.parentescoRelacion?.clave === 'OTRO') {
+    if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
       console.log("otroParentesco")
       console.log(this.otroParentesco)
-      this.otroParentesco.nativeElement.value = dependienteEconomico.parentescoRelacion?.valor;
+      this.otroParentesco.nativeElement.value = bienInmueble.parentescoRelacion?.valor;
       console.log(this.otroParentesco)
     }
-    if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
-      this.otroSector.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
+    if (bienInmueble.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
+      this.otroSector.nativeElement.value = bienInmueble.actividadLaboralSectorPrivadoOtro?.sector?.valor;
     }
 
     this.setAclaraciones(this.aclaracionesText);
@@ -402,7 +402,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   get finalDependienteEconomicoForm() {
-    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.dependienteEconomico)); // Deep copy
+    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
 
     if (form.actividadLaboral?.clave === 'OTR') {
       form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value.toUpperCase();
@@ -420,15 +420,15 @@ export class BienesInmueblesComponent implements OnInit {
   
   inputsAreValid(): boolean {
     let result = true;
-    const dependienteEconomico = this.bienesInmueblesForm.value.dependienteEconomico;
+    const bienInmueble = this.bienesInmueblesForm.value.bienInmueble;
 
-    if (dependienteEconomico.actividadLaboral?.clave === 'OTR') {
+    if (bienInmueble.actividadLaboral?.clave === 'OTR') {
       result = result && this.otroActividadLaboral.nativeElement.value?.match(/^\S.*\S$/);
     }
-    if (dependienteEconomico.parentescoRelacion?.clave === 'OTRO') {
+    if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
       result = result && this.otroParentesco.nativeElement.value?.match(/^\S.*\S$/);
     }
-    if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
+    if (bienInmueble.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
       result = result && this.otroSector.nativeElement.value?.match(/^\S.*\S$/);
     }
 
@@ -438,8 +438,8 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   lugarDondeResideChanged(value: string) {
-    const domicilioMexico = this.bienesInmueblesForm.get('dependienteEconomico.domicilioMexico');
-    const domicilioExtranjero = this.bienesInmueblesForm.get('dependienteEconomico.domicilioExtranjero');
+    const domicilioMexico = this.bienesInmueblesForm.get('bienInmueble.domicilioMexico');
+    const domicilioExtranjero = this.bienesInmueblesForm.get('bienInmueble.domicilioExtranjero');
 
     switch (value) {
       case 'MEXICO':
@@ -492,18 +492,18 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   checkItems() {
-    //let depEconomico = this.bienesInmueblesForm.get('dependienteEconomico');
-    let dependienteEconomico = [...this.dependienteEconomico];
-    if (dependienteEconomico.length === 0) {
+    //let depEconomico = this.bienesInmueblesForm.get('bienInmueble');
+    let bienInmueble = [...this.bienInmueble];
+    if (bienInmueble.length === 0) {
       this.saveInfo({ ninguno: true });
     } else {
-      for (let i = 0; i < dependienteEconomico.length; i++) {
-        dependienteEconomico[i].tipoOperacion = 'SIN_CAMBIOS';
+      for (let i = 0; i < bienInmueble.length; i++) {
+        bienInmueble[i].tipoOperacion = 'SIN_CAMBIOS';
       }
       const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
       this.isLoading = true;
       this.saveInfo({
-        dependienteEconomico,
+        bienInmueble,
         aclaracionesObservaciones,
       });
       this.isLoading = false;
@@ -542,14 +542,14 @@ export class BienesInmueblesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const dependienteEconomico = [
-          ...this.dependienteEconomico.slice(0, index),
-          ...this.dependienteEconomico.slice(index + 1),
+        const bienInmueble = [
+          ...this.bienInmueble.slice(0, index),
+          ...this.bienInmueble.slice(index + 1),
         ];
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
         this.saveInfo({
-          dependienteEconomico,
+          bienInmueble,
           aclaracionesObservaciones,
         });
       }
@@ -588,20 +588,20 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   saveItem() {
-    let dependienteEconomico = [...this.dependienteEconomico];
+    let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
     const newItem = this.finalDependienteEconomicoForm;
 
     if (this.editIndex === null) {
-      dependienteEconomico = [...dependienteEconomico, newItem];
+      bienInmueble = [...bienInmueble, newItem];
     } else {
-      dependienteEconomico[this.editIndex] = newItem;
+      bienInmueble[this.editIndex] = newItem;
     }
 
     this.isLoading = true;
 
     this.saveInfo({
-      dependienteEconomico,
+      bienInmueble,
       aclaracionesObservaciones,
     });
 
@@ -623,48 +623,48 @@ export class BienesInmueblesComponent implements OnInit {
 
   setSelectedOptions() {
     const { actividadLaboral, parentescoRelacion, domicilioExtranjero, domicilioMexico } =
-      this.bienesInmueblesForm.value.dependienteEconomico;
+      this.bienesInmueblesForm.value.bienInmueble;
 
     if (actividadLaboral) {
       this.bienesInmueblesForm
-        .get('dependienteEconomico.actividadLaboral')
+        .get('bienInmueble.actividadLaboral')
         .setValue(findOption(this.actividadLaboralCatalogo, actividadLaboral.clave));
     }
     if (parentescoRelacion) {
       this.bienesInmueblesForm
-        .get('dependienteEconomico.parentescoRelacion')
+        .get('bienInmueble.parentescoRelacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, parentescoRelacion.clave));
     }
     if (actividadLaboral.clave == 'PRI' || actividadLaboral.clave === 'OTR') {
       const { sector } =
-        this.bienesInmueblesForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro;
+        this.bienesInmueblesForm.value.bienInmueble.actividadLaboralSectorPrivadoOtro;
       if (sector) {
         this.bienesInmueblesForm
-          .get('dependienteEconomico.actividadLaboralSectorPrivadoOtro.sector')
+          .get('bienInmueble.actividadLaboralSectorPrivadoOtro.sector')
           .setValue(findOption(this.sectorCatalogo, sector.clave));
       }
     }
 
     if (domicilioMexico) {
       this.bienesInmueblesForm
-        .get('dependienteEconomico.domicilioMexico.entidadFederativa')
+        .get('bienInmueble.domicilioMexico.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa.clave));
       this.bienesInmueblesForm
-        .get('dependienteEconomico.domicilioMexico.municipioAlcaldia')
+        .get('bienInmueble.domicilioMexico.municipioAlcaldia')
         .setValue(
           findOption(this.municipiosCatalogo[this.estado?.clave] || [], domicilioMexico.municipioAlcaldia.clave)
         );
       this.lugarDondeResideChanged('MEXICO');
     } else if (domicilioExtranjero) {
       this.bienesInmueblesForm
-        .get('dependienteEconomico.domicilioExtranjero.pais')
+        .get('bienInmueble.domicilioExtranjero.pais')
         .setValue(findOption(this.paisesCatalogo, domicilioExtranjero.pais).clave);
       this.lugarDondeResideChanged('EXTRANJERO');
     }
   }
 
   setupForm(datosDependientesEconomicos: DatosDependientesEconomicos) {
-    this.dependienteEconomico = datosDependientesEconomicos.dependienteEconomico;
+    this.bienInmueble = datosDependientesEconomicos.bienInmueble;
     const aclaraciones = datosDependientesEconomicos.aclaracionesObservaciones;
 
     if (datosDependientesEconomicos.ninguno) {
