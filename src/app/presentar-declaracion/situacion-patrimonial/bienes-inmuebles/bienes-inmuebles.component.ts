@@ -7,9 +7,6 @@ import {
   bienesInmueblesMutation, 
   bienesInmueblesQuery, 
   lastBienesInmueblesQuery,
-  datosDependientesEconomicosMutation,
-  datosDependientesEconomicosQuery,
-  lastDatosDependientesEconomicosQuery
 } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -36,10 +33,7 @@ import {
   BienesInmuebles, 
   Catalogo, 
   DeclaracionOutput, 
-  ValorDeclarante, 
   LastDeclaracionOutput,
-  DependienteEconomico,
-  DatosDependientesEconomicos
 } from '@models/declaracion';
 
 import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
@@ -64,7 +58,7 @@ export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
   aclaracionesText: string = null;
   bienesInmueblesForm: FormGroup;
-  bienInmueble: DependienteEconomico[] = [];
+  bienInmueble: BienInmueble[] = [];
   editMode = false;
   estado: Catalogo = null;
   editIndex: number = null;
@@ -117,7 +111,7 @@ export class BienesInmueblesComponent implements OnInit {
     this.getUserInfo();
   }
 
-  actividadLaboralChanged(value: any) {
+  /*actividadLaboralChanged(value: any) {
     const actividadLaboralSectorPublico = this.bienesInmueblesForm.get(
       'bienInmueble.actividadLaboralSectorPublico'
     );
@@ -138,7 +132,7 @@ export class BienesInmueblesComponent implements OnInit {
       actividadLaboralSectorPublico.disable();
       actividadLaboralSectorPrivadoOtro.disable();
     }
-  }
+  }*/
 
   addItem() {
     this.bienesInmueblesForm.reset();
@@ -158,108 +152,83 @@ export class BienesInmueblesComponent implements OnInit {
       ninguno: [false],
       bienInmueble: this.formBuilder.group({
         tipoOperacion: [null, [Validators.required]],
-        nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        segundoApellido: [null, [Validators.pattern(/^\S.*\S$/)]],
-        fechaNacimiento: [null, [Validators.required]],
-        rfc: [
-          null,
-          [
-            Validators.required,
-            Validators.pattern(
-              /^([A-ZÑ&]{4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?(([A-Z\d]{2})([A\d]))?$/i
-            ),
-          ],
+        tipoInmueble: [null, [Validators.required]],
+        titular: [[], [Validators.required]],
+        porcentajePropiedad: [
+          0,
+          [Validators.required, Validators.pattern(/^\d+\.?\d{0,4}$/), Validators.min(0), Validators.max(100)],
         ],
-        parentescoRelacion: [null, [Validators.required]],
-        extranjero: [null, [Validators.required]],
-        curp: [
-          null,
-          [
-            Validators.pattern(
-              /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
-            ),
-          ],
-        ],
-        habitaDomicilioDeclarante: [null, [Validators.required]],
-        lugarDondeReside: [null, [Validators.required]],
-        domicilioMexico: this.formBuilder.group({
-          calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
-          coloniaLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
-          entidadFederativa: [{ disabled: true, value: null }, [Validators.required]],
-          codigoPostal: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        superficieTerreno: this.formBuilder.group({
+          valor: [0, [Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          unidad: ['m'],
         }),
-        domicilioExtranjero: this.formBuilder.group({
-          calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
-          ciudadLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          estadoProvincia: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          pais: [{ disabled: true, value: null }, [Validators.required]],
-          codigoPostal: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        superficieConstruccion: this.formBuilder.group({
+          valor: [0, [Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          unidad: ['m'],
         }),
-        actividadLaboral: [null, [Validators.required]],
-        actividadLaboralSectorPublico: this.formBuilder.group({
-          nivelOrdenGobierno: [{ disabled: true, value: null }, [Validators.required]],
-          ambitoPublico: [{ disabled: true, value: null }, [Validators.required]],
-          nombreEntePublico: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          areaAdscripcion: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          empleoCargoComision: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          funcionPrincipal: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-          salarioMensualNeto: this.formBuilder.group({
-            valor: [
-              { disabled: true, value: 0 },
-              [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)],
-            ],
-            moneda: [{ disabled: true, value: null }, [Validators.required]],
-          }),
-          fechaIngreso: [{ disabled: true, value: null }, [Validators.required]],
-        }),
-        actividadLaboralSectorPrivadoOtro: this.formBuilder.group({
-          nombreEmpresaSociedadAsociacion: [
-            { disabled: true, value: null },
-            [Validators.required, Validators.pattern(/^\S.*\S$/)],
-          ],
-          empleoCargoComision: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+        tercero: this.formBuilder.group({
+          tipoPersona: [null],
+          nombreRazonSocial: [null, [Validators.pattern(/^\S.*\S?$/)]],
           rfc: [
-            { disabled: true, value: null },
+            null,
             [
               Validators.pattern(
                 /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
               ),
             ],
           ],
-          fechaIngreso: [{ disabled: true, value: null }, [Validators.required]],
-          sector: [{ disabled: true, value: null }, [Validators.required]],
-          salarioMensualNeto: this.formBuilder.group({
-            valor: [
-              { disabled: true, value: 0 },
-              [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)],
+        }),
+        transmisor: this.formBuilder.group({
+          tipoPersona: [null, [Validators.required]],
+          nombreRazonSocial: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+          rfc: [
+            null,
+            [
+              Validators.required,
+              Validators.pattern(
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              ),
             ],
-            moneda: [{ disabled: true, value: null }, [Validators.required]],
-          }),
-          proveedorContratistaGobierno: [{ disabled: true, value: false }],
+          ],
+          relacion: [null, [Validators.required]],
+        }),
+        formaAdquisicion: [null, [Validators.required]],
+        formaPago: [null, [Validators.required]],
+        valorAdquisicion: this.formBuilder.group({
+          valor: [0, [Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/), Validators.min(0)]],
+          moneda: ['MXN', [Validators.required]],
+        }),
+        fechaAdquisicion: [null, [Validators.required]],
+        datoIdentificacion: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+        valorConformeA: [null, [Validators.required]],
+        domicilioMexico: this.formBuilder.group({
+          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
+          coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+          municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
+          entidadFederativa: [null, [Validators.required]],
+          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
+        }),
+        domicilioExtranjero: this.formBuilder.group({
+          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
+          ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+          estadoProvincia: [null, [Validators.required]],
+          pais: [null, [Validators.required]],
+          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
         }),
       }),
-      aclaracionesObservaciones: [
-        { disabled: true, value: null },
-        [Validators.required, Validators.pattern(/^\S.*\S$/)],
-      ],
+      aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     });
 
-    const bienInmueble = this.bienesInmueblesForm.get('bienInmueble');
+    this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero').disable();
 
-    const actividadLaboral = bienInmueble.get('actividadLaboral');
-    actividadLaboral.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      this.actividadLaboralChanged(value);
-    });
-
-    const estado = bienInmueble.get('domicilioMexico.entidadFederativa');
+    const domicilioMexico = this.bienesInmueblesForm.get('bienInmueble').get('domicilioMexico');
+    const estado = domicilioMexico.get('entidadFederativa');
     estado.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      const municipio = bienInmueble.get('domicilioMexico.municipioAlcaldia');
+      const municipio = domicilioMexico.get('municipioAlcaldia');
 
       if (value) {
         municipio.enable();
@@ -268,23 +237,6 @@ export class BienesInmueblesComponent implements OnInit {
         municipio.reset();
       }
       this.estado = value;
-    });
-
-    const habitaDomicilioDeclarante = bienInmueble.get('habitaDomicilioDeclarante');
-    habitaDomicilioDeclarante.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      const lugarDondeReside = bienInmueble.get('lugarDondeReside');
-
-      if (value) {
-        lugarDondeReside.disable();
-        lugarDondeReside.reset();
-      } else {
-        lugarDondeReside.enable();
-      }
-    });
-
-    const lugarDondeReside = bienInmueble.get('lugarDondeReside');
-    lugarDondeReside.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      this.lugarDondeResideChanged(value);
     });
   }
 
@@ -323,8 +275,8 @@ export class BienesInmueblesComponent implements OnInit {
     this.editIndex = index;
   }
 
-  fillForm(bienInmueble: DependienteEconomico) {
-    const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
+  fillForm(bienInmueble: BienInmueble) {
+   /* const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
 
     bienInmuebleForm.patchValue(bienInmueble || {});
 
@@ -351,13 +303,14 @@ export class BienesInmueblesComponent implements OnInit {
 
     this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
+    */
   }
 
   async getLastUserInfo() {
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
-          query: lastDatosDependientesEconomicosQuery,
+          query: lastBienesInmueblesQuery,
         })
         .toPromise();
 
@@ -365,8 +318,8 @@ export class BienesInmueblesComponent implements OnInit {
         throw errors;
       }
 
-      if (data?.lastDeclaracion.datosDependientesEconomicos) {
-        this.setupForm(data?.lastDeclaracion.datosDependientesEconomicos);
+      if (data?.lastDeclaracion.bienesInmuebles) {
+        this.setupForm(data?.lastDeclaracion.bienesInmuebles);
       }
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -378,7 +331,7 @@ export class BienesInmueblesComponent implements OnInit {
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
-          query: datosDependientesEconomicosQuery,
+          query: bienesInmueblesQuery,
           variables: {
             tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
           },
@@ -390,33 +343,16 @@ export class BienesInmueblesComponent implements OnInit {
       }
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.datosDependientesEconomicos === null) {
+      if (data.declaracion.bienesInmuebles === null) {
         this.getLastUserInfo();
       } else {
-        this.setupForm(data.declaracion.datosDependientesEconomicos);
+        this.setupForm(data.declaracion.bienesInmuebles);
       }
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
-
-  get finalDependienteEconomicoForm() {
-    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
-
-    if (form.actividadLaboral?.clave === 'OTR') {
-      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value.toUpperCase();
-    }
-    if (form.parentescoRelacion?.clave === 'OTRO') {
-      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
-    }
-    if (form.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
-      form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
-    }
-
-    return form;
-  }
-
   
   inputsAreValid(): boolean {
     let result = true;
@@ -556,15 +492,15 @@ export class BienesInmueblesComponent implements OnInit {
     });
   }
 
-  async saveInfo(form: DatosDependientesEconomicos) {
+  async saveInfo(form: BienesInmuebles) {
     try {
       const declaracion = {
-        datosDependientesEconomicos: form,
+        bienesInmuebles: form,
       };
 
       const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
-          mutation: datosDependientesEconomicosMutation,
+          mutation: bienesInmueblesMutation,
           variables: {
             id: this.declaracionId,
             declaracion,
@@ -577,8 +513,8 @@ export class BienesInmueblesComponent implements OnInit {
       }
 
       this.editMode = false;
-      if (data?.declaracion.datosDependientesEconomicos) {
-        this.setupForm(data?.declaracion.datosDependientesEconomicos);
+      if (data?.declaracion.bienesInmuebles) {
+        this.setupForm(data?.declaracion.bienesInmuebles);
       }
       this.presentSuccessAlert();
     } catch (error) {
@@ -588,9 +524,9 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   saveItem() {
-    let bienInmueble = [...this.bienInmueble];
+    /*let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-    const newItem = this.finalDependienteEconomicoForm;
+    const newItem = this.finalBienInmuebleForm;
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
@@ -606,6 +542,21 @@ export class BienesInmueblesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    */
+  }
+
+  get finalBienInmuebleForm() {
+   /* const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
+
+    if (form.tipoInmueble?.clave === 'OTRO') {
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+    */
+    return ;
   }
 
   setAclaraciones(aclaraciones?: string) {
@@ -663,11 +614,11 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  setupForm(datosDependientesEconomicos: DatosDependientesEconomicos) {
-    this.bienInmueble = datosDependientesEconomicos.bienInmueble;
-    const aclaraciones = datosDependientesEconomicos.aclaracionesObservaciones;
+  setupForm(bienesInmuebles: BienesInmuebles) {
+    this.bienInmueble = bienesInmuebles.bienInmueble;
+    const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
-    if (datosDependientesEconomicos.ninguno) {
+    if (bienesInmuebles.ninguno) {
       this.bienesInmueblesForm.get('ninguno').patchValue(true);
     }
 
