@@ -40,7 +40,7 @@
     </p>
 
     <!-- Botones iniciales -->
-    <div class="" *ngIf="!dependienteEconomico?.length && !editMode && !datosDependientesEconomicosForm.value.ninguno">
+    <div class="" *ngIf="!dependienteEconomico?.length && !editMode && !bienesInmueblesForm.value.ninguno">
       <mat-grid-list cols="2" rowHeight="150px">
         <mat-grid-tile colspan="1">
           <div class="boton-agregar">
@@ -57,7 +57,7 @@
 
     <!-- card de información -->
     <div class="">
-      <mat-card class="info text-center" *ngIf="datosDependientesEconomicosForm.value.ninguno">
+      <mat-card class="info text-center" *ngIf="bienesInmueblesForm.value.ninguno">
         <h3 class="vertical-padding-50">Ningún dependiente económico</h3>
       </mat-card>
 
@@ -283,7 +283,7 @@
 
       <div
         class="boton-agregar"
-        *ngIf="(dependienteEconomico.length && !editMode) || datosDependientesEconomicosForm.value.ninguno"
+        *ngIf="(dependienteEconomico.length && !editMode) || bienesInmueblesForm.value.ninguno"
       >
         <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
       <button mat-raised-button color="primary" (click)="checkItems()">
@@ -294,7 +294,7 @@
     </div>
 
     <!-- Formulario -->
-    <form (ngSubmit)="saveItem()" [formGroup]="datosDependientesEconomicosForm" [ngClass]="{ hidden: !editMode }">
+    <form (ngSubmit)="saveItem()" [formGroup]="bienesInmueblesForm" [ngClass]="{ hidden: !editMode }">
       <!-- Agregar empleo, cargo o comisión -->
       <div class="padding-agregar" formGroupName="dependienteEconomico">
         <mat-divider></mat-divider>
@@ -368,7 +368,7 @@
               appearance="fill"
               class="double-col"
               [ngClass]="{
-                hidden: datosDependientesEconomicosForm.value.dependienteEconomico.parentescoRelacion?.clave !== 'OTRO'
+                hidden: bienesInmueblesForm.value.dependienteEconomico.parentescoRelacion?.clave !== 'OTRO'
               }"
             >
               <mat-label>Especifique</mat-label>
@@ -651,7 +651,7 @@
               appearance="fill"
               class="double-col"
               [ngClass]="{
-                hidden: datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboral?.clave !== 'OTR'
+                hidden: bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave !== 'OTR'
               }"
             >
               <mat-label>Especifique</mat-label>
@@ -662,7 +662,7 @@
           <!-- Publico -->
           <div
             class="grid-2-col grid-margin"
-            *ngIf="datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboral?.clave === 'PUB'"
+            *ngIf="bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave === 'PUB'"
             formGroupName="actividadLaboralSectorPublico"
           >
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.nivelOrdenGobierno }}" appearance="fill">
@@ -782,8 +782,8 @@
             class="grid-2-col grid-margin"
             [ngClass]="{
               hidden: !(
-                datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboral?.clave === 'PRI' ||
-                datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboral?.clave === 'OTR'
+                bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave === 'PRI' ||
+                bienesInmueblesForm.value.dependienteEconomico.actividadLaboral?.clave === 'OTR'
               )
             }"
             formGroupName="actividadLaboralSectorPrivadoOtro"
@@ -895,7 +895,7 @@
               class="double-col"
               [ngClass]="{
                 hidden:
-                  datosDependientesEconomicosForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector
+                  bienesInmueblesForm.value.dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector
                     ?.clave !== 'OTRO'
               }"
             >
@@ -932,10 +932,10 @@
         <button mat-raised-button color="primary" type="button" *ngIf="editMode" (click)="cancelEditMode()">
           CANCELAR
         </button>
-        <button mat-raised-button color="primary" type="button" (click)="datosDependientesEconomicosForm.reset()">
+        <button mat-raised-button color="primary" type="button" (click)="bienesInmueblesForm.reset()">
           LIMPIAR FORMULARIO
         </button>
-        <button mat-raised-button color="primary" [disabled]="datosDependientesEconomicosForm.invalid || isLoading">
+        <button mat-raised-button color="primary" [disabled]="bienesInmueblesForm.invalid || isLoading">
           GUARDAR CAMBIOS
         </button>
       </div>
