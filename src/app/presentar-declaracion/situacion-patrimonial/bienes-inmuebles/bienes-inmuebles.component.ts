@@ -293,7 +293,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     bienInmuebleForm.patchValue(bienInmueble || {});
 
-    this.tipoDomicilio = bienInmueble.lugarDondeReside;
+    /*this.tipoDomicilio = bienInmueble.lugarDondeReside;
 
     if (!bienInmueble.domicilioExtranjero) {
       bienInmuebleForm.get('domicilioExtranjero').disable();
