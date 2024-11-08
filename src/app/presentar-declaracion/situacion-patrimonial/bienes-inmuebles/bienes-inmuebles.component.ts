@@ -216,7 +216,11 @@ export class BienesInmueblesComponent implements OnInit {
     const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
     bienInmuebleForm.patchValue(bienInmueble || {});
 
-    console.log("aqui");
+    console.log("bienInmuegleForm");
+    console.log(bienInmuebleForm);
+    console.log("bienInmueble")
+    console.log(bienInmueble);
+    
     console.log(this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]))
     console.log(this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]))
 
