@@ -38,7 +38,8 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
-  aclaracionesText: string = null; bienesInmueblesForm: FormGroup;
+  aclaracionesText: string = null; 
+  bienesInmueblesForm: FormGroup;
   estado: Catalogo = null;
   editMode = false;
   editIndex: number = null;
@@ -205,13 +206,14 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   fillForm(bienInmueble: BienInmueble) {
-    Object.keys(bienInmueble)
+    /*Object.keys(bienInmueble)
       .filter((field) => bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
     
-
+    */
     //los radio buttons
 
+    console.log()
     const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
     bienInmuebleForm.patchValue(bienInmueble || {});
 
