@@ -84,7 +84,6 @@ export class BienesInmueblesComponent implements OnInit {
   municipiosCatalogo = Municipios;
   nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
   paisesCatalogo = Paises;
-  parentescoRelacionCatalogo = ParentescoRelacion;
   sectorCatalogo = Sector;
   tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
