@@ -23,6 +23,10 @@ import {
   DeclaracionOutput,
   LastDeclaracionOutput
 } from '@models/declaracion';
+import TipoInmueble from '@static/catalogos/tipoInmueble.json';
+import TitularBien from '@static/catalogos/titularBien.json';
+import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
+
 import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import AmbitoSector from '@static/catalogos/ambitoSector.json';
@@ -54,9 +58,15 @@ export class DatosDependienteComponent implements OnInit {
   editIndex: number = null;
   isLoading = false;
 
-  @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
-  @ViewChild('otroParentesco') otroParentesco: ElementRef;
-  @ViewChild('otroSector') otroSector: ElementRef;
+  //@ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
+  //@ViewChild('otroParentesco') otroParentesco: ElementRef;
+  //@ViewChild('otroSector') otroSector: ElementRef;
+
+  tipoInmuebleCatalogo = TipoInmueble;
+  formaAdquisicionCatalogo = FormaAdquisicion;
+  titularBienCatalogo = TitularBien;
+
+  tipoPersona: string;
 
   actividadLaboralCatalogo = ActividadLaboral;
   ambitoPublicoCatalogo = AmbitoPublico;
