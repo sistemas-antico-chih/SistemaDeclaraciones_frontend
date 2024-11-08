@@ -3,7 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { bienesInmueblesMutation, bienesInmueblesQuery, lastBienesInmueblesQuery } from '@api/declaracion';
+import { 
+  bienesInmueblesMutation, 
+  bienesInmueblesQuery, 
+  lastBienesInmueblesQuery,
+} from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
@@ -24,7 +28,21 @@ import Monedas from '@static/catalogos/monedas.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
+import { 
+  BienInmueble, 
+  BienesInmuebles, 
+  Catalogo, 
+  DeclaracionOutput, 
+  LastDeclaracionOutput,
+} from '@models/declaracion';
+
+import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
+import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
+import AmbitoSector from '@static/catalogos/ambitoSector.json';
+import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
+import Sector from '@static/catalogos/sector.json';
+
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -38,19 +56,17 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
-  aclaracionesText: string = null; 
+  aclaracionesText: string = null;
   bienesInmueblesForm: FormGroup;
-  estado: Catalogo = null;
-  editMode = false;
-  editIndex: number = null;
   bienInmueble: BienInmueble[] = [];
+  editMode = false;
+  estado: Catalogo = null;
+  editIndex: number = null;
   isLoading = false;
 
-  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
-
-  //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
-
+  @ViewChild('otroSector') otroSector: ElementRef;
 
   tipoInmuebleCatalogo = TipoInmueble;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -58,28 +74,39 @@ export class BienesInmueblesComponent implements OnInit {
   formaPagoCatalogo = FormaPago;
   parentescoRelacionCatalogo = ParentescoRelacion;
   valorConformeACatalogo = ValorConformeA;
+
+  actividadLaboralCatalogo = ActividadLaboral;
+  ambitoPublicoCatalogo = AmbitoPublico;
+  ambitoSectorCatalogo = AmbitoSector;
   estadosCatalogo = Estados;
-  municipiosCatalogo = Municipios;
-  paisesCatalogo = Paises;
+  lugarDondeResideCatalogo = LugarDondeReside;
   monedasCatalogo = Monedas;
+  municipiosCatalogo = Municipios;
+  nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
+  paisesCatalogo = Paises;
+  sectorCatalogo = Sector;
   tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
-  tipoDomicilio = 'MEXICO';
+  tipoDomicilio: string = null;
 
   declaracionId: string = null;
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  minDate = new Date(1940, 1, 1);
+  minDate = new Date(1960, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+  maxDate = new Date(this.anio, this.mes, this.dia);
 
-  valores: ValorDeclarante[] = [];
+  hidden: string = 'false';
+
+  extranjero: boolean;
+  active: boolean;
 
   tipoPersona: string;
+
 
   constructor(
     private apollo: Apollo,
@@ -93,9 +120,32 @@ export class BienesInmueblesComponent implements OnInit {
     this.getUserInfo();
   }
 
+  /*actividadLaboralChanged(value: any) {
+    const actividadLaboralSectorPublico = this.bienesInmueblesForm.get(
+      'bienInmueble.actividadLaboralSectorPublico'
+    );
+
+    const actividadLaboralSectorPrivadoOtro = this.bienesInmueblesForm.get(
+      'bienInmueble.actividadLaboralSectorPrivadoOtro'
+    );
+
+    const clave = value?.clave || null;
+
+    if (clave === 'PUB') {
+      actividadLaboralSectorPublico.enable();
+      actividadLaboralSectorPrivadoOtro.disable();
+    } else if (clave === 'PRI' || clave === 'OTR') {
+      actividadLaboralSectorPublico.disable();
+      actividadLaboralSectorPrivadoOtro.enable();
+    } else {
+      actividadLaboralSectorPublico.disable();
+      actividadLaboralSectorPrivadoOtro.disable();
+    }
+  }*/
+
   addItem() {
     this.bienesInmueblesForm.reset();
-    this.bienesInmueblesForm.get('ninguno').setValue(false);
+    this.bienesInmueblesForm.get('ninguno').patchValue(false);
     this.setAclaraciones(this.aclaracionesText);
     this.editMode = true;
     this.editIndex = null;
@@ -199,6 +249,35 @@ export class BienesInmueblesComponent implements OnInit {
     });
   }
 
+  radioChange(event: any) {
+    
+    this.hidden = event;
+    this.active = this.bienesInmueblesForm.get('bienInmueble.extranjero').value;
+    
+    if (this.active == false) {
+      
+      this.bienesInmueblesForm.get("bienInmueble.rfc").setValidators([Validators.required]);
+      this.bienesInmueblesForm.get("bienInmueble.rfc").enable();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.curp").setValidators([Validators.required]);
+      this.bienesInmueblesForm.get("bienInmueble.curp").enable();
+      this.bienesInmueblesForm.get("bienInmueble.curp").updateValueAndValidity();
+    } else {
+      
+      //console.log(this.active)
+      this.bienesInmueblesForm.get("bienInmueble.rfc").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.rfc").disable();
+
+      this.bienesInmueblesForm.get("bienInmueble.curp").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.curp").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.curp").disable();
+
+      
+    }
+    //console.log("Requerido", this.bienesInmueblesForm.errors);
+  }
+
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.bienInmueble[index]);
@@ -209,46 +288,35 @@ export class BienesInmueblesComponent implements OnInit {
     /*Object.keys(bienInmueble)
       .filter((field) => bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
-    
     */
-    //los radio buttons
-
-    console.log()
     const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
+
     bienInmuebleForm.patchValue(bienInmueble || {});
 
-    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
-    this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
+    /*this.tipoDomicilio = bienInmueble.lugarDondeReside;
 
-    ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
-    if (bienInmueble.domicilioMexico) {
-      this.tipoDomicilio = 'MEXICO';
+    if (!bienInmueble.domicilioExtranjero) {
+      bienInmuebleForm.get('domicilioExtranjero').disable();
     }
-    ifExistsEnableFields(
-      bienInmueble.domicilioExtranjero,
-      this.bienesInmueblesForm,
-      'bienInmueble.domicilioExtranjero'
-    );
-    if (bienInmueble.domicilioExtranjero) {
-      this.tipoDomicilio = 'EXTRANJERO';
+    if (!bienInmueble.domicilioMexico) {
+      bienInmuebleForm.get('domicilioMexico').disable();
     }
-
-    if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-      console.log("otroTipoInmueble")
-      console.log(this.otroTipoInmueble)
+    if (bienInmueble.actividadLaboral?.clave === 'OTR') {
+      this.otroActividadLaboral.nativeElement.value = bienInmueble.actividadLaboral?.valor;
+    }
+    if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
+      console.log("otroParentesco")
       console.log(this.otroParentesco)
-      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
-      console.log(this.otroTipoInmueble)
-      //document.querySelector<HTMLInputElement>('.OTI').value = bienInmueble.tipoInmueble?.valor;
+      this.otroParentesco.nativeElement.value = bienInmueble.parentescoRelacion?.valor;
+      console.log(this.otroParentesco)
     }
-
-    /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
-      console.log("entra2;")
-      this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
-    }*/
+    if (bienInmueble.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
+      this.otroSector.nativeElement.value = bienInmueble.actividadLaboralSectorPrivadoOtro?.sector?.valor;
+    }
 
     this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
+    */
   }
 
   async getLastUserInfo() {
@@ -298,39 +366,29 @@ export class BienesInmueblesComponent implements OnInit {
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
-
-  get finalBienInmuebleForm() {
-    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
-
-    if (form.tipoInmueble?.clave === 'OTRO') {
-      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
-      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
-    }
-    if (form.transmisor.relacion?.clave === 'OTRO') {
-      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
-    }
-
-    return form;
-  }
-
+  
   inputsAreValid(): boolean {
     let result = true;
     const bienInmueble = this.bienesInmueblesForm.value.bienInmueble;
 
     if (bienInmueble.actividadLaboral?.clave === 'OTR') {
-      //result = result && this.otroTipoInmueble.nativeElement.value?.match(/^\S.*\S$/);
+      result = result && this.otroActividadLaboral.nativeElement.value?.match(/^\S.*\S$/);
     }
     if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
       result = result && this.otroParentesco.nativeElement.value?.match(/^\S.*\S$/);
     }
+    if (bienInmueble.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
+      result = result && this.otroSector.nativeElement.value?.match(/^\S.*\S$/);
+    }
 
+    console.log("result");
     console.log(result);
     return result;
   }
 
-  /*lugarDondeResideChanged(value: string) {
-    const domicilioMexico = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioMexico');
-    const domicilioExtranjero = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioExtranjero');
+  lugarDondeResideChanged(value: string) {
+    const domicilioMexico = this.bienesInmueblesForm.get('bienInmueble.domicilioMexico');
+    const domicilioExtranjero = this.bienesInmueblesForm.get('bienInmueble.domicilioExtranjero');
 
     switch (value) {
       case 'MEXICO':
@@ -348,7 +406,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     this.tipoDomicilio = value;
-  }*/
+  }
 
   formHasChanges() {
     let isDirty = this.bienesInmueblesForm.dirty;
@@ -363,10 +421,10 @@ export class BienesInmueblesComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/vehiculos']);
+        if (result) this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/ingresos-netos']);
       });
     } else {
-      this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/vehiculos']);
+      this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/ingresos-netos']);
     }
   }
 
@@ -383,6 +441,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   checkItems() {
+    //let depEconomico = this.bienesInmueblesForm.get('bienInmueble');
     let bienInmueble = [...this.bienInmueble];
     if (bienInmueble.length === 0) {
       this.saveInfo({ ninguno: true });
@@ -400,7 +459,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  noProperty() {
+  noDependent() {
     this.saveInfo({ ninguno: true });
   }
 
@@ -413,7 +472,7 @@ export class BienesInmueblesComponent implements OnInit {
   presentSuccessAlert() {
     this.dialog.open(DialogComponent, {
       data: {
-        title: 'Operación exitosa',
+        title: 'Información actualizada',
         message: 'Se han guardado tus cambios',
         trueText: 'Aceptar',
       },
@@ -432,18 +491,15 @@ export class BienesInmueblesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
-
-        let array: any = [];
-        array = this.deleteValoresDeclarante(bienInmueble);
-        let valores = array;
+        const bienInmueble = [
+          ...this.bienInmueble.slice(0, index),
+          ...this.bienInmueble.slice(index + 1),
+        ];
 
         const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-
         this.saveInfo({
           bienInmueble,
           aclaracionesObservaciones,
-          valores,
         });
       }
     });
@@ -476,46 +532,44 @@ export class BienesInmueblesComponent implements OnInit {
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
-      this.openSnackBar('ERROR: No se guardaron los cambios', 'Aceptar');
+      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
 
   saveItem() {
-    let bienInmueble = [...this.bienInmueble];
+    /*let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-    //const newItem = this.bienesInmueblesForm.value.bienInmueble;
     const newItem = this.finalBienInmuebleForm;
-
-    const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    let valores = [...this.valores];
-    let bandera = false;
 
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      if (valorTitular.titular.clave === "DEC") {
-        const valor = this.saveValoresDeclarante();
-        valores = [...valores, valor];
-      }
     } else {
       bienInmueble[this.editIndex] = newItem;
-      bandera = true;
     }
 
     this.isLoading = true;
 
-    if (bandera) {
-      let array: any = [];
-      array = this.updateValoresDeclarante(bienInmueble);
-      valores = array;
-    }
-
     this.saveInfo({
       bienInmueble,
       aclaracionesObservaciones,
-      valores,
     });
 
     this.isLoading = false;
+    */
+  }
+
+  get finalBienInmuebleForm() {
+   /* const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
+
+    if (form.tipoInmueble?.clave === 'OTRO') {
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+    */
+    return ;
   }
 
   setAclaraciones(aclaraciones?: string) {
@@ -526,46 +580,55 @@ export class BienesInmueblesComponent implements OnInit {
 
   setEditMode() {
     this.bienesInmueblesForm.reset();
+    this.bienesInmueblesForm.get('ninguno').setValue(false);
     this.editMode = true;
     this.editIndex = null;
   }
 
   setSelectedOptions() {
-    console.log("setSelectedOptions")
-    const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
+    const { actividadLaboral, parentescoRelacion, domicilioExtranjero, domicilioMexico } =
+      this.bienesInmueblesForm.value.bienInmueble;
 
-    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
-
-    if (tipoInmueble) {
-      console.log("llega select")
+    if (actividadLaboral) {
       this.bienesInmueblesForm
-        .get('bienInmueble.tipoInmueble')
-        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
-      console.log(tipoInmueble.clave)
-      console.log(tipoInmueble.valor)
+        .get('bienInmueble.actividadLaboral')
+        .setValue(findOption(this.actividadLaboralCatalogo, actividadLaboral.clave));
+    }
+    if (parentescoRelacion) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.parentescoRelacion')
+        .setValue(findOption(this.parentescoRelacionCatalogo, parentescoRelacion.clave));
+    }
+    if (actividadLaboral.clave == 'PRI' || actividadLaboral.clave === 'OTR') {
+      const { sector } =
+        this.bienesInmueblesForm.value.bienInmueble.actividadLaboralSectorPrivadoOtro;
+      if (sector) {
+        this.bienesInmueblesForm
+          .get('bienInmueble.actividadLaboralSectorPrivadoOtro.sector')
+          .setValue(findOption(this.sectorCatalogo, sector.clave));
+      }
     }
 
-    if (titular) {
-      this.bienesInmueblesForm.get('bienInmueble.titular')
-        .setValue(findOption(this.titularBienCatalogo, titular[0]));
-    }
-    if (formaAdquisicion) {
+    if (domicilioMexico) {
       this.bienesInmueblesForm
-        .get('bienInmueble.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
-    }
-
-    if (relacion) {
+        .get('bienInmueble.domicilioMexico.entidadFederativa')
+        .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa.clave));
       this.bienesInmueblesForm
-        .get('bienInmueble.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
+        .get('bienInmueble.domicilioMexico.municipioAlcaldia')
+        .setValue(
+          findOption(this.municipiosCatalogo[this.estado?.clave] || [], domicilioMexico.municipioAlcaldia.clave)
+        );
+      this.lugarDondeResideChanged('MEXICO');
+    } else if (domicilioExtranjero) {
+      this.bienesInmueblesForm
+        .get('bienInmueble.domicilioExtranjero.pais')
+        .setValue(findOption(this.paisesCatalogo, domicilioExtranjero.pais).clave);
+      this.lugarDondeResideChanged('EXTRANJERO');
     }
   }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
     this.bienInmueble = bienesInmuebles.bienInmueble;
-    this.valores = bienesInmuebles.valores;
-
     const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
 
     if (bienesInmuebles.ninguno) {
@@ -601,69 +664,5 @@ export class BienesInmueblesComponent implements OnInit {
     notSelected.reset();
 
     bienInbueble.get(selectedType).enable();
-  }
-
-  saveValoresDeclarante() {
-
-    const newItem = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
-    const indice = this.bienInmueble.length >= 0 ? this.bienInmueble.length : 0;
-    let valor = {
-      "indice": indice,
-      "superficieConstruccion": newItem.superficieConstruccion.valor,
-      "superficieTerreno": newItem.superficieTerreno.valor,
-      "valorAdquisicion": newItem.valorAdquisicion.valor,
-      "formaAdquisicion": newItem.formaAdquisicion.clave,
-    };
-    return valor;
-  }
-
-  deleteValoresDeclarante(bienInmueble: any) {
-    let valores: any = [];
-    let valor = {};
-    for (let i = 0; i < bienInmueble.length; i++) {
-      if (bienInmueble[i].titular[0].clave === "DEC") {
-        valor = {
-          "indice": i,
-          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
-          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
-          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
-          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
-        };
-        valores.push(valor);
-      }
-    }
-    return valores;
-  }
-
-  updateValoresDeclarante(bienInmueble: any) {
-    let valores: any = [];
-    let valor = {};
-    for (let i = 0; i < bienInmueble.length; i++) {
-      if (bienInmueble[i].titular.clave === "DEC") {
-        valor = {
-          "indice": i,
-          "superficieConstruccion": bienInmueble[i].superficieConstruccion.valor,
-          "superficieTerreno": bienInmueble[i].superficieTerreno.valor,
-          "valorAdquisicion": bienInmueble[i].valorAdquisicion.valor,
-          "formaAdquisicion": bienInmueble[i].formaAdquisicion.clave,
-        };
-        valores.push(valor);
-      }
-    }
-    return valores;
-  }
-
-  radioChange(event: any) {
-    if (event === "NINGUNO") {
-      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
-      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
-    }
-    else {
-      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
-      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").enable();
-    }
   }
 }
