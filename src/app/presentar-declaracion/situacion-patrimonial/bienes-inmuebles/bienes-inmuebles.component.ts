@@ -291,7 +291,7 @@ export class BienesInmueblesComponent implements OnInit {
     */
     const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
 
-    /*bienInmuebleForm.patchValue(bienInmueble || {});
+    bienInmuebleForm.patchValue(bienInmueble || {});
 
     this.tipoDomicilio = bienInmueble.lugarDondeReside;
 

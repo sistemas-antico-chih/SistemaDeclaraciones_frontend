@@ -324,8 +324,6 @@ export class DatosDependienteComponent implements OnInit {
       this.otroActividadLaboral.nativeElement.value = dependienteEconomico.actividadLaboral?.valor;
     }
     if (dependienteEconomico.parentescoRelacion?.clave === 'OTRO') {
-      console.log("otroParentesco")
-      console.log(this.otroParentesco)
       this.otroParentesco.nativeElement.value = dependienteEconomico.parentescoRelacion?.valor;
     }
     if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
@@ -414,9 +412,6 @@ export class DatosDependienteComponent implements OnInit {
     if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
       result = result && this.otroSector.nativeElement.value?.match(/^\S.*\S$/);
     }
-
-    console.log("result");
-    console.log(result);
     return result;
   }
 
