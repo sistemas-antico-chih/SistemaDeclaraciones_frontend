@@ -205,10 +205,10 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   fillForm(bienInmueble: BienInmueble) {
-    /*Object.keys(bienInmueble)
+    Object.keys(bienInmueble)
       .filter((field) => bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
-    */
+    
 
     //los radio buttons
 

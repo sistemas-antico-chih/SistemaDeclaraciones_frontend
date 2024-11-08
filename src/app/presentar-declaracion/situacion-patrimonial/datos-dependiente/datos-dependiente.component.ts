@@ -310,7 +310,7 @@ export class DatosDependienteComponent implements OnInit {
   fillForm(dependienteEconomico: DependienteEconomico) {
     const dependienteEconomicoForm = this.datosDependientesEconomicosForm.get('dependienteEconomico');
 
-    dependienteEconomicoForm.patchValue(dependienteEconomico || {});
+    //dependienteEconomicoForm.patchValue(dependienteEconomico || {});
 
     this.tipoDomicilio = dependienteEconomico.lugarDondeReside;
 
