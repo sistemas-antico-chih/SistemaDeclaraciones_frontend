@@ -23,10 +23,6 @@ import {
   DeclaracionOutput,
   LastDeclaracionOutput
 } from '@models/declaracion';
-import TipoInmueble from '@static/catalogos/tipoInmueble.json';
-import TitularBien from '@static/catalogos/titularBien.json';
-import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
-
 import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import AmbitoSector from '@static/catalogos/ambitoSector.json';
@@ -58,15 +54,9 @@ export class DatosDependienteComponent implements OnInit {
   editIndex: number = null;
   isLoading = false;
 
-  //@ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
-  //@ViewChild('otroParentesco') otroParentesco: ElementRef;
-  //@ViewChild('otroSector') otroSector: ElementRef;
-
-  tipoInmuebleCatalogo = TipoInmueble;
-  formaAdquisicionCatalogo = FormaAdquisicion;
-  titularBienCatalogo = TitularBien;
-
-  tipoPersona: string;
+  @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
+  @ViewChild('otroSector') otroSector: ElementRef;
 
   actividadLaboralCatalogo = ActividadLaboral;
   ambitoPublicoCatalogo = AmbitoPublico;
@@ -337,7 +327,6 @@ export class DatosDependienteComponent implements OnInit {
       console.log("otroParentesco")
       console.log(this.otroParentesco)
       this.otroParentesco.nativeElement.value = dependienteEconomico.parentescoRelacion?.valor;
-      console.log(this.otroParentesco)
     }
     if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
       this.otroSector.nativeElement.value = dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.valor;
