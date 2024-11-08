@@ -68,6 +68,10 @@ export class BienesInmueblesComponent implements OnInit {
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
 
+  tipoInmuebleCatalogo = TipoInmueble;
+  formaAdquisicionCatalogo = FormaAdquisicion;
+  titularBienCatalogo = TitularBien;
+  
   actividadLaboralCatalogo = ActividadLaboral;
   ambitoPublicoCatalogo = AmbitoPublico;
   ambitoSectorCatalogo = AmbitoSector;
