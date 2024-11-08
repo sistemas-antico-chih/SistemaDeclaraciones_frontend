@@ -215,7 +215,7 @@ export class BienesInmueblesComponent implements OnInit {
     const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
     bienInmuebleForm.patchValue(bienInmueble || {});
 
-    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
+    /*this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
 
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
