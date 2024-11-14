@@ -216,13 +216,17 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(this.bienesInmueblesForm.get('bienInmueble'));
 
     console.log("22")
-    console.log(this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble));
+    console.log(bienInmueble);
     
     console.log("33")
     console.log(this.bienesInmueblesForm.get('bienInmueble.tipoInmueble'));
 
     console.log("44");
     console.log(this.bienesInmueblesForm.get('bienInmueble.titular'));
+    
+    if(this.bienesInmueblesForm.get('bienInmueble.titular')){
+      this.bienesInmueblesForm.get('bienInmueble.titular.valor').setValue(bienInmueble.titular[0].valor)
+    }
     //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
     
     //console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor'));
@@ -231,8 +235,7 @@ export class BienesInmueblesComponent implements OnInit {
     //console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor'));
     console.log("****")
 
-    //console.log(this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]))
-    //console.log(this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]))
+    
 
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
