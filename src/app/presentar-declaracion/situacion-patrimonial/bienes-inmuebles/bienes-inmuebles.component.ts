@@ -221,7 +221,12 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(bienInmueble);
     
     //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
-    console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble'));
+    console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('clave'));
+    console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor'));
+    console.log("****");
+    console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor').setValue('ALGUILLO'));
+    console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor'));
+    console.log("****")
 
     //console.log(this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]))
     //console.log(this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]))
