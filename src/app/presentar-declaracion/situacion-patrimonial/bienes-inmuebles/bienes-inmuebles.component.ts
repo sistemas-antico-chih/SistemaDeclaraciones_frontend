@@ -515,15 +515,13 @@ export class BienesInmueblesComponent implements OnInit {
     const { tipoInmueble, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
-    const { titular } = this.bienesInmueblesForm.value.bienInmueble.titular;
-
+    const { titular } = this.bienesInmueblesForm.value.bienInmueble;
+    console.log(titular);
 
     if (tipoInmueble) {
       this.bienesInmueblesForm
         .get('bienInmueble.tipoInmueble')
         .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
-      console.log(tipoInmueble.clave)
-      console.log(tipoInmueble.valor)
     }
 
     if (titular) {
