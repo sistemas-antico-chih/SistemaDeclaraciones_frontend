@@ -212,13 +212,13 @@ export class BienesInmueblesComponent implements OnInit {
     */
     
     //los radio buttons
-    console.log(this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').patchValue(bienInmueble));
-
-
-    
-    
-    //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
     console.log(this.bienesInmueblesForm.get('bienInmueble'));
+
+    console.log(this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble));
+    
+    console.log(this.bienesInmueblesForm.get('bienInmueble.tipoOperacion'));
+    //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
+    
     //console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor'));
     console.log("****");
     //console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor').setValue('ALGUILLO'));
