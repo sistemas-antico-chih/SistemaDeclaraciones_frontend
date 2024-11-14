@@ -206,10 +206,10 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   fillForm(bienInmueble: BienInmueble) {
-    Object.keys(bienInmueble)
+    /*Object.keys(bienInmueble)
       .filter((field) => bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
-    
+    */
     
     //los radio buttons
     this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
@@ -242,12 +242,13 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-      console.log("otroTipoInmueble")
-      console.log(this.otroTipoInmueble)
-      console.log(this.otroParentesco)
+       console.log("otroTipoInmueble")
+       console.log(this.otroTipoInmueble.clave)
+      /*console.log(this.otroParentesco)
       this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
       console.log(this.otroTipoInmueble)
       //document.querySelector<HTMLInputElement>('.OTI').value = bienInmueble.tipoInmueble?.valor;
+      */
     }
 
     /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
