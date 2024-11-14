@@ -512,12 +512,13 @@ export class BienesInmueblesComponent implements OnInit {
 
   setSelectedOptions() {
     console.log("setSelectedOptions")
-    const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
+    const { tipoInmueble, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
+    const { titular } = this.bienesInmueblesForm.value.bienInmueble.titular;
+
 
     if (tipoInmueble) {
-      console.log("llega select")
       this.bienesInmueblesForm
         .get('bienInmueble.tipoInmueble')
         .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
@@ -526,8 +527,10 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (titular) {
+      console.log("llega select")
+      console.log(this.bienesInmueblesForm.get('bienInmueble.titular'))
       this.bienesInmueblesForm.get('bienInmueble.titular')
-        .setValue(findOption(this.titularBienCatalogo, titular[0]));
+        .setValue(findOption(this.titularBienCatalogo, titular.clave));
     }
     if (formaAdquisicion) {
       this.bienesInmueblesForm
