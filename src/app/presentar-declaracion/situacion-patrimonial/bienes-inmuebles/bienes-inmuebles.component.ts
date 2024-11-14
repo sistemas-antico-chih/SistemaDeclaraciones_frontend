@@ -206,56 +206,8 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   fillForm(bienInmueble: BienInmueble) {
-    /*Object.keys(bienInmueble)
-      .filter((field) => bienInmueble[field] !== null)
-      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
-    */
     
-    //los radio buttons
     this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
-
-
-    console.log("bienInmuegleForm");
-    console.log(this.bienesInmueblesForm);
-    console.log("bienInmueble")
-    console.log(bienInmueble);
-    
-    this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
-    //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
-    console.log(this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]))
-    console.log(this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]))
-
-    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
-    this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
-
-    ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
-    if (bienInmueble.domicilioMexico) {
-      this.tipoDomicilio = 'MEXICO';
-    }
-    ifExistsEnableFields(
-      bienInmueble.domicilioExtranjero,
-      this.bienesInmueblesForm,
-      'bienInmueble.domicilioExtranjero'
-    );
-    if (bienInmueble.domicilioExtranjero) {
-      this.tipoDomicilio = 'EXTRANJERO';
-    }
-
-    /*if (bienInmueble.tipoInmueble?.clave === 'OTRO') {
-       console.log("otroTipoInmueble")
-       //console.log(bienInmueble.tipoInmueble.clave)
-       //console.log(this.otroTipoInmueble);
-      /*console.log(this.otroParentesco)
-      this.otroTipoInmueble.nativeElement.value = bienInmueble.tipoInmueble?.valor;
-      console.log(this.otroTipoInmueble)
-      //document.querySelector<HTMLInputElement>('.OTI').value = bienInmueble.tipoInmueble?.valor;
-      
-    }*/
-
-    /*if (bienInmueble.transmisor[0].relacion?.clave === 'OTRO') {
-      console.log("entra2;")
-      this.otroParentesco.nativeElement.value = bienInmueble.transmisor[0].relacion?.valor;
-    }*/
 
     this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
