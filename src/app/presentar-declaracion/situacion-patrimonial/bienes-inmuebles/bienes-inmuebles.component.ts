@@ -206,8 +206,42 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   fillForm(bienInmueble: BienInmueble) {
+    /*Object.keys(bienInmueble)
+      .filter((field) => bienInmueble[field] !== null)
+      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
+    */
     
+    //los radio buttons
     this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
+
+
+    console.log("bienInmuegleForm");
+    console.log(this.bienesInmueblesForm);
+    console.log("bienInmueble")
+    console.log(bienInmueble);
+    
+    //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
+    //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
+    console.log(this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]))
+    console.log(this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]))
+
+    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
+    this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
+
+    ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
+    if (bienInmueble.domicilioMexico) {
+      this.tipoDomicilio = 'MEXICO';
+    }
+    ifExistsEnableFields(
+      bienInmueble.domicilioExtranjero,
+      this.bienesInmueblesForm,
+      'bienInmueble.domicilioExtranjero'
+    );
+    if (bienInmueble.domicilioExtranjero) {
+      this.tipoDomicilio = 'EXTRANJERO';
+    }
+
+
 
     this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
