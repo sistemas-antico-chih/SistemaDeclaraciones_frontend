@@ -212,7 +212,7 @@ export class BienesInmueblesComponent implements OnInit {
     
     */
     //los radio buttons
-    this.bienesInmueblesForm.get('experiencia').patchValue(bienInmueble);
+    this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
 
 
     console.log("bienInmuegleForm");
