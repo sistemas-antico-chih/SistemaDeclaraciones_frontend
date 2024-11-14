@@ -224,8 +224,11 @@ export class BienesInmueblesComponent implements OnInit {
     console.log("44");
     console.log(this.bienesInmueblesForm.get('bienInmueble.titular'));
     
-    if(this.bienesInmueblesForm.get('bienInmueble.titular')){
-      this.bienesInmueblesForm.get('bienInmueble.titular.valor').setValue(bienInmueble.titular[0].valor)
+    const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
+
+    if(titular){
+        this.bienesInmueblesForm.get('bienInmueble.titular')
+          .setValue(findOption(this.titularBienCatalogo, titular[0]));
     }
     //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
     
