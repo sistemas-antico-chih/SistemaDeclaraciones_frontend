@@ -210,31 +210,7 @@ export class BienesInmueblesComponent implements OnInit {
       .filter((field) => bienInmueble[field] !== null)
       .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
     */
-    
-    //los radio buttons
-    console.log("11")
-    console.log(this.bienesInmueblesForm.get('bienInmueble'));
-
-    console.log("22")
-    console.log(bienInmueble);
-    
-    console.log("33")
-    console.log(this.bienesInmueblesForm.get('bienInmueble.tipoInmueble'));
-
-    console.log("44");
-    console.log(this.bienesInmueblesForm.get('bienInmueble.titular'));
-    
-
-    //this.bienesInmueblesForm.get('bienInmueble.tipoInmueble.clave').setValue('OTRO');
-    
-    //console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor'));
-    console.log("****");
-    //console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor').setValue('ALGUILLO'));
-    //console.log(this.bienesInmueblesForm.get('bienInmueble').get('tipoInmueble').get('valor'));
-    console.log("****")
-
-    
-
+    this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
 
@@ -250,8 +226,6 @@ export class BienesInmueblesComponent implements OnInit {
     if (bienInmueble.domicilioExtranjero) {
       this.tipoDomicilio = 'EXTRANJERO';
     }
-
-
 
     this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();

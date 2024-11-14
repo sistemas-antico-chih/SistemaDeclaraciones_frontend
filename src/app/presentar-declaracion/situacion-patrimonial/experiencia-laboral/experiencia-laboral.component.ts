@@ -213,6 +213,8 @@ export class ExperienciaLaboralComponent implements OnInit {
 
   fillForm(experiencia: Experiencia) {
     this.experienciaLaboralForm.get('experiencia').patchValue(experiencia);
+    console.log("experiencia");
+    console.log(this.experienciaLaboralForm);
     this.setAclaraciones(this.aclaracionesText);
 
     if (experiencia.ambitoSector?.clave === 'OTR') {
