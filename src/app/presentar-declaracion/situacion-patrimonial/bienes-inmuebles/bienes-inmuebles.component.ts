@@ -517,9 +517,9 @@ export class BienesInmueblesComponent implements OnInit {
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
-    //console.log("aqui");
+    console.log("aqui");
     //console.log(titular);
-    //console.log(this.bienesInmueblesForm.value)
+    console.log(this.bienesInmueblesForm.value)
     //console.log("***")
     //console.log(this.bienesInmueblesForm.value.bienInmueble)
   
@@ -533,7 +533,7 @@ export class BienesInmueblesComponent implements OnInit {
     if (titular) {
       console.log("llega select")
       console.log(this.bienesInmueblesForm.value.bienInmueble.titular)
-      this.bienesInmueblesForm.get('bienInmueble.titular[0]')
+      this.bienesInmueblesForm.get('bienInmueble.titular')
         .setValue(findOption(this.titularBienCatalogo, titular.clave));
       
       console.log("select 2");
