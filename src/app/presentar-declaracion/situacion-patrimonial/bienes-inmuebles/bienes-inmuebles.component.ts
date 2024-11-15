@@ -519,7 +519,7 @@ export class BienesInmueblesComponent implements OnInit {
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
     console.log("aqui");
     //console.log(titular);
-    console.log(this.bienesInmueblesForm.value)
+    console.log(this.bienesInmueblesForm.value.bienInmueble)
     //console.log("***")
     //console.log(this.bienesInmueblesForm.value.bienInmueble)
   
@@ -532,7 +532,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     if (titular) {
       console.log("llega select")
-      console.log(this.bienesInmueblesForm.value.bienInmueble.titular)
+      console.log(this.bienesInmueblesForm.value.bienInmueble.titular[0])
       this.bienesInmueblesForm.get('bienInmueble.titular')
         .setValue(findOption(this.titularBienCatalogo, titular.clave));
       
