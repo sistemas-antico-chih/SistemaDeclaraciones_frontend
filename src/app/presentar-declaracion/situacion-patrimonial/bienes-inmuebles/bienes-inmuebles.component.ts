@@ -541,7 +541,7 @@ export class BienesInmueblesComponent implements OnInit {
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
     }
 
-    if (domicilioMexico) {
+   /* if (domicilioMexico) {
       this.bienesInmueblesForm
         .get('bienInmueble.domicilioMexico.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa.clave));
