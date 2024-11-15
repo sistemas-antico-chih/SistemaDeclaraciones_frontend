@@ -206,13 +206,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   fillForm(bienInmueble: BienInmueble) {
-    /*Object.keys(bienInmueble)
-      .filter((field) => bienInmueble[field] !== null)
-      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
-    */
-    this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
-    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
-    this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
+
 
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
@@ -517,12 +511,10 @@ export class BienesInmueblesComponent implements OnInit {
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
-    console.log("aqui");
-    //console.log(titular);
-    //console.log(this.bienesInmueblesForm.value.bienInmueble)
-    //console.log("***")
-    //console.log(this.bienesInmueblesForm.value.bienInmueble)
-  
+    
+    const domicilioMexico = this.bienesInmueblesForm.get('bienInmueble').get('domicilioMexico');
+    const domicilioExtranjero = this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero');
+
 
     if (tipoInmueble) {
       this.bienesInmueblesForm
@@ -531,13 +523,9 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     if (titular) {
-      console.log("llega select")
-      console.log(this.bienesInmueblesForm.value.bienInmueble.titular[0])
       this.bienesInmueblesForm.get('bienInmueble.titular')
         .setValue(findOption(this.titularBienCatalogo, titular[0].clave));
-      
-      console.log("select 2");
-      console.log(this.bienesInmueblesForm.value.bienInmueble.titular)
+
     }
     if (formaAdquisicion) {
       this.bienesInmueblesForm
@@ -550,6 +538,15 @@ export class BienesInmueblesComponent implements OnInit {
         .get('bienInmueble.transmisor.relacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
     }
+
+    if(domicilioMexico){
+      console.log("llega")
+      console.log(this.bienesInmueblesForm.value.bienInmueble.domicilioMexico.entidadFederativa)
+      this.bienesInmueblesForm
+        .get('bienInmueble.domicilioMexico.entidadFederativa')
+        .setValue(findOption(this.estadosCatalogo, this.estado.clave));
+    }
+
   }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
