@@ -550,7 +550,7 @@ export class BienesInmueblesComponent implements OnInit {
         .setValue(
           findOption(this.municipiosCatalogo[this.estado?.clave] || [], domicilioMexico.municipioAlcaldia.clave)
         );
-      this.bienesInmueblesForm('MEXICO');
+      //this.bienesInmueblesForm('MEXICO');
     } /*else if (domicilioExtranjero) {
       this.datosDependientesEconomicosForm
         .get('dependienteEconomico.domicilioExtranjero.pais')
