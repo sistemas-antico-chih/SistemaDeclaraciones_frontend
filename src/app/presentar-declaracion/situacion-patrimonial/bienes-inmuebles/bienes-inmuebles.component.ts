@@ -507,14 +507,14 @@ export class BienesInmueblesComponent implements OnInit {
   setSelectedOptions() {
     console.log("setSelectedOptions")
 
-    const { tipoInmueble, formaAdquisicion, domicilioMexico, domicilioExtranjero} = 
+    const { tipoInmueble, formaAdquisicion} = 
       this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
     
-    //const domicilioMexico = this.bienesInmueblesForm.get('bienInmueble').get('domicilioMexico');
-    //const domicilioExtranjero = this.bienesInmueblesForm.get('bienInmueble').get('domicilioExtranjero');
+    const { domicilioMexico }= this.bienesInmueblesForm.value.bienInmueble.domicilioMexico;
+    const { domicilioExtranjero }= this.bienesInmueblesForm.value.bienInmueble.domicilioExtranjero;
     console.log("select 1");
     console.log(this.bienInmueble);
 
