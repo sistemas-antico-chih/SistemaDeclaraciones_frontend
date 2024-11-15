@@ -512,16 +512,17 @@ export class BienesInmueblesComponent implements OnInit {
 
   setSelectedOptions() {
     console.log("setSelectedOptions")
+
     const { tipoInmueble, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
-    console.log("aqui");
-    console.log(titular);
-    console.log(this.bienesInmueblesForm.value)
-    console.log("***")
-    console.log(this.bienesInmueblesForm.value.bienInmueble)
-    console.log(this.bienesInmueblesForm.value.bienInmueble.titular)
+    //console.log("aqui");
+    //console.log(titular);
+    //console.log(this.bienesInmueblesForm.value)
+    //console.log("***")
+    //console.log(this.bienesInmueblesForm.value.bienInmueble)
+  
 
     if (tipoInmueble) {
       this.bienesInmueblesForm
@@ -531,9 +532,12 @@ export class BienesInmueblesComponent implements OnInit {
 
     if (titular) {
       console.log("llega select")
-      console.log(this.bienesInmueblesForm.get('bienInmueble.titular'))
-      this.bienesInmueblesForm.get('bienInmueble.titular')
+      console.log(this.bienesInmueblesForm.value.bienInmueble.titular)
+      this.bienesInmueblesForm.get('bienInmueble.titular[0]')
         .setValue(findOption(this.titularBienCatalogo, titular.clave));
+      
+      console.log("select 2");
+      console.log(this.bienesInmueblesForm.value.bienInmueble.titular)
     }
     if (formaAdquisicion) {
       this.bienesInmueblesForm
