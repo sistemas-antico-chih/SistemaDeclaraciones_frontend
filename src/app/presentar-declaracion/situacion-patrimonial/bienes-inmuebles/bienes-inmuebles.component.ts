@@ -540,6 +540,15 @@ export class BienesInmueblesComponent implements OnInit {
         .get('bienInmueble.transmisor.relacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
     }
+
+    console.log("tipoInmueble")
+    console.log(tipoInmueble)
+    console.log("titular")
+    console.log(titular)
+    console.log("formaAdquisicion")
+    console.log(formaAdquisicion)
+    console.log("relacion")
+    console.log(relacion)
     
   }
 
