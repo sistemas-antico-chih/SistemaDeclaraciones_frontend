@@ -516,7 +516,7 @@ export class BienesInmueblesComponent implements OnInit {
     const { domicilioMexico }= this.bienesInmueblesForm.value.bienInmueble.domicilioMexico || null;
     const { domicilioExtranjero }= this.bienesInmueblesForm.value.bienInmueble.domicilioExtranjero || null;
     console.log("select 1");
-    console.log(this.bienInmueble);
+    console.log(this.bienesInmueblesForm.value.bienInmueble);
 
     /*if (domicilioMexico){
       console.log(domicilioMexico)
