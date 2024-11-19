@@ -512,6 +512,7 @@ export class BienesInmueblesComponent implements OnInit {
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
     console.log("aqui");
     //console.log(titular);
+    console.log(this.bienInmueble);
     console.log(this.bienesInmueblesForm.value.bienInmueble)
     //console.log("***")
     //console.log(this.bienesInmueblesForm.value.bienInmueble)
