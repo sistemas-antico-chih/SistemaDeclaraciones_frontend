@@ -207,7 +207,6 @@ export class BienesInmueblesComponent implements OnInit {
 
   fillForm(bienInmueble: BienInmueble) {
 
-
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
       this.tipoDomicilio = 'MEXICO';
@@ -507,25 +506,16 @@ export class BienesInmueblesComponent implements OnInit {
   setSelectedOptions() {
     console.log("setSelectedOptions")
 
-    const { tipoInmueble, formaAdquisicion} = 
-      this.bienesInmueblesForm.value.bienInmueble;
+    const { tipoInmueble, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
-    
-    const { domicilioMexico }= this.bienesInmueblesForm.value.bienInmueble.domicilioMexico || null;
-    const { domicilioExtranjero }= this.bienesInmueblesForm.value.bienInmueble.domicilioExtranjero || null;
-    console.log("select 1");
-    console.log(this.bienesInmueblesForm.value.bienInmueble);
-
-    /*if (domicilioMexico){
-      console.log(domicilioMexico)
-    }
-    
-    if(domicilioExtranjero){
-      console.log(domicilioExtranjero)
-    }*/
-    
+    console.log("aqui");
+    //console.log(titular);
+    console.log(this.bienesInmueblesForm.value.bienInmueble)
+    //console.log("***")
+    //console.log(this.bienesInmueblesForm.value.bienInmueble)
+  
 
     if (tipoInmueble) {
       this.bienesInmueblesForm
@@ -549,24 +539,7 @@ export class BienesInmueblesComponent implements OnInit {
         .get('bienInmueble.transmisor.relacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
     }
-
-   /* if (domicilioMexico) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.domicilioMexico.entidadFederativa')
-        .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa.clave));
-      this.bienesInmueblesForm
-        .get('bienInmueble.domicilioMexico.municipioAlcaldia')
-        .setValue(
-          findOption(this.municipiosCatalogo[this.estado?.clave] || [], domicilioMexico.municipioAlcaldia.clave)
-        );
-      //this.bienesInmueblesForm('MEXICO');
-    } /*else if (domicilioExtranjero) {
-      this.datosDependientesEconomicosForm
-        .get('dependienteEconomico.domicilioExtranjero.pais')
-        .setValue(findOption(this.paisesCatalogo, domicilioExtranjero.pais).clave);
-      this.lugarDondeResideChanged('EXTRANJERO');
-    }*/
-
+    
   }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
