@@ -518,13 +518,13 @@ export class BienesInmueblesComponent implements OnInit {
     console.log("select 1");
     console.log(this.bienInmueble);
 
-    if (domicilioMexico){
+    /*if (domicilioMexico){
       console.log(domicilioMexico)
     }
     
     if(domicilioExtranjero){
       console.log(domicilioExtranjero)
-    }
+    }*/
     
 
     if (tipoInmueble) {
