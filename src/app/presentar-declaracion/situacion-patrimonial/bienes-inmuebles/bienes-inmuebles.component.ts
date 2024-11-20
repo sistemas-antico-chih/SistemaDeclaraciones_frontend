@@ -521,7 +521,14 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(this.bienesInmueblesForm.value.bienInmueble)
     //console.log("***")
     //console.log(this.bienesInmueblesForm.value.bienInmueble)
-  
+    console.log("tipoInmueble")
+    console.log(tipoInmueble)
+    console.log("titular")
+    console.log(titular)
+    console.log("formaAdquisicion")
+    console.log(formaAdquisicion)
+    console.log("relacion")
+    console.log(relacion)
 
     if (tipoInmueble) {
       this.bienesInmueblesForm
@@ -544,17 +551,17 @@ export class BienesInmueblesComponent implements OnInit {
       this.bienesInmueblesForm
         .get('bienInmueble.transmisor.relacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
-    }
+    }   
 
-    console.log("tipoInmueble")
-    console.log(tipoInmueble)
-    console.log("titular")
-    console.log(titular)
-    console.log("formaAdquisicion")
-    console.log(formaAdquisicion)
-    console.log("relacion")
-    console.log(relacion)
-   
+        console.log("this.bienesInmueblesForm.value.bienInmueble")
+        console.log("tipoInmueble")
+        console.log(tipoInmueble)
+        console.log("titular")
+        console.log(titular)
+        console.log("formaAdquisicion")
+        console.log(formaAdquisicion)
+        console.log("relacion")
+        console.log(relacion)
   }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
