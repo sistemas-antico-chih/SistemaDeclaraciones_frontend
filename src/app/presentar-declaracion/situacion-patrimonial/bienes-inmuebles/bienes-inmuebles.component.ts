@@ -207,7 +207,14 @@ export class BienesInmueblesComponent implements OnInit {
 
   fillForm(bienInmueble: BienInmueble) {
 
-    const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
+    Object.keys(bienInmueble)
+      .filter((field) => bienInmueble[field] !== null)
+      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
+    this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
+    this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
+
+
+   // const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble').patchValue(bienInmueble);
 
     //bienInmuebleForm.patchValue(bienInmueble || {});
     console.log("bienInmueble");
