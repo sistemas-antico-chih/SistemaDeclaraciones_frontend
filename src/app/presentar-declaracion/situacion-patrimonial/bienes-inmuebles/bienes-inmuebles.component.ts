@@ -534,7 +534,8 @@ export class BienesInmueblesComponent implements OnInit {
       if(tipoInmueble.clave ==='OTRO'){
         console.log("llega aqui");
         console.log(tipoInmueble)
-        document.querySelector<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
+        //document.querySelector<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
+        document.getElementById<HTMLInputElement>('mat-input-11').value="this.arrayOtroTipoInstrumento[j]";
         //otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
       } 
     }
