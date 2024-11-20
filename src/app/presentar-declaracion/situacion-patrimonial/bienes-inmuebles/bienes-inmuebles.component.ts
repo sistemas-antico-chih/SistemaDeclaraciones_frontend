@@ -541,6 +541,7 @@ export class BienesInmueblesComponent implements OnInit {
         console.log(tipoInmueble)
         console.log("llega aqui 2");
         console.log(valorHtml)
+        valorHtml2.value="axxxx"
         console.log(valorHtml2)
 
       }
