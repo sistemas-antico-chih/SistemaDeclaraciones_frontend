@@ -507,11 +507,26 @@ export class BienesInmueblesComponent implements OnInit {
     this.editIndex = null;
   }
 
+  ngAfterViewInit() {
+    console.log("ngAfterViewInit");
+    //console.log(this.test);
+    //console.log(this.large);
+    /* for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
+      this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
+      document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
+    }
+    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
+    console.log("test 2: " + test);*/
+    this.otroTipoInmueble.nativeElement.value=bienInmueble.tipoInmueble?.clave;
+  }
+
   setSelectedOptions() {
     const { tipoInmueble, titular, formaAdquisicion, domicilioMexico } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
-
+    //****************** */
+    //****************** */
+    //****************** */
     console.log(tipoInmueble);
     if (tipoInmueble) {
       const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
@@ -519,7 +534,7 @@ export class BienesInmueblesComponent implements OnInit {
       if(tipoInmueble.clave ==='OTRO'){
         console.log("llega aqui");
         console.log(tipoInmueble)
-        this.otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
+        otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
       } 
     }
 
