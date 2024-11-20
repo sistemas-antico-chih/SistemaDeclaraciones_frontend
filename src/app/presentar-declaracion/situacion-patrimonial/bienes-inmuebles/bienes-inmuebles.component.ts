@@ -517,7 +517,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
     console.log("test 2: " + test);*/
-    this.otroTipoInmueble.nativeElement.value=bienInmueble.tipoInmueble?.clave;
+    this.otroTipoInmueble.nativeElement.value=this.bienInmueble.tipoInmueble?.clave;
   }
 
   setSelectedOptions() {
@@ -534,7 +534,7 @@ export class BienesInmueblesComponent implements OnInit {
       if(tipoInmueble.clave ==='OTRO'){
         console.log("llega aqui");
         console.log(tipoInmueble)
-        otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
+        //otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
       } 
     }
 
