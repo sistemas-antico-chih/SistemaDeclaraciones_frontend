@@ -46,7 +46,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroTipoInmueble',{static: false}) otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
