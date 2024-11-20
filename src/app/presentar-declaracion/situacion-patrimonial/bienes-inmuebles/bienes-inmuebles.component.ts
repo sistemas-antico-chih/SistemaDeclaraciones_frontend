@@ -207,6 +207,11 @@ export class BienesInmueblesComponent implements OnInit {
 
   fillForm(bienInmueble: BienInmueble) {
 
+    const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
+
+    bienInmuebleForm.patchValue(bienInmueble || {});
+
+
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
       this.tipoDomicilio = 'MEXICO';
@@ -549,7 +554,7 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(formaAdquisicion)
     console.log("relacion")
     console.log(relacion)
-    
+   
   }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
