@@ -207,7 +207,8 @@ export class BienesInmueblesComponent implements OnInit {
 
   fillForm(bienInmueble: BienInmueble) {
     Object.keys(bienInmueble)
-    .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
+      .filter((field) => bienInmueble[field] !== null)
+      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
 
@@ -218,16 +219,15 @@ export class BienesInmueblesComponent implements OnInit {
     ifExistsEnableFields(
       bienInmueble.domicilioExtranjero,
       this.bienesInmueblesForm,
-     'bienInmueble.domicilioExtranjero'
-     );
+      'bienInmueble.domicilioExtranjero'
+    );
     if (bienInmueble.domicilioExtranjero) {
       this.tipoDomicilio = 'EXTRANJERO';
     }
 
     this.setAclaraciones(this.aclaracionesText);
-    //this.setSelectedOptions();
+   //this.setSelectedOptions();
   }
-
   async getLastUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -508,49 +508,47 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    console.log("setSelectedOptions")
+    const { tipoInmueble, titular, formaAdquisicion, domicilioMexico } = this.bienesInmueblesForm.value.bienInmueble;
 
-    const { tipoInmueble, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
-
-    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor[0];
-    const { titular } = this.bienesInmueblesForm.value.bienInmueble;
-    console.log("aqui");
-    //console.log(titular);
-    console.log(this.bienInmueble);
-    console.log(this.bienesInmueblesForm.value.bienInmueble)
-    //console.log("***")
-    //console.log(this.bienesInmueblesForm.value.bienInmueble)
-    console.log("tipoInmueble")
-    console.log(tipoInmueble)
-    console.log("titular")
-    console.log(titular)
-    console.log("formaAdquisicion")
-    console.log(formaAdquisicion)
-    console.log("relacion")
-    console.log(relacion)
+    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
 
     if (tipoInmueble) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.tipoInmueble')
-        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble.clave));
+      const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
+      this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
     }
 
     if (titular) {
-      this.bienesInmueblesForm.get('bienInmueble.titular')
-        .setValue(findOption(this.titularBienCatalogo, titular[0].clave));
-
+      const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+      // this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.bienesInmueblesForm.get('bienInmueble.titular').setValue(optionTitular[0]);
     }
     if (formaAdquisicion) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
+      const optFormaAdquision = this.formaAdquisicionCatalogo.filter((ad: any) => ad.clave === formaAdquisicion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      this.bienesInmueblesForm.get('bienInmueble.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
     if (relacion) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
-    }   
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(optRelacion[0]);
+    }
+
+    if (domicilioMexico) {
+      const { entidadFederativa, municipioAlcaldia } = domicilioMexico;
+
+      if (entidadFederativa) {
+        const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
+        this.bienesInmueblesForm.get('bienInmueble.domicilioMexico.entidadFederativa').setValue(optEntidad[0]);
+
+        if (municipioAlcaldia) {
+          const optMunicipio = this.municipiosCatalogo[optEntidad[0].clave].filter(
+            (mun: any) => mun.clave === municipioAlcaldia.clave
+          );
+          this.bienesInmueblesForm.get('bienInmueble.domicilioMexico.municipioAlcaldia').setValue(optMunicipio[0]);
+        }
+      }
+    }
   }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
