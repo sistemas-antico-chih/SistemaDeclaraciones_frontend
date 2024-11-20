@@ -46,7 +46,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoInmueble',{static: false}) otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
@@ -516,12 +516,10 @@ export class BienesInmueblesComponent implements OnInit {
     if (tipoInmueble) {
       const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
-      console.log("aqui");
-      console.log(tipoInmueble);
       if(tipoInmueble.clave ==='OTRO'){
         console.log("llega aqui");
         console.log(tipoInmueble)
-        //this.otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
+        this.otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
       } 
     }
 
