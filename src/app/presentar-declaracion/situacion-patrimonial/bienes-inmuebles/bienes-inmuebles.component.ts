@@ -46,10 +46,10 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
 
-  @ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
+  //@ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
-  //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
+  @ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
 
 
   tipoInmuebleCatalogo = TipoInmueble;
@@ -280,8 +280,8 @@ export class BienesInmueblesComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
 
     if (form.tipoInmueble?.clave === 'OTRO') {
-      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
-      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+      //form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
     if (form.transmisor.relacion?.clave === 'OTRO') {
       form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
@@ -517,7 +517,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
     console.log("test 2: " + test);*/
-    this.otroTipoInmueble.nativeElement.value="this.bienInmueble.tipoInmueble?.clave";
+    //this.otroTipoInmueble.nativeElement.value="this.bienInmueble.tipoInmueble?.clave";
   }
 
   setSelectedOptions() {
@@ -534,6 +534,7 @@ export class BienesInmueblesComponent implements OnInit {
       if(tipoInmueble.clave ==='OTRO'){
         console.log("llega aqui");
         console.log(tipoInmueble)
+        document.querySelector<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
         //otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
       } 
     }
