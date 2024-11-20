@@ -238,7 +238,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     this.setAclaraciones(this.aclaracionesText);
-    this.setSelectedOptions();
+    //this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
