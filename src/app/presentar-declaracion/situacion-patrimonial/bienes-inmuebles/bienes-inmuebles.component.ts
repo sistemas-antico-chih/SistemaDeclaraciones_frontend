@@ -209,10 +209,12 @@ export class BienesInmueblesComponent implements OnInit {
 
     const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
 
+    console.log(bienInbueble);
+    console.log(bienInmueble);
     bienInmuebleForm.patchValue(bienInmueble || {});
 
 
-    ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
+    /*ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
       this.tipoDomicilio = 'MEXICO';
     }
@@ -223,7 +225,7 @@ export class BienesInmueblesComponent implements OnInit {
     );
     if (bienInmueble.domicilioExtranjero) {
       this.tipoDomicilio = 'EXTRANJERO';
-    }
+    }*/
 
     this.setAclaraciones(this.aclaracionesText);
     //this.setSelectedOptions();
