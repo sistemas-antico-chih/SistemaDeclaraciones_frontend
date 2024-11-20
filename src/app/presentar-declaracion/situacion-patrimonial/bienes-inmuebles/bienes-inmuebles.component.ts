@@ -540,7 +540,7 @@ export class BienesInmueblesComponent implements OnInit {
         console.log(tipoInmueble)
         console.log("llega aqui 2");
         console.log(valorHtml)
-        valorHtml.setValue="alguillo"
+        valorHtml.value="alguillo"
         console.log("llega aqui 3");
         //let inputValue = (swal.getPopup().querySelector('#OTI ')as HTMLInputElement).value
         //console.log(inputValue)
