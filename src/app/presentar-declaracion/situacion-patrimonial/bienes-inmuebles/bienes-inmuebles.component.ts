@@ -209,7 +209,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
 
-    console.log(bienInbueble);
+    console.log(this.bienInbueble);
     console.log(bienInmueble);
     bienInmuebleForm.patchValue(bienInmueble || {});
 
