@@ -538,7 +538,9 @@ export class BienesInmueblesComponent implements OnInit {
         let valorHtml = <HTMLInputElement>document.querySelector('.OTI');
         console.log("llega aqui");
         console.log(tipoInmueble)
+        console.log("llega aqui 2");
         valorHtml.value="alguillo"
+        console.log("llega aqui 3");
         //valorHtml = document.getElementById("mat-input-11") as HTMLInputElement;
 
         //document.querySelectorAll<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
