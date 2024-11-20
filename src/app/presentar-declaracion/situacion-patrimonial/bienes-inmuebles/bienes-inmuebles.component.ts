@@ -527,7 +527,7 @@ export class BienesInmueblesComponent implements OnInit {
     //****************** */
     //****************** */
     //****************** */
-    console.log(tipoInmueble);
+    //console.log(tipoInmueble);
     const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value));
     //let valorHtml = <HTMLInputElement>document.getElementById('mat-input-11');
     
@@ -539,8 +539,11 @@ export class BienesInmueblesComponent implements OnInit {
         console.log("llega aqui");
         console.log(tipoInmueble)
         console.log("llega aqui 2");
-        valorHtml.value="alguillo"
+        console.log(valorHtml)
+        //valorHtml.value="alguillo"
         console.log("llega aqui 3");
+        let inputValue = (swal.getPopup().querySelector('#OTI ')as HTMLInputElement).value
+        console.log(inputValue)
         //valorHtml = document.getElementById("mat-input-11") as HTMLInputElement;
 
         //document.querySelectorAll<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
