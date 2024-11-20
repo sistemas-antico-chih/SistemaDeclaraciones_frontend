@@ -536,21 +536,13 @@ export class BienesInmueblesComponent implements OnInit {
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
       if(tipoInmueble.clave ==='OTRO'){
         let valorHtml = document.querySelector('.OTI') as HTMLInputElement;
+        let valorHtml2 = document.getElementById('mat-input-11') as HTMLInputElement;
         console.log("llega aqui");
         console.log(tipoInmueble)
         console.log("llega aqui 2");
         console.log(valorHtml)
-        valorHtml.value="alguillo"
-        console.log("llega aqui 3");
-        //let inputValue = (swal.getPopup().querySelector('#OTI ')as HTMLInputElement).value
-        //console.log(inputValue)
-        //valorHtml = document.getElementById("mat-input-11") as HTMLInputElement;
+        console.log(valorHtml2)
 
-        //document.querySelectorAll<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
-        //document.getElementById<HTMLInputElement>('mat-input-11').value="this.arrayOtroTipoInstrumento[j]";
-        //otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
-        //form.tipoInmueble.valor
-      } 
     }
 
     if (titular) {
