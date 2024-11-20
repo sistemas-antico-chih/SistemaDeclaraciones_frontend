@@ -543,6 +543,7 @@ export class BienesInmueblesComponent implements OnInit {
         console.log(valorHtml)
         console.log(valorHtml2)
 
+      }
     }
 
     if (titular) {
