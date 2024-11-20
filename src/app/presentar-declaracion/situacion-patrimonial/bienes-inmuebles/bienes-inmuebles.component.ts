@@ -541,7 +541,7 @@ export class BienesInmueblesComponent implements OnInit {
         valorHtml.value="alguillo"
         //valorHtml = document.getElementById("mat-input-11") as HTMLInputElement;
 
-        document.querySelectorAll<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
+        //document.querySelectorAll<HTMLInputElement>('.OTI').value="this.arrayOtroTipoInstrumento[j]";
         //document.getElementById<HTMLInputElement>('mat-input-11').value="this.arrayOtroTipoInstrumento[j]";
         //otroTipoInmueble.nativeElement.value=tipoInmueble?.valor;
         //form.tipoInmueble.valor
