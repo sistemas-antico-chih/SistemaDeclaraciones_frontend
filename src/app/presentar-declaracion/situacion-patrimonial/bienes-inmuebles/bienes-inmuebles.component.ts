@@ -206,23 +206,10 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   fillForm(bienInmueble: BienInmueble) {
-
-    /*Object.keys(bienInmueble)
-      .filter((field) => bienInmueble[field] !== null)
-      .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
+    Object.keys(bienInmueble)
+    .forEach((field) => this.bienesInmueblesForm.get(`bienInmueble.${field}`).patchValue(bienInmueble[field]));
     this.bienesInmueblesForm.get(`bienInmueble.tercero`).patchValue(bienInmueble.tercero[0]);
     this.bienesInmueblesForm.get(`bienInmueble.transmisor`).patchValue(bienInmueble.transmisor[0]);
-    */
-
-    const bienInmuebleForm = this.bienesInmueblesForm.get('bienInmueble');
-    bienInmuebleForm.patchValue(bienInmueble || {});
-    
-    console.log("bienInmueble");
-    console.log(bienInmueble);
-    console.log(bienInmueble.titular);
-    console.log(bienInmueble.tercero);
-    console.log(bienInmueble.transmisor);
-
 
     ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
@@ -231,8 +218,8 @@ export class BienesInmueblesComponent implements OnInit {
     ifExistsEnableFields(
       bienInmueble.domicilioExtranjero,
       this.bienesInmueblesForm,
-      'bienInmueble.domicilioExtranjero'
-    );
+     'bienInmueble.domicilioExtranjero'
+     );
     if (bienInmueble.domicilioExtranjero) {
       this.tipoDomicilio = 'EXTRANJERO';
     }
