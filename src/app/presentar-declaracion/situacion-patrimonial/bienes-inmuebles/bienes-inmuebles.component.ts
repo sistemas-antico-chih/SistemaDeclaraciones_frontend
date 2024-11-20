@@ -513,7 +513,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     const { tipoInmueble, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
-    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor.0;
+    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor[0];
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
     console.log("aqui");
     //console.log(titular);
