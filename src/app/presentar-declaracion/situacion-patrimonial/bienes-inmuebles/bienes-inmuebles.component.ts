@@ -224,7 +224,7 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(bienInmueble.transmisor);
 
 
-    /*ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
+    ifExistsEnableFields(bienInmueble.domicilioMexico, this.bienesInmueblesForm, 'bienInmueble.domicilioMexico');
     if (bienInmueble.domicilioMexico) {
       this.tipoDomicilio = 'MEXICO';
     }
@@ -235,10 +235,10 @@ export class BienesInmueblesComponent implements OnInit {
     );
     if (bienInmueble.domicilioExtranjero) {
       this.tipoDomicilio = 'EXTRANJERO';
-    }*/
+    }
 
     this.setAclaraciones(this.aclaracionesText);
-    //this.setSelectedOptions();
+    this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
