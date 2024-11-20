@@ -226,7 +226,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     this.setAclaraciones(this.aclaracionesText);
-    this.setSelectedOptions();
+    //this.setSelectedOptions();
   }
 
   async getLastUserInfo() {
@@ -513,7 +513,7 @@ export class BienesInmueblesComponent implements OnInit {
 
     const { tipoInmueble, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
 
-    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
+    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor.0;
     const { titular } = this.bienesInmueblesForm.value.bienInmueble;
     console.log("aqui");
     //console.log(titular);
@@ -552,16 +552,6 @@ export class BienesInmueblesComponent implements OnInit {
         .get('bienInmueble.transmisor.relacion')
         .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
     }   
-
-        console.log("this.bienesInmueblesForm.value.bienInmueble")
-        console.log("tipoInmueble")
-        console.log(tipoInmueble)
-        console.log("titular")
-        console.log(titular)
-        console.log("formaAdquisicion")
-        console.log(formaAdquisicion)
-        console.log("relacion")
-        console.log(relacion)
   }
 
   setupForm(bienesInmuebles: BienesInmuebles) {
