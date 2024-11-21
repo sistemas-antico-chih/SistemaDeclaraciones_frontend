@@ -374,7 +374,7 @@ export class VehiculosComponent implements OnInit {
 
     const { relacion } = this.vehiculosForm.value.vehiculo.transmisor;
 
-    const { lugarRegistro } = this.vehiculosForm.value.vehiculo;
+    
 
     if (tipoVehiculo) {
       const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);
@@ -405,22 +405,19 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
-    console.log("lugarRegistro")
-    console.log(lugarRegistro);
     if (lugarRegistro) {
-      if(lugarRegistro.pais === 'MX' || lugarRegistro.entidadFederativa !== undefined){
-        console.log("entra MXX");
-        const { entidadFederativa } = lugarRegistro.entidadFederativa;
+      const { entidadFederativa, municipioAlcaldia } = domicilioMexico;
+
+      if (entidadFederativa) {
         const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
-        this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
-        //this.vehiculosForm.get('vehiculo.lugarRegistro.pais').setValue('MX');
-        this.locationChanged('MX');
-      }
-      else{
-        console.log("entra EX");
-        this.vehiculosForm.get('vehiculo.lugarRegistro.pais')
-        .setValue(findOption(this.paisesCatalogo, lugarRegistro.pais));
-        this.locationChanged('EX');
+        this.bienesInmueblesForm.get('bienInmueble.domicilioMexico.entidadFederativa').setValue(optEntidad[0]);
+
+        if (municipioAlcaldia) {
+          const optMunicipio = this.municipiosCatalogo[optEntidad[0].clave].filter(
+            (mun: any) => mun.clave === municipioAlcaldia.clave
+          );
+          this.bienesInmueblesForm.get('bienInmueble.domicilioMexico.municipioAlcaldia').setValue(optMunicipio[0]);
+        }
       }
     }
   }
