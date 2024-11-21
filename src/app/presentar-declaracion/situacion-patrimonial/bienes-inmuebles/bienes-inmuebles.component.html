@@ -291,7 +291,14 @@
               }">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">wb_iridescent</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" class="OTI" #otroTipoInmueble matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                value="varOTI"
+                class="OTI" 
+                #otroTipoInmueble 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.titular }}" appearance="fill">
               <mat-label>Titular del Inmueble</mat-label>

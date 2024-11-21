@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { bienesInmueblesMutation, bienesInmueblesQuery, lastBienesInmueblesQuery } from '@api/declaracion';
+import { bienesInmueblesMutation, bienesInmueblesQuery, lastBienesInmueblesQuery, lastInversionesCuentasValoresQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
@@ -45,6 +45,7 @@ export class BienesInmueblesComponent implements OnInit {
   editIndex: number = null;
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
+  varOTI: string = null;
 
   //@ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -536,13 +537,16 @@ export class BienesInmueblesComponent implements OnInit {
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
       if(tipoInmueble.clave ==='OTRO'){
         let valorHtml = document.querySelector(".OTI") as HTMLInputElement;
-        let valorHtml2 = (document.getElementById("mat-input-11") as HTMLInputElement).value;
+        let valorHtml2 = (document.getElementById("mat-input-11") as HTMLInputElement);
         console.log("llega aqui");
         console.log(tipoInmueble)
         console.log("llega aqui 2");
         console.log(valorHtml)
         //valorHtml2.value="axxxx"
         console.log(valorHtml2)
+        console.log(this.varOTI)
+        this.varOTI="alguilloo";
+        console.log(this.varOTI)
 
       }
     }
