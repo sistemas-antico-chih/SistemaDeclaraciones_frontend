@@ -405,7 +405,12 @@ export class VehiculosComponent implements OnInit {
 
     console.log(lugarRegistro);
     if (lugarRegistro){
-      console.log("entra")
+      if(lugarRegistro.pais !== 'MX'){
+        console.log("entra");
+        console.log(this.locationChanged);
+        console.log(this.locationChanged.toString());
+        this.locationChanged('EX');
+      }
     }
   }
 
