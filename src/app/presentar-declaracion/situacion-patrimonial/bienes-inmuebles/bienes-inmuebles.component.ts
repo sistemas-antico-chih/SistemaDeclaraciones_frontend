@@ -46,7 +46,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
   varOtroTipoInmueble: string = null;
-  varvarOtroRelacion: string = null;
+  varOtroRelacion: string = null;
 
   //@ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
