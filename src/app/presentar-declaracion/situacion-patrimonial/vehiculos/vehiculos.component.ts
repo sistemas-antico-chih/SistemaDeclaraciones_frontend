@@ -395,8 +395,6 @@ export class VehiculosComponent implements OnInit {
       if(relacion.clave ==='OTRO'){
         this.varOtroRelacion=relacion.valor;
       }
-
-      console.log(lugarRegistro);
     }
 
     if (formaAdquisicion) {
@@ -405,7 +403,10 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
-    if (lugarRegistro)
+    console.log(lugarRegistro);
+    if (lugarRegistro){
+      console.log("entra")
+    }
   }
 
   setupForm(vehiculos: Vehiculos) {
