@@ -307,28 +307,6 @@ export class BienesInmueblesComponent implements OnInit {
     return result;
   }
 
-  /*lugarDondeResideChanged(value: string) {
-    const domicilioMexico = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioMexico');
-    const domicilioExtranjero = this.datosDependientesEconomicosForm.get('dependienteEconomico.domicilioExtranjero');
-
-    switch (value) {
-      case 'MEXICO':
-        domicilioMexico.enable();
-        domicilioExtranjero.disable();
-        break;
-      case 'EXTRANJERO':
-        domicilioMexico.disable();
-        domicilioExtranjero.enable();
-        break;
-      default:
-        domicilioMexico.disable();
-        domicilioExtranjero.disable();
-        break;
-    }
-
-    this.tipoDomicilio = value;
-  }*/
-
   formHasChanges() {
     let isDirty = this.bienesInmueblesForm.dirty;
     if (isDirty) {
@@ -537,7 +515,6 @@ export class BienesInmueblesComponent implements OnInit {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(optRelacion[0]);
-      console.log(relacion);
       if(relacion.clave ==='OTRO'){
         this.varOtroRelacion=relacion.valor;
       }

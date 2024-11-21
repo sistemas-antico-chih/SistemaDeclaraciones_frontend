@@ -264,7 +264,14 @@
             <mat-form-field appearance="fill" *ngIf="vehiculosForm.value.vehiculo.tipoVehiculo?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoVehiculo
+                class="OTV"
+                #otroTipoVehiculo 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.tipoVehiulo }}" appearance="fill">
               <mat-label>Titular del Vehículo</mat-label>
@@ -372,7 +379,13 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value] = varOtroRelacion
+                #otroParentesco 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.marca }}" appearance="fill">
               <mat-label>Marca</mat-label>

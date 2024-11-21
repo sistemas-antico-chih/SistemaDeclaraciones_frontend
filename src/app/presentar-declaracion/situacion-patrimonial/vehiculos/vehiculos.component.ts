@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -42,6 +42,12 @@ export class VehiculosComponent implements OnInit {
   vehiculo: Vehiculo[] = [];
   isLoading = false;
   currentYear = new Date().getFullYear();
+
+  varOtroTipoVehiculo: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   tipoVehiculoCatalogo = TipoVehiculo;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -338,7 +344,8 @@ export class VehiculosComponent implements OnInit {
   saveItem() {
     let vehiculo = [...this.vehiculo];
     const aclaracionesObservaciones = this.vehiculosForm.value.aclaracionesObservaciones;
-    const newItem = this.vehiculosForm.value.vehiculo;
+    //const newItem = this.vehiculosForm.value.vehiculo;
+    const newItem = this.finalVehiculoForm;
 
     if (this.editIndex === null) {
       vehiculo = [...vehiculo, newItem];
@@ -368,23 +375,32 @@ export class VehiculosComponent implements OnInit {
     const { relacion } = this.vehiculosForm.value.vehiculo.transmisor;
 
     if (tipoVehiculo) {
-      this.vehiculosForm.get('vehiculo.tipoVehiculo').setValue(findOption(this.tipoVehiculoCatalogo, tipoVehiculo));
+      const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);
+      this.vehiculosForm.get('vehiculo.tipoVehiculo').setValue(optionTipoVehiculo[0]);
+      if(tipoVehiculo.clave ==='OTRO'){
+        this.varOtroTipoVehiculo = tipoVehiculo.valor;
+      }
     }
 
     if (titular) {
-      this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+      // this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.vehiculosForm.get('vehiculo.titular').setValue(optionTitular[0]);
     }
 
     if (relacion) {
-      this.vehiculosForm
-        .get('vehiculo.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.vehiculosForm.get('vehiculo.transmisor.relacion').setValue(optRelacion[0]);
+      if(relacion.clave ==='OTRO'){
+        this.varOtroRelacion=relacion.valor;
+      }
     }
 
     if (formaAdquisicion) {
-      this.vehiculosForm
-        .get('vehiculo.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      const optFormaAdquision = this.formaAdquisicionCatalogo.filter((ad: any) => ad.clave === formaAdquisicion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
   }
 
@@ -402,6 +418,20 @@ export class VehiculosComponent implements OnInit {
     }
 
     //this.editMode = !!!this.vehiculo.length;
+  }
+
+  get finalVehiculoForm() {
+    const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
+
+    if (form.tipoVehiculo?.clave === 'OTRO') {
+      form.tipoVehiculo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 
   toggleAclaraciones(value: boolean) {
@@ -438,6 +468,8 @@ export class VehiculosComponent implements OnInit {
     if (event === "NINGUNO"){
       this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").disable();
       this.vehiculosForm.get("vehiculo.tercero.rfc").disable();
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").setValue(null);
+      this.vehiculosForm.get("vehiculo.tercero.rfc").setValue(null);
     }
     else{
       this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").enable();
