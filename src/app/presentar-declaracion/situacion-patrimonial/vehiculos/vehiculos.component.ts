@@ -405,8 +405,8 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
+    console.log(lugarRegistro);
     if (lugarRegistro) {
-      console.log(lugarRegistro);
       if(lugarRegistro.pais === 'MX'){
         console.log("entra MX");
         this.locationChanged('MX');
