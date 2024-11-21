@@ -48,10 +48,10 @@ export class BienesInmueblesComponent implements OnInit {
   varOtroTipoInmueble: string = null;
   varOtroRelacion: string = null;
 
-  //@ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
-  @ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
+  //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
 
 
   tipoInmuebleCatalogo = TipoInmueble;
@@ -655,7 +655,6 @@ export class BienesInmueblesComponent implements OnInit {
     if (event === "NINGUNO") {
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue(null);
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
     }
