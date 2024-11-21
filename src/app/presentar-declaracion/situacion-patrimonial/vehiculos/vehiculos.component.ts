@@ -370,7 +370,7 @@ export class VehiculosComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoVehiculo, titular, formaAdquisicion } = this.vehiculosForm.value.vehiculo;
+    const { tipoVehiculo, titular, formaAdquisicion, lugarRegistro } = this.vehiculosForm.value.vehiculo;
 
     const { relacion } = this.vehiculosForm.value.vehiculo.transmisor;
 
@@ -395,6 +395,8 @@ export class VehiculosComponent implements OnInit {
       if(relacion.clave ==='OTRO'){
         this.varOtroRelacion=relacion.valor;
       }
+
+      console.log(lugarRegistro);
     }
 
     if (formaAdquisicion) {
@@ -403,6 +405,7 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
+    if (lugarRegistro)
   }
 
   setupForm(vehiculos: Vehiculos) {
