@@ -411,7 +411,13 @@
               *ngIf="bienesInmueblesForm.value.bienInmueble.transmisor?.relacion?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" #otroParentesco matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value] = varOtroRelacion
+                #otroParentesco 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.valorAdquisicion }}" appearance="fill"
               formGroupName="valorAdquisicion">

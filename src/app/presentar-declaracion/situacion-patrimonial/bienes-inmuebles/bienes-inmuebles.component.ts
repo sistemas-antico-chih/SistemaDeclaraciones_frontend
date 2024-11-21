@@ -46,6 +46,7 @@ export class BienesInmueblesComponent implements OnInit {
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
   varOtroTipoInmueble: string = null;
+  varvarOtroRelacion: string = null;
 
   //@ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -516,7 +517,6 @@ export class BienesInmueblesComponent implements OnInit {
     if (tipoInmueble) {
       const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
-      console.log(tipoInmueble)
       if(tipoInmueble.clave ==='OTRO'){
         this.varOtroTipoInmueble=tipoInmueble.valor;
       }
@@ -537,6 +537,10 @@ export class BienesInmueblesComponent implements OnInit {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(optRelacion[0]);
+      console.log(relacion);
+      if(relacion.clave ==='OTRO'){
+        this.varOtroRelacion=relacion.valor;
+      }
     }
 
     if (domicilioMexico) {
