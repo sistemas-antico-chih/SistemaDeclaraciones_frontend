@@ -405,15 +405,18 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
-    console.log(this.locationChanged)
     if (lugarRegistro) {
+      console.log(lugarRegistro);
       if(lugarRegistro.pais === 'MX'){
+        console.log("entra MX");
         this.locationChanged('MX');
         const { entidadFederativa } = lugarRegistro.entidadFederativa;
         const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
         this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
+        this.vehiculosForm.get('vehiculo.lugarRegistro.pais').setValue('MX');
       }
       else{
+        console.log("entra EX");
         this.locationChanged('EX');
         this.vehiculosForm.get('vehiculo.lugarRegistro.pais')
         .setValue(findOption(this.paisesCatalogo, lugarRegistro.pais));
