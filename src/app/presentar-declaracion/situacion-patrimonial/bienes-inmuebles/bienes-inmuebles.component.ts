@@ -535,13 +535,13 @@ export class BienesInmueblesComponent implements OnInit {
       const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
       if(tipoInmueble.clave ==='OTRO'){
-        let valorHtml = document.querySelector('.OTI') as HTMLInputElement;
+        let valorHtml = document.querySelectorAll('.OTI')[0] as HTMLInputElement;
         let valorHtml2 = document.getElementById('mat-input-11') as HTMLInputElement;
         console.log("llega aqui");
         console.log(tipoInmueble)
         console.log("llega aqui 2");
         console.log(valorHtml)
-        valorHtml2.value="axxxx"
+        //valorHtml2.value="axxxx"
         console.log(valorHtml2)
 
       }
