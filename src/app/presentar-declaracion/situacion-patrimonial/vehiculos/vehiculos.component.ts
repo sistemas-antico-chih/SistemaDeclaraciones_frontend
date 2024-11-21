@@ -374,7 +374,7 @@ export class VehiculosComponent implements OnInit {
 
     const { relacion } = this.vehiculosForm.value.vehiculo.transmisor;
 
-    const { lugarRegistro } = this.vehiculosForm.value.vehiculo.lugarRegistro;
+    const { lugarRegistro } = this.vehiculosForm.value.vehiculo;
 
     if (tipoVehiculo) {
       const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);
