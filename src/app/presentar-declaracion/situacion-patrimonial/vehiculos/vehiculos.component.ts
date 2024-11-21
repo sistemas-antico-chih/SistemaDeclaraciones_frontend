@@ -95,7 +95,7 @@ export class VehiculosComponent implements OnInit {
     this.editIndex = null;
   }
 
-  locationChanged(value: string) {
+  set locationChanged(value: string) {
     const localizacion = this.vehiculosForm.get('vehiculo').get('lugarRegistro');
     const pais = localizacion.get('pais');
     const entidadFederativa = localizacion.get('entidadFederativa');
@@ -409,7 +409,7 @@ export class VehiculosComponent implements OnInit {
         console.log("entra");
         console.log(this.locationChanged);
         console.log(this.locationChanged.toString());
-        this.locationChanged('EX');
+        this.locationChanged;
       }
     }
   }
