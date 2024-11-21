@@ -408,7 +408,7 @@ export class VehiculosComponent implements OnInit {
     console.log("lugarRegistro")
     console.log(lugarRegistro);
     if (lugarRegistro) {
-      if(lugarRegistro.pais === 'MX' || lugarRegistro.entidadFederativa !== null){
+      if(lugarRegistro.pais === 'MX' || lugarRegistro.entidadFederativa !== undefined){
         console.log("entra MXX");
         this.locationChanged('MX');
         const { entidadFederativa } = lugarRegistro.entidadFederativa;
