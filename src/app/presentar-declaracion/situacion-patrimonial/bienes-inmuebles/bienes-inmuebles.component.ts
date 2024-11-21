@@ -45,7 +45,7 @@ export class BienesInmueblesComponent implements OnInit {
   editIndex: number = null;
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
-  varOTI: string = null;
+  varOtroTipoInmueble: string = null;
 
   //@ViewChild('otroTipoInmueble',{static: true}) otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -508,46 +508,17 @@ export class BienesInmueblesComponent implements OnInit {
     this.editIndex = null;
   }
 
-  ngAfterViewInit() {
-    console.log("ngAfterViewInit");
-    //console.log(this.test);
-    //console.log(this.large);
-    /* for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
-      this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
-      document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
-    }
-    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
-    console.log("test 2: " + test);*/
-    //this.otroTipoInmueble.nativeElement.value="this.bienInmueble.tipoInmueble?.clave";
-  }
-
   setSelectedOptions() {
     const { tipoInmueble, titular, formaAdquisicion, domicilioMexico } = this.bienesInmueblesForm.value.bienInmueble;
 
     const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
-    //****************** */
-    //****************** */
-    //****************** */
-    //console.log(tipoInmueble);
-    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value));
-    //let valorHtml = <HTMLInputElement>document.getElementById('mat-input-11');
-    
+
     if (tipoInmueble) {
       const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
+      console.log(tipoInmueble)
       if(tipoInmueble.clave ==='OTRO'){
-        let valorHtml = document.querySelector(".OTI") as HTMLElement;
-        let valorHtml2 = (document.getElementById("mat-input-11") as HTMLElement);
-        console.log("llega aqui");
-        console.log(tipoInmueble)
-        console.log("llega aqui 2");
-        console.log(valorHtml)
-        //valorHtml2.value="axxxx"
-        console.log(valorHtml2)
-        console.log(this.varOTI)
-        this.varOTI="alguilloo";
-        console.log(this.varOTI)
-
+        this.varOtroTipoInmueble=tipoInmueble.tipoInmueble.valor;
       }
     }
 
