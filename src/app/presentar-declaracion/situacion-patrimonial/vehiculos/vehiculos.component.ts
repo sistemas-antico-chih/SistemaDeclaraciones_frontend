@@ -48,8 +48,9 @@ export class VehiculosComponent implements OnInit {
 
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
-  @ViewChild('location') location: ElementRef;
+  //@ViewChild('location') location: ElementRef;
 
+  location: string = null;
   tipoVehiculoCatalogo = TipoVehiculo;
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
@@ -441,11 +442,11 @@ export class VehiculosComponent implements OnInit {
     if(lugarRegistro){
       if( !lugarRegistro.pais || pais.value === 'MX'){
         console.log("mexico")
-        this.location.nativeElement.value = "MX";
+        this.location = "MX";
       }
       else{
         console.log("extranjero")
-        this.location.nativeElement.value = "EX";
+        this.location = "EX";
       }
     }
   }
