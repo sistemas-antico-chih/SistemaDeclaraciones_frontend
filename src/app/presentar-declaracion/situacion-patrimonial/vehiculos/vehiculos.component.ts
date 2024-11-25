@@ -435,15 +435,17 @@ export class VehiculosComponent implements OnInit {
       pais.disable();
       entidadFederativa.enable();
       pais.reset();*/
-    console.log("lugarRegistro")
-    console.log(lugarRegistro);
+    //console.log("lugarRegistro")
+    //console.log(lugarRegistro);
 
     if(lugarRegistro){
       if( !lugarRegistro.pais || pais.value === 'MX'){
         console.log("mexico")
+        this.location.nativeElement.value = "MX";
       }
       else{
         console.log("extranjero")
+        this.location.nativeElement.value = "EX";
       }
     }
   }

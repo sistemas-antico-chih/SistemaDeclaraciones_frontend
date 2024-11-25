@@ -432,7 +432,7 @@
               <mat-icon matPrefix class="no-public">public</mat-icon>
               <mat-select 
                 #location id="location" 
-                (selectionChange)="locationChanged($event.value)" required>
+                [(selectionChange)]="locationChanged($event.value)" required>
                 <mat-option value="{{ extranjeroCatalogo[0] }}"> En México </mat-option>
                 <mat-option value="{{ extranjeroCatalogo[1] }}"> En el extranjero </mat-option>
               </mat-select>
