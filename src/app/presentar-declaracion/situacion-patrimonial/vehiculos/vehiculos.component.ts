@@ -414,6 +414,11 @@ export class VehiculosComponent implements OnInit {
     algo.value="MX";
     console.log(algo);
 
+    document.addEventListener('selectionchange',function (e){
+      console.log(this.getElementById("location"));
+      console.log(e);
+    });
+    
     
     /*if (value === 'EX') {
       this.tipoDomicilio = 'EXTRANJERO';
@@ -428,9 +433,7 @@ export class VehiculosComponent implements OnInit {
     console.log(lugarRegistro);
     if (lugarRegistro){
       if(lugarRegistro.pais !== 'MX'){
-        console.log("entra");
-        console.log(this.locationChanged('MX'));
-        console.log(this.locationChanged.toString());
+        
         //this.locationChanged;
       }
     }
