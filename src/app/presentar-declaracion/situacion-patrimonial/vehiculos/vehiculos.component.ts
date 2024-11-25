@@ -378,7 +378,7 @@ export class VehiculosComponent implements OnInit {
     if (tipoVehiculo) {
       const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);
       this.vehiculosForm.get('vehiculo.tipoVehiculo').setValue(optionTipoVehiculo[0]);
-      if(tipoVehiculo.clave ==='OTRO'){
+      if (tipoVehiculo.clave === 'OTRO') {
         this.varOtroTipoVehiculo = tipoVehiculo.valor;
       }
     }
@@ -393,8 +393,8 @@ export class VehiculosComponent implements OnInit {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.vehiculosForm.get('vehiculo.transmisor.relacion').setValue(optRelacion[0]);
-      if(relacion.clave ==='OTRO'){
-        this.varOtroRelacion=relacion.valor;
+      if (relacion.clave === 'OTRO') {
+        this.varOtroRelacion = relacion.valor;
       }
     }
 
@@ -423,8 +423,8 @@ export class VehiculosComponent implements OnInit {
       algo.value="MX"
       console.log(algo);
     });*/
-    
-    
+
+
     /*if (value === 'EX') {
       this.tipoDomicilio = 'EXTRANJERO';
       pais.enable();
@@ -437,14 +437,13 @@ export class VehiculosComponent implements OnInit {
       pais.reset();*/
     console.log("lugarRegistro")
     console.log(lugarRegistro);
-    if (lugarRegistro){
-      if(lugarRegistro.pais !== 'MX'){
-        console.log("llega Extranjeto")
-        //this.locationChanged;
-      }
-      else if (lugarRegistro.pais === 'MX' || lugarRegistro.pais === undefined){
-        console.log("llega MExico")
-      }
+
+    if (pais !== 'MX') {
+      console.log("llega Extranjeto")
+      //this.locationChanged;
+    }
+    else if (lugarRegistro.pais === 'MX' || pais.value === null) {
+      console.log("llega MExico")
     }
   }
 
@@ -509,13 +508,13 @@ export class VehiculosComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    if (event === "NINGUNO"){
+    if (event === "NINGUNO") {
       this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").disable();
       this.vehiculosForm.get("vehiculo.tercero.rfc").disable();
       this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").setValue(null);
       this.vehiculosForm.get("vehiculo.tercero.rfc").setValue(null);
     }
-    else{
+    else {
       this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").enable();
       this.vehiculosForm.get("vehiculo.tercero.rfc").enable();
     }
