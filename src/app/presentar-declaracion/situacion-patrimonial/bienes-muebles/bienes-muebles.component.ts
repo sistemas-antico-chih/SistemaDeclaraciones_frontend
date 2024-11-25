@@ -341,6 +341,7 @@ export class BienesMueblesComponent implements OnInit {
         this.varOtroTipoBienMueble = tipoBien.valor;
       }
     }
+    */
     if (titular) {
       this.bienesMueblesForm.get('bienMueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
     }
@@ -349,7 +350,7 @@ export class BienesMueblesComponent implements OnInit {
         .get('bienMueble.formaAdquisicion')
         .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
     }
-    */
+    
     if (relacion) {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
