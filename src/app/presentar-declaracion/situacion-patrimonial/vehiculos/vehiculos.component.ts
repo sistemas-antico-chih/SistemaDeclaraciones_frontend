@@ -409,7 +409,7 @@ export class VehiculosComponent implements OnInit {
     const entidadFederativa = localizacion.get('entidadFederativa');
     const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
 
-    this.location.nativeElement.value = 'MX';
+    //this.location.nativeElement.value = 'MX';
     let algo=<HTMLInputElement> document.getElementById('location');
     console.log(algo);
 
