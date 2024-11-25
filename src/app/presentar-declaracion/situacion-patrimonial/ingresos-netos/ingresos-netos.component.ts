@@ -34,6 +34,7 @@ export class IngresosNetosComponent implements OnInit {
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
 
+  otroTipoInstrumentoZ: any=[];
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<'otroTipoInstrumento'>;
