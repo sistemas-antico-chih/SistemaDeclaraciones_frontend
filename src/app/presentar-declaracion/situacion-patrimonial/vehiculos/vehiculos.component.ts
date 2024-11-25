@@ -412,14 +412,17 @@ export class VehiculosComponent implements OnInit {
     //this.location.nativeElement.value = 'MX';
     //let algo=<HTMLSelectElement> document.getElementById("location");
     //algo.value="MX";
+    console.log("pais")
     console.log(pais);
+    console.log("entidad");
+    console.log(entidadFederativa);
 
-    document.addEventListener('load',function (e){
+    /*document.addEventListener('load',function (e){
       console.log(document.getElementById("location"));
       let algo=<HTMLSelectElement>document.getElementById("location");
       algo.value="MX"
       console.log(algo);
-    });
+    });*/
     
     
     /*if (value === 'EX') {
@@ -432,11 +435,15 @@ export class VehiculosComponent implements OnInit {
       pais.disable();
       entidadFederativa.enable();
       pais.reset();*/
+    console.log("lugarRegistro")
     console.log(lugarRegistro);
     if (lugarRegistro){
       if(lugarRegistro.pais !== 'MX'){
-        
+        console.log("llega Extranjeto")
         //this.locationChanged;
+      }
+      else{
+        console.log("llega MExico")
       }
     }
   }
