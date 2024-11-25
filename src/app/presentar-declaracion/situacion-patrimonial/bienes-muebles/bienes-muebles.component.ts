@@ -304,7 +304,7 @@ export class BienesMueblesComponent implements OnInit {
   saveItem() {
     let bienMueble = [...this.bienMueble];
     const aclaracionesObservaciones = this.bienesMueblesForm.value.aclaracionesObservaciones;
-    const newItem = this.bienesMueblesForm.value.bienMueble;
+    const newItem = this.finalBienMuebleForm;
 
     if (this.editIndex === null) {
       bienMueble = [...bienMueble, newItem];
