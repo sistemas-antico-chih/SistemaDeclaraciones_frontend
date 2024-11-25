@@ -334,7 +334,7 @@ export class BienesMueblesComponent implements OnInit {
 
     const { relacion } = this.bienesMueblesForm.value.bienMueble.transmisor;
 
-    if (tipoBien) {
+    /*if (tipoBien) {
       const optionTipoBienMueble = this.tipoBienBienesMueblesCatalogo.filter((i: any) => i.clave === tipoBien.clave);
       this.bienesMueblesForm.get('bienInmueble.tipoBien').setValue(optionTipoBienMueble[0]);
       if (tipoBien.clave === 'OTRO') {
@@ -349,7 +349,7 @@ export class BienesMueblesComponent implements OnInit {
         .get('bienMueble.formaAdquisicion')
         .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
     }
-
+    */
     if (relacion) {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
