@@ -418,8 +418,8 @@ export class BienesMueblesComponent implements OnInit {
   get finalBienMuebleForm() {
     const form = JSON.parse(JSON.stringify(this.bienesMueblesForm.value.bienMueble)); // Deep copy
 
-    if (form.tipoVehiculo?.clave === 'OTRO') {
-      form.tipoVehiculo.valor = this.otroTipoBienMueble.nativeElement.value.toUpperCase();
+    if (form.tipoBien?.clave === 'OTRO') {
+      form.tipoBien.valor = this.otroTipoBienMueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
     if (form.transmisor.relacion?.clave === 'OTRO') {
