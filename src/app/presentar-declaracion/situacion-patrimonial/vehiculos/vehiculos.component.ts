@@ -411,6 +411,7 @@ export class VehiculosComponent implements OnInit {
 
     //this.location.nativeElement.value = 'MX';
     let algo=<HTMLInputElement> document.getElementById('location');
+    algo.value='MX';
     console.log(algo);
 
     /*if (value === 'EX') {
