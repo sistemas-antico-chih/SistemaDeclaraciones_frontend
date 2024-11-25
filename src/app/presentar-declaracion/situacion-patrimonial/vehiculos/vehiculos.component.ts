@@ -403,13 +403,27 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
+    const localizacion = this.vehiculosForm.get('vehiculo').get('lugarRegistro');
+    const pais = localizacion.get('pais');
+    const entidadFederativa = localizacion.get('entidadFederativa');
+    
+    /*if (value === 'EX') {
+      this.tipoDomicilio = 'EXTRANJERO';
+      pais.enable();
+      entidadFederativa.disable();
+      entidadFederativa.reset();
+    } else {
+      this.tipoDomicilio = 'MEXICO';
+      pais.disable();
+      entidadFederativa.enable();
+      pais.reset();*/
     console.log(lugarRegistro);
     if (lugarRegistro){
       if(lugarRegistro.pais !== 'MX'){
         console.log("entra");
-        /*console.log(this.locationChanged);
+        console.log(this.locationChanged);
         console.log(this.locationChanged.toString());
-        this.locationChanged;*/
+        //this.locationChanged;
       }
     }
   }
