@@ -414,7 +414,7 @@ export class VehiculosComponent implements OnInit {
     //algo.value="MX";
     console.log(pais);
 
-    document.addEventListener('selectionchange',function (e){
+    document.addEventListener('load',function (e){
       console.log(document.getElementById("location"));
       let algo=<HTMLSelectElement>document.getElementById("location");
       algo.value="MX"
