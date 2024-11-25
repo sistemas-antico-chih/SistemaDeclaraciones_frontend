@@ -95,7 +95,7 @@ export class VehiculosComponent implements OnInit {
     this.editIndex = null;
   }
 
-  set locationChanged(value: string) {
+  locationChanged(value: string) {
     const localizacion = this.vehiculosForm.get('vehiculo').get('lugarRegistro');
     const pais = localizacion.get('pais');
     const entidadFederativa = localizacion.get('entidadFederativa');
