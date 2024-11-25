@@ -412,10 +412,10 @@ export class VehiculosComponent implements OnInit {
     //this.location.nativeElement.value = 'MX';
     //let algo=<HTMLSelectElement> document.getElementById("location");
     //algo.value="MX";
-    console.log("pais")
+    /*console.log("pais")
     console.log(pais);
     console.log("entidad");
-    console.log(entidadFederativa);
+    console.log(entidadFederativa);*/
 
     /*document.addEventListener('load',function (e){
       console.log(document.getElementById("location"));
@@ -438,14 +438,14 @@ export class VehiculosComponent implements OnInit {
     console.log("lugarRegistro")
     console.log(lugarRegistro);
 
-    if (pais.value !== 'MX') {
-      console.log("llega Extranjeto")
-      //this.locationChanged;
+    if(lugarRegistro){
+      if( !lugarRegistro.pais || pais.value === 'MX'){
+        console.log("mexico")
+      }
+      else{
+        console.log("extranjero")
+      }
     }
-    if (pais.value === 'MX' || pais.value === null || !lugarRegistro.pais) {
-      console.log("llega MExico")
-    }
-
   }
 
   setupForm(vehiculos: Vehiculos) {
