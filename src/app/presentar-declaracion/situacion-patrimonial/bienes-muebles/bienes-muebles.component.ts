@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -60,6 +60,12 @@ export class BienesMueblesComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   tipoPersona: String;
+
+  varOtroTipoBienMueble: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoBienMueble') otroTipoBienMueble: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   constructor(
     private apollo: Apollo,
@@ -329,9 +335,11 @@ export class BienesMueblesComponent implements OnInit {
     const { relacion } = this.bienesMueblesForm.value.bienMueble.transmisor;
 
     if (tipoBien) {
-      this.bienesMueblesForm
-        .get('bienMueble.tipoBien')
-        .setValue(findOption(this.tipoBienBienesMueblesCatalogo, tipoBien));
+      const optionTipoBienMueble = this.tipoBienBienesMueblesCatalogo.filter((i: any) => i.clave === tipoBien.clave);
+      this.bienesMueblesForm.get('bienInmueble.tipoBien').setValue(optionTipoBienMueble[0]);
+      if (tipoBien.clave === 'OTRO') {
+        this.varOtroTipoBienMueble = tipoBien.valor;
+      }
     }
     if (titular) {
       this.bienesMueblesForm.get('bienMueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
@@ -343,9 +351,12 @@ export class BienesMueblesComponent implements OnInit {
     }
 
     if (relacion) {
-      this.bienesMueblesForm
-        .get('bienMueble.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(optRelacion[0]);
+      if (relacion.clave === 'OTRO') {
+        this.varOtroRelacion = relacion.valor;
+      }
     }
   }
 
@@ -401,5 +412,19 @@ export class BienesMueblesComponent implements OnInit {
       this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").enable();
       this.bienesMueblesForm.get("bienMueble.tercero.rfc").enable();
     }
+  }
+
+  get finalBienMuebleForm() {
+    const form = JSON.parse(JSON.stringify(this.bienesMueblesForm.value.bienMueble)); // Deep copy
+
+    if (form.tipoVehiculo?.clave === 'OTRO') {
+      form.tipoVehiculo.valor = this.otroTipoBienMueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }

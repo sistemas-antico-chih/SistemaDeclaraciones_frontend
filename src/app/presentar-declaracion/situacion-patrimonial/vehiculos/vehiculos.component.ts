@@ -407,14 +407,12 @@ export class VehiculosComponent implements OnInit {
     if(lugarRegistro){
       if( !lugarRegistro.pais || lugarRegistro.pais.value === 'MX'){
         const { entidadFederativa } = lugarRegistro;
-        console.log("mexico")
         this.location = "MX";
         const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
         this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
 
       }
       else{
-        console.log("extranjero")
         this.location = "EX";
       }
     }

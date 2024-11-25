@@ -231,7 +231,14 @@
             <mat-form-field appearance="fill" *ngIf="bienesMueblesForm.value.bienMueble.tipoBien?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">dns</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroTipoBienMueble
+              class="OTB"
+              #otroTipoVehiculo 
+              matInput 
+              type="text" 
+              required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.titularBien }}" appearance="fill">
               <mat-label>Titular del Bien</mat-label>
@@ -317,7 +324,13 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value] = varOtroRelacion
+              #otroParentesco 
+              matInput 
+              type="text" 
+              required />
             </mat-form-field>
           </div>
 
