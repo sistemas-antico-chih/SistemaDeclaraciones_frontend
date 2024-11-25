@@ -48,7 +48,6 @@ export class VehiculosComponent implements OnInit {
 
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
-  //@ViewChild('location') location: ElementRef;
 
   location: string = null;
   tipoVehiculoCatalogo = TipoVehiculo;
@@ -405,44 +404,14 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
-    const localizacion = this.vehiculosForm.get('vehiculo').get('lugarRegistro');
-    const pais = localizacion.get('pais');
-    const entidadFederativa = localizacion.get('entidadFederativa');
-    const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
-
-    //this.location.nativeElement.value = 'MX';
-    //let algo=<HTMLSelectElement> document.getElementById("location");
-    //algo.value="MX";
-    /*console.log("pais")
-    console.log(pais);
-    console.log("entidad");
-    console.log(entidadFederativa);*/
-
-    /*document.addEventListener('load',function (e){
-      console.log(document.getElementById("location"));
-      let algo=<HTMLSelectElement>document.getElementById("location");
-      algo.value="MX"
-      console.log(algo);
-    });*/
-
-
-    /*if (value === 'EX') {
-      this.tipoDomicilio = 'EXTRANJERO';
-      pais.enable();
-      entidadFederativa.disable();
-      entidadFederativa.reset();
-    } else {
-      this.tipoDomicilio = 'MEXICO';
-      pais.disable();
-      entidadFederativa.enable();
-      pais.reset();*/
-    //console.log("lugarRegistro")
-    //console.log(lugarRegistro);
-
     if(lugarRegistro){
-      if( !lugarRegistro.pais || pais.value === 'MX'){
+      if( !lugarRegistro.pais || lugarRegistro.pais.value === 'MX'){
+        const { entidadFederativa } = lugarRegistro;
         console.log("mexico")
         this.location = "MX";
+        const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
+        this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
+
       }
       else{
         console.log("extranjero")
