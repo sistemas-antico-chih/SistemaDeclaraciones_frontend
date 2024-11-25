@@ -48,6 +48,7 @@ export class VehiculosComponent implements OnInit {
 
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
+  @ViewChild('location') location: ElementRef;
 
   tipoVehiculoCatalogo = TipoVehiculo;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -406,7 +407,9 @@ export class VehiculosComponent implements OnInit {
     const localizacion = this.vehiculosForm.get('vehiculo').get('lugarRegistro');
     const pais = localizacion.get('pais');
     const entidadFederativa = localizacion.get('entidadFederativa');
-    
+    const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
+
+    console.log(this.location.nativeElement.value);
     /*if (value === 'EX') {
       this.tipoDomicilio = 'EXTRANJERO';
       pais.enable();
