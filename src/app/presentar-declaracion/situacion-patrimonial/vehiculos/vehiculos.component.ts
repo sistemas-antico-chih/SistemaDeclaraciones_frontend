@@ -410,12 +410,14 @@ export class VehiculosComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
 
     //this.location.nativeElement.value = 'MX';
-    let algo=<HTMLSelectElement> document.getElementById("location");
-    algo.value="MX";
-    console.log(algo);
+    //let algo=<HTMLSelectElement> document.getElementById("location");
+    //algo.value="MX";
+    //console.log(algo);
 
     document.addEventListener('selectionchange',function (e){
-      console.log(this.getElementById("location"));
+      console.log(document.getElementById("location"));
+      let algo=<HTMLSelectElement>document.getElementById("location");
+      algo.value="MX"
       console.log(e);
     });
     
