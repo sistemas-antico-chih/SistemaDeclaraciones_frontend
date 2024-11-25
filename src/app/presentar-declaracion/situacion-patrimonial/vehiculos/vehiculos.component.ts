@@ -442,7 +442,7 @@ export class VehiculosComponent implements OnInit {
         console.log("llega Extranjeto")
         //this.locationChanged;
       }
-      else (lugarRegistro.pais === 'MX' || lugarRegistro.pais === undefined){
+      else if (lugarRegistro.pais === 'MX' || lugarRegistro.pais === undefined){
         console.log("llega MExico")
       }
     }
