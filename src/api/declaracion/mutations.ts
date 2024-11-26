@@ -550,7 +550,10 @@ export const prestamoComodatoMutation = gql`
             tipoDuenoTitular
             nombreTitular
             rfc
-            relacionConTitular
+            relacionConTitular{
+              clave
+              valor
+            }
           }
         }
         aclaracionesObservaciones
