@@ -197,7 +197,7 @@ export class PrestamosTercerosComponent implements OnInit {
               ),
             ],
           ],
-          relacionConTitular: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+          relacionConTitular: [null, [Validators.required]]
         }),
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
