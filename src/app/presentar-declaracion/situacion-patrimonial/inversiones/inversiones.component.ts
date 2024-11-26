@@ -108,7 +108,6 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm.reset();
     this.editMode = true;
     this.editIndex = null;
-    console.log("subTipoInversion: " + this.subTipoAforesCatalogo);
   }
 
   localizacionChanged(value: string) {
@@ -443,6 +442,7 @@ export class InversionesComponent implements OnInit {
   }
 
   radioChange(event: any) {
+    console.log(event);
     if (event === "NINGUNO"){
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
