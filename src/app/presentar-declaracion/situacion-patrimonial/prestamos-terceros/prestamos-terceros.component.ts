@@ -536,6 +536,7 @@ export class PrestamosTercerosComponent implements OnInit {
       form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
     }
 
+    
     return form;
   }
 }
