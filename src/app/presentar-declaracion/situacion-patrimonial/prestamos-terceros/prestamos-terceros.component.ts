@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -43,6 +43,14 @@ export class PrestamosTercerosComponent implements OnInit {
   prestamo: Prestamo[] = [];
   isLoading = false;
   currentYear = new Date().getFullYear();
+  
+  varOtroTipoVehiculo: string = null;
+  varOtroTipoInmueble: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   tipoInmuebleCatalogo = TipoInmueble;
   tipoVehiculoCatalogo = TipoVehiculo;
@@ -424,7 +432,7 @@ export class PrestamosTercerosComponent implements OnInit {
   saveItem() {
     let prestamo = [...this.prestamo];
     const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
-    const newItem = this.prestamoComodatoForm.value.prestamo;
+    const newItem = this.finalPrestamoForm;
 
     if (this.editIndex === null) {
       prestamo = [...prestamo, newItem];
@@ -511,5 +519,23 @@ export class PrestamosTercerosComponent implements OnInit {
       });
       this.isLoading = false;
     }
+  }
+
+  get finalPrestamoForm() {
+    const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.bienInmueble)); // Deep copy
+
+    if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
+      form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.tipoBien.vehiculo?.tipo?.clave === 'OTRO') {
+      form.tipoBien.vehiculo.tipo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.duenoTitular.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }

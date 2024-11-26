@@ -346,10 +346,6 @@ export class AdeudosComponent implements OnInit {
 
   setSelectedOptions() {
     const { tipoAdeudo, titular, lugarRegistro } = this.adeudosPasivosForm.value.adeudo;
-    console.log("entra ");
-    console.log(lugarRegistro);
-    console.log(this.location);
-    console.log(this.tipoDomicilio);
 
     if (tipoAdeudo) {
       const optionTipoAdeudo = this.tipoAdeudoCatalogo.filter((i: any) => i.clave === tipoAdeudo.clave);
