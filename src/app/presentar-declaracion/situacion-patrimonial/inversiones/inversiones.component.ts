@@ -441,9 +441,9 @@ export class InversionesComponent implements OnInit {
     }
   }
 
-  radioChange(event: any) {
+  terceroChange(value: string) {
     console.log(event);
-    if (event === "NINGUNO"){
+    if (value === "NINGUNO"){
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(null);

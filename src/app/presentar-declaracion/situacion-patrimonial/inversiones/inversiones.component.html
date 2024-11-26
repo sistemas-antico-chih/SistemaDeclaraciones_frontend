@@ -343,7 +343,7 @@
               <mat-icon matPrefix>person</mat-icon>
               <mat-select 
                 formControlName="tipoPersona"
-                (change)="radioChange($event.value)"
+                (selectionChange)="terceroChange($event.value)"
                 [(ngModel)]="tipoPersona">
                 <mat-option value="FISICA"> Física </mat-option>
                 <mat-option value="MORAL"> Moral </mat-option>
