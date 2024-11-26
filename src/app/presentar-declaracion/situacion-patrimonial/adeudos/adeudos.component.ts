@@ -371,6 +371,7 @@ export class AdeudosComponent implements OnInit {
       }
       else{
         this.location = "EX";
+        this.tipoDomicilio='EX';
       }
     }
   }
