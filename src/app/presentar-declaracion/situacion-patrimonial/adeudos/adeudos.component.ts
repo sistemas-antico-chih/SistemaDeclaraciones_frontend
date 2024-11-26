@@ -94,8 +94,8 @@ export class AdeudosComponent implements OnInit {
     if (value === 'MX') {
       this.adeudosPasivosForm.get('adeudo.localizacionAdeudo.pais').setValue('MX');
     }
-    else{
-      this.tipoDomicilio='EX';
+    else {
+      this.tipoDomicilio = 'EX';
     }
   }
 
@@ -364,19 +364,11 @@ export class AdeudosComponent implements OnInit {
       //this.adeudosPasivosForm.get('adeudo.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
     }
 
-    if(lugarRegistro){
-      console.log(lugarRegistro);
-      if( !lugarRegistro.pais || lugarRegistro.pais.value === 'MX'){
-        const { entidadFederativa } = lugarRegistro;
-        this.location = "MX";
-        //const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
-        //this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
-
-      }
-      else{
-        this.location = "EX";
-        this.tipoDomicilio='EX';
-      }
+    if (this.tipoDomicilio === 'EX') {
+      this.location = 'EX';
+    }
+    else if (this.tipoDomicilio === 'MX') {
+      this.location = 'MX'
     }
   }
 
@@ -424,11 +416,11 @@ export class AdeudosComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    if (event === "NINGUNO"){
+    if (event === "NINGUNO") {
       this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").disable();
       this.adeudosPasivosForm.get("adeudo.tercero.rfc").disable();
     }
-    else{
+    else {
       this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").enable();
       this.adeudosPasivosForm.get("adeudo.tercero.rfc").enable();
     }
