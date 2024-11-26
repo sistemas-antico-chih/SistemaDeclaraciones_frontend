@@ -432,7 +432,8 @@ export class PrestamosTercerosComponent implements OnInit {
   saveItem() {
     let prestamo = [...this.prestamo];
     const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
-    const newItem = this.finalPrestamoForm;
+    //const newItem = this.finalPrestamoForm;
+    const newItem = this.prestamoComodatoForm.value.prestamo;
 
     if (this.editIndex === null) {
       prestamo = [...prestamo, newItem];
@@ -522,6 +523,7 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   get finalPrestamoForm() {
+    console.log("llega");
     const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.bienInmueble)); // Deep copy
     console.log(form);
     /*if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
