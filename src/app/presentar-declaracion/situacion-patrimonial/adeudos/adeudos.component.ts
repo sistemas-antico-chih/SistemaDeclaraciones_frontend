@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -65,6 +65,10 @@ export class AdeudosComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   tipoPersona: String
+  location: string = null;
+  varOtroTipoAdeudo: string = null;
+
+  @ViewChild('otroTipoAdeudo') otroTipoAdeudo: ElementRef;
 
   constructor(
     private apollo: Apollo,
@@ -313,7 +317,7 @@ export class AdeudosComponent implements OnInit {
   saveItem() {
     let adeudo = [...this.adeudo];
     const aclaracionesObservaciones = this.adeudosPasivosForm.value.aclaracionesObservaciones;
-    const newItem = this.adeudosPasivosForm.value.adeudo;
+    const newItem = this.finalAdeudoForm;
 
     if (this.editIndex === null) {
       adeudo = [...adeudo, newItem];
@@ -338,13 +342,33 @@ export class AdeudosComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoAdeudo, titular } = this.adeudosPasivosForm.value.adeudo;
+    const { tipoAdeudo, titular, lugarRegistro } = this.adeudosPasivosForm.value.adeudo;
 
     if (tipoAdeudo) {
-      this.adeudosPasivosForm.get('adeudo.tipoAdeudo').setValue(findOption(this.tipoAdeudoCatalogo, tipoAdeudo.clave));
+      const optionTipoAdeudo = this.tipoAdeudoCatalogo.filter((i: any) => i.clave === tipoAdeudo.clave);
+      this.adeudosPasivosForm.get('adeudo.tipoAdeudo').setValue(optionTipoAdeudo[0]);
+      if (tipoAdeudo.clave === 'OTRO') {
+        this.varOtroTipoAdeudo = tipoAdeudo.valor;
+      }
     }
     if (titular) {
-      this.adeudosPasivosForm.get('adeudo.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
+      const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+      this.adeudosPasivosForm.get('adeudo.titular').setValue(optionTitular[0]);
+      //this.adeudosPasivosForm.get('adeudo.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
+    }
+
+    if(lugarRegistro){
+      console.log(lugarRegistro);
+      if( !lugarRegistro.pais || lugarRegistro.pais.value === 'MX'){
+        const { entidadFederativa } = lugarRegistro;
+        this.location = "MX";
+        //const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
+        //this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
+
+      }
+      else{
+        this.location = "EX";
+      }
     }
   }
 
@@ -400,5 +424,19 @@ export class AdeudosComponent implements OnInit {
       this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").enable();
       this.adeudosPasivosForm.get("adeudo.tercero.rfc").enable();
     }
+  }
+
+  get finalAdeudoForm() {
+    const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
+
+    if (form.tipoVehiculo?.clave === 'OTRO') {
+      form.tipoVehiculo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }

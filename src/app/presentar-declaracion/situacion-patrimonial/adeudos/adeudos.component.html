@@ -245,7 +245,14 @@
             <mat-form-field appearance="fill" *ngIf="adeudosPasivosForm.value.adeudo.tipoAdeudo?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">aspect_ratio</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroTipoAdeudo
+              class="OTA"
+              #otroTipoAdeudo 
+              matInput 
+              type="text" 
+              required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.titularAdeudo }}" appearance="fill">
               <mat-label>Titular del adeudo</mat-label>
@@ -410,7 +417,9 @@
             <mat-form-field matTooltip="{{ tooltipData.localizaAdeudo }}" appearance="fill">
               <mat-label>¿Dónde se localiza el adeudo?</mat-label>
               <mat-icon matPrefix>public</mat-icon>
-              <mat-select (selectionChange)="localizacionChanged($event.value)" required>
+              <mat-select 
+                [(value)]="location"
+                (selectionChange)="localizacionChanged($event.value)" required>
                 <mat-option value="{{ extranjeroCatalogo[0] }}"> EN MÉXICO </mat-option>
                 <mat-option value="{{ extranjeroCatalogo[1] }}"> EN EL EXTRANJERO </mat-option>
               </mat-select>

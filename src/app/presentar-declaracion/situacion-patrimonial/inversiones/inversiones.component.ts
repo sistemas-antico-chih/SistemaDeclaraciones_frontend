@@ -442,18 +442,15 @@ export class InversionesComponent implements OnInit {
   }
 
   terceroChange(value: string) {
-    console.log(event);
     if (value === "NINGUNO"){
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(null);
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(null);
-      console.log("llega ninguno")
     }
     else{
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").enable();
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").enable();
-      console.log("llega no ning")
     }
   }
 
