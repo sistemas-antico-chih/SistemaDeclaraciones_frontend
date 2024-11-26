@@ -427,7 +427,7 @@ export class AdeudosComponent implements OnInit {
   }
 
   get finalAdeudoForm() {
-    const form = JSON.parse(JSON.stringify(this.adeudosPasivosForm.value.vehiculo)); // Deep copy
+    const form = JSON.parse(JSON.stringify(this.adeudosPasivosForm.value.adeudo)); // Deep copy
 
     if (form.tipoAdeudo?.clave === 'OTRO') {
       form.tipoAdeudo.valor = this.otroTipoAdeudo.nativeElement.value.toUpperCase();
