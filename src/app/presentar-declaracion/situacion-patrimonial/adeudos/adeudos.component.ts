@@ -94,6 +94,9 @@ export class AdeudosComponent implements OnInit {
     if (value === 'MX') {
       this.adeudosPasivosForm.get('adeudo.localizacionAdeudo.pais').setValue('MX');
     }
+    else{
+      this.tipoDomicilio='EX';
+    }
   }
 
   cancelEditMode() {
