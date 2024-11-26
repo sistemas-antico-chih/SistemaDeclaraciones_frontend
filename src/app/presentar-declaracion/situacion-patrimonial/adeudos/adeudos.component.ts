@@ -427,16 +427,12 @@ export class AdeudosComponent implements OnInit {
   }
 
   get finalAdeudoForm() {
-    const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
+    const form = JSON.parse(JSON.stringify(this.adeudosPasivosForm.value.vehiculo)); // Deep copy
 
-    if (form.tipoVehiculo?.clave === 'OTRO') {
-      form.tipoVehiculo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
+    if (form.tipoAdeudo?.clave === 'OTRO') {
+      form.tipoAdeudo.valor = this.otroTipoAdeudo.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    if (form.transmisor.relacion?.clave === 'OTRO') {
-      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
-    }
-
     return form;
   }
 }
