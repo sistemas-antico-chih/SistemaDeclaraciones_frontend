@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -60,6 +60,14 @@ export class PrestamosTercerosComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  varOtroTipoInmueble: string = null;
+  varOtroTipoVehiculo: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   constructor(
     private apollo: Apollo,
@@ -424,7 +432,8 @@ export class PrestamosTercerosComponent implements OnInit {
   saveItem() {
     let prestamo = [...this.prestamo];
     const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
-    const newItem = this.prestamoComodatoForm.value.prestamo;
+    //const newItem = this.prestamoComodatoForm.value.prestamo;
+    const newItem = this.finalPrestamoForm
 
     if (this.editIndex === null) {
       prestamo = [...prestamo, newItem];
@@ -511,5 +520,21 @@ export class PrestamosTercerosComponent implements OnInit {
       });
       this.isLoading = false;
     }
+  }
+
+  get finalPrestamoForm() {
+    console.log(this.parentescoRelacionCatalogo);
+    console.log(this.parentescoRelacionCatalogo.valor);
+    const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
+
+    if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }
