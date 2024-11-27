@@ -355,14 +355,6 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("1")
-    this.parentescoRelacionCatalogo.forEach(function (x:any) {
-      console.log(x.valor)
-    });
-    console.log("2")
-    console.log(this.parentescoRelacionCatalogo);
-    console.log("arreglo")
-    console.log(this.parentescoArray)
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -536,8 +528,6 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   get finalPrestamoForm() {
-    console.log(this.parentescoRelacionCatalogo);
-    console.log(this.parentescoRelacionCatalogo.valor);
     const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
 
     if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
@@ -548,7 +538,7 @@ export class PrestamosTercerosComponent implements OnInit {
       form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    if (form.duenoTitular?.relacionConTitular === 'OTRO') {
+    if (form.duenoTitular?.relacionConTitular === 'OTRO(ESPECIFIQUE)') {
       form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
     }
 
