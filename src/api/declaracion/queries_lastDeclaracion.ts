@@ -696,10 +696,7 @@ export const lastPrestamoComodatoQuery = gql`
             tipoDuenoTitular
             nombreTitular
             rfc
-            relacionConTitular{
-              clave
-              valor
-            }
+            relacionConTitular
           }
         }
         aclaracionesObservaciones

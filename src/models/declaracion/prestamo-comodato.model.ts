@@ -26,7 +26,7 @@ interface DuenoTitularPrestamo {
   tipoDuenoTitular: TipoPersona;
   nombreTitular: string;
   rfc: string;
-  relacionConTitular: Catalogo;
+  relacionConTitular: string;
 }
 
 export interface Prestamo {
