@@ -19,6 +19,8 @@ import Paises from '@static/catalogos/paises.json';
 import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/prestamo-terceros';
 
@@ -45,6 +47,8 @@ export class PrestamosTercerosComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
 
+
+  tipoOperacionCatalogo = TipoOperacion;
   tipoInmuebleCatalogo = TipoInmueble;
   tipoVehiculoCatalogo = TipoVehiculo;
   extranjeroCatalogo = Extranjero;
@@ -63,9 +67,11 @@ export class PrestamosTercerosComponent implements OnInit {
   errorMatcher = new DeclarationErrorStateMatcher();
 
   varOtroTipoInmueble: string = null;
+  varOtroTipoVehiculo: string = null;
   varOtroRelacion: string = null;
 
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   constructor(
@@ -158,6 +164,7 @@ export class PrestamosTercerosComponent implements OnInit {
       ninguno: [false],
       prestamo: this.formBuilder.group({
         tipoBien: this.formBuilder.group({
+          tipoOperacion: [null, [Validators.required]],
           inmueble: this.formBuilder.group({
             tipoInmueble: ['', Validators.required],
             domicilioMexico: this.formBuilder.group({
@@ -432,8 +439,8 @@ export class PrestamosTercerosComponent implements OnInit {
   saveItem() {
     let prestamo = [...this.prestamo];
     const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
-    console.log("llega2");
-    const newItem = this.prestamoComodatoForm.value.prestamo;
+    const newItem = this.finalPrestamoForm;
+    //const newItem = this.prestamoComodatoForm.value.prestamo;
 
     if (this.editIndex === null) {
       prestamo = [...prestamo, newItem];
@@ -533,5 +540,42 @@ export class PrestamosTercerosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let prestamo = [...this.prestamo];
+    if (prestamo.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < prestamo.length; i++) {
+        prestamo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        prestamo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  get finalPrestamoForm() {
+    console.log(this.parentescoRelacionCatalogo);
+    const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
+
+    if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
+      form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.tipoBien.vehiculo?.tipoVehiculo?.clave === 'OTRO') {
+      form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.duenoTitular.relacionConTitular === 'OTRO') {
+      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }

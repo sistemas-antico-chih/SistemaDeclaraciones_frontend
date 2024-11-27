@@ -238,6 +238,10 @@
         class="boton-agregar grid-margin"
         *ngIf="(prestamo?.length && !editMode) || prestamoComodatoForm.value.ninguno"
       >
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar préstamo o comodato</button>
       </div>
     </div>
@@ -247,7 +251,19 @@
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="prestamo">
         <mat-divider></mat-divider>
-
+        <p>Préstamo o comodato</p>
+        <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <!-- Datos mueble -->
         <div formGroupName="tipoBien">
           <h2>Agregar préstamo o comodato</h2>
@@ -280,7 +296,14 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">call_merge</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoInmueble
+                class="OTI"
+                #otroTipoInmueble  
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field
               matTooltip="{{ tooltipData.vehiculo }}"
@@ -302,7 +325,14 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">call_merge</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoVehiculo
+                class="OTV"
+                #otroTipoVehiculo 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
           </div>
 
@@ -655,7 +685,13 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">group</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value] = varOtroRelacion
+                #otroParentesco 
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
         </div>
       </div>
