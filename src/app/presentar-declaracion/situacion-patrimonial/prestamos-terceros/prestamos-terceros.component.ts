@@ -230,8 +230,9 @@ export class PrestamosTercerosComponent implements OnInit {
       );
 
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
-    /*if (prestamo.tipoBien.inmueble) {
+    if (prestamo.tipoBien.inmueble) {
       this.tipoBien = 'inmueble';
+      console.log(prestamo);
 
       Object.keys(prestamo.tipoBien.inmueble)
         .filter((field) => prestamo.tipoBien.inmueble[field] !== null)
@@ -241,7 +242,7 @@ export class PrestamosTercerosComponent implements OnInit {
             .patchValue(prestamo.tipoBien.inmueble[field])
         );
 
-      ifExistsEnableFields(
+      /* ifExistsEnableFields(
         prestamo.tipoBien.inmueble.domicilioMexico,
         this.prestamoComodatoForm,
         'prestamo.tipoBien.inmueble.domicilioMexico'
@@ -257,8 +258,9 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       if (prestamo.tipoBien.inmueble.domicilioExtranjero) {
         this.tipoDomicilio = 'EXTRANJERO';
-      }
+      } */
     }
+    /*
     ifExistsEnableFields(prestamo.tipoBien.vehiculo, this.prestamoComodatoForm, 'prestamo.tipoBien.vehiculo');
     if (prestamo.tipoBien.vehiculo) {
       this.tipoBien = 'vehiculos';
