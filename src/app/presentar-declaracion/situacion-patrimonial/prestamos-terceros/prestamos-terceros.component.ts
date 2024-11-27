@@ -1,5 +1,5 @@
 import { filter } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -61,6 +61,12 @@ export class PrestamosTercerosComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  varOtroTipoInmueble: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   constructor(
     private apollo: Apollo,
