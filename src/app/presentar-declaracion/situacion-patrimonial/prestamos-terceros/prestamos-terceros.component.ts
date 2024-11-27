@@ -528,11 +528,15 @@ export class PrestamosTercerosComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
 
     if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
-      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    if (form.transmisor.relacion?.clave === 'OTRO') {
-      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    if (form.tipoBien.vehiculo?.tipoVehiculo.clave === 'OTRO') {
+      form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.duenoTitular?.relacionConTitular === 'OTRO') {
+      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
     }
 
     return form;
