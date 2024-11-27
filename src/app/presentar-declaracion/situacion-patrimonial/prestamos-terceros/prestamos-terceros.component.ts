@@ -7,7 +7,7 @@ import { Apollo } from 'apollo-angular';
 import { lastPrestamoComodatoQuery, prestamoComodatoMutation, prestamoComodatoQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -349,8 +349,18 @@ export class PrestamosTercerosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
-
+  ngOnInit(): void {
+    console.log("llega")
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
   noLoans() {
     this.saveInfo({ ninguno: true });
   }
@@ -422,8 +432,7 @@ export class PrestamosTercerosComponent implements OnInit {
   saveItem() {
     let prestamo = [...this.prestamo];
     const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
-    console.log("llega");
-    console.log(this.prestamoComodatoForm.value.prestamo.duenoTitular);
+    console.log("llega2");
     const newItem = this.prestamoComodatoForm.value.prestamo;
 
     if (this.editIndex === null) {
