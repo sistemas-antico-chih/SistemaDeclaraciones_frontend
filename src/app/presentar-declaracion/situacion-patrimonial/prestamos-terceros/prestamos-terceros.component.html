@@ -657,9 +657,13 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <!--<mat-form-field
+            appearance="fill"
+            *ngIf="prestamoComodatoForm.value.prestamo.duenoTitular.relacionConTitular?.clave !== 'OTRO'"
+          >-->
           <mat-form-field
             appearance="fill"
-            *ngIf="prestamoComodatoForm.value.prestamo.duenoTitular.relacionConTitular?.clave === 'OTRO'"
+            *ngIf="parentescoArray.indexOf(object.id) > -1"
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">group</mat-icon>

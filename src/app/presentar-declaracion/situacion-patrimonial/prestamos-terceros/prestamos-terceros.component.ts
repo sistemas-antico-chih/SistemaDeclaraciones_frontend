@@ -356,8 +356,9 @@ export class PrestamosTercerosComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("1")
-    console.log(this.parentescoRelacionCatalogo.valor);
-    console.log(this.parentescoRelacionCatalogo.clave);
+    this.parentescoRelacionCatalogo.forEach(element => {
+      console.log(element.valor)
+    });
     console.log("2")
     console.log(this.parentescoRelacionCatalogo);
     console.log("arreglo")
