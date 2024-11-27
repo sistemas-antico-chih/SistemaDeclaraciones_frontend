@@ -230,7 +230,7 @@ export class PrestamosTercerosComponent implements OnInit {
       );
 
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
-    if (prestamo.tipoBien.inmueble) {
+    /*if (prestamo.tipoBien.inmueble) {
       this.tipoBien = 'inmueble';
 
       Object.keys(prestamo.tipoBien.inmueble)
@@ -288,7 +288,7 @@ export class PrestamosTercerosComponent implements OnInit {
         this.tipoDomicilio = 'EXTRANJERO';
       }
     }
-
+    */
     this.setSelectedOptions();
   }
 
@@ -538,7 +538,7 @@ export class PrestamosTercerosComponent implements OnInit {
       form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    if (form.duenoTitular?.relacionConTitular === 'OTRO(ESPECIFIQUE)') {
+    if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
       form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
     }
 
