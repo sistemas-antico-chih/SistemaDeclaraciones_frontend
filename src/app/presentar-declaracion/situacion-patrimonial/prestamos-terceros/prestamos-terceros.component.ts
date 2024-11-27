@@ -69,6 +69,11 @@ export class PrestamosTercerosComponent implements OnInit {
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
+  parentescoArray:any[] = ["ABUELO(A)", "BISABUELO(A)", "BISNIETO(A)", "CONCUBINA O CONCUBINARIO",
+    "CONCUÑO(A)", "CÓNYUGE", "CUÑADO(A)", "HERMANO(A)", "HIJO(A)", "MADRE", "PADRE", "PRIMO(A)",
+    "SOBRINO(A)", "SUEGRO(A)", "TATARABUELO(A)", "TATARANIETO(A)", "TIO(A)", "NIETO(A)", "NINGUNO",
+    "AHIJADO(A)", "NUERA", "YERNO", "OTRO(ESPECIFIQUE)"]
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -350,6 +355,13 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("1")
+    console.log(this.parentescoRelacionCatalogo.valor);
+    console.log(this.parentescoRelacionCatalogo.clave);
+    console.log("2")
+    console.log(this.parentescoRelacionCatalogo);
+    console.log("arreglo")
+    console.log(this.parentescoArray)
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
