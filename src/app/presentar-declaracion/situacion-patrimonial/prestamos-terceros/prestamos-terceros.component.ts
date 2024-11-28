@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { prestamoComodatoMutation, prestamoComodatoQuery } from '@api/declaracion';
+import { prestamoComodatoMutation, prestamoComodatoQuery, lastPrestamoComodatoQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -21,11 +21,12 @@ import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/prestamo-terceros';
 
-import { Catalogo, DeclaracionOutput, Prestamo, PrestamoComodato } from '@models/declaracion';
+import { Catalogo, DeclaracionOutput, Prestamo, PrestamoComodato, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -50,7 +51,7 @@ export class PrestamosTercerosComponent implements OnInit {
   estadosCatalogo = Estados;
   municipiosCatalogo = Municipios;
   parentescoRelacionCatalogo = ParentescoRelacion;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoBien: string;
   tipoDomicilio: string;
@@ -59,6 +60,19 @@ export class PrestamosTercerosComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  varOtroTipoInmueble: string = null;
+  varOtroTipoVehiculo: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
+
+  parentescoArray:any[] = ["ABUELO(A)", "BISABUELO(A)", "BISNIETO(A)", "CONCUBINA O CONCUBINARIO",
+    "CONCUÑO(A)", "CÓNYUGE", "CUÑADO(A)", "HERMANO(A)", "HIJO(A)", "MADRE", "PADRE", "PRIMO(A)",
+    "SOBRINO(A)", "SUEGRO(A)", "TATARABUELO(A)", "TATARANIETO(A)", "TIO(A)", "NIETO(A)", "NINGUNO",
+    "AHIJADO(A)", "NUERA", "YERNO", "OTRO(ESPECIFIQUE)"]
 
   constructor(
     private apollo: Apollo,
@@ -148,6 +162,7 @@ export class PrestamosTercerosComponent implements OnInit {
     this.prestamoComodatoForm = this.formBuilder.group({
       ninguno: [false],
       prestamo: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoBien: this.formBuilder.group({
           inmueble: this.formBuilder.group({
             tipoInmueble: ['', Validators.required],
@@ -226,7 +241,7 @@ export class PrestamosTercerosComponent implements OnInit {
             .patchValue(prestamo.tipoBien.inmueble[field])
         );
 
-      ifExistsEnableFields(
+      /*ifExistsEnableFields(
         prestamo.tipoBien.inmueble.domicilioMexico,
         this.prestamoComodatoForm,
         'prestamo.tipoBien.inmueble.domicilioMexico'
@@ -242,7 +257,7 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       if (prestamo.tipoBien.inmueble.domicilioExtranjero) {
         this.tipoDomicilio = 'EXTRANJERO';
-      }
+      }*/
     }
     ifExistsEnableFields(prestamo.tipoBien.vehiculo, this.prestamoComodatoForm, 'prestamo.tipoBien.vehiculo');
     if (prestamo.tipoBien.vehiculo) {
@@ -277,6 +292,25 @@ export class PrestamosTercerosComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastPrestamoComodatoQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.prestamoComodato);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -289,11 +323,14 @@ export class PrestamosTercerosComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.prestamoComodato) {
+      if (data.declaracion.prestamoComodato === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.prestamoComodato);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
@@ -317,7 +354,17 @@ export class PrestamosTercerosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noLoans() {
     this.saveInfo({ ninguno: true });
@@ -390,7 +437,8 @@ export class PrestamosTercerosComponent implements OnInit {
   saveItem() {
     let prestamo = [...this.prestamo];
     const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
-    const newItem = this.prestamoComodatoForm.value.prestamo;
+    //const newItem = this.prestamoComodatoForm.value.prestamo;
+    const newItem = this.finalPrestamoForm
 
     if (this.editIndex === null) {
       prestamo = [...prestamo, newItem];
@@ -459,5 +507,41 @@ export class PrestamosTercerosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let prestamo = [...this.prestamo];
+    if (prestamo.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < prestamo.length; i++) {
+        prestamo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        prestamo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  get finalPrestamoForm() {
+    const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
+
+    if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
+      form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.tipoBien.vehiculo?.tipoVehiculo.clave === 'OTRO') {
+      form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
+      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }
