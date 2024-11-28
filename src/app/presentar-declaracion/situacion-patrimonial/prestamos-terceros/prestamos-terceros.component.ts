@@ -238,14 +238,14 @@ export class PrestamosTercerosComponent implements OnInit {
         .forEach((field) =>
           this.prestamoComodatoForm
             .get(`prestamo.tipoBien.inmueble.${field}`)
-            .patchValue(prestamo.tipoBien.inmueble[field]);
+            .patchValue(prestamo.tipoBien.inmueble[field])); 
           this.prestamoComodatoForm
             .get(`prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad`)
-            .patchValue(prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad)
+            .patchValue(prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad);
           this.prestamoComodatoForm
             .get(`prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior`)
-            .patchValue(prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
-        );
+            .patchValue(prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior);
+        
 
       /*ifExistsEnableFields(
         prestamo.tipoBien.inmueble.domicilioMexico,
