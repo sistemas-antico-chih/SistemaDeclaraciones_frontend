@@ -247,7 +247,7 @@ export class PrestamosTercerosComponent implements OnInit {
             .patchValue(prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior);
         
 
-      /*ifExistsEnableFields(
+      ifExistsEnableFields(
         prestamo.tipoBien.inmueble.domicilioMexico,
         this.prestamoComodatoForm,
         'prestamo.tipoBien.inmueble.domicilioMexico'
@@ -263,7 +263,7 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       if (prestamo.tipoBien.inmueble.domicilioExtranjero) {
         this.tipoDomicilio = 'EXTRANJERO';
-      }*/
+      }
     }
     ifExistsEnableFields(prestamo.tipoBien.vehiculo, this.prestamoComodatoForm, 'prestamo.tipoBien.vehiculo');
     if (prestamo.tipoBien.vehiculo) {
