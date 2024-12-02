@@ -254,8 +254,8 @@ export class PrestamosTercerosComponent implements OnInit {
         console.log(prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
         console.log(this.prestamoComodatoForm)
 
-        this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
-        console.log(this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
+        //this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
+        //console.log(this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
       }
 
       ifExistsEnableFields(
