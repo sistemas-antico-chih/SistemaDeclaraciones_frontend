@@ -232,7 +232,8 @@ export class PrestamosTercerosComponent implements OnInit {
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
     if (prestamo.tipoBien.inmueble) {
       this.tipoBien = 'inmueble';
-
+      console.log("inmueble");
+      console.log(prestamo)
       Object.keys(prestamo.tipoBien.inmueble)
         .filter((field) => prestamo.tipoBien.inmueble[field] !== null)
         .forEach((field) =>
@@ -248,6 +249,13 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       if (prestamo.tipoBien.inmueble.domicilioMexico) {
         this.tipoDomicilio = 'MEXICO';
+        console.log("llega mexico")
+        prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
+        console.log(prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
+        console.log(this.prestamoComodatoForm)
+
+        this.prestamoComodatoForm.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=this.prestamoComodatoForm.tipoBien.inmueble.domicilioMexico.numeroInterior
+        console.log(this.prestamoComodatoForm.tipoBien.inmueble.domicilioMexico.numeroInterior)
       }
 
       ifExistsEnableFields(
@@ -538,7 +546,11 @@ export class PrestamosTercerosComponent implements OnInit {
       form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
+
+    console.log("form");
+    console.log(form);
     if(form.tipoBien.inmueble === 'inmueble'){
+      console.log("llega")
       if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
         form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
