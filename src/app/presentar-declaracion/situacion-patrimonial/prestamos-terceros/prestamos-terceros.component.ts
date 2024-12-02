@@ -552,13 +552,16 @@ export class PrestamosTercerosComponent implements OnInit {
 
     console.log("form");
     console.log(form);
-    if(form.tipoBien.inmueble === 'inmueble'){
+    //if(form.tipoBien.inmueble === 'inmueble'){
       console.log("llega")
       if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
+        console.log(this.parentescoArray.indexOf);
         form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
-    }
-    
+    //}
+    /*if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>0) {
+      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+    }*/
     return form;
   }
 }
