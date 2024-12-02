@@ -67,7 +67,7 @@ export class PrestamosTercerosComponent implements OnInit {
 
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
-  @ViewChild('otroParentesco') otroParentesco: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef = null;
 
   parentescoArray:any[] = ["ABUELO(A)", "BISABUELO(A)", "BISNIETO(A)", "CONCUBINA O CONCUBINARIO",
     "CONCUÑO(A)", "CÓNYUGE", "CUÑADO(A)", "HERMANO(A)", "HIJO(A)", "MADRE", "PADRE", "PRIMO(A)",
@@ -538,10 +538,12 @@ export class PrestamosTercerosComponent implements OnInit {
       form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
-      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+    if(form.tipoBien.inmueble === 'inmueble'){
+      if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
+        form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+      }
     }
-
+    
     return form;
   }
 }
