@@ -223,6 +223,10 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   fillForm(prestamo: Prestamo) {
+    console.log("inmueble");
+      console.log(prestamo.tipoBien.inmueble)
+      console.log("llega mexico")
+      console.log(this.prestamoComodatoForm.value.prestamo.tipoBien)
     Object.keys(prestamo.duenoTitular)
       .filter((field) => prestamo.duenoTitular[field] !== null)
       .forEach((field) =>
@@ -232,8 +236,7 @@ export class PrestamosTercerosComponent implements OnInit {
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
     if (prestamo.tipoBien.inmueble) {
       this.tipoBien = 'inmueble';
-      console.log("inmueble");
-      console.log(prestamo)
+      
       Object.keys(prestamo.tipoBien.inmueble)
         .filter((field) => prestamo.tipoBien.inmueble[field] !== null)
         .forEach((field) =>
@@ -249,10 +252,10 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       if (prestamo.tipoBien.inmueble.domicilioMexico) {
         this.tipoDomicilio = 'MEXICO';
-        console.log("llega mexico")
+        
         prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
-        console.log(prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
-        console.log(this.prestamoComodatoForm)
+        prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior=null;
+        
 
         //this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
         //console.log(this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
