@@ -498,6 +498,11 @@ export class PrestamosTercerosComponent implements OnInit {
 
   setSelectedOptions() {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
+    /* const { tipoParentesco } = this.prestamoComodatoForm.value.duenoTitular;
+
+    if (tipoParentesco){
+      
+    } */
 
     if (inmueble) {
       const { tipoInmueble, domicilioMexico } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
