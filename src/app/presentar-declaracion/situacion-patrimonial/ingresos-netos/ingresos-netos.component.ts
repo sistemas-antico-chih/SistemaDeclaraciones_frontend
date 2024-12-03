@@ -34,7 +34,7 @@ export class IngresosNetosComponent implements OnInit {
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
 
-  otroTipoInstrumentoZ: any=[];
+  otroTipoInstrumentoZ: any = [];
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
   //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<'otroTipoInstrumento'>;
@@ -407,9 +407,9 @@ export class IngresosNetosComponent implements OnInit {
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
       }
-      
+
       console.log("getUserInfo");
-      console.log(this.ingresosForm.value)  
+      console.log(this.ingresosForm.value)
 
     } catch (error) {
       console.error(error);
@@ -453,9 +453,9 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined){
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
       let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
-      console.log("test 1: " + test);   
+      console.log("test 1: " + test);
     }
   }
 
@@ -463,12 +463,16 @@ export class IngresosNetosComponent implements OnInit {
     console.log("ngAfterViewInit");
     console.log(this.ingresosForm.value)
 
-    for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
-      this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
-      document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
+      for (let j = 0; j < document.querySelectorAll<HTMLInputElement>('.OTI').length; j++) {
+        this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
+        document.querySelectorAll<HTMLInputElement>('.OTI')[j].value = this.arrayOtroTipoInstrumento[j];
+      }
     }
-    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
-    console.log("test 2: " + test);
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
+      console.log("test 2: " + test);
+    }
 
   }
 
