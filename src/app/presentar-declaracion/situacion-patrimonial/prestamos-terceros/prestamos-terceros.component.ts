@@ -451,7 +451,9 @@ export class PrestamosTercerosComponent implements OnInit {
   saveItem() {
     let prestamo = [...this.prestamo];
     const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
-    const newItem = this.prestamoComodatoForm.value.prestamo;
+    //const newItem = this.prestamoComodatoForm.value.prestamo;
+    const newItem = this.finalPrestamoForm;
+
 
     if (this.editIndex === null) {
       prestamo = [...prestamo, newItem];
@@ -550,5 +552,29 @@ export class PrestamosTercerosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  get finalPrestamoForm() {
+    /*const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
+
+    if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
+      form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.tipoBien.vehiculo?.tipoVehiculo.clave === 'OTRO') {
+      form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (this.otroParentesco === undefined) {
+      this.prestamoComodatoForm
+      .get('prestamo.duenoTitular.relacionConTitular')
+      .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));    } 
+      else {
+      if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular) > -1) {
+        form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+      }
+    }
+*/
+    return form;
   }
 }

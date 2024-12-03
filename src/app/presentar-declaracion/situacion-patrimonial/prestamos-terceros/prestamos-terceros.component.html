@@ -225,7 +225,7 @@
           <button mat-button color="primary" (click)="removeItem(i)">Eliminar</button>
         </mat-card-actions>
       </mat-card>
-      <div class="boton-agregar" *ngIf="(prestado.length && !editMode) || prestamoComodatoForm.value.ninguno">
+      <div class="boton-agregar" *ngIf="(prestamo.length && !editMode) || prestamoComodatoForm.value.ninguno">
         <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
         <button mat-raised-button color="primary" (click)="checkItems()">
           GUARDAR
