@@ -472,7 +472,7 @@ export class PrestamosTercerosComponent implements OnInit {
 
   setSelectedOptions() {
     const { vehiculo, inmueble, tipoInmueble2 } = this.prestamoComodatoForm.value.prestamo.tipoBien;
-    const { tipoOperacion } = this.prestamoComodatoForm.value.prestamo.tipoOperacion;
+    const { tipoOperacion } = this.prestamoComodatoForm.value.prestamo;
 
     console.log("tipoOperacion");
     console.log(tipoOperacion);
@@ -483,6 +483,11 @@ export class PrestamosTercerosComponent implements OnInit {
     }  
     
     if (inmueble) {
+      
+      this.prestamoComodatoForm
+        .get('prestamo.tipoBien')
+        .setValue('inmueble');
+
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
 
       console.log("inmueble");
