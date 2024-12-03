@@ -480,7 +480,7 @@ export class PrestamosTercerosComponent implements OnInit {
     //this.editIndex(0)
     //console.log(this.editIndex);
     //console.log(this.editItem);
-    console.log(this.indexGeneral);
+    //console.log(this.indexGeneral);
 
     
     if (inmueble) {

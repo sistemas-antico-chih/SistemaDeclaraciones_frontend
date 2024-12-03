@@ -263,7 +263,11 @@
             <mat-form-field appearance="fill">
               <mat-label>Tipo de bien</mat-label>
               <mat-icon matPrefix>beenhere</mat-icon>
-              <mat-select (selectionChange)="bienChanged($event.value)" required [(ngModel)]="selectTipoBien">
+              <mat-select 
+                (selectionChange)="bienChanged($event.value)" 
+                formControlName="selectTipoBien"
+                required 
+                [(ngModel)]="selectTipoBien">
                 <mat-option value="inmueble"> Inmueble </mat-option>
                 <mat-option value="vehiculos"> Vehículos </mat-option>
               </mat-select>
