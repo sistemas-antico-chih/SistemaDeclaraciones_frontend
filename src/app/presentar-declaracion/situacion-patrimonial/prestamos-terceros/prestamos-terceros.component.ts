@@ -1,5 +1,5 @@
 import { filter } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -19,6 +19,7 @@ import Paises from '@static/catalogos/paises.json';
 import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/prestamo-terceros';
 
@@ -52,6 +53,7 @@ export class PrestamosTercerosComponent implements OnInit {
   estadosCatalogo = Estados;
   municipiosCatalogo = Municipios;
   parentescoRelacionCatalogo = ParentescoRelacion;
+  tipoOperacionCatalogo = TipoOperacion;
 
   tipoDeclaracion: string = null;
   tipoBien: string;
