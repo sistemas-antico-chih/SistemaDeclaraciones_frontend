@@ -476,7 +476,8 @@ export class PrestamosTercerosComponent implements OnInit {
 
     console.log("tipoOperacion");
     console.log(inmueble);
-    console.log(tipoOperacion);
+    console.log(vehiculo);
+    console.log(this.prestamo);
 
     if (tipoOperacion) {
       const optionTipoOperacion = this.tipoOperacionCatalogo.filter((i: any) => i.clave === tipoOperacion.clave);
@@ -485,9 +486,10 @@ export class PrestamosTercerosComponent implements OnInit {
     
     if (inmueble) {
       
-      this.prestamoComodatoForm
-        .get('prestamo.tipoBien')
-        .setValue('prestamo.tipoBien.inmueble');
+
+      //this.prestamoComodatoForm
+      //  .get('prestamo.tipoBien')
+      //  .setValue('prestamo.tipoBien.inmueble');
 
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
 

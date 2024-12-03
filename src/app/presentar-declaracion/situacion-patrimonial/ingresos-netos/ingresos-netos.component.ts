@@ -453,7 +453,7 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    if(document.querySelectorAll !== undefined){
+    if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined){
       let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
       console.log("test 1: " + test);   
     }
