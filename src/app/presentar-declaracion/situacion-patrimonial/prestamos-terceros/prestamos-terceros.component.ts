@@ -234,8 +234,8 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       this.prestamoComodatoForm.get(`prestamo.tipoOperacion`).patchValue(prestamo.tipoOperacion);
     
-    console.log("prestamo")
-    console.log(prestamo)
+    //console.log("prestamo")
+    //console.log(prestamo)
 
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
     if (prestamo.tipoBien.inmueble) {
@@ -504,6 +504,15 @@ export class PrestamosTercerosComponent implements OnInit {
       const optTInmueble = this.tipoInmuebleCatalogo.filter((ti: any) => ti.clave === tipoInmueble.clave);
       // this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
       this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(optTInmueble[0]);
+      
+      //if (tipoInmueble) {
+        //const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
+        //this.prestamoComodatoForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
+        if(tipoInmueble.clave ==='OTRO'){
+          this.varOtroTipoInmueble=tipoInmueble.valor;
+        }
+      //}
+      
       if (domicilioMexico) {
         const { entidadFederativa, municipioAlcaldia } = domicilioMexico;
         if (entidadFederativa) {
@@ -525,7 +534,7 @@ export class PrestamosTercerosComponent implements OnInit {
     }
 
     if (vehiculo) {
-      console.log('vehiculo: ', vehiculo);
+      //console.log('vehiculo: ', vehiculo);
       const { tipo, lugarRegistro } = this.prestamoComodatoForm.value.prestamo.tipoBien.vehiculo;
       const optTipoVehiculo = this.tipoVehiculoCatalogo.filter((v: any) => (v.clave = tipo.clave));
       // this.prestamoComodatoForm.get('prestamo.tipoBien.vehiculo.tipo').setValue(findOption(this.tipoVehiculoCatalogo, tipo));
