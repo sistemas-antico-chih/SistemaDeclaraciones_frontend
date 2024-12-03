@@ -478,6 +478,7 @@ export class PrestamosTercerosComponent implements OnInit {
     console.log(inmueble);
     console.log(vehiculo);
     console.log(this.prestamo);
+    console.log(tipoOperacion);
 
     /*if (tipoOperacion) {
       const optionTipoOperacion = this.tipoOperacionCatalogo.filter((i: any) => i.clave === tipoOperacion.clave);
