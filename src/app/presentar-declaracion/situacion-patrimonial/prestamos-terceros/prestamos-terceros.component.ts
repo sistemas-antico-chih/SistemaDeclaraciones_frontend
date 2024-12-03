@@ -478,8 +478,8 @@ export class PrestamosTercerosComponent implements OnInit {
     
     console.log("Index");
     //this.editIndex(0)
-    console.log(this.editIndex);
-    console.log(this.editItem);
+    //console.log(this.editIndex);
+    //console.log(this.editItem);
     console.log(this.indexGeneral);
 
     
@@ -487,7 +487,7 @@ export class PrestamosTercerosComponent implements OnInit {
       console.log("inmueble");
 
       //this.tipoOperacion
-      //this.selectTipoBien="inmueble";
+      this.selectTipoBien="inmueble";
 
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
       if (tipoInmueble) {
