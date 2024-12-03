@@ -153,6 +153,7 @@ export class PrestamosTercerosComponent implements OnInit {
     this.prestamoComodatoForm = this.formBuilder.group({
       ninguno: [false],
       prestamo: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoBien: this.formBuilder.group({
           inmueble: this.formBuilder.group({
             tipoInmueble: ['', Validators.required],
