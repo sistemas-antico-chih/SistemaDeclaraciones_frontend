@@ -64,6 +64,19 @@ export class PrestamosTercerosComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  varOtroTipoInmueble: string = null;
+  varOtroTipoVehiculo: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef = null;
+
+  parentescoArray: any[] = ["ABUELO(A)", "BISABUELO(A)", "BISNIETO(A)", "CONCUBINA O CONCUBINARIO",
+    "CONCUÑO(A)", "CÓNYUGE", "CUÑADO(A)", "HERMANO(A)", "HIJO(A)", "MADRE", "PADRE", "PRIMO(A)",
+    "SOBRINO(A)", "SUEGRO(A)", "TATARABUELO(A)", "TATARANIETO(A)", "TIO(A)", "NIETO(A)", "NINGUNO",
+    "AHIJADO(A)", "NUERA", "YERNO", "OTRO(ESPECIFIQUE)"]
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -555,7 +568,7 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   get finalPrestamoForm() {
-    /*const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
+    const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
 
     if (form.tipoBien.inmueble?.tipoInmueble?.clave === 'OTRO') {
       form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
@@ -574,7 +587,7 @@ export class PrestamosTercerosComponent implements OnInit {
         form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
     }
-*/
+
     return form;
   }
 }

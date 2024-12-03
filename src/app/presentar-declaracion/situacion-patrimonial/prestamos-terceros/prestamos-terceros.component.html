@@ -299,7 +299,14 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">call_merge</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoInmueble
+                class="OTI"
+                #otroTipoInmueble 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field
               matTooltip="{{ tooltipData.vehiculo }}"
@@ -321,7 +328,14 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">call_merge</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoVehiculo
+                class="OTV"
+                #otroTipoVehiculo 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
           </div>
 
@@ -670,11 +684,21 @@
           </mat-form-field>
           <mat-form-field
             appearance="fill"
-            *ngIf="prestamoComodatoForm.value.prestamo.duenoTitular.relacionConTitular?.clave === 'OTRO'"
+            *ngIf="prestamoComodatoForm.value.prestamo.duenoTitular?.relacionConTitular === 'OTRO(ESPECIFIQUE)'"
           >
+          <!--<mat-form-field
+            appearance="fill"
+            *ngIf="parentescoArray.indexOf(object.id) > -1"
+          >-->
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">group</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value] = varOtroRelacion
+                #otroParentesco 
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
         </div>
       </div>
