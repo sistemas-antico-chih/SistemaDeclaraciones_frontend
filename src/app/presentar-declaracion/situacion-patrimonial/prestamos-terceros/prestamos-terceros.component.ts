@@ -292,7 +292,7 @@ export class PrestamosTercerosComponent implements OnInit {
       }
     }
 
-    this.setAclaraciones(this.aclaracionesText);
+    //this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
   }
 
