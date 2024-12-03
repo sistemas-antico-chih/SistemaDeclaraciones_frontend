@@ -882,7 +882,8 @@ export const prestamoComodatoQuery = gql`
               domicilioMexico {
                 calle
                 numeroExterior
-                numeroInterior: coloniaLocalidad
+                numeroInterior
+                coloniaLocalidad
                 municipioAlcaldia {
                   clave
                   valor

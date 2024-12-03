@@ -69,7 +69,7 @@ export class PrestamosTercerosComponent implements OnInit {
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef = null;
 
-  parentescoArray:any[] = ["ABUELO(A)", "BISABUELO(A)", "BISNIETO(A)", "CONCUBINA O CONCUBINARIO",
+  parentescoArray: any[] = ["ABUELO(A)", "BISABUELO(A)", "BISNIETO(A)", "CONCUBINA O CONCUBINARIO",
     "CONCUÑO(A)", "CÓNYUGE", "CUÑADO(A)", "HERMANO(A)", "HIJO(A)", "MADRE", "PADRE", "PRIMO(A)",
     "SOBRINO(A)", "SUEGRO(A)", "TATARABUELO(A)", "TATARANIETO(A)", "TIO(A)", "NIETO(A)", "NINGUNO",
     "AHIJADO(A)", "NUERA", "YERNO", "OTRO(ESPECIFIQUE)"]
@@ -219,18 +219,18 @@ export class PrestamosTercerosComponent implements OnInit {
   editItem(index: number) {
     this.setEditMode();
     console.log("inmueble1");
-      console.log(this.prestamo)
+    console.log(this.prestamo)
     this.fillForm(this.prestamo[index]);
     console.log("inmueble2");
-      console.log(this.prestamo)
+    console.log(this.prestamo)
     this.editIndex = index;
   }
 
   fillForm(prestamo: Prestamo) {
     console.log("inmueble");
-      console.log(prestamo.tipoBien.inmueble)
-      console.log("llega mexico")
-      console.log(this.prestamoComodatoForm.value.prestamo.tipoBien)
+    console.log(prestamo.tipoBien.inmueble)
+    console.log("llega mexico")
+    console.log(this.prestamoComodatoForm.value.prestamo.tipoBien)
     Object.keys(prestamo.duenoTitular)
       .filter((field) => prestamo.duenoTitular[field] !== null)
       .forEach((field) =>
@@ -240,7 +240,7 @@ export class PrestamosTercerosComponent implements OnInit {
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
     if (prestamo.tipoBien.inmueble) {
       this.tipoBien = 'inmueble';
-      
+
       Object.keys(prestamo.tipoBien.inmueble)
         .filter((field) => prestamo.tipoBien.inmueble[field] !== null)
         .forEach((field) =>
@@ -256,10 +256,10 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       if (prestamo.tipoBien.inmueble.domicilioMexico) {
         this.tipoDomicilio = 'MEXICO';
-        
-        prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
-        prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior=null;
-        
+
+        prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad = prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
+        prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior = null;
+
 
         //this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
         //console.log(this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
@@ -343,7 +343,7 @@ export class PrestamosTercerosComponent implements OnInit {
       } else {
         this.setupForm(data.declaracion.prestamoComodato);
       }
-      
+
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -558,19 +558,24 @@ export class PrestamosTercerosComponent implements OnInit {
     console.log("form");
     console.log(form);
     //if(form.tipoBien.inmueble === 'inmueble'){
-      console.log("llega")
-      if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
+    console.log("llega")
+    if (this.otroParentesco === undefined) {
+      this.prestamoComodatoForm
+      .get('prestamo.duenoTitular.relacionConTitular')
+      .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));    } 
+      else {
+      if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular) > -1) {
         console.log("llega 22")
-
         console.log(this.parentescoArray.values);
         form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
-      
-      if (form.duenoTitular) {
-        console.log("llega333")
-        console.log(form.duenoTitular.value);
-        form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
-      }
+    }
+
+    /*if (form.duenoTitular) {
+      console.log("llega333")
+      console.log(form.duenoTitular.value);
+      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
     //}
     /*if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>0) {
       form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
