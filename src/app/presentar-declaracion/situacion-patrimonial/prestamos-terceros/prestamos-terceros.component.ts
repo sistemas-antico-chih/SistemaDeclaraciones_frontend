@@ -478,9 +478,6 @@ export class PrestamosTercerosComponent implements OnInit {
     //const vehiculo = tipoBien.get('vehiculo');
 
     console.log("tipoOperacion");
-    console.log(inmueble);
-    console.log(vehiculo);
-    console.log(this.prestamo);
     console.log(this.editIndex);
     console.log(this.prestamo[this.editIndex]);
     
@@ -496,9 +493,9 @@ export class PrestamosTercerosComponent implements OnInit {
       const { tipoOperacion } = this.prestamoComodatoForm.value.prestamo
       console.log(tipoOperacion);
 
-      //this.prestamoComodatoForm
-      //  .get('prestamo.tipoBien')
-      //  .setValue('prestamo.tipoBien.inmueble');
+      this.prestamoComodatoForm
+        .get('prestamo.tipoBien')
+        .setValue('inmueble');
 
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
 
