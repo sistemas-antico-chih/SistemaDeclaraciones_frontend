@@ -407,6 +407,10 @@ export class IngresosNetosComponent implements OnInit {
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
       }
+      
+      console.log("getUserInfo");
+      console.log(this.ingresosForm.value)  
+
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -439,8 +443,6 @@ export class IngresosNetosComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("ngOnInit");
-    //console.log(this.test);
-    //console.log(this.large);
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -457,9 +459,7 @@ export class IngresosNetosComponent implements OnInit {
 
   ngAfterViewInit() {
     console.log("ngAfterViewInit");
-    //console.log(this.test);
-    //console.log(this.large);
-    console.log("");
+    console.log(this.ingresosForm.value)
 
     for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
       this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
