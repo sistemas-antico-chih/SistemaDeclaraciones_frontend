@@ -476,29 +476,18 @@ export class PrestamosTercerosComponent implements OnInit {
   setSelectedOptions() {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
     
-    const tipoBien = this.prestamoComodatoForm.get('prestamo').get('tipoBien');
-    //const inmueble = tipoBien.get('inmueble');
-    //const vehiculo = tipoBien.get('vehiculo');
-
     console.log("Index");
     //this.editIndex(0)
     console.log(this.editIndex);
     console.log(this.editItem);
     console.log(this.indexGeneral);
-    //console.log(this.prestamo[this.editIndex]);
-    
 
-
-    /*if (tipoOperacion) {
-      const optionTipoOperacion = this.tipoOperacionCatalogo.filter((i: any) => i.clave === tipoOperacion.clave);
-      this.prestamoComodatoForm.get('prestamo.tipoOperacion').setValue(optionTipoOperacion[0]);
-    } */ 
     
     if (inmueble) {
       console.log("inmueble");
 
       //this.tipoOperacion
-      this.selectTipoBien="inmueble";
+      //this.selectTipoBien="inmueble";
 
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
       if (tipoInmueble) {
@@ -508,6 +497,8 @@ export class PrestamosTercerosComponent implements OnInit {
           this.varOtroTipoInmueble=tipoInmueble.valor;
         }
       }
+
+      
     }
 
     if (vehiculo) {
