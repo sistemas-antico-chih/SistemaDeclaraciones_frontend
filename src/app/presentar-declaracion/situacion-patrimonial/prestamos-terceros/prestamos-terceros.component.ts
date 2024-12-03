@@ -493,10 +493,12 @@ export class PrestamosTercerosComponent implements OnInit {
       const { tipoOperacion } = this.prestamoComodatoForm.value.prestamo
       console.log(tipoOperacion);
 
-      this.prestamoComodatoForm
+      this.tipoBien='inmueble';
+
+      /* this.prestamoComodatoForm
         .get('prestamo.tipoBien')
         .setValue('inmueble');
-
+ */
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
 
       console.log("inmueble");
