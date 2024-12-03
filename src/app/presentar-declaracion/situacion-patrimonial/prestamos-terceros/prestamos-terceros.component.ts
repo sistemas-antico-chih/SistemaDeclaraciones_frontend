@@ -479,14 +479,27 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
+    const { tipoOperacion, vehiculo, inmueble, tipoInmueble2 } = this.prestamoComodatoForm.value.prestamo.tipoBien;
 
+    if (tipoOperacion) {
+      const optionTipoOperacion = this.tipoOperacionCatalogo.filter((i: any) => i.clave === tipoOperacion.clave);
+      this.prestamoComodatoForm.get('prestamo.tipoOperacion').setValue(optionTipoOperacion[0]);
+    }  
+    
     if (inmueble) {
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
 
       this.prestamoComodatoForm
         .get('prestamo.tipoBien.inmueble.tipoInmueble')
         .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+
+      if (tipoInmueble2) {
+        const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
+        this.prestamoComodatoForm.get('prestamo.tipoInmueble').setValue(optionTipoInmueble[0]);
+        if(tipoInmueble2.clave ==='OTRO'){
+          this.varOtroTipoInmueble=tipoInmueble2.valor;
+        }
+      }
     }
 
     if (vehiculo) {
@@ -554,32 +567,16 @@ export class PrestamosTercerosComponent implements OnInit {
       form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-
-    console.log("form");
-    console.log(form);
-    //if(form.tipoBien.inmueble === 'inmueble'){
-    console.log("llega")
     if (this.otroParentesco === undefined) {
       this.prestamoComodatoForm
       .get('prestamo.duenoTitular.relacionConTitular')
       .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));    } 
       else {
       if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular) > -1) {
-        console.log("llega 22")
-        console.log(this.parentescoArray.values);
         form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
     }
 
-    /*if (form.duenoTitular) {
-      console.log("llega333")
-      console.log(form.duenoTitular.value);
-      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
-    }
-    //}
-    /*if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>0) {
-      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
-    }*/
     return form;
   }
 }
