@@ -55,6 +55,7 @@ export class PrestamosTercerosComponent implements OnInit {
   tipoDeclaracion: string = null;
   tipoBien: string;
   tipoDomicilio: string;
+  indexGeneral: number = 0;
 
   declaracionId: string = null;
 
@@ -220,6 +221,7 @@ export class PrestamosTercerosComponent implements OnInit {
     this.setEditMode();
     this.fillForm(this.prestamo[index]);
     this.editIndex = index;
+    this.indexGeneral=index;
   }
 
   fillForm(prestamo: Prestamo) {
@@ -477,9 +479,12 @@ export class PrestamosTercerosComponent implements OnInit {
     //const inmueble = tipoBien.get('inmueble');
     //const vehiculo = tipoBien.get('vehiculo');
 
-    console.log("tipoOperacion");
+    console.log("Index");
+    //this.editIndex(0)
     console.log(this.editIndex);
-    console.log(this.prestamo[this.editIndex]);
+    console.log(this.editItem);
+    console.log(this.indexGeneral);
+    //console.log(this.prestamo[this.editIndex]);
     
 
 
@@ -490,20 +495,11 @@ export class PrestamosTercerosComponent implements OnInit {
     
     if (inmueble) {
       console.log("inmueble");
-      const { tipoOperacion } = this.prestamoComodatoForm.value.prestamo
-      console.log(tipoOperacion);
 
+      //this.tipoOperacion
       this.tipoBien='inmueble';
 
-      /* this.prestamoComodatoForm
-        .get('prestamo.tipoBien')
-        .setValue('inmueble');
- */
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
-
-      console.log("inmueble");
-      console.log(tipoInmueble)
-
       if (tipoInmueble) {
         const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
         this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
