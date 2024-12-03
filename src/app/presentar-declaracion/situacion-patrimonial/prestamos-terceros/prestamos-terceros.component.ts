@@ -218,19 +218,11 @@ export class PrestamosTercerosComponent implements OnInit {
 
   editItem(index: number) {
     this.setEditMode();
-    console.log("inmueble1");
-    console.log(this.prestamo)
     this.fillForm(this.prestamo[index]);
-    console.log("inmueble2");
-    console.log(this.prestamo)
     this.editIndex = index;
   }
 
   fillForm(prestamo: Prestamo) {
-    console.log("inmueble");
-    console.log(prestamo.tipoBien.inmueble)
-    console.log("llega mexico")
-    console.log(this.prestamoComodatoForm.value.prestamo.tipoBien)
     Object.keys(prestamo.duenoTitular)
       .filter((field) => prestamo.duenoTitular[field] !== null)
       .forEach((field) =>
@@ -481,6 +473,9 @@ export class PrestamosTercerosComponent implements OnInit {
   setSelectedOptions() {
     const { tipoOperacion, vehiculo, inmueble, tipoInmueble2 } = this.prestamoComodatoForm.value.prestamo.tipoBien;
 
+    console.log("tipoOperacion");
+    console.log(tipoOperacion);
+
     if (tipoOperacion) {
       const optionTipoOperacion = this.tipoOperacionCatalogo.filter((i: any) => i.clave === tipoOperacion.clave);
       this.prestamoComodatoForm.get('prestamo.tipoOperacion').setValue(optionTipoOperacion[0]);
@@ -488,6 +483,9 @@ export class PrestamosTercerosComponent implements OnInit {
     
     if (inmueble) {
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
+
+      console.log("inmueble");
+      console.log(tipoInmueble)
 
       this.prestamoComodatoForm
         .get('prestamo.tipoBien.inmueble.tipoInmueble')
