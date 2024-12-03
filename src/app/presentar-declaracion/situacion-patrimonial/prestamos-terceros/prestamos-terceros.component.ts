@@ -350,7 +350,35 @@ export class PrestamosTercerosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+
+  checkItems() {
+    let prestamo = [...this.prestamo];
+    if (prestamo.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < prestamo.length; i++) {
+        prestamo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.prestamoComodatoForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        prestamo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 
   noLoans() {
     this.saveInfo({ ninguno: true });
