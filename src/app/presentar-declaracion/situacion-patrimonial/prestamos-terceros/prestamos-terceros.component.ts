@@ -219,6 +219,10 @@ export class PrestamosTercerosComponent implements OnInit {
       .forEach((field) =>
         this.prestamoComodatoForm.get(`prestamo.duenoTitular.${field}`).patchValue(prestamo.duenoTitular[field])
       );
+      this.prestamoComodatoForm.get(`prestamo.tipoOperacion`).patchValue(prestamo.tipoOperacion);
+    
+    console.log("prestamo")
+    console.log(prestamo)
 
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
     if (prestamo.tipoBien.inmueble) {
