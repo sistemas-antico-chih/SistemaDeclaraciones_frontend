@@ -476,29 +476,29 @@ export class PrestamosTercerosComponent implements OnInit {
   setSelectedOptions() {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
     
-    console.log("Index");
-    //this.editIndex(0)
-    //console.log(this.editIndex);
-    //console.log(this.editItem);
-    //console.log(this.indexGeneral);
-
-    
     if (inmueble) {
-      console.log("inmueble");
+      const { tipoInmueble, domicilioMexico } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
+      const optTInmueble = this.tipoInmuebleCatalogo.filter((ti: any) => ti.clave === tipoInmueble.clave);
+      // this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+      this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(optTInmueble[0]);
+      if (domicilioMexico) {
+        const { entidadFederativa, municipioAlcaldia } = domicilioMexico;
+        if (entidadFederativa) {
+          const optEdos = this.estadosCatalogo.filter((ed: any) => ed.clave === entidadFederativa.clave);
+          this.prestamoComodatoForm
+            .get('prestamo.tipoBien.inmueble.domicilioMexico.entidadFederativa')
+            .setValue(optEdos[0]);
 
-      //this.tipoOperacion
-      this.selectTipoBien = "inmueble";
-
-      /*const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
-      if (tipoInmueble) {
-        const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
-        this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
-        if(tipoInmueble.clave ==='OTRO'){
-          this.varOtroTipoInmueble=tipoInmueble.valor;
+          if (municipioAlcaldia) {
+            const optMun = this.municipiosCatalogo[entidadFederativa?.clave].filter(
+              (ed: any) => ed.clave === municipioAlcaldia.clave
+            );
+            this.prestamoComodatoForm
+              .get('prestamo.tipoBien.inmueble.domicilioMexico.municipioAlcaldia')
+              .setValue(optMun[0]);
+          }
         }
       }
-      */
-      
     }
 
     if (vehiculo) {
