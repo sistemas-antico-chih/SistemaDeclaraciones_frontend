@@ -251,13 +251,6 @@ export class PrestamosTercerosComponent implements OnInit {
       );
       if (prestamo.tipoBien.inmueble.domicilioMexico) {
         this.tipoDomicilio = 'MEXICO';
-
-        prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad = prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
-        prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior = null;
-
-
-        //this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.coloniaLocalidad=this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior
-        //console.log(this.prestamoComodatoForm.prestamo.tipoBien.inmueble.domicilioMexico.numeroInterior)
       }
 
       ifExistsEnableFields(
@@ -299,6 +292,7 @@ export class PrestamosTercerosComponent implements OnInit {
       }
     }
 
+    this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
   }
 
