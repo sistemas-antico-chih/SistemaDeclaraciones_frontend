@@ -55,8 +55,8 @@ export class PrestamosTercerosComponent implements OnInit {
   tipoDeclaracion: string = null;
   tipoBien: string;
   tipoDomicilio: string;
-  indexGeneral: number = 0;
-  selectTipoBien: string = 'inmueble';
+  indexGeneral: number;
+  selectTipoBien: string;
 
   declaracionId: string = null;
 
@@ -487,7 +487,7 @@ export class PrestamosTercerosComponent implements OnInit {
       console.log("inmueble");
 
       //this.tipoOperacion
-      this.selectTipoBien="inmueble";
+      this.selectTipoBien = "inmueble";
 
       const { tipoInmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
       if (tipoInmueble) {
