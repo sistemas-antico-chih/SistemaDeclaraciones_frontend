@@ -337,16 +337,13 @@ export class PrestamosTercerosComponent implements OnInit {
         })
         .toPromise();
 
-      console.log("x1")
-      console.log(this.prestamo);
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.prestamoComodato === null) {
         this.getLastUserInfo();
       } else {
         this.setupForm(data.declaracion.prestamoComodato);
       }
-      console.log("x2")
-      console.log(this.prestamo);
+      
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -563,12 +560,16 @@ export class PrestamosTercerosComponent implements OnInit {
     //if(form.tipoBien.inmueble === 'inmueble'){
       console.log("llega")
       if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>-1) {
-        console.log(this.parentescoArray.indexOf);
+        console.log("llega 22")
+
+        console.log(this.parentescoArray.values);
         form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
-      if (!this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)) {
-        console.log(this.parentescoArray.indexOf);
-        //form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
+      
+      if (form.duenoTitular) {
+        console.log("llega333")
+        console.log(form.duenoTitular.value);
+        form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
     //}
     /*if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular)>0) {
