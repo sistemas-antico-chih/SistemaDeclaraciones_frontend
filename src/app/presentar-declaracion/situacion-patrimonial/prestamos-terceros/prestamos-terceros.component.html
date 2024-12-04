@@ -672,9 +672,7 @@
             <mat-select formControlName="relacionConTitular" required>
               <mat-option
                 *ngFor="let parentescoRelacion of parentescoRelacionCatalogo"
-                value="{{ parentescoRelacion.valor }}"
-                [(ngModel)]="relacionConTitular"
-                formControlName="relacionConTitular"
+                [{ngValue}]="{{ parentescoRelacion.valor }}"
               >
                 {{ parentescoRelacion.valor }}
               </mat-option>

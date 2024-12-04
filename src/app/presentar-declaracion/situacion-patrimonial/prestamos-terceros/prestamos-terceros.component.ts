@@ -512,7 +512,7 @@ export class PrestamosTercerosComponent implements OnInit {
       }
       else{
         console.log("llega33")
-        this.relacionConTitular = 'OTRO'
+        this.parentescoRelacionCatalogo.clave = 'OTRO'
         this.varOtroRelacion = duenoTitular.relacionConTitular      
       }
     }
