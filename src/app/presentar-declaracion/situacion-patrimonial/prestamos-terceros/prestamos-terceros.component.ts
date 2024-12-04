@@ -498,23 +498,6 @@ export class PrestamosTercerosComponent implements OnInit {
 
   setSelectedOptions() {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
-    const { parentesco } = this.prestamoComodatoForm.value.prestamo.duenoTitular;
-    const { parentesco2 } = this.prestamoComodatoForm.value.prestamo;
-    console.log("parentesco")
-    console.log(parentesco);
-    console.log("parentesco2")
-    console.log(parentesco2)
-
-    if (parentesco){
-      console.log("parentesco")
-      console.log(parentesco)
-      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === parentesco.clave);
-      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
-      this.prestamoComodatoForm.get('duenoTitular.relacionConTitular').setValue(optRelacion[0]);
-      if(parentesco.clave ==='OTRO'){
-        this.varOtroRelacion=parentesco.valor;
-      }
-    }
 
     if (inmueble) {
       const { tipoInmueble, domicilioMexico } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
@@ -565,6 +548,25 @@ export class PrestamosTercerosComponent implements OnInit {
           .setValue(optEntidad[0]);
       }
     }
+
+    const { parentesco } = this.prestamoComodatoForm.value.prestamo.duenoTitular;
+    const { parentesco2 } = this.prestamoComodatoForm.value.prestamo.tipoBien;
+    console.log("parentesco")
+    console.log(parentesco);
+    console.log("parentesco2")
+    console.log(parentesco2)
+
+    if (parentesco){
+      console.log("parentesco")
+      console.log(parentesco)
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === parentesco.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.prestamoComodatoForm.get('duenoTitular.relacionConTitular').setValue(optRelacion[0]);
+      if(parentesco.clave ==='OTRO'){
+        this.varOtroRelacion=parentesco.valor;
+      }
+    }
+
   }
 
   setupForm(prestamoComodato: PrestamoComodato) {
