@@ -67,7 +67,7 @@ export class PrestamosTercerosComponent implements OnInit {
   varOtroTipoInmueble: string = null;
   varOtroTipoVehiculo: string = null;
   varOtroRelacion: string = null;
-  parentesco: string = null;
+  relacionConTitular: string;
 
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
@@ -502,6 +502,7 @@ export class PrestamosTercerosComponent implements OnInit {
 
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo;
     console.log(duenoTitular.relacionConTitular);
+    console.log(this.relacionConTitular)
 
     if (duenoTitular) {
       console.log("llega")
@@ -510,7 +511,7 @@ export class PrestamosTercerosComponent implements OnInit {
       }
       else{
         console.log("llega33")
-        this.parentesco = 'OTRO'
+        this.relacionConTitular = 'OTRO'
         this.varOtroRelacion = duenoTitular.relacionConTitular      
       }
     }
@@ -520,10 +521,6 @@ export class PrestamosTercerosComponent implements OnInit {
       const optTInmueble = this.tipoInmuebleCatalogo.filter((ti: any) => ti.clave === tipoInmueble.clave);
       // this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
       this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(optTInmueble[0]);
-
-      //if (tipoInmueble) {
-      //const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
-      //this.prestamoComodatoForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
       if (tipoInmueble.clave === 'OTRO') {
         this.varOtroTipoInmueble = tipoInmueble.valor;
       }
