@@ -60,6 +60,8 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
   @ViewChild('otroTipoParticipacion') otroTipoParticipacion: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
+  location: string = null;
+
 
   constructor(
     private apollo: Apollo,
@@ -321,7 +323,8 @@ export class ParticipacionEmpresaComponent implements OnInit {
   saveItem() {
     let participacion = [...this.participacion];
     const aclaracionesObservaciones = this.participacionForm.value.aclaracionesObservaciones;
-    const newItem = this.participacionForm.value.participacion;
+    //const newItem = this.participacionForm.value.participacion;
+    const newItem = this.finalParticipacionForm;
 
     if (this.editIndex === null) {
       participacion = [...participacion, newItem];
@@ -347,7 +350,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
   setSelectedOptions() {
     const { tipoParticipacion, sector } = this.participacionForm.value.participacion;
-    const { entidadFederativa, pais } = this.participacionForm.value.participacion.ubicacion;
+    const { entidadFederativa, pais, ubicacion } = this.participacionForm.value.participacion.ubicacion;
 
     if (tipoParticipacion) {
       this.participacionForm
@@ -364,6 +367,21 @@ export class ParticipacionEmpresaComponent implements OnInit {
         .get('participacion.ubicacion.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
     }
+
+    console.log("aqui");
+    console.log(entidadFederativa);
+   /*if(lugarRegistro){
+      if( !lugarRegistro.pais || lugarRegistro.pais.value === 'MX'){
+        const { entidadFederativa } = lugarRegistro;
+        this.location = "MX";
+        const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
+        this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
+
+      }
+      else{
+        this.location = "EX";
+      }
+    }*/
   }
 
   setupForm(participacion: Participaciones) {
@@ -407,5 +425,19 @@ export class ParticipacionEmpresaComponent implements OnInit {
       });
       this.isLoading = false;
     }
+  }
+
+  get finalParticipacionForm() {
+    const form = JSON.parse(JSON.stringify(this.participacionForm.value.participacion)); // Deep copy
+
+    if (form.tipoParticipacion?.clave === 'OTRO') {
+      form.tipoParticipacion.valor = this.otroTipoParticipacion.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.sector?.clave === 'OTRO') {
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }
