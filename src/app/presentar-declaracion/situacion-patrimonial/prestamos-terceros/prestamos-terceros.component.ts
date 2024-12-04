@@ -549,22 +549,12 @@ export class PrestamosTercerosComponent implements OnInit {
       }
     }
 
-    const { parentesco } = this.prestamoComodatoForm.value.prestamo.duenoTitular;
-    const { parentesco2 } = this.prestamoComodatoForm.value.prestamo.tipoBien;
-    console.log("parentesco")
-    console.log(parentesco);
-    console.log("parentesco2")
-    console.log(xx)
-
-    if (parentesco){
-      console.log("parentesco")
-      console.log(parentesco)
-      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === parentesco.clave);
-      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
-      this.prestamoComodatoForm.get('duenoTitular.relacionConTitular').setValue(optRelacion[0]);
-      if(parentesco.clave ==='OTRO'){
-        this.varOtroRelacion=parentesco.valor;
-      }
+    const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
+    console.log("form")
+    console.log(form)
+    
+    if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular) > -1) {
+      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
     }
 
   }
