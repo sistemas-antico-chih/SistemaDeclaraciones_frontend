@@ -502,7 +502,8 @@ export class PrestamosTercerosComponent implements OnInit {
 
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo;
     console.log(duenoTitular.relacionConTitular);
-    console.log(this.relacionConTitular)
+    this.relacionConTitular=duenoTitular.relacionConTitular;
+    console.log(this.relacionConTitular);
 
     if (duenoTitular) {
       console.log("llega")
