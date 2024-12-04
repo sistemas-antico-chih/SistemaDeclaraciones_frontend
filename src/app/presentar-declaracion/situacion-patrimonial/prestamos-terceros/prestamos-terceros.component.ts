@@ -232,8 +232,8 @@ export class PrestamosTercerosComponent implements OnInit {
       .forEach((field) =>
         this.prestamoComodatoForm.get(`prestamo.duenoTitular.${field}`).patchValue(prestamo.duenoTitular[field])
       );
-      this.prestamoComodatoForm.get(`prestamo.tipoOperacion`).patchValue(prestamo.tipoOperacion);
-    
+    this.prestamoComodatoForm.get(`prestamo.tipoOperacion`).patchValue(prestamo.tipoOperacion);
+
     //console.log("prestamo")
     //console.log(prestamo)
 
@@ -501,13 +501,12 @@ export class PrestamosTercerosComponent implements OnInit {
 
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo.duenoTitular;
 
-    if (duenoTitular){
+    if (duenoTitular) {
       if (this.parentescoArray.indexOf(duenoTitular?.relacionConTitular) > -1) {
-        this.varOtroRelacion=duenoTitular.relacionConTitular
-        /*this.bienesMueblesForm
-        .get('bienMueble.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));     
-        */ 
+        this.varOtroRelacion = duenoTitular.relacionConTitular
+        this.prestamoComodatoForm
+          .get('prestamo.duenoTitular.relacionConTitular')
+          .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));
       }
     }
 
@@ -516,15 +515,15 @@ export class PrestamosTercerosComponent implements OnInit {
       const optTInmueble = this.tipoInmuebleCatalogo.filter((ti: any) => ti.clave === tipoInmueble.clave);
       // this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
       this.prestamoComodatoForm.get('prestamo.tipoBien.inmueble.tipoInmueble').setValue(optTInmueble[0]);
-      
+
       //if (tipoInmueble) {
-        //const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
-        //this.prestamoComodatoForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
-        if(tipoInmueble.clave ==='OTRO'){
-          this.varOtroTipoInmueble=tipoInmueble.valor;
-        }
+      //const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
+      //this.prestamoComodatoForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
+      if (tipoInmueble.clave === 'OTRO') {
+        this.varOtroTipoInmueble = tipoInmueble.valor;
+      }
       //}
-      
+
       if (domicilioMexico) {
         const { entidadFederativa, municipioAlcaldia } = domicilioMexico;
         if (entidadFederativa) {
@@ -601,9 +600,10 @@ export class PrestamosTercerosComponent implements OnInit {
     }
     if (this.otroParentesco === undefined) {
       this.prestamoComodatoForm
-      .get('prestamo.duenoTitular.relacionConTitular')
-      .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));    } 
-      else {
+        .get('prestamo.duenoTitular.relacionConTitular')
+        .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));
+    }
+    else {
       if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular) > -1) {
         form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
       }
