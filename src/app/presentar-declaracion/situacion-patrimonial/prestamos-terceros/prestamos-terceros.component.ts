@@ -501,18 +501,11 @@ export class PrestamosTercerosComponent implements OnInit {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
 
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo;
-    console.log(duenoTitular.relacionConTitular);
-    this.relacionConTitular=duenoTitular.relacionConTitular;
-    console.log(this.relacionConTitular);
 
     if (duenoTitular) {
-      console.log("llega")
       if (this.parentescoArray.includes(duenoTitular.relacionConTitular)){
-        console.log("llega2")
       }
       else{
-        console.log("llega33")
-        //this.parentescoRelacionCatalogo.clave = 'OTRO'
         this.relacionConTitular="OTRO(ESPECIFIQUE)"
         this.varOtroRelacion = duenoTitular.relacionConTitular      
       }

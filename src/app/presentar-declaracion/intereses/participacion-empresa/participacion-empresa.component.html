@@ -221,6 +221,18 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field appearance="fill" *ngIf="participacionForm.value.participacion.tipoParticipacion?.clave === 'OTRO'">
+            <mat-label>Especifique</mat-label>
+            <mat-icon matPrefix class="no-public">group</mat-icon>
+            <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroTipoParticipacion
+              class="OTP"
+              #otroTipoParticipacion
+              matInput 
+              type="text" 
+              required />
+          </mat-form-field>
         </div>
 
         <div class="grid-2-col grid-margin">
@@ -285,6 +297,18 @@
                 {{ sector.valor }}
               </mat-option>
             </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" *ngIf="participacionForm.value.participacion.sector?.clave === 'OTRO'">
+            <mat-label>Especifique</mat-label>
+            <mat-icon matPrefix class="no-public">group</mat-icon>
+            <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroSector
+              class="OS"
+              #otroTipoSector
+              matInput 
+              type="text" 
+              required />
           </mat-form-field>
         </div>
       </div>
