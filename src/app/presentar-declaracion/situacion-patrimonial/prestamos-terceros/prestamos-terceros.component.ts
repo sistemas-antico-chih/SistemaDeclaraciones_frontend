@@ -504,7 +504,7 @@ export class PrestamosTercerosComponent implements OnInit {
 
     if (duenoTitular) {
       console.log("llega")
-      if (duenoTitular.relacionConTitular in this.parentescoArray){
+      if (this.parentescoArray.includes(duenoTitular.relacionConTitular)){
         console.log("llega2")
       }
       else{
