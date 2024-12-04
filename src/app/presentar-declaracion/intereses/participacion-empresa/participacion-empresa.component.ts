@@ -55,6 +55,12 @@ export class ParticipacionEmpresaComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  varOtroTipoParticipacion: string = null;
+  varOtroSector: string = null;
+
+  @ViewChild('otroTipoParticipacion') otroTipoParticipacion: ElementRef;
+  @ViewChild('otroSector') otroSector: ElementRef;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
