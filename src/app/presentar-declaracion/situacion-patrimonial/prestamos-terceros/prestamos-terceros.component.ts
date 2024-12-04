@@ -498,11 +498,16 @@ export class PrestamosTercerosComponent implements OnInit {
 
   setSelectedOptions() {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
-    /* const { tipoParentesco } = this.prestamoComodatoForm.value.duenoTitular;
+    const { parentesco } = this.prestamoComodatoForm.value.duenoTitular;
 
-    if (tipoParentesco){
-      
-    } */
+    if (parentesco){
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === parentesco.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.prestamoComodatoForm.get('duenoTitular.relacionConTitular').setValue(optRelacion[0]);
+      if(parentesco.clave ==='OTRO'){
+        this.varOtroRelacion=parentesco.valor;
+      }
+    }
 
     if (inmueble) {
       const { tipoInmueble, domicilioMexico } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
@@ -588,10 +593,10 @@ export class PrestamosTercerosComponent implements OnInit {
       form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    /*if (form.tipoBien.vehiculo?.tipoVehiculo.clave === 'OTRO') {
+    if (form.tipoBien.vehiculo?.tipoVehiculo.clave === 'OTRO') {
       form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
-    }*/
+    }
     if (this.otroParentesco === undefined) {
       this.prestamoComodatoForm
       .get('prestamo.duenoTitular.relacionConTitular')
