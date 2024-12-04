@@ -501,14 +501,15 @@ export class PrestamosTercerosComponent implements OnInit {
 
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo.duenoTitular;
 
-    console.log(duenoTitular)
-
-    const form = this.prestamoComodatoForm.value.prestamo
-    console.log("form")
-    console.log(form)
-
-    console.log("///")
-    console.log(form.duenoTitular)
+    if (duenoTitular){
+      if (this.parentescoArray.indexOf(duenoTitular?.relacionConTitular) > -1) {
+        this.varOtroRelacion=duenoTitular.relacionConTitular
+        /*this.bienesMueblesForm
+        .get('bienMueble.formaAdquisicion')
+        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));     
+        */ 
+      }
+    }
 
     if (inmueble) {
       const { tipoInmueble, domicilioMexico } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
