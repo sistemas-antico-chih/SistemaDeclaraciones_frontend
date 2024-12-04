@@ -354,13 +354,19 @@ export class ParticipacionEmpresaComponent implements OnInit {
     //const { ubicacion } = this.participacionForm.value.participacion;
 
     if (tipoParticipacion) {
-      this.participacionForm
-        .get('participacion.tipoParticipacion')
-        .setValue(findOption(this.tipoParticipacionCatalogo, tipoParticipacion.clave));
+      const optionTipoParticipacion = this.tipoParticipacionCatalogo.filter((i: any) => i.clave === tipoParticipacion.clave);
+      this.participacionForm.get('participacion.tipoParticipacion').setValue(optionTipoParticipacion[0]);
+      if (tipoParticipacion.clave === 'OTRO') {
+        this.varOtroTipoParticipacion = tipoParticipacion.valor;
+      }
     }
 
     if (sector) {
-      this.participacionForm.get('participacion.sector').setValue(findOption(this.sectorCatalogo, sector.clave));
+      const optionSector = this.sectorCatalogo.filter((i: any) => i.clave === sector.clave);
+      this.participacionForm.get('participacion.sector').setValue(optionSector[0]);
+      if (sector.clave === 'OTRO') {
+        this.varOtroSector = sector.valor;
+      }
     }
 
     if (entidadFederativa) {
