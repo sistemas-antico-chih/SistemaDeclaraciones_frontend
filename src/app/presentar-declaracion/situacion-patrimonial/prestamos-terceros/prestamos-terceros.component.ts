@@ -497,7 +497,14 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { vehiculo, inmueble, xx } = this.prestamoComodatoForm.value.prestamo.tipoBien;
+    const { vehiculo, inmueble, xyz } = this.prestamoComodatoForm.value.prestamo;
+
+    const { duenoTitular } = this.prestamoComodatoForm.value.duenoTitular;
+
+    console.log("inmueble");
+    console.log(inmueble)
+    console.log(xyz)
+    console.log(duenoTitular)
 
     if (inmueble) {
       const { tipoInmueble, domicilioMexico } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
@@ -549,7 +556,7 @@ export class PrestamosTercerosComponent implements OnInit {
       }
     }
 
-    const form = JSON.parse(JSON.stringify(this.prestamoComodatoForm.value.prestamo)); // Deep copy
+    const form = this.prestamoComodatoForm.value.prestamo
     console.log("form")
     console.log(form)
     
