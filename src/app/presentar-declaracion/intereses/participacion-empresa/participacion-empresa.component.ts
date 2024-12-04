@@ -350,7 +350,8 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
   setSelectedOptions() {
     const { tipoParticipacion, sector } = this.participacionForm.value.participacion;
-    const { entidadFederativa, pais, ubicacion } = this.participacionForm.value.participacion.ubicacion;
+    const { entidadFederativa } = this.participacionForm.value.participacion.ubicacion;
+    //const { ubicacion } = this.participacionForm.value.participacion;
 
     if (tipoParticipacion) {
       this.participacionForm
@@ -366,11 +367,15 @@ export class ParticipacionEmpresaComponent implements OnInit {
       this.participacionForm
         .get('participacion.ubicacion.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
+      this.location="MX"
+    }else{
+      this.location="EX"
     }
+
 
     console.log("aqui");
     console.log(entidadFederativa);
-    if(ubicacion){
+    /*if(ubicacion){
       if( !ubicacion.pais || ubicacion.pais.value === 'MX'){
         console.log("aqui true");
         const { entidadFederativa } = ubicacion;
@@ -383,7 +388,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
         console.log("aqui false");
         this.location = "EX";
       }
-    }
+    }*/
   }
 
   setupForm(participacion: Participaciones) {
