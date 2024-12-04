@@ -497,14 +497,18 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { vehiculo, inmueble, xyz } = this.prestamoComodatoForm.value.prestamo;
+    const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
 
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo.duenoTitular;
 
-    console.log("inmueble");
-    console.log(inmueble)
-    console.log(xyz)
     console.log(duenoTitular)
+
+    const form = this.prestamoComodatoForm.value.prestamo
+    console.log("form")
+    console.log(form)
+
+    console.log("///")
+    console.log(form.duenoTitular)
 
     if (inmueble) {
       const { tipoInmueble, domicilioMexico } = this.prestamoComodatoForm.value.prestamo.tipoBien.inmueble;
@@ -555,15 +559,6 @@ export class PrestamosTercerosComponent implements OnInit {
           .setValue(optEntidad[0]);
       }
     }
-
-    const form = this.prestamoComodatoForm.value.prestamo
-    console.log("form")
-    console.log(form)
-    
-    if (this.parentescoArray.indexOf(form.duenoTitular?.relacionConTitular) > -1) {
-      form.duenoTitular.relacionConTitular = this.otroParentesco.nativeElement.value.toUpperCase();
-    }
-
   }
 
   setupForm(prestamoComodato: PrestamoComodato) {
