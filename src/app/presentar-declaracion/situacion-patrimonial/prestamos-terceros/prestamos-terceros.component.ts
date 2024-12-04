@@ -498,7 +498,7 @@ export class PrestamosTercerosComponent implements OnInit {
 
   setSelectedOptions() {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
-    const { parentesco } = this.prestamoComodatoForm.value.duenoTitular;
+    const { parentesco } = this.prestamoComodatoForm.value.prestamo.duenoTitular;
 
     if (parentesco){
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === parentesco.clave);
