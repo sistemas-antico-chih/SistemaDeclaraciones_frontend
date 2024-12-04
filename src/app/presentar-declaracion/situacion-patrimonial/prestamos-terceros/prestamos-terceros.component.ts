@@ -67,6 +67,7 @@ export class PrestamosTercerosComponent implements OnInit {
   varOtroTipoInmueble: string = null;
   varOtroTipoVehiculo: string = null;
   varOtroRelacion: string = null;
+  parentesco: string = null;
 
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
@@ -509,11 +510,8 @@ export class PrestamosTercerosComponent implements OnInit {
       }
       else{
         console.log("llega33")
-        this.varOtroRelacion = duenoTitular.relacionConTitular
-        this.prestamoComodatoForm
-          .get('prestamo.duenoTitular.relacionConTitular')
-          .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));
-      
+        this.parentesco = 'OTRO'
+        this.varOtroRelacion = duenoTitular.relacionConTitular      
       }
     }
 
