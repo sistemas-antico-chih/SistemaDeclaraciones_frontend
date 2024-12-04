@@ -225,12 +225,15 @@
           <button mat-button color="primary" (click)="removeItem(i)">Eliminar</button>
         </mat-card-actions>
       </mat-card>
-      <div class="boton-agregar" *ngIf="(prestamo.length && !editMode) || prestamoComodatoForm.value.ninguno">
-        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-        <button mat-raised-button color="primary" (click)="checkItems()">
-          GUARDAR
-        </button>
-        <button mat-raised-button color="primary" (click)="addItem()">Agregar Préstamo</button>
+      <div
+        class="boton-agregar grid-margin"
+        *ngIf="(prestamo?.length && !editMode) || prestamoComodatoForm.value.ninguno"
+      >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        GUARDAR
+      </button>
+        <button mat-raised-button color="primary" (click)="addItem()">Agregar préstamo o comodato</button>
       </div>
 
       <div *ngIf="!editMode && aclaracionesText">
@@ -239,13 +242,6 @@
           <p>Aclaraciones / Observaciones</p>
         </div>
         <p class="vertical-margin-25">{{ aclaracionesText }}</p>
-      </div>
-
-      <div
-        class="boton-agregar grid-margin"
-        *ngIf="(prestamo?.length && !editMode) || prestamoComodatoForm.value.ninguno"
-      >
-        <button mat-raised-button color="primary" (click)="addItem()">Agregar préstamo o comodato</button>
       </div>
     </div>
 

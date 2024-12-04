@@ -588,10 +588,10 @@ export class PrestamosTercerosComponent implements OnInit {
       form.tipoBien.inmueble.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }
-    if (form.tipoBien.vehiculo?.tipoVehiculo.clave === 'OTRO') {
+    /*if (form.tipoBien.vehiculo?.tipoVehiculo.clave === 'OTRO') {
       form.tipoBien.vehiculo.tipoVehiculo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
-    }
+    }*/
     if (this.otroParentesco === undefined) {
       this.prestamoComodatoForm
       .get('prestamo.duenoTitular.relacionConTitular')
