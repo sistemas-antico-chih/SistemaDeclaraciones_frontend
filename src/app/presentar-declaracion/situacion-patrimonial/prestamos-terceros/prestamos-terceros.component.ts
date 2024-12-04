@@ -500,16 +500,20 @@ export class PrestamosTercerosComponent implements OnInit {
     const { vehiculo, inmueble } = this.prestamoComodatoForm.value.prestamo.tipoBien;
 
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo;
-    console.log(duenoTitular);
+    console.log(duenoTitular.relacionConTitular);
 
     if (duenoTitular) {
       console.log("llega")
-      if (this.parentescoArray.indexOf(duenoTitular.relacionConTitular) > -1) {
+      if (duenoTitular.relacionConTitular in this.parentescoArray){
         console.log("llega2")
+      }
+      else{
+        console.log("llega33")
         this.varOtroRelacion = duenoTitular.relacionConTitular
         this.prestamoComodatoForm
           .get('prestamo.duenoTitular.relacionConTitular')
           .setValue(findOption(this.parentescoRelacionCatalogo, ParentescoRelacion));
+      
       }
     }
 
