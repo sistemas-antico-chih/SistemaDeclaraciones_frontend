@@ -669,7 +669,7 @@
           <mat-form-field matTooltip="{{ tooltipData.relacionDuenioTitular }}" appearance="fill">
             <mat-label>Relación con el dueño o titular</mat-label>
             <mat-icon matPrefix class="no-public">group</mat-icon>
-            <mat-select formControlName="relacionConTitular" required [{ngModel}]="relacionConTitular">
+            <mat-select formControlName="relacionConTitular" required [(ngModel)]="relacionConTitular">
               <mat-option
                 *ngFor="let parentescoRelacion of parentescoRelacionCatalogo"
                 value="{{ parentescoRelacion.valor }}"
