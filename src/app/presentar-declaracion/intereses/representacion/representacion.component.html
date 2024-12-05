@@ -298,7 +298,13 @@
           <mat-form-field appearance="fill" *ngIf="representacionForm.value.representacion.sector?.clave === 'OTRO'">
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">credit_card</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroSector
+                #otroSector
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
         </div>
       </div>

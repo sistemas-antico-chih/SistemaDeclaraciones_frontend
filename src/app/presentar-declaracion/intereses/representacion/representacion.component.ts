@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -60,6 +60,11 @@ export class RepresentacionComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  varOtroSector: string = null;
+
+  @ViewChild('otroSector') otroSector: ElementRef;
+  location: string = null;
 
   constructor(
     private apollo: Apollo,
@@ -319,7 +324,8 @@ export class RepresentacionComponent implements OnInit {
   saveItem() {
     let representacion = [...this.representacion];
     const aclaracionesObservaciones = this.representacionForm.value.aclaracionesObservaciones;
-    const newItem = this.representacionForm.value.representacion;
+    //const newItem = this.representacionForm.value.representacion;
+    const newItem = this.finalRepresentacionForm;
 
     if (this.editIndex === null) {
       representacion = [...representacion, newItem];
@@ -345,16 +351,25 @@ export class RepresentacionComponent implements OnInit {
 
   setSelectedOptions() {
     const { sector } = this.representacionForm.value.representacion;
-    const { entidadFederativa, pais } = this.representacionForm.value.representacion.ubicacion;
+    const { entidadFederativa } = this.representacionForm.value.representacion.ubicacion;
 
     if (sector) {
-      this.representacionForm.get('representacion.sector').setValue(findOption(this.sectorCatalogo, sector));
+      //this.representacionForm.get('representacion.sector').setValue(findOption(this.sectorCatalogo, sector));
+      const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
+        // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+        this.representacionForm.get('apoyo.beneficiarioPrograma').setValue(optSector[0]);
+        if (sector.clave === 'OTRO') {
+          this.varOtroSector = sector.valor;
+        }
     }
 
     if (entidadFederativa) {
       this.representacionForm
         .get('representacion.ubicacion.entidadFederativa')
-        .setValue(findOption(this.estadosCatalogo, entidadFederativa));
+        .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
+      this.location="MX"
+    }else{
+      this.location="EX"
     }
   }
 
@@ -399,5 +414,16 @@ export class RepresentacionComponent implements OnInit {
       });
       this.isLoading = false;
     }
+  }
+
+  get finalRepresentacionForm(){
+    const form = JSON.parse(JSON.stringify(this.representacionForm.value.apoyo)); // Deep copy
+
+    if (form.beneficiarioPrograma?.clave === 'OTRO') {
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    return form;
   }
 }
