@@ -312,7 +312,7 @@ export class ApoyosPublicosComponent implements OnInit {
       // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
       this.apoyosForm.get('participacion.tipoInstitucion').setValue(optTipoIns[0]);
       if (tipoApoyo.clave === 'OTRO') {
-        this.varOtroTipoApoyo = tipoApoyo.valor; S
+        this.varOtroTipoApoyo = tipoApoyo.valor;
       }
     }
   }
