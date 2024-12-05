@@ -339,8 +339,8 @@ export class IngresosNetosComponent implements OnInit {
 
   pasarIds(tipoInstrumento: any): void {
     this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
-    console.log(this.arrayOtroTipoInstrumento)
-    console.log(this.arrayHTMLOtroTipoInstrumento)
+    //console.log(this.arrayOtroTipoInstrumento)
+    //console.log(this.arrayHTMLOtroTipoInstrumento)
   }
 
   fillForm(ingresos: Ingresos) {
@@ -395,6 +395,9 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   async getUserInfo() {
+    this.cargarActividadFinanciera
+      console.log("getUserInfo1");
+      console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
@@ -416,7 +419,7 @@ export class IngresosNetosComponent implements OnInit {
       }
 
       this.cargarActividadFinanciera
-      console.log("getUserInfo");
+      console.log("getUserInfo2");
       console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
 
     } catch (error) {
