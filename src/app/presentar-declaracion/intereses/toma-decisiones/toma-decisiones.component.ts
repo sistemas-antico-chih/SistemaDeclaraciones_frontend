@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -68,6 +68,11 @@ export class TomaDecisionesComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  varOtroTipoParticipacion: string = null;
+
+  @ViewChild('otroTipoParticipacion') otroTipoParticipacion: ElementRef;
+  location: string = null;
 
   constructor(
     private apollo: Apollo,
@@ -333,7 +338,8 @@ export class TomaDecisionesComponent implements OnInit {
   saveItem() {
     let participacion = [...this.participacion];
     const aclaracionesObservaciones = this.participacionTomaDecisionesForm.value.aclaracionesObservaciones;
-    const newItem = this.participacionTomaDecisionesForm.value.participacion;
+    //const newItem = this.participacionTomaDecisionesForm.value.participacion;
+    const newItem = this.finalParticipacionTomaDecisionesForm;
 
     if (this.editIndex === null) {
       participacion = [...participacion, newItem];
@@ -362,15 +368,20 @@ export class TomaDecisionesComponent implements OnInit {
     const { entidadFederativa } = this.participacionTomaDecisionesForm.value.participacion.ubicacion;
 
     if (tipoInstitucion) {
-      this.participacionTomaDecisionesForm
-        .get('participacion.tipoInstitucion')
-        .setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+      const optionTipoInstitucion = this.institucionCatalogo.filter((i: any) => i.clave === tipoInstitucion.clave);
+      this.participacionTomaDecisionesForm.get('participacion.tipoParticipacion').setValue(optionTipoInstitucion[0]);
+      if (tipoInstitucion.clave === 'OTRO') {
+        this.varOtroTipoParticipacion = tipoInstitucion.valor;
+      }
     }
 
     if (entidadFederativa) {
       this.participacionTomaDecisionesForm
         .get('participacion.ubicacion.entidadFederativa')
-        .setValue(findOption(this.estadosCatalogo, entidadFederativa));
+        .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
+      this.location="MX"
+    }else{
+      this.location="EX"
     }
   }
 
@@ -417,5 +428,16 @@ export class TomaDecisionesComponent implements OnInit {
       });
       this.isLoading = false;
     }
+  }
+
+  get finalParticipacionForm() {
+    const form = JSON.parse(JSON.stringify(this.participacionTomaDecisionesForm.value.participacion)); // Deep copy
+
+    if (form.tipoInstitucion?.clave === 'OTRO') {
+      form.tipoInstitucion.valor = this.otroTipoParticipacion.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    return form;
   }
 }

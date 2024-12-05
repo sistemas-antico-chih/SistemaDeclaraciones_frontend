@@ -377,24 +377,6 @@ export class ParticipacionEmpresaComponent implements OnInit {
     }else{
       this.location="EX"
     }
-
-
-    console.log("aqui");
-    console.log(entidadFederativa);
-    /*if(ubicacion){
-      if( !ubicacion.pais || ubicacion.pais.value === 'MX'){
-        console.log("aqui true");
-        const { entidadFederativa } = ubicacion;
-        this.location = "MX";
-        const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
-        this.participacionForm.get('participacion.ubicacion.entidadFederativa').setValue(optEntidad[0]);
-
-      }
-      else{
-        console.log("aqui false");
-        this.location = "EX";
-      }
-    }*/
   }
 
   setupForm(participacion: Participaciones) {

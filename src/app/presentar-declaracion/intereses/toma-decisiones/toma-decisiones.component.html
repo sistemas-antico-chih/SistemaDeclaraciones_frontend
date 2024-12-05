@@ -187,7 +187,14 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">beenhere</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoParticipacion
+                class="OTP"
+                #otroTipoParticipacion
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
           <mat-form-field matTooltip="{{ tooltipData.nombreInstitucion }}" appearance="fill">
             <mat-label>Nombre de la Institución</mat-label>
