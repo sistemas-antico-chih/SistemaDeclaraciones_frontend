@@ -299,8 +299,8 @@ export class IngresosNetosComponent implements OnInit {
   ) {
     let formArray: FormArray = null;
 
-    console.log("fillFormArray1")
-    console.log(this.actividadFinanciera.value.length)
+    //console.log("fillFormArray1")
+    //console.log(this.actividadFinanciera.value.length)
 
     for (let [index, value] of data.entries()) {
       switch (formArrayName) {
@@ -344,8 +344,8 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   fillForm(ingresos: Ingresos) {
-    console.log("fillForm1")
-    console.log(this.actividadFinanciera.value.length)
+    //console.log("fillForm1")
+    //console.log(this.actividadFinanciera.value.length)
     this.ingresosForm.patchValue(ingresos);
     
     [
@@ -460,7 +460,7 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
-    if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id){
+    /*if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id){
       console.log("entra")
     }
     console.log(this.finalIngresosForm)
@@ -469,7 +469,7 @@ export class IngresosNetosComponent implements OnInit {
     if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
       let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
       console.log("test 1: " + test);
-    }
+    }*/
   }
 
   /*ngAfterViewInit() {
