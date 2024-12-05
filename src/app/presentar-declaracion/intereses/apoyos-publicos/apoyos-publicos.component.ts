@@ -258,7 +258,9 @@ export class ApoyosPublicosComponent implements OnInit {
   saveItem() {
     let apoyo = [...this.apoyo];
     const { aclaracionesObservaciones } = this.apoyosForm.value;
-    const newItem = this.apoyosForm.value.apoyo;
+    //const newItem = this.apoyosForm.value.apoyo;
+    const newItem = this.finalApoyosForm;
+
 
     if (this.editIndex === null) {
       apoyo = [...apoyo, newItem];
@@ -345,5 +347,21 @@ export class ApoyosPublicosComponent implements OnInit {
       });
       this.isLoading = false;
     }
+  }
+
+  get finalApoyosForm() {
+    const form = JSON.parse(JSON.stringify(this.apoyosForm.value.apoyo)); // Deep copy
+
+    if (form.beneficiarioPrograma?.clave === 'OTRO') {
+      form.beneficiarioPrograma.valor = this.otroBeneficiario.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    if (form.tipoApoyo?.clave === 'OTRO') {
+      form.tipoApoyo.valor = this.otroTipoApoyo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    return form;
   }
 }
