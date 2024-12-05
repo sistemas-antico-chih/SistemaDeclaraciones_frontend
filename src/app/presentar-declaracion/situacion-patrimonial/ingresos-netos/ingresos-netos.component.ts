@@ -339,6 +339,8 @@ export class IngresosNetosComponent implements OnInit {
 
   pasarIds(tipoInstrumento: any): void {
     this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
+    console.log(this.arrayOtroTipoInstrumento)
+    console.log(this.arrayHTMLOtroTipoInstrumento)
   }
 
   fillForm(ingresos: Ingresos) {
