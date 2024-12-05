@@ -395,8 +395,9 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   async getUserInfo() {
-    this.cargarActividadFinanciera
+    
       console.log("getUserInfo1");
+      this.cargarActividadFinanciera()
       console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     try {
       const { data, errors } = await this.apollo
@@ -418,8 +419,8 @@ export class IngresosNetosComponent implements OnInit {
         this.fillForm(data?.declaracion.ingresos);
       }
 
-      this.cargarActividadFinanciera
       console.log("getUserInfo2");
+      this.cargarActividadFinanciera()
       console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
 
     } catch (error) {
@@ -471,7 +472,7 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
-    this.cargarActividadFinanciera
+    this.cargarActividadFinanciera()
 
 
     /*if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id){
