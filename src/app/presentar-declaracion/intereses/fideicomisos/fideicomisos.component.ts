@@ -35,6 +35,7 @@ export class FideicomisosComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  varOtroSector: string = null;
 
   @ViewChild('otroSector') otroSector: ElementRef;
 
@@ -346,7 +347,11 @@ export class FideicomisosComponent implements OnInit {
     const { sector } = this.fideicomisosForm.value.fideicomiso;
 
     if (sector) {
-      this.fideicomisosForm.get('fideicomiso.sector').setValue(findOption(this.sectorCatalogo, sector.clave));
+      const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
+        this.fideicomisosForm.get('fideicomiso.sector').setValue(optSector[0]);
+        if (sector.clave === 'OTRO') {
+          this.varOtroSector = sector.valor; 
+        }
     }
   }
 

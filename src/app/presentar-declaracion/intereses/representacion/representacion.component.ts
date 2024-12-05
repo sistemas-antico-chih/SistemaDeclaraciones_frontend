@@ -417,7 +417,7 @@ export class RepresentacionComponent implements OnInit {
   }
 
   get finalRepresentacionForm(){
-    const form = JSON.parse(JSON.stringify(this.representacionForm.value.apoyo)); // Deep copy
+    const form = JSON.parse(JSON.stringify(this.representacionForm.value.representacion)); // Deep copy
 
     if (form.beneficiarioPrograma?.clave === 'OTRO') {
       form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();

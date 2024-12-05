@@ -275,7 +275,14 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">public</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" #otroSector matInput type="text" required />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroSector
+                #otroSector
+                matInput 
+                type="text" 
+                required />
+          </mat-form-field>
           </mat-form-field>
 
           <mat-form-field matTooltip="{{ tooltipData.localizaFideicomiso }}" appearance="fill">
