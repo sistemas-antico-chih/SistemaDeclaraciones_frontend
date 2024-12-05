@@ -164,7 +164,7 @@ export class FideicomisosComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.fideicomisosForm.value.fideicomiso)); // Deep copy
 
     if (form.sector?.clave === 'OTRO') {
-      form.sector.valor = this.otroSector.nativeElement.value;
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
     }
 
     return form;

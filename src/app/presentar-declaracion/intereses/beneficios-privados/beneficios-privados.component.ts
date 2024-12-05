@@ -148,7 +148,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.beneficiosPrivadosForm.value.beneficio)); // Deep copy
 
     if (form.tipoBeneficio?.clave === 'O') {
-      form.tipoBeneficio.valor = this.otroTipoBeneficio.nativeElement.value;
+      form.tipoBeneficio.valor = this.otroTipoBeneficio.nativeElement.value.toUpperCase();;
     }
 
     if (form.sector?.clave === 'OTRO') {

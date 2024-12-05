@@ -197,7 +197,7 @@ export class ClientesPrincipalesComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.clientesPrincipalesForm.value.cliente)); // Deep copy
 
     if (form.sector?.clave === 'OTRO') {
-      form.sector.valor = this.otroSector.nativeElement.value;
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
     }
 
     return form;
