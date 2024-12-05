@@ -293,24 +293,22 @@ export class ApoyosPublicosComponent implements OnInit {
   setSelectedOptions() {
     const { beneficiarioPrograma, tipoApoyo } = this.apoyosForm.value.apoyo;
 
+    console.log(beneficiarioPrograma);
+    console.log(tipoApoyo)
+
     if (beneficiarioPrograma) {
-      /*this.apoyosForm
-        .get('apoyo.beneficiarioPrograma')
-        .setValue(findOption(this.beneficiarioProgramaCatalogo, beneficiarioPrograma.clave));
-        */
-        const optTipoIns = this.beneficiarioProgramaCatalogo.filter((ins: any) => ins.clave === beneficiarioPrograma.clave);
+        const optBeneficiario = this.beneficiarioProgramaCatalogo.filter((ins: any) => ins.clave === beneficiarioPrograma.clave);
         // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
-        this.apoyosForm.get('participacion.tipoInstitucion').setValue(optTipoIns[0]);
+        this.apoyosForm.get('apoyo.beneficiarioPrograma').setValue(optBeneficiario[0]);
         if (beneficiarioPrograma.clave === 'OTRO') {
           this.varOtroBeneficiario = beneficiarioPrograma.valor;
         }
     }
 
     if (tipoApoyo) {
-      //this.apoyosForm.get('apoyo.tipoApoyo').setValue(findOption(this.TiposApoyoCatalogo, tipoApoyo.clave));
       const optTipoIns = this.TiposApoyoCatalogo.filter((ins: any) => ins.clave === tipoApoyo.clave);
       // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
-      this.apoyosForm.get('participacion.tipoInstitucion').setValue(optTipoIns[0]);
+      this.apoyosForm.get('apoyo.tipoApoyo').setValue(optTipoIns[0]);
       if (tipoApoyo.clave === 'OTRO') {
         this.varOtroTipoApoyo = tipoApoyo.valor;
       }
