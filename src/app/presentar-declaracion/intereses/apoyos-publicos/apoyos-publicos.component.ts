@@ -48,6 +48,12 @@ export class ApoyosPublicosComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  varOtroBeneficiario: string = null;
+  varOtroTipoApoyo: string = null;
+
+  @ViewChild('otroBeneficiario') otroBeneficiario: ElementRef;
+  @ViewChild('otroTipoApoyo') otroTipoApoyo: ElementRef;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
