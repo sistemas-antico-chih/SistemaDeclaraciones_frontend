@@ -299,7 +299,7 @@ export class IngresosNetosComponent implements OnInit {
   ) {
     let formArray: FormArray = null;
 
-    console.log("fillFormArray")
+    console.log("fillFormArray1")
     console.log(this.actividadFinanciera.value.length)
 
     for (let [index, value] of data.entries()) {
@@ -342,7 +342,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   fillForm(ingresos: Ingresos) {
-    console.log("fillForm")
+    console.log("fillForm1")
     console.log(this.actividadFinanciera.value.length)
     this.ingresosForm.patchValue(ingresos);
     
@@ -470,7 +470,7 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
+  /*ngAfterViewInit() {
     console.log("ngAfterViewInit");
     console.log(this.ingresosForm.value)
     console.log("aqui");
@@ -482,12 +482,12 @@ export class IngresosNetosComponent implements OnInit {
         document.querySelectorAll<HTMLInputElement>('.OTI')[j].value = this.arrayOtroTipoInstrumento[j];
       }
     }
-    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
+    /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
       let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
       console.log("test 2: " + test);
     }
 
-  }
+  }*/
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
