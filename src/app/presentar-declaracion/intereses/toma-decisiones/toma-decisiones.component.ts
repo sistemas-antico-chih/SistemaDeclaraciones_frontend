@@ -364,19 +364,20 @@ export class TomaDecisionesComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoInstitucion } = this.participacionTomaDecisionesForm.value.participacion;
+    const { tipoParticipacion } = this.participacionTomaDecisionesForm.value.participacion;
     const { entidadFederativa } = this.participacionTomaDecisionesForm.value.participacion.ubicacion;
 
     console.log("institucion");
-    console.log(tipoInstitucion)
+    //console.log(tipoInstitucion)
     console.log("entidadFederativa");
     console.log(entidadFederativa)
-    if (tipoInstitucion) {
-      /*const optionTipoParticipacion = this.institucionCatalogo.filter((i: any) => i.clave === tipoInstitucion.clave);
+   
+    if (tipoParticipacion) {
+      const optionTipoParticipacion = this.institucionCatalogo.filter((i: any) => i.clave === tipoParticipacion.clave);
       this.participacionTomaDecisionesForm.get('participacion.tipoParticipacion').setValue(optionTipoParticipacion[0]);
-      if (tipoInstitucion.clave === 'OTRO') {
-        this.varOtroTipoParticipacion = tipoInstitucion.valor;
-      }*/
+      if (tipoParticipacion.clave === 'OTRO') {
+        this.varOtroTipoParticipacion = tipoParticipacion.valor;
+      }
     }
 
     if (entidadFederativa) {
