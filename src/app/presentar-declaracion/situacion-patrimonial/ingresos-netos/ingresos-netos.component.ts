@@ -471,6 +471,8 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
+    this.cargarActividadFinanciera
+
 
     /*if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id){
       console.log("entra")
