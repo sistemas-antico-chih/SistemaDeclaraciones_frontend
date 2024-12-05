@@ -367,6 +367,10 @@ export class TomaDecisionesComponent implements OnInit {
     const { tipoInstitucion } = this.participacionTomaDecisionesForm.value.participacion;
     const { entidadFederativa } = this.participacionTomaDecisionesForm.value.participacion.ubicacion;
 
+    console.log("institucion");
+    console.log(tipoInstitucion)
+    console.log("entidadFederativa");
+    console.log(entidadFederativa)
     if (tipoInstitucion) {
       const optionTipoInstitucion = this.institucionCatalogo.filter((i: any) => i.clave === tipoInstitucion.clave);
       this.participacionTomaDecisionesForm.get('participacion.tipoParticipacion').setValue(optionTipoInstitucion[0]);
@@ -432,6 +436,7 @@ export class TomaDecisionesComponent implements OnInit {
 
   get finalParticipacionTomaDecisionesForm() {
     const form = JSON.parse(JSON.stringify(this.participacionTomaDecisionesForm.value.participacion)); // Deep copy
+    console.log("llega final")
 
     if (form.tipoInstitucion?.clave === 'OTRO') {
       form.tipoInstitucion.valor = this.otroTipoParticipacion.nativeElement.value.toUpperCase();
