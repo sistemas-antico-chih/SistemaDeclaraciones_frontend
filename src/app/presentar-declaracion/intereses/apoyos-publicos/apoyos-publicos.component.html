@@ -148,6 +148,20 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field
+            appearance="fill"
+            *ngIf="apoyosForm.value.apoyo.beneficiarioPrograma?.clave === 'OTRO'"
+          >
+            <mat-label>Especifique</mat-label>
+            <mat-icon matPrefix class="no-public">beenhere</mat-icon>
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroBeneficiario
+                #otroBeneficiario
+                matInput 
+                type="text" 
+                required />
+          </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Tipo de persona</mat-label>
             <mat-icon matPrefix>person</mat-icon>
@@ -199,7 +213,13 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">dns</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoApoyo
+                #otroTipoApoyo
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
           <mat-form-field matTooltip="{{ tooltipData.formaRecepcionApoyo }}" appearance="fill">
             <mat-label>Forma de recepción de pago</mat-label>
