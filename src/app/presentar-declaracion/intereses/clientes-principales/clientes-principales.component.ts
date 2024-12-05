@@ -377,7 +377,7 @@ export class ClientesPrincipalesComponent implements OnInit {
       const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
         this.clientesPrincipalesForm.get('cliente.sector').setValue(optSector[0]);
         if (sector.clave === 'OTRO') {
-          this.varOtroSector = sector.valor;
+          this.varOtroSector = sector.valor; 
         }
     }
 
