@@ -420,8 +420,8 @@ export class IngresosNetosComponent implements OnInit {
       }
 
       console.log("getUserInfo2");
-      this.cargarActividadFinanciera()
-      console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+      //this.cargarActividadFinanciera()
+      //console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
 
     } catch (error) {
       console.error(error);
