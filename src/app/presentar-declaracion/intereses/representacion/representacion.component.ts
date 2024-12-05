@@ -419,7 +419,7 @@ export class RepresentacionComponent implements OnInit {
   get finalRepresentacionForm(){
     const form = JSON.parse(JSON.stringify(this.representacionForm.value.representacion)); // Deep copy
 
-    if (form.beneficiarioPrograma?.clave === 'OTRO') {
+    if (form.sector?.clave === 'OTRO') {
       form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
       //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
     }

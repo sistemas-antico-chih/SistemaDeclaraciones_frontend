@@ -293,9 +293,6 @@ export class ApoyosPublicosComponent implements OnInit {
   setSelectedOptions() {
     const { beneficiarioPrograma, tipoApoyo } = this.apoyosForm.value.apoyo;
 
-    console.log(beneficiarioPrograma);
-    console.log(tipoApoyo)
-
     if (beneficiarioPrograma) {
         const optBeneficiario = this.beneficiarioProgramaCatalogo.filter((ins: any) => ins.clave === beneficiarioPrograma.clave);
         // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
