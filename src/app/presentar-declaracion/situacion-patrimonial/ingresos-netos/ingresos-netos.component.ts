@@ -465,6 +465,10 @@ export class IngresosNetosComponent implements OnInit {
   ngAfterViewInit() {
     console.log("ngAfterViewInit");
     console.log(this.ingresosForm.value)
+    console.log("aqui");
+    console.log(this.actividadFinanciera);
+    console.log("aqui22");
+    console.log(this.getUserInfo);
 
     if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
       for (let j = 0; j < document.querySelectorAll<HTMLInputElement>('.OTI').length; j++) {
