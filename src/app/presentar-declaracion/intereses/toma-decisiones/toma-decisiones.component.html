@@ -266,7 +266,7 @@
           <mat-form-field matTooltip="{{ tooltipData.lugarDondeUbica }}" appearance="fill">
             <mat-label>Lugar donde se ubica</mat-label>
             <mat-icon matPrefix>public</mat-icon>
-            <mat-select #location (selectionChange)="locationChanged($event.value)" required>
+            <mat-select #location (selectionChange)="locationChanged($event.value)" [(value)]="location" required>
               <mat-option value="{{ extranjeroCatalogo[0] }}"> En México </mat-option>
               <mat-option value="{{ extranjeroCatalogo[1] }}"> En el extranjero </mat-option>
             </mat-select>
