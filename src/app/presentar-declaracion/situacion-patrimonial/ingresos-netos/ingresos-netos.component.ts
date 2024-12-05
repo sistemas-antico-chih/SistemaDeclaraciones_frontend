@@ -299,6 +299,9 @@ export class IngresosNetosComponent implements OnInit {
   ) {
     let formArray: FormArray = null;
 
+    console.log("fillFormArray")
+    console.log(this.actividadFinanciera.value.length)
+
     for (let [index, value] of data.entries()) {
       switch (formArrayName) {
         case 'actividadIndustrialComercialEmpresarial':
@@ -339,8 +342,10 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   fillForm(ingresos: Ingresos) {
+    console.log("fillForm")
+    console.log(this.actividadFinanciera.value.length)
     this.ingresosForm.patchValue(ingresos);
-
+    
     [
       'actividadIndustrialComercialEmpresarial',
       'actividadFinanciera',
@@ -409,7 +414,7 @@ export class IngresosNetosComponent implements OnInit {
       }
 
       console.log("getUserInfo");
-      console.log(this.ingresosForm.value)
+      console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
 
     } catch (error) {
       console.error(error);
@@ -453,6 +458,9 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
+    if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id){
+      console.log("entra")
+    }
     console.log(this.finalIngresosForm)
     console.log(this.ingresosForm) 
     
@@ -466,10 +474,8 @@ export class IngresosNetosComponent implements OnInit {
     console.log("ngAfterViewInit");
     console.log(this.ingresosForm.value)
     console.log("aqui");
-    console.log(this.actividadFinanciera);
-    console.log("aqui22");
-    console.log(this.getUserInfo);
-
+    console.log(this.actividadFinanciera.value.length);
+  
     if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
       for (let j = 0; j < document.querySelectorAll<HTMLInputElement>('.OTI').length; j++) {
         this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
@@ -482,28 +488,6 @@ export class IngresosNetosComponent implements OnInit {
     }
 
   }
-
-  /*
-  ngAfterViewChecked(){
-    console.log("ngAfterViewChecked");
-  }
-
-  ngAfterContentChecked(){
-    console.log("ngAfterContentChecked");
-  }
-
-  ngAfterContentInit(){
-    console.log("ngAfterContentInit");
-  }
-
-  ngDoCheck(){
-    console.log("ngDoCheck");
-  }
-
-  ngOnChanges(){
-    console.log("ngOnChanges");
-  }
-  */
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
