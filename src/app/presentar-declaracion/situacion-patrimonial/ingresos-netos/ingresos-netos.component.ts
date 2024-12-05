@@ -415,12 +415,21 @@ export class IngresosNetosComponent implements OnInit {
         this.fillForm(data?.declaracion.ingresos);
       }
 
+      this.cargarActividadFinanciera
       console.log("getUserInfo");
       console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
 
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
+  cargarActividadFinanciera(){
+    console.log("entra");
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
+      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
+      console.log("test 1: " + test);
     }
   }
 
