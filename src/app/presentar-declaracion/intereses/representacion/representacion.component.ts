@@ -357,7 +357,7 @@ export class RepresentacionComponent implements OnInit {
       //this.representacionForm.get('representacion.sector').setValue(findOption(this.sectorCatalogo, sector));
       const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
         // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
-        this.representacionForm.get('apoyo.beneficiarioPrograma').setValue(optSector[0]);
+        this.representacionForm.get('representacion.sector').setValue(optSector[0]);
         if (sector.clave === 'OTRO') {
           this.varOtroSector = sector.valor;
         }

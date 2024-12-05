@@ -254,7 +254,13 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">person</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" #otroSector matInput type="text" required />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroSector
+                #otroSector
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
 
           <div class="grid-2-col" formGroupName="montoAproximadoGanancia">

@@ -34,6 +34,8 @@ export class ClientesPrincipalesComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  varOtroSector: string = null;
+  location: string = null;
 
   @ViewChild('locationSelect') locationSelect: MatSelect;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -372,7 +374,11 @@ export class ClientesPrincipalesComponent implements OnInit {
     const { entidadFederativa, pais } = this.clientesPrincipalesForm.value.cliente.ubicacion;
 
     if (sector) {
-      this.clientesPrincipalesForm.get('cliente.sector').setValue(findOption(this.sectorCatalogo, sector.clave));
+      const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
+        this.clientesPrincipalesForm.get('cliente.sector').setValue(optSector[0]);
+        if (sector.clave === 'OTRO') {
+          this.varOtroSector = sector.valor;
+        }
     }
 
     if (entidadFederativa) {
