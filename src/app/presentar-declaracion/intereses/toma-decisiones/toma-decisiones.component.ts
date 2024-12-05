@@ -430,7 +430,7 @@ export class TomaDecisionesComponent implements OnInit {
     }
   }
 
-  get finalParticipacionForm() {
+  get finalParticipacionTomaDecisionesForm() {
     const form = JSON.parse(JSON.stringify(this.participacionTomaDecisionesForm.value.participacion)); // Deep copy
 
     if (form.tipoInstitucion?.clave === 'OTRO') {
