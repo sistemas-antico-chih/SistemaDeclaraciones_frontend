@@ -434,9 +434,9 @@ export class IngresosNetosComponent implements OnInit {
     console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     console.log(this.ingresoActividad)
 
-    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id === undefined) {
+    /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id === undefined) {
       console.log("unnnn")
-    }
+    }*/
     /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
       let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
       console.log("test 1: " + test);
