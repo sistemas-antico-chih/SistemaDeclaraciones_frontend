@@ -423,11 +423,16 @@ export class IngresosNetosComponent implements OnInit {
 
   cargarActividadFinanciera(){
     console.log("entra");
+    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+    let arreglo = this.otroTipoInstrumento.toArray();
     console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     //this.ingresoActividad=this.otroTipoInstrumento
     console.log(this.otroTipoInstrumento)
-    console.log("ingresosQuery")
-    console.log(ingresosQuery)
+    console.log("form")
+    console.log(form)
+    console.log("ingresosForm")
+    console.log(this.ingresosForm)
+  
     //console.log("ingresosQuery")
     //console.log(ingres)
     console.log(this.ingresoActividad[0])
