@@ -397,7 +397,7 @@ export class IngresosNetosComponent implements OnInit {
   async getUserInfo() {
     
       console.log("getUserInfo1");
-      this.cargarActividadFinanciera()
+      //this.cargarActividadFinanciera()
       console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     try {
       const { data, errors } = await this.apollo
