@@ -420,8 +420,8 @@ export class IngresosNetosComponent implements OnInit {
       }
 
       console.log("getUserInfo2");
-      //this.cargarActividadFinanciera()
       console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+      this.cargarActividadFinanciera()
 
     } catch (error) {
       console.error(error);
@@ -443,6 +443,7 @@ export class IngresosNetosComponent implements OnInit {
     }*/
     console.log("fin")
     console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+    console.log("xxxx")
 
   }
 
@@ -483,7 +484,7 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
-    this.cargarActividadFinanciera()
+    //this.cargarActividadFinanciera()
 
 
     /*if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id){
