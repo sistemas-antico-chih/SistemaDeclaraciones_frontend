@@ -398,7 +398,7 @@ export class IngresosNetosComponent implements OnInit {
     
       console.log("getUserInfo1");
       //this.cargarActividadFinanciera()
-      console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+      //console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
@@ -421,7 +421,7 @@ export class IngresosNetosComponent implements OnInit {
 
       console.log("getUserInfo2");
       //this.cargarActividadFinanciera()
-      //console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+      console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
 
     } catch (error) {
       console.error(error);
@@ -431,10 +431,18 @@ export class IngresosNetosComponent implements OnInit {
 
   cargarActividadFinanciera(){
     console.log("entra");
+    console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+
+    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id === undefined) {
+      console.log("unnnn")
+    }
     if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
       let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
       console.log("test 1: " + test);
     }
+    console.log("fin")
+    console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+
   }
 
   formHasChanges() {
@@ -463,6 +471,8 @@ export class IngresosNetosComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("ngOnInit");
+    console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
