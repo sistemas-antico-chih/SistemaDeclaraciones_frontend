@@ -133,11 +133,11 @@
               <!--#otroTipoInstrumento-->
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">assistant</mat-icon>
-              <input 
+              <input let i = index
                 class="OTI"
                 [errorStateMatcher]="errorMatcher" 
                 #otroTipoInstrumento
-                [(value)]="ingresoActividad[{i}]"
+                [(value)]="ingresoActividad[i]"
                 matInput type="text"  
                 required  />
             </mat-form-field>
