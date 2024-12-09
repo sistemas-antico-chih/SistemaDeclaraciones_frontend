@@ -34,7 +34,7 @@ export class IngresosNetosComponent implements OnInit {
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
 
-  ingresoActividad: number;
+  ingresoActividad: any =[];
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
 
@@ -426,7 +426,13 @@ export class IngresosNetosComponent implements OnInit {
     console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     //this.ingresoActividad=this.otroTipoInstrumento
     console.log(this.otroTipoInstrumento)
-    console.log(this.ingresoActividad)
+    console.log("ingresosQuery")
+    console.log(ingresosQuery)
+    //console.log("ingresosQuery")
+    //console.log(ingres)
+    console.log(this.ingresoActividad[0])
+    this.ingresoActividad[0]="prueba"
+    this.ingresoActividad[1]="prueba2222"
 
     /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id === undefined) {
       console.log("unnnn")
