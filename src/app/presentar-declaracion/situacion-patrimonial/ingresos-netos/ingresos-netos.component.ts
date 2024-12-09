@@ -325,7 +325,7 @@ export class IngresosNetosComponent implements OnInit {
         console.log("index")
         console.log(index)
         const optionTipoInstrumento = this.tipoInstrumentoCatalogo.filter((i: any) => i.clave === tipoInstrumento.clave);
-        this.ingresosForm.get('actividadFinanciera.activividades.tipoInstrumento').setValue(optionTipoInstrumento[0]);
+        formArray.at(index).get('tipoInstrumento').setValue(optionTipoInstrumento[0]);
         if (tipoInstrumento.clave === 'OTRO') {
           this.ingresoActividad[index] = tipoInstrumento.valor;
         }
