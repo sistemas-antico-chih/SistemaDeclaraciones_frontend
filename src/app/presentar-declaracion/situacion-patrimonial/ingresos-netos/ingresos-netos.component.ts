@@ -330,14 +330,15 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   pasarIds(tipoInstrumento: any): void {
+    console.log("pasarIds")
     this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
-    //console.log(this.arrayOtroTipoInstrumento)
-    //console.log(this.arrayHTMLOtroTipoInstrumento)
+    console.log(this.arrayOtroTipoInstrumento)
+    console.log(this.arrayHTMLOtroTipoInstrumento)
+    this.ingresoActividad[0]="prueba"
+    this.ingresoActividad[1]="prueba2222"
   }
 
   fillForm(ingresos: Ingresos) {
-    //console.log("fillForm1")
-    //console.log(this.actividadFinanciera.value.length)
     this.ingresosForm.patchValue(ingresos);
     
     [
@@ -387,10 +388,6 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   async getUserInfo() {
-    
-      console.log("getUserInfo1");
-      //this.cargarActividadFinanciera()
-      //console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
@@ -411,10 +408,8 @@ export class IngresosNetosComponent implements OnInit {
         this.fillForm(data?.declaracion.ingresos);
       }
 
-      console.log("getUserInfo2");
-      console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
-      this.cargarActividadFinanciera()
-
+      //this.cargarActividadFinanciera()
+      
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -432,10 +427,19 @@ export class IngresosNetosComponent implements OnInit {
     console.log(form)
     console.log("ingresosForm")
     console.log(this.ingresosForm)
-  
+    console.log(this.arrayHTMLOtroTipoInstrumento)
+    console.log(this.arrayOtroTipoInstrumento)
+
     //console.log("ingresosQuery")
     //console.log(ingres)
     console.log(this.ingresoActividad[0])
+    this.ingresosForm.value.actividadFinanciera.actividades.length.forEach(function (value: any) {
+      /* if (value !== undefined) {
+        obValores = arreglo[j].nativeElement.id;
+        valorHtml = document.getElementById(obValores) as HTMLInputElement;
+        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value.toUpperCase(); */
+      
+    });
     this.ingresoActividad[0]="prueba"
     this.ingresoActividad[1]="prueba2222"
 
@@ -477,9 +481,6 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("ngOnInit");
-    console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
-
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
