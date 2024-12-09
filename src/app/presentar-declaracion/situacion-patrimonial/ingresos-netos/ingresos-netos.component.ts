@@ -37,14 +37,6 @@ export class IngresosNetosComponent implements OnInit {
   ingresoActividad: number;
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
-  //@ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<'otroTipoInstrumento'>;
-
-  //@ContentChildren('otroTipoInstrumento') otroTipoInstrumento2: QueryList<'otroTipoInstrumento'>;
-
-  //large = document.querySelectorAll<HTMLInputElement>('.OTI').length || 0;
-  //test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
-
-  //@ViewChild('otroTipoInstrumento') otroTipoInstrumentoSolo:ElementRef;  
 
   isHidden = true;
 
@@ -432,6 +424,8 @@ export class IngresosNetosComponent implements OnInit {
   cargarActividadFinanciera(){
     console.log("entra");
     console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
+    //this.ingresoActividad=this.otroTipoInstrumento
+    console.log(this.otroTipoInstrumento)
     console.log(this.ingresoActividad)
 
     /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id === undefined) {
