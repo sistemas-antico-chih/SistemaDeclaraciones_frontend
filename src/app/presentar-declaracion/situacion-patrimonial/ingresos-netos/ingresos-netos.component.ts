@@ -319,12 +319,22 @@ export class IngresosNetosComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
-        formArray
+        //const { tipoVehiculo, titular, formaAdquisicion, lugarRegistro } = this.vehiculosForm.value.vehiculo;
+        console.log("tipoInstrumento")
+        console.log (tipoInstrumento);
+        console.log("index")
+        console.log(index)
+        /*formArray
           .at(index)
           .get('tipoInstrumento')
           .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
-
-        this.pasarIds(tipoInstrumento);
+        */
+        /* const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);
+        this.vehiculosForm.get('vehiculo.tipoVehiculo').setValue(optionTipoVehiculo[0]);
+        if (tipoVehiculo.clave === 'OTRO') {
+          this.varOtroTipoVehiculo = tipoVehiculo.valor;
+        }
+        this.pasarIds(tipoInstrumento); */
       }
     }
   }
@@ -333,7 +343,7 @@ export class IngresosNetosComponent implements OnInit {
     console.log("pasarIds")
     this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
     console.log(this.arrayOtroTipoInstrumento)
-    console.log(this.arrayHTMLOtroTipoInstrumento)
+    //console.log(this.arrayHTMLOtroTipoInstrumento)
     this.ingresoActividad[0]="prueba"
     this.ingresoActividad[1]="prueba2222"
   }
