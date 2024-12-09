@@ -34,7 +34,7 @@ export class IngresosNetosComponent implements OnInit {
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
 
-  ingresoActividad: any =[];
+  ingresoActividad: any = [];
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
 
@@ -319,43 +319,18 @@ export class IngresosNetosComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
-        //const { tipoVehiculo, titular, formaAdquisicion, lugarRegistro } = this.vehiculosForm.value.vehiculo;
-        console.log("tipoInstrumento")
-        console.log (tipoInstrumento);
-        console.log("index")
-        console.log(index)
         const optionTipoInstrumento = this.tipoInstrumentoCatalogo.filter((i: any) => i.clave === tipoInstrumento.clave);
         formArray.at(index).get('tipoInstrumento').setValue(optionTipoInstrumento[0]);
         if (tipoInstrumento.clave === 'OTRO') {
           this.ingresoActividad[index] = tipoInstrumento.valor;
         }
-        /*formArray
-          .at(index)
-          .get('tipoInstrumento')
-          .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
-        */
-        /* const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);
-        this.vehiculosForm.get('vehiculo.tipoVehiculo').setValue(optionTipoVehiculo[0]);
-        if (tipoVehiculo.clave === 'OTRO') {
-          this.varOtroTipoVehiculo = tipoVehiculo.valor;
-        }
-        this.pasarIds(tipoInstrumento); */
       }
     }
   }
 
-  pasarIds(tipoInstrumento: any): void {
-    console.log("pasarIds")
-    this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
-    console.log(this.arrayOtroTipoInstrumento)
-    //console.log(this.arrayHTMLOtroTipoInstrumento)
-    //this.ingresoActividad[0]="prueba"
-    //this.ingresoActividad[1]="prueba2222"
-  }
-
   fillForm(ingresos: Ingresos) {
     this.ingresosForm.patchValue(ingresos);
-    
+
     [
       'actividadIndustrialComercialEmpresarial',
       'actividadFinanciera',
@@ -423,53 +398,13 @@ export class IngresosNetosComponent implements OnInit {
         this.fillForm(data?.declaracion.ingresos);
       }
 
-      //this.cargarActividadFinanciera()
-      
     } catch (error) {
       console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
-  cargarActividadFinanciera(){
-    console.log("entra");
-    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
-    let arreglo = this.otroTipoInstrumento.toArray();
-    console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
-    //this.ingresoActividad=this.otroTipoInstrumento
-    console.log(this.otroTipoInstrumento)
-    console.log("form")
-    console.log(form)
-    console.log("ingresosForm")
-    console.log(this.ingresosForm)
-    console.log(this.arrayHTMLOtroTipoInstrumento)
-    console.log(this.arrayOtroTipoInstrumento)
 
-    //console.log("ingresosQuery")
-    //console.log(ingres)
-    console.log(this.ingresoActividad[0])
-    this.ingresosForm.value.actividadFinanciera.actividades.length.forEach(function (value: any) {
-      /* if (value !== undefined) {
-        obValores = arreglo[j].nativeElement.id;
-        valorHtml = document.getElementById(obValores) as HTMLInputElement;
-        form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value.toUpperCase(); */
-      
-    });
-    this.ingresoActividad[0]="prueba"
-    this.ingresoActividad[1]="prueba2222"
-
-    /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id === undefined) {
-      console.log("unnnn")
-    }*/
-    /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
-      console.log("test 1: " + test);
-    }*/
-    console.log("fin")
-    console.log(this.ingresosForm.value.actividadFinanciera.actividades.length)
-    console.log("xxxx")
-
-  }
 
   formHasChanges() {
     let url = '/' + this.tipoDeclaracion;
@@ -505,39 +440,8 @@ export class IngresosNetosComponent implements OnInit {
         //falseText: '',
       },
     });
-    //this.cargarActividadFinanciera()
-
-
-    /*if(document.querySelectorAll<HTMLInputElement>('.OTI')[0].id){
-      console.log("entra")
-    }
-    console.log(this.finalIngresosForm)
-    console.log(this.ingresosForm) 
-    
-    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
-      console.log("test 1: " + test);
-    }*/
   }
 
-  /*ngAfterViewInit() {
-    console.log("ngAfterViewInit");
-    console.log(this.ingresosForm.value)
-    console.log("aqui");
-    console.log(this.actividadFinanciera.value.length);
-  
-    if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
-      for (let j = 0; j < document.querySelectorAll<HTMLInputElement>('.OTI').length; j++) {
-        this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
-        document.querySelectorAll<HTMLInputElement>('.OTI')[j].value = this.arrayOtroTipoInstrumento[j];
-      }
-    }
-    /*if (document.querySelectorAll<HTMLInputElement>('.OTI')[0].id !== undefined) {
-      let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id || 0;
-      console.log("test 2: " + test);
-    }
-
-  }*/
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {

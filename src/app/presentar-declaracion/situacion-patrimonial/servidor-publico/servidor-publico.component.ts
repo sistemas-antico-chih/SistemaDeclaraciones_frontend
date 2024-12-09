@@ -34,6 +34,7 @@ export class ServidorPublicoComponent implements OnInit {
   index: number = 0;
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
+  ingresoActividad: any = [];
 
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
@@ -442,19 +443,13 @@ export class ServidorPublicoComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
-        formArray
-          .at(index)
-          .get('tipoInstrumento')
-          .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
-          
-          this.pasarIds(tipoInstrumento);
-
+        const optionTipoInstrumento = this.tipoInstrumentoCatalogo.filter((i: any) => i.clave === tipoInstrumento.clave);
+        formArray.at(index).get('tipoInstrumento').setValue(optionTipoInstrumento[0]);
+        if (tipoInstrumento.clave === 'OTRO') {
+          this.ingresoActividad[index] = tipoInstrumento.valor;
+        }
       }
     }
-  }
-
-  pasarIds(tipoInstrumento: any): void {
-    this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
   }
 
   fillForm(actividadAnualAnterior: ActividadAnualAnterior) {
@@ -567,15 +562,6 @@ export class ServidorPublicoComponent implements OnInit {
 
     let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
     console.log("test 1: " + test);  
-  }
-
-  ngAfterViewInit() {
-    for (let j=0; j<document.querySelectorAll<HTMLInputElement>('.OTI').length; j++){
-      this.arrayHTMLOtroTipoInstrumento.push(document.querySelectorAll<HTMLInputElement>('.OTI')[j])
-      document.querySelectorAll<HTMLInputElement>('.OTI')[j].value=this.arrayOtroTipoInstrumento[j];
-    }
-    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    console.log("test 2: " + test);
   }
 
   openSnackBar(message: string, action: string = null) {
