@@ -324,6 +324,11 @@ export class IngresosNetosComponent implements OnInit {
         console.log (tipoInstrumento);
         console.log("index")
         console.log(index)
+        const optionTipoInstrumento = this.tipoInstrumentoCatalogo.filter((i: any) => i.clave === tipoInstrumento.clave);
+        this.ingresosForm.get('actividadFinanciera.activividades.tipoInstrumento').setValue(optionTipoInstrumento[0]);
+        if (tipoInstrumento.clave === 'OTRO') {
+          this.ingresoActividad[index] = tipoInstrumento.valor;
+        }
         /*formArray
           .at(index)
           .get('tipoInstrumento')
@@ -344,8 +349,8 @@ export class IngresosNetosComponent implements OnInit {
     this.arrayOtroTipoInstrumento.push(tipoInstrumento.valor)
     console.log(this.arrayOtroTipoInstrumento)
     //console.log(this.arrayHTMLOtroTipoInstrumento)
-    this.ingresoActividad[0]="prueba"
-    this.ingresoActividad[1]="prueba2222"
+    //this.ingresoActividad[0]="prueba"
+    //this.ingresoActividad[1]="prueba2222"
   }
 
   fillForm(ingresos: Ingresos) {
