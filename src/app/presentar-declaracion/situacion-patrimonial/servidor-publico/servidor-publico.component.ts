@@ -559,9 +559,6 @@ export class ServidorPublicoComponent implements OnInit {
         //falseText: '',
       },
     });
-
-    let test = document.querySelectorAll<HTMLInputElement>('.OTI')[0].id;
-    console.log("test 1: " + test);  
   }
 
   openSnackBar(message: string, action: string = null) {

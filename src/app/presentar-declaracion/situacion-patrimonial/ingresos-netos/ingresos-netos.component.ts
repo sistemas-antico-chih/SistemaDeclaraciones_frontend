@@ -290,10 +290,7 @@ export class IngresosNetosComponent implements OnInit {
     data: Array<ActividadIndustrial | ActividadFinanciera | OtrosIngresos | ServiciosProfesionales>
   ) {
     let formArray: FormArray = null;
-
-    //console.log("fillFormArray1")
-    //console.log(this.actividadFinanciera.value.length)
-
+    
     for (let [index, value] of data.entries()) {
       switch (formArrayName) {
         case 'actividadIndustrialComercialEmpresarial':
