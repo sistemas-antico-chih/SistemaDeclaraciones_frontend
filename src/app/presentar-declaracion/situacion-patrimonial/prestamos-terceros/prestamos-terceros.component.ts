@@ -69,6 +69,9 @@ export class PrestamosTercerosComponent implements OnInit {
   varOtroRelacion: string = null;
   relacionConTitular: string;
 
+  minAnio = 1920;
+  maxAnio = new Date().getFullYear();
+
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef = null;

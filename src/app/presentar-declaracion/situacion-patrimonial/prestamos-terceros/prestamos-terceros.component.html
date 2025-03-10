@@ -357,8 +357,8 @@
                   matInput
                   type="number"
                   formControlName="anio"
-                  min="0"
-                  max="{{ currentYear + 1 }}"
+                  [min]="1920"
+                  [max]="{{ currentYear + 1 }}"
                   placeholder="{{ currentYear }}"
                   required
                 />

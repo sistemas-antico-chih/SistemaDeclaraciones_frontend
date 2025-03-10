@@ -76,6 +76,9 @@ export class VehiculosComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
+  minAnio = 1920;
+  maxAnio = this.anio;
+
   tipoPersona: string;
 
   constructor(
