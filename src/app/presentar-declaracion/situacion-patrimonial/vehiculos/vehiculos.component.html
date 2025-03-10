@@ -402,11 +402,12 @@
               <mat-label>Año</mat-label>
               <mat-icon matPrefix>date_range</mat-icon>
               <input
-                
+                [errorStateMatcher]="errorMatcher"
                 matInput
+                type="number"
                 formControlName="anio"
-                [min]= "minAnio"
-                [max]= "maxAnio"
+                [min]= "1920"
+                [max]= "2025"
                 placeholder="{{ currentYear }}"
                 minlength="4"
                 maxlength="4"
