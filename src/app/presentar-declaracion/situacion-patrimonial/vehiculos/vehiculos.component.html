@@ -404,12 +404,12 @@
               <input
                 [errorStateMatcher]="errorMatcher"
                 matInput
-                type="number"
                 formControlName="anio"
                 [min]= "minAnio"
                 [max]= "maxAnio"
                 placeholder="{{ currentYear }}"
-                
+                minlength="4"
+                maxlength="4"
                 required
               />
             </mat-form-field>
