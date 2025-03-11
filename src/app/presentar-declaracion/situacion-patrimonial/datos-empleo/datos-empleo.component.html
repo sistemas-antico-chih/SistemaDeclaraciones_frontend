@@ -177,6 +177,25 @@
                 {{ entePublico.valor }}
               </mat-option>
             </mat-select>
+            </mat-form-field>
+            <!--
+            <mat-form-field
+              matTooltip="{{ tooltipData.nombreEntePublico }}"
+              appearance="fill"
+              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'FINV' "
+            >
+              <mat-label>Fondos de Inversión</mat-label>
+              <mat-icon matPrefix>aspect_ratio</mat-icon>
+              <mat-select formControlName="subTipoInversion" required>
+                <mat-option
+                  *ngFor="let sub of subTipoFondosCatalogo"
+                  [value]="{ clave: sub.clave, valor: sub.valor }"
+                >
+                  {{ sub.valor }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            -->
             <!-- <input
               [errorStateMatcher]="errorMatcher"
               matInput
@@ -184,7 +203,7 @@
               formControlName="nombreEntePublico"
               required
             />-->
-          </mat-form-field>
+          
 
           <mat-form-field matTooltip="{{ tooltipData.areaAdscripcion }}" appearance="fill">
             <mat-label>Área de Adscripción</mat-label>
