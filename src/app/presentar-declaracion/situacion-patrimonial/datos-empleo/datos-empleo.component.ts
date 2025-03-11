@@ -33,6 +33,8 @@ import { UntilDestroy, untilDestroyed } from '@app/@core';
   styleUrls: ['./datos-empleo.component.scss'],
 })
 export class DatosEmpleoComponent implements OnInit {
+
+  orden: string;
   aclaraciones = false;
   datosEmpleoCargoComisionForm: FormGroup;
   estado: Catalogo = null;
