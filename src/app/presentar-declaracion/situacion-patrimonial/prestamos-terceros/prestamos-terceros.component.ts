@@ -197,7 +197,11 @@ export class PrestamosTercerosComponent implements OnInit {
             tipo: ['', Validators.required],
             marca: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],
             modelo: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-            anio: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+            anio: [null, [
+              Validators.required, 
+              Validators.min(1920), 
+              Validators.max(this.maxAnio),
+            ]],
             numeroSerieRegistro: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],
             lugarRegistro: this.formBuilder.group({
               pais: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],

@@ -597,8 +597,7 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   async saveInfo(form: ActividadAnualAnterior) {
-    console.log("aqui");
-
+    console.log("aqui11");
     try {
       this.isLoading = true;
       form = this.finalIngresosForm;

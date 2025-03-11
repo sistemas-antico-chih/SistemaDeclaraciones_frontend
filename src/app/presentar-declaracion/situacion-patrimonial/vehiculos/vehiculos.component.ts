@@ -149,7 +149,7 @@ export class VehiculosComponent implements OnInit {
           Validators.required, 
           Validators.min(1920), 
           Validators.max(this.maxAnio),
-          this.validarLongitud
+          //this.validarLongitud
         ]],
         numeroSerieRegistro: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         tercero: this.formBuilder.group({
@@ -180,7 +180,7 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
-  validarLongitud(control: FormControl){
+  /*validarLongitud(control: FormControl){
     console.log("lllega")
     //console.log(control.value)
     console.log(control.value.length)
@@ -191,7 +191,8 @@ export class VehiculosComponent implements OnInit {
     //else{
      // return null;
     //}
-  }
+  }*/
+
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.vehiculo[index]);
