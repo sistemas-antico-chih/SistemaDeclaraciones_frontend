@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
@@ -149,8 +149,7 @@ export class VehiculosComponent implements OnInit {
           Validators.required, 
           Validators.min(1920), 
           Validators.max(this.maxAnio),
-          //Validators.maxLength(4),
-          Validators.pattern(/^\d{4}$/)
+          this.validarLongitud
         ]],
         numeroSerieRegistro: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         tercero: this.formBuilder.group({
@@ -181,6 +180,17 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
+  validarLongitud(control: FormControl){
+    console.log("lllega")
+    console.log(control)
+    console.log(control.length)
+    if (control.length === 4){
+      return {'validarLongitud': true}
+    }
+    else{
+      return null;
+    }
+  }
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.vehiculo[index]);
