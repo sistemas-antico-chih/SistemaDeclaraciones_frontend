@@ -149,7 +149,7 @@ export class VehiculosComponent implements OnInit {
           Validators.required, 
           Validators.min(1920), 
           Validators.max(this.maxAnio),
-          //this.validarLongitud
+          this.validarLongitud
         ]],
         numeroSerieRegistro: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         tercero: this.formBuilder.group({
