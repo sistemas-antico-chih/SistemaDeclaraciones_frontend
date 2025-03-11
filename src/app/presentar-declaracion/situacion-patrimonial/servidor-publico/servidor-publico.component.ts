@@ -597,14 +597,13 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   async saveInfo(form: ActividadAnualAnterior) {
-    console.log("aqui11");
+
     try {
       this.isLoading = true;
-      //form = this.finalIngresosForm;
+      form = this.finalIngresosForm;
       const declaracion = {
         actividadAnualAnterior: form,
       };
-      console.log("aqui22");
 
       const { errors } = await this.apollo
         .mutate({
