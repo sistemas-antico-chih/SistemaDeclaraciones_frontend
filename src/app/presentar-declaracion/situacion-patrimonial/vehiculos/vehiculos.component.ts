@@ -149,7 +149,7 @@ export class VehiculosComponent implements OnInit {
           Validators.required, 
           Validators.min(1920), 
           Validators.max(this.maxAnio),
-          //Validators.maxLength(4),
+          Validators.maxLength(4),
           //Validators.pattern(/^\d{4}$/)
         ]],
         numeroSerieRegistro: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
