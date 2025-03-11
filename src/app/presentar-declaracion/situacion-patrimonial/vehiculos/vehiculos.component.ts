@@ -183,13 +183,13 @@ export class VehiculosComponent implements OnInit {
   validarLongitud(control: FormControl){
     console.log("lllega")
     console.log(control.value)
-    console.log(control.value.length)
-    if (control.value.length === 4){
-      return {'validarLongitud': true}
-    }
-    else{
-      return null;
-    }
+    //console.log(control.value.length)
+    //if (control.value.length === 4){
+      //return {'validarLongitud': true}
+    //}
+    //else{
+     // return null;
+    //}
   }
   editItem(index: number) {
     this.setEditMode();

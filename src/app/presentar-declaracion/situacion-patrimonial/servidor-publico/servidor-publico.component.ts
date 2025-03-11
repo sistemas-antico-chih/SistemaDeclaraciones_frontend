@@ -237,6 +237,7 @@ export class ServidorPublicoComponent implements OnInit {
 
           this.saveInfo(form);
         } else {
+          console.log("aqui");
           this.saveInfo({
             servidorPublicoAnioAnterior: false,
             aclaracionesObservaciones: form.aclaracionesObservaciones,
@@ -441,14 +442,14 @@ export class ServidorPublicoComponent implements OnInit {
       }
       formArray.at(index).patchValue(value);
 
-      /*if (formArrayName === 'actividadFinanciera') {
+      if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
         const optionTipoInstrumento = this.tipoInstrumentoCatalogo.filter((i: any) => i.clave === tipoInstrumento.clave);
         formArray.at(index).get('tipoInstrumento').setValue(optionTipoInstrumento[0]);
         if (tipoInstrumento.clave === 'OTRO') {
           this.ingresoActividad[index] = tipoInstrumento.valor;
         }
-      }*/
+      }
     }
   }
 
