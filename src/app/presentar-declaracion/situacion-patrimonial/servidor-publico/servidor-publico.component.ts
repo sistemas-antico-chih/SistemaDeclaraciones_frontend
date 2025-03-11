@@ -600,7 +600,7 @@ export class ServidorPublicoComponent implements OnInit {
     console.log("aqui11");
     try {
       this.isLoading = true;
-      form = this.finalIngresosForm;
+      //form = this.finalIngresosForm;
       const declaracion = {
         actividadAnualAnterior: form,
       };
