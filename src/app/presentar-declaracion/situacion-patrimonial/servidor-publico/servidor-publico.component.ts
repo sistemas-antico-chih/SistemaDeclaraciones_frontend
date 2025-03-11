@@ -237,7 +237,6 @@ export class ServidorPublicoComponent implements OnInit {
 
           this.saveInfo(form);
         } else {
-          console.log("aqui");
           this.saveInfo({
             servidorPublicoAnioAnterior: false,
             aclaracionesObservaciones: form.aclaracionesObservaciones,
@@ -598,12 +597,15 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   async saveInfo(form: ActividadAnualAnterior) {
+    console.log("aqui");
+
     try {
       this.isLoading = true;
       form = this.finalIngresosForm;
       const declaracion = {
         actividadAnualAnterior: form,
       };
+      console.log("aqui22");
 
       const { errors } = await this.apollo
         .mutate({
