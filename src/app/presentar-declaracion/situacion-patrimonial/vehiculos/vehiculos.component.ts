@@ -147,8 +147,8 @@ export class VehiculosComponent implements OnInit {
         //anio: [null, [Validators.required, Validators.pattern(/^\d{4}$/)]],
         anio: [null, [
           Validators.required, 
-          Validators.min(1920), 
-          Validators.max(this.maxAnio),
+          //Validators.min(1920), 
+          //Validators.max(this.maxAnio),
           Validators.maxLength(4),
           //Validators.pattern(/^\d{4}$/)
         ]],
