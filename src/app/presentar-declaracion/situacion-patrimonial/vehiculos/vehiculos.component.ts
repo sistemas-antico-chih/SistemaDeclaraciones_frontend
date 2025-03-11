@@ -145,7 +145,12 @@ export class VehiculosComponent implements OnInit {
         marca: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         modelo: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         //anio: [null, [Validators.required, Validators.pattern(/^\d{4}$/)]],
-        anio: [null, [Validators.required, Validators.maxLength(4), Validators.min(1920), Validators.max(this.maxAnio)]],
+        anio: [null, [
+          Validators.required, 
+          Validators.min(1920), 
+          Validators.max(this.maxAnio),
+          Validators.pattern(/^\d{4}$/)
+        ]],
         numeroSerieRegistro: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         tercero: this.formBuilder.group({
           tipoPersona: [null],
