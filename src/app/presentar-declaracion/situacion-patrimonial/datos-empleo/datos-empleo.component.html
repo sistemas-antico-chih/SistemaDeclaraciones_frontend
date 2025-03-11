@@ -159,6 +159,8 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          
+          
           <mat-form-field matTooltip="{{ tooltipData.ambitoPublico }}" appearance="fill">
             <mat-label>Ámbito Público</mat-label>
             <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -169,7 +171,10 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill">
+          
+          <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill"
+            *ngIf="orden==='MUNICIPAL_ALCALDIA'"
+          >
             <mat-label>Nombre del Ente Público</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
             <mat-select formControlName="nombreEntePublico" required>
@@ -177,25 +182,8 @@
                 {{ entePublico.valor }}
               </mat-option>
             </mat-select>
-            </mat-form-field>
-            <!--
-            <mat-form-field
-              matTooltip="{{ tooltipData.nombreEntePublico }}"
-              appearance="fill"
-              *ngIf="inversionesCuentasValoresForm.value.inversion.tipoInversion?.clave === 'FINV' "
-            >
-              <mat-label>Fondos de Inversión</mat-label>
-              <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required>
-                <mat-option
-                  *ngFor="let sub of subTipoFondosCatalogo"
-                  [value]="{ clave: sub.clave, valor: sub.valor }"
-                >
-                  {{ sub.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            -->
+          </mat-form-field>
+            
             <!-- <input
               [errorStateMatcher]="errorMatcher"
               matInput
