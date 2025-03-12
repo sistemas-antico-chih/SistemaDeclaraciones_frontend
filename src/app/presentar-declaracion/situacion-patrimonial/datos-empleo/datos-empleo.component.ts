@@ -331,17 +331,10 @@ export class DatosEmpleoComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  /*tipoDomicilioChanged(value: string) {
-    this.tipoDomicilio = value;
-    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
-    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
-
-    const notSelected = this.datosEmpleoCargoComisionForm.get(notSelectedType);
-    notSelected.disable();
-    notSelected.reset();
-
-    this.datosEmpleoCargoComisionForm.get(selectedType).enable();
-  }*/
+  cambioPoder(orden: string) {
+    console.log("llega aqui");
+    console.log(orden);
+  }
 
   //filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
   filtrarEntes(orden: string, ambito: string="EJECUTIVO_MUNICIPAL"){
