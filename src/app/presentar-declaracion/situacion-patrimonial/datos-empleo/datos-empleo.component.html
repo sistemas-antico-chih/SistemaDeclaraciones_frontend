@@ -153,7 +153,7 @@
           <mat-form-field matTooltip="{{ tooltipData.nivelOrdenGobierno }}" appearance="fill">
             <mat-label>Nivel/Orden de Gobierno </mat-label>
             <mat-icon matPrefix>star</mat-icon>
-            <mat-select formControlName="nivelOrdenGobierno" required (selectionChange)="filtrarEntes($event.poder)">
+            <mat-select formControlName="nivelOrdenGobierno" required (selectionChange)="filtrarEntes($event.orden)">
               <mat-option *ngFor="let orden of nivelOrdenGobiernoCatalogo" [value]="orden">
                 {{ orden | replace: '_':' ' }}
               </mat-option>
