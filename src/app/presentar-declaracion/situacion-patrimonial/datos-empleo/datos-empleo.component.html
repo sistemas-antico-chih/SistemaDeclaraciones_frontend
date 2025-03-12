@@ -164,7 +164,7 @@
           <mat-form-field matTooltip="{{ tooltipData.ambitoPublico }}" appearance="fill">
             <mat-label>Ámbito Público</mat-label>
             <mat-icon matPrefix>aspect_ratio</mat-icon>
-            <mat-select formControlName="ambitoPublico" required>
+            <mat-select formControlName="ambitoPublico" required (selectionChange)="cambioAmbito($event.value)">
               <mat-option *ngFor="let ambito of ambitoPublicoCatalogo" [value]="ambito">
                 {{ ambito | replace: '_':' ' }}
               </mat-option>
