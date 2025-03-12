@@ -350,7 +350,7 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   //filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
-  filtrarEntes(orden?: string, ambito?: string){
+  filtrarEntes(orden: string, ambito: string){
     console.log("llegaaa");
     console.log("ORDEN: "+orden);
     console.log("AMBITO: "+ambito);
@@ -359,11 +359,22 @@ export class DatosEmpleoComponent implements OnInit {
     let poderAmbito=ambito;
 
     if(orden==="MUNICIPIO_ALCALDIA"){
-      return this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
+      console.log("dentro if")
+      console.log(this.entePublicoCatalogo)
+      this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
         (o:any) =>  o.poder===poderFiltro && o.empleo==='SI');  
+      console.log("if ente")
+        console.log(this.entePublicoCatalogo)
+      return;
     }
-
-    return this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
-      (o:any) =>  o.poder!==poderFiltro && o.ambito===poderAmbito && o.empleo==='NO');
+    else{
+      console.log("dentro else")
+      /*return this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
+        (o:any) =>  o.poder!==poderFiltro && o.ambito===poderAmbito && o.empleo==='NO');
+        */
+       console.log(this.entePublicoCatalogo)
+       return
+    }
+    
   }
 }
