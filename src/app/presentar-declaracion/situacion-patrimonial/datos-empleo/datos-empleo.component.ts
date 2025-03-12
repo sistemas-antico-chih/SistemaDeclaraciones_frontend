@@ -248,14 +248,14 @@ export class DatosEmpleoComponent implements OnInit {
     });
     let poder="MUNICIPAL_ALCALDIA";
     let ambito="EJECUTIVO_MUNICIPAL"
-    this.entePublicoCatalogo=this.filtrarEntes();
+    //this.entePublicoCatalogo=this.filtrarEntes();
     console.log(this.filtrarEntes(poder,ambito))
   }
 
   filtrarEntes(poder: string ="MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
     let poderFiltro=poder;
     let poderAmbito=ambito;
-    return this.entePublicoCatalogo.filter(
+    return this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
       (o:any) =>  o.poder===poderFiltro && o.ambito===poderAmbito && o.empleo==='NO');
   }
 
