@@ -331,9 +331,9 @@ export class DatosEmpleoComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  cambioPoder(orden: string) {
+  cambioPoder(value: string) {
     console.log("llega aqui");
-    console.log(orden);
+    console.log(value);
   }
 
   //filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
