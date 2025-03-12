@@ -248,15 +248,9 @@ export class DatosEmpleoComponent implements OnInit {
     });
     let poder="MUNICIPAL_ALCALDIA";
     let ambito="EJECUTIVO_MUNICIPAL"
+    console.log(this.nivelOrdenGobiernoCatalogo);
     //this.entePublicoCatalogo=this.filtrarEntes();
-    console.log(this.filtrarEntes(poder,ambito))
-  }
-
-  filtrarEntes(poder: string ="MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
-    let poderFiltro=poder;
-    let poderAmbito=ambito;
-    return this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
-      (o:any) =>  o.poder===poderFiltro && o.ambito===poderAmbito && o.empleo==='NO');
+    //console.log(this.filtrarEntes(poder,ambito))
   }
 
   openSnackBar(message: string, action: string = null) {
@@ -335,5 +329,24 @@ export class DatosEmpleoComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  /*tipoDomicilioChanged(value: string) {
+    this.tipoDomicilio = value;
+    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
+
+    const notSelected = this.datosEmpleoCargoComisionForm.get(notSelectedType);
+    notSelected.disable();
+    notSelected.reset();
+
+    this.datosEmpleoCargoComisionForm.get(selectedType).enable();
+  }*/
+
+  filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
+    let poderFiltro=poder;
+    let poderAmbito=ambito;
+    return this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
+      (o:any) =>  o.poder===poderFiltro && o.ambito===poderAmbito && o.empleo==='NO');
   }
 }

@@ -154,7 +154,8 @@
             <mat-label>Nivel/Orden de Gobierno </mat-label>
             <mat-icon matPrefix>star</mat-icon>
             <mat-select formControlName="nivelOrdenGobierno" required>
-              <mat-option *ngFor="let orden of nivelOrdenGobiernoCatalogo" [value]="orden">
+              <mat-option *ngFor="let orden of nivelOrdenGobiernoCatalogo" [value]="orden" 
+              (selectionChange)="filtrarEntes($event.orden)">
                 {{ orden | replace: '_':' ' }}
               </mat-option>
             </mat-select>
