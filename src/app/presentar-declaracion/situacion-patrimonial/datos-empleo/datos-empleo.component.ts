@@ -370,7 +370,7 @@ export class DatosEmpleoComponent implements OnInit {
     else{
       console.log("dentro else")
        this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.poder!=="MUNICIPAL_ALCALDIA" && o.ambito===poderAmbito && o.empleo==='NO');
+        (o:any) =>  o.poder!==poderAmbito && o.ambito==="MUNICIPAL_ALCALDIA" && o.empleo==='NO');
        console.log(this.entePublicoCatalogo)
        return
     }
