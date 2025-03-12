@@ -332,8 +332,8 @@ export class DatosEmpleoComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  cambioPoder(value: any) {
-    console.log("poder");
+  cambioOrden(value: any) {
+    console.log("orden");
     console.log(value);
     console.log(this.datosEmpleoCargoComisionForm.get('ambitoPublico').value);
     this.filtrarEntes(value, this.datosEmpleoCargoComisionForm.get('ambitoPublico').value);
@@ -369,6 +369,7 @@ export class DatosEmpleoComponent implements OnInit {
     }
     else{
       console.log("dentro else")
+      console.log(this.entePublicoCatalogo)
        this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
         (o:any) =>  o.poder!==poderAmbito && o.ambito==="MUNICIPAL_ALCALDIA" && o.empleo==='NO');
        console.log(this.entePublicoCatalogo)

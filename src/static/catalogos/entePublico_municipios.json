@@ -2,1162 +2,1162 @@
     {
         "clave": "001",
         "valor": "MUNICIPIO DE AHUMADA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "002",
         "valor": "MUNICIPIO DE ALDAMA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "003",
         "valor": "MUNICIPIO DE ALLENDE",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "004",
         "valor": "MUNICIPIO DE AQUILES SERDÁN",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "005",
         "valor": "MUNICIPIO DE ASCENSIÓN",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "006",
         "valor": "MUNICIPIO DE BACHÍNIVA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "007",
         "valor": "MUNICIPIO DE BALLEZA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "008",
         "valor": "MUNICIPIO DE BATOPILAS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "009",
         "valor": "MUNICIPIO DE BOCOYNA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "010",
         "valor": "MUNICIPIO DE BUENAVENTURA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "011",
         "valor": "MUNICIPIO DE CAMARGO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "012",
         "valor": "MUNICIPIO DE CARICHÍ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "013",
         "valor": "MUNICIPIO DE CASAS GRANDES",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "014",
         "valor": "MUNICIPIO DE CORONADO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "015",
         "valor": "MUNICIPIO DE COYAME DEL SOTOL",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "016",
         "valor": "MUNICIPIO DE LA CRUZ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "017",
         "valor": "MUNICIPIO DE CUAUHTÉMOC",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "018",
         "valor": "MUNICIPIO DE CUSIHUIRIACHI",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "019",
         "valor": "MUNICIPIO DE CHIHUAHUA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "NO"
     },
     {
         "clave": "020",
         "valor": "MUNICIPIO DE CHÍNIPAS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "021",
         "valor": "MUNICIPIO DE DELICIAS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "022",
         "valor": "MUNICIPIO DE DR. BELISARIO DOMÍNGUEZ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "023",
         "valor": "MUNICIPIO DE GALEANA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "024",
         "valor": "MUNICIPIO DE SANTA ISABEL",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "025",
         "valor": "MUNICIPIO DE GÓMEZ FARÍAS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "026",
         "valor": "MUNICIPIO DE GRAN MORELOS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "027",
         "valor": "MUNICIPIO DE GUACHOCHI",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "028",
         "valor": "MUNICIPIO DE GUADALUPE",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "029",
         "valor": "MUNICIPIO DE GUADALUPE Y CALVO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "030",
         "valor": "MUNICIPIO DE GUAZAPARES",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "031",
         "valor": "MUNICIPIO DE GUERRERO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "032",
         "valor": "MUNICIPIO DE HIDALGO DEL PARRAL",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "033",
         "valor": "MUNICIPIO DE HUEJOTITÁN",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "034",
         "valor": "MUNICIPIO DE IGNACIO ZARAGOZA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "035",
         "valor": "MUNICIPIO DE JANOS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "036",
         "valor": "MUNICIPIO DE JIMÉNEZ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "037",
         "valor": "MUNICIPIO DE JUÁREZ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "NO"
     },
     {
         "clave": "038",
         "valor": "MUNICIPIO DE JULIMES",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "039",
         "valor": "MUNICIPIO DE LÓPEZ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "040",
         "valor": "MUNICIPIO DE MADERA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "041",
         "valor": "MUNICIPIO DE MAGUARICHI",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "042",
         "valor": "MUNICIPIO DE MANUEL BENAVIDES",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "043",
         "valor": "MUNICIPIO DE MATACHÍ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "044",
         "valor": "MUNICIPIO DE MATAMOROS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "045",
         "valor": "MUNICIPIO DE MEOQUI",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "046",
         "valor": "MUNICIPIO DE MORELOS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "047",
         "valor": "MUNICIPIO DE MORIS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "048",
         "valor": "MUNICIPIO DE NAMIQUIPA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "049",
         "valor": "MUNICIPIO DE NONOAVA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "050",
         "valor": "MUNICIPIO DE NUEVO CASAS GRANDES",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "051",
         "valor": "MUNICIPIO DE OCAMPO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "052",
         "valor": "MUNICIPIO DE OJINAGA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "053",
         "valor": "MUNICIPIO DE PRAXEDIS G. GUERRERO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "054",
         "valor": "MUNICIPIO DE RIVA PALACIO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "055",
         "valor": "MUNICIPIO DE ROSALES",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "056",
         "valor": "MUNICIPIO DE ROSARIO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "057",
         "valor": "MUNICIPIO DE SAN FRANCISCO DE BORJA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "058",
         "valor": "MUNICIPIO DE SAN FRANCISCO DE CONCHOS",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "059",
         "valor": "MUNICIPIO DE SAN FRANCISCO DEL ORO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "060",
         "valor": "MUNICIPIO DE SANTA BÁRBARA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "061",
         "valor": "MUNICIPIO DE SATEVÓ",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "062",
         "valor": "MUNICIPIO DE SAUCILLO",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "063",
         "valor": "MUNICIPIO DE TEMÓSACHIC",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "064",
         "valor": "MUNICIPIO DE EL TULE",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "065",
         "valor": "MUNICIPIO DE URIQUE",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "066",
         "valor": "MUNICIPIO DE URUACHI",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "067",
         "valor": "MUNICIPIO DE VALLE DE ZARAGOZA",
-        "poder": "MUNICIPAL_ALCALDIA",
+        "orden": "MUNICIPAL_ALCALDIA",
         "ambito": "EJECUTIVO_MUNICIPAL",
         "empleo": "SI"
     },
     {
         "clave": "068",
         "valor": "ADMINISTRADORA DE SERVICIOS AEROPORTUARIOS DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "069",
         "valor": "AGENCIA ESTATAL DE DESARROLLO ENERGETICO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "070",
         "valor": "AUDITORIA SUPERIOR DEL ESTADO DE CHIHUAHUA",
-        "poder": "LEGISLATIVO",
+        "orden": "LEGISLATIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "071",
         "valor": "CASA CHIHUAHUA CENTRO DE PATRIMONIO CULTURAL",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "072",
         "valor": "CENTRO DE CONCILIACION LABORAL DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "073",
         "valor": "COLEGIO DE BACHILLERES DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "074",
         "valor": "COLEGIO DE EDUCACION PROFESIONAL TECNICA DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "075",
         "valor": "COLEGIO DE ESTUDIOS CIENTIFICOS Y TECNOLOGICOS DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "076",
         "valor": "COMISION ESTATAL DE LOS DERECHOS HUMANOS",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "077",
         "valor": "COMISION ESTATAL DE LOS DERECHOS HUMANOS DE CHIHUAHUA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "078",
         "valor": "COMISION ESTATAL DE VIVIENDA SUELO E INFRAESTRUCTURA DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "079",
         "valor": "COMISION ESTATAL PARA LA PROTECCION CONTRA RIESGOS SANITARIOS DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "080",
         "valor": "CONGRESO DEL ESTADO DE CHIHUAHUA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "081",
         "valor": "CONSEJO DE LA JUDICATURA",
-        "poder": "JUDICIAL",
+        "orden": "JUDICIAL",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "082",
         "valor": "CONSEJO ESTATAL DE POBLACION",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "083",
         "valor": "CONTRALORIA PODER JUDICIAL CHIHUAHUA",
-        "poder": "JUDICIAL",
+        "orden": "JUDICIAL",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "084",
         "valor": "COORDINACION DE COMUNICACION",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "085",
         "valor": "COORDINACION DE RELACIONES PUBLICAS",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "086",
         "valor": "DESARROLLO INTEGRAL DE LA FAMILIA DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "087",
         "valor": "DESPACHO DEL EJECUTIVO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "088",
         "valor": "EL COLEGIO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "089",
         "valor": "ESCUELA NORMAL SUPERIOR PROFESOR JOSE E MEDRANO R",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "090",
         "valor": "FIDEICOMISO DE ADMINISTRACION PARA LA PROMOCION Y FOMENTO DE LAS ACTIVIDADES TURISTICAS DEL ESTADO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "091",
         "valor": "FIDEICOMISO DE PUENTES FRONTERIZOS DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "092",
         "valor": "FIDEICOMISO ESTATAL PARA EL FOMENTO DE LAS ACTIVIDADES PRODUCTIVAS EN EL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "093",
         "valor": "FISCALIA ANTICORRUPCION DEL ESTADO DE CHIHUAHUA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "094",
         "valor": "FISCALIA GENERAL DEL ESTADO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "095",
         "valor": "FOMENTO Y DESARROLLO ARTESANAL DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "096",
         "valor": "FONDO DE ATENCIÓN A NIÑAS Y NIÑOS HIJOS DE POLICÍAS CAÍDOS EN CUMPLIMIENTO DE SU DEBER",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "097",
         "valor": "H. CONGRESO DEL ESTADO",
-        "poder": "LEGISLATIVO",
+        "orden": "LEGISLATIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "098",
         "valor": "INSTITUTO CHIHUAHUENSE DE EDUCACION PARA LOS ADULTOS",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "099",
         "valor": "INSTITUTO CHIHUAHUENSE DE INFRAESTRUCTURA FISICA EDUCATIVA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "100",
         "valor": "INSTITUTO CHIHUAHUENSE DE LA JUVENTUD",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "101",
         "valor": "INSTITUTO CHIHUAHUENSE DE LAS MUJERES",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "102",
         "valor": "INSTITUTO CHIHUAHUENSE DE SALUD",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "103",
         "valor": "INSTITUTO CHIHUAHUENSE DE SALUD MENTAL",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "104",
         "valor": "INSTITUTO CHIHUAHUENSE DEL DEPORTE Y CULTURA FISICA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "105",
         "valor": "INSTITUTO CHIHUAHUENSE PARA LA TRANSPARENCIA Y ACCESO A LA INFORMACION PUBLICA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "106",
         "valor": "INSTITUTO CHIHUAHUENSE PARA LA TRANSPARENCIA Y ACCESO A LA INFORMACIÓN PÚBLICA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "107",
         "valor": "INSTITUTO DE APOYO AL DESARROLLO TECNOLOGICO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "108",
         "valor": "INSTITUTO DE CAPACITACION PARA EL TRABAJO DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "109",
         "valor": "INSTITUTO DE INNOVACION Y COMPETITIVIDAD",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "110",
         "valor": "INSTITUTO ESTATAL ELECTORAL",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "111",
         "valor": "INSTITUTO ESTATAL ELECTORAL DE CHIHUAHUA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "112",
         "valor": "INSTITUTO TECNOLOGICO SUPERIOR DE NUEVO CASAS GRANDES",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "113",
         "valor": "JUNTA CENTRAL DE AGUA Y SANEAMIENTO DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "114",
         "valor": "JUNTA DE ASISTENCIA SOCIAL PRIVADA DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "115",
         "valor": "OPERADORA DE TRANSPORTE VIVEBUS CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "116",
         "valor": "PENSIONES CIVILES DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "117",
         "valor": "PROMOTORA PARA EL DESARROLLO ECONOMICO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "118",
         "valor": "REPRESENTACION DEL GOBIERNO DEL ESTADO DE CHIHUAHUA EN LA CIUDAD DE MEXICO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "119",
         "valor": "SECRETARIA DE COMUNICACIONES Y OBRAS PUBLICAS",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "120",
         "valor": "SECRETARIA DE COORDINACION DE GABINETE",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "121",
         "valor": "SECRETARIA DE CULTURA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "122",
         "valor": "SECRETARIA DE DESARROLLO HUMANO Y BIEN COMUN",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "123",
         "valor": "SECRETARIA DE DESARROLLO RURAL",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "124",
         "valor": "SECRETARIA DE DESARROLLO URBANO Y ECOLOGIA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "125",
         "valor": "SECRETARIA DE EDUCACION Y DEPORTE",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "126",
         "valor": "SECRETARIA DE HACIENDA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "127",
         "valor": "SECRETARIA DE INNOVACION Y DESARROLLO ECONOMICO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "128",
         "valor": "SECRETARIA DE LA FUNCION PUBLICA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "129",
         "valor": "SECRETARIA DE LA FUNCION PUBLICA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "130",
         "valor": "SECRETARIA DE PUEBLOS Y COMUNIDADES INDIGENAS",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "131",
         "valor": "SECRETARIA DE SALUD",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "132",
         "valor": "SECRETARIA DE SEGURIDAD PUBLICA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "133",
         "valor": "SECRETARIA DE TURISMO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "134",
         "valor": "SECRETARIA DEL TRABAJO Y PREVISION SOCIAL",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "135",
         "valor": "SECRETARIA EJECUTIVA DEL SISTEMA ESTATAL ANTICORRUPCION",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "136",
         "valor": "SECRETARIA GENERAL DE GOBIERNO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "137",
         "valor": "SECRETARIADO EJECUTIVO DEL SISTEMA ESTATAL DE SEGURIDAD PÚBLICA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "138",
         "valor": "SECTOR APOYO SOCIAL",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "139",
         "valor": "SECTOR DESARROLLO URBANO Y RURAL",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "140",
         "valor": "SECTOR ECONOMIA Y EMPLEO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "141",
         "valor": "SECTOR EDUCACION CULTURA Y DEPORTE",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "142",
         "valor": "SECTOR GOBIERNO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "143",
         "valor": "SECTOR HACIENDA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "144",
         "valor": "SECTOR OBRA PUBLICA Y AGUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "145",
         "valor": "SECTOR SALUD",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "146",
         "valor": "SECTOR SEGURIDAD Y JUSTICIA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "147",
         "valor": "SERVICIOS DE SALUD DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "148",
         "valor": "SERVICIOS EDUCATIVOS DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "149",
         "valor": "SUBSISTEMA DE PREPARATORIA ABIERTA Y TELEBACHILLERATO DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "150",
         "valor": "TRIBUNAL ESTATAL DE JUSTICIA ADMINISTRATIVA DE CHIHUAHUA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "151",
         "valor": "TRIBUNAL ESTATAL ELECTORAL",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "152",
         "valor": "TRIBUNAL ESTATAL ELECTORAL DE CHIHUAHUA",
-        "poder": "AUTONOMO",
+        "orden": "AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "153",
         "valor": "TRIBUNAL SUPERIOR DE JUSTICIA",
-        "poder": "JUDICIAL",
+        "orden": "JUDICIAL",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "154",
         "valor": "UNIVERSIDAD AUTONOMA DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "155",
         "valor": "UNIVERSIDAD AUTONOMA DE CIUDAD JUAREZ",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "156",
         "valor": "UNIVERSIDAD PEDAGOGICA NACIONAL DEL ESTADO DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "157",
         "valor": "UNIVERSIDAD POLITECNICA DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "158",
         "valor": "UNIVERSIDAD TECNOLOGICA DE CAMARGO",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "159",
         "valor": "UNIVERSIDAD TECNOLOGICA DE CHIHUAHUA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "160",
         "valor": "UNIVERSIDAD TECNOLOGICA DE CHIHUAHUA SUR",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "161",
         "valor": "UNIVERSIDAD TECNOLOGICA DE CIUDAD JUAREZ",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "162",
         "valor": "UNIVERSIDAD TECNOLOGICA DE LA BABICORA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "163",
         "valor": "UNIVERSIDAD TECNOLOGICA DE LA TARAHUMARA",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "164",
         "valor": "UNIVERSIDAD TECNOLOGICA DE PAQUIME",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "165",
         "valor": "UNIVERSIDAD TECNOLOGICA DE PARRAL",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "166",
         "valor": "UNIVERSIDAD TECNOLOGICA PASO DEL NORTE",
-        "poder": "EJECUTIVO",
+        "orden": "EJECUTIVO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     }
