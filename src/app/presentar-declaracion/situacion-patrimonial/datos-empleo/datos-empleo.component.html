@@ -172,9 +172,7 @@
           </mat-form-field>
 
           
-          <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill"
-            *ngIf="datosEmpleoCargoComisionForm.nivelOrdenGobierno==='MUNICIPAL_ALCALDIA'"
-          >
+          <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill">
             <mat-label>Nombre del Ente Público</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
             <mat-select formControlName="nombreEntePublico" required>

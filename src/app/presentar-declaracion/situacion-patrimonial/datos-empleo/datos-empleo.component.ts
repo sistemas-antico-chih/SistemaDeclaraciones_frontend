@@ -245,6 +245,7 @@ export class DatosEmpleoComponent implements OnInit {
         //falseText: '',
       },
     });
+    console.log(this.entePublicoCatalogo)
   }
 
   openSnackBar(message: string, action: string = null) {
