@@ -343,11 +343,11 @@ export class DatosEmpleoComponent implements OnInit {
     this.datosEmpleoCargoComisionForm.get(selectedType).enable();
   }*/
 
-  //filtrarEntes(value: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
-  filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
+  //filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
+  filtrarEntes(poder: string, ambito: string="EJECUTIVO_MUNICIPAL"){
     console.log("llegaaa");
     console.log(poder);
-    console.log(ambito);
+    
     let poderFiltro=poder;
     let poderAmbito=ambito;
     return this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
