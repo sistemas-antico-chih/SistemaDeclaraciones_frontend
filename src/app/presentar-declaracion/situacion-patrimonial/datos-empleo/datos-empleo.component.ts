@@ -335,14 +335,14 @@ export class DatosEmpleoComponent implements OnInit {
   cambioPoder(value: any) {
     console.log("poder");
     console.log(value);
-    console.log(this.ambito);
+    console.log(this.datosEmpleoCargoComisionForm.get('ambitoPublico'));
     //this.filtrarEntes(value);
   }
 
   cambioAmbito(value: any) {
     console.log("ambito");
     console.log(value);
-    console.log(this.orden);
+    console.log(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno'));
     //console.log(this.datosEmpleoCargoComisionForm.nivelOrdenGobierno.value);
     //this.filtrarEntes(value);
   }

@@ -154,7 +154,7 @@
             <mat-label>Nivel/Orden de Gobierno </mat-label>
             <mat-icon matPrefix>star</mat-icon>
             <mat-select formControlName="nivelOrdenGobierno" required (selectionChange)="cambioPoder($event.value)">
-              <mat-option *ngFor="let orden of nivelOrdenGobiernoCatalogo" [(value)]="orden">
+              <mat-option *ngFor="let orden of nivelOrdenGobiernoCatalogo" [value]="orden">
                 {{ orden | replace: '_':' ' }}
               </mat-option>
             </mat-select>
@@ -165,7 +165,7 @@
             <mat-label>Ámbito Público</mat-label>
             <mat-icon matPrefix>aspect_ratio</mat-icon>
             <mat-select formControlName="ambitoPublico" required (selectionChange)="cambioAmbito($event.value)">
-              <mat-option *ngFor="let ambito of ambitoPublicoCatalogo" [(value)]="ambito">
+              <mat-option *ngFor="let ambito of ambitoPublicoCatalogo" [value]="ambito">
                 {{ ambito | replace: '_':' ' }}
               </mat-option>
             </mat-select>
