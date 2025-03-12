@@ -358,7 +358,7 @@ export class DatosEmpleoComponent implements OnInit {
     let poderFiltro=orden;
     let poderAmbito=ambito;
 
-    if(orden==="MUNICIPIO_ALCALDIA"){
+    if(orden==="MUNICIPAL_ALCALDIA"){
       console.log("dentro if")
       console.log(this.entePublicoCatalogo)
       this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
