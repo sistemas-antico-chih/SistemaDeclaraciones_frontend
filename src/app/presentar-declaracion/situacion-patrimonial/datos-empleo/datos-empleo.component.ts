@@ -40,6 +40,7 @@ export class DatosEmpleoComponent implements OnInit {
   estado: Catalogo = null;
   isLoading = false;
   entePublicoCatalogo = entePublico;
+  entesFiltrados:any = [] ;
 
   @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
 
@@ -247,6 +248,7 @@ export class DatosEmpleoComponent implements OnInit {
     });
     let poder="MUNICIPAL_ALCALDIA";
     let ambito="EJECUTIVO_MUNICIPAL"
+    this.entePublicoCatalogo=this.filtrarEntes();
     console.log(this.filtrarEntes(poder,ambito))
   }
 
