@@ -247,9 +247,9 @@ export class DatosEmpleoComponent implements OnInit {
         //falseText: '',
       },
     });
-    let poder="MUNICIPAL_ALCALDIA";
-    let ambito="EJECUTIVO_MUNICIPAL"
-    console.log(this.nivelOrdenGobiernoCatalogo);
+    //let poder="MUNICIPAL_ALCALDIA";
+    //let ambito="EJECUTIVO_MUNICIPAL"
+    //console.log(this.nivelOrdenGobiernoCatalogo);
     //this.entePublicoCatalogo=this.filtrarEntes();
     //console.log(this.filtrarEntes(poder,ambito))
   }
@@ -335,20 +335,20 @@ export class DatosEmpleoComponent implements OnInit {
   cambioPoder(value: any) {
     console.log("poder");
     console.log(value);
-    console.log(this.datosEmpleoCargoComisionForm.get('ambitoPublico'));
+    console.log(this.datosEmpleoCargoComisionForm.get('ambitoPublico').value);
     //this.filtrarEntes(value);
   }
 
   cambioAmbito(value: any) {
     console.log("ambito");
     console.log(value);
-    console.log(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno'));
+    console.log(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno').value);
     //console.log(this.datosEmpleoCargoComisionForm.nivelOrdenGobierno.value);
     //this.filtrarEntes(value);
   }
 
   //filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
-  filtrarEntes(orden: string="MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
+  filtrarEntes(orden?: string, ambito?: string){
     console.log("llegaaa");
     
     let poderFiltro=orden;
