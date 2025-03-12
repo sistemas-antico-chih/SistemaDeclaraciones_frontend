@@ -249,10 +249,12 @@ export class DatosEmpleoComponent implements OnInit {
     let ambito="EJECUTIVO_MUNICIPAL"
     console.log(this.filtrarEntes(poder,ambito))
   }
+
   filtrarEntes(poder: string, ambito: string){
     let poderFiltro=poder;
     let poderAmbito=ambito;
-    return this.entePublicoCatalogo.filter((o:any) =>  o.poder===poderFiltro && o.ambito===poderAmbito);
+    return this.entePublicoCatalogo.filter(
+      (o:any) =>  o.poder===poderFiltro && o.ambito===poderAmbito && o.empleo==='NO');
   }
 
   openSnackBar(message: string, action: string = null) {
