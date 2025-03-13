@@ -41,6 +41,7 @@ export class DatosCurricularesComponent implements OnInit {
   editIndex: number = null;
   escolaridad: Escolaridad[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   documentoObtenidoCatalogo = DocumentoObtenido;
   estatusCatalogo = Estatus;
@@ -181,7 +182,7 @@ export class DatosCurricularesComponent implements OnInit {
     let isDirty = this.datosCurricularesDeclaranteForm.dirty;
     console.log(isDirty);
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -200,6 +201,7 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -297,6 +299,7 @@ export class DatosCurricularesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   saveItems() {

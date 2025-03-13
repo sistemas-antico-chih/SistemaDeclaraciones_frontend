@@ -49,6 +49,7 @@ export class AdeudosComponent implements OnInit {
   extranjeroCatalogo = Extranjero;
   paisesCatalogo = Paises;
   monedasCatalogo = Monedas;
+  pushButtonSave: boolean =false;
 
   tipoDeclaracion: string = null;
   tipoDomicilio: MexicoExtranjero = null;
@@ -218,7 +219,7 @@ export class AdeudosComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.adeudosPasivosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -237,6 +238,7 @@ export class AdeudosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -336,6 +338,7 @@ export class AdeudosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {

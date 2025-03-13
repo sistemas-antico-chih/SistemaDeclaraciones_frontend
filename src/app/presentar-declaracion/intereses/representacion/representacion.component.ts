@@ -39,6 +39,7 @@ export class RepresentacionComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   relacionCatalogo = TipoRelacion;
   representacionCatalogo = TipoRepresentacion;
@@ -222,7 +223,7 @@ export class RepresentacionComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.representacionForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -241,6 +242,7 @@ export class RepresentacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -341,6 +343,7 @@ export class RepresentacionComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {

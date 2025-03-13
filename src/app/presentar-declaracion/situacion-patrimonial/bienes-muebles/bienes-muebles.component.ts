@@ -37,6 +37,7 @@ export class BienesMueblesComponent implements OnInit {
   editIndex: number = null;
   bienMueble: BienMueble[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   tipoBienBienesMueblesCatalogo = TipoBienBienesMuebles;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -202,7 +203,7 @@ export class BienesMueblesComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.bienesMueblesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -221,6 +222,7 @@ export class BienesMueblesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -320,6 +322,7 @@ export class BienesMueblesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {

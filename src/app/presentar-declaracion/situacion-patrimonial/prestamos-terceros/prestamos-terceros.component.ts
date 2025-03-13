@@ -45,6 +45,7 @@ export class PrestamosTercerosComponent implements OnInit {
   prestamo: Prestamo[] = [];
   isLoading = false;
   currentYear = new Date().getFullYear();
+  pushButtonSave: boolean =false;
 
   tipoInmuebleCatalogo = TipoInmueble;
   tipoVehiculoCatalogo = TipoVehiculo;
@@ -353,7 +354,7 @@ export class PrestamosTercerosComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.prestamoComodatoForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -372,6 +373,7 @@ export class PrestamosTercerosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -490,6 +492,7 @@ export class PrestamosTercerosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {

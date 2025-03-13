@@ -35,6 +35,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroSector') otroSector: ElementRef;
   @ViewChild('otroTipoBeneficio') otroTipoBeneficio: ElementRef;
@@ -221,7 +222,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.beneficiosPrivadosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -240,6 +241,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -343,6 +345,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {

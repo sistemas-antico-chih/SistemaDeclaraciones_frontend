@@ -53,6 +53,7 @@ export class DatosDependienteComponent implements OnInit {
   estado: Catalogo = null;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -439,8 +440,8 @@ export class DatosDependienteComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.datosDependientesEconomicosForm.dirty;
-    if (isDirty) {
-      const dialogRef = this.dialog.open(DialogComponent, {
+    if (isDirty && !this.pushButtonSave) {
+        const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
           message: '¿Deseas continuar?',
@@ -458,6 +459,7 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -584,6 +586,7 @@ export class DatosDependienteComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {

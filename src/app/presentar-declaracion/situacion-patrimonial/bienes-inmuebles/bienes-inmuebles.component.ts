@@ -47,6 +47,7 @@ export class BienesInmueblesComponent implements OnInit {
   isLoading = false;
   varOtroTipoInmueble: string = null;
   varOtroRelacion: string = null;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -309,7 +310,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.bienesInmueblesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -328,6 +329,7 @@ export class BienesInmueblesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -473,6 +475,7 @@ export class BienesInmueblesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {

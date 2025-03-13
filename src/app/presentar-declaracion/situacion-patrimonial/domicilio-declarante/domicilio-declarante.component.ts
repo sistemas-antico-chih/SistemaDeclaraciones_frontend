@@ -28,6 +28,7 @@ export class DomicilioDeclaranteComponent implements OnInit {
   domicilioDeclaranteForm: FormGroup;
   estado: Catalogo = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   estadosCatalogo = Estados;
   municipiosCatalogo = Municipios;
@@ -65,6 +66,8 @@ export class DomicilioDeclaranteComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -175,7 +178,7 @@ export class DomicilioDeclaranteComponent implements OnInit {
     let isDirty = this.domicilioDeclaranteForm.dirty;
     console.log(isDirty);
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -194,6 +197,7 @@ export class DomicilioDeclaranteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',

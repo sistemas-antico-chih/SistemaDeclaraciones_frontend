@@ -59,10 +59,10 @@ export class InversionesComponent implements OnInit {
   editIndex: number = null;
   inversion: Inversion[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   tipoInversionCatalogo = TipoInversion;
   subTipoInversionCatalogo = SubTipoInversion;
-
 
   subTipoAforesCatalogo = SubTipoInversionAfores;
   subTipoBancariaCatalogo = SubTipoInversionBancaria;
@@ -252,7 +252,7 @@ export class InversionesComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.inversionesCuentasValoresForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -271,6 +271,7 @@ export class InversionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -370,6 +371,7 @@ export class InversionesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {

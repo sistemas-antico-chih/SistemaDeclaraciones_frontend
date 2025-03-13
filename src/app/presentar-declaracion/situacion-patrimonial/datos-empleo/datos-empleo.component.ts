@@ -43,6 +43,7 @@ export class DatosEmpleoComponent implements OnInit {
   entePublicoCatalogo = entePublico;
   entePublicoFiltrado = entePublico;
   entesFiltrados:any = [] ;
+  pushButtonSave: boolean =false;
 
   @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
 
@@ -91,6 +92,8 @@ export class DatosEmpleoComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -220,7 +223,7 @@ export class DatosEmpleoComponent implements OnInit {
     let isDirty = this.datosEmpleoCargoComisionForm.dirty;
     console.log(isDirty);
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -239,6 +242,7 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -248,11 +252,6 @@ export class DatosEmpleoComponent implements OnInit {
         //falseText: '',
       },
     });
-    //let poder="MUNICIPAL_ALCALDIA";
-    //let ambito="EJECUTIVO_MUNICIPAL"
-    //console.log(this.nivelOrdenGobiernoCatalogo);
-    //this.entePublicoCatalogo=this.filtrarEntes();
-    //console.log(this.filtrarEntes(poder,ambito))
   }
 
   openSnackBar(message: string, action: string = null) {

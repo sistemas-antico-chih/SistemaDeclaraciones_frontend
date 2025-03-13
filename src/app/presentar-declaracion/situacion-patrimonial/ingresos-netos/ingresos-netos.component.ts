@@ -33,6 +33,7 @@ export class IngresosNetosComponent implements OnInit {
   index: number = 0;
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
+  pushButtonSave: boolean =false;
 
   ingresoActividad: any = [];
   //@Output("otroTipoInstrumento") ids: any = [];
@@ -169,6 +170,8 @@ export class IngresosNetosComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -409,7 +412,7 @@ export class IngresosNetosComponent implements OnInit {
     let isDirty = this.ingresosForm.dirty;
     //console.log(isDirty);
 
-    if (isDirty) {
+      if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -428,6 +431,7 @@ export class IngresosNetosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',

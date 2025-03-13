@@ -36,6 +36,7 @@ export class ExperienciaLaboralComponent implements OnInit {
   editIndex: number = null;
   experiencia: Experiencia[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroAmbitoSector') otroAmbitoSector: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -312,7 +313,7 @@ export class ExperienciaLaboralComponent implements OnInit {
     let isDirty = this.experienciaLaboralForm.dirty;
     console.log(isDirty);
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -331,6 +332,7 @@ export class ExperienciaLaboralComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -447,6 +449,7 @@ export class ExperienciaLaboralComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   saveItems() {

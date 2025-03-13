@@ -39,6 +39,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
   editIndex: number = null;
   participacion: Participacion[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   relacionCatalogo = Relacion;
   tipoParticipacionCatalogo = TipoParticipacion;
@@ -221,7 +222,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.participacionForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -240,6 +241,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -340,6 +342,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {

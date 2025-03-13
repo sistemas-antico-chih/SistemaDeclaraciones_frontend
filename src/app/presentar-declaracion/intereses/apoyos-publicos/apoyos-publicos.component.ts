@@ -35,6 +35,7 @@ export class ApoyosPublicosComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   beneficiarioProgramaCatalogo = beneficiarioPrograma;
   NivelGobiernoCatalogo = NivelGobierno;
@@ -158,7 +159,7 @@ export class ApoyosPublicosComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.apoyosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -177,6 +178,7 @@ export class ApoyosPublicosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -276,6 +278,7 @@ export class ApoyosPublicosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {

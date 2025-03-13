@@ -45,6 +45,7 @@ export class VehiculosComponent implements OnInit {
 
   varOtroTipoVehiculo: string = null;
   varOtroRelacion: string = null;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -266,7 +267,7 @@ export class VehiculosComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.vehiculosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -285,6 +286,7 @@ export class VehiculosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -384,6 +386,7 @@ export class VehiculosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {

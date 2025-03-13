@@ -35,6 +35,7 @@ export class ServidorPublicoComponent implements OnInit {
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
   ingresoActividad: any = [];
+  pushButtonSave: boolean =false;
 
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
@@ -217,6 +218,8 @@ export class ServidorPublicoComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -531,7 +534,7 @@ export class ServidorPublicoComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.actividadAnualAnteriorForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -550,6 +553,7 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',

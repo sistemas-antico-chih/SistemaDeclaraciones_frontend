@@ -48,6 +48,7 @@ export class TomaDecisionesComponent implements OnInit {
   editIndex: number = null;
   estado: string = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   relacionCatalogo = Relacion;
   institucionCatalogo = Institucion;
@@ -236,7 +237,7 @@ export class TomaDecisionesComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.participacionTomaDecisionesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -255,6 +256,7 @@ export class TomaDecisionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -355,6 +357,7 @@ export class TomaDecisionesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {

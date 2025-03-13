@@ -36,6 +36,7 @@ export class ClientesPrincipalesComponent implements OnInit {
   isLoading = false;
   varOtroSector: string = null;
   location: string = null;
+  pushButtonSave: boolean =false;
 
   @ViewChild('locationSelect') locationSelect: MatSelect;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -233,7 +234,7 @@ export class ClientesPrincipalesComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.clientesPrincipalesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -252,6 +253,7 @@ export class ClientesPrincipalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -355,6 +357,7 @@ export class ClientesPrincipalesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {
