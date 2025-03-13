@@ -159,7 +159,7 @@ export class ApoyosPublicosComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.apoyosForm.dirty;
-    if (isDirty && !this.pushButtonSave) 
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
