@@ -334,45 +334,23 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   cambioOrden(value: any) {
-    console.log("orden");
-    console.log(value);
-    console.log(this.datosEmpleoCargoComisionForm.get('ambitoPublico').value);
     this.filtrarEntes(value, this.datosEmpleoCargoComisionForm.get('ambitoPublico').value);
-    //this.filtrarEntes(value);
   }
 
   cambioAmbito(value: any) {
-    console.log("ambito");
-    console.log(value);
-    console.log(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno').value);
     this.filtrarEntes(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno').value,value);
-    //console.log(this.datosEmpleoCargoComisionForm.nivelOrdenGobierno.value);
-    //this.filtrarEntes(value);
   }
 
-  //filtrarEntes(poder: string = "MUNICIPAL_ALCALDIA", ambito: string="EJECUTIVO_MUNICIPAL"){
   filtrarEntes(orden: string, ambito: string){
-    console.log("llegaaa");
-    console.log("ORDEN: "+orden);
-    console.log("AMBITO: "+ambito);
-
     if(orden==="MUNICIPAL_ALCALDIA"){
-      console.log("dentro if")
-      console.log(this.entePublicoFiltrado)
       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
         (o:any) =>  o.ambito===orden && o.empleo==='SI');  
-      console.log("if ente")
-        console.log(this.entePublicoFiltrado)
       return;
     }
     else{
-      console.log("dentro else")
-      console.log(this.entePublicoFiltrado)
        this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
         (o:any) =>  o.ambito!=="MUNICIPAL_ALCALDIA"  && o.empleo==='NO' && o.ambito === ambito);
-       console.log(this.entePublicoFiltrado)
        return
     }
-    
   }
 }
