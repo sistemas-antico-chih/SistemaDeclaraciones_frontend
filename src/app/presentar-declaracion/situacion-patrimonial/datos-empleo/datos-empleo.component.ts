@@ -41,6 +41,7 @@ export class DatosEmpleoComponent implements OnInit {
   estado: Catalogo = null;
   isLoading = false;
   entePublicoCatalogo = entePublico;
+  entePublicoFiltrado = entePublico;
   entesFiltrados:any = [] ;
 
   @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
@@ -357,19 +358,19 @@ export class DatosEmpleoComponent implements OnInit {
 
     if(orden==="MUNICIPAL_ALCALDIA"){
       console.log("dentro if")
-      console.log(this.entePublicoCatalogo)
-      this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
+      console.log(this.entePublicoFiltrado)
+      this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
         (o:any) =>  o.orden===orden && o.empleo==='SI');  
       console.log("if ente")
-        console.log(this.entePublicoCatalogo)
+        console.log(this.entePublicoFiltrado)
       return;
     }
     else{
       console.log("dentro else")
-      console.log(this.entePublicoCatalogo)
-       this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
+      console.log(this.entePublicoFiltrado)
+       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
         (o:any) =>  o.orden!=="MUNICIPAL_ALCALDIA"  && o.empleo==='NO');
-       console.log(this.entePublicoCatalogo)
+       console.log(this.entePublicoFiltrado)
        return
     }
     
