@@ -527,14 +527,14 @@
     {
         "clave": "076",
         "valor": "COMISION ESTATAL DE LOS DERECHOS HUMANOS",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "077",
         "valor": "COMISION ESTATAL DE LOS DERECHOS HUMANOS DE CHIHUAHUA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
@@ -555,7 +555,7 @@
     {
         "clave": "080",
         "valor": "CONGRESO DEL ESTADO DE CHIHUAHUA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
@@ -646,7 +646,7 @@
     {
         "clave": "093",
         "valor": "FISCALIA ANTICORRUPCION DEL ESTADO DE CHIHUAHUA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
@@ -730,14 +730,14 @@
     {
         "clave": "105",
         "valor": "INSTITUTO CHIHUAHUENSE PARA LA TRANSPARENCIA Y ACCESO A LA INFORMACION PUBLICA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "106",
         "valor": "INSTITUTO CHIHUAHUENSE PARA LA TRANSPARENCIA Y ACCESO A LA INFORMACIÓN PÚBLICA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
@@ -765,14 +765,14 @@
     {
         "clave": "110",
         "valor": "INSTITUTO ESTATAL ELECTORAL",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "111",
         "valor": "INSTITUTO ESTATAL ELECTORAL DE CHIHUAHUA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
@@ -1045,21 +1045,21 @@
     {
         "clave": "150",
         "valor": "TRIBUNAL ESTATAL DE JUSTICIA ADMINISTRATIVA DE CHIHUAHUA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "151",
         "valor": "TRIBUNAL ESTATAL ELECTORAL",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
     {
         "clave": "152",
         "valor": "TRIBUNAL ESTATAL ELECTORAL DE CHIHUAHUA",
-        "orden": "AUTONOMO",
+        "orden": "ORGANO_AUTONOMO",
         "ambito": "ESTATAL",
         "empleo": "NO"
     },
