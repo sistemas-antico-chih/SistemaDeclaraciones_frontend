@@ -32,6 +32,7 @@ export class DatosGeneralesComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
   anio_ejercicio: number = null;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -76,6 +77,8 @@ export class DatosGeneralesComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -227,13 +230,15 @@ export class DatosGeneralesComponent implements OnInit {
     return typeof this.anio_ejercicio === 'number';
     // return true;
   }
+  
+
 
   formHasChanges() {
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosGeneralesForm.dirty;
 
-    if (isDirty) {
+    if (isDirty && this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
