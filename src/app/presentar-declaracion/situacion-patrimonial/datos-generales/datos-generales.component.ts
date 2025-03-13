@@ -238,7 +238,7 @@ export class DatosGeneralesComponent implements OnInit {
     if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosGeneralesForm.dirty;
 
-    if (isDirty && this.pushButtonSave) {
+    if (isDirty && !this.pushButtonSave) {
       console.log("llegaa");
       console.log(this.pushButtonSave);
       const dialogRef = this.dialog.open(DialogComponent, {
