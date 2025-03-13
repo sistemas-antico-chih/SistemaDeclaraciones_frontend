@@ -354,15 +354,12 @@ export class DatosEmpleoComponent implements OnInit {
     console.log("llegaaa");
     console.log("ORDEN: "+orden);
     console.log("AMBITO: "+ambito);
-    
-    let poderFiltro=orden;
-    let poderAmbito=ambito;
 
     if(orden==="MUNICIPAL_ALCALDIA"){
       console.log("dentro if")
       console.log(this.entePublicoCatalogo)
       this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.poder===poderFiltro && o.empleo==='SI');  
+        (o:any) =>  o.orden===orden && o.empleo==='SI');  
       console.log("if ente")
         console.log(this.entePublicoCatalogo)
       return;
@@ -371,7 +368,7 @@ export class DatosEmpleoComponent implements OnInit {
       console.log("dentro else")
       console.log(this.entePublicoCatalogo)
        this.entePublicoCatalogo = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.poder!==poderAmbito && o.ambito==="MUNICIPAL_ALCALDIA" && o.empleo==='NO');
+        (o:any) =>  o.orden!=="MUNICIPAL_ALCALDIA" && o.ambito===ambito && o.empleo==='NO');
        console.log(this.entePublicoCatalogo)
        return
     }
