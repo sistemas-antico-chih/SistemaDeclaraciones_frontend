@@ -360,7 +360,7 @@ export class DatosEmpleoComponent implements OnInit {
       console.log("dentro if")
       console.log(this.entePublicoFiltrado)
       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.orden===orden && o.empleo==='SI');  
+        (o:any) =>  o.ambito===orden && o.empleo==='SI');  
       console.log("if ente")
         console.log(this.entePublicoFiltrado)
       return;
@@ -369,7 +369,7 @@ export class DatosEmpleoComponent implements OnInit {
       console.log("dentro else")
       console.log(this.entePublicoFiltrado)
        this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.orden!=="MUNICIPAL_ALCALDIA"  && o.empleo==='NO' && o.orden ===o.ambito);
+        (o:any) =>  o.ambito!=="MUNICIPAL_ALCALDIA"  && o.empleo==='NO' && o.ambito === ambito);
        console.log(this.entePublicoFiltrado)
        return
     }
