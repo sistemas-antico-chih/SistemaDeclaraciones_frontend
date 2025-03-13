@@ -239,6 +239,8 @@ export class DatosGeneralesComponent implements OnInit {
     let isDirty = this.datosGeneralesForm.dirty;
 
     if (isDirty && this.pushButtonSave) {
+      console.log("llegaa");
+      console.log(this.pushButtonSave);
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -321,6 +323,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
