@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { participacionMutation, participacionQuery } from '@api/declaracion';
+import { participacionMutation, participacionQuery, lastParticipacionQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -20,7 +20,7 @@ import Sector from '@static/catalogos/sector.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/participacion-empresa';
 
-import { DeclaracionOutput, Participacion, Participaciones } from '@models/declaracion';
+import { DeclaracionOutput, Participacion, Participaciones, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -39,6 +39,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
   editIndex: number = null;
   participacion: Participacion[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   relacionCatalogo = Relacion;
   tipoParticipacionCatalogo = TipoParticipacion;
@@ -54,6 +55,14 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  varOtroTipoParticipacion: string = null;
+  varOtroSector: string = null;
+
+  @ViewChild('otroTipoParticipacion') otroTipoParticipacion: ElementRef;
+  @ViewChild('otroSector') otroSector: ElementRef;
+  location: string = null;
+
 
   constructor(
     private apollo: Apollo,
@@ -168,6 +177,25 @@ export class ParticipacionEmpresaComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastParticipacionQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.participacion);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -180,17 +208,21 @@ export class ParticipacionEmpresaComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.participacion) {
+      if (data.declaracion.participacion === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.participacion);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
+
   formHasChanges() {
     let isDirty = this.participacionForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -208,7 +240,18 @@ export class ParticipacionEmpresaComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noParticipacion() {
     this.saveInfo({ ninguno: true });
@@ -282,7 +325,8 @@ export class ParticipacionEmpresaComponent implements OnInit {
   saveItem() {
     let participacion = [...this.participacion];
     const aclaracionesObservaciones = this.participacionForm.value.aclaracionesObservaciones;
-    const newItem = this.participacionForm.value.participacion;
+    //const newItem = this.participacionForm.value.participacion;
+    const newItem = this.finalParticipacionForm;
 
     if (this.editIndex === null) {
       participacion = [...participacion, newItem];
@@ -298,6 +342,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -308,22 +353,32 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
   setSelectedOptions() {
     const { tipoParticipacion, sector } = this.participacionForm.value.participacion;
-    const { entidadFederativa, pais } = this.participacionForm.value.participacion.ubicacion;
+    const { entidadFederativa } = this.participacionForm.value.participacion.ubicacion;
+    //const { ubicacion } = this.participacionForm.value.participacion;
 
     if (tipoParticipacion) {
-      this.participacionForm
-        .get('participacion.tipoParticipacion')
-        .setValue(findOption(this.tipoParticipacionCatalogo, tipoParticipacion.clave));
+      const optionTipoParticipacion = this.tipoParticipacionCatalogo.filter((i: any) => i.clave === tipoParticipacion.clave);
+      this.participacionForm.get('participacion.tipoParticipacion').setValue(optionTipoParticipacion[0]);
+      if (tipoParticipacion.clave === 'OTRO') {
+        this.varOtroTipoParticipacion = tipoParticipacion.valor;
+      }
     }
 
     if (sector) {
-      this.participacionForm.get('participacion.sector').setValue(findOption(this.sectorCatalogo, sector.clave));
+      const optionSector = this.sectorCatalogo.filter((i: any) => i.clave === sector.clave);
+      this.participacionForm.get('participacion.sector').setValue(optionSector[0]);
+      if (sector.clave === 'OTRO') {
+        this.varOtroSector = sector.valor;
+      }
     }
 
     if (entidadFederativa) {
       this.participacionForm
         .get('participacion.ubicacion.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
+      this.location="MX"
+    }else{
+      this.location="EX"
     }
   }
 
@@ -350,5 +405,37 @@ export class ParticipacionEmpresaComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let participacion = [...this.participacion];
+    if (participacion.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < participacion.length; i++) {
+        participacion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.participacionForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        participacion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  get finalParticipacionForm() {
+    const form = JSON.parse(JSON.stringify(this.participacionForm.value.participacion)); // Deep copy
+
+    if (form.tipoParticipacion?.clave === 'OTRO') {
+      form.tipoParticipacion.valor = this.otroTipoParticipacion.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.sector?.clave === 'OTRO') {
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }

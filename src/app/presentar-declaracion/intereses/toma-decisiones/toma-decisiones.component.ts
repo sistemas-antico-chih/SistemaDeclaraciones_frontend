@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { participacionTomaDecisionesMutation, participacionTomaDecisionesQuery } from '@api/declaracion';
+import {
+  participacionTomaDecisionesMutation,
+  participacionTomaDecisionesQuery,
+  lastParticipacionTomaDecisionesQuery
+} from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -19,7 +23,12 @@ import Estados from '@static/catalogos/estados.json';
 
 import { tooltipData } from '@static/tooltips/intereses/toma-descisiones';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
-import { DeclaracionOutput, ParticipacionTD, ParticipacionTomaDecisiones } from '@models/declaracion';
+import {
+  DeclaracionOutput,
+  ParticipacionTD,
+  ParticipacionTomaDecisiones,
+  LastDeclaracionOutput
+} from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -39,6 +48,7 @@ export class TomaDecisionesComponent implements OnInit {
   editIndex: number = null;
   estado: string = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   relacionCatalogo = Relacion;
   institucionCatalogo = Institucion;
@@ -58,7 +68,12 @@ export class TomaDecisionesComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  varOtroTipoParticipacion: string = null;
+
+  @ViewChild('otroTipoParticipacion') otroTipoParticipacion: ElementRef;
+  location: string = null;
 
   constructor(
     private apollo: Apollo,
@@ -177,6 +192,25 @@ export class TomaDecisionesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastParticipacionTomaDecisionesQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.participacionTomaDecisiones);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -189,17 +223,21 @@ export class TomaDecisionesComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.participacionTomaDecisiones) {
+      if (data.declaracion.participacionTomaDecisiones === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.participacionTomaDecisiones);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
+
   formHasChanges() {
     let isDirty = this.participacionTomaDecisionesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -217,7 +255,18 @@ export class TomaDecisionesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noTomaDecisiones() {
     this.saveInfo({ ninguno: true });
@@ -291,7 +340,8 @@ export class TomaDecisionesComponent implements OnInit {
   saveItem() {
     let participacion = [...this.participacion];
     const aclaracionesObservaciones = this.participacionTomaDecisionesForm.value.aclaracionesObservaciones;
-    const newItem = this.participacionTomaDecisionesForm.value.participacion;
+    //const newItem = this.participacionTomaDecisionesForm.value.participacion;
+    const newItem = this.finalParticipacionTomaDecisionesForm;
 
     if (this.editIndex === null) {
       participacion = [...participacion, newItem];
@@ -307,6 +357,7 @@ export class TomaDecisionesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -320,15 +371,21 @@ export class TomaDecisionesComponent implements OnInit {
     const { entidadFederativa } = this.participacionTomaDecisionesForm.value.participacion.ubicacion;
 
     if (tipoInstitucion) {
-      this.participacionTomaDecisionesForm
-        .get('participacion.tipoInstitucion')
-        .setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+      const optTipoIns = this.institucionCatalogo.filter((ins: any) => ins.clave === tipoInstitucion.clave);
+      // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+      this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(optTipoIns[0]);
+      if (tipoInstitucion.clave === 'OTRO') {
+        this.varOtroTipoParticipacion = tipoInstitucion.valor;
+      }
     }
 
     if (entidadFederativa) {
       this.participacionTomaDecisionesForm
         .get('participacion.ubicacion.entidadFederativa')
-        .setValue(findOption(this.estadosCatalogo, entidadFederativa));
+        .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
+      this.location="MX"
+    }else{
+      this.location="EX"
     }
   }
 
@@ -357,5 +414,34 @@ export class TomaDecisionesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let participacion = [...this.participacion];
+    if (participacion.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < participacion.length; i++) {
+        participacion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.participacionTomaDecisionesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        participacion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  get finalParticipacionTomaDecisionesForm() {
+    const form = JSON.parse(JSON.stringify(this.participacionTomaDecisionesForm.value.participacion)); // Deep copy
+
+    if (form.tipoInstitucion?.clave === 'OTRO') {
+      form.tipoInstitucion.valor = this.otroTipoParticipacion.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    return form;
   }
 }

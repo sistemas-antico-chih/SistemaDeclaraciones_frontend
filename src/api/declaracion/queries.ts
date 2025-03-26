@@ -1,5 +1,46 @@
 import gql from 'graphql-tag';
 
+export const myDeclaracionesMetadata = gql`
+  query myDeclaracionesMetadata(
+    $userID: LimitedString
+    $filter: DeclaracionesFilterInput
+    $pagination: PaginationOptionsInput
+  ) {
+    myDeclaracionesMetadata(userID: $userID, filter: $filter, pagination: $pagination) {
+      totalDocs
+      limit
+      totalPages
+      page
+      pagingCounter
+      hasPrevPage
+      hasNextPage
+      prevPage
+      nextPage
+      hasMore
+      docs {
+        _id
+        firmada
+        declaracionCompleta
+        tipoDeclaracion
+        createdAt
+        updatedAt
+        owner {
+          _id
+          username
+          nombre
+          primerApellido
+          segundoApellido
+          curp
+          rfc
+          roles
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+
 export const declaracionesMetadata = gql`
   query declaracionesMetadata(
     $userID: LimitedString
@@ -507,8 +548,8 @@ export const datosEmpleoCargoComisionQuery = gql`
 `;
 
 export const datosGeneralesQuery = gql`
-  query declaracion($tipoDeclaracion: TipoDeclaracion!, $declaracionCompleta: Boolean, $anioEjercicio: Int) {
-    declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta, anioEjercicio: $anioEjercicio) {
+  query declaracion($tipoDeclaracion: TipoDeclaracion!, $declaracionCompleta: Boolean) {
+    declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta) {
       _id
       anioEjercicio
       datosGenerales {
@@ -841,7 +882,8 @@ export const prestamoComodatoQuery = gql`
               domicilioMexico {
                 calle
                 numeroExterior
-                numeroInterior: coloniaLocalidad
+                numeroInterior
+                coloniaLocalidad
                 municipioAlcaldia {
                   clave
                   valor

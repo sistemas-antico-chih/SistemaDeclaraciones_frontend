@@ -37,7 +37,7 @@
         Para la declaración de conclusión reportar la situación de las inversiones, cuentas bancarias y otro tipo de
         valores a la fecha de conclusión del empleo, cargo o comisión.
       </span>
-      <br />El Declarante reportara toda la información relacionada con sus inversiones, cuentas bancarias o algún otro
+      <br />El Declarante reportará toda la información relacionada con sus inversiones, cuentas bancarias o algún otro
       tipo de valor que forme parte de sus activos.
     </p>
 
@@ -167,6 +167,10 @@
         </mat-card-actions>
       </mat-card>
       <div class="boton-agregar" *ngIf="(inversion.length && !editMode) || inversionesCuentasValoresForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar Valor</button>
       </div>
     </div>
@@ -334,6 +338,18 @@
 
           <!-- Tercero -->
           <div class="grid-4-col grid-margin" formGroupName="tercero">
+            <mat-form-field matTooltip="{{ tooltipData.tercero }}" appearance="fill">
+              <mat-label>Persona Física o Moral</mat-label>
+              <mat-icon matPrefix>person</mat-icon>
+              <mat-select 
+                formControlName="tipoPersona"
+                (selectionChange)="terceroChange($event.value)"
+                [(ngModel)]="tipoPersona">
+                <mat-option value="FISICA"> Física </mat-option>
+                <mat-option value="MORAL"> Moral </mat-option>
+                <mat-option value="NINGUNO"> Ninguno </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill" class="double-col">
               <mat-label>Nombre del Tercero o Terceros</mat-label>
               <mat-icon matPrefix>person</mat-icon>
@@ -348,17 +364,10 @@
                 #input_rfc_tercero
                 formControlName="rfc"
                 type="text"
+                minlength="12"
                 maxlength="13"
               />
               <mat-hint align="end">{{ input_rfc_tercero.value?.length || 0 }}/13</mat-hint>
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.tercero }}" appearance="fill">
-              <mat-label>Persona Física o Moral</mat-label>
-              <mat-icon matPrefix>person</mat-icon>
-              <mat-select formControlName="tipoPersona">
-                <mat-option value="FISICA"> Física </mat-option>
-                <mat-option value="MORAL"> Moral </mat-option>
-              </mat-select>
             </mat-form-field>
           </div>
 
@@ -401,6 +410,7 @@
                 #input_rfc_institucion
                 type="text"
                 formControlName="rfc"
+                minlength="12"
                 maxlength="13"
                 required
               />

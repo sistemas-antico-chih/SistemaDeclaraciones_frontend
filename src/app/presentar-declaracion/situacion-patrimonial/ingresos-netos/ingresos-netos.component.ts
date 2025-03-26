@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { declaracionMutation, ingresosQuery } from '@api/declaracion';
@@ -30,6 +30,17 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./ingresos-netos.component.scss'],
 })
 export class IngresosNetosComponent implements OnInit {
+  index: number = 0;
+  arrayOtroTipoInstrumento: any = [];
+  arrayHTMLOtroTipoInstrumento: any = [];
+  pushButtonSave: boolean =false;
+
+  ingresoActividad: any = [];
+  //@Output("otroTipoInstrumento") ids: any = [];
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
+
+  isHidden = true;
+
   aclaraciones = false;
   ingresosForm: FormGroup;
   isLoading = false;
@@ -160,6 +171,8 @@ export class IngresosNetosComponent implements OnInit {
       },
     });
 
+    this.pushButtonSave = true;
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const form: Ingresos = this.ingresosForm.value;
@@ -280,7 +293,7 @@ export class IngresosNetosComponent implements OnInit {
     data: Array<ActividadIndustrial | ActividadFinanciera | OtrosIngresos | ServiciosProfesionales>
   ) {
     let formArray: FormArray = null;
-
+    
     for (let [index, value] of data.entries()) {
       switch (formArrayName) {
         case 'actividadIndustrialComercialEmpresarial':
@@ -306,10 +319,11 @@ export class IngresosNetosComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
-        formArray
-          .at(index)
-          .get('tipoInstrumento')
-          .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
+        const optionTipoInstrumento = this.tipoInstrumentoCatalogo.filter((i: any) => i.clave === tipoInstrumento.clave);
+        formArray.at(index).get('tipoInstrumento').setValue(optionTipoInstrumento[0]);
+        if (tipoInstrumento.clave === 'OTRO') {
+          this.ingresoActividad[index] = tipoInstrumento.valor;
+        }
       }
     }
   }
@@ -383,19 +397,22 @@ export class IngresosNetosComponent implements OnInit {
       if (data?.declaracion.ingresos) {
         this.fillForm(data?.declaracion.ingresos);
       }
+
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
+
+
 
   formHasChanges() {
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.ingresosForm.dirty;
-    console.log(isDirty);
+    //console.log(isDirty);
 
-    if (isDirty) {
+      if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -413,7 +430,19 @@ export class IngresosNetosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
@@ -431,10 +460,30 @@ export class IngresosNetosComponent implements OnInit {
     });
   }
 
+  get finalIngresosForm() {
+    const form = JSON.parse(JSON.stringify(this.ingresosForm.value)); // Deep copy
+    let arreglo = this.otroTipoInstrumento.toArray();
+    let obValores;
+    let valorHtml;
+    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
+        this.otroTipoInstrumento.forEach(function (value: any) {
+          if (value !== undefined) {
+            obValores = arreglo[j].nativeElement.id;
+            valorHtml = document.getElementById(obValores) as HTMLInputElement;
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value.toUpperCase();
+          }
+        });
+      }
+    }
+    return form;
+  }
+
   async saveInfo(form: Ingresos) {
     try {
-      this.isLoading = true;
 
+      this.isLoading = true;
+      form = this.finalIngresosForm;
       const declaracion = {
         ingresos: form,
       };

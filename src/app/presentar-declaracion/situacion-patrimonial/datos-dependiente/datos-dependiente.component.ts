@@ -5,14 +5,24 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { datosDependientesEconomicosMutation, datosDependientesEconomicosQuery } from '@api/declaracion';
+import {
+  datosDependientesEconomicosMutation,
+  datosDependientesEconomicosQuery,
+  lastDatosDependientesEconomicosQuery
+} from '@api/declaracion';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { Catalogo, DependienteEconomico, DatosDependientesEconomicos, DeclaracionOutput } from '@models/declaracion';
+import {
+  Catalogo,
+  DependienteEconomico,
+  DatosDependientesEconomicos,
+  DeclaracionOutput,
+  LastDeclaracionOutput
+} from '@models/declaracion';
 import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import AmbitoSector from '@static/catalogos/ambitoSector.json';
@@ -20,7 +30,7 @@ import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Paises from '@static/catalogos/paises.json';
 import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 import Sector from '@static/catalogos/sector.json';
@@ -43,6 +53,7 @@ export class DatosDependienteComponent implements OnInit {
   estado: Catalogo = null;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -73,6 +84,11 @@ export class DatosDependienteComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes, this.dia);
+
+  hidden: string = 'false';
+
+  extranjero: boolean;
+  active: boolean;
 
   constructor(
     private apollo: Apollo,
@@ -197,7 +213,7 @@ export class DatosDependienteComponent implements OnInit {
             { disabled: true, value: null },
             [
               Validators.pattern(
-                /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
               ),
             ],
           ],
@@ -257,6 +273,35 @@ export class DatosDependienteComponent implements OnInit {
     });
   }
 
+  radioChange(event: any) {
+    
+    this.hidden = event;
+    this.active = this.datosDependientesEconomicosForm.get('dependienteEconomico.extranjero').value;
+    
+    if (this.active == false) {
+      
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").enable();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").enable();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
+    } else {
+      
+      //console.log(this.active)
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").clearValidators();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").disable();
+
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").clearValidators();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").disable();
+
+      
+    }
+    //console.log("Requerido", this.datosDependientesEconomicosForm.errors);
+  }
+
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.dependienteEconomico[index]);
@@ -290,6 +335,27 @@ export class DatosDependienteComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDatosDependientesEconomicosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      if (data?.lastDeclaracion.datosDependientesEconomicos) {
+        this.setupForm(data?.lastDeclaracion.datosDependientesEconomicos);
+      }
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -306,11 +372,13 @@ export class DatosDependienteComponent implements OnInit {
       }
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.datosDependientesEconomicos) {
+      if (data.declaracion.datosDependientesEconomicos === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.datosDependientesEconomicos);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -319,18 +387,19 @@ export class DatosDependienteComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.datosDependientesEconomicosForm.value.dependienteEconomico)); // Deep copy
 
     if (form.actividadLaboral?.clave === 'OTR') {
-      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value;
+      form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value.toUpperCase();
     }
     if (form.parentescoRelacion?.clave === 'OTRO') {
-      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.value;
+      form.parentescoRelacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
     }
     if (form.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
-      form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value;
+      form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
     }
 
     return form;
   }
 
+  
   inputsAreValid(): boolean {
     let result = true;
     const dependienteEconomico = this.datosDependientesEconomicosForm.value.dependienteEconomico;
@@ -344,7 +413,6 @@ export class DatosDependienteComponent implements OnInit {
     if (dependienteEconomico.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
       result = result && this.otroSector.nativeElement.value?.match(/^\S.*\S$/);
     }
-
     return result;
   }
 
@@ -372,8 +440,8 @@ export class DatosDependienteComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.datosDependientesEconomicosForm.dirty;
-    if (isDirty) {
-      const dialogRef = this.dialog.open(DialogComponent, {
+    if (isDirty && !this.pushButtonSave) {
+        const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
           message: '¿Deseas continuar?',
@@ -390,7 +458,37 @@ export class DatosDependienteComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+
+  checkItems() {
+    //let depEconomico = this.datosDependientesEconomicosForm.get('dependienteEconomico');
+    let dependienteEconomico = [...this.dependienteEconomico];
+    if (dependienteEconomico.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < dependienteEconomico.length; i++) {
+        dependienteEconomico[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        dependienteEconomico,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 
   noDependent() {
     this.saveInfo({ ninguno: true });
@@ -488,6 +586,7 @@ export class DatosDependienteComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {

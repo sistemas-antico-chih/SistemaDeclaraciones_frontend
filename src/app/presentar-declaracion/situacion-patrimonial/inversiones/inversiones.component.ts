@@ -3,10 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { inversionesCuentasValoresMutation, inversionesCuentasValoresQuery } from '@api/declaracion';
+import {
+  inversionesCuentasValoresMutation,
+  inversionesCuentasValoresQuery,
+  lastInversionesCuentasValoresQuery
+} from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoInversion from '@static/catalogos/tipoInversion.json';
@@ -31,7 +35,13 @@ import Monedas from '@static/catalogos/monedas.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/inversiones';
 
-import { DeclaracionOutput, Inversion, InversionesCuentasValores } from '@models/declaracion';
+import {
+  Catalogo,
+  DeclaracionOutput,
+  Inversion,
+  InversionesCuentasValores,
+  LastDeclaracionOutput,
+} from '@models/declaracion';
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
@@ -49,10 +59,10 @@ export class InversionesComponent implements OnInit {
   editIndex: number = null;
   inversion: Inversion[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   tipoInversionCatalogo = TipoInversion;
   subTipoInversionCatalogo = SubTipoInversion;
-
 
   subTipoAforesCatalogo = SubTipoInversionAfores;
   subTipoBancariaCatalogo = SubTipoInversionBancaria;
@@ -61,8 +71,8 @@ export class InversionesComponent implements OnInit {
   subTipoOrganizacionesCatalogo = SubTipoInversionOrganizaciones;
   subTipoSegurosCatalogo = SubTipoInversionSeguros;
   subTipoValoresCatalogo = SubTipoInversionValores;
-  
-  
+
+
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
   formaPagoCatalogo = FormaPago;
@@ -80,6 +90,7 @@ export class InversionesComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  tipoPersona: String;
 
   constructor(
     private apollo: Apollo,
@@ -97,7 +108,6 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm.reset();
     this.editMode = true;
     this.editIndex = null;
-    console.log("subTipoInversion: "+this.subTipoAforesCatalogo);
   }
 
   localizacionChanged(value: string) {
@@ -197,6 +207,25 @@ export class InversionesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastInversionesCuentasValoresQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.inversionesCuentasValores);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -209,17 +238,21 @@ export class InversionesComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.inversionesCuentasValores) {
+      if (data.declaracion.inversionesCuentasValores === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.inversionesCuentasValores);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
+
   formHasChanges() {
     let isDirty = this.inversionesCuentasValoresForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -237,7 +270,18 @@ export class InversionesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noInvestments() {
     this.saveInfo({ ninguno: true });
@@ -327,6 +371,7 @@ export class InversionesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -379,6 +424,38 @@ export class InversionesComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems() {
+    let inversion = [...this.inversion];
+    if (inversion.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < inversion.length; i++) {
+        inversion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.inversionesCuentasValoresForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        inversion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  terceroChange(value: string) {
+    if (value === "NINGUNO"){
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(null);
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(null);
+    }
+    else{
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").enable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").enable();
+    }
+  }
+
 }
 function item(item: any, arg1: (any: any) => any) {
   throw new Error('Function not implemented.');

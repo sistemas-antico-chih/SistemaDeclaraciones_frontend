@@ -225,12 +225,23 @@
           <button mat-button color="primary" (click)="removeItem(i)">Eliminar</button>
         </mat-card-actions>
       </mat-card>
-
       <div
         class="boton-agregar grid-margin"
         *ngIf="(prestamo?.length && !editMode) || prestamoComodatoForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        GUARDAR
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar préstamo o comodato</button>
+      </div>
+
+      <div *ngIf="!editMode && aclaracionesText">
+        <div class="paragraph-flex aclaraciones">
+          <mat-icon matPrefix class="icon card-no-public">insert_comment</mat-icon>
+          <p>Aclaraciones / Observaciones</p>
+        </div>
+        <p class="vertical-margin-25">{{ aclaracionesText }}</p>
       </div>
     </div>
 
@@ -239,7 +250,7 @@
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="prestamo">
         <mat-divider></mat-divider>
-        <p>Préstamo comodato</p>
+        <p>Préstamo Comodato</p>
         <!-- Datos -->
         <div class="grid-3-col grid-margin">
           <mat-form-field appearance="fill">
@@ -254,12 +265,12 @@
         </div>
         <!-- Datos mueble -->
         <div formGroupName="tipoBien">
-          <h2>Préstamo o comodato</h2>
+          <h2>Agregar préstamo o comodato</h2>
           <div class="grid-2-col grid-margin">
             <mat-form-field appearance="fill">
               <mat-label>Tipo de bien</mat-label>
               <mat-icon matPrefix>beenhere</mat-icon>
-              <mat-select (selectionChange)="bienChanged($event.value)" required>
+              <mat-select (selectionChange)="bienChanged($event.value)" [value]="tipoBien" required>
                 <mat-option value="inmueble"> Inmueble </mat-option>
                 <mat-option value="vehiculos"> Vehículos </mat-option>
               </mat-select>
@@ -284,7 +295,14 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">call_merge</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoInmueble
+                class="OTI"
+                #otroTipoInmueble 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field
               matTooltip="{{ tooltipData.vehiculo }}"
@@ -306,7 +324,14 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">call_merge</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoVehiculo
+                class="OTV"
+                #otroTipoVehiculo 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
           </div>
 
@@ -332,13 +357,11 @@
                   matInput
                   type="number"
                   formControlName="anio"
-                  min="0"
-                  max="{{ currentYear + 1 }}"
                   placeholder="{{ currentYear }}"
                   required
                 />
               </mat-form-field>
-              <mat-form-field matTooltip="{{ tooltipData.numeroSerieRegistro }}" appearance="fill" required>
+              <mat-form-field matTooltip="{{ tooltipData.numeroSerieRegistro }}" appearance="fill">
                 <mat-label>Número de Serie o Registro</mat-label>
                 <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
                 <input
@@ -358,7 +381,12 @@
               >
                 <mat-label>¿Donde se encuentra registrado?</mat-label>
                 <mat-icon matPrefix class="no-public">public</mat-icon>
-                <mat-select #ubicacionVehiculo (selectionChange)="localizacionVehiculoChanged($event.value)" required>
+                <mat-select
+                  #ubicacionVehiculo
+                  (selectionChange)="localizacionVehiculoChanged($event.value)"
+                  [value]="tipoDomicilio === 'EXTRANJERO' ? 'EX' : 'MX'"
+                  required
+                >
                   <mat-option value="{{ extranjeroCatalogo[0] }}"> EN MÉXICO </mat-option>
                   <mat-option value="{{ extranjeroCatalogo[1] }}"> EN EL EXTRANJERO </mat-option>
                 </mat-select>
@@ -394,7 +422,11 @@
               <mat-form-field matTooltip="{{ tooltipData.ubicacionInmueble }}" appearance="fill">
                 <mat-label>Ubicación del inmueble</mat-label>
                 <mat-icon matPrefix class="no-public">public</mat-icon>
-                <mat-select (selectionChange)="tipoDomicilioChanged($event.value)" required>
+                <mat-select
+                  (selectionChange)="tipoDomicilioChanged($event.value)"
+                  [value]="tipoDomicilio === 'EXTRANJERO' ? 'EX' : 'MX'"
+                  required
+                >
                   <mat-option value="{{ extranjeroCatalogo[0] }}"> En México </mat-option>
                   <mat-option value="{{ extranjeroCatalogo[1] }}"> En el extranjero </mat-option>
                 </mat-select>
@@ -532,7 +564,6 @@
                   <input
                     [errorStateMatcher]="errorMatcher"
                     matInput
-                    #input_curp
                     maxlength="18"
                     type="text"
                     formControlName="numeroInterior"
@@ -570,7 +601,15 @@
                   <mat-label>Municipio/Alcaldia</mat-label>
                   <mat-icon matPrefix class="no-public">beenhere</mat-icon>
                   <mat-select formControlName="municipioAlcaldia" required>
-                    <mat-option *ngFor="let opt of municipiosCatalogo[estado?.clave]" [value]="opt">
+                    <mat-option
+                      *ngFor="
+                        let opt of municipiosCatalogo[
+                          prestamoComodatoForm.value.prestamo.tipoBien.inmueble.domicilioMexico?.entidadFederativa
+                            ?.clave
+                        ]
+                      "
+                      [value]="opt"
+                    >
                       {{ opt.valor }}
                     </mat-option>
                   </mat-select>
@@ -583,7 +622,6 @@
                   <input
                     [errorStateMatcher]="errorMatcher"
                     matInput
-                    #input_localidad
                     type="text"
                     formControlName="coloniaLocalidad"
                     required
@@ -629,7 +667,7 @@
           <mat-form-field matTooltip="{{ tooltipData.relacionDuenioTitular }}" appearance="fill">
             <mat-label>Relación con el dueño o titular</mat-label>
             <mat-icon matPrefix class="no-public">group</mat-icon>
-            <mat-select formControlName="relacionConTitular" required>
+            <mat-select formControlName="relacionConTitular" required [(ngModel)]="relacionConTitular">
               <mat-option
                 *ngFor="let parentescoRelacion of parentescoRelacionCatalogo"
                 value="{{ parentescoRelacion.valor }}"
@@ -640,11 +678,21 @@
           </mat-form-field>
           <mat-form-field
             appearance="fill"
-            *ngIf="prestamoComodatoForm.value.prestamo.duenoTitular.relacionConTitular?.clave === 'OTRO'"
+            *ngIf="prestamoComodatoForm.value.prestamo.duenoTitular?.relacionConTitular === 'OTRO(ESPECIFIQUE)'"
           >
+          <!--<mat-form-field
+            appearance="fill"
+            *ngIf="parentescoArray.indexOf(object.id) > -1"
+          >-->
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">group</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value] = varOtroRelacion
+                #otroParentesco 
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
         </div>
       </div>

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { adeudosPasivosMutation, adeudosPasivosQuery } from '@api/declaracion';
+import { adeudosPasivosMutation, adeudosPasivosQuery, lastAdeudosPasivosQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Adeudo, AdeudosPasivos, DeclaracionOutput, MexicoExtranjero } from '@models/declaracion';
+import { Adeudo, AdeudosPasivos, DeclaracionOutput, MexicoExtranjero, LastDeclaracionOutput, } from '@models/declaracion';
 
 import TipoAdeudo from '@static/catalogos/tipoAdeudo.json';
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
@@ -49,6 +49,7 @@ export class AdeudosComponent implements OnInit {
   extranjeroCatalogo = Extranjero;
   paisesCatalogo = Paises;
   monedasCatalogo = Monedas;
+  pushButtonSave: boolean =false;
 
   tipoDeclaracion: string = null;
   tipoDomicilio: MexicoExtranjero = null;
@@ -62,7 +63,13 @@ export class AdeudosComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  tipoPersona: String
+  location: string = null;
+  varOtroTipoAdeudo: string = null;
+
+  @ViewChild('otroTipoAdeudo') otroTipoAdeudo: ElementRef;
 
   constructor(
     private apollo: Apollo,
@@ -87,6 +94,9 @@ export class AdeudosComponent implements OnInit {
     this.tipoDomicilio = value;
     if (value === 'MX') {
       this.adeudosPasivosForm.get('adeudo.localizacionAdeudo.pais').setValue('MX');
+    }
+    else {
+      this.tipoDomicilio = 'EX';
     }
   }
 
@@ -165,6 +175,25 @@ export class AdeudosComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastAdeudosPasivosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.adeudosPasivos);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -177,17 +206,20 @@ export class AdeudosComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.adeudosPasivos) {
+      if (data.declaracion.adeudosPasivos === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.adeudosPasivos);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
   formHasChanges() {
     let isDirty = this.adeudosPasivosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -205,7 +237,18 @@ export class AdeudosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noDebts() {
     this.saveInfo({ ninguno: true });
@@ -279,7 +322,7 @@ export class AdeudosComponent implements OnInit {
   saveItem() {
     let adeudo = [...this.adeudo];
     const aclaracionesObservaciones = this.adeudosPasivosForm.value.aclaracionesObservaciones;
-    const newItem = this.adeudosPasivosForm.value.adeudo;
+    const newItem = this.finalAdeudoForm;
 
     if (this.editIndex === null) {
       adeudo = [...adeudo, newItem];
@@ -295,6 +338,7 @@ export class AdeudosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -304,13 +348,26 @@ export class AdeudosComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoAdeudo, titular } = this.adeudosPasivosForm.value.adeudo;
+    const { tipoAdeudo, titular, lugarRegistro } = this.adeudosPasivosForm.value.adeudo;
 
     if (tipoAdeudo) {
-      this.adeudosPasivosForm.get('adeudo.tipoAdeudo').setValue(findOption(this.tipoAdeudoCatalogo, tipoAdeudo.clave));
+      const optionTipoAdeudo = this.tipoAdeudoCatalogo.filter((i: any) => i.clave === tipoAdeudo.clave);
+      this.adeudosPasivosForm.get('adeudo.tipoAdeudo').setValue(optionTipoAdeudo[0]);
+      if (tipoAdeudo.clave === 'OTRO') {
+        this.varOtroTipoAdeudo = tipoAdeudo.valor;
+      }
     }
     if (titular) {
-      this.adeudosPasivosForm.get('adeudo.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
+      const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+      this.adeudosPasivosForm.get('adeudo.titular').setValue(optionTitular[0]);
+      //this.adeudosPasivosForm.get('adeudo.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
+    }
+
+    if (this.tipoDomicilio === 'EX') {
+      this.location = 'EX';
+    }
+    else if (this.tipoDomicilio === 'MX') {
+      this.location = 'MX'
     }
   }
 
@@ -337,5 +394,44 @@ export class AdeudosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let adeudo = [...this.adeudo];
+    if (adeudo.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < adeudo.length; i++) {
+        adeudo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.adeudosPasivosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        adeudo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO") {
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").disable();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").disable();
+    }
+    else {
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").enable();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").enable();
+    }
+  }
+
+  get finalAdeudoForm() {
+    const form = JSON.parse(JSON.stringify(this.adeudosPasivosForm.value.adeudo)); // Deep copy
+
+    if (form.tipoAdeudo?.clave === 'OTRO') {
+      form.tipoAdeudo.valor = this.otroTipoAdeudo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    return form;
   }
 }

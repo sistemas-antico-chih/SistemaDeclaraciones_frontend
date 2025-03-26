@@ -9,7 +9,7 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 import { DatosDialog } from '@models/declaracion/datos-dialog.model';
 
 import { Apollo } from 'apollo-angular';
-import {  DeclaracionOutput } from '@models/declaracion';
+import { DeclaracionOutput } from '@models/declaracion';
 import { datosGeneralesQuery } from '@api/declaracion';
 
 import gql from 'graphql-tag';
@@ -36,9 +36,9 @@ export class DialogElementsExampleDialog implements OnInit {
 
   declaracionSimplificada = false;
   declaracionId: string = null;
-  anio_ejercicio: number = null;
+  anio_ejercicio: number = new Date().getFullYear();
 
-  datosDialogForm: FormGroup;
+
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
@@ -53,205 +53,58 @@ export class DialogElementsExampleDialog implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
-  isDisabledCheckBoxInicial: boolean = true;
-  isDisabledCheckBoxModificacion: boolean = true;
-  isDisabledCheckBoxConclusion: boolean = true;
-
-  isCheckedCheckBoxInicial: boolean = false;
-  isCheckedCheckBoxModificacion: boolean = false;
-  isCheckedCheckBoxConclusion: boolean = false;
-
-  isDisabledButtonInicialSimple: boolean = true;
-  isDisabledButtonInicialCompleta: boolean = true;
-  isDisabledButtonModificacionSimple: boolean = true;
-  isDisabledButtonModificacionCompleta: boolean = true;
-  isDisabledButtonConclusionSimple: boolean = true;
-  isDisabledButtonConclusionCompleta: boolean = true;
+  ngOnInit(): void { }
 
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     private apollo: Apollo,
     @Inject(MAT_DIALOG_DATA) public data: any
 
   ) {
-    this.createForm();
-    //this.getUserInfo();
   }
 
-  cambioValores(value: any) {
-    this.validarDeclaracion();
-    //const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
-    if (value === 'inicial' || value === 'modificacion' || value === 'conclusion') {
-      this.validarFecha(value);
-    }
-  }
+  async closeDialog(route: string) {
+    var splits = route.split("/");
+    var tipoDeclaracion = splits[1];
+    var formaDeclaracion = splits[2];
 
-  validarDeclaracion() {
-    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
-    const puesto = this.datosDialogForm.get('puesto').value;
-    const fechaInicial = this.datosDialogForm.get('fechaInicial').value;
-    const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
-    const fechaConclusion = this.datosDialogForm.get('fechaConclusion').value;
-
-    if (tipoDeclaracion === "inicial" && puesto === "DIRECTIVO" && fechaInicial != null) {
-      this.isCheckedCheckBoxInicial = false;
-      this.isCheckedCheckBoxModificacion = false;
-      this.isCheckedCheckBoxConclusion = false;
-      this.isDisabledButtonInicialSimple = true;
-      this.isDisabledButtonInicialCompleta = false;
-      this.isDisabledButtonModificacionSimple = true;
-      this.isDisabledButtonModificacionCompleta = true;
-      this.isDisabledButtonConclusionSimple = true;
-      this.isDisabledButtonConclusionCompleta = true;
-    }
-    else if (tipoDeclaracion === "inicial" && puesto === "OPERATIVO" && fechaInicial != null) {
-      this.isCheckedCheckBoxInicial = true;
-      this.isCheckedCheckBoxModificacion = false;
-      this.isCheckedCheckBoxConclusion = false;
-      this.isDisabledButtonInicialSimple = false;
-      this.isDisabledButtonInicialCompleta = true;
-      this.isDisabledButtonModificacionSimple = true;
-      this.isDisabledButtonModificacionCompleta = true;
-      this.isDisabledButtonConclusionSimple = true;
-      this.isDisabledButtonConclusionCompleta = true;
-    }
-    else if (tipoDeclaracion === "modificacion" && puesto === "DIRECTIVO" && fechaModificacion != null) {
-      this.isCheckedCheckBoxModificacion = false;
-      this.isCheckedCheckBoxInicial = false;
-      this.isCheckedCheckBoxConclusion = false;
-      this.isDisabledButtonInicialSimple = true;
-      this.isDisabledButtonInicialCompleta = true;
-      this.isDisabledButtonModificacionSimple = true;
-      this.isDisabledButtonModificacionCompleta = false;
-      this.isDisabledButtonConclusionSimple = true;
-      this.isDisabledButtonConclusionCompleta = true;
-    }
-    else if (tipoDeclaracion === "modificacion" && puesto === "OPERATIVO" && fechaModificacion != null) {
-      this.isCheckedCheckBoxModificacion = true;
-      this.isCheckedCheckBoxInicial = false;
-      this.isCheckedCheckBoxConclusion = false;
-      this.isDisabledButtonInicialSimple = true;
-      this.isDisabledButtonInicialCompleta = true;
-      this.isDisabledButtonModificacionSimple = false;
-      this.isDisabledButtonModificacionCompleta = true;
-      this.isDisabledButtonConclusionSimple = true;
-      this.isDisabledButtonConclusionCompleta = true;
-    }
-    else if (tipoDeclaracion === "conclusion" && puesto === "DIRECTIVO" && fechaConclusion != null) {
-      this.isCheckedCheckBoxConclusion = false;
-      this.isCheckedCheckBoxInicial = false;
-      this.isCheckedCheckBoxModificacion = false;
-      this.isDisabledButtonInicialSimple = true;
-      this.isDisabledButtonInicialCompleta = true;
-      this.isDisabledButtonModificacionSimple = true;
-      this.isDisabledButtonModificacionCompleta = true;
-      this.isDisabledButtonConclusionSimple = true;
-      this.isDisabledButtonConclusionCompleta = false;
-    }
-    else if (tipoDeclaracion === "conclusion" && puesto === "OPERATIVO" && fechaConclusion != null) {
-      this.isCheckedCheckBoxConclusion = true;
-      this.isCheckedCheckBoxInicial = false;
-      this.isCheckedCheckBoxModificacion = false;
-      this.isDisabledButtonInicialSimple = true;
-      this.isDisabledButtonInicialCompleta = true;
-      this.isDisabledButtonModificacionSimple = true;
-      this.isDisabledButtonModificacionCompleta = true;
-      this.isDisabledButtonConclusionSimple = false;
-      this.isDisabledButtonConclusionCompleta = true;
+    if (splits[2] == "simplificada") {
+      formaDeclaracion = 'simplificada';
     }
     else {
-      this.isCheckedCheckBoxInicial = false;
-      this.isCheckedCheckBoxModificacion = false;
-      this.isCheckedCheckBoxConclusion = false;
-      this.isDisabledButtonInicialSimple = true;
-      this.isDisabledButtonInicialCompleta = true;
-      this.isDisabledButtonModificacionSimple = true;
-      this.isDisabledButtonModificacionCompleta = true;
-      this.isDisabledButtonConclusionSimple = true;
-      this.isDisabledButtonConclusionCompleta = true;
+      formaDeclaracion = "completa";
     }
-  }
 
-  validarFecha(value: any) {
-
-
-    switch (value) {
-      case 'inicial':
-        this.datosDialogForm.controls.fechaModificacion.setValue('');
-        this.datosDialogForm.controls.fechaConclusion.setValue('');
-        break;
-      case 'modificacion':
-        for (let i = 2019; this.anio > i; this.anio--) {
-          this.anios.push(this.anio);
-        }
-        this.datosDialogForm.controls.fechaInicial.setValue('');
-        this.datosDialogForm.controls.fechaConclusion.setValue('');
-        break;
-      case 'conclusion':
-        this.datosDialogForm.controls.fechaInicial.setValue('');
-        this.datosDialogForm.controls.fechaModificacion.setValue('');
-        break;
-      default:
-        this.datosDialogForm.controls.fechaInicial.setValue('');
-        this.datosDialogForm.controls.fechaModificacion.setValue('');
-        this.datosDialogForm.controls.fechaConclusion.setValue('');
-        break;
-    }
-  }
-
-  ngOnInit(): void { }
-
-  createForm() {
-    this.datosDialogForm = this.formBuilder.group({
-      tipoDeclaracion: [null, [Validators.required]],
-      fechaInicial: [null, [Validators.required]],
-      fechaModificacion: [null, [Validators.required]],
-      fechaConclusion: [null, [Validators.required]],
-      puesto: [null, [Validators.required]],
-    });
-  }
-
-  async closeDialog() {
-    var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
-    const puesto = this.datosDialogForm.get('puesto').value;
-
-    if (await this.isValid()) {
-      let url = '/' + tipo;
-      if (puesto === "OPERATIVO") {
-        url += '/simplificada';
-        this.dialogRef.close({ data: '' })
-      } else {
-        url = '/' + tipo;
-      }
-      this.router.navigate([url + '/situacion-patrimonial/datos-generales'])
+    if (await this.isValid(tipoDeclaracion, formaDeclaracion)) {
+      this.router.navigate([`/${route}`], { replaceUrl: true });
       this.dialogRef.close({ data: '' })
     }
+
     else {
-      switch (tipo) {
+      switch (tipoDeclaracion) {
         case "inicial":
           const dialogRefInicial = this.dialog.open(DialogComponent, {
             height: '240px',
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo INICIAL',
-              message: 'Es neceario que exista la declaración firmada de tipo CONCLUSIÓN correspondiente, en caso de alguna duda favor de dirigirse a su Órano Interno de Control.',
+              message: 'Ya cuenta con una declaración INICIAL firmada o no existe una declaración firmada de tipo CONCLUSIÓN correspondiente, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.',
               trueText: 'Continuar',
             },
           });
           break;
         case "modificacion":
-          const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
+          const fechaModificacion = this.anio;
           const dialogRefModificacion = this.dialog.open(DialogComponent, {
             height: '240px',
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo MODIFICACIÓN',
-              message: `Ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion}, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
+              message: `No cuenta con una declaración de tipo INICIAL o ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion}, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
               trueText: 'Continuar',
             },
           });
@@ -268,50 +121,35 @@ export class DialogElementsExampleDialog implements OnInit {
           });
           break;
       }
-
-
-      /*const dialogReff = this.dialog.open(DialogComponent, {
-        data: {
-          title: 'No es posible iniciar la declaración de tipo INICIAL',
-          message: 'Actualmente existe firmada una declaración de tipo INICIAL, sin embargo no existe firmada la declaración de tipo CONCLUSIÓN correspondiente',   
-          trueText: 'Continuar',
-        },
-      });*/
-      //dialogReff.close({ data: '' })
     }
-
-    //this.dialogRef.close({ data: '' })
   }
 
-  async isValid() {
-    var tipo = this.datosDialogForm.get('tipoDeclaracion').value;
-    const puesto = this.datosDialogForm.get('puesto').value;
-    const fechaModificacion = this.datosDialogForm.get('fechaModificacion').value;
-
-    switch (tipo) {
+  async isValid(tipoDeclaracion: string, formaDeclaracion: string) {
+    switch (tipoDeclaracion) {
       case 'inicial':
-        const validaInicial = await this.verificarDeclaracionInicial();
+        const validaInicial = await this.verificarDeclaracionInicial(tipoDeclaracion, formaDeclaracion);
         if (validaInicial)
           return true;
         else
           return false;
       case 'modificacion':
-        if (puesto === "DIRECTIVO"){
-          const validaModificacion = await this.verificarDeclaracionModificacionCompleta(fechaModificacion);
+        if (formaDeclaracion === "completa") {
+          console.log("llega switch")
+          const validaModificacion = await this.verificarDeclaracionModificacionCompleta(this.anio, tipoDeclaracion, formaDeclaracion);
           if (validaModificacion)
             return true;
           else
             return false
         }
-        if ( puesto === "OPERATIVO"){
-          const validaModificacion = await this.verificarDeclaracionModificacionSimple(fechaModificacion);
+        if (formaDeclaracion === "simplificada") {
+          const validaModificacion = await this.verificarDeclaracionModificacionSimple(this.anio, tipoDeclaracion, formaDeclaracion);
           if (validaModificacion)
             return true;
           else
             return false
-        }        
+        }
       case 'conclusion':
-        const validaConclusion = await this.verificarDeclaracionConclusion();
+        const validaConclusion = await this.verificarDeclaracionConclusion(tipoDeclaracion, formaDeclaracion);
         if (validaConclusion)
           return true;
         else
@@ -320,7 +158,7 @@ export class DialogElementsExampleDialog implements OnInit {
     return true;
   }
 
-  async verificarDeclaracionInicial() {
+  async verificarDeclaracionInicial(tipoDeclaracion: string, formaDeclaracion: string) {
     try {
       const { data }: any = await this.apollo
         .query({
@@ -334,10 +172,6 @@ export class DialogElementsExampleDialog implements OnInit {
               }
             }
           `,
-          /*variables: {
-            tipoDeclaracion: tipo.toUpperCase(),
-            //total: !this.declaracionSimplificada,
-          },*/
         })
         .toPromise();
       this.declaraciones = data.statsTipo.counters.count || 0;
@@ -348,15 +182,15 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales === 0){
-      await this.crearDeclaracion();
+    if (this.declaracionesIniciales - this.declaracionesFinales === 0) {
+      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
     else
       return false;
   }
 
-  async verificarDeclaracionConclusion() {
+  async verificarDeclaracionConclusion(tipoDeclaracion: string, formaDeclaracion: string) {
     try {
       const { data }: any = await this.apollo
         .query({
@@ -382,13 +216,41 @@ export class DialogElementsExampleDialog implements OnInit {
     }
     if (this.declaracionesIniciales - this.declaracionesFinales === 0)
       return false;
-    else{
-      await this.crearDeclaracion();
+    else {
+      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
   }
 
-  async verificarDeclaracionModificacionCompleta(fechaModificacion: any) {
+  async contarDeclaracionesInicialConclusion() {
+    try {
+      const { data }: any = await this.apollo
+        .query({
+          query: gql`
+            query statsTipo {
+              statsTipo {
+                counters{
+                  tipoDeclaracion
+                  count
+                }
+              }
+            }
+          `,
+        })
+        .toPromise();
+      this.declaraciones = data.statsTipo.counters.count || 0;
+      this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
+      this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
+
+      return this.declaracionesIniciales - this.declaracionesFinales;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async verificarDeclaracionModificacionCompleta(fechaModificacion: any,
+    tipoDeclaracion: string, formaDeclaracion: string) {
     try {
       const { data }: any = await this.apollo
         .query({
@@ -405,22 +267,24 @@ export class DialogElementsExampleDialog implements OnInit {
           `,
         })
         .toPromise();
+
       this.declaraciones = data.statsModif.counters.count || 0;
-      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
-      //this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
+      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+    
     } catch (error) {
       console.log(error);
       return false;
     }
-    if (this.declaracionesModificacionCompleta === 0){
-      await this.crearDeclaracion();
+    if (this.contarDeclaracionesInicialConclusion()){
+      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
     else
-      return false;
+    return false;
   }
 
-  async verificarDeclaracionModificacionSimple(fechaModificacion: any) {
+  async verificarDeclaracionModificacionSimple(fechaModificacion: any,
+    tipoDeclaracion: string, formaDeclaracion: string) {
     try {
       const { data }: any = await this.apollo
         .query({
@@ -437,34 +301,38 @@ export class DialogElementsExampleDialog implements OnInit {
           `,
         })
         .toPromise();
-      this.declaraciones = data.statsModif.counters.count || 0;
-      //this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===true)?.count || 0;
-      this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta===false)?.count || 0;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-    if (this.declaracionesModificacionSimple === 0){
-      await this.crearDeclaracion();
-      return true;
-    }
-    else
+
+        this.declaraciones = data.statsModif.counters.count || 0;
+        this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+      
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+      if (this.contarDeclaracionesInicialConclusion()){
+        await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
+        return true;
+      }
+      else
       return false;
   }
-  /*
-  async saveInfo() {
-    try {
-      this.isLoading = true;
-      const declaracion = {
-        datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
-      };
 
-      const { errors } = await this.apollo
-        .mutate({
-          mutation: declaracionMutation,
+  async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string) {
+    try {
+      if (formaDeclaracion === "completa") {
+        this.declaracionSimplificada = false;
+      }
+      else {
+        this.declaracionSimplificada = true
+      }
+
+      const { data, errors } = await this.apollo
+        .query<DeclaracionOutput>({
+          query: datosGeneralesQuery,
           variables: {
-            id: this.declaracionId,
-            declaracion,
+            tipoDeclaracion: tipoDeclaracion.toUpperCase(),
+            declaracionCompleta: !this.declaracionSimplificada,
+            anioEjercicio: this.anio_ejercicio
           },
         })
         .toPromise();
@@ -473,63 +341,14 @@ export class DialogElementsExampleDialog implements OnInit {
         throw errors;
       }
 
-      this.isLoading = false;
-      this.openSnackBar('Información actualizada', 'Aceptar');
+      this.declaracionId = data?.declaracion._id;
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
     } catch (error) {
       console.log(error);
-      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
-  */
- async crearDeclaracion(){
-  try {
-    const tipoDeclaracion = this.datosDialogForm.get('tipoDeclaracion').value;
-    const puesto = this.datosDialogForm.get('puesto').value;
-    if(puesto==="DIRECTIVO")
-      this.declaracionSimplificada=false;
-    else 
-      this.declaracionSimplificada=true
-   
-    switch(tipoDeclaracion){
-      case "inicial":
-       this.anio_ejercicio = new Date(this.datosDialogForm.get('fechaInicial').value).getFullYear();
-       break;
-      case "modificacion":
-        this.anio_ejercicio = this.datosDialogForm.get('fechaModificacion').value;
-        break;
-      case "conlcusion":
-        this.anio_ejercicio = new Date(this.datosDialogForm.get('fechaConclusion').value).getFullYear();
-        break;
-      }
-    const { data, errors } = await this.apollo
-      .query<DeclaracionOutput>({
-        query: datosGeneralesQuery,
-        variables: {
-          tipoDeclaracion: tipoDeclaracion.toUpperCase(),
-          declaracionCompleta: !this.declaracionSimplificada,
-          anioEjercicio: this.anio_ejercicio
-        },
-      })
-      .toPromise();
 
-    if (errors) {
-      throw errors;
-    }
-
-    this.declaracionId = data?.declaracion._id;
-    this.anio_ejercicio = data?.declaracion.anioEjercicio;
-  } catch (error) {
-    console.log(error);
-    //this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
-  }
-}
-  
-  fillForm(datosComponenteForm: DatosDialog | undefined) {
-    this.datosDialogForm.patchValue(datosComponenteForm || {});
-
-  }
   confirmSaveInfo() {
     console.log("boton guardar");
   }
 }
-

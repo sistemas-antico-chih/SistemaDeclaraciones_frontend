@@ -5,26 +5,27 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { datosParejaMutation, datosParejaQuery } from '@api/declaracion';
+import { datosParejaMutation, datosParejaQuery, lastDatosParejaQuery } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { Catalogo, DatosPareja, DeclaracionOutput } from '@models/declaracion';
+import { Catalogo, DatosPareja, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
 import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Paises from '@static/catalogos/paises.json';
 import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+
 
 @UntilDestroy()
 @Component({
@@ -39,6 +40,7 @@ export class DatosParejaComponent implements OnInit {
   editMode = false;
   estado: Catalogo = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -54,6 +56,7 @@ export class DatosParejaComponent implements OnInit {
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
   tipoOperacionCatalogo = TipoOperacion;
+
   pareja: DatosPareja = null;
 
   tipoDeclaracion: string = null;
@@ -69,7 +72,11 @@ export class DatosParejaComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth();
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  hidden: string = 'false';
+  ciudadanoExtranjero: boolean;
+  active: boolean;
 
   constructor(
     private apollo: Apollo,
@@ -80,6 +87,7 @@ export class DatosParejaComponent implements OnInit {
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
+    this.getUserInfo();
   }
 
   actividadLaboralChanged(value: any) {
@@ -114,6 +122,8 @@ export class DatosParejaComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -193,7 +203,7 @@ export class DatosParejaComponent implements OnInit {
           { disabled: true, value: null },
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
@@ -270,6 +280,27 @@ export class DatosParejaComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDatosParejaQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      if (data?.lastDeclaracion.datosPareja) {
+        this.setupForm(data?.lastDeclaracion.datosPareja);
+      }
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -286,11 +317,13 @@ export class DatosParejaComponent implements OnInit {
       }
 
       this.declaracionId = data.declaracion._id;
-      if (data?.declaracion.datosPareja) {
+      if (data?.declaracion.datosPareja === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data?.declaracion.datosPareja);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -325,7 +358,7 @@ export class DatosParejaComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.datosParejaForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -363,10 +396,6 @@ export class DatosParejaComponent implements OnInit {
     }
 
     this.tipoDomicilio = value;
-  }
-
-  async ngOnInit() {
-    this.getUserInfo();
   }
 
   noCouple() {
@@ -498,4 +527,51 @@ export class DatosParejaComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  radioChange(event: any) {
+    this.hidden = event;
+    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
+    if (this.active == false) {
+      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").enable();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("curp").setValidators([Validators.required]);
+      this.datosParejaForm.get("curp").enable();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+    } else {
+      this.datosParejaForm.get("rfc").clearValidators();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").disable();
+      this.datosParejaForm.get("curp").clearValidators();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+      this.datosParejaForm.get("curp").disable();
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
+  }
+  
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+
+  checkPartner() {
+    let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
+    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    if (form.nombre !== null) {
+      this.isLoading = true;
+      this.saveInfo(this.finalForm);
+      this.isLoading = false;
+    } else {
+      this.saveInfo({ ninguno: true })
+    }
+  }
+
 }

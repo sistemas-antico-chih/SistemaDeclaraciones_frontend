@@ -1,5 +1,6 @@
 #compile
-FROM node:lts-buster as builder
+FROM node:16-alpine as builder
+
 
 WORKDIR /build
 

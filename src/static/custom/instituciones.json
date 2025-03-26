@@ -79,7 +79,7 @@
       "cargo": "PRESIDENTE MUNICIPAL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE CAMARGO",
     "clave": "MUN_CAM",
     "servidor_publico_recibe": {
@@ -91,11 +91,11 @@
     "ente_publico": "MUNICIPIO DE CARICHÍ",
     "clave": "MUN_ASC",
     "servidor_publico_recibe": {
-      "nombre": "C. MARÍA GUADALUPE TERÁN RASCÓN",
+      "nombre": "C.P. BERENICE RODRÍGUEZ GUTIÉRREZ",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-{
+  {
     "ente_publico": "MUNICIPIO DE CASAS GRANDES",
     "clave": "MUN_CGR",
     "servidor_publico_recibe": {
@@ -211,7 +211,7 @@
     "ente_publico": "MUNICIPIO DE GUADALUPE",
     "clave": "MUN_GPE",
     "servidor_publico_recibe": {
-      "nombre": "C. ABIMAEL CHÁVEZ GARAY",
+      "nombre": "DR. VÍCTOR LUIS LUQUE CLEMENTE",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -243,11 +243,11 @@
     "ente_publico": "MUNICIPIO DE HIDALGO DEL PARRAL",
     "clave": "MUN_HGO",
     "servidor_publico_recibe": {
-      "nombre": "C. DANIELA IVETH SÁNCHEZ MOLINA",
+      "nombre": "LIC. OMAR DELFINO RAMÍREZ LUNA",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE HUEJOTITÁN",
     "clave": "MUN_HUE",
     "servidor_publico_recibe": {
@@ -295,7 +295,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE LÓPEZ",
     "clave": "MUN_LOP",
     "servidor_publico_recibe": {
@@ -351,7 +351,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE MORELOS",
     "clave": "MUN_MOR",
     "servidor_publico_recibe": {
@@ -403,8 +403,8 @@
     "ente_publico": "MUNICIPIO DE OJINAGA",
     "clave": "MUN_OJI",
     "servidor_publico_recibe": {
-      "nombre": "C. ANDRÉS RAMOS DE ANDA",
-      "cargo": "PRESIDENTE MUNICIPAL"
+      "nombre": "PROFR. JORGE VALENZUELA RAMOS",
+      "cargo": "TITULAR DEL ÓRGANO INTERNO DE CONTROL"
     }
   },
    {
@@ -439,7 +439,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE SAN FRANCISCO DE BORJA",
     "clave": "MUN_BOR",
     "servidor_publico_recibe": {

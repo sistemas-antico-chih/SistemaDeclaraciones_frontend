@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { declaracionMutation, domicilioDeclaranteQuery } from '@api/declaracion';
+import { declaracionMutation, domicilioDeclaranteQuery, lastDeclaracionDomicilioDeclarante } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { Catalogo, DeclaracionOutput, DomicilioDeclarante } from '@models/declaracion';
+import { Catalogo, DeclaracionOutput, DomicilioDeclarante, LastDeclaracionOutput } from '@models/declaracion';
 import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import Paises from '@static/catalogos/paises.json';
@@ -28,6 +28,7 @@ export class DomicilioDeclaranteComponent implements OnInit {
   domicilioDeclaranteForm: FormGroup;
   estado: Catalogo = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   estadosCatalogo = Estados;
   municipiosCatalogo = Municipios;
@@ -65,6 +66,8 @@ export class DomicilioDeclaranteComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -122,6 +125,25 @@ export class DomicilioDeclaranteComponent implements OnInit {
     this.setSelectedOptions(domicilioDeclarante);
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDeclaracionDomicilioDeclarante,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.fillForm(data?.lastDeclaracion.domicilioDeclarante);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -139,9 +161,13 @@ export class DomicilioDeclaranteComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.fillForm(data?.declaracion.domicilioDeclarante);
+      if (data?.declaracion.domicilioDeclarante === null) {
+        this.getLastUserInfo();
+      } else {
+        this.fillForm(data?.declaracion.domicilioDeclarante);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -152,8 +178,7 @@ export class DomicilioDeclaranteComponent implements OnInit {
     let isDirty = this.domicilioDeclaranteForm.dirty;
     console.log(isDirty);
 
-
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -171,7 +196,18 @@ export class DomicilioDeclaranteComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {

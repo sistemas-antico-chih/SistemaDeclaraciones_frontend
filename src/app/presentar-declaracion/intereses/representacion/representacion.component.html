@@ -133,6 +133,10 @@
       </mat-card>
 
       <div class="boton-agregar" *ngIf="(representacion.length && !editMode) || representacionForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar Representación</button>
       </div>
     </div>
@@ -207,6 +211,7 @@
               matInput
               #input_rfc_tercero
               type="text"
+              minlength="12"
               maxlength="13"
               formControlName="rfc"
               required
@@ -253,7 +258,7 @@
           <mat-form-field matTooltip="{{ tooltipData.lugarUbicacion }}" appearance="fill">
             <mat-label>Lugar donde se ubica</mat-label>
             <mat-icon matPrefix>public</mat-icon>
-            <mat-select (selectionChange)="locationChanged($event.value)" required>
+            <mat-select [(value)]="location" (selectionChange)="locationChanged($event.value)" required>
               <mat-option value="{{ extranjeroCatalogo[0] }}"> En México </mat-option>
               <mat-option value="{{ extranjeroCatalogo[1] }}"> En el extranjero </mat-option>
             </mat-select>
@@ -293,7 +298,13 @@
           <mat-form-field appearance="fill" *ngIf="representacionForm.value.representacion.sector?.clave === 'OTRO'">
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">credit_card</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroSector
+                #otroSector
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
         </div>
       </div>

@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { fideicomisosMutation, fideicomisosQuery } from '@api/declaracion';
+import { fideicomisosMutation, fideicomisosQuery, lastFideicomisosQuery } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { DeclaracionOutput, Fideicomiso, Fideicomisos } from '@models/declaracion';
+import { DeclaracionOutput, Fideicomiso, Fideicomisos, LastDeclaracionOutput } from '@models/declaracion';
 import Extranjero from '@static/catalogos/extranjero.json';
 import Relacion from '@static/catalogos/tipoRelacion.json';
 import Sector from '@static/catalogos/sector.json';
@@ -35,6 +35,7 @@ export class FideicomisosComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  varOtroSector: string = null;
 
   @ViewChild('otroSector') otroSector: ElementRef;
 
@@ -163,10 +164,29 @@ export class FideicomisosComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.fideicomisosForm.value.fideicomiso)); // Deep copy
 
     if (form.sector?.clave === 'OTRO') {
-      form.sector.valor = this.otroSector.nativeElement.value;
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
     }
 
     return form;
+  }
+
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastFideicomisosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.fideicomisos);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
   }
 
   async getUserInfo() {
@@ -185,11 +205,13 @@ export class FideicomisosComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      if (data?.declaracion.fideicomisos) {
+      if (data?.declaracion.fideicomisos === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data?.declaracion.fideicomisos);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -205,7 +227,17 @@ export class FideicomisosComponent implements OnInit {
     return result;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noExperience() {
     this.saveInfo({ ninguno: true });
@@ -315,7 +347,11 @@ export class FideicomisosComponent implements OnInit {
     const { sector } = this.fideicomisosForm.value.fideicomiso;
 
     if (sector) {
-      this.fideicomisosForm.get('fideicomiso.sector').setValue(findOption(this.sectorCatalogo, sector.clave));
+      const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
+        this.fideicomisosForm.get('fideicomiso.sector').setValue(optSector[0]);
+        if (sector.clave === 'OTRO') {
+          this.varOtroSector = sector.valor; 
+        }
     }
   }
 
@@ -374,5 +410,23 @@ export class FideicomisosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let fideicomiso = [...this.fideicomiso];
+    if (fideicomiso.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < fideicomiso.length; i++) {
+        fideicomiso[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.fideicomisosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        fideicomiso,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
   }
 }

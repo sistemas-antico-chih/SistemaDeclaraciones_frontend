@@ -222,6 +222,10 @@
         </mat-card-actions>
       </mat-card>
       <div class="boton-agregar" *ngIf="(vehiculo.length && !editMode) || vehiculosForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar Vehículo</button>
       </div>
     </div>
@@ -260,7 +264,14 @@
             <mat-form-field appearance="fill" *ngIf="vehiculosForm.value.vehiculo.tipoVehiculo?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoVehiculo
+                class="OTV"
+                #otroTipoVehiculo 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.tipoVehiulo }}" appearance="fill">
               <mat-label>Titular del Vehículo</mat-label>
@@ -275,10 +286,16 @@
 
           <!-- Tercero -->
           <div class="grid-3-col grid-margin" formGroupName="tercero">
-            <mat-radio-group matTooltip="{{ tooltipData.tercero }}" class="checkbox" formControlName="tipoPersona">
-              <p class="question double-col">Tercero</p>
-              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Persona Física</mat-radio-button>
-              <mat-radio-button value="MORAL">Persona Moral</mat-radio-button>
+            <mat-radio-group 
+              matTooltip="{{ tooltipData.tercero }}" 
+              class="tercero" 
+              formControlName="tipoPersona"
+              (change)="radioChange($event.value)"
+              [(ngModel)]="tipoPersona">
+              <p class="question double-col">Copropiedad tipo persona de Tercero</p>
+              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Física</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="MORAL">Moral</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="NINGUNO">Ninguno</mat-radio-button>
             </mat-radio-group>
             <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill">
               <mat-label>Nombre del Tercero o Terceros</mat-label>
@@ -294,6 +311,7 @@
                 #input_rfc_tercero
                 formControlName="rfc"
                 type="text"
+                minlength="12"
                 maxlength="13"
               />
               <mat-hint align="end">{{ input_rfc_tercero.value?.length || 0 }}/13</mat-hint>
@@ -334,6 +352,7 @@
                 #input_rfc_transmisor
                 formControlName="rfc"
                 type="text"
+                minlength="12"
                 maxlength="13"
                 required
               />
@@ -360,7 +379,13 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value] = varOtroRelacion
+                #otroParentesco 
+                matInput 
+                type="text" 
+                required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.marca }}" appearance="fill">
               <mat-label>Marca</mat-label>
@@ -381,8 +406,6 @@
                 matInput
                 type="number"
                 formControlName="anio"
-                min="0"
-                max="{{ currentYear + 1 }}"
                 placeholder="{{ currentYear }}"
                 required
               />
@@ -403,9 +426,11 @@
               appearance="fill"
               formGroupName="lugarRegistro"
             >
-              <mat-label>¿Donde se encuentra registrado?</mat-label>
+              <mat-label>¿Dónde se encuentra registrado?</mat-label>
               <mat-icon matPrefix class="no-public">public</mat-icon>
-              <mat-select #location (selectionChange)="locationChanged($event.value)" required>
+              <mat-select 
+                [(value)]="location"
+                (selectionChange)="locationChanged($event.value)" required>
                 <mat-option value="{{ extranjeroCatalogo[0] }}"> En México </mat-option>
                 <mat-option value="{{ extranjeroCatalogo[1] }}"> En el extranjero </mat-option>
               </mat-select>

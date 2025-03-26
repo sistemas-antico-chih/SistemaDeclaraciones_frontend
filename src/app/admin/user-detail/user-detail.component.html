@@ -53,7 +53,16 @@
               </p>
             </div>
           </div>
-          <div>
+          <div class="grid-2-col">
+            <div class="paragraph-flex">
+              <mat-icon matPrefix class="icon">account_balance</mat-icon>
+              <p>
+                Institución: <br />
+                <span class="resaltar">
+                  {{ user?.institucion?.valor || 'Sin seleccionar' | uppercase }}
+                </span>
+              </p>
+            </div>
             <div class="paragraph-flex">
               <mat-icon matPrefix class="icon">supervisor_account</mat-icon>
               <p>
@@ -74,3 +83,4 @@
   </div>
   <app-footer></app-footer>
 </div>
+

@@ -125,6 +125,10 @@
       </mat-card>
 
       <div class="boton-agregar" *ngIf="(participacion.length && !editMode) || participacionForm.value.ninguno">
+         <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+         <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PARTICIPACIÓN</button>
       </div>
     </div>
@@ -185,6 +189,7 @@
               matInput
               #input_rfc_tercero
               type="text"
+              minlength="12"
               maxlength="13"
               formControlName="rfc"
               required
@@ -216,6 +221,18 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field appearance="fill" *ngIf="participacionForm.value.participacion.tipoParticipacion?.clave === 'OTRO'">
+            <mat-label>Especifique</mat-label>
+            <mat-icon matPrefix class="no-public">group</mat-icon>
+            <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroTipoParticipacion
+              class="OTP"
+              #otroTipoParticipacion
+              matInput 
+              type="text" 
+              required />
+          </mat-form-field>
         </div>
 
         <div class="grid-2-col grid-margin">
@@ -245,7 +262,7 @@
           <mat-form-field matTooltip="{{ tooltipData.lugarDondeUbica }}" appearance="fill">
             <mat-label>Lugar donde se ubica</mat-label>
             <mat-icon matPrefix>public</mat-icon>
-            <mat-select (selectionChange)="locationChanged($event.value)" required>
+            <mat-select (selectionChange)="locationChanged($event.value)" [(value)]="location" required>
               <mat-option value="{{ extranjeroCatalogo[0] }}"> En México </mat-option>
               <mat-option value="{{ extranjeroCatalogo[1] }}"> En el extranjero </mat-option>
             </mat-select>
@@ -280,6 +297,18 @@
                 {{ sector.valor }}
               </mat-option>
             </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" *ngIf="participacionForm.value.participacion.sector?.clave === 'OTRO'">
+            <mat-label>Especifique</mat-label>
+            <mat-icon matPrefix class="no-public">group</mat-icon>
+            <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroSector
+              class="OS"
+              #otroSector
+              matInput 
+              type="text" 
+              required />
           </mat-form-field>
         </div>
       </div>

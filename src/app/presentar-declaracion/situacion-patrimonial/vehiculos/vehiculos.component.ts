@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { vehiculosMutation, vehiculosQuery } from '@api/declaracion';
+import { vehiculosMutation, vehiculosQuery, lastVehiculosQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoVehiculo from '@static/catalogos/tipoVehiculo.json';
@@ -22,7 +22,7 @@ import Monedas from '@static/catalogos/monedas.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/vehiculos';
 
-import { DeclaracionOutput, Vehiculo, Vehiculos } from '@models/declaracion';
+import { DeclaracionOutput, Vehiculo, Vehiculos, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -43,6 +43,14 @@ export class VehiculosComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
 
+  varOtroTipoVehiculo: string = null;
+  varOtroRelacion: string = null;
+  pushButtonSave: boolean =false;
+
+  @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
+
+  location: string = null;
   tipoVehiculoCatalogo = TipoVehiculo;
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
@@ -67,7 +75,12 @@ export class VehiculosComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  minAnio = 1920;
+  maxAnio = this.anio;
+
+  tipoPersona: string;
 
   constructor(
     private apollo: Apollo,
@@ -132,7 +145,13 @@ export class VehiculosComponent implements OnInit {
         }),
         marca: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         modelo: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        anio: [null, [Validators.required, Validators.pattern(/^\d{4}$/)]],
+        //anio: [null, [Validators.required, Validators.pattern(/^\d{4}$/)]],
+        anio: [null, [
+          Validators.required, 
+          Validators.min(1920), 
+          Validators.max(this.maxAnio),
+          //this.validarLongitud
+        ]],
         numeroSerieRegistro: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         tercero: this.formBuilder.group({
           tipoPersona: [null],
@@ -161,6 +180,19 @@ export class VehiculosComponent implements OnInit {
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     });
   }
+
+  /*validarLongitud(control: FormControl){
+    console.log("lllega")
+    //console.log(control.value)
+    console.log(control.value.length)
+    //console.log(control.value.length)
+    //if (control.value.length === 4){
+      //return {'validarLongitud': true}
+    //}
+    //else{
+     // return null;
+    //}
+  }*/
 
   editItem(index: number) {
     this.setEditMode();
@@ -191,6 +223,25 @@ export class VehiculosComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastVehiculosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.vehiculos);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -202,17 +253,21 @@ export class VehiculosComponent implements OnInit {
         })
         .toPromise();
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.vehiculos) {
+
+      if (data.declaracion.vehiculos === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.vehiculos);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
   formHasChanges() {
     let isDirty = this.vehiculosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -230,7 +285,18 @@ export class VehiculosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noVehicle() {
     this.saveInfo({ ninguno: true });
@@ -303,7 +369,8 @@ export class VehiculosComponent implements OnInit {
   saveItem() {
     let vehiculo = [...this.vehiculo];
     const aclaracionesObservaciones = this.vehiculosForm.value.aclaracionesObservaciones;
-    const newItem = this.vehiculosForm.value.vehiculo;
+    //const newItem = this.vehiculosForm.value.vehiculo;
+    const newItem = this.finalVehiculoForm;
 
     if (this.editIndex === null) {
       vehiculo = [...vehiculo, newItem];
@@ -319,6 +386,7 @@ export class VehiculosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -328,28 +396,50 @@ export class VehiculosComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoVehiculo, titular, formaAdquisicion } = this.vehiculosForm.value.vehiculo;
+    const { tipoVehiculo, titular, formaAdquisicion, lugarRegistro } = this.vehiculosForm.value.vehiculo;
 
     const { relacion } = this.vehiculosForm.value.vehiculo.transmisor;
 
     if (tipoVehiculo) {
-      this.vehiculosForm.get('vehiculo.tipoVehiculo').setValue(findOption(this.tipoVehiculoCatalogo, tipoVehiculo));
+      const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);
+      this.vehiculosForm.get('vehiculo.tipoVehiculo').setValue(optionTipoVehiculo[0]);
+      if (tipoVehiculo.clave === 'OTRO') {
+        this.varOtroTipoVehiculo = tipoVehiculo.valor;
+      }
     }
 
     if (titular) {
-      this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+      // this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.vehiculosForm.get('vehiculo.titular').setValue(optionTitular[0]);
     }
 
     if (relacion) {
-      this.vehiculosForm
-        .get('vehiculo.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.vehiculosForm.get('vehiculo.transmisor.relacion').setValue(optRelacion[0]);
+      if (relacion.clave === 'OTRO') {
+        this.varOtroRelacion = relacion.valor;
+      }
     }
 
     if (formaAdquisicion) {
-      this.vehiculosForm
-        .get('vehiculo.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      const optFormaAdquision = this.formaAdquisicionCatalogo.filter((ad: any) => ad.clave === formaAdquisicion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
+    }
+
+    if(lugarRegistro){
+      if( !lugarRegistro.pais || lugarRegistro.pais.value === 'MX'){
+        const { entidadFederativa } = lugarRegistro;
+        this.location = "MX";
+        const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
+        this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
+
+      }
+      else{
+        this.location = "EX";
+      }
     }
   }
 
@@ -369,6 +459,20 @@ export class VehiculosComponent implements OnInit {
     //this.editMode = !!!this.vehiculo.length;
   }
 
+  get finalVehiculoForm() {
+    const form = JSON.parse(JSON.stringify(this.vehiculosForm.value.vehiculo)); // Deep copy
+
+    if (form.tipoVehiculo?.clave === 'OTRO') {
+      form.tipoVehiculo.valor = this.otroTipoVehiculo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
+  }
+
   toggleAclaraciones(value: boolean) {
     const aclaraciones = this.vehiculosForm.get('aclaracionesObservaciones');
     if (value) {
@@ -378,5 +482,37 @@ export class VehiculosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+
+  checkItems() {
+    let vehiculo = [...this.vehiculo];
+    if (vehiculo.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < vehiculo.length; i++) {
+        vehiculo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.vehiculosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        vehiculo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO") {
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").disable();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").disable();
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").setValue(null);
+      this.vehiculosForm.get("vehiculo.tercero.rfc").setValue(null);
+    }
+    else {
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").enable();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").enable();
+    }
   }
 }

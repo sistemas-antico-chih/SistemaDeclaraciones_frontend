@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { bienesInmueblesMutation, bienesInmueblesQuery } from '@api/declaracion';
+import { bienesInmueblesMutation, bienesInmueblesQuery, lastBienesInmueblesQuery, lastInversionesCuentasValoresQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -24,7 +24,7 @@ import Monedas from '@static/catalogos/monedas.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
 
-import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante } from '@models/declaracion';
+import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -38,12 +38,22 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
+  aclaracionesText: string = null; 
   bienesInmueblesForm: FormGroup;
   estado: Catalogo = null;
   editMode = false;
   editIndex: number = null;
   bienInmueble: BienInmueble[] = [];
   isLoading = false;
+  varOtroTipoInmueble: string = null;
+  varOtroRelacion: string = null;
+  pushButtonSave: boolean =false;
+
+  @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
+
+  //@ViewChildren('otroTipoInmueble') otroTipoInmueble: QueryList<ElementRef>;
+
 
   tipoInmuebleCatalogo = TipoInmueble;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -68,9 +78,11 @@ export class BienesInmueblesComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   valores: ValorDeclarante[] = [];
+
+  tipoPersona: string;
 
   constructor(
     private apollo: Apollo,
@@ -87,6 +99,7 @@ export class BienesInmueblesComponent implements OnInit {
   addItem() {
     this.bienesInmueblesForm.reset();
     this.bienesInmueblesForm.get('ninguno').setValue(false);
+    this.setAclaraciones(this.aclaracionesText);
     this.editMode = true;
     this.editIndex = null;
   }
@@ -215,12 +228,33 @@ export class BienesInmueblesComponent implements OnInit {
       this.tipoDomicilio = 'EXTRANJERO';
     }
 
-    this.setSelectedOptions();
+    this.setAclaraciones(this.aclaracionesText);
+   this.setSelectedOptions();
+  }
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastBienesInmueblesQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      if (data?.lastDeclaracion.bienesInmuebles) {
+        this.setupForm(data?.lastDeclaracion.bienesInmuebles);
+      }
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
   }
 
   async getUserInfo() {
     try {
-      const { data } = await this.apollo
+      const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
           query: bienesInmueblesQuery,
           variables: {
@@ -229,18 +263,54 @@ export class BienesInmueblesComponent implements OnInit {
         })
         .toPromise();
 
+      if (errors) {
+        throw errors;
+      }
+
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.bienesInmuebles) {
+      if (data.declaracion.bienesInmuebles === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.bienesInmuebles);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
+  }
+
+  get finalBienInmuebleForm() {
+    const form = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble)); // Deep copy
+
+    if (form.tipoInmueble?.clave === 'OTRO') {
+      form.tipoInmueble.valor = this.otroTipoInmueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
+  }
+
+  inputsAreValid(): boolean {
+    let result = true;
+    const bienInmueble = this.bienesInmueblesForm.value.bienInmueble;
+
+    if (bienInmueble.actividadLaboral?.clave === 'OTR') {
+      //result = result && this.otroTipoInmueble.nativeElement.value?.match(/^\S.*\S$/);
+    }
+    if (bienInmueble.parentescoRelacion?.clave === 'OTRO') {
+      result = result && this.otroParentesco.nativeElement.value?.match(/^\S.*\S$/);
+    }
+
+    console.log(result);
+    return result;
   }
 
   formHasChanges() {
     let isDirty = this.bienesInmueblesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -258,7 +328,36 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+
+  checkItems() {
+    let bienInmueble = [...this.bienInmueble];
+    if (bienInmueble.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < bienInmueble.length; i++) {
+        bienInmueble[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        bienInmueble,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 
   noProperty() {
     this.saveInfo({ ninguno: true });
@@ -294,7 +393,7 @@ export class BienesInmueblesComponent implements OnInit {
       if (result) {
         const bienInmueble = [...this.bienInmueble.slice(0, index), ...this.bienInmueble.slice(index + 1)];
 
-        let array : any =[];
+        let array: any = [];
         array = this.deleteValoresDeclarante(bienInmueble);
         let valores = array;
 
@@ -315,7 +414,7 @@ export class BienesInmueblesComponent implements OnInit {
         bienesInmuebles: form,
       };
 
-      const { data } = await this.apollo
+      const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
           mutation: bienesInmueblesMutation,
           variables: {
@@ -325,9 +424,13 @@ export class BienesInmueblesComponent implements OnInit {
         })
         .toPromise();
 
+      if (errors) {
+        throw errors;
+      }
+
       this.editMode = false;
-      if (data.declaracion.bienesInmuebles) {
-        this.setupForm(data.declaracion.bienesInmuebles);
+      if (data?.declaracion.bienesInmuebles) {
+        this.setupForm(data?.declaracion.bienesInmuebles);
       }
       this.presentSuccessAlert();
     } catch (error) {
@@ -336,26 +439,11 @@ export class BienesInmueblesComponent implements OnInit {
     }
   }
 
-  tipoDomicilioChanged(value: any) {
-    this.tipoDomicilio = value;
-
-    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
-    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
-    const bienInbueble = this.bienesInmueblesForm.get('bienInmueble');
-
-    const notSelected = bienInbueble.get(notSelectedType);
-
-    notSelected.disable();
-    notSelected.reset();
-
-    bienInbueble.get(selectedType).enable();
-  }
-
-
   saveItem() {
     let bienInmueble = [...this.bienInmueble];
     const aclaracionesObservaciones = this.bienesInmueblesForm.value.aclaracionesObservaciones;
-    const newItem = this.bienesInmueblesForm.value.bienInmueble;
+    //const newItem = this.bienesInmueblesForm.value.bienInmueble;
+    const newItem = this.finalBienInmuebleForm;
 
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
@@ -372,11 +460,10 @@ export class BienesInmueblesComponent implements OnInit {
       bandera = true;
     }
 
-
     this.isLoading = true;
 
-    if (bandera){
-      let array : any =[];
+    if (bandera) {
+      let array: any = [];
       array = this.updateValoresDeclarante(bienInmueble);
       valores = array;
     }
@@ -388,6 +475,110 @@ export class BienesInmueblesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
+  }
+
+  setAclaraciones(aclaraciones?: string) {
+    this.bienesInmueblesForm.get('aclaracionesObservaciones').patchValue(aclaraciones || null);
+    this.aclaracionesText = aclaraciones || null;
+    this.toggleAclaraciones(!!aclaraciones);
+  }
+
+  setEditMode() {
+    this.bienesInmueblesForm.reset();
+    this.editMode = true;
+    this.editIndex = null;
+  }
+
+  setSelectedOptions() {
+    const { tipoInmueble, titular, formaAdquisicion, domicilioMexico } = this.bienesInmueblesForm.value.bienInmueble;
+
+    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
+
+    if (tipoInmueble) {
+      const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
+      this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
+      if(tipoInmueble.clave ==='OTRO'){
+        this.varOtroTipoInmueble=tipoInmueble.valor;
+      }
+    }
+
+    if (titular) {
+      const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+      // this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.bienesInmueblesForm.get('bienInmueble.titular').setValue(optionTitular[0]);
+    }
+    if (formaAdquisicion) {
+      const optFormaAdquision = this.formaAdquisicionCatalogo.filter((ad: any) => ad.clave === formaAdquisicion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      this.bienesInmueblesForm.get('bienInmueble.formaAdquisicion').setValue(optFormaAdquision[0]);
+    }
+
+    if (relacion) {
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
+      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(optRelacion[0]);
+      if(relacion.clave ==='OTRO'){
+        this.varOtroRelacion=relacion.valor;
+      }
+    }
+
+    if (domicilioMexico) {
+      const { entidadFederativa, municipioAlcaldia } = domicilioMexico;
+
+      if (entidadFederativa) {
+        const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
+        this.bienesInmueblesForm.get('bienInmueble.domicilioMexico.entidadFederativa').setValue(optEntidad[0]);
+
+        if (municipioAlcaldia) {
+          const optMunicipio = this.municipiosCatalogo[optEntidad[0].clave].filter(
+            (mun: any) => mun.clave === municipioAlcaldia.clave
+          );
+          this.bienesInmueblesForm.get('bienInmueble.domicilioMexico.municipioAlcaldia').setValue(optMunicipio[0]);
+        }
+      }
+    }
+  }
+
+  setupForm(bienesInmuebles: BienesInmuebles) {
+    this.bienInmueble = bienesInmuebles.bienInmueble;
+    this.valores = bienesInmuebles.valores;
+
+    const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
+
+    if (bienesInmuebles.ninguno) {
+      this.bienesInmueblesForm.get('ninguno').patchValue(true);
+    }
+
+    if (aclaraciones) {
+      this.setAclaraciones(aclaraciones);
+    }
+  }
+
+  toggleAclaraciones(value: boolean) {
+    const aclaraciones = this.bienesInmueblesForm.get('aclaracionesObservaciones');
+    if (value) {
+      aclaraciones.enable();
+    } else {
+      aclaraciones.disable();
+      aclaraciones.reset();
+    }
+    this.aclaraciones = value;
+  }
+
+  tipoDomicilioChanged(value: any) {
+    this.tipoDomicilio = value;
+
+    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
+    const bienInbueble = this.bienesInmueblesForm.get('bienInmueble');
+
+    const notSelected = bienInbueble.get(notSelectedType);
+
+    notSelected.disable();
+    notSelected.reset();
+
+    bienInbueble.get(selectedType).enable();
   }
 
   saveValoresDeclarante() {
@@ -440,62 +631,16 @@ export class BienesInmueblesComponent implements OnInit {
     return valores;
   }
 
-  setEditMode() {
-    this.bienesInmueblesForm.reset();
-    this.editMode = true;
-    this.editIndex = null;
-  }
-
-  setSelectedOptions() {
-    const { tipoInmueble, titular, formaAdquisicion } = this.bienesInmueblesForm.value.bienInmueble;
-
-    const { relacion } = this.bienesInmueblesForm.value.bienInmueble.transmisor;
-
-    if (tipoInmueble) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.tipoInmueble')
-        .setValue(findOption(this.tipoInmuebleCatalogo, tipoInmueble));
+  radioChange(event: any) {
+    if (event === "NINGUNO") {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
     }
-    if (titular) {
-      this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+    else {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").enable();
     }
-    if (formaAdquisicion) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.formaAdquisicion')
-        .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
-    }
-
-    if (relacion) {
-      this.bienesInmueblesForm
-        .get('bienInmueble.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion));
-    }
-  }
-
-  setupForm(bienesInmuebles: BienesInmuebles) {
-    this.bienInmueble = bienesInmuebles.bienInmueble;
-    this.valores = bienesInmuebles.valores;
-
-    const aclaraciones = bienesInmuebles.aclaracionesObservaciones;
-
-    if (bienesInmuebles.ninguno) {
-      this.bienesInmueblesForm.get('ninguno').patchValue(true);
-    }
-
-    if (aclaraciones) {
-      this.bienesInmueblesForm.get('aclaracionesObservaciones').setValue(aclaraciones);
-      this.toggleAclaraciones(true);
-    }
-  }
-
-  toggleAclaraciones(value: boolean) {
-    const aclaraciones = this.bienesInmueblesForm.get('aclaracionesObservaciones');
-    if (value) {
-      aclaraciones.enable();
-    } else {
-      aclaraciones.disable();
-      aclaraciones.reset();
-    }
-    this.aclaraciones = value;
   }
 }
