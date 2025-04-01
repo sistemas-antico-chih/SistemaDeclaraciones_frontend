@@ -633,14 +633,22 @@ export class BienesInmueblesComponent implements OnInit {
 
   radioChange(event: any) {
     if (event === "NINGUNO") {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
     }
     else {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValidators([Validators.required]);
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").enable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
     }
   }
 }
