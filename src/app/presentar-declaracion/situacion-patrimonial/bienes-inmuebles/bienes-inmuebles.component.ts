@@ -410,6 +410,12 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
+      console.log("form");
+      console.log(form);
+      console.log("this.editIndex")
+      console.log(this.editIndex);
+      console.log("this.bienInmueble")
+      console.log(this.bienInmueble);
       console.log("length");
       console.log(form.bienInmueble.length);
       if (this.tipoPersona === "NINGUNO") {
@@ -437,13 +443,7 @@ export class BienesInmueblesComponent implements OnInit {
       const declaracion = {
         bienesInmuebles: form,
       };
-      console.log("form");
-      console.log(form);
-      console.log("this.editIndex")
-      console.log(this.editIndex);
-      console.log("this.bienInmueble")
-      console.log(this.bienInmueble);
-
+      
       const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
           mutation: bienesInmueblesMutation,
