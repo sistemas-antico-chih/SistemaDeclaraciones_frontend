@@ -38,7 +38,7 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
-  aclaracionesText: string = null; 
+  aclaracionesText: string = null;
   bienesInmueblesForm: FormGroup;
   estado: Catalogo = null;
   editMode = false;
@@ -47,7 +47,7 @@ export class BienesInmueblesComponent implements OnInit {
   isLoading = false;
   varOtroTipoInmueble: string = null;
   varOtroRelacion: string = null;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -229,7 +229,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     this.setAclaraciones(this.aclaracionesText);
-   this.setSelectedOptions();
+    this.setSelectedOptions();
   }
   async getLastUserInfo() {
     try {
@@ -412,8 +412,16 @@ export class BienesInmueblesComponent implements OnInit {
     try {
       console.log("length");
       console.log(form.bienInmueble.length);
-     /* if (this.tipoPersona ==="NINGUNO"){
+      if (this.tipoPersona === "NINGUNO") {
         console.log("entra");
+        this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
+        this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
+        this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+        this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+        this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").clearValidators();
+        this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
+        this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
+        this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
         this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
         /*console.log("llega1")
         if (this.editIndex === null) {
@@ -428,8 +436,8 @@ export class BienesInmueblesComponent implements OnInit {
           //form.bienInmueble[this.editIndex].tercero[0].tipoPersona = 'FISICA'
           this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
           console.log("llega else 2")
-        }*
-      }*/
+        }*/
+      }
       const declaracion = {
         bienesInmuebles: form,
       };
@@ -523,8 +531,8 @@ export class BienesInmueblesComponent implements OnInit {
     if (tipoInmueble) {
       const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
-      if(tipoInmueble.clave ==='OTRO'){
-        this.varOtroTipoInmueble=tipoInmueble.valor;
+      if (tipoInmueble.clave === 'OTRO') {
+        this.varOtroTipoInmueble = tipoInmueble.valor;
       }
     }
 
@@ -543,8 +551,8 @@ export class BienesInmueblesComponent implements OnInit {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(optRelacion[0]);
-      if(relacion.clave ==='OTRO'){
-        this.varOtroRelacion=relacion.valor;
+      if (relacion.clave === 'OTRO') {
+        this.varOtroRelacion = relacion.valor;
       }
     }
 
@@ -666,8 +674,8 @@ export class BienesInmueblesComponent implements OnInit {
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-      
-      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
+
+      //this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
     }
     else {
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
