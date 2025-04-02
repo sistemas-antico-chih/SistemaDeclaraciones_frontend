@@ -452,7 +452,7 @@ export class BienesInmueblesComponent implements OnInit {
     console.log(bienInmueble.length);
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      bienInmueble[bienInmueble.length].tercero[0].tipoPersona='FISICA';
+      bienInmueble[bienInmueble.length-1].tercero[0].tipoPersona='FISICA';
       if (valorTitular.titular.clave === "DEC") {
         const valor = this.saveValoresDeclarante();
         valores = [...valores, valor];
@@ -460,7 +460,7 @@ export class BienesInmueblesComponent implements OnInit {
     } else {
       bienInmueble[this.editIndex] = newItem;
       bandera = true;
-      bienInmueble[this.editIndex].tercero[0].tipoPersona="FISICA";
+      bienInmueble[this.editIndex-1].tercero[0].tipoPersona="FISICA";
     }
 
     this.isLoading = true;
