@@ -414,6 +414,8 @@ export class BienesInmueblesComponent implements OnInit {
       console.log(form.bienInmueble.length);
       if (this.tipoPersona === "NINGUNO") {
         console.log("entra");
+        console.log(this.tipoPersona);
+        this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").getValue();
         this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
         this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
         this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
@@ -422,7 +424,7 @@ export class BienesInmueblesComponent implements OnInit {
         this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
         this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
         this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-        this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
+        //this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
         /*console.log("llega1")
         if (this.editIndex === null) {
           console.log("llega if 1")
