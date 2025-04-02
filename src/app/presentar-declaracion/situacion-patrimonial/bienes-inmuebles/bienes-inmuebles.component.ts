@@ -415,7 +415,7 @@ export class BienesInmueblesComponent implements OnInit {
       if (this.tipoPersona === "NINGUNO") {
         console.log("entra");
         console.log(this.tipoPersona);
-        this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").getValue();
+        this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona");
         this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
         this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
         this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
