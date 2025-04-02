@@ -410,7 +410,10 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
+      console.log("saveInfo");
       console.log(form.bienInmueble.length);
+      console.log("this.editIndex")
+      console.log(this.editIndex);
       const declaracion = {
         bienesInmuebles: form,
       };
@@ -449,6 +452,7 @@ export class BienesInmueblesComponent implements OnInit {
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
     let bandera = false;
+    console.log("saveItem");
     console.log(bienInmueble.length);
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
