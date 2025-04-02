@@ -431,7 +431,8 @@ export class BienesInmueblesComponent implements OnInit {
       };
       console.log("form");
       console.log(form);
-
+      console.log("this.editIndex")
+      console.log(this.editIndex);
       console.log("this.bienInmueble")
       console.log(this.bienInmueble);
 
