@@ -415,6 +415,7 @@ export class BienesInmueblesComponent implements OnInit {
       if (this.tipoPersona === "NINGUNO") {
         console.log("entra");
         console.log(this.tipoPersona);
+        console.log(form.bienInmueble[2])
         form.bienInmueble[2].tercero[0].tipoPersona='FISICA'
         
         //this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
