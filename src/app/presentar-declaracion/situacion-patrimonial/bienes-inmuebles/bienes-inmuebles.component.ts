@@ -410,6 +410,7 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
+      console.log(form.bienInmueble.length);
       const declaracion = {
         bienesInmuebles: form,
       };
@@ -448,9 +449,10 @@ export class BienesInmueblesComponent implements OnInit {
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
     let bandera = false;
-
+    console.log(bienInmueble.length);
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
+      bienInmueble[bienInmueble.length].tercero[0].tipoPersona='FISICA';
       if (valorTitular.titular.clave === "DEC") {
         const valor = this.saveValoresDeclarante();
         valores = [...valores, valor];
@@ -458,6 +460,7 @@ export class BienesInmueblesComponent implements OnInit {
     } else {
       bienInmueble[this.editIndex] = newItem;
       bandera = true;
+      bienInmueble[this.editIndex].tercero[0].tipoPersona="FISICA";
     }
 
     this.isLoading = true;
@@ -641,7 +644,8 @@ export class BienesInmueblesComponent implements OnInit {
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
+      
+      //this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
     }
     else {
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
