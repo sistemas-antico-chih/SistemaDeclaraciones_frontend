@@ -413,18 +413,21 @@ export class BienesInmueblesComponent implements OnInit {
       console.log("length");
       console.log(form.bienInmueble.length);
       if (this.tipoPersona ==="NINGUNO"){
-        console.log("llega1")
+        this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
+        /*console.log("llega1")
         if (this.editIndex === null) {
           console.log("llega if 1")
-          form.bienInmueble[form.bienInmueble.length].tercero[0].tipoPersona='FISICA';
+          //form.bienInmueble[form.bienInmueble.length].tercero[0].tipoPersona='FISICA';
+          this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
           console.log("llega if 2")
         } else {
           console.log("index");
           console.log(this.editIndex);
           console.log("llega else 1")
-          form.bienInmueble[this.editIndex].tercero[0].tipoPersona = 'FISICA'
+          //form.bienInmueble[this.editIndex].tercero[0].tipoPersona = 'FISICA'
+          this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
           console.log("llega else 2")
-        }
+        }*/
       }
       const declaracion = {
         bienesInmuebles: form,
