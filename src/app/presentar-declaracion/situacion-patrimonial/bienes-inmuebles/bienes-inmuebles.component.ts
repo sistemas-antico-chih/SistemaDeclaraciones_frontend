@@ -410,14 +410,20 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
+      console.log("length");
+      console.log(form.bienInmueble.length);
       if (this.tipoPersona ==="NINGUNO"){
         console.log("llega1")
         if (this.editIndex === null) {
+          console.log("llega if 1")
           form.bienInmueble[form.bienInmueble.length].tercero[0].tipoPersona='FISICA';
-          console.log("llega if")
+          console.log("llega if 2")
         } else {
+          console.log("index");
+          console.log(this.editIndex);
+          console.log("llega else 1")
           form.bienInmueble[this.editIndex].tercero[0].tipoPersona = 'FISICA'
-          console.log("llega else")
+          console.log("llega else 2")
         }
       }
       const declaracion = {
