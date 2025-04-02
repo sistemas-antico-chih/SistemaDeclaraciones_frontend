@@ -412,7 +412,7 @@ export class BienesInmueblesComponent implements OnInit {
     try {
       console.log("length");
       console.log(form.bienInmueble.length);
-      if (this.tipoPersona ==="NINGUNO"){
+     /* if (this.tipoPersona ==="NINGUNO"){
         console.log("entra");
         this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
         /*console.log("llega1")
@@ -428,8 +428,8 @@ export class BienesInmueblesComponent implements OnInit {
           //form.bienInmueble[this.editIndex].tercero[0].tipoPersona = 'FISICA'
           this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
           console.log("llega else 2")
-        }*/
-      }
+        }*
+      }*/
       const declaracion = {
         bienesInmuebles: form,
       };
@@ -667,7 +667,7 @@ export class BienesInmueblesComponent implements OnInit {
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
       
-      //this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
+      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
     }
     else {
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
