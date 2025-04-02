@@ -410,13 +410,30 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
+      /*let bienInmueble = [...this.bienInmueble];
       console.log("saveInfo");
       console.log(form.bienInmueble.length);
       console.log("this.editIndex")
       console.log(this.editIndex);
+      if (this.editIndex === null) {
+        bienInmueble = [...bienInmueble, newItem];
+        if (valorTitular.titular.clave === "DEC") {
+          const valor = this.saveValoresDeclarante();
+          valores = [...valores, valor];
+        }
+      } else {
+        bienInmueble[this.editIndex] = newItem;
+        bandera = true;
+      }
+      */
       const declaracion = {
         bienesInmuebles: form,
       };
+      console.log("form");
+      console.log(form);
+
+      console.log("this.bienInmueble")
+      console.log(this.bienInmueble);
 
       const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
@@ -452,11 +469,8 @@ export class BienesInmueblesComponent implements OnInit {
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
     let bandera = false;
-    console.log("saveItem");
-    console.log(bienInmueble.length);
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
-      bienInmueble[bienInmueble.length-1].tercero[0].tipoPersona='FISICA';
       if (valorTitular.titular.clave === "DEC") {
         const valor = this.saveValoresDeclarante();
         valores = [...valores, valor];
@@ -464,7 +478,6 @@ export class BienesInmueblesComponent implements OnInit {
     } else {
       bienInmueble[this.editIndex] = newItem;
       bandera = true;
-      bienInmueble[this.editIndex-1].tercero[0].tipoPersona="FISICA";
     }
 
     this.isLoading = true;
