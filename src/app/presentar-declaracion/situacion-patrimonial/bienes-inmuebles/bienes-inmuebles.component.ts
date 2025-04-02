@@ -410,22 +410,16 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
-      /*let bienInmueble = [...this.bienInmueble];
-      console.log("saveInfo");
-      console.log(form.bienInmueble.length);
-      console.log("this.editIndex")
-      console.log(this.editIndex);
-      if (this.editIndex === null) {
-        bienInmueble = [...bienInmueble, newItem];
-        if (valorTitular.titular.clave === "DEC") {
-          const valor = this.saveValoresDeclarante();
-          valores = [...valores, valor];
+      if (this.tipoPersona ==="NINGUNO"){
+        console.log("llega1")
+        if (this.editIndex === null) {
+          form.bienInmueble[form.bienInmueble.length].tercero[0].tipoPersona='FISICA';
+          console.log("llega if")
+        } else {
+          form.bienInmueble[this.editIndex].tercero[0].tipoPersona = 'FISICA'
+          console.log("llega else")
         }
-      } else {
-        bienInmueble[this.editIndex] = newItem;
-        bandera = true;
       }
-      */
       const declaracion = {
         bienesInmuebles: form,
       };
