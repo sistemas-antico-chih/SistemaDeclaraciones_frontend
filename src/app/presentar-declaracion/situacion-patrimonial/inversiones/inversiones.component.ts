@@ -413,6 +413,13 @@ export class InversionesComponent implements OnInit {
     console.log(titular)
     console.log("tercero");
     console.log(tercero)
+
+    if (tercero){
+      const optionTercero = this.titularBienCatalogo.filter((t: any) => t.clave === tercero[0].tipoPersona);
+      // this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.inversionesCuentasValoresForm.get('inversion.tercero').setValue(optionTercero[0]);
+    }
+
     if (tipoInversion) {
       const optTipoInversion = this.tipoInversionCatalogo.filter((ti: any) => ti.clave === tipoInversion.clave);
       // this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
@@ -426,7 +433,11 @@ export class InversionesComponent implements OnInit {
             const opsBANC = this.subTipoBancariaCatalogo.filter((i: any) => i.clave === subTipoInversion.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opsBANC[0]);
             console.log(opsBANC);
-            /*console.log(this.opsBANC);
+            /*
+            const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+            // this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+            this.vehiculosForm.get('vehiculo.titular').setValue(optionTitular[0]);
+            console.log(this.opsBANC);
             const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
             console.log("opt")
             console.log(opt)
