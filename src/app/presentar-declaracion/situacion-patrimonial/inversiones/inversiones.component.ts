@@ -406,7 +406,7 @@ export class InversionesComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoInversion, subTipoInversion, titular } = this.inversionesCuentasValoresForm.value.inversion;
+    const { tipoInversion, subTipoInversion, titular, lugarRegistro } = this.inversionesCuentasValoresForm.value.inversion;
 
     if (tipoInversion) {
       const optTipoInversion = this.tipoInversionCatalogo.filter((ti: any) => ti.clave === tipoInversion.clave);
@@ -414,6 +414,8 @@ export class InversionesComponent implements OnInit {
       this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(optTipoInversion[0]);
 
       if (subTipoInversion) {
+        console.log("entra");
+        console.log(subTipoInversion);
         switch (tipoInversion.clave) {
           case 'BANC':
             const opt = this.opsBANC.filter((ban: any) => ban.clave === subTipoInversion.clave);
@@ -456,6 +458,16 @@ export class InversionesComponent implements OnInit {
       // this.inversionesCuentasValoresForm.get('inversion.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
       this.inversionesCuentasValoresForm.get('inversion.titular').setValue(optTitular[0]);
     }
+
+    if(lugarRegistro){
+      if( !lugarRegistro.localizacionInversion || lugarRegistro.pais.value === 'MX'){
+        this.localizacionChanged('MX')
+      }
+      else{
+        this.localizacionChanged('EX')
+      }
+    }
+
   }
 
   setupForm(inversionesCuentasValores: InversionesCuentasValores) {
