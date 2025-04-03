@@ -64,6 +64,8 @@ export class InversionesComponent implements OnInit {
   tipoInversionCatalogo = TipoInversion;
   subTipoInversionCatalogo = SubTipoInversion;
 
+  varOtroTipoVehiculo: string = null;
+
   subTipoAforesCatalogo = SubTipoInversionAfores;
   subTipoBancariaCatalogo = SubTipoInversionBancaria;
   subTipoFondosCatalogo = SubTipoInversionFondos;
@@ -383,7 +385,12 @@ export class InversionesComponent implements OnInit {
   setSelectedOptions() {
     const { tipoInversion, titular } = this.inversionesCuentasValoresForm.value.inversion;
 
+    console.log("tipoInversion");
+    console.log(tipoInversion);
+
     if (tipoInversion) {
+      if (titular) { 
+        console.log("entra titular");
       this.inversionesCuentasValoresForm
         .get('inversion.tipoInversion')
         .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
@@ -444,15 +451,23 @@ export class InversionesComponent implements OnInit {
   }
 
   terceroChange(value: string) {
-    if (value === "NINGUNO"){
+    if (value === "NINGUNO") {
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").clearValidators();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(' ');
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").updateValueAndValidity();
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").clearValidators();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(' ');
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").updateValueAndValidity();
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(null);
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(null);
     }
-    else{
+    else {
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValidators([Validators.required]);
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").enable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValidators([Validators.required]);
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").enable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").updateValueAndValidity();
     }
   }
 
