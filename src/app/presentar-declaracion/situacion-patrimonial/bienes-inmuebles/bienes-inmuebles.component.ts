@@ -410,16 +410,16 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
-      console.log("form");
+      /*console.log("form");
       console.log(form);
       console.log("this.editIndex")
       console.log(this.editIndex);
       console.log("this.bienInmueble")
       console.log(this.bienInmueble);
       console.log("length");
-      console.log(form.bienInmueble.length);
+      console.log(form.bienInmueble.length);*/
       console.log(this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona"));
-      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
+     // this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
       /*if (this.tipoPersona === "NINGUNO") {
         console.log("entra");
         console.log(this.tipoPersona);
