@@ -410,39 +410,6 @@ export class BienesInmueblesComponent implements OnInit {
 
   async saveInfo(form: BienesInmuebles) {
     try {
-      /*console.log("form");
-      console.log(form);
-      console.log("this.editIndex")
-      console.log(this.editIndex);
-      console.log("this.bienInmueble")
-      console.log(this.bienInmueble);
-      console.log("length");
-      console.log(form.bienInmueble.length);*/
-      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
-      console.log(this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona"));
-     // this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
-      /*if (this.tipoPersona === "NINGUNO") {
-        console.log("entra");
-        console.log(this.tipoPersona);
-        console.log(form.bienInmueble[2])
-        form.bienInmueble[2].tercero[0].tipoPersona='FISICA'
-        
-        this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
-        /*console.log("llega1")
-        if (this.editIndex === null) {
-          console.log("llega if 1")
-          //form.bienInmueble[form.bienInmueble.length].tercero[0].tipoPersona='FISICA';
-          this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
-          console.log("llega if 2")
-        } else {
-          console.log("index");
-          console.log(this.editIndex);
-          console.log("llega else 1")
-          //form.bienInmueble[this.editIndex].tercero[0].tipoPersona = 'FISICA'
-          this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
-          console.log("llega else 2")
-        }
-      }*/
       const declaracion = {
         bienesInmuebles: form,
       };
