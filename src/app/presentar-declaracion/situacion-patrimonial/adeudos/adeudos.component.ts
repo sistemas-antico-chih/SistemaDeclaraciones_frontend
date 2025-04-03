@@ -416,12 +416,22 @@ export class AdeudosComponent implements OnInit {
 
   radioChange(event: any) {
     if (event === "NINGUNO") {
-      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").disable();
-      this.adeudosPasivosForm.get("adeudo.tercero.rfc").disable();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
+      this.adeudosPasivosForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.rfc").clearValidators();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.rfc").setValue(' ');
+      this.adeudosPasivosForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.rfc").disable();
     }
     else {
-      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").enable();
-      this.adeudosPasivosForm.get("adeudo.tercero.rfc").enable();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.adeudosPasivosForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.rfc").setValidators([Validators.required]);
+      this.adeudosPasivosForm.get("bienInmueble.tercero.rfc").enable();
+      this.adeudosPasivosForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
     }
   }
 

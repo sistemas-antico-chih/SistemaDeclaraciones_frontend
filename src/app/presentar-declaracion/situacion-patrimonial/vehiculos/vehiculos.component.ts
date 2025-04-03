@@ -410,13 +410,13 @@ export class VehiculosComponent implements OnInit {
 
     if (titular) {
       const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
-      // this.bienesInmueblesForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      // this.vehiculosForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
       this.vehiculosForm.get('vehiculo.titular').setValue(optionTitular[0]);
     }
 
     if (relacion) {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
-      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      // this.vehiculosForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.vehiculosForm.get('vehiculo.transmisor.relacion').setValue(optRelacion[0]);
       if (relacion.clave === 'OTRO') {
         this.varOtroRelacion = relacion.valor;
@@ -425,7 +425,7 @@ export class VehiculosComponent implements OnInit {
 
     if (formaAdquisicion) {
       const optFormaAdquision = this.formaAdquisicionCatalogo.filter((ad: any) => ad.clave === formaAdquisicion.clave);
-      // this.bienesInmueblesForm.get('bienInmueble.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      // this.vehiculosForm.get('bienInmueble.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
@@ -505,14 +505,22 @@ export class VehiculosComponent implements OnInit {
 
   radioChange(event: any) {
     if (event === "NINGUNO") {
-      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").disable();
-      this.vehiculosForm.get("vehiculo.tercero.rfc").disable();
-      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").setValue(null);
-      this.vehiculosForm.get("vehiculo.tercero.rfc").setValue(null);
+      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
+      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
+      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+      this.vehiculosForm.get("bienInmueble.tercero.rfc").clearValidators();
+      this.vehiculosForm.get("bienInmueble.tercero.rfc").setValue(' ');
+      this.vehiculosForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
+      this.vehiculosForm.get("bienInmueble.tercero.rfc").disable();
     }
     else {
-      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").enable();
-      this.vehiculosForm.get("vehiculo.tercero.rfc").enable();
+      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
+      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.vehiculosForm.get("bienInmueble.tercero.rfc").setValidators([Validators.required]);
+      this.vehiculosForm.get("bienInmueble.tercero.rfc").enable();
+      this.vehiculosForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
     }
   }
 }

@@ -640,8 +640,6 @@ export class BienesInmueblesComponent implements OnInit {
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-
-      //this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
     }
     else {
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);

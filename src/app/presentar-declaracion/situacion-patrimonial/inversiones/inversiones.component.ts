@@ -444,15 +444,23 @@ export class InversionesComponent implements OnInit {
   }
 
   terceroChange(value: string) {
-    if (value === "NINGUNO"){
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(null);
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(null);
+    if (value === "NINGUNO") {
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.rfc").clearValidators();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.rfc").setValue(' ');
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.rfc").disable();
     }
-    else{
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").enable();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").enable();
+    else {
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.rfc").setValidators([Validators.required]);
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.rfc").enable();
+      this.inversionesCuentasValoresForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
     }
   }
 
