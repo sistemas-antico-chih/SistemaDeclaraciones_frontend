@@ -413,19 +413,22 @@ export class InversionesComponent implements OnInit {
       // this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
       this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(optTipoInversion[0]);
 
-      console.log("llega");
-      console.log(tipoInversion.clave);
-      console.log(tipoInversion);
       if (subTipoInversion) {
-        
+        console.log(tipoInversion)
+        console.log(subTipoInversion)
         switch (tipoInversion.clave) {
           case 'BANC':
-            console.log("entra? aqui?")
+            console.log(tipoInversion.clave)
+            console.log(subTipoInversion.clave)
             console.log(SubTipoInversionBancaria);
             const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
             console.log("opt")
             console.log(opt)
-            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
+            const opt2 = "CUENTA EJE"
+            console.log("opt")
+            console.log(opt2)
+            
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt2[0]);
             break;
           case 'FINV':
             const optFINV = this.opsFINV.filter((ban: any) => ban.clave === SubTipoInversionFondos.clave);
@@ -466,9 +469,9 @@ export class InversionesComponent implements OnInit {
     }
 
     if (localizacionInversion) {
-      console.log("entra registro")
-      console.log("entra if registro")
-      if (!localizacionInversion || localizacionInversion.pais.value === 'MX') {
+      console.log('localizacionInversion')
+      console.log(localizacionInversion)
+      if (!localizacionInversion.pais ) {
         console.log("entra MX")
         this.localizacionChanged('MX')
       }
