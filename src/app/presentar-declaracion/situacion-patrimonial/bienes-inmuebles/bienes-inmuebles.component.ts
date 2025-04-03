@@ -418,6 +418,7 @@ export class BienesInmueblesComponent implements OnInit {
       console.log(this.bienInmueble);
       console.log("length");
       console.log(form.bienInmueble.length);*/
+      this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
       console.log(this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona"));
      // this.bienesInmueblesForm.get("bienInmueble.tercero.tipoPersona").setValue('FISICA');
       /*if (this.tipoPersona === "NINGUNO") {
