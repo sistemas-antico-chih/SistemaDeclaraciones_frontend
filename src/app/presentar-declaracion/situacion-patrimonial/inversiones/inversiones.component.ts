@@ -413,9 +413,13 @@ export class InversionesComponent implements OnInit {
       // this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
       this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(optTipoInversion[0]);
 
+      console.log("llega");
+      console.log(tipoInversion.clave);
       if (subTipoInversion) {
         console.log("entra");
         console.log(subTipoInversion);
+        console.log("tipoInversion");
+        console.log(tipoInversion.clave);
         switch (tipoInversion.clave) {
           case 'BANC':
             const opt = this.opsBANC.filter((ban: any) => ban.clave === subTipoInversion.clave);
