@@ -464,14 +464,15 @@ export class InversionesComponent implements OnInit {
     }
 
     if(lugarRegistro){
-      if( !lugarRegistro.localizacionInversion || lugarRegistro.pais.value === 'MX'){
-        this.localizacionChanged('MX')
-      }
-      else{
-        this.localizacionChanged('EX')
+      if(lugarRegistro.localizacionInversion){
+        if( !lugarRegistro.localizacionInversion || lugarRegistro.pais.value === 'MX'){
+          this.localizacionChanged('MX')
+        }
+        else{
+          this.localizacionChanged('EX')
+        }
       }
     }
-
   }
 
   setupForm(inversionesCuentasValores: InversionesCuentasValores) {
