@@ -379,7 +379,7 @@
             >
               <mat-label>¿Dónde se localiza la inversión, cuenta bancaria y otro tipo de valores/activos? </mat-label>
               <mat-icon matPrefix>public</mat-icon>
-              <mat-select [(ngModel)]=mexicoExtranjero (selectionChange)="localizacionChanged($event.value)" required>
+              <mat-select [(value)]=mexicoExtranjero (selectionChange)="localizacionChanged($event.value)" required>
                 <mat-option value="{{ extranjeroCatalogo[0] }}"> EN MÉXICO </mat-option>
                 <mat-option value="{{ extranjeroCatalogo[1] }}"> EN EL EXTRANJERO </mat-option>
               </mat-select>
