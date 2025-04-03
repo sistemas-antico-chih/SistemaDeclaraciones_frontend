@@ -94,25 +94,25 @@ export class InversionesComponent implements OnInit {
 
   tipoPersona: String;
 
-  opsBANC = this.subTipoInversionCatalogo
+  opsBANC = this.subTipoBancariaCatalogo
     .filter((e: any) => e.tipoInversion === 'BANC')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
-  opsFINV = this.subTipoInversionCatalogo
+  opsFINV = this.subTipoFondosCatalogo
     .filter((e: any) => e.tipoInversion === 'FINV')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
-  opsORPM = this.subTipoInversionCatalogo
+  opsORPM = this.subTipoOrganizacionesCatalogo
     .filter((e: any) => e.tipoInversion === 'ORPM')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
-  opsPOMM = this.subTipoInversionCatalogo
+  opsPOMM = this.subTipoMetalesCatalogo
     .filter((e: any) => e.tipoInversion === 'POMM')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
-  opsSEGR = this.subTipoInversionCatalogo
+  opsSEGR = this.subTipoSegurosCatalogo
     .filter((e: any) => e.tipoInversion === 'SEGR')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
-  opsVBUR = this.subTipoInversionCatalogo
+  opsVBUR = this.subTipoValoresCatalogo
     .filter((e: any) => e.tipoInversion === 'VBUR')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
-  opsAFOT = this.subTipoInversionCatalogo
+  opsAFOT = this.subTipoAforesCatalogo
     .filter((e: any) => e.tipoInversion === 'AFOT')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
 
