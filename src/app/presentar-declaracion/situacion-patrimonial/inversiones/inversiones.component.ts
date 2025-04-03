@@ -406,7 +406,7 @@ export class InversionesComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoInversion, subTipoInversion, titular, lugarRegistro } = this.inversionesCuentasValoresForm.value.inversion;
+    const { tipoInversion, subTipoInversion, titular, localizacionInversion } = this.inversionesCuentasValoresForm.value.inversion;
 
     if (tipoInversion) {
       const optTipoInversion = this.tipoInversionCatalogo.filter((ti: any) => ti.clave === tipoInversion.clave);
@@ -417,15 +417,14 @@ export class InversionesComponent implements OnInit {
       console.log(tipoInversion.clave);
       console.log(tipoInversion);
       if (subTipoInversion) {
-        console.log("entra");
-        console.log(subTipoInversion);
-        console.log("tipoInversion");
-        console.log(tipoInversion.clave);
+        
         switch (tipoInversion.clave) {
           case 'BANC':
             console.log("entra? aqui?")
             console.log(SubTipoInversionBancaria);
             const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
+            console.log("opt")
+            console.log(opt)
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
             break;
           case 'FINV':
@@ -466,18 +465,16 @@ export class InversionesComponent implements OnInit {
       this.inversionesCuentasValoresForm.get('inversion.titular').setValue(optTitular[0]);
     }
 
-    if(lugarRegistro){
+    if (localizacionInversion) {
       console.log("entra registro")
-      if(lugarRegistro.localizacionInversion){
-        console.log("entra if registro")
-        if( !lugarRegistro.localizacionInversion || lugarRegistro.pais.value === 'MX'){
-          console.log("entra MX")
-          this.localizacionChanged('MX')
-        }
-        else{
-          console.log("entra EX")
-          this.localizacionChanged('EX')
-        }
+      console.log("entra if registro")
+      if (!localizacionInversion || localizacionInversion.pais.value === 'MX') {
+        console.log("entra MX")
+        this.localizacionChanged('MX')
+      }
+      else {
+        console.log("entra EX")
+        this.localizacionChanged('EX')
       }
     }
   }
