@@ -74,6 +74,7 @@ export class InversionesComponent implements OnInit {
   subTipoSegurosCatalogo = SubTipoInversionSeguros;
   subTipoValoresCatalogo = SubTipoInversionValores;
 
+  mexicoExtranjero: string =null;
 
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
@@ -418,9 +419,7 @@ export class InversionesComponent implements OnInit {
         console.log(subTipoInversion)
         switch (tipoInversion.clave) {
           case 'BANC':
-            console.log(tipoInversion.clave)
-            console.log(subTipoInversion.clave)
-            console.log(SubTipoInversionBancaria);
+            console.log(this.opsBANC);
             const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
             console.log("opt")
             console.log(opt)
@@ -428,7 +427,7 @@ export class InversionesComponent implements OnInit {
             console.log("opt")
             console.log(opt2)
             
-            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt2[0]);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
             break;
           case 'FINV':
             const optFINV = this.opsFINV.filter((ban: any) => ban.clave === SubTipoInversionFondos.clave);
@@ -473,11 +472,11 @@ export class InversionesComponent implements OnInit {
       console.log(localizacionInversion)
       if (!localizacionInversion.pais ) {
         console.log("entra MX")
-        this.localizacionChanged('MX')
+        this.mexicoExtranjero='MX'
       }
       else {
         console.log("entra EX")
-        this.localizacionChanged('EX')
+        this.mexicoExtranjero='EX'
       }
     }
   }
