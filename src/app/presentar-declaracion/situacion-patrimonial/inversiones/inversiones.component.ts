@@ -444,23 +444,15 @@ export class InversionesComponent implements OnInit {
   }
 
   terceroChange(value: string) {
-    if (value === "NINGUNO") {
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").clearValidators();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(' ');
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").updateValueAndValidity();
+    if (value === "NINGUNO"){
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").clearValidators();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(' ');
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").updateValueAndValidity();
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(null);
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(null);
     }
-    else {
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValidators([Validators.required]);
+    else{
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").enable();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").updateValueAndValidity();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValidators([Validators.required]);
       this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").enable();
-      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").updateValueAndValidity();
     }
   }
 
