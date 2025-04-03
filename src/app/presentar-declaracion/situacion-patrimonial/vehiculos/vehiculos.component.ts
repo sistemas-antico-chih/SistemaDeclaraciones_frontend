@@ -410,13 +410,13 @@ export class VehiculosComponent implements OnInit {
 
     if (titular) {
       const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
-      // this.vehiculosForm.get('bienInmueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      // this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
       this.vehiculosForm.get('vehiculo.titular').setValue(optionTitular[0]);
     }
 
     if (relacion) {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
-      // this.vehiculosForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      // this.vehiculosForm.get('vehiculo.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.vehiculosForm.get('vehiculo.transmisor.relacion').setValue(optRelacion[0]);
       if (relacion.clave === 'OTRO') {
         this.varOtroRelacion = relacion.valor;
@@ -425,7 +425,7 @@ export class VehiculosComponent implements OnInit {
 
     if (formaAdquisicion) {
       const optFormaAdquision = this.formaAdquisicionCatalogo.filter((ad: any) => ad.clave === formaAdquisicion.clave);
-      // this.vehiculosForm.get('bienInmueble.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
+      // this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion));
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
@@ -505,22 +505,22 @@ export class VehiculosComponent implements OnInit {
 
   radioChange(event: any) {
     if (event === "NINGUNO") {
-      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
-      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
-      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
-      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
-      this.vehiculosForm.get("bienInmueble.tercero.rfc").clearValidators();
-      this.vehiculosForm.get("bienInmueble.tercero.rfc").setValue(' ');
-      this.vehiculosForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
-      this.vehiculosForm.get("bienInmueble.tercero.rfc").disable();
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").clearValidators();
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").setValue(' ');
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").disable();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").clearValidators();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").setValue(' ');
+      this.vehiculosForm.get("vehiculo.tercero.rfc").updateValueAndValidity();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").disable();
     }
     else {
-      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
-      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
-      this.vehiculosForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
-      this.vehiculosForm.get("bienInmueble.tercero.rfc").setValidators([Validators.required]);
-      this.vehiculosForm.get("bienInmueble.tercero.rfc").enable();
-      this.vehiculosForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").enable();
+      this.vehiculosForm.get("vehiculo.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").setValidators([Validators.required]);
+      this.vehiculosForm.get("vehiculo.tercero.rfc").enable();
+      this.vehiculosForm.get("vehiculo.tercero.rfc").updateValueAndValidity();
     }
   }
 }

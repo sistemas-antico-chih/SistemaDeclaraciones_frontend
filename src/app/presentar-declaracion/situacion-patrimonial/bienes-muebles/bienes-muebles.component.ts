@@ -356,7 +356,7 @@ export class BienesMueblesComponent implements OnInit {
     
     if (relacion) {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
-      // this.bienesMueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      // this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(optRelacion[0]);
       if (relacion.clave === 'OTRO') {
         this.varOtroRelacion = relacion.valor;
@@ -409,22 +409,22 @@ export class BienesMueblesComponent implements OnInit {
 
   radioChange(event: any) {
     if (event === "NINGUNO") {
-      this.bienesMueblesForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
-      this.bienesMueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
-      this.bienesMueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
-      this.bienesMueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
-      this.bienesMueblesForm.get("bienInmueble.tercero.rfc").clearValidators();
-      this.bienesMueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
-      this.bienesMueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
-      this.bienesMueblesForm.get("bienInmueble.tercero.rfc").disable();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").clearValidators();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").setValue(' ');
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").disable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").clearValidators();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").setValue(' ');
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").disable();
     }
     else {
-      this.bienesMueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
-      this.bienesMueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
-      this.bienesMueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
-      this.bienesMueblesForm.get("bienInmueble.tercero.rfc").setValidators([Validators.required]);
-      this.bienesMueblesForm.get("bienInmueble.tercero.rfc").enable();
-      this.bienesMueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").enable();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").setValidators([Validators.required]);
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").enable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").updateValueAndValidity();
     }
   }
 
