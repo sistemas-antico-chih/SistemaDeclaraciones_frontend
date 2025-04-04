@@ -428,9 +428,7 @@ export class InversionesComponent implements OnInit {
             //console.log("***: "+subTipoInversion.clave);
             //console.log("***: "+subTipoInversion.valor);
             this.subTipo=subTipoInversion.valor
-            console.log("subTipoInversion 1: "+subTipoInversion);
-            console.log("subTipoInversion 2: "+subTipoInversion.clave);
-            console.log("subTipoInversion 3: "+subTipoInversion.valor);
+            console.log("subTipoInversion 1: "+this.subTipo);
             //console.log("subTipoInversion 4: "+this.subTipoInversion);
             //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(subTipoInversion.valor);
             //console.log(SubTipoInversionBancaria)
