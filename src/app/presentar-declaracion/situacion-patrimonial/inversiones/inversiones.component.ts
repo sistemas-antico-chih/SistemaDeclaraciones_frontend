@@ -65,6 +65,7 @@ export class InversionesComponent implements OnInit {
   subTipoInversionCatalogo = SubTipoInversion;
 
   varOtroTipoVehiculo: string = null;
+  terceroCatalogo: String[] = ['FISICA', 'MORAL', 'NINGUNO'];
 
   subTipoAforesCatalogo = SubTipoInversionAfores;
   subTipoBancariaCatalogo = SubTipoInversionBancaria;
@@ -413,9 +414,10 @@ export class InversionesComponent implements OnInit {
     console.log(titular)
     console.log("tercero");
     console.log(tercero)
-
+    console.log("catalogo");
+    console.log(this.terceroCatalogo);
     if (tercero){
-      //const optionTercero = this.titularBienCatalogo.filter((t: any) => t.clave === tercero[0].tipoPersona);
+      //const optionTercero = this.terceroCatalogo.filter((t: any) => t.clave === tercero[0].tipoPersona);
       // this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
       //this.inversionesCuentasValoresForm.get('inversion.tercero').setValue(optionTercero[0]);
     }
@@ -431,32 +433,33 @@ export class InversionesComponent implements OnInit {
             console.log(this.opsBANC);
             //console.log(this.subTipoBancariaCatalogo)
             //console.log(SubTipoInversionBancaria)
-            const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
+            //const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
+            const opt=['CUENTA EJE'];
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
             break;
           case 'FINV':
-            const optFINV = this.opsFINV.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            const optFINV = this.opsFINV.filter((ban: any) => ban.clave === SubTipoInversionFondos.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optFINV[0]);
             break;
 
           case 'ORPM':
-            const optORPM = this.opsORPM.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            const optORPM = this.opsORPM.filter((ban: any) => ban.clave === SubTipoInversionOrganizaciones.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optORPM[0]);
             break;
           case 'POMM':
-            const optPOMM = this.opsPOMM.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            const optPOMM = this.opsPOMM.filter((ban: any) => ban.clave === SubTipoInversionMetales.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optPOMM[0]);
             break;
           case 'SEGR':
-            const optSEGR = this.opsSEGR.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            const optSEGR = this.opsSEGR.filter((ban: any) => ban.clave === SubTipoInversionSeguros.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optSEGR[0]);
             break;
           case 'VBUR':
-            const optVBUR = this.opsVBUR.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            const optVBUR = this.opsVBUR.filter((ban: any) => ban.clave === SubTipoInversionValores.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optVBUR[0]);
             break;
           case 'AFOT':
-            const optAFOT = this.opsAFOT.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            const optAFOT = this.opsAFOT.filter((ban: any) => ban.clave === SubTipoInversionAfores.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optAFOT[0]);
             break;
           default:
