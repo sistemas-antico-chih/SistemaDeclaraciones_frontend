@@ -95,7 +95,7 @@ export class InversionesComponent implements OnInit {
   errorMatcher = new DeclarationErrorStateMatcher();
 
   tipoPersona: String = null;
-  //subTipoInversion: String= null;
+  subTipo: any= null;
 
   opsBANC = this.subTipoBancariaCatalogo
     .filter((e: any) => e.tipoInversion === 'BANC')
@@ -427,12 +427,12 @@ export class InversionesComponent implements OnInit {
             //console.log(this.opsBANC)
             //console.log("***: "+subTipoInversion.clave);
             //console.log("***: "+subTipoInversion.valor);
-           // this.subTipoInversion=subTipoInversion.valor
+            this.subTipo=subTipoInversion.valor
             console.log("subTipoInversion 1: "+subTipoInversion);
             console.log("subTipoInversion 2: "+subTipoInversion.clave);
             console.log("subTipoInversion 3: "+subTipoInversion.valor);
             //console.log("subTipoInversion 4: "+this.subTipoInversion);
-            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(subTipoInversion.valor);
+            //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(subTipoInversion.valor);
             //console.log(SubTipoInversionBancaria)
             //const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
             //const opt=['CEJE'];
