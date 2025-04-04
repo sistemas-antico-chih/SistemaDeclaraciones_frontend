@@ -214,7 +214,7 @@
             >
               <mat-label>Bancaria</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required [(ngModel)]="subTipo">
+              <mat-select formControlName="subTipoInversion" required [(value)]="subTipo">
                 <mat-option
                   *ngFor="let sub of subTipoBancariaCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
@@ -231,7 +231,7 @@
             >
               <mat-label>Fondos de Inversión</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required [(ngModel)]="subTipo">
+              <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoFondosCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
@@ -248,7 +248,7 @@
             >
               <mat-label>Organizaciones Privadas y/o Mercantiles</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required [(ngModel)]="subTipo">
+              <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoOrganizacionesCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
@@ -265,7 +265,7 @@
             >
               <mat-label>Posesión de Monedas y/o Metales</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required [(ngModel)]="subTipo">
+              <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoMetalesCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
@@ -282,7 +282,7 @@
             >
               <mat-label>Seguros</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required [(ngModel)]="subTipo">
+              <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoSegurosCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
@@ -299,7 +299,7 @@
             >
               <mat-label>Valores Bursátiles</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required [(ngModel)]="subTipo">
+              <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoValoresCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
@@ -316,7 +316,7 @@
             >
               <mat-label>Afores y otros</mat-label>
               <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="subTipoInversion" required [(ngModel)]="subTipo">
+              <mat-select formControlName="subTipoInversion" required>
                 <mat-option
                   *ngFor="let sub of subTipoAforesCatalogo"
                   [value]="{ clave: sub.clave, valor: sub.valor }"
