@@ -417,7 +417,7 @@ export class InversionesComponent implements OnInit {
       console.log(optionTercero);
       //const optionTercero='FISICA';
       // this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
-      this.inversionesCuentasValoresForm.get('inversion.tercero').setValue(optionTercero[0]);
+      this.inversionesCuentasValoresForm.get('inversion.tercero.tipoPersona').setValue(optionTercero[0]);
     }
 
     if (tipoInversion) {
