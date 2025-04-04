@@ -181,19 +181,6 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
-  /*validarLongitud(control: FormControl){
-    console.log("lllega")
-    //console.log(control.value)
-    console.log(control.value.length)
-    //console.log(control.value.length)
-    //if (control.value.length === 4){
-      //return {'validarLongitud': true}
-    //}
-    //else{
-     // return null;
-    //}
-  }*/
-
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.vehiculo[index]);
@@ -399,7 +386,6 @@ export class VehiculosComponent implements OnInit {
     const { tipoVehiculo, titular, formaAdquisicion, lugarRegistro } = this.vehiculosForm.value.vehiculo;
 
     const { relacion } = this.vehiculosForm.value.vehiculo.transmisor;
-    console.log("entrra");
 
     if (tipoVehiculo) {
       const optionTipoVehiculo = this.tipoVehiculoCatalogo.filter((i: any) => i.clave === tipoVehiculo.clave);

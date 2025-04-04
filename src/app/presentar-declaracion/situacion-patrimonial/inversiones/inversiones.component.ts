@@ -411,14 +411,7 @@ export class InversionesComponent implements OnInit {
     const { tipoInversion, subTipoInversion, titular, localizacionInversion, tercero } = this.inversionesCuentasValoresForm.value.inversion;
 
     if (tercero){
-      //console.log("tercero")
-      //console.log(tercero);
-      //const optionTercero = tercero.tipoPersona
-      //console.log(optionTercero);
       this.tipoPersona=tercero.tipoPersona;
-      //const optionTercero='FISICA';
-      // this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
-      //this.inversionesCuentasValoresForm.get('inversion.tercero.tipoPersona').setValue(optionTercero[0]);
     }
 
     if (tipoInversion) {
@@ -430,7 +423,8 @@ export class InversionesComponent implements OnInit {
         switch (tipoInversion.clave) {
           case 'BANC':
             console.log("entra BANC")
-            //console.log(this.subTipoBancariaCatalogo)
+            console.log(this.opsBANC)
+            console.log("***: "+subTipoInversion);
             //console.log(SubTipoInversionBancaria)
             const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
             //const opt=['CEJE'];
