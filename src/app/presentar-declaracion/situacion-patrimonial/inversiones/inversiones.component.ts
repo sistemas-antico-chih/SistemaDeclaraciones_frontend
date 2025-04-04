@@ -428,7 +428,7 @@ export class InversionesComponent implements OnInit {
             //console.log("***: "+subTipoInversion.clave);
             //console.log("***: "+subTipoInversion.valor);
             this.subTipoInversion=subTipoInversion.valor
-            console.log(subTipoInversion);
+            console.log("subTipoInversion: "+subTipoInversion);
             
             //console.log(SubTipoInversionBancaria)
             //const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
