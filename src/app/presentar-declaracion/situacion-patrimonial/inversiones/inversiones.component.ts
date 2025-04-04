@@ -412,7 +412,8 @@ export class InversionesComponent implements OnInit {
 
     if (tercero){
       console.log("tercero")
-      const optionTercero = this.terceroCatalogo.filter((t: any) => t.clave === tercero[0].tipoPersona);
+      //const optionTercero = this.terceroCatalogo.filter((t: any) => t.clave === tercero[0].tipoPersona);
+      const optionTercero='NINGUNO';
       // this.vehiculosForm.get('vehiculo.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
       this.inversionesCuentasValoresForm.get('inversion.tercero').setValue(optionTercero[0]);
     }
