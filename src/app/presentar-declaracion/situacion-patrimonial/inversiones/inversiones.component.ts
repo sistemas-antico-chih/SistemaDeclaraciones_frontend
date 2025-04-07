@@ -428,7 +428,8 @@ export class InversionesComponent implements OnInit {
             //opt={clave:opt[0].clave, valor: opt[0].valor}
             console.log("opt")
             console.log(opt)
-            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').patchValue(opt[0]);
+            //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').patchValue(opt[0]);
+            this.inversionesCuentasValoresForm.get('inversion').get('subTipoInversion').patchValue(opt[0]);
             //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').patchValue(opt[0]);
             //this.subTipo={opt};
             //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt);
