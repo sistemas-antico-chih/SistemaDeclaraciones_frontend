@@ -529,8 +529,9 @@ export class InversionesComponent implements OnInit {
     const algo2=this.inversionesCuentasValoresForm.get('inversion').get ('subTipoInversion');
     console.log('algo: '+algo);
     console.log('xxxxx');
+    this.subTipo={clave:"CEJE", valor:"CUENTA EJE"}
     console.log("this.subtipo: "+this.subTipo)
-    console.log("this.subtipo: "+this.subTipo.length)
+    console.log("this.subtipo: "+this.subTipo[0]) 
     console.log("this.subtipo: "+this.subTipo.clave)
     console.log("this.subtipo: "+this.subTipo.valor)
     console.log('algo2: '+algo2.value);
