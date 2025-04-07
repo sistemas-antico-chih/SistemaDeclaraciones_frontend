@@ -217,7 +217,7 @@
               <mat-select formControlName="subTipoInversion" required [(value)]="subTipo">
                 <mat-option
                   *ngFor="let sub of subTipoBancariaCatalogo"
-                  [value]="{  clave: sub.clave, valor: sub.valor }"
+                  [value]="{ tipoInversion: clave.tipoInversion, clave: sub.clave, valor: sub.valor }"
                 >
                   {{ sub.valor }}
                 </mat-option>
