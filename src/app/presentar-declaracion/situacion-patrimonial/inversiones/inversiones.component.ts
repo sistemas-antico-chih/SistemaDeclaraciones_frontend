@@ -423,10 +423,10 @@ export class InversionesComponent implements OnInit {
       if (subTipoInversion) {
         switch (tipoInversion.clave) {
           case 'BANC':
-            const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
+            console.log(SubTipoInversionBancaria);
+            //const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
+            const opt = this.opsBANC.filter((ban: any) => console.log(ban));
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
-            const algo=this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
-            console.log('algo: '+algo);
             break;
           case 'FINV':
             const optFINV = this.opsFINV.filter((ban: any) => ban.clave === SubTipoInversionFondos.clave);
@@ -521,19 +521,6 @@ export class InversionesComponent implements OnInit {
   }
 
   terceroChange(value: string) {
-    //const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
-    console.log("entra: "+value)
-    console.log(this.subTipoBancariaCatalogo);
-    const algo=this.inversionesCuentasValoresForm.get('inversion.subTipoInversion');
-    //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue([{clave:this.subTipo.clave, valor:this.subTipo.valor}]);
-    const algo2=this.inversionesCuentasValoresForm.get('inversion').get ('subTipoInversion');
-    console.log('algo: '+algo.value);
-    console.log('xxxxx');
-    this.subTipo={tipoInversion: "BANC", clave: "CEJE", valor: "CUENTA EJE"}
-    console.log("this.subtipo: "+this.subTipo)
-    console.log("this.subtipo: "+this.subTipo.clave)
-    console.log("this.subtipo: "+this.subTipo.valor)
-    console.log('algo2: '+algo2.value);
     if (value === "NINGUNO") {
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").clearValidators();
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(' ');
