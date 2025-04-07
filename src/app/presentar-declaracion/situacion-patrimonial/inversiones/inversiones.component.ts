@@ -523,8 +523,9 @@ export class InversionesComponent implements OnInit {
   terceroChange(value: string) {
     //const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
     console.log("entra: "+value)
-    const algo=this.inversionesCuentasValoresForm.get('inversion.subTipoInversion.clave');
-    const algo2=this.inversionesCuentasValoresForm.get('inversion').get ('subTipoInversion').get('valor');
+    const algo=this.inversionesCuentasValoresForm.get('inversion.subTipoInversion');
+    this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue([{clave:"CEJE", valor:"CUENTA EJE"}]);
+    const algo2=this.inversionesCuentasValoresForm.get('inversion').get ('subTipoInversion');
     console.log('algo: '+algo);
     console.log('algo2: '+algo2);
     if (value === "NINGUNO") {
