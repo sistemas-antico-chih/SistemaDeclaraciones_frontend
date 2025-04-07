@@ -429,7 +429,8 @@ export class InversionesComponent implements OnInit {
             console.log("opt")
             console.log(opt)
             console.log(this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').patchValue({clave:opt[0].clave, valor:opt[0].valor}));
-            this.subTipo={opt};
+            //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').patchValue(opt[0]);
+            //this.subTipo={opt};
             //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt);
             break;
           case 'FINV':
