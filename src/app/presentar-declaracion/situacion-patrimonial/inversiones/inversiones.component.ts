@@ -521,6 +521,9 @@ export class InversionesComponent implements OnInit {
   }
 
   terceroChange(value: string) {
+    const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
+    const algo=this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
+    console.log('algo: '+algo);
     if (value === "NINGUNO") {
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").clearValidators();
       this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(' ');
