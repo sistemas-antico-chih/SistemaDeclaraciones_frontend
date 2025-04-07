@@ -426,12 +426,12 @@ export class InversionesComponent implements OnInit {
             console.log(subTipoInversion.clave);
             //const opt = this.subTipoBancariaCatalogo.filter((i: any) => i.clave === subTipoInversion.clave);
             //const opt = this.subTipoBancariaCatalogo.filter((i: any) => console.log(i.clave));
-            const opt = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
+            const opt:[] = this.opsBANC.filter((ban: any) => ban.clave === SubTipoInversionBancaria.clave);
             const opt2 = this.opsBANC.filter((ban: any) => console.log(ban));
             console.log(opt);
             console.log("*****")
             console.log(opt2)
-            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').patchValue(opt);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt);
             break;
           case 'FINV':
             const optFINV = this.opsFINV.filter((ban: any) => ban.clave === SubTipoInversionFondos.clave);
