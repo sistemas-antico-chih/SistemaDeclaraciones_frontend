@@ -423,11 +423,14 @@ export class InversionesComponent implements OnInit {
       if (subTipoInversion) {
         switch (tipoInversion.clave) {
           case 'BANC':
-            let optBANC = this.subTipoBancariaCatalogo.filter((i: any) => i.clave === subTipoInversion.clave);
+            const opt = this.opsBANC.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
+            break;
+            /*let optBANC = this.subTipoBancariaCatalogo.filter((i: any) => i.clave === subTipoInversion.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optBANC[0].valor);
             console.log(optBANC[0].valor);
             this.sub=optBANC[0].valor;
-            break;
+            break;*/
           case 'FINV':
             const optFINV = this.opsFINV.filter((ban: any) => ban.clave === SubTipoInversionFondos.clave);
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optFINV[0]);
