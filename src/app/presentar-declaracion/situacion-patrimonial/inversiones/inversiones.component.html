@@ -216,10 +216,10 @@
               <mat-icon matPrefix>aspect_ratio</mat-icon>
               <mat-select formControlName="subTipoInversion" required>
                 <mat-option
-                  *ngFor="let sub of subTipoBancariaCatalogo"
-                  [value]="{ clave: sub.clave, valor: sub.valor }"
+                  *ngFor="let subTipoInversion of subTipoBancariaCatalogo"
+                  [value]="{ clave: subTipoInversion.clave, valor: subTipoInversion.valor }"
                 >
-                  {{ sub.valor }}
+                  {{ subTipoInversion.valor }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
