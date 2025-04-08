@@ -433,7 +433,7 @@ export class InversionesComponent implements OnInit {
             //this.inversionesCuentasValoresForm.get('inversion').get('subTipoInversion').patchValue(opt[0]);
             //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').patchValue(opt[0]);
             //this.subTipo={opt};
-            //this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
             this.subTipo=opt[0];
             console.log(this.subTipo);
             break;
