@@ -95,7 +95,7 @@ export class InversionesComponent implements OnInit {
   errorMatcher = new DeclarationErrorStateMatcher();
 
   tipoPersona: String = null;
-  subTipo: any= null;
+  //subTipo: any= null;
 
   opsBANC = this.subTipoBancariaCatalogo
     .filter((e: any) => e.tipoInversion === 'BANC')
@@ -424,7 +424,7 @@ export class InversionesComponent implements OnInit {
         switch (tipoInversion.clave) {
           case 'BANC':
             let optBANC = this.subTipoBancariaCatalogo.filter((i: any) => i.clave === subTipoInversion.clave);
-            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optBANC[0]);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optBANC[0].valor);
             break;
           case 'FINV':
             const optFINV = this.opsFINV.filter((ban: any) => ban.clave === SubTipoInversionFondos.clave);
