@@ -24,7 +24,7 @@ export type TipoOperacion = 'AGREGAR' | 'MODIFICAR' | 'SIN_CAMBIOS' | 'BAJA';
 
 export type TipoParticipacionFideicomiso = 'FIDEICOMITENTE' | 'FIDUCIARIO' | 'FIDEICOMISARIO' | 'COMITE_TECNICO';
 
-export type TipoPersona = 'FISICA' | 'MORAL';
+export type TipoPersona = 'FISICA' | 'MORAL' | 'NINGUNO';
 
 export type TipoRelacion = 'DECLARANTE' | 'PAREJA' | 'DEPENDIENTE_ECONOMICO';
 

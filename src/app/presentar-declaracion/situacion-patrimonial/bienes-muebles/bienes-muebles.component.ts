@@ -356,7 +356,7 @@ export class BienesMueblesComponent implements OnInit {
     
     if (relacion) {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
-      // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      // this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(optRelacion[0]);
       if (relacion.clave === 'OTRO') {
         this.varOtroRelacion = relacion.valor;
@@ -408,13 +408,23 @@ export class BienesMueblesComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    if (event === "NINGUNO"){
+    if (event === "NINGUNO") {
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").clearValidators();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").setValue(' ');
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").updateValueAndValidity();
       this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").disable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").clearValidators();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").setValue(' ');
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").updateValueAndValidity();
       this.bienesMueblesForm.get("bienMueble.tercero.rfc").disable();
     }
-    else{
+    else {
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
       this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").enable();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").setValidators([Validators.required]);
       this.bienesMueblesForm.get("bienMueble.tercero.rfc").enable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").updateValueAndValidity();
     }
   }
 

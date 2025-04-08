@@ -38,7 +38,7 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 })
 export class BienesInmueblesComponent implements OnInit {
   aclaraciones = false;
-  aclaracionesText: string = null; 
+  aclaracionesText: string = null;
   bienesInmueblesForm: FormGroup;
   estado: Catalogo = null;
   editMode = false;
@@ -47,7 +47,7 @@ export class BienesInmueblesComponent implements OnInit {
   isLoading = false;
   varOtroTipoInmueble: string = null;
   varOtroRelacion: string = null;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroTipoInmueble') otroTipoInmueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -229,7 +229,7 @@ export class BienesInmueblesComponent implements OnInit {
     }
 
     this.setAclaraciones(this.aclaracionesText);
-   this.setSelectedOptions();
+    this.setSelectedOptions();
   }
   async getLastUserInfo() {
     try {
@@ -413,7 +413,7 @@ export class BienesInmueblesComponent implements OnInit {
       const declaracion = {
         bienesInmuebles: form,
       };
-
+      
       const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
           mutation: bienesInmueblesMutation,
@@ -448,7 +448,6 @@ export class BienesInmueblesComponent implements OnInit {
     const valorTitular = JSON.parse(JSON.stringify(this.bienesInmueblesForm.value.bienInmueble));
     let valores = [...this.valores];
     let bandera = false;
-
     if (this.editIndex === null) {
       bienInmueble = [...bienInmueble, newItem];
       if (valorTitular.titular.clave === "DEC") {
@@ -498,8 +497,8 @@ export class BienesInmueblesComponent implements OnInit {
     if (tipoInmueble) {
       const optionTipoInmueble = this.tipoInmuebleCatalogo.filter((i: any) => i.clave === tipoInmueble.clave);
       this.bienesInmueblesForm.get('bienInmueble.tipoInmueble').setValue(optionTipoInmueble[0]);
-      if(tipoInmueble.clave ==='OTRO'){
-        this.varOtroTipoInmueble=tipoInmueble.valor;
+      if (tipoInmueble.clave === 'OTRO') {
+        this.varOtroTipoInmueble = tipoInmueble.valor;
       }
     }
 
@@ -518,8 +517,8 @@ export class BienesInmueblesComponent implements OnInit {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
       this.bienesInmueblesForm.get('bienInmueble.transmisor.relacion').setValue(optRelacion[0]);
-      if(relacion.clave ==='OTRO'){
-        this.varOtroRelacion=relacion.valor;
+      if (relacion.clave === 'OTRO') {
+        this.varOtroRelacion = relacion.valor;
       }
     }
 
@@ -633,14 +632,22 @@ export class BienesInmueblesComponent implements OnInit {
 
   radioChange(event: any) {
     if (event === "NINGUNO") {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(' ');
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").disable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").clearValidators();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(' ');
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").disable();
-      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValue(null);
-      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValue(null);
     }
     else {
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
       this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").enable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").setValidators([Validators.required]);
       this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").enable();
+      this.bienesInmueblesForm.get("bienInmueble.tercero.rfc").updateValueAndValidity();
     }
   }
 }
