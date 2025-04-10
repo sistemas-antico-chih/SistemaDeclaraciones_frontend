@@ -44,14 +44,14 @@
           <mat-form-field appearance="fill">
             <mat-label>Número Exterior</mat-label>
             <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="numeroExterior" required />
+            <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="numeroExterior" required maxlength="6"/>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile colspan="3">
           <mat-form-field appearance="fill">
             <mat-label>Número Interior</mat-label>
             <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput #input_ni type="text" formControlName="numeroInterior" />
+            <input [errorStateMatcher]="errorMatcher" matInput #input_ni type="text" formControlName="numeroInterior" maxlength="6"/>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile colspan="3">

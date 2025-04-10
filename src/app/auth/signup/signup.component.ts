@@ -102,11 +102,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       //nombre: ['', Validators.required,
       nombre: ['',
         Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
-        Validators.minLength(2)
       ],
       primerApellido: ['', 
         Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
-        Validators.minLength(2)
       ],
       segundoApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
       username: [
