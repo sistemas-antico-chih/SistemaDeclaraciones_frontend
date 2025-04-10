@@ -170,8 +170,8 @@ export class DatosDependienteComponent implements OnInit {
         lugarDondeReside: [null, [Validators.required]],
         domicilioMexico: this.formBuilder.group({
           calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
           coloniaLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
           municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
           entidadFederativa: [{ disabled: true, value: null }, [Validators.required]],
@@ -179,8 +179,8 @@ export class DatosDependienteComponent implements OnInit {
         }),
         domicilioExtranjero: this.formBuilder.group({
           calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
+          numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+          numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
           ciudadLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
           estadoProvincia: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
           pais: [{ disabled: true, value: null }, [Validators.required]],
