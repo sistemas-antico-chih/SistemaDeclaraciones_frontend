@@ -98,10 +98,13 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.signupForm = this.formBuilder.group({
-      nombre: ['', Validators.required,
+      //nombre: ['', Validators.required,
+      nombre: ['',
         Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)
       ],
-      primerApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
+      primerApellido: ['', 
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)
+      ],
       segundoApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
       username: [
         '',
