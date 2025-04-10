@@ -79,7 +79,8 @@ export class SignupComponent implements OnInit, OnDestroy {
             this.openSnackBar('Usuario registrado exitosamente', 'Aceptar');
             this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
           } else {
-            this.openSnackBar('No se pudo completar el registro', 'Aceptar');
+            //this.openSnackBar('No se pudo completar el registro', 'Aceptar');
+            this.openSnackBar('Usuario ya registrado', 'Aceptar');
           }
         },
         (error) => {
@@ -100,10 +101,12 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.signupForm = this.formBuilder.group({
       //nombre: ['', Validators.required,
       nombre: ['',
-        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
+        Validators.minLength(2)
       ],
       primerApellido: ['', 
-        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
+        Validators.minLength(2)
       ],
       segundoApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
       username: [

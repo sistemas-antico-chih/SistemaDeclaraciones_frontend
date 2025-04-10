@@ -36,7 +36,6 @@
               formControlName="primerApellido"
               autocomplete="apellido"
               [placeholder]="'Apellido paterno' | translate"
-              required
             />
             <mat-error *ngIf="signupForm.controls.primerApellido.invalid && signupForm.controls.primerApellido.touched">
               <span translate>Primer apellido requerido</span>
