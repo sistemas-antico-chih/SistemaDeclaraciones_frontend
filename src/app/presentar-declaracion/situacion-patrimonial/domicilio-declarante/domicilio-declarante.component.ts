@@ -90,7 +90,7 @@ export class DomicilioDeclaranteComponent implements OnInit {
       domicilioExtranjero: this.formBuilder.group({
         calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroInterior: [null, [Validators.pattern(/^\S.*$/)])],
+        numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
         ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         estadoProvincia: [null, [Validators.required]],
         pais: [null, [Validators.required]],
