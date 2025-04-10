@@ -99,10 +99,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   private createForm() {
     this.signupForm = this.formBuilder.group({
       nombre: ['', Validators.required,
-        Validators.pattern(/^[a-zA-Z][a-zA-Z ]+$/i)
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)
       ],
-      primerApellido: [''],
-      segundoApellido: [''],
+      primerApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
+      segundoApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
       username: [
         '',
         [
@@ -132,8 +132,8 @@ export class SignupComponent implements OnInit, OnDestroy {
           ),
         ],
       ],
-      contrasena: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      confirmarContrasena: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      contrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
+      confirmarContrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       institucion: [{ disabled: true, value: null }, [Validators.required]],
     });
   }
