@@ -80,8 +80,8 @@ export class DomicilioDeclaranteComponent implements OnInit {
     this.domicilioDeclaranteForm = this.formBuilder.group({
       domicilioMexico: this.formBuilder.group({
         calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [null, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
         coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
         entidadFederativa: [null, [Validators.required]],
@@ -89,8 +89,8 @@ export class DomicilioDeclaranteComponent implements OnInit {
       }),
       domicilioExtranjero: this.formBuilder.group({
         calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [null, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [null, [Validators.pattern(/^\S.*$/)])],
         ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         estadoProvincia: [null, [Validators.required]],
         pais: [null, [Validators.required]],
