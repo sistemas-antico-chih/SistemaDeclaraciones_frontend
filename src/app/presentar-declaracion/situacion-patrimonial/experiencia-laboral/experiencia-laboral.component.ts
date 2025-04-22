@@ -59,6 +59,7 @@ export class ExperienciaLaboralComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
+  maxDateIngreso = new Date(this.anio, this.mes - 1, this.dia-1);
 
   ahora: any;
   deshabilitar: any;

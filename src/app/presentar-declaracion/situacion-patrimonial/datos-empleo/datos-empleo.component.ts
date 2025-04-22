@@ -119,8 +119,8 @@ export class DatosEmpleoComponent implements OnInit {
       }),
       domicilioMexico: this.formBuilder.group({
         calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S{1,8}$/)]],
-        numeroInterior: [null, [Validators.pattern(/^\S{1,8}$/)]],
+        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
         coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
         entidadFederativa: [null, [Validators.required]],
@@ -128,8 +128,8 @@ export class DatosEmpleoComponent implements OnInit {
       }),
       domicilioExtranjero: this.formBuilder.group({
         calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [null, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
         ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         estadoProvincia: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         pais: [null, [Validators.required]],
@@ -343,7 +343,7 @@ export class DatosEmpleoComponent implements OnInit {
   filtrarEntes(orden: string, ambito: string){
     if(orden==="MUNICIPAL_ALCALDIA"){
       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.ambito===orden && o.empleo==='SI');  
+        (o:any) =>  o.ambito===orden && o.empleo==='SI');
       return;
     }
     else{
