@@ -159,8 +159,8 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          
-          
+
+
           <mat-form-field matTooltip="{{ tooltipData.ambitoPublico }}" appearance="fill">
             <mat-label>Ámbito Público</mat-label>
             <mat-icon matPrefix>aspect_ratio</mat-icon>
@@ -171,7 +171,7 @@
             </mat-select>
           </mat-form-field>
 
-          
+
           <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill">
             <mat-label>Nombre del Ente Público</mat-label>
             <mat-icon matPrefix>dns</mat-icon>
@@ -181,7 +181,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-            
+
             <!-- <input
               [errorStateMatcher]="errorMatcher"
               matInput
@@ -189,7 +189,7 @@
               formControlName="nombreEntePublico"
               required
             />-->
-          
+
 
           <mat-form-field matTooltip="{{ tooltipData.areaAdscripcion }}" appearance="fill">
             <mat-label>Área de Adscripción</mat-label>
@@ -325,9 +325,8 @@
                 matInput
                 type="text"
                 formControlName="numeroExterior"
-                required 
-                maxlength="8" 
-                minlength="1"
+                maxlength="5"
+                required
               />
             </mat-form-field>
           </mat-grid-tile>
@@ -341,8 +340,7 @@
                 #input_ni
                 type="text"
                 formControlName="numeroInterior"
-                maxlength="8"
-                minlength="1"
+                maxlength="10"
               />
             </mat-form-field>
           </mat-grid-tile>
