@@ -80,8 +80,8 @@ export class DomicilioDeclaranteComponent implements OnInit {
     this.domicilioDeclaranteForm = this.formBuilder.group({
       domicilioMexico: this.formBuilder.group({
         calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S{6}$/)]],
-        numeroInterior: [null, [Validators.pattern(/^\S{6}$/)]],
+        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S{1,6}$/)]],
+        numeroInterior: [null, [Validators.pattern(/^\S{1,6}$/)]],
         coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
         entidadFederativa: [null, [Validators.required]],
