@@ -79,7 +79,8 @@ export class SignupComponent implements OnInit, OnDestroy {
             this.openSnackBar('Usuario registrado exitosamente', 'Aceptar');
             this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
           } else {
-            this.openSnackBar('No se pudo completar el registro', 'Aceptar');
+            //this.openSnackBar('No se pudo completar el registro', 'Aceptar');
+            this.openSnackBar('Usuario ya registrado', 'Aceptar');
           }
         },
         (error) => {
@@ -98,9 +99,14 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.signupForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      primerApellido: [''],
-      segundoApellido: [''],
+      //nombre: ['', Validators.required,
+      nombre: ['',
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
+      ],
+      primerApellido: ['', 
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
+      ],
+      segundoApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
       username: [
         '',
         [
@@ -130,8 +136,8 @@ export class SignupComponent implements OnInit, OnDestroy {
           ),
         ],
       ],
-      contrasena: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      confirmarContrasena: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      contrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
+      confirmarContrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       institucion: [{ disabled: true, value: null }, [Validators.required]],
     });
   }
