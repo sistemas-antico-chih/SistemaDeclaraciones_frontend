@@ -119,8 +119,8 @@ export class DatosEmpleoComponent implements OnInit {
       }),
       domicilioMexico: this.formBuilder.group({
         calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [null, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S{1,8}$/)]],
+        numeroInterior: [null, [Validators.pattern(/^\S{1,8}$/)]],
         coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
         municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
         entidadFederativa: [null, [Validators.required]],
