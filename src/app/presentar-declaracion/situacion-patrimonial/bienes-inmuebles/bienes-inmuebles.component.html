@@ -534,8 +534,8 @@
                 <mat-label>País</mat-label>
                 <mat-icon matPrefix class="no-public">location_city</mat-icon>
                 <mat-select formControlName="pais" required>
-                  <mat-option *ngFor="let opt of paisesCatalogo" value="{{ opt.clave }}">
-                    {{ opt.name }}
+                  <mat-option *ngFor="let pais of paisesCatalogo" [value]="pais.clave">
+                    {{ pais.valor }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
