@@ -177,8 +177,8 @@ export class PrestamosTercerosComponent implements OnInit {
             tipoInmueble: ['', Validators.required],
             domicilioMexico: this.formBuilder.group({
               calle: ['', [Validators.required, Validators.pattern(/^\S.*$/)]],
-              numeroExterior: ['', [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-              numeroInterior: ['', [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+              numeroExterior: [null, [Validators.required, Validators.pattern(/^\S{1,8}$/)]],
+              numeroInterior: [null, [Validators.pattern(/^\S{1,8}$/)]],
               coloniaLocalidad: ['', [Validators.required, Validators.pattern(/^\S.*$/)]],
               municipioAlcaldia: [{ disabled: true, value: '' }, Validators.required],
               entidadFederativa: ['', Validators.required],
@@ -186,8 +186,8 @@ export class PrestamosTercerosComponent implements OnInit {
             }),
             domicilioExtranjero: this.formBuilder.group({
               calle: ['', [Validators.required, Validators.pattern(/^\S.*$/)]],
-              numeroExterior: ['', [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-              numeroInterior: ['', [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+              numeroExterior: [null, [Validators.required, Validators.pattern(/^\S{1,8}$/)]],
+              numeroInterior: [null, [Validators.pattern(/^\S{1,8}$/)]],
               ciudadLocalidad: ['', [Validators.required, Validators.pattern(/^\S.*$/)]],
               estadoProvincia: ['', Validators.required],
               pais: ['', Validators.required],
