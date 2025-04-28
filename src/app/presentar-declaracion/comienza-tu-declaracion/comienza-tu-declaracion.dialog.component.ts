@@ -182,12 +182,12 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales === 0) {
+    //if (this.declaracionesIniciales - this.declaracionesFinales === 0) {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
-    }
-    else
-      return false;
+    //}
+    //else
+      //return false;
   }
 
   async verificarDeclaracionConclusion(tipoDeclaracion: string, formaDeclaracion: string) {
@@ -214,12 +214,12 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales === 0)
-      return false;
-    else {
+    //if (this.declaracionesIniciales - this.declaracionesFinales === 0)
+      //return false;
+    //else {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
-    }
+    //}
   }
 
   async contarDeclaracionesInicialConclusion() {
