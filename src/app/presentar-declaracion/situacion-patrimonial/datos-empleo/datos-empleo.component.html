@@ -241,8 +241,8 @@
           <!--</div>-->
           <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}" appearance="fill">
             
-            <mat-label *ngIf ="tipoDeclaracion !== 'conclusion'">Fecha de toma de posesión</mat-label>
-            <mat-label *ngIf ="tipoDeclaracion === 'conclusion'">Fecha de conclusión</mat-label>
+            <mat-label *ngIf="tipoDeclaracion !== 'conclusion'">Fecha de toma de posesión del empleo</mat-label>
+            <mat-label *ngIf="tipoDeclaracion === 'conclusion'">Fecha de conclusión del empleo</mat-label>
             <input
               [errorStateMatcher]="errorMatcher"
               matInput
