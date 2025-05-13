@@ -428,6 +428,13 @@ export const lastBienesInmueblesQuery = gql`
           }
         }
         aclaracionesObservaciones
+        valores {
+          indice
+          superficieConstruccion
+          superficieTerreno
+          valorAdquisicion
+          formaAdquisicion
+        }
       }
     }
   }
