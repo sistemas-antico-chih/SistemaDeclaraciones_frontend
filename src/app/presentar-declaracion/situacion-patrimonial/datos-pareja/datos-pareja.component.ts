@@ -527,4 +527,38 @@ export class DatosParejaComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  radioChange(event: any) {
+    this.hidden = event;
+    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
+    if (this.active == false) {
+      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
+      this.datosParejaForm.get("rfc").enable();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("curp").setValidators([Validators.required]);
+      this.datosParejaForm.get("curp").enable();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+    } else {
+      this.datosParejaForm.get("rfc").clearValidators();
+      this.datosParejaForm.get("rfc").updateValueAndValidity();
+      this.datosParejaForm.get("rfc").disable();
+      this.datosParejaForm.get("curp").clearValidators();
+      this.datosParejaForm.get("curp").updateValueAndValidity();
+      this.datosParejaForm.get("curp").disable();
+    }
+    console.log("Requerido", this.datosParejaForm.errors);
+  }
+
+  checkPartner() {
+    let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
+    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
+    if (form.nombre !== null) {
+      this.isLoading = true;
+      this.saveInfo(this.finalForm);
+      this.isLoading = false;
+    } else {
+      this.saveInfo({ ninguno: true })
+    }
+  }
+
 }
