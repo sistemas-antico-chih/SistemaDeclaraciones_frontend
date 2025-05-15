@@ -302,6 +302,7 @@ export class DatosParejaComponent implements OnInit {
 
   async getUserInfo() {
     try {
+      console.log("getUserInfo")
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
           query: datosParejaQuery,
