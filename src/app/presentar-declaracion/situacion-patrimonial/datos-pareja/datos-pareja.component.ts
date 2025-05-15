@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosParejaMutation, datosParejaQuery, lastDatosParejaQuery } from '@api/declaracion';
@@ -18,12 +18,14 @@ import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Paises from '@static/catalogos/paises.json';
 import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+
 
 @UntilDestroy()
 @Component({
@@ -38,6 +40,7 @@ export class DatosParejaComponent implements OnInit {
   editMode = false;
   estado: Catalogo = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -52,6 +55,7 @@ export class DatosParejaComponent implements OnInit {
   monedasCatalogo = Monedas;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
+  tipoOperacionCatalogo = TipoOperacion;
 
   pareja: DatosPareja = null;
 
@@ -62,6 +66,17 @@ export class DatosParejaComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDatePareja = new Date(1940, 1, 1);
+  minDate = new Date(1960, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth();
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  hidden: string = 'false';
+  ciudadanoExtranjero: boolean;
+  active: boolean;
 
   constructor(
     private apollo: Apollo,
