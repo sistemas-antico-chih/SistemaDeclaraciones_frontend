@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
+import { DialogComponent } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { datosParejaMutation, datosParejaQuery, lastDatosParejaQuery } from '@api/declaracion';
@@ -18,14 +18,12 @@ import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
 import Paises from '@static/catalogos/paises.json';
 import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
-import TipoOperacion from '@static/catalogos/tipoOperacion.json';
-
 
 @UntilDestroy()
 @Component({
@@ -40,7 +38,6 @@ export class DatosParejaComponent implements OnInit {
   editMode = false;
   estado: Catalogo = null;
   isLoading = false;
-  pushButtonSave: boolean =false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -55,7 +52,6 @@ export class DatosParejaComponent implements OnInit {
   monedasCatalogo = Monedas;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
-  tipoOperacionCatalogo = TipoOperacion;
 
   pareja: DatosPareja = null;
 
@@ -67,17 +63,6 @@ export class DatosParejaComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  minDatePareja = new Date(1940, 1, 1);
-  minDate = new Date(1960, 1, 1);
-  anio: number = new Date().getFullYear();
-  mes: number = new Date().getMonth();
-  dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes - 1, this.dia);
-
-  hidden: string = 'false';
-  ciudadanoExtranjero: boolean;
-  active: boolean;
-
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
@@ -87,7 +72,6 @@ export class DatosParejaComponent implements OnInit {
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
-    this.getUserInfo();
   }
 
   actividadLaboralChanged(value: any) {
@@ -123,8 +107,6 @@ export class DatosParejaComponent implements OnInit {
       },
     });
 
-    this.pushButtonSave = true;
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.saveInfo(this.finalForm);
@@ -134,7 +116,6 @@ export class DatosParejaComponent implements OnInit {
 
   createForm() {
     this.datosParejaForm = this.formBuilder.group({
-      tipoOperacion: [null, [Validators.required]],
       ninguno: [false],
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
@@ -163,8 +144,8 @@ export class DatosParejaComponent implements OnInit {
       lugarDondeReside: [null, [Validators.required]],
       domicilioMexico: this.formBuilder.group({
         calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
         coloniaLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
         municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
         entidadFederativa: [{ disabled: true, value: null }, [Validators.required]],
@@ -172,8 +153,8 @@ export class DatosParejaComponent implements OnInit {
       }),
       domicilioExtranjero: this.formBuilder.group({
         calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
         ciudadLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
         estadoProvincia: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
         pais: [{ disabled: true, value: null }, [Validators.required]],
@@ -203,7 +184,7 @@ export class DatosParejaComponent implements OnInit {
           { disabled: true, value: null },
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
@@ -358,7 +339,7 @@ export class DatosParejaComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.datosParejaForm.dirty;
-    if (isDirty && !this.pushButtonSave) {
+    if (isDirty) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -396,6 +377,10 @@ export class DatosParejaComponent implements OnInit {
     }
 
     this.tipoDomicilio = value;
+  }
+
+  async ngOnInit() {
+    this.getUserInfo();
   }
 
   noCouple() {
@@ -527,51 +512,4 @@ export class DatosParejaComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
-
-  radioChange(event: any) {
-    this.hidden = event;
-    this.active = this.datosParejaForm.controls['ciudadanoExtranjero'].value;
-    if (this.active == false) {
-      this.datosParejaForm.get("rfc").setValidators([Validators.required]);
-      this.datosParejaForm.get("rfc").enable();
-      this.datosParejaForm.get("rfc").updateValueAndValidity();
-      this.datosParejaForm.get("curp").setValidators([Validators.required]);
-      this.datosParejaForm.get("curp").enable();
-      this.datosParejaForm.get("curp").updateValueAndValidity();
-    } else {
-      this.datosParejaForm.get("rfc").clearValidators();
-      this.datosParejaForm.get("rfc").updateValueAndValidity();
-      this.datosParejaForm.get("rfc").disable();
-      this.datosParejaForm.get("curp").clearValidators();
-      this.datosParejaForm.get("curp").updateValueAndValidity();
-      this.datosParejaForm.get("curp").disable();
-    }
-    console.log("Requerido", this.datosParejaForm.errors);
-  }
-  
-  ngOnInit(): void {
-    this.pushButtonSave = false;
-    const dialogRef = this.dialog.open(DialogComponentMensaje, {
-      data: {
-        title: '',
-        messageAviso: `Recuerde Guardar la información del registro,`,
-        messageAviso2: `dando clic en el botón correspondiente`,
-        trueText: 'Aceptar',
-        //falseText: '',
-      },
-    });
-  }
-
-  checkPartner() {
-    let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
-    this.datosParejaForm.get('tipoOperacion').setValue('SIN_CAMBIOS')
-    if (form.nombre !== null) {
-      this.isLoading = true;
-      this.saveInfo(this.finalForm);
-      this.isLoading = false;
-    } else {
-      this.saveInfo({ ninguno: true })
-    }
-  }
-
 }
