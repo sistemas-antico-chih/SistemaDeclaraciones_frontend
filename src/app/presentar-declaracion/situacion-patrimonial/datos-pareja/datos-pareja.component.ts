@@ -548,7 +548,7 @@ export class DatosParejaComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    /*this.pushButtonSave = false;
+    this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
         title: '',
@@ -557,7 +557,7 @@ export class DatosParejaComponent implements OnInit {
         trueText: 'Aceptar',
         //falseText: '',
       },
-    });*/
+    });
   }
 
   checkPartner() {
