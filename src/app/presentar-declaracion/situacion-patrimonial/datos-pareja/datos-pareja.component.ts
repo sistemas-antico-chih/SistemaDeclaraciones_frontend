@@ -133,7 +133,6 @@ export class DatosParejaComponent implements OnInit {
 
   createForm() {
     this.datosParejaForm = this.formBuilder.group({
-      tipoOperacion: [null, [Validators.required]],
       ninguno: [false],
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
@@ -162,8 +161,8 @@ export class DatosParejaComponent implements OnInit {
       lugarDondeReside: [null, [Validators.required]],
       domicilioMexico: this.formBuilder.group({
         calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
         coloniaLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
         municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
         entidadFederativa: [{ disabled: true, value: null }, [Validators.required]],
@@ -171,8 +170,8 @@ export class DatosParejaComponent implements OnInit {
       }),
       domicilioExtranjero: this.formBuilder.group({
         calle: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
-        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)], Validators.maxLength(6)],
+        numeroExterior: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
+        numeroInterior: [{ disabled: true, value: null }, [Validators.pattern(/^\S.*$/)]],
         ciudadLocalidad: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
         estadoProvincia: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
         pais: [{ disabled: true, value: null }, [Validators.required]],
@@ -202,7 +201,7 @@ export class DatosParejaComponent implements OnInit {
           { disabled: true, value: null },
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
