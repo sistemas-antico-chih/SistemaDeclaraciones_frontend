@@ -96,44 +96,34 @@
           <div class="padding-card-section">
             <h3>Domicilio</h3>
 
-            <div class="card-grid-3-col">
-              <div class="paragraph-flex">
-                <mat-icon matPrefix class="icon">public</mat-icon>
-                <p>Lugar donde reside</p>
-              </div>
-              <div class="paragraph-flex">
-                <mat-icon matPrefix class="icon">streetview</mat-icon>
-                <p>Habita en el domicilio del declarante</p>
-              </div>
-
-              <div class="paragraph-flex">
-                <mat-icon matPrefix class="icon">location_city</mat-icon>
-                <p>Domicilio de la pareja</p>
-              </div>
-              <div class="">
-                <p>{{ (pareja.lugarDondeReside | replace: '_':' ') || 'MISMO QUE EL DEL DECLARANTE' }}</p>
-              </div>
-              <div class="">
-                <p>{{ pareja.habitaDomicilioDeclarante ? 'SÍ' : 'NO' }}</p>
-              </div>
-              <div class="paragraph-flex">
-                <p *ngIf="pareja.lugarDondeReside === 'MEXICO'">
-                  {{ pareja.domicilioMexico.calle }} {{ pareja.domicilioMexico.numeroExterior }}
-                  {{ pareja.domicilioMexico.numeroInterior }}, {{ pareja.domicilioMexico.coloniaLocalidad }},
-                  {{ pareja.domicilioMexico.municipioAlcaldia.valor }},
-                  {{ pareja.domicilioMexico.entidadFederativa.valor }}, {{ pareja.domicilioMexico.codigoPostal }}, MX.
-                </p>
-                <p *ngIf="pareja.lugarDondeReside === 'EXTRANJERO'">
-                  {{ pareja.domicilioExtranjero.calle }} {{ pareja.domicilioExtranjero.numeroExterior }}
-                  {{ pareja.domicilioExtranjero.numeroInterior }}, {{ pareja.domicilioExtranjero.ciudadLocalidad }},
-                  {{ pareja.domicilioExtranjero.estadoProvincia }}, {{ pareja.domicilioExtranjero.codigoPostal }},
-                  {{ pareja.domicilioExtranjero.pais }}.
-                </p>
-                <p *ngIf="pareja.lugarDondeReside === 'SE_DESCONOCE'">SE DESCONOCE</p>
-                <p *ngIf="!pareja.lugarDondeReside">MISMO QUE EL DEL DECLARANTE</p>
-              </div>
+            <div class="paragraph-flex">
+              <mat-icon matPrefix class="icon">location_city</mat-icon>
+              <p>Domicilio de la pareja</p>
+            </div>
+            <div class="">
+              <p>{{ (pareja.lugarDondeReside | replace: '_':' ') || 'MISMO QUE EL DEL DECLARANTE' }}</p>
+            </div>
+            <div class="">
+              <p>{{ pareja.habitaDomicilioDeclarante ? 'SÍ' : 'NO' }}</p>
+            </div>
+            <div class="paragraph-flex">
+              <p *ngIf="pareja.lugarDondeReside === 'MEXICO'">
+                {{ pareja.domicilioMexico.calle }} {{ pareja.domicilioMexico.numeroExterior }}
+                {{ pareja.domicilioMexico.numeroInterior }}, {{ pareja.domicilioMexico.coloniaLocalidad }},
+                {{ pareja.domicilioMexico.municipioAlcaldia.valor }},
+                {{ pareja.domicilioMexico.entidadFederativa.valor }}, {{ pareja.domicilioMexico.codigoPostal }}, MX.
+              </p>
+              <p *ngIf="pareja.lugarDondeReside === 'EXTRANJERO'">
+                {{ pareja.domicilioExtranjero.calle }} {{ pareja.domicilioExtranjero.numeroExterior }}
+                {{ pareja.domicilioExtranjero.numeroInterior }}, {{ pareja.domicilioExtranjero.ciudadLocalidad }},
+                {{ pareja.domicilioExtranjero.estadoProvincia }}, {{ pareja.domicilioExtranjero.codigoPostal }},
+                {{ pareja.domicilioExtranjero.pais }}.
+              </p>
+              <p *ngIf="pareja.lugarDondeReside === 'SE_DESCONOCE'">SE DESCONOCE</p>
+              <p *ngIf="!pareja.lugarDondeReside">MISMO QUE EL DEL DECLARANTE</p>
             </div>
           </div>
+        </div>
           <mat-divider></mat-divider>
           <!-- Actividad Laboral -->
           <div class="padding-card-section" *ngIf="pareja.actividadLaboral.clave !== 'NIN'">
