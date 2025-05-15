@@ -547,7 +547,7 @@ export class DatosParejaComponent implements OnInit {
     console.log("Requerido", this.datosParejaForm.errors);
   }
   
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
@@ -558,7 +558,7 @@ export class DatosParejaComponent implements OnInit {
         //falseText: '',
       },
     });
-  }
+  }*/
 
   checkPartner() {
     let form = JSON.parse(JSON.stringify(this.datosParejaForm.value)); // Deep copy
