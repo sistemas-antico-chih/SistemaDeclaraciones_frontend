@@ -121,12 +121,15 @@ export class DatosParejaComponent implements OnInit {
       },
     });
 
+    this.pushButtonSave = true;
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.saveInfo(this.finalForm);
       }
     });
   }
+
 
   createForm() {
     this.datosParejaForm = this.formBuilder.group({
