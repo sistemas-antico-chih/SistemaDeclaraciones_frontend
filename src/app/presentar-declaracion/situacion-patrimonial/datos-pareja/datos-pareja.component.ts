@@ -133,6 +133,7 @@ export class DatosParejaComponent implements OnInit {
 
   createForm() {
     this.datosParejaForm = this.formBuilder.group({
+      tipoOperacion: [null, [Validators.required]],
       ninguno: [false],
       nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
