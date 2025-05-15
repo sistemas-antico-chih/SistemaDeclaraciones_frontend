@@ -24,6 +24,7 @@ import RelacionConDeclarante from '@static/catalogos/relacionConDeclarante.json'
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -38,6 +39,7 @@ export class DatosParejaComponent implements OnInit {
   editMode = false;
   estado: Catalogo = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -52,6 +54,7 @@ export class DatosParejaComponent implements OnInit {
   monedasCatalogo = Monedas;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
+  tipoOperacionCatalogo = TipoOperacion;
 
   pareja: DatosPareja = null;
 
@@ -62,6 +65,17 @@ export class DatosParejaComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDatePareja = new Date(1940, 1, 1);
+  minDate = new Date(1960, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth();
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  hidden: string = 'false';
+  ciudadanoExtranjero: boolean;
+  active: boolean;
 
   constructor(
     private apollo: Apollo,
