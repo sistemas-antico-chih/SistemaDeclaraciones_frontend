@@ -459,6 +459,7 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUserInfo();
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
