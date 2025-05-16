@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import {
   datosDependientesEconomicosMutation,
   datosDependientesEconomicosQuery,
-  lastDatosDependientesEconomicosQuery,
+  lastDatosDependientesEconomicosQuery
 } from '@api/declaracion';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
@@ -21,7 +21,7 @@ import {
   DependienteEconomico,
   DatosDependientesEconomicos,
   DeclaracionOutput,
-  LastDeclaracionOutput,
+  LastDeclaracionOutput
 } from '@models/declaracion';
 import ActividadLaboral from '@static/catalogos/actividadLaboral.json';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
@@ -30,12 +30,13 @@ import Estados from '@static/catalogos/estados.json';
 import LugarDondeReside from '@static/catalogos/lugarDondeReside.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Paises from '@static/catalogos/paises.json';
 import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-dependiente';
 import { findOption } from '@utils/utils';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @UntilDestroy()
 @Component({
@@ -52,6 +53,7 @@ export class DatosDependienteComponent implements OnInit {
   estado: Catalogo = null;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -68,7 +70,7 @@ export class DatosDependienteComponent implements OnInit {
   paisesCatalogo = Paises;
   parentescoRelacionCatalogo = ParentescoRelacion;
   sectorCatalogo = Sector;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio: string = null;
 
@@ -76,6 +78,17 @@ export class DatosDependienteComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDate = new Date(1960, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes-1, this.dia);
+
+  hidden: string = 'false';
+
+  extranjero: boolean;
+  active: boolean;
 
   constructor(
     private apollo: Apollo,
