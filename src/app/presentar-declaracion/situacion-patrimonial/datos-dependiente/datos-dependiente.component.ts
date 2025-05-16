@@ -142,6 +142,7 @@ export class DatosDependienteComponent implements OnInit {
     this.datosDependientesEconomicosForm = this.formBuilder.group({
       ninguno: [false],
       dependienteEconomico: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         segundoApellido: [null, [Validators.pattern(/^\S.*\S$/)]],
