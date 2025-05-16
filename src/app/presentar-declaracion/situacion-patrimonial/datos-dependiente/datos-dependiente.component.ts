@@ -272,6 +272,35 @@ export class DatosDependienteComponent implements OnInit {
     });
   }
 
+  radioChange(event: any) {
+    
+    this.hidden = event;
+    this.active = this.datosDependientesEconomicosForm.get('dependienteEconomico.extranjero').value;
+    
+    if (this.active == false) {
+      
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").enable();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").setValidators([Validators.required]);
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").enable();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
+    } else {
+      
+      //console.log(this.active)
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").clearValidators();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").disable();
+
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").clearValidators();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
+      this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").disable();
+
+      
+    }
+    //console.log("Requerido", this.datosDependientesEconomicosForm.errors);
+  }
+
   editItem(index: number) {
     this.setEditMode();
     this.fillForm(this.dependienteEconomico[index]);
