@@ -60,7 +60,7 @@ export class DatosGeneralesComponent implements OnInit {
     this.tipoDeclaracion = urlChunks[1] || null;
 
     for (let index = 0; index < 5; index++) {
-      this.array_anio_ejercicio.push(this.currentYear - index);
+      this.array_anio_ejercicio.push(this.currentYear);
     }
 
     this.createForm();
