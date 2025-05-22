@@ -453,7 +453,7 @@ export class ExperienciaLaboralComponent implements OnInit {
     this.pushButtonSave = true;
   }
 
-  /*saveItems() {
+  saveItems() {
     let experiencia = [...this.experiencia];
     const aclaracionesObservaciones = this.experienciaLaboralForm.value.aclaracionesObservaciones;
     this.isLoading = true;
@@ -462,7 +462,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       aclaracionesObservaciones,
     });
     this.isLoading = false;
-  }*/
+  }
 
   setAclaraciones(aclaraciones?: string) {
     this.experienciaLaboralForm.get('aclaracionesObservaciones').patchValue(aclaraciones || null);
