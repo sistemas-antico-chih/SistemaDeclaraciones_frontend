@@ -62,9 +62,11 @@ export function validarRFC(control: FormControl, aceptarGenerico = true) {
     console.log("validado: " + validado);
     console.log("rfcSinDigito: " + rfcSinDigito);
     console.log("digitoEsperado: " + digitoEsperado);
+    console.log("digitoVerificador: " + digitoVerificador);
 
     if (rfc === 'MAMF860306QX') {
         //  console.log("entra");
+        //digitoVerificador
         digitoEsperado = 8;
         // return { 'validarRFC': true };
     }
@@ -76,9 +78,11 @@ export function validarRFC(control: FormControl, aceptarGenerico = true) {
     //El dígito verificador coincide con el esperado?
     // o es un RFC Genérico (ventas a público general)?
     if ((digitoVerificador != digitoEsperado)
-        && (!aceptarGenerico || rfcSinDigito + digitoVerificador != "XAXX010101000"))
+        && (!aceptarGenerico || rfcSinDigito + digitoVerificador != "XAXX010101000")) {
         //return false;
+        console.log("entra if 2");
         return { 'validarRFC': true };
+    }
     else if (!aceptarGenerico && rfcSinDigito + digitoVerificador == "XEXX010101000")
         //return false;
         return { 'validarRFC': true };
