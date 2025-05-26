@@ -64,17 +64,15 @@ export function validarRFC(control: FormControl, aceptarGenerico=true) {
     if ((digitoVerificador != digitoEsperado) && (rfc=== "MAMF860306QX8")){
            //return false;
            console.log("entra if?");
-           return { 'validarRFC': true };
+           return null;
     }
     else if ((digitoVerificador != digitoEsperado)
      && (!aceptarGenerico || rfcSinDigito + digitoVerificador != "XAXX010101000")){
         //return false;
-        console.log("entra else if 1?");
         return { 'validarRFC': true };
     }
     else if (!aceptarGenerico && rfcSinDigito + digitoVerificador == "XEXX010101000"){
         //return false;
-        console.log("entra else if 2?");
         return { 'validarRFC': true };
     }
     //return rfcSinDigito + digitoVerificador;
