@@ -57,6 +57,12 @@ export function validarRFC(control: FormControl, aceptarGenerico = true) {
         suma += diccionario.indexOf(rfcSinDigito.charAt(i)) * (indice - i);
     digitoEsperado = 11 - suma % 11;
 
+    console.log("llega");
+    console.log("rfc: " + rfc);
+    console.log("validado: "+validado);
+    console.log("rfcSinDigito: "+rfcSinDigito);
+    console.log("digitoEsperado: "+digitoEsperado);
+
     if (rfc === 'MAMF860306QX8')
         return { 'validarRFC': true };
     if (digitoEsperado == 11) digitoEsperado = 0;
