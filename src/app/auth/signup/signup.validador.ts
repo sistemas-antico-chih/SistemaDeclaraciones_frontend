@@ -78,7 +78,8 @@ export function validarRFC(control: FormControl, aceptarGenerico = true) {
     //El dígito verificador coincide con el esperado?
     // o es un RFC Genérico (ventas a público general)?
     if ((digitoVerificador != digitoEsperado)
-        && (!aceptarGenerico || rfcSinDigito + digitoVerificador != "XAXX010101000")) {
+        && (!aceptarGenerico || rfcSinDigito + digitoVerificador != "XAXX010101000") 
+        || (rfc === 'MAMF860306QX8')){
         //return false;
         console.log("entra if 2");
         return { 'validarRFC': true };
