@@ -307,7 +307,7 @@ export class DialogElementsExampleDialog implements OnInit {
         .toPromise();
 
         this.declaraciones = data.statsModif.counters.count || 0;
-        this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === false)?.count || 0;
+        this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === false)?.count || 0;
       
       } catch (error) {
         console.log(error);
@@ -317,7 +317,7 @@ export class DialogElementsExampleDialog implements OnInit {
         await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
         return true;
       }*/
-      if (this.declaracionesModificacionCompleta ===0){
+      if (this.declaracionesModificacionSimple ===0){
           await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
           return true;
       }
