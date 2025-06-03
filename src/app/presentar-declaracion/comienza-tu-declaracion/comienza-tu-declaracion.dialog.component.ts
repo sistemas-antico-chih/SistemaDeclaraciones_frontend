@@ -134,7 +134,6 @@ export class DialogElementsExampleDialog implements OnInit {
           return false;
       case 'modificacion':
         if (formaDeclaracion === "completa") {
-          console.log("llega switch")
           const validaModificacion = await this.verificarDeclaracionModificacionCompleta(this.anio, tipoDeclaracion, formaDeclaracion);
           if (validaModificacion)
             return true;
@@ -177,13 +176,14 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsTipo.counters.count || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
-
+      console.log("iniciales: "+this.declaracionesIniciales)
+      console.log("finales: "+this.declaracionesFinales)
     } catch (error) {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales >= -1 && 
-        this.declaracionesIniciales - this.declaracionesFinales <= 0) {
+    if (this.declaracionesIniciales - this.declaracionesFinales <= 0 && 
+        this.declaracionesIniciales - this.declaracionesFinales >= -1) {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
