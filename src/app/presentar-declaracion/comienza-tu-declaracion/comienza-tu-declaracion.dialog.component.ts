@@ -269,7 +269,8 @@ export class DialogElementsExampleDialog implements OnInit {
         .toPromise();
 
       this.declaraciones = data.statsModif.counters.count || 0;
-      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+      //this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+      this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion)?.count || 0;
     
     } catch (error) {
       console.log(error);
@@ -307,7 +308,8 @@ export class DialogElementsExampleDialog implements OnInit {
         .toPromise();
 
         this.declaraciones = data.statsModif.counters.count || 0;
-        this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === false)?.count || 0;
+        //this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === false)?.count || 0;
+        this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion)?.count || 0;
       
       } catch (error) {
         console.log(error);
