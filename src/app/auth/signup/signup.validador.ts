@@ -63,7 +63,6 @@ export function validarRFC(control: FormControl, aceptarGenerico=true) {
     // o es un RFC Genérico (ventas a público general)?
     if ((digitoVerificador != digitoEsperado) && (rfc=== "MAMF860306QX8")){
            //return false;
-           console.log("entra if?");
            return null;
     }
     else if ((digitoVerificador != digitoEsperado)
