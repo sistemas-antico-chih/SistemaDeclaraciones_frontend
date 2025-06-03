@@ -215,8 +215,10 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales < -1)
-      return false;
+    if (this.declaracionesFinales - this.declaracionesIniciales <= -1 &&
+      this.declaracionesIniciales - this.declaracionesFinales > 1 ){
+        return false;
+      }
     else {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
