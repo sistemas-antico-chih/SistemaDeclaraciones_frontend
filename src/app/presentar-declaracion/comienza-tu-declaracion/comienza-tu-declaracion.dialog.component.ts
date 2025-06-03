@@ -182,12 +182,12 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    //if (this.declaracionesIniciales - this.declaracionesFinales === 0) {
+    if (this.declaracionesIniciales - this.declaracionesFinales >= -1) {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
-    //}
-    //else
-      //return false;
+    }
+    else
+      return false;
   }
 
   async verificarDeclaracionConclusion(tipoDeclaracion: string, formaDeclaracion: string) {
@@ -214,12 +214,12 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    //if (this.declaracionesIniciales - this.declaracionesFinales === 0)
-      //return false;
-    //else {
+    if (this.declaracionesIniciales - this.declaracionesFinales < -1)
+      return false;
+    else {
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
-    //}
+    }
   }
 
   async contarDeclaracionesInicialConclusion() {
@@ -275,7 +275,11 @@ export class DialogElementsExampleDialog implements OnInit {
       console.log(error);
       return false;
     }
-    if (this.contarDeclaracionesInicialConclusion()){
+    /*if (this.contarDeclaracionesInicialConclusion()){
+      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
+      return true;
+    }*/
+    if (this.declaracionesModificacionCompleta ===0){
       await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
       return true;
     }
@@ -303,15 +307,19 @@ export class DialogElementsExampleDialog implements OnInit {
         .toPromise();
 
         this.declaraciones = data.statsModif.counters.count || 0;
-        this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
+        this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === false)?.count || 0;
       
       } catch (error) {
         console.log(error);
         return false;
       }
-      if (this.contarDeclaracionesInicialConclusion()){
+      /*if (this.contarDeclaracionesInicialConclusion()){
         await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
         return true;
+      }*/
+      if (this.declaracionesModificacionCompleta ===0){
+          await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
+          return true;
       }
       else
       return false;
