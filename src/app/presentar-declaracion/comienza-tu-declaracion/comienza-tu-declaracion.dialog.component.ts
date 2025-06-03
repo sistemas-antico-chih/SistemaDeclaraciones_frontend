@@ -33,6 +33,7 @@ export class DialogElementsExampleDialog implements OnInit {
   declaracionesModificacionCompleta = 0;
   declaracionesModificacionSimple = 0;
   declaracionesFinales = 0;
+  declaracionesModificaciones = 0;
 
   declaracionSimplificada = false;
   declaracionId: string = null;
@@ -176,8 +177,8 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsTipo.counters.count || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
-      console.log("iniciales: "+this.declaracionesIniciales)
-      console.log("finales: "+this.declaracionesFinales)
+      this.declaracionesModificaciones = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'MODIFICACION')?.count || 0;
+      
     } catch (error) {
       console.log(error);
       return false;
@@ -210,16 +211,22 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsTipo.counters.count || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
+      this.declaracionesModificaciones = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'MODIFICACION')?.count || 0;
 
+      console.log("iniciales: "+this.declaracionesIniciales)
+      console.log("finales: "+this.declaracionesFinales)
+      console.log("modificaciones: "+this.declaracionesModificaciones)
     } catch (error) {
       console.log(error);
       return false;
     }
-    if (this.declaracionesIniciales - this.declaracionesFinales < -1)
-      return false;
+    if ((this.declaracionesIniciales - this.declaracionesFinales === 1) ||
+        (this.declaracionesIniciales - this.declaracionesFinales === 0 && this.declaracionesModificaciones > 0 )){
+        await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
+        return true;
+      }
     else {
-      await this.crearDeclaracion(tipoDeclaracion, formaDeclaracion);
-      return true;
+      return false;
     }
   }
 
@@ -242,6 +249,8 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsTipo.counters.count || 0;
       this.declaracionesIniciales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'INICIAL')?.count || 0;
       this.declaracionesFinales = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'CONCLUSION')?.count || 0;
+      this.declaracionesModificaciones = data.statsTipo.counters.find((d: any) => d.tipoDeclaracion === 'MODIFICACION')?.count || 0;
+
 
       return this.declaracionesIniciales - this.declaracionesFinales;
     } catch (error) {
