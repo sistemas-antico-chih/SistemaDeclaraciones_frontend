@@ -300,7 +300,8 @@
         </button>
       </div>-->
 
-      <div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">
+      <!--<div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">-->
+      <div class="boton-agregar" *ngIf="!editMode">
         <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: editMode }">
           GUARDAR
         </button>
