@@ -110,7 +110,7 @@
           <mat-form-field matTooltip="{{ tooltipData.estatus }}" appearance="fill">
             <mat-label>Estatus</mat-label>
             <mat-icon matPrefix>timelapse</mat-icon>
-            <mat-select formControlName="estatus" required>
+            <mat-select formControlName="estatus" required (selectionChange)="cambioEstatus($event.value)">
               <mat-option *ngFor="let opt of estatusCatalogo" value="{{ opt }}">
                 {{ opt }}
               </mat-option>
