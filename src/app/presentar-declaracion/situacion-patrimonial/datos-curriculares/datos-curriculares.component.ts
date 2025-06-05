@@ -356,4 +356,8 @@ export class DatosCurricularesComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  cambioEstatus(value: any) {
+    console.log(value);
+  }
 }
