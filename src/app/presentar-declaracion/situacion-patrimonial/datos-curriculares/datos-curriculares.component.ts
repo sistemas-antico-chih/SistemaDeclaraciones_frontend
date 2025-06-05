@@ -365,8 +365,8 @@ export class DatosCurricularesComponent implements OnInit {
 
   cambioEstatus(estatus: any) {
     console.log("cambioEstatus: "+estatus);
-    let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value.clave;
-    this.actualizacionDocumento(nivel,estatus);
+    let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value;
+    this.actualizacionDocumento(nivel.clave,estatus);
   }
 
   actualizacionDocumento(nivel: any, estatus: any){
