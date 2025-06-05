@@ -94,7 +94,7 @@
           <mat-form-field matTooltip="{{ tooltipData.nivel }}" appearance="fill">
             <mat-label>Nivel</mat-label>
             <mat-icon matPrefix>star</mat-icon>
-            <mat-select formControlName="nivel" required>
+            <mat-select formControlName="nivel" required (selectionChange)="cambioNivel($event.value)">
               <mat-option *ngFor="let opt of nivelCatalogo" [value]="opt">
                 {{ opt.valor }}
               </mat-option>
