@@ -359,7 +359,7 @@ export class DatosCurricularesComponent implements OnInit {
 
   cambioNivel(nivel: any) {
     console.log("cambioNivel: "+nivel.clave);
-    let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus');
+    let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus').value;
     this.actualizacionDocumento(nivel.clave,estatus);
   }
 
