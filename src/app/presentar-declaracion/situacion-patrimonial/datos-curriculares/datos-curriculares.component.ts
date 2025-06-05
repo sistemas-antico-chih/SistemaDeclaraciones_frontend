@@ -359,8 +359,11 @@ export class DatosCurricularesComponent implements OnInit {
 
   cambioEstatus(valorEstatus: any) {
     console.log(valorEstatus);
+    let nivel=console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value)
     if (valorEstatus === 'FINALIZADO'){
       console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value)
+      console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel'))
+      console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').get('valor').value)
       //console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value.valor)
       console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').value)
     }
