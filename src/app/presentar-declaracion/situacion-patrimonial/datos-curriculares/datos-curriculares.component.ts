@@ -357,17 +357,21 @@ export class DatosCurricularesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  cambioNivel(valorNivel: any) {
+  cambioNivel(value: any) {
+    console.log("cambioNivel: "+value);
     let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus');
-    this.actualizacionDocumento(valorNivel,estatus);
+    this.actualizacionDocumento(value,estatus);
   }
 
-  cambioEstatus(valorEstatus: any) {
+  cambioEstatus(value: any) {
+    console.log("cambioEstatus: "+value);
     let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel');
-    this.actualizacionDocumento(nivel,valorEstatus);
+    this.actualizacionDocumento(nivel,value);
   }
 
   actualizacionDocumento(nivel: any, estatus: any){
+    console.log("nivel: "+nivel)
+    console.log("estatus: "+estatus)
     const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
     const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
     if(estatus === 'FINALIZADO'){
