@@ -357,7 +357,7 @@ export class DatosCurricularesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  cambioNivel(value: any) {
+  /*cambioNivel(value: any) {
     console.log("cambioNivel: "+value);
     let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus');
     this.actualizacionDocumento(value,estatus);
@@ -382,8 +382,24 @@ export class DatosCurricularesComponent implements OnInit {
         this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
       }
     }
+  }*/
+  cambioNivel(valorNivel: any) {
+    console.log("cambioNivel: "+valorNivel);
+    const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
+    const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
+    let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value.clave;
+    if(valorNivel === 'FINALIZADO'){
+      if (certificados.includes(nivel)){
+        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
+      }
+      if (titulos.includes(nivel)){
+        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
+      }
+    }
   }
-  /*cambioNivel(valorEstatus: any) {
+
+  cambioEstatus(valorEstatus: any) {
+    console.log("cambioEstatus: "+valorEstatus);
     const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
     const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
     let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value.clave;
@@ -395,5 +411,5 @@ export class DatosCurricularesComponent implements OnInit {
         this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
       }
     }
-  }*/
+  }
 }
