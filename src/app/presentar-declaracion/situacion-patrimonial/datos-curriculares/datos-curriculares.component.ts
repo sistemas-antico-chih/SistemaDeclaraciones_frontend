@@ -357,11 +357,11 @@ export class DatosCurricularesComponent implements OnInit {
     this.aclaraciones = value;
   }
 
-  cambioEstatus(value: any) {
-    console.log(value);
-    if (value === 'FINALIZADO'){
-      console.log(this.datosCurricularesDeclaranteForm.get('nivel'))
-      console.log(this.datosCurricularesDeclaranteForm.get('documentoObtenido'))
+  cambioEstatus(valorEstatus: any) {
+    console.log(valorEstatus);
+    if (valorEstatus === 'FINALIZADO'){
+      console.log(this.datosCurricularesDeclaranteForm.get('nivel').value)
+      console.log(this.datosCurricularesDeclaranteForm.get('documentoObtenido').value)
     }
   }
 }
