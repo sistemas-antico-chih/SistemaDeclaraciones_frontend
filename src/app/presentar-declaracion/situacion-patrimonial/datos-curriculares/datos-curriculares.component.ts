@@ -362,15 +362,13 @@ export class DatosCurricularesComponent implements OnInit {
     const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
     const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
     let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value.clave;
-    console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').value);
-    console.log(nivel);
-    if (certificados.includes(nivel)){
-      console.log ("llega 1 if");
-      this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
-    }
-    if (titulos.includes(nivel)){
-      console.log ("llega 2 if");
-      this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
+    if(valorEstatus === 'FINALIZADO'){
+      if (certificados.includes(nivel)){
+        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
+      }
+      if (titulos.includes(nivel)){
+        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
+      }
     }
   }
 }
