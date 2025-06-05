@@ -360,8 +360,8 @@ export class DatosCurricularesComponent implements OnInit {
   cambioEstatus(valorEstatus: any) {
     console.log(valorEstatus);
     if (valorEstatus === 'FINALIZADO'){
-      console.log(this.datosCurricularesDeclaranteForm.get('nivel').value)
-      console.log(this.datosCurricularesDeclaranteForm.get('documentoObtenido').value)
+      console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel'))
+      console.log(this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido'))
     }
   }
 }
