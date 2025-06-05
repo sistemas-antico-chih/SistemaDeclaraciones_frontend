@@ -359,5 +359,9 @@ export class DatosCurricularesComponent implements OnInit {
 
   cambioEstatus(value: any) {
     console.log(value);
+    if (value === 'FINALIZADO'){
+      console.log(this.datosCurricularesDeclaranteForm.get('nivel'))
+      console.log(this.datosCurricularesDeclaranteForm.get('documentoObtenido'))
+    }
   }
 }
