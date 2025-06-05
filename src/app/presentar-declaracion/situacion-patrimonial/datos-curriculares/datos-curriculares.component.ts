@@ -366,11 +366,11 @@ export class DatosCurricularesComponent implements OnInit {
     console.log(nivel);
     if (certificados.includes(nivel)){
       console.log ("llega 1 if");
-      this.datosCurricularesDeclaranteForm.get('escolaridad').set('documentoObtenido').setValue('CERTIFICADO');
+      this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
     }
     if (titulos.includes(nivel)){
       console.log ("llega 2 if");
-      this.datosCurricularesDeclaranteForm.get('escolaridad').set('documentoObtenido').setValue('TITULO');
+      this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
     }
   }
 }
