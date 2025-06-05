@@ -358,20 +358,16 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   cambioNivel(nivel: any) {
-    console.log("cambioNivel: "+nivel.clave);
     let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus').value;
     this.actualizacionDocumento(nivel.clave,estatus);
   }
 
   cambioEstatus(estatus: any) {
-    console.log("cambioEstatus: "+estatus);
     let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value;
     this.actualizacionDocumento(nivel.clave,estatus);
   }
 
   actualizacionDocumento(nivel: any, estatus: any){
-    console.log("nivel: "+nivel)
-    console.log("estatus: "+estatus)
     const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
     const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
     if(estatus === 'FINALIZADO'){
@@ -383,33 +379,4 @@ export class DatosCurricularesComponent implements OnInit {
       }
     }
   }
-  /*cambioNivel(valorNivel: any) {
-    console.log("cambioNivel: "+valorNivel.clave);
-    const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
-    const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
-    let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus').value;
-    if(estatus === 'FINALIZADO'){
-      if (certificados.includes(valorNivel)){
-        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
-      }
-      if (titulos.includes(valorNivel)){
-        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
-      }
-    }
-  }
-
-  cambioEstatus(valorEstatus: any) {
-    console.log("cambioEstatus: "+valorEstatus);
-    const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
-    const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
-    let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value.clave;
-    if(valorEstatus === 'FINALIZADO'){
-      if (certificados.includes(nivel)){
-        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
-      }
-      if (titulos.includes(nivel)){
-        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
-      }
-    }
-  }*/
 }
