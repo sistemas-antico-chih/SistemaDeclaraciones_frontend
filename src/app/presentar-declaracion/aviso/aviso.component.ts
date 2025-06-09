@@ -1,0 +1,447 @@
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { Apollo } from 'apollo-angular';
+import { adeudosPasivosMutation, adeudosPasivosQuery, lastAdeudosPasivosQuery } from '@api/declaracion';
+
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { Adeudo, AdeudosPasivos, DeclaracionOutput, MexicoExtranjero, LastDeclaracionOutput, } from '@models/declaracion';
+
+import TipoAdeudo from '@static/catalogos/tipoAdeudo.json';
+import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
+import TitularBien from '@static/catalogos/titularBien.json';
+import FormaPago from '@static/catalogos/formaPago.json';
+import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
+import ValorConformeA from '@static/catalogos/valorConformeA.json';
+import Extranjero from '@static/catalogos/extranjero.json';
+import Paises from '@static/catalogos/paises.json';
+import Monedas from '@static/catalogos/monedas.json';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { tooltipData } from '@static/tooltips/situacion-patrimonial/adeudos';
+
+import { findOption } from '@utils/utils';
+
+import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+
+@Component({
+  selector: 'app-adeudos',
+  templateUrl: './adeudos.component.html',
+  styleUrls: ['./adeudos.component.scss'],
+})
+export class AdeudosComponent implements OnInit {
+  aclaraciones = false;
+  adeudosPasivosForm: FormGroup;
+  editMode = false;
+  editIndex: number = null;
+  adeudo: Adeudo[] = [];
+  isLoading = false;
+  tipoOperacionCatalogo = TipoOperacion;
+  tipoAdeudoCatalogo = TipoAdeudo;
+  formaAdquisicionCatalogo = FormaAdquisicion;
+  titularBienCatalogo = TitularBien;
+  formaPagoCatalogo = FormaPago;
+  parentescoRelacionCatalogo = ParentescoRelacion;
+  valorConformeACatalogo = ValorConformeA;
+  extranjeroCatalogo = Extranjero;
+  paisesCatalogo = Paises;
+  monedasCatalogo = Monedas;
+  pushButtonSave: boolean =false;
+
+  tipoDeclaracion: string = null;
+  tipoDomicilio: MexicoExtranjero = null;
+
+  declaracionId: string = null;
+
+  tooltipData = tooltipData;
+  errorMatcher = new DeclarationErrorStateMatcher();
+
+  minDate = new Date(1960, 1, 1);
+  anio: number = new Date().getFullYear();
+  mes: number = new Date().getMonth() + 1;
+  dia: number = new Date().getDate();
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  tipoPersona: String
+  location: string = null;
+  varOtroTipoAdeudo: string = null;
+
+  @ViewChild('otroTipoAdeudo') otroTipoAdeudo: ElementRef;
+
+  constructor(
+    private apollo: Apollo,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.tipoDeclaracion = this.router.url.split('/')[1];
+    this.createForm();
+    this.getUserInfo();
+  }
+
+  addItem() {
+    this.adeudosPasivosForm.reset();
+    this.adeudosPasivosForm.get('ninguno').setValue(false);
+    this.editMode = true;
+    this.editIndex = null;
+  }
+
+  localizacionChanged(value: MexicoExtranjero) {
+    this.tipoDomicilio = value;
+    if (value === 'MX') {
+      this.adeudosPasivosForm.get('adeudo.localizacionAdeudo.pais').setValue('MX');
+    }
+    else {
+      this.tipoDomicilio = 'EX';
+    }
+  }
+
+  cancelEditMode() {
+    this.editMode = false;
+    this.editIndex = null;
+  }
+
+  createForm() {
+    this.adeudosPasivosForm = this.formBuilder.group({
+      ninguno: [false],
+      adeudo: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
+        titular: [[], Validators.required],
+        tipoAdeudo: [null, Validators.required],
+        numeroCuentaContrato: ['', [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+        fechaAdquisicion: [null, [Validators.required]],
+        montoOriginal: this.formBuilder.group({
+          valor: [0, [Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/)]],
+          moneda: ['MXN', [Validators.pattern(/^\S.*\S?$/)]],
+        }),
+        saldoInsolutoSituacionActual: this.formBuilder.group({
+          valor: [0, [Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/)]],
+          moneda: ['MXN', [Validators.pattern(/^\S.*\S?$/)]],
+        }),
+        tercero: this.formBuilder.group({
+          tipoPersona: [null, [Validators.pattern(/^\S.*$/)]],
+          nombreRazonSocial: [null, [Validators.pattern(/^\S.*$/)]],
+          rfc: [
+            null,
+            [
+              Validators.pattern(
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              ),
+            ],
+          ],
+        }),
+        otorganteCredito: this.formBuilder.group({
+          tipoPersona: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+          nombreInstitucion: [null, [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
+          rfc: [
+            null,
+            [
+              Validators.required,
+              Validators.pattern(
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              ),
+            ],
+          ],
+        }),
+        localizacionAdeudo: this.formBuilder.group({
+          pais: ['MX', [Validators.required]],
+        }),
+      }),
+      aclaracionesObservaciones: [
+        { disabled: true, value: null },
+        [Validators.required, Validators.pattern(/^\S.*\S$/)],
+      ],
+    });
+  }
+
+  editItem(index: number) {
+    this.setEditMode();
+    this.fillForm(this.adeudo[index]);
+    this.editIndex = index;
+  }
+
+  fillForm(adeudo: Adeudo) {
+    Object.keys(adeudo)
+      .filter((field) => adeudo[field] !== null)
+      .forEach((field) => this.adeudosPasivosForm.get(`adeudo.${field}`).patchValue(adeudo[field]));
+    this.adeudosPasivosForm.get(`adeudo.tercero`).patchValue(adeudo.tercero[0]);
+
+    this.localizacionChanged(this.adeudosPasivosForm.value.adeudo.localizacionAdeudo.pais);
+
+    this.setSelectedOptions();
+  }
+
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastAdeudosPasivosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.adeudosPasivos);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
+  async getUserInfo() {
+    try {
+      const { data } = await this.apollo
+        .query<DeclaracionOutput>({
+          query: adeudosPasivosQuery,
+          variables: {
+            tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
+          },
+        })
+        .toPromise();
+
+      this.declaracionId = data.declaracion._id;
+      if (data.declaracion.adeudosPasivos === null) {
+        this.getLastUserInfo();
+      } else {
+        this.setupForm(data.declaracion.adeudosPasivos);
+      }
+    } catch (error) {
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
+  formHasChanges() {
+    let isDirty = this.adeudosPasivosForm.dirty;
+    if (isDirty && !this.pushButtonSave) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Tienes cambios sin guardar',
+          message: '¿Deseas continuar?',
+          falseText: 'Cancelar',
+          trueText: 'Continuar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/prestamos-terceros']);
+      });
+    } else {
+      this.router.navigate(['/' + this.tipoDeclaracion + '/situacion-patrimonial/prestamos-terceros']);
+    }
+  }
+
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+
+  noDebts() {
+    this.saveInfo({ ninguno: true });
+  }
+
+  openSnackBar(message: string, action: string = null) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
+  }
+
+  presentSuccessAlert() {
+    this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Operación exitosa',
+        message: 'Se han guardado tus cambios',
+        trueText: 'Aceptar',
+      },
+    });
+  }
+
+  removeItem(index: number) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Eliminar elemento',
+        message: '¿Está seguro de eliminar este elemento?',
+        trueText: 'Eliminar',
+        falseText: 'Cancelar',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const adeudo = [...this.adeudo.slice(0, index), ...this.adeudo.slice(index + 1)];
+        const aclaracionesObservaciones = this.adeudosPasivosForm.value.aclaracionesObservaciones;
+        this.saveInfo({
+          adeudo,
+          aclaracionesObservaciones,
+        });
+      }
+    });
+  }
+
+  async saveInfo(form: AdeudosPasivos) {
+    try {
+      const declaracion = {
+        adeudosPasivos: form,
+      };
+
+      const { data } = await this.apollo
+        .mutate<DeclaracionOutput>({
+          mutation: adeudosPasivosMutation,
+          variables: {
+            id: this.declaracionId,
+            declaracion,
+          },
+        })
+        .toPromise();
+
+      this.editMode = false;
+      if (data.declaracion.adeudosPasivos) {
+        this.setupForm(data.declaracion.adeudosPasivos);
+      }
+      this.presentSuccessAlert();
+    } catch (error) {
+      console.log(error);
+      this.openSnackBar('ERROR: No se guardaron los cambios', 'Aceptar');
+    }
+  }
+
+  saveItem() {
+    let adeudo = [...this.adeudo];
+    const aclaracionesObservaciones = this.adeudosPasivosForm.value.aclaracionesObservaciones;
+    const newItem = this.finalAdeudoForm;
+
+    if (this.editIndex === null) {
+      adeudo = [...adeudo, newItem];
+    } else {
+      adeudo[this.editIndex] = newItem;
+    }
+
+    this.isLoading = true;
+
+    this.saveInfo({
+      adeudo,
+      aclaracionesObservaciones,
+    });
+
+    this.isLoading = false;
+    this.pushButtonSave = true;
+  }
+
+  setEditMode() {
+    this.adeudosPasivosForm.reset();
+    this.editMode = true;
+    this.editIndex = null;
+  }
+
+  setSelectedOptions() {
+    const { tipoAdeudo, titular, lugarRegistro } = this.adeudosPasivosForm.value.adeudo;
+
+    if (tipoAdeudo) {
+      const optionTipoAdeudo = this.tipoAdeudoCatalogo.filter((i: any) => i.clave === tipoAdeudo.clave);
+      this.adeudosPasivosForm.get('adeudo.tipoAdeudo').setValue(optionTipoAdeudo[0]);
+      if (tipoAdeudo.clave === 'OTRO') {
+        this.varOtroTipoAdeudo = tipoAdeudo.valor;
+      }
+    }
+    if (titular) {
+      const optionTitular = this.titularBienCatalogo.filter((t: any) => t.clave === titular[0].clave);
+      this.adeudosPasivosForm.get('adeudo.titular').setValue(optionTitular[0]);
+      //this.adeudosPasivosForm.get('adeudo.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
+    }
+
+    if (this.tipoDomicilio === 'EX') {
+      this.location = 'EX';
+    }
+    else if (this.tipoDomicilio === 'MX') {
+      this.location = 'MX'
+    }
+  }
+
+  setupForm(adeudosPasivos: AdeudosPasivos) {
+    this.adeudo = adeudosPasivos.adeudo;
+    const aclaraciones = adeudosPasivos.aclaracionesObservaciones;
+
+    this.adeudosPasivosForm.get('ninguno').setValue(!!adeudosPasivos.ninguno);
+
+    if (aclaraciones) {
+      this.adeudosPasivosForm.get('aclaracionesObservaciones').setValue(aclaraciones);
+      this.toggleAclaraciones(true);
+    }
+
+    //this.editMode = !!!this.adeudo.length;
+  }
+
+  toggleAclaraciones(value: boolean) {
+    const aclaraciones = this.adeudosPasivosForm.get('aclaracionesObservaciones');
+    if (value) {
+      aclaraciones.enable();
+    } else {
+      aclaraciones.disable();
+      aclaraciones.reset();
+    }
+    this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let adeudo = [...this.adeudo];
+    if (adeudo.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < adeudo.length; i++) {
+        adeudo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.adeudosPasivosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        adeudo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO") {
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").clearValidators();
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").setValue(' ');
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").disable();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").clearValidators();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").setValue(' ');
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").updateValueAndValidity();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").disable();
+    }
+    else {
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").enable();
+      this.adeudosPasivosForm.get("adeudo.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").setValidators([Validators.required]);
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").enable();
+      this.adeudosPasivosForm.get("adeudo.tercero.rfc").updateValueAndValidity();
+    }
+  }
+
+  get finalAdeudoForm() {
+    const form = JSON.parse(JSON.stringify(this.adeudosPasivosForm.value.adeudo)); // Deep copy
+
+    if (form.tipoAdeudo?.clave === 'OTRO') {
+      form.tipoAdeudo.valor = this.otroTipoAdeudo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    return form;
+  }
+}
