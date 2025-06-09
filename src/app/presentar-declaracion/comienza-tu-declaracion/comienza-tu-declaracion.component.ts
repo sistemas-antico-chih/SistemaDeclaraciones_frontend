@@ -29,9 +29,7 @@ export class ComienzaTuDeclaracionComponent  {
     })
   }
 
-  openAviso(){
-    //this.dialogRef.open(DialogElementsExampleDialog);
-    console.log("llega hasta aqui");
-    this.router.navigate(["/aviso"]);
+  goTo(route: string) {
+    this.router.navigate([`/${route}`], { replaceUrl: true });
   }
 }
