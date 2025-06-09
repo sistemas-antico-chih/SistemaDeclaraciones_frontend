@@ -24,4 +24,15 @@ export class ComienzaTuDeclaracionComponent  {
       console.log(res.data)
     })
   }
+
+  openAviso(){
+    //this.dialogRef.open(DialogElementsExampleDialog);
+    let dialogRef = this.dialog.open(DialogElementsExampleDialog, {
+      data: `llega hasta qqui`
+    })
+    console.log("");
+    dialogRef.afterClosed().subscribe((res: { data: any; }) => {
+      console.log(res.data)
+    })
+  }
 }

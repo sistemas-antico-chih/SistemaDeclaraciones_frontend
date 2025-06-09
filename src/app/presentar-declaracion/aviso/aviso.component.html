@@ -2,197 +2,136 @@
   <mat-card class="form-card">
     <section-header
       section="I. Declaración de situación patrimonial"
-      progress="63"
+      [simplificada]="declaracionSimplificada"
+      progress="18"
       type="{{ tipoDeclaracion }}"
     ></section-header>
 
     <mat-divider></mat-divider>
 
     <mat-toolbar class="background-white">
-      <label class="step-title">
-        14. Adeudos/Pasivos
-        <span *ngIf="tipoDeclaracion === 'inicial'"> (situación actual)</span>
-        <span *ngIf="tipoDeclaracion === 'modificacion'">
-          (entre el 1 de enero y 31 de diciembre del año inmediato anterior)</span
-        >
-        <span *ngIf="tipoDeclaracion === 'conclusion'"> (del año en curso a la fecha de conclusión del empleo)</span>
-      </label>
+      <label class="step-title"> 4. Datos empleo, cargo o comisión</label>
     </mat-toolbar>
 
     <mat-divider></mat-divider>
 
-    <p>
-      Todos los campos * son obligatorios. Todos los datos de adeudos/pasivos a nombre de la
-      <span class="negritas">pareja, dependientes económicos y/o terceros</span> o que sean en copropiedad con el
-      declarante no seran públicos y los campos resaltados <span class="no-public-inline"></span> no serán públicos.
-
-      <br />
-      <span *ngIf="tipoDeclaracion === 'inicial'">
-        Para la declaración de inicio reportar la situación de adeudos/pasivos a la fecha de ingreso al empleo, cargo o
-        comisión.
-      </span>
-      <span *ngIf="tipoDeclaracion === 'modificacion'">
-        Para la declaración de modificación reportar la situación de adeudos/pasivos del año inmediato anterior.
-      </span>
-      <span *ngIf="tipoDeclaracion === 'conclusion'">
-        Para la declaración de conclusión reportar la situación de adeudos/pasivos a la fecha de conclusión del empleo,
-        cargo o comisión.
-      </span>
-      <br />
-      El Declarante reportará la información sobre cualquier tipo de deuda y por cada una de ellas.
+    <p class="vertical-margin-25">
+      Todos los campos * son obligatorios. Los datos de terceros, siempre y cuando sean personas físicas, y los campos
+      resaltados <span class="no-public-inline"></span> no serán públicos.
+      <span *ngIf="tipoDeclaracion === 'inicial'">Reportar los datos del empleo, cargo o comisión que inicie.</span>
+      <span *ngIf="tipoDeclaracion === 'modificacion'">Deberá reportar el empleo, cargo o comisión actual.</span>
+      <span *ngIf="tipoDeclaracion === 'conclusion'"
+        >Reportar los datos del empleo, cargo o comisión que concluya.</span
+      >
     </p>
 
-    <!-- Botones iniciales -->
-    <div *ngIf="!adeudo?.length && !editMode && !adeudosPasivosForm.value.ninguno">
-      <mat-grid-list cols="2" rowHeight="150px">
-        <mat-grid-tile colspan="1">
-          <div class="boton-agregar">
-            <button mat-raised-button color="primary" (click)="noDebts()">Ninguno</button>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="1">
-          <div class="boton-agregar">
-            <button mat-raised-button color="primary" (click)="addItem()">Agregar Adeudos/Pasivos</button>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </div>
-
     <!-- card de información -->
-    <div class="">
-      <mat-card class="info" *ngIf="adeudosPasivosForm.value.ninguno">
-        <p>Ningún adeudo/pasivo</p>
-      </mat-card>
-
-      <mat-card class="info" *ngFor="let p of adeudo; let i = index">
-        <mat-card-content class="">
-          <div class="grid-3fr-1fr">
-            <div class="paragraph-flex size-20">
+    <div class="hidden">
+      <!--<mat-card class="info" *ngFor="let c of cargos; let i = index">
+        <mat-card-content>
+          <div class="flex">
+            <div class="left paragraph-flex">
+              <mat-icon matPrefix class="icon">star</mat-icon>
+              <p>
+                Nivel/Orden de Gobierno: <span class="resaltar">{{ c.orden_gobierno }}</span>
+              </p>
+            </div>
+            <div class="right paragraph-flex">
               <mat-icon matPrefix class="icon">aspect_ratio</mat-icon>
               <p>
-                <span class="negritas">{{ p.tipoAdeudo.valor }}</span>
+                Ámbito Público: <span class="resaltar">{{ c.ambito_publico }}</span>
               </p>
             </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">person</mat-icon>
+            <div class="left resaltar paragraph-flex">
+              <mat-icon matPrefix class="icon">dns</mat-icon>
+              <p>Nombre del Ente Público: {{ c.ente_publico }}</p>
+            </div>
+            <div class="right paragraph-flex">
+              <mat-icon matPrefix class="icon">wb_iridescent</mat-icon>
+              <p><span *ngIf="!c.honorarios">NO</span> Contratado por honorarios</p>
+            </div>
+            <div class="left paragraph-flex">
+              <mat-icon matPrefix class="icon">speaker_notes</mat-icon>
+              <p>Área de Adscripción: {{ c.area_adscripcion }}</p>
+            </div>
+            <div class="right paragraph-flex">
+              <mat-icon matPrefix class="icon">wb_iridescent</mat-icon>
               <p>
-                Titular: <span class="resaltar" *ngFor="let dato of p.titular">{{ dato.valor }}</span>
+                Nivel del empleo, cargo o comisión <span class="resaltar">{{ c.nivel_cargo }}</span>
+              </p>
+            </div>
+            <div class="left paragraph-flex">
+              <mat-icon matPrefix class="icon">work</mat-icon>
+              <p>
+                <span class="resaltar negritas">{{ c.cargo }}</span>
               </p>
             </div>
           </div>
 
-          <!-- Terceros -->
+          <!-- Funcion principal -- >
           <mat-divider></mat-divider>
-
-          <p>Nombre del Tercero o Terceros</p>
-          <div class="card-grid-3-col" *ngFor="let dato of p.tercero">
+          <div class="padding-card-section">
             <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">person</mat-icon>
-              <p>
-                {{ dato.nombreRazonSocial }}
-              </p>
+              <mat-icon matPrefix class="icon">speaker_notes</mat-icon>
+              <p>Especifique función principal</p>
             </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">fingerprint</mat-icon>
-              <p>
-                {{ dato.rfc }}
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">person</mat-icon>
-              <p>
-                {{ dato.tipoPersona }}
-              </p>
-            </div>
+            <p>
+              {{ c.funcion_principal }}
+            </p>
           </div>
 
+          <!-- Direccion empresa -- >
           <mat-divider></mat-divider>
 
-          <p>Otorgante del crédito</p>
-          <div class="card-grid-3-col">
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">person</mat-icon>
-              <p>
-                {{ p.otorganteCredito.nombreInstitucion }}
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">fingerprint</mat-icon>
-              <p>
-                {{ p.otorganteCredito.rfc }}
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">person</mat-icon>
-              <p>
-                {{ p.otorganteCredito.tipoPersona }}
-              </p>
-            </div>
-          </div>
-
-          <mat-divider></mat-divider>
-
-          <div class="grid-3fr-1fr">
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">image_aspect_ratio</mat-icon>
-              <p>
-                Número de Cuenta: <span class="resaltar">{{ p.numeroCuentaContrato }}</span>
-              </p>
-            </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon">credit_card</mat-icon>
-              <p>
-                Monto original:
-                <span class="resaltar">{{ p.montoOriginal.valor | currency }} {{ p.montoOriginal.moneda }} </span>
-              </p>
-            </div>
-            <div class="paragraph-flex">
+          <div class="grid-container">
+            <div class="grid-item paragraph-flex">
               <mat-icon matPrefix class="icon">date_range</mat-icon>
               <p>
-                Fecha de adquisición del adeudo:
-                <span class="resaltar">{{ p.fechaAdquisicion | date: 'dd/MM/yyyy' }}</span>
+                Fecha de toma de posición del empleo, cargo o comisión
               </p>
             </div>
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">account_balance_wallet</mat-icon>
+            <div class="grid-item paragraph-flex">
+              <mat-icon matPrefix class="icon">call</mat-icon>
               <p>
-                Saldo Indoluto:
-                <span class="resaltar">
-                  {{ p.saldoInsolutoSituacionActual.valor | currency }} {{ p.saldoInsolutoSituacionActual.moneda }}
-                </span>
+                Teléfono de oficina
               </p>
+            </div>
+            <div class="grid-item">Domicilio del empleo, cargo o comisión</div>
+            <div class="grid-item">
+              <p>{{ c.fecha_ingreso | date: 'dd/MM/yyyy' }}</p>
+            </div>
+            <div class="grid-item">
+              {{ c.telefono_oficina }} <span *ngIf="c.extension"></span>extensión {{ c.extension }}
+            </div>
+            <div class="grid-item paragraph-flex">
+              <mat-icon matPrefix class="icon">public</mat-icon>
+              <p>En {{ c.domicilio_cargo?.pais }}</p>
+            </div>
+            <div class="grid-item grid-item-last paragraph-flex">
+              <mat-icon matPrefix class="icon">location_city</mat-icon>
+              <div class="domicilio-empleo">
+                <p>
+                  Calle {{ c.domicilio_cargo?.calle }} #{{ c.domicilio_cargo?.numero_exterior }}
+                  <span *ngIf="c.numero_interior">Int. {{ c.domicilio_cargo?.numero_interior }}</span
+                  >.
+                </p>
+                <p>{{ c.domicilio_cargo?.localidad }}.</p>
+                <p>{{ c.domicilio_cargo?.municipio }}, {{ c.domicilio_cargo?.estado }}.</p>
+                <p>C.P. {{ c.domicilio_cargo?.codigo_postal }}</p>
+              </div>
             </div>
           </div>
-
           <mat-divider></mat-divider>
-
-          <p>Ubicación dónde se localiza la inversión, cuenta bancaria u otro tipo de valores/activos</p>
-          <div class="card-grid-3-col">
-            <div class="paragraph-flex">
-              <mat-icon matPrefix class="icon card-no-public">public</mat-icon>
-              <p *ngIf="p.localizacionAdeudo">En el Extranjero</p>
-              <p *ngIf="!p.localizacionAdeudo">En México</p>
-            </div>
-            <div></div>
-            <div class="paragraph-flex" *ngIf="p.localizacionAdeudo">
-              <mat-icon matPrefix class="icon card-no-public">public</mat-icon>
-              <p>
-                {{ p.localizacionAdeudo?.pais }}
-              </p>
-            </div>
-          </div>
-
-          <!--           <mat-divider></mat-divider>
-
           <div class="padding-card-section">
             <div class="paragraph-flex aclaraciones">
+              <span class="no-public-inline no-public-inline-margin"></span>
               <mat-icon matPrefix class="icon">speaker_notes</mat-icon>
               <p>Aclaraciones/Observaciones</p>
             </div>
             <p>
-              {{ p.aclaracionesObservaciones }}
+              {{ c.aclaraciones }}
             </p>
-          </div> -->
+          </div>
 
           <mat-divider></mat-divider>
         </mat-card-content>
@@ -202,255 +141,376 @@
         </mat-card-actions>
       </mat-card>
 
-      <div class="boton-agregar" *ngIf="(adeudo.length && !editMode) || adeudosPasivosForm.value.ninguno">
-        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
-        <button mat-raised-button color="primary" (click)="checkItems()">
-          GUARDAR
-        </button>
-        <button mat-raised-button color="primary" (click)="addItem()">Agregar Pasivo</button>
-      </div>
+      <div class="boton-agrgar-empleo">
+        <button mat-button color="primary">Agregar otro empleo</button>
+      </div>-->
     </div>
 
-    <!-- Formulario -->
-    <form (ngSubmit)="saveItem()" [formGroup]="adeudosPasivosForm" *ngIf="editMode">
-      <!-- Agregar -->
-      <div class="padding-agregar" formGroupName="adeudo">
-        <mat-divider></mat-divider>
-        <p>Adeudo/Pasivo</p>
-        <!-- Datos -->
-        <div class="grid-3-col grid-margin">
-          <mat-form-field appearance="fill">
-            <mat-label>Tipo de Operacion</mat-label>
-            <mat-icon matPrefix>beenhere</mat-icon>
-            <mat-select formControlName="tipoOperacion" required>
-              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
-                {{ tipoOperacion | replace: '_':' ' }}
+    <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosEmpleoCargoComisionForm">
+      <!-- Primer bloque -->
+      <div>
+        <div class="grid-2-col">
+          <mat-form-field matTooltip="{{ tooltipData.nivelOrdenGobierno }}" appearance="fill">
+            <mat-label>Nivel/Orden de Gobierno </mat-label>
+            <mat-icon matPrefix>star</mat-icon>
+            <mat-select formControlName="nivelOrdenGobierno" required (selectionChange)="cambioOrden($event.value)">
+              <mat-option *ngFor="let orden of nivelOrdenGobiernoCatalogo" [value]="orden">
+                {{ orden | replace: '_':' ' }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
-        <!-- Datos adeudo -->
-        <div class="">
-          <h2>Adeudo/Pasivo</h2>
-          <div class="grid-2-col grid-margin">
-            <mat-form-field matTooltip="{{ tooltipData.tipoAdeudo }}" appearance="fill">
-              <mat-label>Tipo de adeudo</mat-label>
-              <mat-icon matPrefix>aspect_ratio</mat-icon>
-              <mat-select formControlName="tipoAdeudo" required>
-                <mat-option *ngFor="let tipoAdeudo of tipoAdeudoCatalogo" [value]="tipoAdeudo">
-                  {{ tipoAdeudo.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" *ngIf="adeudosPasivosForm.value.adeudo.tipoAdeudo?.clave === 'OTRO'">
-              <mat-label>Especifique</mat-label>
-              <mat-icon matPrefix class="no-public">aspect_ratio</mat-icon>
-              <input 
-              [errorStateMatcher]="errorMatcher" 
-              [value]= varOtroTipoAdeudo
-              class="OTA"
-              #otroTipoAdeudo 
-              matInput 
-              type="text" 
-              required />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.titularAdeudo }}" appearance="fill">
-              <mat-label>Titular del adeudo</mat-label>
-              <mat-icon matPrefix class="no-public">person</mat-icon>
-              <mat-select formControlName="titular" required>
-                <mat-option *ngFor="let titularBien of titularBienCatalogo" [value]="titularBien">
-                  {{ titularBien.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
 
-          <div class="grid-2-col grid-margin">
-            <mat-form-field matTooltip="{{ tooltipData.numeroCuentaContrato }}" appearance="fill">
-              <mat-label>Número de cuenta o contrato</mat-label>
-              <mat-icon matPrefix class="no-public">image_aspect_ratio</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="text"
-                formControlName="numeroCuentaContrato"
-                required
-              />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.fechaAdquisicion }}" appearance="fill">
-              <mat-label>Fecha de Adquisición del adeudo/pasivo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerAdquisicion"
-                [min]="minDate"
-                [max]="maxDate"
-                formControlName="fechaAdquisicion"
-                required
-              />
-              <mat-hint>dd/mm/yyyy</mat-hint>
-              <mat-datepicker-toggle matPrefix [for]="pickerAdquisicion"> </mat-datepicker-toggle>
-              <mat-datepicker #pickerAdquisicion></mat-datepicker>
-            </mat-form-field>
-          </div>
 
-          <div class="grid-2-col grid-margin" formGroupName="montoOriginal">
-            <mat-form-field matTooltip="{{ tooltipData.montoOriginal }}" appearance="fill">
-              <mat-label>Monto original del adeudo/pasivo</mat-label>
-              <mat-icon matPrefix>credit_card</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="number"
-                formControlName="valor"
-                min="0"
-                required
-              />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.tipoMoneda }}" appearance="fill">
-              <mat-label>Tipo de Moneda</mat-label>
-              <mat-icon matPrefix>credit_card</mat-icon>
-              <mat-select formControlName="moneda" required>
-                <mat-option *ngFor="let m of monedasCatalogo" [value]="m.clave">
-                  {{ m.clave }} - {{ m.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+          <mat-form-field matTooltip="{{ tooltipData.ambitoPublico }}" appearance="fill">
+            <mat-label>Ámbito Público</mat-label>
+            <mat-icon matPrefix>aspect_ratio</mat-icon>
+            <mat-select formControlName="ambitoPublico" required (selectionChange)="cambioAmbito($event.value)">
+              <mat-option *ngFor="let ambito of ambitoPublicoCatalogo" [value]="ambito">
+                {{ ambito | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-          <!-- Tercero -->
-          <div class="grid-3-col grid-margin" formGroupName="tercero">
-            <mat-radio-group 
-              matTooltip="{{ tooltipData.tercero }}" 
-              class="tercero" 
-              formControlName="tipoPersona"
-              (change)="radioChange($event.value)"
-              [(ngModel)]="tipoPersona">
-              <p class="question double-col">Copropiedad Tercero</p>
-              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Física</mat-radio-button>&nbsp;&nbsp;
-              <mat-radio-button value="MORAL">Moral</mat-radio-button>&nbsp;&nbsp;
-              <mat-radio-button value="NINGUNO">Ninguno</mat-radio-button>
-            </mat-radio-group>
-            <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill">
-              <mat-label>Nombre del Tercero o Terceros</mat-label>
-              <mat-icon matPrefix>group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="nombreRazonSocial" />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.rfcTercero }}" appearance="fill">
-              <mat-label>RFC</mat-label>
-              <mat-icon matPrefix>fingerprint</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                #input_rfc_tercero
-                formControlName="rfc"
-                type="text"
-                minlength="12"
-                maxlength="13"
-              />
-              <mat-hint align="end">{{ input_rfc_tercero.value?.length || 0 }}/13</mat-hint>
-            </mat-form-field>
-          </div>
 
-          <div class="grid-2-col grid-margin" formGroupName="saldoInsolutoSituacionActual">
-            <mat-form-field matTooltip="{{ tooltipData.saldoInsoluto }}" appearance="fill">
-              <mat-label>Saldo Insoluto (Situación Actual)</mat-label>
-              <mat-icon matPrefix class="no-public">credit_card</mat-icon>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                type="number"
-                formControlName="valor"
-                min="0"
-                required
-              />
-            </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.saldoInsoluto }}" appearance="fill">
-              <mat-label>Tipo de Moneda</mat-label>
-              <mat-icon matPrefix>credit_card</mat-icon>
-              <mat-select formControlName="moneda" required>
-                <mat-option *ngFor="let m of monedasCatalogo" [value]="m.clave">
-                  {{ m.clave }} - {{ m.valor }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+          <mat-form-field matTooltip="{{ tooltipData.nombreEntePublico }}" appearance="fill">
+            <mat-label>Nombre del Ente Público</mat-label>
+            <mat-icon matPrefix>dns</mat-icon>
+            <mat-select formControlName="nombreEntePublico" required>
+              <mat-option *ngFor="let entePublico of entePublicoFiltrado" [value]="entePublico.valor">
+                {{ entePublico.valor }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-          <div class="grid-3-col grid-margin" formGroupName="otorganteCredito">
-            <mat-radio-group
-              matTooltip="{{ tooltipData.otorganteCredito }}"
-              class="checkbox"
-              formControlName="tipoPersona"
+            <!-- <input
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              type="text"
+              formControlName="nombreEntePublico"
+              required
+            />-->
+
+
+          <mat-form-field matTooltip="{{ tooltipData.areaAdscripcion }}" appearance="fill">
+            <mat-label>Área de Adscripción</mat-label>
+            <mat-icon matPrefix>wb_iridescent</mat-icon>
+            <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="areaAdscripcion" required />
+          </mat-form-field>
+
+          <mat-form-field matTooltip="{{ tooltipData.empleoCargoComision }}" appearance="fill">
+            <mat-label>Empleo, cargo o comisión</mat-label>
+            <mat-icon matPrefix>wb_iridescent</mat-icon>
+            <input
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              type="text"
+              formControlName="empleoCargoComision"
+              required
+            />
+          </mat-form-field>
+
+          <mat-form-field matTooltip="{{ tooltipData.especifiqueFuncionPrincipal }}" appearance="fill">
+            <mat-label>Especifique función principal</mat-label>
+            <mat-icon matPrefix>speaker_notes</mat-icon>
+            <input
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              type="text"
+              formControlName="funcionPrincipal"
+              required
+            />
+          </mat-form-field>
+          <!--<div class="grid-2-col">-->
+          <mat-radio-group class="checkbox" appearance="fill" formControlName="contratadoPorHonorarios">
+            <label class="question">¿Está contratado por honorarios? *</label>
+            <mat-radio-button [value]="true">Sí</mat-radio-button>
+            <mat-radio-button [value]="false">No</mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field matTooltip="{{ tooltipData.nivelEmpleoCargoComision }}" appearance="fill">
+            <mat-label>Nivel del empleo, cargo o comisión</mat-label>
+            <mat-icon matPrefix>work</mat-icon>
+            <input
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              #input_nivel_cargo
+              type="text"
+              formControlName="nivelEmpleoCargoComision"
+              required
+            />
+          </mat-form-field>
+          <!--</div>-->
+          <mat-form-field matTooltip="{{ tooltipData.fechaTomaPosesion }}" appearance="fill">
+            
+            <mat-label *ngIf="tipoDeclaracion !== 'conclusion'">Fecha de toma de posesión del empleo</mat-label>
+            <mat-label *ngIf="tipoDeclaracion === 'conclusion'">Fecha de conclusión del empleo</mat-label>
+            <input
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              [matDatepicker]="picker"
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="fechaTomaPosesion"
+              required
+            />
+            <mat-hint>dd/mm/yyyy</mat-hint>
+            <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div class="grid-3-col">
+            <mat-form-field
+              matTooltip="{{ tooltipData.telefonoOficinaExtension }}"
+              appearance="fill"
+              class="double-col"
+              formGroupName="telefonoOficina"
             >
-              <p class="question double-col">Otorgante del crédito</p>
-              <mat-radio-button value="FISICA"><span class="no-public-inline"></span> Persona Física</mat-radio-button>
-              <mat-radio-button value="MORAL">Persona Moral</mat-radio-button>
-            </mat-radio-group>
-            <mat-form-field matTooltip="{{ tooltipData.nombreInstitucionRazonSocial }}" appearance="fill">
-              <mat-label>Nombre/ institución o razón social</mat-label>
-              <mat-icon matPrefix class="no-public">group</mat-icon>
+              <mat-label>Teléfono de oficina</mat-label>
+              <mat-icon matPrefix>call</mat-icon>
               <input
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 type="text"
-                formControlName="nombreInstitucion"
+                #input_telefono_oficina
+                formControlName="telefono"
+                maxlength="10"
                 required
               />
+              <mat-hint align="end">{{ input_telefono_oficina.value?.length || 0 }}/10</mat-hint>
             </mat-form-field>
-            <mat-form-field matTooltip="{{ tooltipData.rfc }}" appearance="fill">
-              <mat-label>RFC</mat-label>
-              <mat-icon matPrefix class="no-public">fingerprint</mat-icon>
+            <mat-form-field
+              matTooltip="{{ tooltipData.telefonoOficinaExtension }}"
+              appearance="fill"
+              class="extension"
+              formGroupName="telefonoOficina"
+            >
+              <mat-label>Extensión</mat-label>
+              <mat-icon matPrefix>call</mat-icon>
               <input
                 [errorStateMatcher]="errorMatcher"
                 matInput
-                #input_rfc_otorgante
-                formControlName="rfc"
                 type="text"
-                maxlength="13"
+                formControlName="extension"
+                maxlength="5"
                 required
               />
-              <mat-hint align="end">{{ input_rfc_otorgante.value?.length || 0 }}/13</mat-hint>
             </mat-form-field>
           </div>
+        </div>
 
-          <div class="grid-2-col grid-margin" formGroupName="localizacionAdeudo">
-            <mat-form-field matTooltip="{{ tooltipData.localizaAdeudo }}" appearance="fill">
-              <mat-label>¿Dónde se localiza el adeudo?</mat-label>
+        <!-- Segundo Bloque -->
+        <p>Domicilio del empleo, cargo o comisión</p>
+        <mat-grid-list cols="2" rowHeight="100px">
+          <mat-grid-tile colspan="1">
+            <mat-form-field appearance="fill">
+              <mat-label>País</mat-label>
               <mat-icon matPrefix>public</mat-icon>
-              <mat-select 
-                [(value)]="location"
-                (selectionChange)="localizacionChanged($event.value)" required>
-                <mat-option value="{{ extranjeroCatalogo[0] }}"> EN MÉXICO </mat-option>
-                <mat-option value="{{ extranjeroCatalogo[1] }}"> EN EL EXTRANJERO </mat-option>
+              <mat-select #tipoDomicilioInput (selectionChange)="tipoDomicilioChanged($event.value)" required>
+                <mat-option value="MEXICO"> MÉXICO </mat-option>
+                <mat-option value="EXTRANJERO"> EN EL EXTRANJERO </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="fill" *ngIf="tipoDomicilio === 'EX'">
-              <mat-label>País donde de ubica</mat-label>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list *ngIf="tipoDomicilio === 'MEXICO'" cols="15" rowHeight="100px" formGroupName="domicilioMexico">
+          <mat-grid-tile colspan="6">
+            <mat-form-field appearance="fill">
+              <mat-label>Calle</mat-label>
+              <mat-icon matPrefix>streetview</mat-icon>
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="calle" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field appearance="fill">
+              <mat-label>Número Exterior</mat-label>
+              <mat-icon matPrefix>image_aspect_ratio</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                type="text"
+                formControlName="numeroExterior"
+                maxlength="5"
+                required
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field appearance="fill">
+              <mat-label>Número Interior</mat-label>
+              <mat-icon matPrefix>image_aspect_ratio</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                #input_ni
+                type="text"
+                formControlName="numeroInterior"
+                maxlength="10"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field appearance="fill">
+              <mat-label>Código Postal</mat-label>
+              <mat-icon matPrefix>markunread_mailbox</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                #input_cp
+                maxlength="5"
+                type="text"
+                formControlName="codigoPostal"
+                required
+              />
+              <mat-hint align="end">{{ input_cp.value?.length || 0 }}/5</mat-hint>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="5">
+            <mat-form-field appearance="fill">
+              <mat-label>Entidad Federativa</mat-label>
               <mat-icon matPrefix>public</mat-icon>
-              <mat-select formControlName="pais" required>
-                <mat-option *ngFor="let opt of paisesCatalogo" [(value)]="opt.clave">
+              <mat-select formControlName="entidadFederativa" required>
+                <mat-option *ngFor="let opt of estadosCatalogo" [value]="opt">
                   {{ opt.valor }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-        </div>
-      </div>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="5">
+            <mat-form-field appearance="fill">
+              <mat-label>Municipio/Alcaldía</mat-label>
+              <mat-icon matPrefix>beenhere</mat-icon>
+              <mat-select formControlName="municipioAlcaldia" required>
+                <mat-option *ngFor="let opt of municipiosCatalogo[estado?.clave]" [value]="opt">
+                  {{ opt.valor }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="5">
+            <mat-form-field appearance="fill">
+              <mat-label>Colonia</mat-label>
+              <mat-icon matPrefix>location_city</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                #input_localidad
+                type="text"
+                formControlName="coloniaLocalidad"
+                required
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
 
-      <mat-divider></mat-divider>
+        <mat-grid-list
+          *ngIf="tipoDomicilio === 'EXTRANJERO'"
+          cols="15"
+          rowHeight="100px"
+          formGroupName="domicilioExtranjero"
+        >
+          <mat-grid-tile colspan="6">
+            <mat-form-field appearance="fill">
+              <mat-label>Calle</mat-label>
+              <mat-icon matPrefix>streetview</mat-icon>
+              <input [errorStateMatcher]="errorMatcher" matInput type="text" formControlName="calle" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field appearance="fill">
+              <mat-label>Número Exterior</mat-label>
+              <mat-icon matPrefix>image_aspect_ratio</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                type="text"
+                formControlName="numeroExterior"
+                required
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field appearance="fill">
+              <mat-label>Número Interior</mat-label>
+              <mat-icon matPrefix>image_aspect_ratio</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                #input_ni
+                type="text"
+                formControlName="numeroInterior"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field appearance="fill">
+              <mat-label>Código Postal</mat-label>
+              <mat-icon matPrefix>markunread_mailbox</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                #input_cp
+                maxlength="5"
+                type="text"
+                formControlName="codigoPostal"
+                required
+              />
+              <mat-hint align="end">{{ input_cp.value?.length || 0 }}/5</mat-hint>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="5">
+            <mat-form-field appearance="fill">
+              <mat-label>País</mat-label>
+              <mat-icon matPrefix>location_city</mat-icon>
+              <mat-select formControlName="pais" required>
+                <mat-option *ngFor="let opt of paisesCatalogo" [value]="opt.clave">
+                  {{ opt.valor }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="5">
+            <mat-form-field appearance="fill">
+              <mat-label>Estado/Provincia</mat-label>
+              <mat-icon matPrefix>public</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                #input_ep
+                type="text"
+                formControlName="estadoProvincia"
+                required
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="5">
+            <mat-form-field appearance="fill">
+              <mat-label>Ciudad/Localidad</mat-label>
+              <mat-icon matPrefix>beenhere</mat-icon>
+              <input
+                [errorStateMatcher]="errorMatcher"
+                matInput
+                #input_cl
+                type="text"
+                formControlName="ciudadLocalidad"
+                required
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
 
       <div class="boton" *ngIf="!aclaraciones">
         <button mat-raised-button class="text-primary" (click)="toggleAclaraciones(true)">
           AGREGAR ACLARACIONES / OBSERVACIONES
         </button>
       </div>
-      <div class="grid-margin" *ngIf="aclaraciones">
-        <div class="flex">
+      <div class="" *ngIf="aclaraciones">
+        <div class="flex grid-margin">
           <p>Aclaraciones / Observaciones</p>
           <button mat-raised-button color="primary" (click)="toggleAclaraciones(false)">CANCELAR</button>
         </div>
 
-        <mat-form-field matTooltip="{{ tooltipData.aclaracionesObservaciones }}" appearance="fill" class="grid-margin">
+        <mat-form-field appearance="fill" class="grid-margin">
           <mat-icon matPrefix class="aclaraciones-no-public">speaker_notes</mat-icon>
           <textarea
             maxlength="500"
@@ -462,17 +522,24 @@
         </mat-form-field>
       </div>
 
-      <mat-divider></mat-divider>
+      <mat-grid-list cols="1" rowHeight="100px" *ngIf="tipoDeclaracion === 'modificacion'">
+        <mat-grid-tile colspan="1" class="content-left">
+          <mat-radio-group class="checkbox" appearance="fill" formControlName="cuentaConOtroCargoPublico">
+            <label class="question"
+              >¿Cuenta con otro empleo cargo o comisión en el servicio público distinto al declarado? *</label
+            >
+            <mat-radio-button [value]="true">Sí</mat-radio-button>
+            <mat-radio-button [value]="false">No</mat-radio-button>
+          </mat-radio-group>
+        </mat-grid-tile>
+      </mat-grid-list>
 
       <div class="boton text-right">
         <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-        <button mat-raised-button color="primary" type="button" *ngIf="editMode" (click)="cancelEditMode()">
-          CANCELAR
-        </button>
-        <button mat-raised-button color="primary" type="button" (click)="adeudosPasivosForm.reset()">
+        <button mat-raised-button color="primary" type="button" (click)="datosEmpleoCargoComisionForm.reset()">
           LIMPIAR FORMULARIO
         </button>
-        <button mat-raised-button color="primary" [disabled]="adeudosPasivosForm.invalid || isLoading">
+        <button mat-raised-button color="primary" [disabled]="datosEmpleoCargoComisionForm.invalid || isLoading">
           GUARDAR CAMBIOS
         </button>
       </div>
@@ -481,8 +548,25 @@
     <mat-divider></mat-divider>
 
     <div class="boton center">
-      <button mat-raised-button color="primary" (click)="formHasChanges()">
-        CONTINUAR 15 DE 15
+      <button
+        *ngIf="!declaracionSimplificada"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="formHasChanges()"
+      >
+        CONTINUAR 5 DE 15
+        <mat-icon matSofix>arrow_forward</mat-icon>
+      </button>
+
+      <button
+        *ngIf="declaracionSimplificada"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="formHasChanges()"
+      >
+        CONTINUAR 5 DE 7
         <mat-icon matSofix>arrow_forward</mat-icon>
       </button>
     </div>
