@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog  } from '@angular/material/dialog';
 import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,10 @@ import { DialogElementsExampleDialog } from './comienza-tu-declaracion.dialog.co
 export class ComienzaTuDeclaracionComponent  {
   ngOnInit(){
   }
- constructor(public dialog: MatDialog) {}
+ constructor(
+  public dialog: MatDialog,
+  private router: Router,
+) {}
 
   openDialog() {
     //this.dialogRef.open(DialogElementsExampleDialog);
@@ -27,12 +31,7 @@ export class ComienzaTuDeclaracionComponent  {
 
   openAviso(){
     //this.dialogRef.open(DialogElementsExampleDialog);
-    let dialogRef = this.dialog.open(DialogElementsExampleDialog, {
-      data: `llega hasta qqui`
-    })
-    console.log("");
-    dialogRef.afterClosed().subscribe((res: { data: any; }) => {
-      console.log(res.data)
-    })
+    console.log("llega hasta aqui");
+    this.router.navigate(["/aviso"]);
   }
 }
