@@ -15,18 +15,12 @@ import { BienesInmueblesComponent } from './bienes-inmuebles/bienes-inmuebles.co
 import { InversionesComponent } from './inversiones/inversiones.component';
 import { VehiculosComponent } from './vehiculos/vehiculos.component';
 import { BienesMueblesComponent } from './bienes-muebles/bienes-muebles.component';
-import { AvisoComponent } from './aviso/aviso.component';
 
 import { AdeudosComponent } from './adeudos/adeudos.component';
 import { PrestamosTercerosComponent } from './prestamos-terceros/prestamos-terceros.component';
 import { Shell } from '@app/shell/shell.service';
 
 const modules: Routes = [
-  {
-    path: 'aviso',
-    component: AvisoComponent,
-    data: { title: marker('Aviso') },
-  },
   {
     path: 'datos-generales',
     component: DatosGeneralesComponent,
