@@ -1,6 +1,6 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AvisoComponent } from './aviso.component';
+import { AvisoComponent } from './datos-generales.component';
 
 describe('AvisoComponent', () => {
   let component: AvisoComponent;
