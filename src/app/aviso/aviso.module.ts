@@ -8,27 +8,19 @@ import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
 import { SharedPresentarDeclaracionModule } from '../shared-presentar-declaracion/shared-presentar-declaracion.module';
-import { InteresesRoutingModule } from './aviso-routing.module';
+import { AvisoRoutingModule } from './aviso-routing.module';
 
-import { ParticipacionEmpresaComponent } from './participacion-empresa/participacion-empresa.component';
-import { TomaDecisionesComponent } from './toma-decisiones/toma-decisiones.component';
-import { ApoyosPublicosComponent } from './apoyos-publicos/apoyos-publicos.component';
-import { RepresentacionComponent } from './representacion/representacion.component';
-import { ClientesPrincipalesComponent } from './clientes-principales/clientes-principales.component';
-import { BeneficiosPrivadosComponent } from './beneficios-privados/beneficios-privados.component';
-import { FideicomisosComponent } from './fideicomisos/fideicomisos.component';
+import { DatosGeneralesComponent } from './datos-generales/datos-generales.component';
+import { DomicilioDeclaranteComponent } from './domicilio-declarante/domicilio-declarante.component';
+import { DatosEmpleoComponent } from './datos-empleo/datos-empleo.component';
 
 import { CatalogosService } from '../../services/catalogos.service';
 
 @NgModule({
   declarations: [
-    ParticipacionEmpresaComponent,
-    TomaDecisionesComponent,
-    ApoyosPublicosComponent,
-    RepresentacionComponent,
-    ClientesPrincipalesComponent,
-    BeneficiosPrivadosComponent,
-    FideicomisosComponent,
+    DatosGeneralesComponent,
+    DomicilioDeclaranteComponent,
+    DatosEmpleoComponent,
   ],
   imports: [
     CommonModule,
@@ -39,8 +31,8 @@ import { CatalogosService } from '../../services/catalogos.service';
     FlexLayoutModule,
     MaterialModule,
     SharedPresentarDeclaracionModule,
-    InteresesRoutingModule,
+    AvisoRoutingModule,
   ],
   providers: [CatalogosService],
 })
-export class InteresesModule {}
+export class AvisoModule {}

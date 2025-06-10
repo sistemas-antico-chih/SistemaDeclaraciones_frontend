@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 
 import { ComienzaTuDeclaracionComponent } from './comienza-tu-declaracion.component';
-import { AvisoComponent } from '../../aviso/datos-generales/datos-generales.component';
+//import { AvisoComponent } from '../../aviso/datos-generales/datos-generales.component';
 
 const routes: Routes = [
   {
@@ -11,11 +11,11 @@ const routes: Routes = [
     component: ComienzaTuDeclaracionComponent,
     data: { title: marker('Comienza tu declaración') },
   },
-  {
+  /*{
     path: 'aviso',
     component: AvisoComponent,
     data: { title: marker('Aviso') },
-  },
+  },*/
 ];
 
 @NgModule({
