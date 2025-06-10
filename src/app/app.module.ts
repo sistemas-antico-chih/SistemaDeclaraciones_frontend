@@ -21,6 +21,7 @@ import { PreguntasFrecuentesModule } from './preguntas-frecuentes/preguntas-frec
 import { PerfilModule } from './perfil/perfil.module';
 import { ListaDeclaracionesModule } from './lista-declaraciones/lista-declaraciones.module';
 import { ComienzaTuDeclaracionModule } from './presentar-declaracion/comienza-tu-declaracion/comienza-tu-declaracion.module';
+import { Aviso } from '../app/aviso/aviso.module';
 //import { AvisosModule } from './presentar-declaracion/intereses/intereses.module';
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ComienzaTuDeclaracionModule } from './presentar-declaracion/comienza-tu
     PerfilModule,
     ListaDeclaracionesModule,
     ComienzaTuDeclaracionModule,
+    Aviso,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
