@@ -7,7 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
-import { SharedPresentarDeclaracionModule } from '../shared-presentar-declaracion/shared-presentar-declaracion.module';
+//import { SharedPresentarDeclaracionModule } from '/shared-presentar-declaracion/shared-presentar-declaracion.module';
+import { SharedPresentarDeclaracionModule } from '../presentar-declaracion/shared-presentar-declaracion/shared-presentar-declaracion.module';
 import { AvisoRoutingModule } from './aviso-routing.module';
 
 import { DatosGeneralesComponent } from './datos-generales/datos-generales.component';
