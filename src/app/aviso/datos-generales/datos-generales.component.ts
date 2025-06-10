@@ -1,353 +1,336 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { MatSelect } from '@angular/material/select';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  datosEmpleoCargoComisionQuery,
-  declaracionMutation,
-  lastDatosEmpleoCargoComisionQuery,
-} from '@api/declaracion';
-import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
-import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
-import Estados from '@static/catalogos/estados.json';
-import EstadoFijo from '@static/catalogos/estadoFijo.json';
-import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoEmpleo.json';
-import Paises from '@static/catalogos/paises.json';
-import entePublico from '@static/catalogos/entePublico_municipios.json';
-import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
-import { findOption } from '@utils/utils';
-import { UntilDestroy, untilDestroyed } from '@app/@core';
 
+import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
+import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { UntilDestroy, untilDestroyed } from '@core';
+import { DatosGenerales, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
+import Nacionalidades from '@static/catalogos/nacionalidades.json';
+import Paises from '@static/catalogos/paisesMX.json';
+import SituacionPersonalEstadoCivil from '@static/catalogos/situacionPersonalEstadoCivil.json';
+import RegimenMatrimonial from '@static/catalogos/regimenMatrimonial.json';
+import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-generales';
+import { findOption } from '@utils/utils';
+
+@UntilDestroy()
 @Component({
-  selector: 'app-aviso',
-  templateUrl: './aviso.component.html',
-  styleUrls: ['./aviso.component.scss'],
+  selector: 'app-datos-generales',
+  templateUrl: './datos-generales.component.html',
+  styleUrls: ['./datos-generales.component.scss'],
 })
-export class AvisoComponent implements OnInit {
-  orden: string;
-    ambito: string;
-    aclaraciones = false;
-    datosEmpleoCargoComisionForm: FormGroup;
-    estado: Catalogo = null;
-    isLoading = false;
-    entePublicoCatalogo = entePublico;
-    entePublicoFiltrado = entePublico;
-    entesFiltrados:any = [] ;
-    pushButtonSave: boolean =false;
-  
-    @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
-  
-    nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
-    ambitoPublicoCatalogo = AmbitoPublico;
-    estadosCatalogo = EstadoFijo;
-    municipiosCatalogo = Municipios;
-    paisesCatalogo = Paises;
-  
-    declaracionSimplificada = false;
-    tipoDeclaracion: string = "MODIFICACION";
-    tipoDomicilio: string = null;
-  
-    declaracionId: string = null;
-  
-    tooltipData = tooltipData;
-    errorMatcher = new DeclarationErrorStateMatcher();
-  
-    minDate = new Date(1980, 1, 1);
-    anio: number = new Date().getFullYear();
-    mes: number = new Date().getMonth() + 1;
-    dia: number = new Date().getDate();
-    maxDate = new Date(this.anio, this.mes - 1, this.dia);
-  
-    constructor(
-      private apollo: Apollo,
-      private dialog: MatDialog,
-      private formBuilder: FormBuilder,
-      private router: Router,
-      private snackBar: MatSnackBar
-    ) {
-      const urlChunks = this.router.url.split('/');
-      this.declaracionSimplificada = urlChunks[2] === 'simplificada';
-      this.tipoDeclaracion = urlChunks[1] || null;
-  
-      this.createForm();
-      this.getUserInfo();
+export class DatosGeneralesComponent implements OnInit {
+  array_anio_ejercicio: Array<number> = [];
+  aclaraciones = false;
+  datosGeneralesForm: FormGroup;
+  isLoading = false;
+  currentYear = new Date().getFullYear();
+  anio_ejercicio: number = null;
+  pushButtonSave: boolean =false;
+
+  @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
+
+  nacionalidadesCatalogo = Nacionalidades;
+  paisesCatalogo = Paises;
+  situacionPersonalEstadoCivilCatalogo = SituacionPersonalEstadoCivil;
+  regimenMatrimonialCatalogo = RegimenMatrimonial;
+
+  declaracionSimplificada = false;
+  tipoDeclaracion: string = null;
+  declaracionId: string = null;
+
+  tooltipData = tooltipData;
+  errorMatcher = new DeclarationErrorStateMatcher();
+
+  constructor(
+    private apollo: Apollo,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    const urlChunks = this.router.url.split('/');
+    this.declaracionSimplificada = urlChunks[2] === 'simplificada';
+    this.tipoDeclaracion = urlChunks[1] || null;
+
+    for (let index = 0; index < 5; index++) {
+      this.array_anio_ejercicio.push(this.currentYear - index);
     }
-  
-    confirmSaveInfo() {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        data: {
-          title: 'Guardar cambios',
-          message: '',
-          trueText: 'Guardar',
-          falseText: 'Cancelar',
-        },
-      });
-  
-      this.pushButtonSave = true;
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.saveInfo();
-        }
-      });
-    }
-  
-    createForm() {
-      this.datosEmpleoCargoComisionForm = this.formBuilder.group({
-        nivelOrdenGobierno: [null, [Validators.required]],
-        ambitoPublico: [null, [Validators.required]],
-        nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        contratadoPorHonorarios: [null, [Validators.required]],
-        nivelEmpleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        fechaTomaPosesion: [null, [Validators.required]],
-        telefonoOficina: this.formBuilder.group({
-          telefono: [null, [Validators.pattern(/^\d{10}$/)]],
-          extension: [null, [Validators.pattern(/^\d{1,10}$/)]],
-        }),
-        domicilioMexico: this.formBuilder.group({
-          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
-          coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
-          entidadFederativa: [null, [Validators.required]],
-          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
-        }),
-        domicilioExtranjero: this.formBuilder.group({
-          calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
-          ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          estadoProvincia: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-          pais: [null, [Validators.required]],
-          codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
-        }),
-        aclaracionesObservaciones: [
-          { disabled: true, value: '' },
-          [Validators.required, Validators.pattern(/^\S.*\S?$/)],
+
+    this.createForm();
+    this.getUserInfo();
+    this.getUserDataQuery();
+  }
+
+  confirmSaveInfo() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Guardar cambios',
+        message: '',
+        trueText: 'Guardar',
+        falseText: 'Cancelar',
+      },
+    });
+
+    this.pushButtonSave = true;
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.saveInfo();
+      }
+    });
+  }
+
+  createForm() {
+    this.datosGeneralesForm = this.formBuilder.group({
+      nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
+      primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
+      segundoApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
+      curp: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(
+            /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
+          ),
         ],
-        cuentaConOtroCargoPublico: [
-          { disabled: this.tipoDeclaracion !== 'modificacion', value: null },
-          [Validators.required],
+      ],
+      rfc: this.formBuilder.group({
+        rfc: [
+          null,
+          [
+            Validators.required,
+            Validators.pattern(/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01]))$/i),
+          ],
         ],
-      });
-  
-      // this.datosEmpleoCargoComisionForm.get('domicilioExtranjero').disable();
-  
-      const estado = this.datosEmpleoCargoComisionForm.get('domicilioMexico').get('entidadFederativa');
-      estado.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-        const municipio = this.datosEmpleoCargoComisionForm.get('domicilioMexico').get('municipioAlcaldia');
-  
-        if (value) {
-          municipio.enable();
-        } else {
-          municipio.disable();
-          municipio.reset();
-        }
-        this.estado = value;
-      });
-    }
-  
-    fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
-      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision || {});
-  
-      if (datosEmpleoCargoComision?.aclaracionesObservaciones) {
-        this.toggleAclaraciones(true);
-      }
-      this.setSelectedOptions(datosEmpleoCargoComision);
-    }
-  
-    async getLastUserInfo() {
-      try {
-        const { data, errors } = await this.apollo
-          .query<LastDeclaracionOutput>({
-            query: lastDatosEmpleoCargoComisionQuery,
-          })
-          .toPromise();
-  
-        if (errors) {
-          throw errors;
-        }
-  
-        this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
-      } catch (error) {
-        console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
-        // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
-      }
-    }
-  
-    async getUserInfo() {
-      try {
-        const { data, errors } = await this.apollo
-          .query<DeclaracionOutput>({
-            query: datosEmpleoCargoComisionQuery,
-            variables: {
-              tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
-              declaracionCompleta: !this.declaracionSimplificada,
-            },
-          })
-          .toPromise();
-  
-        if (errors) {
-          throw errors;
-        }
-  
-        this.declaracionId = data?.declaracion._id;
-        if (data?.declaracion.datosEmpleoCargoComision === null) {
-          this.getLastUserInfo();
-        } else {
-          this.fillForm(data?.declaracion.datosEmpleoCargoComision);
-        }
-      } catch (error) {
-        console.error(error);
-        this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
-      }
-    }
-  
-    formHasChanges() {
-      let url = '/' + this.tipoDeclaracion;
-      if (this.declaracionSimplificada) url += '/simplificada';
-      let isDirty = this.datosEmpleoCargoComisionForm.dirty;
-      console.log(isDirty);
-  
-      if (isDirty && !this.pushButtonSave) {
-        const dialogRef = this.dialog.open(DialogComponent, {
-          data: {
-            title: 'Tienes cambios sin guardar',
-            message: '¿Deseas continuar?',
-            falseText: 'Cancelar',
-            trueText: 'Continuar',
-          },
-        });
-  
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) this.router.navigate([url + '/situacion-patrimonial/experiencia-laboral']);
-        });
+        homoClave: [null, [Validators.required, Validators.pattern(/^([A-Z\d]{2})([A\d])$/i)]],
+      }),
+      //rfc con homoclave /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+      correoElectronico: this.formBuilder.group({
+        institucional: [null, [Validators.email]],
+        personal: [null, [Validators.required, Validators.email]],
+      }),
+      telefono: this.formBuilder.group({
+        casa: [null, [Validators.pattern(/^\d{10}$/)]],
+        celularPersonal: [null, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      }),
+      situacionPersonalEstadoCivil: [null, [Validators.required]],
+      regimenMatrimonial: [{ disabled: true, value: null }, [Validators.required]],
+      paisNacimiento: [null, [Validators.required]],
+      nacionalidad: [null, [Validators.required, Validators.pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/i)]], //solo letras, incluyendo acentos
+      aclaracionesObservaciones: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
+    });
+
+    const situacionPersonal = this.datosGeneralesForm.get('situacionPersonalEstadoCivil');
+    situacionPersonal.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      const regimenMatrimonial = this.datosGeneralesForm.get('regimenMatrimonial');
+
+      if (value?.clave === 'CAS') {
+        regimenMatrimonial.enable();
       } else {
-        this.router.navigate([url + '/situacion-patrimonial/experiencia-laboral']);
+        regimenMatrimonial.disable();
+        regimenMatrimonial.reset();
       }
+    });
+  }
+
+  fillForm(datosGenerales: DatosGenerales) {
+    this.datosGeneralesForm.patchValue(datosGenerales || {});
+
+    if (datosGenerales?.aclaracionesObservaciones) {
+      this.toggleAclaraciones(true);
     }
-  
-    ngOnInit(): void {
-      this.pushButtonSave = false;
-      const dialogRef = this.dialog.open(DialogComponentMensaje, {
-        data: {
-          title: '',
-          messageAviso: `Recuerde Guardar la información del registro,`,
-          messageAviso2: `dando clic en el botón correspondiente`,
-          trueText: 'Aceptar',
-          //falseText: '',
-        },
-      });
+
+    if (datosGenerales?.regimenMatrimonial?.clave === 'OTR') {
+      this.otroRegimenMatrimonial.nativeElement.value = datosGenerales?.regimenMatrimonial?.valor;
     }
-  
-    openSnackBar(message: string, action: string = null) {
-      this.snackBar.open(message, action, {
-        duration: 5000,
-      });
-    }
-  
-    async saveInfo() {
-      try {
-        this.isLoading = true;
-        const declaracion = {
-          datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
-        };
-  
-        const { errors } = await this.apollo
-          .mutate({
-            mutation: declaracionMutation,
-            variables: {
-              id: this.declaracionId,
-              declaracion,
-            },
-          })
-          .toPromise();
-  
-        if (errors) {
-          throw errors;
-        }
-  
-        this.isLoading = false;
-        this.openSnackBar('Información actualizada', 'Aceptar');
-      } catch (error) {
-        console.log(error);
-        this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+
+    this.setSelectedOptions();
+  }
+
+  async getUserDataQuery() {
+    const credentials = JSON.parse(localStorage.getItem('credentials'));
+    const rfc = credentials.user.rfc.slice(0, 10);
+    const homo = credentials.user.rfc.slice(10, 13);
+    const dataUser = { ...credentials.user, rfc: { rfc, homoClave: homo } };
+
+    this.datosGeneralesForm.patchValue({ ...dataUser } || {});
+  }
+
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDeclaracionDatosGenerales,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
       }
-    }
-  
-    setSelectedOptions(datosEmpleoCargoComision: DatosEmpleoCargoComision) {
-      const { domicilioExtranjero, domicilioMexico } = datosEmpleoCargoComision ?? {};
-  
-      if (domicilioMexico) {
-        this.datosEmpleoCargoComisionForm
-          .get('domicilioMexico.entidadFederativa')
-          .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa?.clave));
-        this.datosEmpleoCargoComisionForm
-          .get('domicilioMexico.municipioAlcaldia')
-          .setValue(
-            findOption(this.municipiosCatalogo[this.estado?.clave] || [], domicilioMexico.municipioAlcaldia?.clave)
-          );
-        this.tipoDomicilioInput.writeValue('MEXICO');
-        this.tipoDomicilioChanged('MEXICO');
-      } else if (domicilioExtranjero) {
-        this.tipoDomicilioInput.writeValue('EXTRANJERO');
-        this.tipoDomicilioChanged('EXTRANJERO');
-      }
-    }
-  
-    tipoDomicilioChanged(value: string) {
-      this.tipoDomicilio = value;
-      const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
-      const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
-  
-      const notSelected = this.datosEmpleoCargoComisionForm.get(notSelectedType);
-      notSelected.disable();
-      notSelected.reset();
-  
-      this.datosEmpleoCargoComisionForm.get(selectedType).enable();
-    }
-  
-    toggleAclaraciones(value: boolean) {
-      const aclaraciones = this.datosEmpleoCargoComisionForm.get('aclaracionesObservaciones');
-      if (value) {
-        aclaraciones.enable();
-      } else {
-        aclaraciones.disable();
-        aclaraciones.reset();
-      }
-      this.aclaraciones = value;
-    }
-  
-    cambioOrden(value: any) {
-      this.filtrarEntes(value, this.datosEmpleoCargoComisionForm.get('ambitoPublico').value);
-    }
-  
-    cambioAmbito(value: any) {
-      this.filtrarEntes(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno').value,value);
-    }
-  
-    filtrarEntes(orden: string, ambito: string){
-      if(orden==="MUNICIPAL_ALCALDIA"){
-        this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
-          (o:any) =>  o.ambito===orden && o.empleo==='SI');
-        return;
-      }
-      else{
-         this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
-          (o:any) =>  o.ambito!=="MUNICIPAL_ALCALDIA"  && o.empleo==='NO' && o.ambito === ambito);
-         return
-      }
+
+      this.fillForm(data?.lastDeclaracion.datosGenerales);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
+
+  async getUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<DeclaracionOutput>({
+          query: datosGeneralesQuery,
+          variables: {
+            tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
+            declaracionCompleta: !this.declaracionSimplificada,
+          },
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.declaracionId = data?.declaracion._id;
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
+
+      if (data.declaracion.datosGenerales === null) {
+        this.getLastUserInfo();
+      } else {
+        this.fillForm(data?.declaracion.datosGenerales);
+      }
+    } catch (error) {
+      console.log(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
+  get finalForm() {
+    const form = JSON.parse(JSON.stringify(this.datosGeneralesForm.value)); // Deep copy
+
+    if (form.regimenMatrimonial?.clave === 'OTR') {
+      form.regimenMatrimonial.valor = this.otroRegimenMatrimonial.nativeElement.value;
+    }
+
+    return form;
+  }
+
+  inputsAreValid(): boolean {
+    if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
+      return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
+    }
+
+    return typeof this.anio_ejercicio === 'number';
+    // return true;
+  }
+  
+
+
+  formHasChanges() {
+    let url = '/' + this.tipoDeclaracion;
+    if (this.declaracionSimplificada) url += '/simplificada';
+    let isDirty = this.datosGeneralesForm.dirty;
+
+    if (isDirty && !this.pushButtonSave) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Tienes cambios sin guardar',
+          message: '¿Deseas continuar?',
+          falseText: 'Cancelar',
+          trueText: 'Continuar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+      });
+    } else {
+      this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+    }
+  }
+
+  openSnackBar(message: string, action: string = null) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
+  }
+
+  async saveInfo() {
+    try {
+      this.isLoading = true;
+      const declaracion = {
+        datosGenerales: this.finalForm,
+        //anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
+        anioEjercicio: this.anio_ejercicio,
+      };
+
+      const { errors } = await this.apollo
+        .mutate({
+          mutation: declaracionMutation,
+          variables: {
+            id: this.declaracionId,
+            declaracion,
+          },
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.isLoading = false;
+      this.openSnackBar('Información actualizada', 'Aceptar');
+    } catch (error) {
+      console.log(error);
+      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+    }
+  }
+
+  setSelectedOptions() {
+    const { situacionPersonalEstadoCivil, regimenMatrimonial } = this.datosGeneralesForm.value;
+
+    if (situacionPersonalEstadoCivil) {
+      this.datosGeneralesForm
+        .get('situacionPersonalEstadoCivil')
+        .setValue(findOption(this.situacionPersonalEstadoCivilCatalogo, situacionPersonalEstadoCivil.clave));
+    }
+
+    if (regimenMatrimonial) {
+      this.datosGeneralesForm
+        .get('regimenMatrimonial')
+        .setValue(findOption(this.regimenMatrimonialCatalogo, regimenMatrimonial.clave));
+    }
+  }
+
+  toggleAclaraciones(value: boolean) {
+    const aclaraciones = this.datosGeneralesForm.get('aclaracionesObservaciones');
+    if (value) {
+      aclaraciones.enable();
+    } else {
+      aclaraciones.disable();
+      aclaraciones.reset();
+    }
+    this.aclaraciones = value;
+  }
+
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+}
+

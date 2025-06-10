@@ -6,7 +6,7 @@ import { DatosEmpleoComponent } from './datos-empleo/datos-empleo.component';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { Shell } from '@app/shell/shell.service';
 
-const modules:Routes = [
+const modules = [
     {
       path: 'datos-generales',
       component: DatosGeneralesComponent,
