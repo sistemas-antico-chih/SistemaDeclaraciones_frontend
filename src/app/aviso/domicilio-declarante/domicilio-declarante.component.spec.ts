@@ -1,21 +1,21 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatosGeneralesComponent } from './datos-generales.component';
+import { DomicilioDeclaranteComponent } from './domicilio-declarante.component';
 
-describe('DatosGeneralesComponent', () => {
-  let component: DatosGeneralesComponent;
-  let fixture: ComponentFixture<DatosGeneralesComponent>;
+describe('DomicilioDeclaranteComponent', () => {
+  let component: DomicilioDeclaranteComponent;
+  let fixture: ComponentFixture<DomicilioDeclaranteComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [DatosGeneralesComponent],
+        declarations: [DomicilioDeclaranteComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatosGeneralesComponent);
+    fixture = TestBed.createComponent(DomicilioDeclaranteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
