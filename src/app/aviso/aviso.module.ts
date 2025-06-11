@@ -34,6 +34,7 @@ import { CatalogosService } from '../services/catalogos.service';
     SharedPresentarDeclaracionModule,
     AvisoRoutingModule,
   ],
+  exports: [AvisoComponent],
   providers: [CatalogosService],
 })
 export class AvisoModule {}
