@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DatosGeneralesComponent } from './datos-generales/datos-generales.component';
+import { DatosGeneralesAvisoComponent } from './datos-generales/datos-generales.component';
 import { DomicilioDeclaranteComponent } from './domicilio-declarante/domicilio-declarante.component';
 import { DatosEmpleoComponent } from './datos-empleo/datos-empleo.component';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
@@ -9,7 +9,7 @@ import { Shell } from '@app/shell/shell.service';
 const modules = [
     {
       path: 'datos-generales',
-      component: DatosGeneralesComponent,
+      component: DatosGeneralesAvisoComponent,
       data: { title: marker('Datos Generales') },
     },
     {
