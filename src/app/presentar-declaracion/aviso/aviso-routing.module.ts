@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-//import { DatosGeneralesAvisoComponent } from './datos-generales/datos-generales.component';
+import { DatosGeneralesAvisoComponent } from './datos-generales/datos-generales.component';
 import { DomicilioDeclaranteAvisoComponent } from './domicilio-declarante/domicilio-declarante.component';
 import { DatosEmpleoAvisoComponent } from './datos-empleo/datos-empleo.component';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { Shell } from '@app/shell/shell.service';
 
 const modules = [
-    /*{
+    {
       path: 'datos-generales',
       component: DatosGeneralesAvisoComponent,
       data: { title: marker('Datos Generales') },
-    },*/
+    },
     {
       path: 'domicilio-declarante',
       component: DomicilioDeclaranteAvisoComponent,
