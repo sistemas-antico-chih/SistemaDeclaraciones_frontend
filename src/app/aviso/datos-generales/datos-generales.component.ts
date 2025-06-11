@@ -25,7 +25,7 @@ import { findOption } from '@utils/utils';
   templateUrl: './datos-generales.component.html',
   styleUrls: ['./datos-generales.component.scss'],
 })
-export class DatosGeneralesComponent implements OnInit {
+export class DatosGeneralesAvisoComponent implements OnInit {
   array_anio_ejercicio: Array<number> = [];
   aclaraciones = false;
   datosGeneralesForm: FormGroup;
