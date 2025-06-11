@@ -15,7 +15,7 @@ import { DatosGeneralesComponent } from './datos-generales/datos-generales.compo
 import { DomicilioDeclaranteComponent } from './domicilio-declarante/domicilio-declarante.component';
 import { DatosEmpleoComponent } from './datos-empleo/datos-empleo.component';
 
-import { CatalogosService } from '../../services/catalogos.service';
+import { CatalogosService } from '../services/catalogos.service';
 
 @NgModule({
   declarations: [
