@@ -29,21 +29,7 @@ const routes: Routes = [
     {
       path: 'aviso',
       children: [{ path: '', redirectTo: '/aviso/datos-generales', pathMatch: 'full' }, ...modules],
-    },
-    {
-      path: 'aviso',
-      children: [
-        { path: '', redirectTo: '/aviso/domicilio-declarante', pathMatch: 'full' },
-        ...modules,
-      ],
-    },
-    {
-      path: 'aviso',
-      children: [
-        { path: '', redirectTo: '/aviso/datos-empleo', pathMatch: 'full' },
-        ...modules,
-      ],
-    },
+    }
   ]),
 ];
 
