@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -25,7 +24,6 @@ import { findOption } from '@utils/utils';
   selector: 'app-datos-generales',
   templateUrl: './datos-generales.component.html',
   styleUrls: ['./datos-generales.component.scss'],
-  imports: [FormsModule]
 })
 export class DatosGeneralesAvisoComponent implements OnInit {
   array_anio_ejercicio: Array<number> = [];
