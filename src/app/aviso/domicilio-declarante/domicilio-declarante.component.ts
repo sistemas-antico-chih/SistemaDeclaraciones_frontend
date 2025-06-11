@@ -23,7 +23,7 @@ import { findOption } from '@utils/utils';
   templateUrl: './domicilio-declarante.component.html',
   styleUrls: ['./domicilio-declarante.component.scss'],
 })
-export class DomicilioDeclaranteComponent implements OnInit {
+export class DomicilioDeclaranteAvisoComponent implements OnInit {
   aclaraciones = false;
   domicilioDeclaranteForm: FormGroup;
   estado: Catalogo = null;

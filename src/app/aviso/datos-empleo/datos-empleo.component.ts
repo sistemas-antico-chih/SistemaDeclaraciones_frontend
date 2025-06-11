@@ -32,7 +32,7 @@ import { UntilDestroy, untilDestroyed } from '@app/@core';
   templateUrl: './datos-empleo.component.html',
   styleUrls: ['./datos-empleo.component.scss'],
 })
-export class DatosEmpleoComponent implements OnInit {
+export class DatosEmpleoAvisoComponent implements OnInit {
 
   orden: string;
   ambito: string;

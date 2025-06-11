@@ -12,16 +12,16 @@ import { SharedPresentarDeclaracionModule } from '../presentar-declaracion/share
 import { AvisoRoutingModule } from './aviso-routing.module';
 
 import { DatosGeneralesAvisoComponent } from './datos-generales/datos-generales.component';
-import { DomicilioDeclaranteComponent } from './domicilio-declarante/domicilio-declarante.component';
-import { DatosEmpleoComponent } from './datos-empleo/datos-empleo.component';
+import { DomicilioDeclaranteAvisoComponent } from './domicilio-declarante/domicilio-declarante.component';
+import { DatosEmpleoAvisoComponent } from './datos-empleo/datos-empleo.component';
 
 import { CatalogosService } from '../services/catalogos.service';
 
 @NgModule({
   declarations: [
     DatosGeneralesAvisoComponent,
-    DomicilioDeclaranteComponent,
-    DatosEmpleoComponent,
+    DomicilioDeclaranteAvisoComponent,
+    DatosEmpleoAvisoComponent,
   ],
   imports: [
     CommonModule,
