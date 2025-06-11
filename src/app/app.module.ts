@@ -22,7 +22,7 @@ import { PreguntasFrecuentesModule } from './preguntas-frecuentes/preguntas-frec
 import { PerfilModule } from './perfil/perfil.module';
 import { ListaDeclaracionesModule } from './lista-declaraciones/lista-declaraciones.module';
 import { ComienzaTuDeclaracionModule } from './presentar-declaracion/comienza-tu-declaracion/comienza-tu-declaracion.module';
-import { AvisoModule } from './aviso/aviso.module';
+//import { AvisoModule } from './aviso/aviso.module';
 //import { AvisosModule } from './presentar-declaracion/intereses/intereses.module';
 
 @NgModule({
