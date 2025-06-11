@@ -24,7 +24,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Lugar en el que reside</mat-label>
           <mat-icon matPrefix class="no-public">public</mat-icon>
-          <mat-select [(ngModel)]="tipoDomicilio" (selectionChange)="tipoDomicilioChanged()" required>
+          <mat-select (selectionChange)="tipoDomicilioChanged()" required>
             <mat-option value="MEXICO"> MÉXICO </mat-option>
             <mat-option value="EXTRANJERO"> EN EL EXTRANJERO </mat-option>
           </mat-select>

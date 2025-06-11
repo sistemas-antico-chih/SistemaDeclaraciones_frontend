@@ -50,7 +50,6 @@ import { AvisoModule } from './aviso/aviso.module';
     AvisoModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
-  exports: [AvisoComponent],
   declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent],
