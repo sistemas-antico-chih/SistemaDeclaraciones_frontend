@@ -47,7 +47,7 @@ import { ComienzaTuDeclaracionModule } from './presentar-declaracion/comienza-tu
     PerfilModule,
     ListaDeclaracionesModule,
     ComienzaTuDeclaracionModule,
-    AvisoModule,
+   // AvisoModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
