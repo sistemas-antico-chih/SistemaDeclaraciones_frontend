@@ -19,7 +19,7 @@ import { CatalogosService } from '../../services/catalogos.service';
 
 @NgModule({
   declarations: [
-    DatosGeneralesAvisoComponent,
+    //DatosGeneralesAvisoComponent,
     DomicilioDeclaranteAvisoComponent,
     DatosEmpleoAvisoComponent,
   ],
