@@ -173,8 +173,8 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
   }
 
   formHasChanges() {
-    let url = '/' + this.tipoDeclaracion;
-    if (this.declaracionSimplificada) url += '/simplificada';
+    let url = '/aviso/domicilio-empleo';
+    //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.domicilioDeclaranteForm.dirty;
     console.log(isDirty);
 
@@ -189,11 +189,9 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([url + '/situacion-patrimonial/datos-curriculares']);
+        if (result) this.router.navigate([`${url}`], { replaceUrl: true });;
       });
-    } else {
-      this.router.navigate([url + '/situacion-patrimonial/datos-curriculares']);
-    }
+    } 
   }
 
   ngOnInit(): void {

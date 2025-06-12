@@ -233,8 +233,8 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   
 
 
-  formHasChanges(route: string) {
-    //let url = '/aviso/';
+  formHasChanges() {
+    let url = '/aviso/domicilio-declarante';
     //if (this.declaracionSimplificada) url += '/simplificada';
     
     let isDirty = this.datosGeneralesForm.dirty;
@@ -250,7 +250,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([`/aviso/${route}`], { replaceUrl: true });;
+        if (result) this.router.navigate([`${url}`], { replaceUrl: true });;
       });
     } 
   }
