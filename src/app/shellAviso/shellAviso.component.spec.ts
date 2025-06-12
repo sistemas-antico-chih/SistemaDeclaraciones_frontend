@@ -11,11 +11,11 @@ import { MockAuthenticationService } from '@app/auth/authentication.service.mock
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 
 import { I18nModule } from '@app/i18n';
-import { ShellComponent } from './shell.component';
+import { ShellAvisoComponent } from './shellAviso.component';
 
-describe('ShellComponent', () => {
-  let component: ShellComponent;
-  let fixture: ComponentFixture<ShellComponent>;
+describe('ShellAvisoComponent', () => {
+  let component: ShellAvisoComponent;
+  let fixture: ComponentFixture<ShellAvisoComponent>;
 
   beforeEach(
     waitForAsync(() => {
@@ -33,13 +33,13 @@ describe('ShellComponent', () => {
           { provide: AuthenticationService, useClass: MockAuthenticationService },
           { provide: CredentialsService, useClass: MockCredentialsService },
         ],
-        declarations: [ShellComponent],
+        declarations: [ShellAvisoComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShellComponent);
+    fixture = TestBed.createComponent(ShellAvisoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

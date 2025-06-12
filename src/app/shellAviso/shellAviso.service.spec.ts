@@ -2,13 +2,13 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { AuthenticationGuard, AuthenticationService } from '@app/auth';
 import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
-import { ShellComponent } from './shell.component';
-import { Shell } from './shell.service';
+import { ShellAvisoComponent } from './shellAviso.component';
+import { ShellAviso } from './shellAviso.service';
 
-describe('Shell', () => {
+describe('ShellAviso', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ShellComponent],
+      declarations: [ShellAvisoComponent],
       providers: [AuthenticationGuard, { provide: AuthenticationService, useClass: MockAuthenticationService }],
     });
   });
@@ -19,12 +19,12 @@ describe('Shell', () => {
       const testRoutes = [{ path: 'test' }];
 
       // Act
-      const result = Shell.childRoutes(testRoutes);
+      const result = ShellAviso.childRoutes(testRoutes);
 
       // Assert
       expect(result.path).toBe('');
       expect(result.children).toBe(testRoutes);
-      expect(result.component).toBe(ShellComponent);
+      expect(result.component).toBe(ShellAvisoComponent);
     });
   });
 });

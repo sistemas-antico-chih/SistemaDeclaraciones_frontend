@@ -8,10 +8,10 @@ import { MatStep } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-shell',
-  templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss'],
+  templateUrl: './shellAviso.component.html',
+  styleUrls: ['./shellAviso.component.scss'],
 })
-export class ShellComponent implements OnInit {
+export class ShellAvisoComponent implements OnInit {
   situacionPatrimonialOptions = [
     { text: 'Datos generales', url: '/situacion-patrimonial/datos-generales', simplificada: true },
     { text: 'Domicilio del declarante', url: '/situacion-patrimonial/domicilio-declarante', simplificada: true },
