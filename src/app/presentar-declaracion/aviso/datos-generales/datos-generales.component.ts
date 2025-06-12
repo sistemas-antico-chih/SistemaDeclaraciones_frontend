@@ -234,9 +234,9 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
 
   formHasChanges(route: string) {
-    /*let url = '/' + this.tipoDeclaracion;
-    if (this.declaracionSimplificada) url += '/simplificada';
-    */
+    //let url = '/aviso/';
+    //if (this.declaracionSimplificada) url += '/simplificada';
+    
     let isDirty = this.datosGeneralesForm.dirty;
     
     if (isDirty && !this.pushButtonSave) {
@@ -250,7 +250,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([`/${route}`], { replaceUrl: true });;
+        if (result) this.router.navigate([`/aviso/${route}`], { replaceUrl: true });;
       });
     } 
   }
