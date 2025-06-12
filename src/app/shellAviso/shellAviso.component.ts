@@ -49,21 +49,6 @@ export class ShellAvisoComponent implements OnInit {
     { text: 'Préstamo o comodato por terceros', url: '/situacion-patrimonial/prestamos-terceros' },
   ];
 
-  interesesOptions = [
-    {
-      text: 'Participación en empresas, sociedades o asociaciones (hasta los dos últimos años)',
-      url: '/intereses/participacion-empresa',
-    },
-    {
-      text: '¿Participa en la toma de decisiones de alguna de estas instituciones? (hasta los dos últimos años)',
-      url: '/intereses/toma-decisiones',
-    },
-    { text: 'Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/intereses/apoyos-publicos' },
-    { text: 'Representación (hasta los dos últimos años)', url: '/intereses/representacion' },
-    { text: 'Clientes principales (hasta los dos últimos años)', url: '/intereses/clientes-principales' },
-    { text: 'Beneficios privados (hasta los dos últimos años)', url: '/intereses/beneficios-privados' },
-    { text: 'Fideicomisos (hasta los dos últimos años)', url: '/intereses/fideicomisos' },
-  ];
 
   declaracionSimplificada = false;
   tipoDeclaracion: string = null;
@@ -77,9 +62,6 @@ export class ShellAvisoComponent implements OnInit {
     private media: MediaObserver
   ) {}
 
-  goToInteresesSection(optionIndex: number) {
-    this.router.navigate([`/${this.tipoDeclaracion}${this.interesesOptions[optionIndex].url}`], { replaceUrl: true });
-  }
 
   goToSituacionPatrimonialSection(selectedStep: MatStep) {
     const selected = this.situacionPatrimonialOptions.find((opt) => opt.text === selectedStep.label);
