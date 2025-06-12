@@ -7,7 +7,7 @@ import { AuthenticationService, CredentialsService } from '@app/auth';
 import { MatStep } from '@angular/material/stepper';
 
 @Component({
-  selector: 'app-shell',
+  selector: 'app-shellAviso',
   templateUrl: './shellAviso.component.html',
   styleUrls: ['./shellAviso.component.scss'],
 })
