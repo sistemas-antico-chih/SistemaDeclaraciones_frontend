@@ -23,4 +23,4 @@ import { ShellAvisoComponent } from './shellAviso.component';
   ],
   declarations: [ShellAvisoComponent],
 })
-export class ShellModule {}
+export class ShellAvisoModule {}
