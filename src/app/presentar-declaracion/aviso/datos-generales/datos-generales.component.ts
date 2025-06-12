@@ -233,11 +233,12 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   
 
 
-  formHasChanges() {
-    let url = '/' + this.tipoDeclaracion;
+  formHasChanges(route: string) {
+    /*let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
+    */
     let isDirty = this.datosGeneralesForm.dirty;
-
+    
     if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
@@ -249,11 +250,9 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+        if (result) this.router.navigate([`/${route}`], { replaceUrl: true });;
       });
-    } else {
-      this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
-    }
+    } 
   }
 
   openSnackBar(message: string, action: string = null) {

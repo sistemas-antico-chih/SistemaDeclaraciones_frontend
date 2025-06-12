@@ -28,7 +28,7 @@ const routes: Routes = [
   Shell.childRoutes([
     {
       path: 'aviso',
-      children: [{ path: '', redirectTo: '/aviso/domicilio-declarante', pathMatch: 'full' }, ...modules],
+      children: [{ path: '', redirectTo: '/aviso/datos-generales', pathMatch: 'full' }, ...modules],
     }
   ]),
 ];
