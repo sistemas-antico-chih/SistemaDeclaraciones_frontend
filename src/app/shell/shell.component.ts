@@ -12,6 +12,13 @@ import { MatStep } from '@angular/material/stepper';
   styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent implements OnInit {
+
+  avisoOptions=[
+    { text: 'Datos generales', url: '/aviso/datos-generales' },
+    { text: 'Domicilio del declarante', url: '/aviso/domicilio-declarante' },
+    { text: 'Datos del empleo, cargo o comisión', url: '/aviso/datos-empleo' },
+  ]
+
   situacionPatrimonialOptions = [
     { text: 'Datos generales', url: '/situacion-patrimonial/datos-generales', simplificada: true },
     { text: 'Domicilio del declarante', url: '/situacion-patrimonial/domicilio-declarante', simplificada: true },
