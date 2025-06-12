@@ -82,6 +82,8 @@ export class ShellAvisoComponent implements OnInit {
     this.tipoDeclaracion = chunks[1] || null;
     this.declaracionSimplificada = chunks[2] === 'simplificada';
 
+    console.log("tipoDeclaracionAviso: "+this.tipoDeclaracion);
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = this.router.url;
