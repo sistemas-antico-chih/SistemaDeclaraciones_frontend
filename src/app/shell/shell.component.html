@@ -1,7 +1,8 @@
 <div fxFlex>
   <app-header></app-header>
-  <mat-sidenav-container fxFill>
+  
     <mat-sidenav
+      *ngIf="tipoDeclaracion !== 'aviso'"
       #sidenav
       [mode]="isMobile ? 'over' : 'side'"
       [opened]="!isMobile"
@@ -42,12 +43,12 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <mat-toolbar class="menu-button-container">
-        <button class="menu-button" mat-icon-button (click)="sidenav.toggle()" fxHide.gt-sm>
+        <button class="menu-button" mat-icon-button  fxHide.gt-sm>
           <mat-icon>menu</mat-icon>
         </button>
       </mat-toolbar>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
-  </mat-sidenav-container>
+  
   <app-footer></app-footer>
 </div>
