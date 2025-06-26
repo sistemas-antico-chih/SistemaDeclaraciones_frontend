@@ -30,6 +30,6 @@ export class ComienzaTuDeclaracionComponent  {
   }
 
   goTo(route: string) {
-    this.router.navigate([`/${route}`], { replaceUrl: true });
+    this.router.navigate([`${route}`], { replaceUrl: true });
   }
 }
