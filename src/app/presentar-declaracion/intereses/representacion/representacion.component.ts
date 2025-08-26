@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { representacionesMutation, representacionesQuery } from '@api/declaracion';
+import { representacionesMutation, representacionesQuery, lastRepresentacionesQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -17,10 +17,10 @@ import TipoRelacion from '@static/catalogos/tipoRelacion.json';
 import TipoRepresentacion from '@static/catalogos/tipoRepresentacion.json';
 import Extranjero from '@static/catalogos/extranjero.json';
 import Sector from '@static/catalogos/sector.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/representacion';
 
-import { DeclaracionOutput, Representacion, Representaciones } from '@models/declaracion';
+import { DeclaracionOutput, Representacion, Representaciones, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
@@ -39,6 +39,7 @@ export class RepresentacionComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   relacionCatalogo = TipoRelacion;
   representacionCatalogo = TipoRepresentacion;
@@ -46,7 +47,7 @@ export class RepresentacionComponent implements OnInit {
   paisesCatalogo = Paises;
   estadosCatalogo = Estados;
   sectorCatalogo = Sector;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tipoDeclaracion: string = null;
   tipoDomicilio: string;
 
@@ -59,7 +60,12 @@ export class RepresentacionComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  varOtroSector: string = null;
+
+  @ViewChild('otroSector') otroSector: ElementRef;
+  location: string = null;
 
   constructor(
     private apollo: Apollo,
@@ -106,7 +112,7 @@ export class RepresentacionComponent implements OnInit {
       ninguno: false,
       // participaciones
       representacion: this.formBuilder.group({
-        //tipoOperacion: ['', Validators.required],
+        tipoOperacion: [null, [Validators.required]],
         tipoRelacion: ['', Validators.required],
         tipoRepresentacion: ['', Validators.required],
         fechaInicioRepresentacion: ['', [Validators.required]],
@@ -173,6 +179,25 @@ export class RepresentacionComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastRepresentacionesQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.representaciones);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -185,17 +210,20 @@ export class RepresentacionComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.representaciones) {
+      if (data.declaracion.representaciones === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.representaciones);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
   formHasChanges() {
     let isDirty = this.representacionForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -213,7 +241,18 @@ export class RepresentacionComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noRepresentation() {
     this.saveInfo({ ninguno: true });
@@ -287,7 +326,8 @@ export class RepresentacionComponent implements OnInit {
   saveItem() {
     let representacion = [...this.representacion];
     const aclaracionesObservaciones = this.representacionForm.value.aclaracionesObservaciones;
-    const newItem = this.representacionForm.value.representacion;
+    //const newItem = this.representacionForm.value.representacion;
+    const newItem = this.finalRepresentacionForm;
 
     if (this.editIndex === null) {
       representacion = [...representacion, newItem];
@@ -303,6 +343,7 @@ export class RepresentacionComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -313,16 +354,25 @@ export class RepresentacionComponent implements OnInit {
 
   setSelectedOptions() {
     const { sector } = this.representacionForm.value.representacion;
-    const { entidadFederativa, pais } = this.representacionForm.value.representacion.ubicacion;
+    const { entidadFederativa } = this.representacionForm.value.representacion.ubicacion;
 
     if (sector) {
-      this.representacionForm.get('representacion.sector').setValue(findOption(this.sectorCatalogo, sector));
+      //this.representacionForm.get('representacion.sector').setValue(findOption(this.sectorCatalogo, sector));
+      const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
+        // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+        this.representacionForm.get('representacion.sector').setValue(optSector[0]);
+        if (sector.clave === 'OTRO') {
+          this.varOtroSector = sector.valor;
+        }
     }
 
     if (entidadFederativa) {
       this.representacionForm
         .get('representacion.ubicacion.entidadFederativa')
-        .setValue(findOption(this.estadosCatalogo, entidadFederativa));
+        .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
+      this.location="MX"
+    }else{
+      this.location="EX"
     }
   }
 
@@ -349,5 +399,34 @@ export class RepresentacionComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let representacion = [...this.representacion];
+    if (representacion.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < representacion.length; i++) {
+        representacion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.representacionForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        representacion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  get finalRepresentacionForm(){
+    const form = JSON.parse(JSON.stringify(this.representacionForm.value.representacion)); // Deep copy
+
+    if (form.sector?.clave === 'OTRO') {
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    return form;
   }
 }

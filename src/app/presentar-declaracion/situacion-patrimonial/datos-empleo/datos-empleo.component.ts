@@ -6,18 +6,22 @@ import { MatSelect } from '@angular/material/select';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { datosEmpleoCargoComisionQuery, declaracionMutation } from '@api/declaracion';
+import {
+  datosEmpleoCargoComisionQuery,
+  declaracionMutation,
+  lastDatosEmpleoCargoComisionQuery,
+} from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput } from '@models/declaracion';
+import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import Estados from '@static/catalogos/estados.json';
+import EstadoFijo from '@static/catalogos/estadoFijo.json';
 import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoEmpleo.json';
 import Paises from '@static/catalogos/paises.json';
-import entePublico from '@static/catalogos/entePublico.json';
+import entePublico from '@static/catalogos/entePublico_municipios.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { findOption } from '@utils/utils';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
@@ -29,17 +33,23 @@ import { UntilDestroy, untilDestroyed } from '@app/@core';
   styleUrls: ['./datos-empleo.component.scss'],
 })
 export class DatosEmpleoComponent implements OnInit {
+
+  orden: string;
+  ambito: string;
   aclaraciones = false;
   datosEmpleoCargoComisionForm: FormGroup;
   estado: Catalogo = null;
   isLoading = false;
   entePublicoCatalogo = entePublico;
+  entePublicoFiltrado = entePublico;
+  entesFiltrados:any = [] ;
+  pushButtonSave: boolean =false;
 
   @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
 
   nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
   ambitoPublicoCatalogo = AmbitoPublico;
-  estadosCatalogo = Estados;
+  estadosCatalogo = EstadoFijo;
   municipiosCatalogo = Municipios;
   paisesCatalogo = Paises;
 
@@ -56,7 +66,7 @@ export class DatosEmpleoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -82,6 +92,8 @@ export class DatosEmpleoComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -158,6 +170,25 @@ export class DatosEmpleoComponent implements OnInit {
     this.setSelectedOptions(datosEmpleoCargoComision);
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDatosEmpleoCargoComisionQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -175,9 +206,13 @@ export class DatosEmpleoComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.fillForm(data?.declaracion.datosEmpleoCargoComision);
+      if (data?.declaracion.datosEmpleoCargoComision === null) {
+        this.getLastUserInfo();
+      } else {
+        this.fillForm(data?.declaracion.datosEmpleoCargoComision);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -188,7 +223,7 @@ export class DatosEmpleoComponent implements OnInit {
     let isDirty = this.datosEmpleoCargoComisionForm.dirty;
     console.log(isDirty);
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -206,7 +241,18 @@ export class DatosEmpleoComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
@@ -284,5 +330,26 @@ export class DatosEmpleoComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  cambioOrden(value: any) {
+    this.filtrarEntes(value, this.datosEmpleoCargoComisionForm.get('ambitoPublico').value);
+  }
+
+  cambioAmbito(value: any) {
+    this.filtrarEntes(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno').value,value);
+  }
+
+  filtrarEntes(orden: string, ambito: string){
+    if(orden==="MUNICIPAL_ALCALDIA"){
+      this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
+        (o:any) =>  o.ambito===orden && o.empleo==='SI');
+      return;
+    }
+    else{
+       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
+        (o:any) =>  o.ambito!=="MUNICIPAL_ALCALDIA"  && o.empleo==='NO' && o.ambito === ambito);
+       return
+    }
   }
 }

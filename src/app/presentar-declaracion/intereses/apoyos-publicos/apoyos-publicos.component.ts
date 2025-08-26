@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef   } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Apoyo, Apoyos, DeclaracionOutput } from '@models/declaracion';
+import { Apoyo, Apoyos, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption } from '@utils/utils';
 
 import beneficiarioPrograma from '@static/catalogos/beneficiariosPrograma.json';
-import NivelGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import TiposApoyo from '@static/catalogos/tipoApoyo.json';
 import RecepcionApoyo from '@static/catalogos/formaRecepcion.json';
-
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/apoyos';
-import { apoyosQuery, apoyosMutation } from '@api/declaracion';
+import { apoyosQuery, apoyosMutation, lastApoyosQuery } from '@api/declaracion';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 
@@ -29,11 +29,13 @@ import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-
 })
 export class ApoyosPublicosComponent implements OnInit {
   aclaraciones = false;
+  aclaracionesText: string = null;
   apoyo: Apoyo[] = [];
   apoyosForm: FormGroup;
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   beneficiarioProgramaCatalogo = beneficiarioPrograma;
   NivelGobiernoCatalogo = NivelGobierno;
@@ -43,9 +45,15 @@ export class ApoyosPublicosComponent implements OnInit {
   tipoDeclaracion: string = null;
 
   declaracionId: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  varOtroBeneficiario: string = null;
+  varOtroTipoApoyo: string = null;
+
+  @ViewChild('otroBeneficiario') otroBeneficiario: ElementRef;
+  @ViewChild('otroTipoApoyo') otroTipoApoyo: ElementRef;
 
   constructor(
     private apollo: Apollo,
@@ -61,6 +69,7 @@ export class ApoyosPublicosComponent implements OnInit {
 
   addItem() {
     this.apoyosForm.reset();
+    this.setAclaraciones(this.aclaracionesText);
     this.editMode = true;
     this.editIndex = null;
   }
@@ -74,7 +83,7 @@ export class ApoyosPublicosComponent implements OnInit {
     this.apoyosForm = this.formBuilder.group({
       ninguno: [false],
       apoyo: this.formBuilder.group({
-        // tipoOperacion: [''],
+        tipoOperacion: [null, [Validators.required]],
         tipoPersona: ['', [Validators.required]],
         beneficiarioPrograma: [{ clave: '', valor: '' }, [Validators.required]],
         nombrePrograma: ['', [Validators.required, Validators.pattern(/^\S.*\S?$/)]],
@@ -103,7 +112,27 @@ export class ApoyosPublicosComponent implements OnInit {
       .filter((field) => apoyo[field] !== null)
       .forEach((field) => this.apoyosForm.get(`apoyo.${field}`).patchValue(apoyo[field]));
 
+    this.setAclaraciones(this.aclaracionesText);
     this.setSelectedOptions();
+  }
+
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastApoyosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.apoyos);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
   }
 
   async getUserInfo() {
@@ -117,17 +146,20 @@ export class ApoyosPublicosComponent implements OnInit {
         })
         .toPromise();
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.apoyos) {
+      if (data.declaracion.apoyos === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.apoyos);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
   formHasChanges() {
     let isDirty = this.apoyosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -145,7 +177,18 @@ export class ApoyosPublicosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noApoyo() {
     this.saveInfo({ ninguno: true });
@@ -217,7 +260,9 @@ export class ApoyosPublicosComponent implements OnInit {
   saveItem() {
     let apoyo = [...this.apoyo];
     const { aclaracionesObservaciones } = this.apoyosForm.value;
-    const newItem = this.apoyosForm.value.apoyo;
+    //const newItem = this.apoyosForm.value.apoyo;
+    const newItem = this.finalApoyosForm;
+
 
     if (this.editIndex === null) {
       apoyo = [...apoyo, newItem];
@@ -233,6 +278,13 @@ export class ApoyosPublicosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
+  }
+
+  setAclaraciones(aclaraciones?: string) {
+    this.apoyosForm.get('aclaracionesObservaciones').patchValue(aclaraciones || null);
+    this.aclaracionesText = aclaraciones || null;
+    this.toggleAclaraciones(!!aclaraciones);
   }
 
   setEditMode() {
@@ -245,13 +297,21 @@ export class ApoyosPublicosComponent implements OnInit {
     const { beneficiarioPrograma, tipoApoyo } = this.apoyosForm.value.apoyo;
 
     if (beneficiarioPrograma) {
-      this.apoyosForm
-        .get('apoyo.beneficiarioPrograma')
-        .setValue(findOption(this.beneficiarioProgramaCatalogo, beneficiarioPrograma.clave));
+        const optBeneficiario = this.beneficiarioProgramaCatalogo.filter((ins: any) => ins.clave === beneficiarioPrograma.clave);
+        // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+        this.apoyosForm.get('apoyo.beneficiarioPrograma').setValue(optBeneficiario[0]);
+        if (beneficiarioPrograma.clave === 'OTRO') {
+          this.varOtroBeneficiario = beneficiarioPrograma.valor;
+        }
     }
 
     if (tipoApoyo) {
-      this.apoyosForm.get('apoyo.tipoApoyo').setValue(findOption(this.TiposApoyoCatalogo, tipoApoyo.clave));
+      const optTipoIns = this.TiposApoyoCatalogo.filter((ins: any) => ins.clave === tipoApoyo.clave);
+      // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+      this.apoyosForm.get('apoyo.tipoApoyo').setValue(optTipoIns[0]);
+      if (tipoApoyo.clave === 'OTRO') {
+        this.varOtroTipoApoyo = tipoApoyo.valor;
+      }
     }
   }
 
@@ -280,5 +340,39 @@ export class ApoyosPublicosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let apoyo = [...this.apoyo];
+    if (apoyo.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < apoyo.length; i++) {
+        apoyo[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.apoyosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        apoyo,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  get finalApoyosForm() {
+    const form = JSON.parse(JSON.stringify(this.apoyosForm.value.apoyo)); // Deep copy
+
+    if (form.beneficiarioPrograma?.clave === 'OTRO') {
+      form.beneficiarioPrograma.valor = this.otroBeneficiario.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    if (form.tipoApoyo?.clave === 'OTRO') {
+      form.tipoApoyo.valor = this.otroTipoApoyo.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+
+    return form;
   }
 }

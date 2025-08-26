@@ -18,3 +18,23 @@ export class DialogComponent implements OnInit {
 
   ngOnInit(): void {}
 }
+
+
+export interface DialogDataMensaje {
+  title: string;
+  messageAviso: string;
+  messageAviso2: string;
+  trueText: string;
+  falseText: string;
+}
+
+@Component({
+  selector: 'app-dialog',
+  templateUrl: './dialog_mensaje.component.html',
+  styleUrls: ['./dialog.component.scss'],
+})
+export class DialogComponentMensaje implements OnInit {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogDataMensaje) {}
+
+  ngOnInit(): void {}
+}

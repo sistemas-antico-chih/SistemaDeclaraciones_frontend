@@ -99,6 +99,10 @@
         class="boton-agregar grid-margin"
         *ngIf="(fideicomiso.length && !editMode) || fideicomisosForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        GUARDAR
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR FIDEICOMISO</button>
       </div>
     </div>
@@ -108,7 +112,7 @@
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="fideicomiso">
         <mat-divider></mat-divider>
-        <p>Agregar fideicomisos</p>
+        <p>Fideicomiso</p>
         <!-- Datos -->
         <div class="grid-3-col grid-margin">
           <mat-form-field appearance="fill">
@@ -191,6 +195,7 @@
               matInput
               #input_rfc
               type="text"
+              minlength="12"
               maxlength="13"
               formControlName="rfc"
             />
@@ -246,6 +251,7 @@
               matInput
               #input_rfc_fideicomisario
               type="text"
+              minlength="12"
               maxlength="13"
               formControlName="rfc"
             />
@@ -269,7 +275,13 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">public</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" #otroSector matInput type="text" required />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroSector
+                #otroSector
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
 
           <mat-form-field matTooltip="{{ tooltipData.localizaFideicomiso }}" appearance="fill">

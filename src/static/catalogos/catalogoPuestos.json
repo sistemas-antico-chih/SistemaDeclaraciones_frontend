@@ -1,0 +1,11 @@
+[
+    { "clave": "DIRECTIVO", "valor": "PRESIDENTE(A) MUNICIPAL" },
+    { "clave": "DIRECTIVO", "valor": "REGIDOR(A)" },
+    { "clave": "DIRECTIVO", "valor": "SÍNDICO(A)" },
+    { "clave": "DIRECTIVO", "valor": "DIRECTOR(A)" },
+    { "clave": "DIRECTIVO", "valor": "SECRETARIO(A) PARTICULAR" },
+    { "clave": "DIRECTIVO", "valor": "SUBDIRECTOR(A)" },
+    { "clave": "DIRECTIVO", "valor": "JEFE(A) DE DEPARTAMENTO" },
+    { "clave": "DIRECTIVO", "valor": "PRESIDENTE(A) SECCIONAL" },
+    { "clave": "OPERATIVO", "valor": "OPERATIVO(A) U HOMÓLOGO(A)" }
+]

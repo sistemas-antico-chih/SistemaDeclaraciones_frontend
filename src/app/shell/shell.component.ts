@@ -65,6 +65,15 @@ export class ShellComponent implements OnInit {
     { text: 'Fideicomisos (hasta los dos últimos años)', url: '/intereses/fideicomisos' },
   ];
 
+  avisoOptions = [
+    { text: 'Datos generales', url: '/datos-generales' },
+    { text: 'Domicilio del declarante', url: '/domicilio-declarante'},
+    {
+      text: 'Aviso cambio de dependencia',
+      url: '/datos-empleo',
+    },
+  ];
+
   declaracionSimplificada = false;
   tipoDeclaracion: string = null;
   url: string = null;
@@ -76,6 +85,15 @@ export class ShellComponent implements OnInit {
     private credentialsService: CredentialsService,
     private media: MediaObserver
   ) {}
+
+  goToAvisoSection(selectedStep: MatStep) {
+    //this.router.navigate([`/${this.tipoDeclaracion}${this.avisoOptions[optionIndex].url}`], { replaceUrl: true });
+    const selected = this.avisoOptions.find((opt) => opt.text === selectedStep.label);
+    const route =`/${this.tipoDeclaracion}/${selected.url}`
+    this.router.navigate([route], {
+      replaceUrl: true,
+    });
+  }
 
   goToInteresesSection(optionIndex: number) {
     this.router.navigate([`/${this.tipoDeclaracion}${this.interesesOptions[optionIndex].url}`], { replaceUrl: true });

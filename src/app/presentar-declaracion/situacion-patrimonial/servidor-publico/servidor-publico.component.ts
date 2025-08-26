@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { declaracionMutation, actividadAnualAnteriorQuery } from '@api/declaracion';
@@ -32,6 +31,15 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./servidor-publico.component.scss'],
 })
 export class ServidorPublicoComponent implements OnInit {
+  index: number = 0;
+  arrayOtroTipoInstrumento: any = [];
+  arrayHTMLOtroTipoInstrumento: any = [];
+  ingresoActividad: any = [];
+  pushButtonSave: boolean =false;
+
+  //@Output("otroTipoInstrumento") ids: any = [];
+  @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
+  
   aclaraciones = false;
   actividadAnualAnteriorForm: FormGroup;
   isLoading = false;
@@ -64,7 +72,7 @@ export class ServidorPublicoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -211,6 +219,8 @@ export class ServidorPublicoComponent implements OnInit {
       },
     });
 
+    this.pushButtonSave = true;
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const form: ActividadAnualAnterior = this.actividadAnualAnteriorForm.value;
@@ -300,6 +310,8 @@ export class ServidorPublicoComponent implements OnInit {
         moneda: ['MXN'],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+    }, {
+      validator: this.validarFechas("fechaIngreso", "fechaConclusion")
     });
 
     this.actividadAnualAnteriorForm.valueChanges
@@ -341,6 +353,23 @@ export class ServidorPublicoComponent implements OnInit {
           formFields.forEach((field) => this.actividadAnualAnteriorForm.get(field).disable());
         }
       });
+  }
+
+  validarFechas(fechaIngreso: string, fechaEgreso: string) {
+    return (formGroup: FormGroup) => {
+      const fingreso = formGroup.get(fechaIngreso);
+      const fegreso = formGroup.get(fechaEgreso);
+      if (fegreso.errors && !fegreso.errors.validarFechas) {
+        return;
+      }
+
+      if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
+        fegreso.setErrors({ validarFechas: true });
+      }
+      else {
+        fegreso.setErrors(null);
+      }
+    };
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
@@ -417,10 +446,11 @@ export class ServidorPublicoComponent implements OnInit {
 
       if (formArrayName === 'actividadFinanciera') {
         const { tipoInstrumento } = formArray.at(index).value;
-        formArray
-          .at(index)
-          .get('tipoInstrumento')
-          .setValue(findOption(this.tipoInstrumentoCatalogo, tipoInstrumento?.clave));
+        const optionTipoInstrumento = this.tipoInstrumentoCatalogo.filter((i: any) => i.clave === tipoInstrumento.clave);
+        formArray.at(index).get('tipoInstrumento').setValue(optionTipoInstrumento[0]);
+        if (tipoInstrumento.clave === 'OTRO') {
+          this.ingresoActividad[index] = tipoInstrumento.valor;
+        }
       }
     }
   }
@@ -504,7 +534,7 @@ export class ServidorPublicoComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.actividadAnualAnteriorForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -522,7 +552,18 @@ export class ServidorPublicoComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
@@ -540,10 +581,32 @@ export class ServidorPublicoComponent implements OnInit {
     });
   }
 
+  get finalIngresosForm() {
+    const form = JSON.parse(JSON.stringify(this.actividadAnualAnteriorForm.value)); // Deep copy
+    let arreglo = this.otroTipoInstrumento.toArray();
+    let obValores;
+    let valorHtml;
+    for (let j = 0; j < form.actividadFinanciera.actividades.length; j++) {
+      if (form.actividadFinanciera.actividades[j].tipoInstrumento.clave === "OTRO") {
+        this.otroTipoInstrumento.forEach(function (value: any) {
+          if (value !== undefined) {
+            obValores = arreglo[j].nativeElement.id;
+            valorHtml = document.getElementById(obValores) as HTMLInputElement;
+            form.actividadFinanciera.actividades[j].tipoInstrumento.valor = valorHtml.value.toUpperCase();
+          }
+        });
+      }
+    }
+    return form;
+  }
+
   async saveInfo(form: ActividadAnualAnterior) {
+
     try {
       this.isLoading = true;
-
+      if (form.servidorPublicoAnioAnterior) {
+        form = this.finalIngresosForm;
+      }
       const declaracion = {
         actividadAnualAnterior: form,
       };

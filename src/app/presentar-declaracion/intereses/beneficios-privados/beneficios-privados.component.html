@@ -117,6 +117,10 @@
       </div>
 
       <div class="boton-agregar" *ngIf="(beneficio.length && !editMode) || beneficiosPrivadosForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR BENEFICIO</button>
       </div>
     </div>
@@ -125,7 +129,7 @@
     <form (ngSubmit)="saveItem()" [formGroup]="beneficiosPrivadosForm" [ngClass]="{ hidden: !editMode }">
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="beneficio">
-        <p>Agregar beneficio privado</p>
+        <p>Beneficio privado</p>
 
         <!-- Datos -->
         <div class="grid-3-col grid-margin">
@@ -194,7 +198,7 @@
               matInput
               #input_rfc
               type="text"
-              maxlength="12"
+              minlength="12"
               maxlength="13"
               formControlName="rfc"
               required

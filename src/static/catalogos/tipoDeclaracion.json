@@ -1,0 +1,6 @@
+[
+   { "clave": "inicial", "valor": "INICIAL"},
+   { "clave": "modificacion", "valor": "MODIFICACIÓN"},
+   { "clave": "conclusion", "valor":"CONCLUSIÓN"},
+   { "clave": "aviso", "valor": "AVISO"}
+]

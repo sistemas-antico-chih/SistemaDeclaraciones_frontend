@@ -21,6 +21,7 @@
               autocomplete="nombre"
               [placeholder]="'Nombre' | translate"
               required
+              minlength="2"
             />
             <mat-error *ngIf="signupForm.controls.nombre.invalid && signupForm.controls.nombre.touched">
               <span translate>Nombre requerido</span>
@@ -36,6 +37,7 @@
               formControlName="primerApellido"
               autocomplete="apellido"
               [placeholder]="'Apellido paterno' | translate"
+              minlength="2"
             />
             <mat-error *ngIf="signupForm.controls.primerApellido.invalid && signupForm.controls.primerApellido.touched">
               <span translate>Primer apellido requerido</span>
@@ -121,7 +123,7 @@
             />
             <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             <mat-error *ngIf="signupForm.controls.curp.invalid && signupForm.controls.curp.touched">
-              <span translate>CURP requerido</span>
+              <span translate>Ingrese una CURP válida</span>
             </mat-error>
           </mat-form-field>
 
@@ -140,16 +142,16 @@
             />
             <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             <mat-error *ngIf="signupForm.controls.rfc.invalid && signupForm.controls.rfc.touched">
-              <span translate>RFC requerido</span>
+              <span translate>Ingrese un RFC válida</span>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="institucionesCatalogo.length" [hideRequiredMarker]="true" appearance="fill" fxFlex>
+          <mat-form-field *ngIf="institucionesCatalogo" [hideRequiredMarker]="true" appearance="fill" fxFlex>
             <mat-label>Institución</mat-label>
             <mat-icon matPrefix>account_balance</mat-icon>
             <mat-select formControlName="institucion" required>
               <mat-option *ngFor="let institucion of institucionesCatalogo" [value]="institucion">
-                {{ institucion.ente_publico }}
+                {{ institucion.valor }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="signupForm.controls.institucion.invalid && signupForm.controls.institucion.touched">

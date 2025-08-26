@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "build": "npm run write:env -s && ng build --prod",
-    "start": "npm run write:env -s && ng serve --proxy-config proxy.conf.js",
+    "start": "npm run write:env -s && ng serve --proxy-config proxy.conf.js && react-scripts start --openssl-legacy-provider",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "npm run write:env -s && ng test",
     "test:ci": "npm run write:env -s && npm run lint -s && ng test --configuration=ci",
@@ -33,7 +33,7 @@
     "@angular/platform-browser": "^11.0.8",
     "@angular/platform-browser-dynamic": "^11.0.8",
     "@angular/router": "^11.0.8",
-    "@apollo/client": "^3.3.11",
+    "@apollo/client": "3.3.11",
     "@ngx-translate/core": "^13.0.0",
     "apollo-angular": "^2.3.0",
     "graphql": "^15.5.0",

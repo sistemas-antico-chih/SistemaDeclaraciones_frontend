@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,11 +22,13 @@ import { PreguntasFrecuentesModule } from './preguntas-frecuentes/preguntas-frec
 import { PerfilModule } from './perfil/perfil.module';
 import { ListaDeclaracionesModule } from './lista-declaraciones/lista-declaraciones.module';
 import { ComienzaTuDeclaracionModule } from './presentar-declaracion/comienza-tu-declaracion/comienza-tu-declaracion.module';
+import { AvisoModule } from './presentar-declaracion/aviso/aviso.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule,
@@ -43,6 +46,7 @@ import { ComienzaTuDeclaracionModule } from './presentar-declaracion/comienza-tu
     PerfilModule,
     ListaDeclaracionesModule,
     ComienzaTuDeclaracionModule,
+    AvisoModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],

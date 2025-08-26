@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { beneficiosPrivadosQuery, beneficiosPrivadosMutation } from '@api/declaracion';
+import { beneficiosPrivadosQuery, beneficiosPrivadosMutation, lastBeneficiosPrivadosQuery } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { Beneficio, BeneficiosPrivados, Catalogo, DeclaracionOutput } from '@models/declaracion';
+import { Beneficio, BeneficiosPrivados, Catalogo, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
 import beneficiario from '@static/catalogos/beneficiariosPrograma.json';
 import FormaRecepcion from '@static/catalogos/formaRecepcion.json';
 import Monedas from '@static/catalogos/monedas.json';
@@ -35,6 +35,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroSector') otroSector: ElementRef;
   @ViewChild('otroTipoBeneficio') otroTipoBeneficio: ElementRef;
@@ -148,7 +149,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
     const form = JSON.parse(JSON.stringify(this.beneficiosPrivadosForm.value.beneficio)); // Deep copy
 
     if (form.tipoBeneficio?.clave === 'O') {
-      form.tipoBeneficio.valor = this.otroTipoBeneficio.nativeElement.value;
+      form.tipoBeneficio.valor = this.otroTipoBeneficio.nativeElement.value.toUpperCase();;
     }
 
     if (form.sector?.clave === 'OTRO') {
@@ -156,6 +157,25 @@ export class BeneficiosPrivadosComponent implements OnInit {
     }
 
     return form;
+  }
+
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastBeneficiosPrivadosQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.beneficiosPrivados);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
   }
 
   async getUserInfo() {
@@ -174,9 +194,13 @@ export class BeneficiosPrivadosComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.setupForm(data?.declaracion.beneficiosPrivados);
+      if (data?.declaracion.beneficiosPrivados === null) {
+        this.getLastUserInfo();
+      } else {
+        this.setupForm(data?.declaracion.beneficiosPrivados);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -198,7 +222,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.beneficiosPrivadosForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -216,7 +240,18 @@ export class BeneficiosPrivadosComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noBenefits() {
     this.saveInfo({ ninguno: true });
@@ -310,6 +345,7 @@ export class BeneficiosPrivadosComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {
@@ -366,5 +402,23 @@ export class BeneficiosPrivadosComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let beneficio = [...this.beneficio];
+    if (beneficio.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < beneficio.length; i++) {
+        beneficio[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.beneficiosPrivadosForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        beneficio,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
   }
 }

@@ -23,6 +23,7 @@ export const adeudosPasivosMutation = gql`
       adeudosPasivos {
         ninguno
         adeudo {
+          tipoOperacion
           titular {
             clave
             valor
@@ -68,6 +69,7 @@ export const bienesInmueblesMutation = gql`
       bienesInmuebles {
         ninguno
         bienInmueble {
+          tipoOperacion
           tipoInmueble {
             clave
             valor
@@ -160,6 +162,7 @@ export const bienesMueblesMutation = gql`
       bienesMuebles {
         ninguno
         bienMueble {
+          tipoOperacion
           titular {
             clave
             valor
@@ -238,6 +241,7 @@ export const datosDependientesEconomicosMutation = gql`
       datosDependientesEconomicos {
         ninguno
         dependienteEconomico {
+          tipoOperacion
           nombre
           primerApellido
           segundoApellido
@@ -319,6 +323,7 @@ export const datosParejaMutation = gql`
     declaracion(id: $id, declaracion: $declaracion) {
       _id
       datosPareja {
+        tipoOperacion
         ninguno
         nombre
         primerApellido
@@ -403,6 +408,58 @@ export const declaracionMutation = gql`
   }
 `;
 
+export const datosEmpleoCargoComisionMutation = gql`
+  mutation declaracion($id: ID!, $declaracion: DeclaracionSeccionesInput!) {
+    declaracion(id: $id, declaracion: $declaracion) {
+      _id
+      datosEmpleoCargoComision {
+        nivelOrdenGobierno
+        ambitoPublico
+        nombreEntePublico
+        areaAdscripcion
+        areaAdscripcionConcluye
+        empleoCargoComision
+        contratadoPorHonorarios
+        nivelEmpleoCargoComision
+        nivelEmpleoCargoComisionConcluye
+        funcionPrincipal
+        fechaTomaPosesion
+        fechaConclusionEncargo
+        telefonoOficina {
+          telefono
+          extension
+        }
+        domicilioMexico {
+          calle
+          numeroExterior
+          numeroInterior
+          coloniaLocalidad
+          municipioAlcaldia {
+            clave
+            valor
+          }
+          entidadFederativa {
+            clave
+            valor
+          }
+          codigoPostal
+        }
+        domicilioExtranjero {
+          calle
+          numeroExterior
+          numeroInterior
+          ciudadLocalidad
+          estadoProvincia
+          pais
+          codigoPostal
+        }
+        aclaracionesObservaciones
+        cuentaConOtroCargoPublico
+      }
+    }
+  }
+`;
+
 export const experienciaLaboralMutation = gql`
   mutation declaracion($id: ID!, $declaracion: DeclaracionSeccionesInput!) {
     declaracion(id: $id, declaracion: $declaracion) {
@@ -450,6 +507,7 @@ export const inversionesCuentasValoresMutation = gql`
       inversionesCuentasValores {
         ninguno
         inversion {
+          tipoOperacion
           tipoInversion {
             clave
             valor
@@ -491,6 +549,7 @@ export const prestamoComodatoMutation = gql`
       prestamoComodato {
         ninguno
         prestamo {
+          tipoOperacion
           tipoBien {
             inmueble {
               tipoInmueble {
@@ -559,6 +618,7 @@ export const vehiculosMutation = gql`
       vehiculos {
         ninguno
         vehiculo {
+          tipoOperacion
           tipoVehiculo {
             clave
             valor
@@ -622,6 +682,7 @@ export const apoyosMutation = gql`
       apoyos {
         ninguno
         apoyo {
+          tipoOperacion
           tipoPersona
           beneficiarioPrograma {
             clave

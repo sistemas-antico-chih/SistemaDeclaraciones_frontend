@@ -1,5 +1,6 @@
 import { Catalogo, Monto, Tercero } from './common.model';
 import { MexicoExtranjero, TipoPersona } from './types';
+import { TipoOperacion } from './types';
 
 interface OtorganteCredito {
   tipoPersona: TipoPersona;
@@ -13,6 +14,7 @@ interface LocalizacionAdeudo {
 }
 
 export interface Adeudo {
+  tipoOperacion?: TipoOperacion;
   titular: Catalogo[];
   tipoAdeudo: Catalogo;
   numeroCuentaContrato: string;

@@ -12,6 +12,8 @@ const tooltipData = {
     'Señalar cuál es la función o actividad principal que desempeña en su empleo, cargo o comisión.',
   fechaTomaPosesion:
     'Señalar la fecha en que inició/concluyó el encargo. Ésta deberá coincidir con la que se haya dado de alta/baja en el área de recursos humanos del Ente Público correspondiente, ya que dicha fecha es la que se toma en cuenta para contabilizar los sesenta días que prevé la Ley para cumplir con la presentación de declaración de inicio/conclusión',
+  fechaConclusionEncargo:
+    'Señalar la fecha en que concluyó el encargo. Ésta deberá coincidir con la que se haya dado de baja en el área de recursos humanos del Ente Público correspondiente, ya que dicha fecha es la que se toma en cuenta para contabilizar los sesenta días que prevé la Ley para cumplir con la presentación de declaración de conclusión',  
   telefonoOficinaExtension: 'Proporcionar el teléfono laboral y extensión según corresponda.',
 };
 

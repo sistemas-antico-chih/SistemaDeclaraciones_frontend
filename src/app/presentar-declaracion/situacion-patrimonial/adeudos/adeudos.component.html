@@ -203,6 +203,10 @@
       </mat-card>
 
       <div class="boton-agregar" *ngIf="(adeudo.length && !editMode) || adeudosPasivosForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar Pasivo</button>
       </div>
     </div>
@@ -212,10 +216,22 @@
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="adeudo">
         <mat-divider></mat-divider>
-
+        <p>Adeudo/Pasivo</p>
+        <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <!-- Datos adeudo -->
         <div class="">
-          <h2>Agregar adeudo/pasivo</h2>
+          <h2>Adeudo/Pasivo</h2>
           <div class="grid-2-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.tipoAdeudo }}" appearance="fill">
               <mat-label>Tipo de adeudo</mat-label>
@@ -229,7 +245,14 @@
             <mat-form-field appearance="fill" *ngIf="adeudosPasivosForm.value.adeudo.tipoAdeudo?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">aspect_ratio</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroTipoAdeudo
+              class="OTA"
+              #otroTipoAdeudo 
+              matInput 
+              type="text" 
+              required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.titularAdeudo }}" appearance="fill">
               <mat-label>Titular del adeudo</mat-label>
@@ -297,10 +320,16 @@
 
           <!-- Tercero -->
           <div class="grid-3-col grid-margin" formGroupName="tercero">
-            <mat-radio-group matTooltip="{{ tooltipData.tercero }}" class="checkbox" formControlName="tipoPersona">
-              <p class="question double-col">Tercero</p>
-              <mat-radio-button value="FISICA"><span class="no-public-inline"></span> Persona Física</mat-radio-button>
-              <mat-radio-button value="MORAL">Persona Moral</mat-radio-button>
+            <mat-radio-group 
+              matTooltip="{{ tooltipData.tercero }}" 
+              class="tercero" 
+              formControlName="tipoPersona"
+              (change)="radioChange($event.value)"
+              [(ngModel)]="tipoPersona">
+              <p class="question double-col">Copropiedad Tercero</p>
+              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Física</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="MORAL">Moral</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="NINGUNO">Ninguno</mat-radio-button>
             </mat-radio-group>
             <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill">
               <mat-label>Nombre del Tercero o Terceros</mat-label>
@@ -316,6 +345,7 @@
                 #input_rfc_tercero
                 formControlName="rfc"
                 type="text"
+                minlength="12"
                 maxlength="13"
               />
               <mat-hint align="end">{{ input_rfc_tercero.value?.length || 0 }}/13</mat-hint>
@@ -387,7 +417,9 @@
             <mat-form-field matTooltip="{{ tooltipData.localizaAdeudo }}" appearance="fill">
               <mat-label>¿Dónde se localiza el adeudo?</mat-label>
               <mat-icon matPrefix>public</mat-icon>
-              <mat-select (selectionChange)="localizacionChanged($event.value)" required>
+              <mat-select 
+                [(value)]="location"
+                (selectionChange)="localizacionChanged($event.value)" required>
                 <mat-option value="{{ extranjeroCatalogo[0] }}"> EN MÉXICO </mat-option>
                 <mat-option value="{{ extranjeroCatalogo[1] }}"> EN EL EXTRANJERO </mat-option>
               </mat-select>
@@ -396,7 +428,7 @@
               <mat-label>País donde de ubica</mat-label>
               <mat-icon matPrefix>public</mat-icon>
               <mat-select formControlName="pais" required>
-                <mat-option *ngFor="let opt of paisesCatalogo" [value]="opt.clave">
+                <mat-option *ngFor="let opt of paisesCatalogo" [(value)]="opt.clave">
                   {{ opt.valor }}
                 </mat-option>
               </mat-select>

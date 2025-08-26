@@ -100,10 +100,46 @@ export class SectionFooterComponent implements OnInit {
           });
         } catch (error) {
           console.log(error);
-          this.openSnackBar('ERROR: No pudo firmar la declaración Favor de verificar que todos los campos estén capturados', 'Aceptar');
+          this.openSnackBar('ERROR: No pudo firmar la declaración', 'Aceptar');
         }
       }
     });
+    
+    /*console.log("tipoDeclaracion: "+this.tipoDeclaracion);
+    if(this.tipoDeclaracion ==='modificación'){
+      dialogRef.afterClosed().subscribe(async (password) => {
+        if (password) {
+          try {
+            await this.signDeclaration(password);
+            await this.downloadAcuse();
+            this.presentSuccessAlert();
+            this.router.navigate([`/declaraciones`], {
+              replaceUrl: true,
+            });
+          } catch (error) {
+            console.log(error);
+            this.openSnackBar('ERROR: Las declaraciones de tipo MODIFICACION se deben realizar en el mes de mayo', 'Aceptar');
+          }
+        }
+      });
+    }
+    else{
+      dialogRef.afterClosed().subscribe(async (password) => {
+        if (password) {
+          try {
+            await this.signDeclaration(password);
+            await this.downloadAcuse();
+            this.presentSuccessAlert();
+            this.router.navigate([`/declaraciones`], {
+              replaceUrl: true,
+            });
+          } catch (error) {
+            console.log(error);
+            this.openSnackBar('ERROR: No pudo firmar la declaración Favor de verificar que todos los campos estén capturados', 'Aceptar');
+          }
+        }
+      });
+    }*/
   }
 
   async signDeclaration(password: string) {

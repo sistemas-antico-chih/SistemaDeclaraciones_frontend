@@ -6,8 +6,10 @@ import {
   DomicilioMexico,
 } from './common.model';
 import { LugarResidencia } from './types';
+import { TipoOperacion } from './types';
 
 export interface DependienteEconomico {
+  tipoOperacion?: TipoOperacion;
   nombre: string;
   primerApellido: string;
   segundoApellido: string;

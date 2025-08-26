@@ -132,6 +132,10 @@
         class="boton-agregar"
         *ngIf="(participacion.length && !editMode) || participacionTomaDecisionesForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        GUARDAR
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PARTICIPACIÓN</button>
       </div>
     </div>
@@ -141,8 +145,20 @@
       <!-- Agregar empleo, cargo o comisión -->
       <div class="padding-agregar" formGroupName="participacion">
         <mat-divider></mat-divider>
-
+        <p>Toma de decisiones</p>
         <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="grid-2-col grid-margin">
           <mat-form-field matTooltip="{{ tooltipData.declaranteParejaDependiente }}" appearance="fill">
             <mat-label>Tipo de relación</mat-label>
@@ -171,7 +187,14 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">beenhere</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroTipoParticipacion
+                class="OTP"
+                #otroTipoParticipacion
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
           <mat-form-field matTooltip="{{ tooltipData.nombreInstitucion }}" appearance="fill">
             <mat-label>Nombre de la Institución</mat-label>
@@ -193,6 +216,7 @@
               matInput
               #input_rfc_tercero
               type="text"
+              minlength="12"
               maxlength="13"
               formControlName="rfc"
               required
@@ -207,7 +231,6 @@
 
           <mat-form-field matTooltip="{{ tooltipData.fechaInicioParticipacion }}" appearance="fill">
             <mat-label>Fecha de inicio de participación dentro de la Institución</mat-label>
-            <mat-icon matPrefix>beenhere</mat-icon>
             <input
               [errorStateMatcher]="errorMatcher"
               matInput
@@ -250,7 +273,7 @@
           <mat-form-field matTooltip="{{ tooltipData.lugarDondeUbica }}" appearance="fill">
             <mat-label>Lugar donde se ubica</mat-label>
             <mat-icon matPrefix>public</mat-icon>
-            <mat-select #location (selectionChange)="locationChanged($event.value)" required>
+            <mat-select [(value)]="location" (selectionChange)="locationChanged($event.value)" required>
               <mat-option value="{{ extranjeroCatalogo[0] }}"> En México </mat-option>
               <mat-option value="{{ extranjeroCatalogo[1] }}"> En el extranjero </mat-option>
             </mat-select>

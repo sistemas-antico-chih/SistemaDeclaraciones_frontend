@@ -3,14 +3,27 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { inversionesCuentasValoresMutation, inversionesCuentasValoresQuery } from '@api/declaracion';
+import {
+  inversionesCuentasValoresMutation,
+  inversionesCuentasValoresQuery,
+  lastInversionesCuentasValoresQuery
+} from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoInversion from '@static/catalogos/tipoInversion.json';
 import SubTipoInversion from '@static/catalogos/subTipoInversion.json';
+import SubTipoInversionAfores from '@static/catalogos/subTipoInversionAfores.json';
+import SubTipoInversionBancaria from '@static/catalogos/subTipoInversionBancaria.json';
+import SubTipoInversionFondos from '@static/catalogos/subTipoInversionFondos.json';
+import SubTipoInversionMetales from '@static/catalogos/subTipoInversionMetales.json';
+import SubTipoInversionOrganizaciones from '@static/catalogos/subTipoInversionOrganizaciones.json';
+import SubTipoInversionSeguros from '@static/catalogos/subTipoInversionSeguros.json';
+import SubTipoInversionValores from '@static/catalogos/subTipoInversionValores.json';
+
+
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
 import TitularBien from '@static/catalogos/titularBien.json';
 import FormaPago from '@static/catalogos/formaPago.json';
@@ -22,10 +35,17 @@ import Monedas from '@static/catalogos/monedas.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/inversiones';
 
-import { DeclaracionOutput, Inversion, InversionesCuentasValores } from '@models/declaracion';
+import {
+  Catalogo,
+  DeclaracionOutput,
+  Inversion,
+  InversionesCuentasValores,
+  LastDeclaracionOutput,
+} from '@models/declaracion';
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 
 @Component({
   selector: 'app-inversiones',
@@ -39,9 +59,24 @@ export class InversionesComponent implements OnInit {
   editIndex: number = null;
   inversion: Inversion[] = [];
   isLoading = false;
+  pushButtonSave: boolean = false;
 
   tipoInversionCatalogo = TipoInversion;
   subTipoInversionCatalogo = SubTipoInversion;
+
+  varOtroTipoVehiculo: string = null;
+  terceroCatalogo: String[] = ['FISICA', 'MORAL', 'NINGUNO'];
+
+  subTipoAforesCatalogo = SubTipoInversionAfores;
+  subTipoBancariaCatalogo = SubTipoInversionBancaria;
+  subTipoFondosCatalogo = SubTipoInversionFondos;
+  subTipoMetalesCatalogo = SubTipoInversionMetales;
+  subTipoOrganizacionesCatalogo = SubTipoInversionOrganizaciones;
+  subTipoSegurosCatalogo = SubTipoInversionSeguros;
+  subTipoValoresCatalogo = SubTipoInversionValores;
+
+  mexicoExtranjero: string =null;
+
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
   formaPagoCatalogo = FormaPago;
@@ -55,9 +90,35 @@ export class InversionesComponent implements OnInit {
   tipoDomicilio: string;
 
   declaracionId: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+
+  tipoPersona: String = null;
+  sub: String = null;
+
+  opsBANC = this.subTipoBancariaCatalogo
+    .filter((e: any) => e.tipoInversion === 'BANC')
+    .map((e: any) => ({ clave: e.clave, valor: e.valor }));
+  opsFINV = this.subTipoFondosCatalogo
+    .filter((e: any) => e.tipoInversion === 'FINV')
+    .map((e: any) => ({ clave: e.clave, valor: e.valor }));
+  opsORPM = this.subTipoOrganizacionesCatalogo
+    .filter((e: any) => e.tipoInversion === 'ORPM')
+    .map((e: any) => ({ clave: e.clave, valor: e.valor }));
+  opsPOMM = this.subTipoMetalesCatalogo
+    .filter((e: any) => e.tipoInversion === 'POMM')
+    .map((e: any) => ({ clave: e.clave, valor: e.valor }));
+  opsSEGR = this.subTipoSegurosCatalogo
+    .filter((e: any) => e.tipoInversion === 'SEGR')
+    .map((e: any) => ({ clave: e.clave, valor: e.valor }));
+  opsVBUR = this.subTipoValoresCatalogo
+    .filter((e: any) => e.tipoInversion === 'VBUR')
+    .map((e: any) => ({ clave: e.clave, valor: e.valor }));
+  opsAFOT = this.subTipoAforesCatalogo
+    .filter((e: any) => e.tipoInversion === 'AFOT')
+    .map((e: any) => ({ clave: e.clave, valor: e.valor }));
+
 
   constructor(
     private apollo: Apollo,
@@ -100,6 +161,7 @@ export class InversionesComponent implements OnInit {
     this.inversionesCuentasValoresForm = this.formBuilder.group({
       ninguno: [false],
       inversion: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         tipoInversion: [null, [Validators.required]],
         subTipoInversion: [null, [Validators.required]],
         titular: [null, [Validators.required]],
@@ -173,6 +235,25 @@ export class InversionesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastInversionesCuentasValoresQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.inversionesCuentasValores);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -185,17 +266,21 @@ export class InversionesComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.inversionesCuentasValores) {
+      if (data.declaracion.inversionesCuentasValores === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.inversionesCuentasValores);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
+
   formHasChanges() {
     let isDirty = this.inversionesCuentasValoresForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -213,7 +298,18 @@ export class InversionesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noInvestments() {
     this.saveInfo({ ninguno: true });
@@ -303,6 +399,7 @@ export class InversionesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -312,18 +409,67 @@ export class InversionesComponent implements OnInit {
   }
 
   setSelectedOptions() {
-    const { tipoInversion, titular } = this.inversionesCuentasValoresForm.value.inversion;
+    const { tipoInversion, subTipoInversion, titular, localizacionInversion, tercero } = this.inversionesCuentasValoresForm.value.inversion;
+
+    if (tercero){
+      this.tipoPersona=tercero.tipoPersona;
+    }
 
     if (tipoInversion) {
-      this.inversionesCuentasValoresForm
-        .get('inversion.tipoInversion')
-        .setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
+      const optTipoInversion = this.tipoInversionCatalogo.filter((ti: any) => ti.clave === tipoInversion.clave);
+      // this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(findOption(this.tipoInversionCatalogo, tipoInversion));
+      this.inversionesCuentasValoresForm.get('inversion.tipoInversion').setValue(optTipoInversion[0]);
+
+      if (subTipoInversion) {
+        switch (tipoInversion.clave) {
+          case 'BANC':
+            const opt = this.opsBANC.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(opt[0]);
+            break;
+          case 'FINV':
+            const optFINV = this.opsFINV.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optFINV[0]);
+            break;
+          case 'ORPM':
+            const optORPM = this.opsORPM.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optORPM[0]);
+            break;
+          case 'POMM':
+            const optPOMM = this.opsPOMM.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optPOMM[0]);
+            break;
+          case 'SEGR':
+            const optSEGR = this.opsSEGR.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optSEGR[0]);
+            break;
+          case 'VBUR':
+            const optVBUR = this.opsVBUR.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optVBUR[0]);
+            break;
+          case 'AFOT':
+            const optAFOT = this.opsAFOT.filter((ban: any) => ban.clave === subTipoInversion.clave);
+            this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optAFOT[0]);
+            break;
+          default:
+            console.log('ESTO NO DEBERIA SALIR');
+            break;
+        }
+      }
     }
 
     if (titular) {
-      this.inversionesCuentasValoresForm
-        .get('inversion.titular')
-        .setValue(findOption(this.titularBienCatalogo, titular[0]));
+      const optTitular = this.titularBienCatalogo.filter((ti: any) => ti.clave === titular[0].clave);
+      // this.inversionesCuentasValoresForm.get('inversion.titular').setValue(findOption(this.titularBienCatalogo, titular[0]));
+      this.inversionesCuentasValoresForm.get('inversion.titular').setValue(optTitular[0]);
+    }
+
+    if (localizacionInversion) {
+      if (!localizacionInversion.pais ) {
+        this.mexicoExtranjero='MX'
+      }
+      else {
+        this.mexicoExtranjero='EX'
+      }
     }
   }
 
@@ -353,4 +499,48 @@ export class InversionesComponent implements OnInit {
     }
     this.aclaraciones = value;
   }
+
+  checkItems() {
+    let inversion = [...this.inversion];
+    if (inversion.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < inversion.length; i++) {
+        inversion[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.inversionesCuentasValoresForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        inversion,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  terceroChange(value: string) {
+    if (value === "NINGUNO") {
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").clearValidators();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValue(' ');
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").disable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").clearValidators();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValue(' ');
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").updateValueAndValidity();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").disable();
+    }
+    else {
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").enable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").setValidators([Validators.required]);
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").enable();
+      this.inversionesCuentasValoresForm.get("inversion.tercero.rfc").updateValueAndValidity();
+    }
+  }
+
 }
+function item(item: any, arg1: (any: any) => any) {
+  throw new Error('Function not implemented.');
+}
+

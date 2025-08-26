@@ -1,5 +1,6 @@
 import { Catalogo, DomicilioExtranjero, DomicilioMexico, Ubicacion } from './common.model';
 import { TipoPersona } from './types';
+import { TipoOperacion } from './types';
 
 interface InmueblePrestamo {
   tipoInmueble: Catalogo;
@@ -29,6 +30,7 @@ interface DuenoTitularPrestamo {
 }
 
 export interface Prestamo {
+  tipoOperacion?: TipoOperacion;
   tipoBien: TipoBienPrestamo;
   duenoTitular: DuenoTitularPrestamo;
 }

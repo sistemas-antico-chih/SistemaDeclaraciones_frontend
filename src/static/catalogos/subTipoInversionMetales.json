@@ -1,0 +1,7 @@
+[
+  { "tipoInversion": "POMM", "clave": "CENT", "valor": "CENTENARIOS" },
+  { "tipoInversion": "POMM", "clave": "DIVS", "valor": "DIVISAS" },
+  { "tipoInversion": "POMM", "clave": "MONN", "valor": "MONEDA NACIONAL" },
+  { "tipoInversion": "POMM", "clave": "ONZT", "valor": "ONZAS TROY" },
+  { "tipoInversion": "POMM", "clave": "CRIP", "valor": "CRIPTOMONEDAS" }
+]

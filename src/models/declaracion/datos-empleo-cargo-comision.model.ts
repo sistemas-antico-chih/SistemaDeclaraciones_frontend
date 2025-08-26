@@ -12,11 +12,14 @@ export interface DatosEmpleoCargoComision {
   ambitoPublico?: AmbitoPublico;
   nombreEntePublico?: string;
   areaAdscripcion: string;
+  areaAdscripcionConcluye?: string;//Agregado para aviso
   empleoCargoComision: string;
   contratadoPorHonorarios: boolean;
   nivelEmpleoCargoComision: string;
+  nivelEmpleoCargoComisionConcluye?: string;//Agregado para aviso
   funcionPrincipal: string;
   fechaTomaPosesion: string;
+  fechaConclusionEncargo?: string;//Agregado para aviso
   telefonoOficina: TelefonoOficina;
   domicilioMexico?: DomicilioMexico;
   domicilioExtranjero?: DomicilioExtranjero;

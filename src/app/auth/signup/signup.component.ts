@@ -8,8 +8,10 @@ import { Logger, UntilDestroy, untilDestroyed } from '@core';
 import { AuthenticationService } from '../authentication.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CatalogosService } from '@app/services/catalogos.service';
+//import InstitucionesCatalogo from '@static/custom/instituciones.json';
 
-import InstitucionesCatalogo from '@static/custom/instituciones.json';
+import { validarCURP, validarRFC } from '../signup/signup.validador';
 
 const log = new Logger('Signup');
 
@@ -25,24 +27,30 @@ export class SignupComponent implements OnInit, OnDestroy {
   signupForm!: FormGroup;
   isLoading = false;
 
-  institucionesCatalogo = InstitucionesCatalogo;
+  institucionesCatalogo: any[];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private catalogoService: CatalogosService
   ) {
     this.createForm();
-    if (this.institucionesCatalogo?.length) {
-      this.signupForm.get('institucion').enable();
-    }
+    this.loadInstituciones();
   }
 
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  async loadInstituciones() {
+    this.institucionesCatalogo = await this.catalogoService.getInstituciones().then((data) => data);
+    if (this.institucionesCatalogo?.length) {
+      this.signupForm.get('institucion').enable();
+    }
+  }
 
   signup() {
     this.isLoading = true;
@@ -51,7 +59,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (this.institucionesCatalogo?.length) {
       signupForm.institucion = {
         clave: signupForm.institucion.clave,
-        valor: signupForm.institucion.ente_publico,
+        valor: signupForm.institucion.valor,
       };
     }
 
@@ -71,7 +79,8 @@ export class SignupComponent implements OnInit, OnDestroy {
             this.openSnackBar('Usuario registrado exitosamente', 'Aceptar');
             this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
           } else {
-            this.openSnackBar('No se pudo completar el registro', 'Aceptar');
+            //this.openSnackBar('No se pudo completar el registro', 'Aceptar');
+            this.openSnackBar('Usuario ya registrado', 'Aceptar');
           }
         },
         (error) => {
@@ -90,9 +99,14 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.signupForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      primerApellido: [''],
-      segundoApellido: [''],
+      //nombre: ['', Validators.required,
+      nombre: ['',
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
+      ],
+      primerApellido: ['', 
+        Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
+      ],
+      segundoApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
       username: [
         '',
         [
@@ -106,22 +120,24 @@ export class SignupComponent implements OnInit, OnDestroy {
         '',
         [
           Validators.required,
+          validarCURP,
           Validators.pattern(
             /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
           ),
         ],
-      ],
+      ],updatedOn: 'change',
       rfc: [
         '',
         [
           Validators.required,
+          validarRFC,
           Validators.pattern(
             /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
           ),
         ],
       ],
-      contrasena: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      confirmarContrasena: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      contrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
+      confirmarContrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       institucion: [{ disabled: true, value: null }, [Validators.required]],
     });
   }

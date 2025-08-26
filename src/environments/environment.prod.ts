@@ -9,7 +9,7 @@ import { env } from './.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  serverUrl: 'https://declaraciones.anticorrupcion.org/api',
+  serverUrl: 'https://prueba.anticorrupcion.org/api',
   defaultLanguage: 'es-ES',
   supportedLanguages: ['es-ES'],
 };

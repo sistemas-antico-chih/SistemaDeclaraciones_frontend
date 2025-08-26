@@ -122,6 +122,10 @@
       </div>
 
       <div class="boton-agregar" *ngIf="(cliente.length && !editMode) || clientesPrincipalesForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR CLIENTE</button>
       </div>
     </div>
@@ -131,9 +135,8 @@
       <!-- Agregar -->
       <div class="padding-agregar" formGroupName="cliente">
         <mat-divider></mat-divider>
-        <p>Agregar cliente principal</p>
+        <p>Cliente principal</p>
         <!-- Datos -->
-
         <div class="grid-3-col grid-margin">
           <mat-form-field appearance="fill">
             <mat-label>Tipo de Operacion</mat-label>
@@ -189,7 +192,8 @@
               matInput
               #input_rfc_empresa
               type="text"
-              maxlength="12"
+              minlength="12"
+              maxlength="13"
               formControlName="rfc"
               required
             />
@@ -250,7 +254,13 @@
           >
             <mat-label>Especifique</mat-label>
             <mat-icon matPrefix class="no-public">person</mat-icon>
-            <input [errorStateMatcher]="errorMatcher" #otroSector matInput type="text" required />
+            <input 
+                [errorStateMatcher]="errorMatcher" 
+                [value]= varOtroSector
+                #otroSector
+                matInput 
+                type="text" 
+                required />
           </mat-form-field>
 
           <div class="grid-2-col" formGroupName="montoAproximadoGanancia">

@@ -7,12 +7,21 @@ import { Moment } from 'moment';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { datosCurricularesMutation, datosCurricularesDeclaranteQuery } from '@api/declaracion';
+import {
+  datosCurricularesMutation,
+  datosCurricularesDeclaranteQuery,
+  lastDatosCurricularesDeclaranteQuery
+} from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { DatosCurricularesDeclarante, DeclaracionOutput, Escolaridad } from '@models/declaracion';
+import {
+  DatosCurricularesDeclarante,
+  DeclaracionOutput,
+  Escolaridad,
+  LastDeclaracionOutput
+} from '@models/declaracion';
 import DocumentoObtenido from '@static/catalogos/documentoObtenido.json';
 import Estatus from '@static/catalogos/estatus.json';
 import Nivel from '@static/catalogos/nivel.json';
@@ -32,6 +41,7 @@ export class DatosCurricularesComponent implements OnInit {
   editIndex: number = null;
   escolaridad: Escolaridad[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   documentoObtenidoCatalogo = DocumentoObtenido;
   estatusCatalogo = Estatus;
@@ -49,7 +59,7 @@ export class DatosCurricularesComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -119,6 +129,25 @@ export class DatosCurricularesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDatosCurricularesDeclaranteQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.datosCurricularesDeclarante);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -136,9 +165,13 @@ export class DatosCurricularesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.setupForm(data?.declaracion.datosCurricularesDeclarante);
+      if (data?.declaracion.datosCurricularesDeclarante === null) {
+        this.getLastUserInfo();
+      } else {
+        this.setupForm(data?.declaracion.datosCurricularesDeclarante);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -149,7 +182,7 @@ export class DatosCurricularesComponent implements OnInit {
     let isDirty = this.datosCurricularesDeclaranteForm.dirty;
     console.log(isDirty);
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -167,7 +200,18 @@ export class DatosCurricularesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
@@ -255,6 +299,18 @@ export class DatosCurricularesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
+  }
+
+  saveItems() {
+    let escolaridad = [...this.escolaridad];
+    const aclaracionesObservaciones = this.datosCurricularesDeclaranteForm.value.aclaracionesObservaciones;
+    this.isLoading = true;
+    this.saveInfo({
+      escolaridad,
+      aclaracionesObservaciones,
+    });
+    this.isLoading = false;
   }
 
   setAclaraciones(aclaraciones?: string) {
@@ -299,5 +355,28 @@ export class DatosCurricularesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  cambioNivel(nivel: any) {
+    let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus').value;
+    this.actualizacionDocumento(nivel.clave,estatus);
+  }
+
+  cambioEstatus(estatus: any) {
+    let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value;
+    this.actualizacionDocumento(nivel.clave,estatus);
+  }
+
+  actualizacionDocumento(nivel: any, estatus: any){
+    const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
+    const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
+    if(estatus === 'FINALIZADO'){
+      if (certificados.includes(nivel)){
+        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
+      }
+      if (titulos.includes(nivel)){
+        this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
+      }
+    }
   }
 }

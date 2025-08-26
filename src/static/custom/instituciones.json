@@ -27,7 +27,7 @@
     "ente_publico": "MUNICIPIO DE AQUILES SERDÁN",
     "clave": "MUN_AQS",
     "servidor_publico_recibe": {
-      "nombre": "C. RICARO LUJÁN TERRAZAS",
+      "nombre": "LIC. LUIS GREGORIO GUERRA LÓPEZ",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -79,11 +79,11 @@
       "cargo": "PRESIDENTE MUNICIPAL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE CAMARGO",
     "clave": "MUN_CAM",
     "servidor_publico_recibe": {
-      "nombre": "C. JULIAN GILBERTO ESTEVANE LUNA",
+      "nombre": "LIC. JULIAN GILBERTO ESTEVANE LUNA",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -91,11 +91,11 @@
     "ente_publico": "MUNICIPIO DE CARICHÍ",
     "clave": "MUN_ASC",
     "servidor_publico_recibe": {
-      "nombre": "C. MARÍA GUADALUPE TERÁN RASCÓN",
+      "nombre": "C.P. BERENICE RODRÍGUEZ GUTIÉRREZ",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-{
+  {
     "ente_publico": "MUNICIPIO DE CASAS GRANDES",
     "clave": "MUN_CGR",
     "servidor_publico_recibe": {
@@ -163,7 +163,7 @@
     "ente_publico": "MUNICIPIO DE DR. BELISARIO DOMÍNGUEZ",
     "clave": "MUN_BEL",
     "servidor_publico_recibe": {
-      "nombre": "C. ANA CECILIA ESTRADA OLIVAS",
+      "nombre": "C. PAOLA RODRÍGUEZ CEPEDA",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -211,7 +211,7 @@
     "ente_publico": "MUNICIPIO DE GUADALUPE",
     "clave": "MUN_GPE",
     "servidor_publico_recibe": {
-      "nombre": "C. AVIMAEL CHÁVEZ GARAY",
+      "nombre": "DR. VÍCTOR LUIS LUQUE CLEMENTE",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
@@ -219,8 +219,8 @@
     "ente_publico": "MUNICIPIO DE GUADALUPE Y CALVO",
     "clave": "MUN_GYC",
     "servidor_publico_recibe": {
-      "nombre": "C. JULIO CÉSAR CHÁVEZ PONCE",
-      "cargo": "PRESIDENTE MUNICIPAL"
+      "valor": "ING. MARTÍN ALEJANDRO MOLINA LÓPEZ",
+      "cargo": "TITULAR DEL ÓRGANO INTERNO DE CONTROL"
     }
   },
   {
@@ -243,11 +243,11 @@
     "ente_publico": "MUNICIPIO DE HIDALGO DEL PARRAL",
     "clave": "MUN_HGO",
     "servidor_publico_recibe": {
-      "nombre": "C. DANIELA IVETH SÁNCHEZ MOLINA",
+      "nombre": "LIC. OMAR DELFINO RAMÍREZ LUNA",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE HUEJOTITÁN",
     "clave": "MUN_HUE",
     "servidor_publico_recibe": {
@@ -280,14 +280,6 @@
     }
   },
   {
-    "ente_publico": "MUNICIPIO DE JUÁREZ",
-    "clave": "MUN_JUA",
-    "servidor_publico_recibe": {
-      "nombre": "C. JOSÉ LUIS ANAYA CARRASCO",
-      "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
-    }
-  },
-  {
     "ente_publico": "MUNICIPIO DE JULIMES",
     "clave": "MUN_JUL",
     "servidor_publico_recibe": {
@@ -303,7 +295,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE LÓPEZ",
     "clave": "MUN_LOP",
     "servidor_publico_recibe": {
@@ -355,11 +347,11 @@
     "ente_publico": "MUNICIPIO DE MEOQUI",
     "clave": "MUN_MEQ",
     "servidor_publico_recibe": {
-      "nombre": "C. RICARDO LUJÁN TERRAZAS",
+      "nombre": "ING. OSMAR AARÓN NERI GONZÁLEZ",
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE MORELOS",
     "clave": "MUN_MOR",
     "servidor_publico_recibe": {
@@ -411,8 +403,8 @@
     "ente_publico": "MUNICIPIO DE OJINAGA",
     "clave": "MUN_OJI",
     "servidor_publico_recibe": {
-      "nombre": "C. ANDRÉS RAMOS DE ANDA",
-      "cargo": "PRESIDENTE MUNICIPAL"
+      "nombre": "PROFR. JORGE VALENZUELA RAMOS",
+      "cargo": "TITULAR DEL ÓRGANO INTERNO DE CONTROL"
     }
   },
    {
@@ -447,7 +439,7 @@
       "cargo": "TITULAR ÓRGANO INTERNO DE CONTROL"
     }
   },
-   {
+  {
     "ente_publico": "MUNICIPIO DE SAN FRANCISCO DE BORJA",
     "clave": "MUN_BOR",
     "servidor_publico_recibe": {

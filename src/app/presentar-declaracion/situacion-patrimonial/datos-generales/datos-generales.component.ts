@@ -5,15 +5,15 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { datosGeneralesQuery, declaracionMutation } from '@api/declaracion';
+import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { DatosGenerales, DeclaracionOutput } from '@models/declaracion';
+import { DatosGenerales, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
 import Nacionalidades from '@static/catalogos/nacionalidades.json';
-import Paises from '@static/catalogos/paises.json';
+import Paises from '@static/catalogos/paisesMX.json';
 import SituacionPersonalEstadoCivil from '@static/catalogos/situacionPersonalEstadoCivil.json';
 import RegimenMatrimonial from '@static/catalogos/regimenMatrimonial.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-generales';
@@ -26,11 +26,13 @@ import { findOption } from '@utils/utils';
   styleUrls: ['./datos-generales.component.scss'],
 })
 export class DatosGeneralesComponent implements OnInit {
+  array_anio_ejercicio: Array<number> = [];
   aclaraciones = false;
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
   anio_ejercicio: number = null;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -57,8 +59,13 @@ export class DatosGeneralesComponent implements OnInit {
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
 
+    for (let index = 0; index < 5; index++) {
+      this.array_anio_ejercicio.push(this.currentYear - index);
+    }
+
     this.createForm();
     this.getUserInfo();
+    this.getUserDataQuery();
   }
 
   confirmSaveInfo() {
@@ -70,6 +77,8 @@ export class DatosGeneralesComponent implements OnInit {
         falseText: 'Cancelar',
       },
     });
+
+    this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -145,6 +154,35 @@ export class DatosGeneralesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getUserDataQuery() {
+    const credentials = JSON.parse(localStorage.getItem('credentials'));
+    const rfc = credentials.user.rfc.slice(0, 10);
+    const homo = credentials.user.rfc.slice(10, 13);
+    const dataUser = { ...credentials.user, rfc: { rfc, homoClave: homo } };
+
+    this.datosGeneralesForm.patchValue({ ...dataUser } || {});
+  }
+
+  async getLastUserInfo() {
+    console.log("lastUser")
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDeclaracionDatosGenerales,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.fillForm(data?.lastDeclaracion.datosGenerales);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -163,7 +201,12 @@ export class DatosGeneralesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
-      this.fillForm(data?.declaracion.datosGenerales);
+
+      if (data.declaracion.datosGenerales === null) {
+        this.getLastUserInfo();
+      } else {
+        this.fillForm(data?.declaracion.datosGenerales);
+      }
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -185,15 +228,18 @@ export class DatosGeneralesComponent implements OnInit {
       return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
     }
 
-    return true;
+    return typeof this.anio_ejercicio === 'number';
+    // return true;
   }
+  
+
 
   formHasChanges() {
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosGeneralesForm.dirty;
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -211,8 +257,6 @@ export class DatosGeneralesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
-
   openSnackBar(message: string, action: string = null) {
     this.snackBar.open(message, action, {
       duration: 5000,
@@ -222,9 +266,9 @@ export class DatosGeneralesComponent implements OnInit {
   async saveInfo() {
     try {
       this.isLoading = true;
-
       const declaracion = {
         datosGenerales: this.finalForm,
+        //anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
         anioEjercicio: this.anio_ejercicio,
       };
 
@@ -275,6 +319,19 @@ export class DatosGeneralesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
   }
 }
 

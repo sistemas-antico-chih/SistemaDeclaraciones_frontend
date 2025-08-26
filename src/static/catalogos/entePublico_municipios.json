@@ -1,0 +1,457 @@
+[
+    {
+        "clave": "001",
+        "valor": "MUNICIPIO DE AHUMADA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "002",
+        "valor": "MUNICIPIO DE ALDAMA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "003",
+        "valor": "MUNICIPIO DE ALLENDE",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "004",
+        "valor": "MUNICIPIO DE AQUILES SERDÁN",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "005",
+        "valor": "MUNICIPIO DE ASCENSIÓN",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "006",
+        "valor": "MUNICIPIO DE BACHÍNIVA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "007",
+        "valor": "MUNICIPIO DE BALLEZA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "008",
+        "valor": "MUNICIPIO DE BATOPILAS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "009",
+        "valor": "MUNICIPIO DE BOCOYNA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "010",
+        "valor": "MUNICIPIO DE BUENAVENTURA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "011",
+        "valor": "MUNICIPIO DE CAMARGO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "012",
+        "valor": "MUNICIPIO DE CARICHÍ",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "013",
+        "valor": "MUNICIPIO DE CASAS GRANDES",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "014",
+        "valor": "MUNICIPIO DE CORONADO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "015",
+        "valor": "MUNICIPIO DE COYAME DEL SOTOL",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "016",
+        "valor": "MUNICIPIO DE LA CRUZ",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "017",
+        "valor": "MUNICIPIO DE CUAUHTÉMOC",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "018",
+        "valor": "MUNICIPIO DE CUSIHUIRIACHI",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "020",
+        "valor": "MUNICIPIO DE CHÍNIPAS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "021",
+        "valor": "MUNICIPIO DE DELICIAS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "022",
+        "valor": "MUNICIPIO DE DR. BELISARIO DOMÍNGUEZ",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "023",
+        "valor": "MUNICIPIO DE GALEANA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "024",
+        "valor": "MUNICIPIO DE SANTA ISABEL",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "025",
+        "valor": "MUNICIPIO DE GÓMEZ FARÍAS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "026",
+        "valor": "MUNICIPIO DE GRAN MORELOS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "027",
+        "valor": "MUNICIPIO DE GUACHOCHI",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "028",
+        "valor": "MUNICIPIO DE GUADALUPE",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "029",
+        "valor": "MUNICIPIO DE GUADALUPE Y CALVO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "030",
+        "valor": "MUNICIPIO DE GUAZAPARES",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "031",
+        "valor": "MUNICIPIO DE GUERRERO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "032",
+        "valor": "MUNICIPIO DE HIDALGO DEL PARRAL",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "033",
+        "valor": "MUNICIPIO DE HUEJOTITÁN",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "034",
+        "valor": "MUNICIPIO DE IGNACIO ZARAGOZA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "035",
+        "valor": "MUNICIPIO DE JANOS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "036",
+        "valor": "MUNICIPIO DE JIMÉNEZ",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "038",
+        "valor": "MUNICIPIO DE JULIMES",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "039",
+        "valor": "MUNICIPIO DE LÓPEZ",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "040",
+        "valor": "MUNICIPIO DE MADERA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "041",
+        "valor": "MUNICIPIO DE MAGUARICHI",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "042",
+        "valor": "MUNICIPIO DE MANUEL BENAVIDES",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "043",
+        "valor": "MUNICIPIO DE MATACHÍ",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "044",
+        "valor": "MUNICIPIO DE MATAMOROS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "045",
+        "valor": "MUNICIPIO DE MEOQUI",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "046",
+        "valor": "MUNICIPIO DE MORELOS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "047",
+        "valor": "MUNICIPIO DE MORIS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "048",
+        "valor": "MUNICIPIO DE NAMIQUIPA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "049",
+        "valor": "MUNICIPIO DE NONOAVA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "050",
+        "valor": "MUNICIPIO DE NUEVO CASAS GRANDES",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "051",
+        "valor": "MUNICIPIO DE OCAMPO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "052",
+        "valor": "MUNICIPIO DE OJINAGA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "053",
+        "valor": "MUNICIPIO DE PRAXEDIS G. GUERRERO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "054",
+        "valor": "MUNICIPIO DE RIVA PALACIO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "055",
+        "valor": "MUNICIPIO DE ROSALES",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "056",
+        "valor": "MUNICIPIO DE ROSARIO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "057",
+        "valor": "MUNICIPIO DE SAN FRANCISCO DE BORJA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "058",
+        "valor": "MUNICIPIO DE SAN FRANCISCO DE CONCHOS",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "059",
+        "valor": "MUNICIPIO DE SAN FRANCISCO DEL ORO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "060",
+        "valor": "MUNICIPIO DE SANTA BÁRBARA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "061",
+        "valor": "MUNICIPIO DE SATEVÓ",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "062",
+        "valor": "MUNICIPIO DE SAUCILLO",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "063",
+        "valor": "MUNICIPIO DE TEMÓSACHIC",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "064",
+        "valor": "MUNICIPIO DE EL TULE",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "065",
+        "valor": "MUNICIPIO DE URIQUE",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "066",
+        "valor": "MUNICIPIO DE URUACHI",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    },
+    {
+        "clave": "067",
+        "valor": "MUNICIPIO DE VALLE DE ZARAGOZA",
+        "ambito": "MUNICIPAL_ALCALDIA",
+        "orden": "EJECUTIVO_MUNICIPAL",
+        "empleo": "SI"
+    }
+]

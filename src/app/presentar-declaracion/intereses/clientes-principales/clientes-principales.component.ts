@@ -6,12 +6,12 @@ import { MatSelect } from '@angular/material/select';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { clientesPrincipalesMutation, clientesPrincipalesQuery } from '@api/declaracion';
+import { clientesPrincipalesMutation, clientesPrincipalesQuery, lastClientesPrincipalesQuery } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { Cliente, ClientesPrincipales, DeclaracionOutput } from '@models/declaracion';
+import { Cliente, ClientesPrincipales, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
 import Estados from '@static/catalogos/estados.json';
 import Monedas from '@static/catalogos/monedas.json';
 import Paises from '@static/catalogos/paises.json';
@@ -34,6 +34,9 @@ export class ClientesPrincipalesComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
+  varOtroSector: string = null;
+  location: string = null;
+  pushButtonSave: boolean =false;
 
   @ViewChild('locationSelect') locationSelect: MatSelect;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -91,7 +94,7 @@ export class ClientesPrincipalesComponent implements OnInit {
             [
               Validators.required,
               Validators.pattern(
-                /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+                /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
               ),
             ],
           ],
@@ -144,6 +147,25 @@ export class ClientesPrincipalesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastClientesPrincipalesQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.clientesPrincipales);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data, errors } = await this.apollo
@@ -160,20 +182,23 @@ export class ClientesPrincipalesComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      if (data?.declaracion.clientesPrincipales) {
+      if (data?.declaracion.clientesPrincipales === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data?.declaracion.clientesPrincipales);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
+
 
   get finalClienteForm() {
     const form = JSON.parse(JSON.stringify(this.clientesPrincipalesForm.value.cliente)); // Deep copy
 
     if (form.sector?.clave === 'OTRO') {
-      form.sector.valor = this.otroSector.nativeElement.value;
+      form.sector.valor = this.otroSector.nativeElement.value.toUpperCase();
     }
 
     return form;
@@ -209,7 +234,7 @@ export class ClientesPrincipalesComponent implements OnInit {
 
   formHasChanges() {
     let isDirty = this.clientesPrincipalesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -227,7 +252,18 @@ export class ClientesPrincipalesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noClients() {
     this.saveInfo({ ninguno: true });
@@ -321,6 +357,7 @@ export class ClientesPrincipalesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setAclaraciones(aclaraciones?: string) {
@@ -340,7 +377,11 @@ export class ClientesPrincipalesComponent implements OnInit {
     const { entidadFederativa, pais } = this.clientesPrincipalesForm.value.cliente.ubicacion;
 
     if (sector) {
-      this.clientesPrincipalesForm.get('cliente.sector').setValue(findOption(this.sectorCatalogo, sector.clave));
+      const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
+        this.clientesPrincipalesForm.get('cliente.sector').setValue(optSector[0]);
+        if (sector.clave === 'OTRO') {
+          this.varOtroSector = sector.valor; 
+        }
     }
 
     if (entidadFederativa) {
@@ -380,5 +421,23 @@ export class ClientesPrincipalesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let cliente = [...this.cliente];
+    if (cliente.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < cliente.length; i++) {
+        cliente[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.clientesPrincipalesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        cliente,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
   }
 }

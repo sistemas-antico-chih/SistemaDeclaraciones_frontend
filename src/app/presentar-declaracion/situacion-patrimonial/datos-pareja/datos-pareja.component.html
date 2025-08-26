@@ -293,11 +293,22 @@
         </mat-card-actions>
       </mat-card>
 
-      <div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS
+      <div class="boton-agregar" *ngIf="!editMode">
+        <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: editMode }">
+          -GUARDAR-
+        </button>
+      </div>-->
+
+      <!--<div class="boton-agregar" *ngIf="!editMode && datosParejaForm.value.ninguno">-->
+      <div class="boton-agregar" *ngIf="!editMode">
+        <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: editMode }">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR PAREJA</button>
       </div>
     </div>
-
+  
     <!-- Formulario -->
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosParejaForm" [ngClass]="{ hidden: !editMode }">
       <mat-divider></mat-divider>
@@ -305,6 +316,17 @@
       <div class="padding-agregar">
         <!-- Agregar Pareja -->
         <!-- Datos pareja -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <div class="">
           <h2>Agregar pareja</h2>
           <div class="grid-3-col grid-margin">
@@ -334,14 +356,13 @@
           <div class="grid-2-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.fechaNacimiento }}" appearance="fill">
               <mat-label>Fecha de Nacimiento</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerNacimiento"
-                [min]="minDatePareja"
-                [max]="maxDate"
-                formControlName="fechaNacimiento"
-                required
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                matInput [matDatepicker]="pickerNacimiento"
+                [min]="minDatePareja" 
+                [max]="maxDate" 
+                formControlName="fechaNacimiento" 
+                required 
               />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerNacimiento">
@@ -370,7 +391,6 @@
                 type="text"
                 maxlength="13"
                 formControlName="rfc"
-                required
               />
               <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             </mat-form-field>
@@ -379,7 +399,8 @@
               matTooltip="{{ tooltipData.ciudadanoExtranjero }}"
               class="checkbox"
               formControlName="ciudadanoExtranjero"
-            >
+              (change)="radioChange($event.value)"
+              [(ngModel)]="ciudadanoExtranjero">
               <p class="question double-col"><span class="no-public-inline"></span> ¿Es ciudadano extranjero?</p>
               <mat-radio-button [value]="true">Sí</mat-radio-button>
               <mat-radio-button [value]="false">No</mat-radio-button>
@@ -396,7 +417,6 @@
                 maxlength="18"
                 type="text"
                 formControlName="curp"
-                required
               />
               <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             </mat-form-field>
@@ -753,14 +773,13 @@
 
             <mat-form-field matTooltip="{{ tooltipData.sectorPublico.fechaIngreso }}" appearance="fill">
               <mat-label>Fecha de ingreso al empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerPublicIngreso"
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                matInput [matDatepicker]="pickerPublicIngreso" 
                 [min]="minDate"
-                [max]="maxDate"
-                formControlName="fechaIngreso"
-                required
+                [max]="maxDate" 
+                formControlName="fechaIngreso" 
+                required 
               />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerPublicIngreso">
@@ -845,14 +864,13 @@
 
             <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.fechaIngreso }}" appearance="fill">
               <mat-label>Fecha de ingreso al empleo</mat-label>
-              <input
-                [errorStateMatcher]="errorMatcher"
-                matInput
-                [matDatepicker]="pickerOtroIngreso"
+              <input 
+                [errorStateMatcher]="errorMatcher" 
+                matInput [matDatepicker]="pickerOtroIngreso" 
                 [min]="minDate"
-                [max]="maxDate"
-                formControlName="fechaIngreso"
-                required
+                [max]="maxDate" 
+                formControlName="fechaIngreso" 
+                required 
               />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix class="no-public-picker" [for]="pickerOtroIngreso">
@@ -931,7 +949,14 @@
       </div>
     </form>
     <mat-divider></mat-divider>
-
+ 
+    <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS
+      <div class="boton-agregar" *ngIf="!editMode">
+        <button mat-raised-button color="primary" (click)="checkPartner()" [ngClass]="{ hidden: editMode }">
+          GUARDAR
+        </button>
+      </div>
+    -->
     <div class="boton center">
       <button mat-raised-button color="primary" (click)="formHasChanges()">
         CONTINUAR 7 DE 15

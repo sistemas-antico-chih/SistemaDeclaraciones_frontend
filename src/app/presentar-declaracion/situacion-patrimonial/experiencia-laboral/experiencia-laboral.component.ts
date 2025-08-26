@@ -5,18 +5,19 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { experienciaLaboralMutation, experienciaLaboralQuery } from '@api/declaracion';
+import { experienciaLaboralMutation, experienciaLaboralQuery, lastExperienciaLaboralQuery } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { DeclaracionOutput } from '@models/declaracion/declaracion.model';
+
+import { DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion/declaracion.model';
 import { Experiencia, ExperienciaLaboral } from '@models/declaracion/experiencia-laboral.model';
 import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
 import AmbitoSector from '@static/catalogos/ambitoSector.json';
 import Extranjero from '@static/catalogos/extranjero.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobierno.json';
+import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/experiencia-laboral';
 import { findOption } from '@utils/utils';
@@ -35,6 +36,7 @@ export class ExperienciaLaboralComponent implements OnInit {
   editIndex: number = null;
   experiencia: Experiencia[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   @ViewChild('otroAmbitoSector') otroAmbitoSector: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -56,7 +58,12 @@ export class ExperienciaLaboralComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+  maxDateIngreso = new Date(this.anio, this.mes - 1, this.dia-1);
+
+  ahora: any;
+  deshabilitar: any;
+  fechaIngreso: string;
 
   constructor(
     private apollo: Apollo,
@@ -150,15 +157,17 @@ export class ExperienciaLaboralComponent implements OnInit {
         areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-        fechaIngreso: [null, [Validators.required]],
-        fechaEgreso: [null, [Validators.required]],
+        fechaIngreso: [null, [Validators.required,
+        ]],
+        fechaEgreso: [null, [Validators.required,
+        ]],
         ubicacion: [null, [Validators.required]],
         nombreEmpresaSociedadAsociacion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         rfc: [
           null,
           [
             Validators.pattern(
-              /^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+              /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
             ),
           ],
         ],
@@ -167,8 +176,11 @@ export class ExperienciaLaboralComponent implements OnInit {
         sector: [null, [Validators.required]],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+    }, {
+      validator: this.validarFechas("experiencia.fechaIngreso", "experiencia.fechaEgreso")
     });
 
+    //this.ahora=this.experienciaLaboralForm.get('experiencia.fechaIngreso');
     const ambitoSector = this.experienciaLaboralForm.get('experiencia.ambitoSector');
 
     ambitoSector.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
@@ -176,6 +188,23 @@ export class ExperienciaLaboralComponent implements OnInit {
         this.ambitoSectorChanged(value.clave);
       }
     });
+  }
+
+  validarFechas(fechaIngreso: string, fechaEgreso: string) {
+    return (formGroup: FormGroup) => {
+      const fingreso = formGroup.get(fechaIngreso);
+      const fegreso = formGroup.get(fechaEgreso);
+      if (fegreso.errors && !fegreso.errors.validarFechas) {
+        return;
+      }
+
+      if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
+        fegreso.setErrors({ validarFechas: true });
+      }
+      else {
+        fegreso.setErrors(null);
+      }
+    };
   }
 
   editItem(index: number) {
@@ -186,6 +215,8 @@ export class ExperienciaLaboralComponent implements OnInit {
 
   fillForm(experiencia: Experiencia) {
     this.experienciaLaboralForm.get('experiencia').patchValue(experiencia);
+    console.log("experiencia");
+    console.log(this.experienciaLaboralForm);
     this.setAclaraciones(this.aclaracionesText);
 
     if (experiencia.ambitoSector?.clave === 'OTR') {
@@ -197,6 +228,25 @@ export class ExperienciaLaboralComponent implements OnInit {
     }
 
     this.setSelectedOptions(experiencia);
+  }
+
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastExperienciaLaboralQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.experienciaLaboral);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
   }
 
   async getUserInfo() {
@@ -216,9 +266,13 @@ export class ExperienciaLaboralComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      this.setupForm(data?.declaracion.experienciaLaboral);
+      if (data?.declaracion.experienciaLaboral === null) {
+        this.getLastUserInfo();
+      } else {
+        this.setupForm(data?.declaracion.experienciaLaboral);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
@@ -260,7 +314,7 @@ export class ExperienciaLaboralComponent implements OnInit {
     let isDirty = this.experienciaLaboralForm.dirty;
     console.log(isDirty);
 
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -278,7 +332,33 @@ export class ExperienciaLaboralComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
+
+  checkItems() {
+    let experiencia = [...this.experiencia];
+    if (experiencia.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      const aclaracionesObservaciones = this.experienciaLaboralForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        experiencia,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
 
   noExperience() {
     this.saveInfo({ ninguno: true });
@@ -369,6 +449,18 @@ export class ExperienciaLaboralComponent implements OnInit {
       aclaracionesObservaciones,
     });
 
+    this.isLoading = false;
+    this.pushButtonSave = true;
+  }
+
+  saveItems() {
+    let experiencia = [...this.experiencia];
+    const aclaracionesObservaciones = this.experienciaLaboralForm.value.aclaracionesObservaciones;
+    this.isLoading = true;
+    this.saveInfo({
+      experiencia,
+      aclaracionesObservaciones,
+    });
     this.isLoading = false;
   }
 

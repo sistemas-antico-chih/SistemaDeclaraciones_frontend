@@ -186,6 +186,10 @@
         </mat-card-actions>
       </mat-card>
       <div class="boton-agregar" *ngIf="(bienMueble.length && !editMode) || bienesMueblesForm.value.ninguno">
+        <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+        <button mat-raised-button color="primary" (click)="checkItems()">
+          GUARDAR
+        </button>
         <button mat-raised-button color="primary" (click)="addItem()">Agregar Bien Mueble</button>
       </div>
     </div>
@@ -195,9 +199,22 @@
       <!-- Agregar empleo, cargo o comisión -->
       <div class="padding-agregar" formGroupName="bienMueble">
         <mat-divider></mat-divider>
+        <p>Bien mueble</p>
+        <!-- Datos -->
+        <div class="grid-3-col grid-margin">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de Operacion</mat-label>
+            <mat-icon matPrefix>beenhere</mat-icon>
+            <mat-select formControlName="tipoOperacion" required>
+              <mat-option *ngFor="let tipoOperacion of tipoOperacionCatalogo" [value]="tipoOperacion">
+                {{ tipoOperacion | replace: '_':' ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <!-- Datos mueble -->
         <div class="">
-          <h2>Agregar bien mueble</h2>
+          <h2>Bien mueble</h2>
           <div class="grid-2-col grid-margin">
             <mat-form-field matTooltip="{{ tooltipData.tipoBien }}" appearance="fill">
               <mat-label>Tipo del bien</mat-label>
@@ -214,7 +231,14 @@
             <mat-form-field appearance="fill" *ngIf="bienesMueblesForm.value.bienMueble.tipoBien?.clave === 'OTRO'">
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">dns</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value]= varOtroTipoBienMueble
+              class="OTB"
+              #otroTipoBienMueble
+              matInput 
+              type="text" 
+              required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.titularBien }}" appearance="fill">
               <mat-label>Titular del Bien</mat-label>
@@ -229,10 +253,16 @@
 
           <!-- Tercero -->
           <div class="grid-3-col grid-margin" formGroupName="tercero">
-            <mat-radio-group matTooltip="{{ tooltipData.tercero }}" class="checkbox" formControlName="tipoPersona">
-              <p class="question double-col">Tercero</p>
-              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Persona Física</mat-radio-button>
-              <mat-radio-button value="MORAL">Persona Moral</mat-radio-button>
+            <mat-radio-group 
+              matTooltip="{{ tooltipData.tercero }}" 
+              class="tercero" 
+              formControlName="tipoPersona"
+              (change)="radioChange($event.value)"
+              [(ngModel)]="tipoPersona">
+              <p class="question double-col">Copropiedad tipo persona de Tercero</p>
+              <mat-radio-button value="FISICA"><span class="no-public-inline"></span>Física</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="MORAL">Moral</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="NINGUNO">Ninguno</mat-radio-button>
             </mat-radio-group>
             <mat-form-field matTooltip="{{ tooltipData.nombreTercero }}" appearance="fill">
               <mat-label>Nombre del Tercero o Terceros</mat-label>
@@ -248,6 +278,7 @@
                 #input_rfc_tercero
                 formControlName="rfc"
                 type="text"
+                minlength="12"
                 maxlength="13"
               />
               <mat-hint align="end">{{ input_rfc_tercero.value?.length || 0 }}/13</mat-hint>
@@ -293,7 +324,13 @@
             >
               <mat-label>Especifique</mat-label>
               <mat-icon matPrefix class="no-public">group</mat-icon>
-              <input [errorStateMatcher]="errorMatcher" matInput type="text" required />
+              <input 
+              [errorStateMatcher]="errorMatcher" 
+              [value] = varOtroRelacion
+              #otroParentesco 
+              matInput 
+              type="text" 
+              required />
             </mat-form-field>
           </div>
 
@@ -323,6 +360,7 @@
                 #input_rfc_transmisor
                 formControlName="rfc"
                 type="text"
+                minlength="12"
                 maxlength="13"
                 required
               />

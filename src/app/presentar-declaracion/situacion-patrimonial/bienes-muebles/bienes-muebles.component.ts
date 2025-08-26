@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';
-import { bienesMueblesMutation, bienesMueblesQuery } from '@api/declaracion';
+import { bienesMueblesMutation, bienesMueblesQuery, lastBienesMueblesQuery } from '@api/declaracion';
 
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
+import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import TipoBienBienesMuebles from '@static/catalogos/tipoBienBienesMuebles.json';
@@ -19,8 +19,8 @@ import Monedas from '@static/catalogos/monedas.json';
 
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bienes-muebles';
 
-import { BienMueble, BienesMuebles, DeclaracionOutput } from '@models/declaracion';
-
+import { BienMueble, BienesMuebles, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
+import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { findOption } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
@@ -37,6 +37,7 @@ export class BienesMueblesComponent implements OnInit {
   editIndex: number = null;
   bienMueble: BienMueble[] = [];
   isLoading = false;
+  pushButtonSave: boolean =false;
 
   tipoBienBienesMueblesCatalogo = TipoBienBienesMuebles;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -47,7 +48,7 @@ export class BienesMueblesComponent implements OnInit {
   monedasCatalogo = Monedas;
 
   tipoDeclaracion: string = null;
-
+  tipoOperacionCatalogo = TipoOperacion;
   declaracionId: string = null;
 
   tooltipData = tooltipData;
@@ -57,7 +58,15 @@ export class BienesMueblesComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+
+  tipoPersona: String;
+
+  varOtroTipoBienMueble: string = null;
+  varOtroRelacion: string = null;
+
+  @ViewChild('otroTipoBienMueble') otroTipoBienMueble: ElementRef;
+  @ViewChild('otroParentesco') otroParentesco: ElementRef;
 
   constructor(
     private apollo: Apollo,
@@ -87,6 +96,7 @@ export class BienesMueblesComponent implements OnInit {
     this.bienesMueblesForm = this.formBuilder.group({
       ninguno: [false],
       bienMueble: this.formBuilder.group({
+        tipoOperacion: [null, [Validators.required]],
         titular: [[], Validators.required],
         tipoBien: [null, [Validators.required]],
         transmisor: this.formBuilder.group({
@@ -148,6 +158,25 @@ export class BienesMueblesComponent implements OnInit {
     this.setSelectedOptions();
   }
 
+  async getLastUserInfo() {
+    try {
+      const { data, errors } = await this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastBienesMueblesQuery,
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
+      }
+
+      this.setupForm(data?.lastDeclaracion.bienesMuebles);
+    } catch (error) {
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+    }
+  }
+
   async getUserInfo() {
     try {
       const { data } = await this.apollo
@@ -160,17 +189,21 @@ export class BienesMueblesComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.bienesMuebles) {
+
+      if (data.declaracion.bienesMuebles === null) {
+        this.getLastUserInfo();
+      } else {
         this.setupForm(data.declaracion.bienesMuebles);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
   formHasChanges() {
     let isDirty = this.bienesMueblesForm.dirty;
-    if (isDirty) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -188,7 +221,18 @@ export class BienesMueblesComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 
   noPossessions() {
     this.saveInfo({ ninguno: true });
@@ -262,7 +306,7 @@ export class BienesMueblesComponent implements OnInit {
   saveItem() {
     let bienMueble = [...this.bienMueble];
     const aclaracionesObservaciones = this.bienesMueblesForm.value.aclaracionesObservaciones;
-    const newItem = this.bienesMueblesForm.value.bienMueble;
+    const newItem = this.finalBienMuebleForm;
 
     if (this.editIndex === null) {
       bienMueble = [...bienMueble, newItem];
@@ -278,6 +322,7 @@ export class BienesMueblesComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.pushButtonSave = true;
   }
 
   setEditMode() {
@@ -293,10 +338,13 @@ export class BienesMueblesComponent implements OnInit {
     const { relacion } = this.bienesMueblesForm.value.bienMueble.transmisor;
 
     if (tipoBien) {
-      this.bienesMueblesForm
-        .get('bienMueble.tipoBien')
-        .setValue(findOption(this.tipoBienBienesMueblesCatalogo, tipoBien));
+      const optionTipoBienMueble = this.tipoBienBienesMueblesCatalogo.filter((i: any) => i.clave === tipoBien.clave);
+      this.bienesMueblesForm.get('bienMueble.tipoBien').setValue(optionTipoBienMueble[0]);
+      if (tipoBien.clave === 'OTRO') {
+        this.varOtroTipoBienMueble = tipoBien.valor;
+      }
     }
+    
     if (titular) {
       this.bienesMueblesForm.get('bienMueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
     }
@@ -305,11 +353,14 @@ export class BienesMueblesComponent implements OnInit {
         .get('bienMueble.formaAdquisicion')
         .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
     }
-
+    
     if (relacion) {
-      this.bienesMueblesForm
-        .get('bienMueble.transmisor.relacion')
-        .setValue(findOption(this.parentescoRelacionCatalogo, relacion.clave));
+      const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
+      // this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));
+      this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(optRelacion[0]);
+      if (relacion.clave === 'OTRO') {
+        this.varOtroRelacion = relacion.valor;
+      }
     }
   }
 
@@ -336,5 +387,58 @@ export class BienesMueblesComponent implements OnInit {
       aclaraciones.reset();
     }
     this.aclaraciones = value;
+  }
+
+  checkItems() {
+    let bienMueble = [...this.bienMueble];
+    if (bienMueble.length === 0) {
+      this.saveInfo({ ninguno: true });
+    } else {
+      for (let i = 0; i < bienMueble.length; i++) {
+        bienMueble[i].tipoOperacion = 'SIN_CAMBIOS';
+      }
+      const aclaracionesObservaciones = this.bienesMueblesForm.value.aclaracionesObservaciones;
+      this.isLoading = true;
+      this.saveInfo({
+        bienMueble,
+        aclaracionesObservaciones,
+      });
+      this.isLoading = false;
+    }
+  }
+
+  radioChange(event: any) {
+    if (event === "NINGUNO") {
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").clearValidators();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").setValue(' ');
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").disable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").clearValidators();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").setValue(' ');
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").disable();
+    }
+    else {
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").setValidators([Validators.required]);
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").enable();
+      this.bienesMueblesForm.get("bienMueble.tercero.nombreRazonSocial").updateValueAndValidity();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").setValidators([Validators.required]);
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").enable();
+      this.bienesMueblesForm.get("bienMueble.tercero.rfc").updateValueAndValidity();
+    }
+  }
+
+  get finalBienMuebleForm() {
+    const form = JSON.parse(JSON.stringify(this.bienesMueblesForm.value.bienMueble)); // Deep copy
+
+    if (form.tipoBien?.clave === 'OTRO') {
+      form.tipoBien.valor = this.otroTipoBienMueble.nativeElement.value.toUpperCase();
+      //form.tipoInmueble.valor = document.querySelector<HTMLInputElement>('.OTI').value.toUpperCase();
+    }
+    if (form.transmisor.relacion?.clave === 'OTRO') {
+      form.transmisor.relacion.valor = this.otroParentesco.nativeElement.value.toUpperCase();
+    }
+
+    return form;
   }
 }

@@ -177,8 +177,12 @@
 
       <div
         class="boton-agregar"
-        *ngIf="(experiencia.length > 0 && experiencia.length < 5 && !editMode) || experienciaLaboralForm.value.ninguno"
+        *ngIf="(experiencia.length > 0 && experiencia.length < 6 && !editMode) || experienciaLaboralForm.value.ninguno"
       >
+      <!--AGREGAR OTRO BOTON DE GUARDAR CAMBIOS-->
+      <button mat-raised-button color="primary" (click)="checkItems()">
+        GUARDAR CAMBIOS
+      </button>
         <button mat-raised-button color="primary" (click)="addItem()">AGREGAR EXPERIENCIA</button>
       </div>
     </div>
@@ -313,10 +317,11 @@
               #input_rfc
               type="text"
               formControlName="rfc"
-              maxlength="12"
+              minlength="12"
+              maxlength="13"
               required
             />
-            <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/12</mat-hint>
+            <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
           </mat-form-field>
           <mat-form-field matTooltip="{{ tooltipData.sectorPrivado.area }}" appearance="fill">
             <mat-label>Área</mat-label>
@@ -356,9 +361,10 @@
               formControlName="fechaIngreso"
               [matDatepicker]="pickerOtroIngreso"
               [min]="minDate"
-              [max]="maxDate"
+              [max]="maxDateIngreso"
               required
             />
+            <!--[min]="ahora" [(ngModel)]="fechaIngreso" (ngModelChange)="cambioFecha()" -->
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="pickerOtroIngreso"></mat-datepicker-toggle>
             <mat-datepicker #pickerOtroIngreso></mat-datepicker>
@@ -373,10 +379,17 @@
               [min]="minDate"
               [max]="maxDate"
               required
-            />
+              #fechaEgreso           />
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="pickerOtroEgreso"></mat-datepicker-toggle>
             <mat-datepicker #pickerOtroEgreso></mat-datepicker>
+            
+            <!--
+            <mat-error class="mat-error"
+             *ngIf="fechaEgreso.errors.validarFechas && fechaEgreso.touched">
+             Las contraseñas debden de coincidir
+            </mat-error>
+            -->
           </mat-form-field>
 
           <mat-form-field matTooltip="{{ tooltipData.lugarDondeSeUbica }}" appearance="fill">

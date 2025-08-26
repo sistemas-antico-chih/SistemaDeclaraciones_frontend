@@ -1,5 +1,46 @@
 import gql from 'graphql-tag';
 
+export const myDeclaracionesMetadata = gql`
+  query myDeclaracionesMetadata(
+    $userID: LimitedString
+    $filter: DeclaracionesFilterInput
+    $pagination: PaginationOptionsInput
+  ) {
+    myDeclaracionesMetadata(userID: $userID, filter: $filter, pagination: $pagination) {
+      totalDocs
+      limit
+      totalPages
+      page
+      pagingCounter
+      hasPrevPage
+      hasNextPage
+      prevPage
+      nextPage
+      hasMore
+      docs {
+        _id
+        firmada
+        declaracionCompleta
+        tipoDeclaracion
+        createdAt
+        updatedAt
+        owner {
+          _id
+          username
+          nombre
+          primerApellido
+          segundoApellido
+          curp
+          rfc
+          roles
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+
 export const declaracionesMetadata = gql`
   query declaracionesMetadata(
     $userID: LimitedString
@@ -164,6 +205,7 @@ export const adeudosPasivosQuery = gql`
       adeudosPasivos {
         ninguno
         adeudo {
+          tipoOperacion
           titular {
             clave
             valor
@@ -209,6 +251,7 @@ export const bienesInmueblesQuery = gql`
       bienesInmuebles {
         ninguno
         bienInmueble {
+          tipoOperacion
           tipoInmueble {
             clave
             valor
@@ -301,6 +344,7 @@ export const bienesMueblesQuery = gql`
       bienesMuebles {
         ninguno
         bienMueble {
+          tipoOperacion
           titular {
             clave
             valor
@@ -377,6 +421,7 @@ export const datosDependientesEconomicosQuery = gql`
       datosDependientesEconomicos {
         ninguno
         dependienteEconomico {
+          tipoOperacion
           nombre
           primerApellido
           segundoApellido
@@ -462,11 +507,14 @@ export const datosEmpleoCargoComisionQuery = gql`
         ambitoPublico
         nombreEntePublico
         areaAdscripcion
+        areaAdscripcionConcluye
         empleoCargoComision
         contratadoPorHonorarios
         nivelEmpleoCargoComision
+        nivelEmpleoCargoComisionConcluye
         funcionPrincipal
         fechaTomaPosesion
+        fechaConclusionEncargo
         telefonoOficina {
           telefono
           extension
@@ -545,6 +593,7 @@ export const datosParejaQuery = gql`
     declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta) {
       _id
       datosPareja {
+        tipoOperacion
         ninguno
         nombre
         primerApellido
@@ -784,6 +833,7 @@ export const inversionesCuentasValoresQuery = gql`
       inversionesCuentasValores {
         ninguno
         inversion {
+          tipoOperacion
           tipoInversion {
             clave
             valor
@@ -825,6 +875,7 @@ export const prestamoComodatoQuery = gql`
       prestamoComodato {
         ninguno
         prestamo {
+          tipoOperacion
           tipoBien {
             inmueble {
               tipoInmueble {
@@ -834,7 +885,8 @@ export const prestamoComodatoQuery = gql`
               domicilioMexico {
                 calle
                 numeroExterior
-                numeroInterior: coloniaLocalidad
+                numeroInterior
+                coloniaLocalidad
                 municipioAlcaldia {
                   clave
                   valor
@@ -893,6 +945,7 @@ export const vehiculosQuery = gql`
       vehiculos {
         ninguno
         vehiculo {
+          tipoOperacion
           tipoVehiculo {
             clave
             valor
@@ -956,6 +1009,7 @@ export const apoyosQuery = gql`
       apoyos {
         ninguno
         apoyo {
+          tipoOperacion
           tipoPersona
           beneficiarioPrograma {
             clave
@@ -1210,3 +1264,15 @@ export const participacionTomaDecisionesQuery = gql`
     }
   }
 `;
+
+/*export const statsTipoQuery = gql`
+  query statsTipo {
+    statsTipo {
+      counters{
+        tipoDeclaracion
+        count
+      }
+    }
+  }
+`;
+*/

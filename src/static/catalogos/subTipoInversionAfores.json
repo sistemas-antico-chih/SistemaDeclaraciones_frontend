@@ -1,0 +1,6 @@
+[
+  { "tipoInversion": "AFOT", "clave": "AFOR", "valor": "AFORES" },
+  { "tipoInversion": "AFOT", "clave": "FIDE", "valor": "FIDEICOMISOS" },
+  { "tipoInversion": "AFOT", "clave": "CTES", "valor": "CERTIFICADOS DE LA TESORERÍA" },
+  { "tipoInversion": "AFOT", "clave": "PFTE", "valor": "PRÉSTAMOS A FAVOR DE UN TERCERO" }
+]
