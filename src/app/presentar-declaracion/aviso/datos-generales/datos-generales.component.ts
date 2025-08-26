@@ -235,8 +235,8 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
 
   formHasChanges() {
-    let url = '/' + this.tipoDeclaracion;
-    if (this.declaracionSimplificada) url += '/simplificada';
+    let url = '/aviso/domicilio-declarante';
+    //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosGeneralesForm.dirty;
 
     if (isDirty && !this.pushButtonSave) {

@@ -261,8 +261,8 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   formHasChanges() {
-    let url = '/' + this.tipoDeclaracion;
-    if (this.declaracionSimplificada) url += '/simplificada';
+    let url = '/aviso/datos-empleo';
+    //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosEmpleoCargoComisionForm.dirty;
     console.log(isDirty);
 
