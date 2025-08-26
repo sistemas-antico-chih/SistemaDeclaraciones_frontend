@@ -250,10 +250,10 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+        if (result) this.router.navigate([url]);
       });
     } else {
-      this.router.navigate([url + '/situacion-patrimonial/domicilio-declarante']);
+      this.router.navigate([url]);
     }
   }
 

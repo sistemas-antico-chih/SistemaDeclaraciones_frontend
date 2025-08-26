@@ -191,7 +191,9 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) this.router.navigate([`${url}`], { replaceUrl: true });;
       });
-    } 
+    } else {
+      this.router.navigate([url]);
+    }
   }
 
 
