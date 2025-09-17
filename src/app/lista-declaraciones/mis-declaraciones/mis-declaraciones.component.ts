@@ -68,8 +68,8 @@ export class MisDeclaracionesComponent implements OnInit {
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
-    let listaDeclaraciones: any[];
-    let decAviso : number = 0;
+    //let listaDeclaraciones: any[];
+    //let decAviso : number = 0;
     try {
       const { data }: any = await this.apollo
         .query({
@@ -90,11 +90,9 @@ export class MisDeclaracionesComponent implements OnInit {
   
   ngOnInit(): void {
     this.getList(this.currentTab);
-    console.log("inicio: "+this.getList);
   }
 
   onTabChanged(event: any) {
-    console.log("entra: "+this.getList);
     const tabName = event.tab.textLabel;
 
     const tipoDeclaracionMap = {
@@ -105,6 +103,8 @@ export class MisDeclaracionesComponent implements OnInit {
     };
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
+    console.log('tab: '+this.currentTab)
+    console.log('getList: '+this.getList(tipoDeclaracionMap['AVISO']))
   }
 
   presentAlert(title: string, message: string) {
