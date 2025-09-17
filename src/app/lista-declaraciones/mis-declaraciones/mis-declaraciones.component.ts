@@ -67,7 +67,7 @@ export class MisDeclaracionesComponent implements OnInit {
     this.router.navigate([url], { replaceUrl: true });
   }
 
-  /*async getList(tipoDeclaracion: TipoDeclaracion = null) {
+  async getList(tipoDeclaracion: TipoDeclaracion = null) {
     let listaDeclaraciones: any[];
     let decAviso : number = 0;
     try {
@@ -82,43 +82,19 @@ export class MisDeclaracionesComponent implements OnInit {
         })
         .toPromise();
 
-      this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || [];
-      decAviso = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'AVISO').length;
-      console.log ('AVISO: '+decAviso);  
-      console.log (decAviso);  
+      this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || []; 
     } catch (error) {
       console.log(error);
-    }
-  }*/
-  
-    async getList(tipoDeclaracion: TipoDeclaracion = null) {
-    try {
-      let listaDeclaraciones: any[];
-      let decAviso: number = 0;
-
-      const { data: data1 }: any = await this.apollo
-        .query({
-          query: myDeclaracionesMetadata,
-          variables: {
-            filter: {},
-          },
-        })
-        .toPromise();
-
-      listaDeclaraciones = data1.myDeclaracionesMetadata.docs || [];
-      decAviso = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'AVISO').length;
-
-    } catch (error) {
-      console.log(error);
-      return 0;
     }
   }
-
+  
   ngOnInit(): void {
     this.getList(this.currentTab);
+    console.log("inicio: "+this.getList);
   }
 
   onTabChanged(event: any) {
+    console.log("entra: "+this.getList);
     const tabName = event.tab.textLabel;
 
     const tipoDeclaracionMap = {
