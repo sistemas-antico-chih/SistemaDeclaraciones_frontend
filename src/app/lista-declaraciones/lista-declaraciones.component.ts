@@ -16,7 +16,7 @@ export class ListaDeclaracionesComponent implements OnInit {
   declaracionesIniciales = 0;
   declaracionesModificacion = 0;
   declaracionesFinales = 0;
-  //declaracionesAvisos = 0;
+  declaracionesAvisos = 0;
   userInstitucion: Catalogo = null;
 
   constructor(private apollo: Apollo, private credential: CredentialsService) {
@@ -31,7 +31,7 @@ export class ListaDeclaracionesComponent implements OnInit {
       let decInicial: number = 0;
       let decModificacion: number = 0;
       let decConclucion: number = 0;
-      //let decAviso: number = 0;
+      let decAviso: number = 0;
 
       const { data: data1 }: any = await this.apollo
         .query({
@@ -47,14 +47,14 @@ export class ListaDeclaracionesComponent implements OnInit {
       decInicial = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'INICIAL').length;
       decModificacion = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'MODIFICACION').length;
       decConclucion = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'CONCLUSION').length;
-      //decAviso = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'AVISO').length;
+      decAviso = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'AVISO').length;
 
       this.declaraciones = decInicial + decModificacion + decConclucion;
 
       this.declaracionesIniciales = decInicial;
       this.declaracionesModificacion = decModificacion;
       this.declaracionesFinales = decConclucion;
-      //this.declaracionesAvisos = decAviso;
+      this.declaracionesAvisos = decAviso;
 
       // console.log('listaDeclaraciones: ', listaDeclaraciones);
 
