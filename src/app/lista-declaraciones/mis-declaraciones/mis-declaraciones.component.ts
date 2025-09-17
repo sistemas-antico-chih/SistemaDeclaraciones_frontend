@@ -97,6 +97,7 @@ export class MisDeclaracionesComponent implements OnInit {
       Inicial: 'INICIAL',
       Modificación: 'MODIFICACION',
       Conclusión: 'CONCLUSION',
+      Aviso: 'AVISO'
     };
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
