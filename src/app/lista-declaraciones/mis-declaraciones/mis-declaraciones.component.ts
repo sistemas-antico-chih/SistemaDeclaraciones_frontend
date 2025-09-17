@@ -99,6 +99,7 @@ export class MisDeclaracionesComponent implements OnInit {
       Conclusión: 'CONCLUSION',
       Aviso: 'AVISO'
     };
+    console.log(tabName);
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
   }
