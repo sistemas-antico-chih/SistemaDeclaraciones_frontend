@@ -68,6 +68,8 @@ export class MisDeclaracionesComponent implements OnInit {
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
+    let listaDeclaraciones: any[];
+    let decAviso : number = 0;
     try {
       const { data }: any = await this.apollo
         .query({
@@ -81,6 +83,9 @@ export class MisDeclaracionesComponent implements OnInit {
         .toPromise();
 
       this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || [];
+      decAviso = listaDeclaraciones.filter((d) => d.tipoDeclaracion === 'AVISO').length;
+      console.log ('AVISO: '+decAviso);  
+      console.log (decAviso);  
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +104,6 @@ export class MisDeclaracionesComponent implements OnInit {
       Conclusión: 'CONCLUSION',
       Aviso: 'AVISO'
     };
-    console.log(tabName);
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
   }
