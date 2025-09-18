@@ -16,7 +16,7 @@ import { Apollo } from 'apollo-angular';
   styleUrls: ['./mis-declaraciones.component.scss'],
 })
 export class MisDeclaracionesComponent implements OnInit {
-  currentTab: TipoDeclaracion = 'AVISO';
+  currentTab: TipoDeclaracion = 'INICIAL';
   listaDeclaraciones: DeclaracionMetadata[] = [];
 
   constructor(private apollo: Apollo, private dialog: MatDialog, private router: Router) {}
@@ -67,8 +67,9 @@ export class MisDeclaracionesComponent implements OnInit {
       : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
 
     this.router.navigate([url], { replaceUrl: true });
+    }else{
+      this.router.navigate(['/aviso'], { replaceUrl: true });
     }
-    this.router.navigate(['/aviso'], { replaceUrl: true });
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
