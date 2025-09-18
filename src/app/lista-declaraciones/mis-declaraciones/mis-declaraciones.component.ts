@@ -83,7 +83,7 @@ export class MisDeclaracionesComponent implements OnInit {
         .toPromise();
 
       this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || []; 
-      console.log('list: '+this.listaDeclaraciones[0].tipoDeclaracion);
+      //console.log('list: '+this.listaDeclaraciones[0].tipoDeclaracion);
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +95,7 @@ export class MisDeclaracionesComponent implements OnInit {
 
   onTabChanged(event: any) {
     const tabName = event.tab.textLabel;
-    console.log('tab: '+tabName)
+    //console.log('tab: '+tabName)
 
     const tipoDeclaracionMap = {
       Inicial: 'INICIAL',
