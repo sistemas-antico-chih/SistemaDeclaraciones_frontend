@@ -83,6 +83,7 @@ export class MisDeclaracionesComponent implements OnInit {
         .toPromise();
 
       this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || []; 
+      console.log('list: '+this.listaDeclaraciones[0]);
     } catch (error) {
       console.log(error);
     }
@@ -94,6 +95,7 @@ export class MisDeclaracionesComponent implements OnInit {
 
   onTabChanged(event: any) {
     const tabName = event.tab.textLabel;
+    console.log('tab: '+tabName)
 
     const tipoDeclaracionMap = {
       Inicial: 'INICIAL',
@@ -101,10 +103,9 @@ export class MisDeclaracionesComponent implements OnInit {
       Conclusión: 'CONCLUSION',
       Aviso: 'AVISO'
     };
-    this.currentTab = tipoDeclaracionMap['AVISO'];
+    this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
-    console.log('tab: '+this.currentTab)
-    //console.log('getList: '+this.getList(tipoDeclaracionMap['AVISO']))
+    console.log('tab2: '+this.currentTab)
   }
 
   presentAlert(title: string, message: string) {
