@@ -62,7 +62,7 @@ export class MisDeclaracionesComponent implements OnInit {
     const tipoDeclaracion = declaracion.tipoDeclaracion.toLocaleLowerCase();
     console.log("tipoDeclaracion: "+tipoDeclaracion);
 
-    if(tipoDeclaracion === 'AVISO'){
+    if(tipoDeclaracion === 'aviso'){
       console.log("entra AVISO");
       this.router.navigate(['/aviso'], { replaceUrl: true });
       return;
