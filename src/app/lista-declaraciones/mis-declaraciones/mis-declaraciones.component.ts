@@ -62,7 +62,13 @@ export class MisDeclaracionesComponent implements OnInit {
     const tipoDeclaracion = declaracion.tipoDeclaracion.toLocaleLowerCase();
     console.log("tipoDeclaracion: "+tipoDeclaracion);
 
+    if(tipoDeclaracion === 'AVISO'){
+      console.log("entra AVISO");
+      this.router.navigate(['/aviso'], { replaceUrl: true });
+      return;
+    }
     if(tipoDeclaracion !== 'AVISO'){
+      console.log("entra NO aviso");
       const url = declaracion.declaracionCompleta
       ? `/${tipoDeclaracion}/situacion-patrimonial`
       : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
@@ -70,10 +76,7 @@ export class MisDeclaracionesComponent implements OnInit {
     this.router.navigate([url], { replaceUrl: true });
     return;
     }
-    if(tipoDeclaracion === 'AVISO'){
-      this.router.navigate(['/aviso'], { replaceUrl: true });
-      return;
-    }
+    
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
