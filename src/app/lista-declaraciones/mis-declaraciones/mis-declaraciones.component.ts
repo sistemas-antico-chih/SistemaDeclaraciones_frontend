@@ -98,11 +98,14 @@ export class MisDeclaracionesComponent implements OnInit {
     //console.log('tab: '+tabName)
 
     const tipoDeclaracionMap = {
-      Inicial: 'INICIAL',
+      Inicial: 'AVISO',
       Modificación: 'MODIFICACION',
       Conclusión: 'CONCLUSION',
-      Aviso: 'AVISO',
+      Aviso: 'INICIAL',
     };
+
+    console.log(tipoDeclaracionMap);
+    
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
     console.log('tab2: '+this.currentTab)
