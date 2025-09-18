@@ -68,11 +68,12 @@ export class MisDeclaracionesComponent implements OnInit {
       : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
 
     this.router.navigate([url], { replaceUrl: true });
+    return;
     }
     if(tipoDeclaracion === 'AVISO'){
       this.router.navigate(['/aviso'], { replaceUrl: true });
+      return;
     }
-    console.log("tipoDeclaracion 2: "+tipoDeclaracion)
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
