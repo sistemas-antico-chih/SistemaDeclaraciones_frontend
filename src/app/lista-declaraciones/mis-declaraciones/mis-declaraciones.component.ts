@@ -83,7 +83,7 @@ export class MisDeclaracionesComponent implements OnInit {
         .toPromise();
 
       this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || []; 
-      console.log('list: '+this.listaDeclaraciones[0]);
+      console.log('list: '+this.listaDeclaraciones[0].tipoDeclaracion);
     } catch (error) {
       console.log(error);
     }
