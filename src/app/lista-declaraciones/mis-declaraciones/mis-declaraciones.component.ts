@@ -16,7 +16,7 @@ import { Apollo } from 'apollo-angular';
   styleUrls: ['./mis-declaraciones.component.scss'],
 })
 export class MisDeclaracionesComponent implements OnInit {
-  currentTab: TipoDeclaracion = 'INICIAL';
+  currentTab: TipoDeclaracion = 'AVISO';
   listaDeclaraciones: DeclaracionMetadata[] = [];
 
   constructor(private apollo: Apollo, private dialog: MatDialog, private router: Router) {}
@@ -83,10 +83,6 @@ export class MisDeclaracionesComponent implements OnInit {
         .toPromise();
 
       this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || []; 
-      console.log('list 1: '+this.listaDeclaraciones.length);
-      console.log('list 2: '+this.listaDeclaraciones.values);
-      console.log('list 3: '+this.listaDeclaraciones.toString);
-      console.log('list 4: '+this.listaDeclaraciones.map);
     } catch (error) {
       console.log(error);
     }
@@ -94,6 +90,7 @@ export class MisDeclaracionesComponent implements OnInit {
   
   ngOnInit(): void {
     this.getList(this.currentTab);
+    console.log(this.currentTab);
   }
 
   onTabChanged(event: any) {
