@@ -83,7 +83,10 @@ export class MisDeclaracionesComponent implements OnInit {
         .toPromise();
 
       this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || []; 
-      //console.log('list: '+this.listaDeclaraciones[0].tipoDeclaracion);
+      console.log('list 1: '+this.listaDeclaraciones.length);
+      console.log('list 2: '+this.listaDeclaraciones.values);
+      console.log('list 3: '+this.listaDeclaraciones.toString);
+      console.log('list 4: '+this.listaDeclaraciones.map);
     } catch (error) {
       console.log(error);
     }
@@ -98,10 +101,10 @@ export class MisDeclaracionesComponent implements OnInit {
     //console.log('tab: '+tabName)
 
     const tipoDeclaracionMap = {
-      Aviso: 'AVISO',
       Inicial: 'INICIAL',
       Modificación: 'MODIFICACION',
       Conclusión: 'CONCLUSION',
+      Aviso: 'AVISO',
     };
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);

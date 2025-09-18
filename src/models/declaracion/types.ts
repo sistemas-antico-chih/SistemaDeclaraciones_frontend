@@ -16,7 +16,7 @@ export type NivelOrdenGobierno = 'FEDERAL' | 'ESTATAL' | 'MUNICIPAL_ALCALDIA';
 
 export type RelacionConDeclarante = 'CONYUGE' | 'CONCUBINA_CONCUBINARIO_UNION_LIBRE' | 'SOCIEDAD_DE_CONVIVENCIA';
 
-export type TipoDeclaracion = 'INICIAL' | 'MODIFICACION' | 'FINAL';
+export type TipoDeclaracion = 'INICIAL' | 'MODIFICACION' | 'FINAL' | 'AVISO';
 
 export type TipoFideicomiso = 'PUBLICO' | 'PRIVADO' | 'MIXTO';
 
