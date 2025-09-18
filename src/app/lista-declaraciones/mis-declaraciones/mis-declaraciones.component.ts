@@ -60,10 +60,8 @@ export class MisDeclaracionesComponent implements OnInit {
 
   editDeclaration(declaracion: DeclaracionMetadata) {
     const tipoDeclaracion = declaracion.tipoDeclaracion.toLocaleLowerCase();
-    console.log("tipoDeclaracion: "+tipoDeclaracion);
 
     if(tipoDeclaracion === 'aviso'){
-      console.log("entra AVISO");
       this.router.navigate(['/aviso'], { replaceUrl: true });
       return;
     }
