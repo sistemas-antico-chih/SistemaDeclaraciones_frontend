@@ -60,11 +60,15 @@ export class MisDeclaracionesComponent implements OnInit {
 
   editDeclaration(declaracion: DeclaracionMetadata) {
     const tipoDeclaracion = declaracion.tipoDeclaracion.toLocaleLowerCase();
-    const url = declaracion.declaracionCompleta
+
+    if(tipoDeclaracion !== 'AVISO'){
+      const url = declaracion.declaracionCompleta
       ? `/${tipoDeclaracion}/situacion-patrimonial`
       : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
 
     this.router.navigate([url], { replaceUrl: true });
+    }
+    this.router.navigate(['/aviso'], { replaceUrl: true });
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
@@ -105,7 +109,7 @@ export class MisDeclaracionesComponent implements OnInit {
     };
 
     console.log(tipoDeclaracionMap);
-    
+
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
     console.log('tab2: '+this.currentTab)
