@@ -94,7 +94,6 @@ export class MisDeclaracionesComponent implements OnInit {
   
   ngOnInit(): void {
     this.getList(this.currentTab);
-    console.log(this.currentTab);
   }
 
   onTabChanged(event: any) {
@@ -102,10 +101,10 @@ export class MisDeclaracionesComponent implements OnInit {
     //console.log('tab: '+tabName)
 
     const tipoDeclaracionMap = {
-      Inicial: 'AVISO',
+      Inicial: 'INICIAL',
       Modificación: 'MODIFICACION',
       Conclusión: 'CONCLUSION',
-      Aviso: 'INICIAL',
+      Avisos: 'AVISO'
     };
 
     console.log(tipoDeclaracionMap);
