@@ -60,6 +60,7 @@ export class MisDeclaracionesComponent implements OnInit {
 
   editDeclaration(declaracion: DeclaracionMetadata) {
     const tipoDeclaracion = declaracion.tipoDeclaracion.toLocaleLowerCase();
+    console.log("tipoDeclaracion: "+tipoDeclaracion);
 
     if(tipoDeclaracion !== 'AVISO'){
       const url = declaracion.declaracionCompleta
@@ -67,14 +68,14 @@ export class MisDeclaracionesComponent implements OnInit {
       : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
 
     this.router.navigate([url], { replaceUrl: true });
-    }else{
+    }
+    if(tipoDeclaracion === 'AVISO'){
       this.router.navigate(['/aviso'], { replaceUrl: true });
     }
+    console.log("tipoDeclaracion 2: "+tipoDeclaracion)
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
-    //let listaDeclaraciones: any[];
-    //let decAviso : number = 0;
     try {
       const { data }: any = await this.apollo
         .query({
@@ -99,8 +100,6 @@ export class MisDeclaracionesComponent implements OnInit {
 
   onTabChanged(event: any) {
     const tabName = event.tab.textLabel;
-    //console.log('tab: '+tabName)
-
     const tipoDeclaracionMap = {
       Inicial: 'INICIAL',
       Modificación: 'MODIFICACION',
@@ -108,11 +107,8 @@ export class MisDeclaracionesComponent implements OnInit {
       Avisos: 'AVISO'
     };
 
-    console.log(tipoDeclaracionMap);
-
     this.currentTab = tipoDeclaracionMap[tabName];
     this.getList(tipoDeclaracionMap[tabName]);
-    console.log('tab2: '+this.currentTab)
   }
 
   presentAlert(title: string, message: string) {
