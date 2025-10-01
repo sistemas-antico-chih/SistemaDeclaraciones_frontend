@@ -66,7 +66,6 @@ export class MisDeclaracionesComponent implements OnInit {
       return;
     }
     if(tipoDeclaracion !== 'AVISO'){
-      console.log("entra NO aviso");
       const url = declaracion.declaracionCompleta
       ? `/${tipoDeclaracion}/situacion-patrimonial`
       : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
