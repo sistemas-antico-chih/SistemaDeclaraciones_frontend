@@ -72,7 +72,9 @@ export class ServidorPublicoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+  maxDate = new Date(this.anio - 1, this.mes - 1, this.dia);
+  minDateFinal = new Date(2010, 1, 1);
+  maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
 
   constructor(
     private apollo: Apollo,
@@ -253,7 +255,9 @@ export class ServidorPublicoComponent implements OnInit {
     this.actividadAnualAnteriorForm = this.formBuilder.group({
       servidorPublicoAnioAnterior: [true, [Validators.required]],
       fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaConclusion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      fechaConclusion: [
+        null, [Validators.required, Validators.pattern(/^\S.*\S$/)]
+      ],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
         moneda: ['MXN'],
@@ -314,6 +318,8 @@ export class ServidorPublicoComponent implements OnInit {
       validator: this.validarFechas("fechaIngreso", "fechaConclusion")
     });
 
+    
+
     this.actividadAnualAnteriorForm.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe((form: ActividadAnualAnterior) => {
@@ -356,9 +362,13 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   validarFechas(fechaIngreso: string, fechaEgreso: string) {
+    console.log('fechaIngreso: '+fechaIngreso);
+    console.log('fechaEgreso: '+fechaEgreso);
     return (formGroup: FormGroup) => {
       const fingreso = formGroup.get(fechaIngreso);
       const fegreso = formGroup.get(fechaEgreso);
+      console.log('fechaEgresoParse: '+Date.parse(fechaEgreso));
+      console.log('fechaEgresoParse: '+Date.parse(fechaEgreso));
       if (fegreso.errors && !fegreso.errors.validarFechas) {
         return;
       }
@@ -601,7 +611,8 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   async saveInfo(form: ActividadAnualAnterior) {
-
+    this.minDate=new Date(this.actividadAnualAnteriorForm.get('fechaIngreso'));
+    this.maxDate=new Date (this.minDate.getFullYear(),11, 31);
     try {
       this.isLoading = true;
       if (form.servidorPublicoAnioAnterior) {
