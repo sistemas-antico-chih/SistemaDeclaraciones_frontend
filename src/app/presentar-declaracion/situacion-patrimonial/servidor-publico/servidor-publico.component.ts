@@ -611,8 +611,6 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   async saveInfo(form: ActividadAnualAnterior) {
-    this.minDate=new Date(this.actividadAnualAnteriorForm.get('fechaIngreso'));
-    this.maxDate=new Date (this.minDate.getFullYear(),11, 31);
     try {
       this.isLoading = true;
       if (form.servidorPublicoAnioAnterior) {
