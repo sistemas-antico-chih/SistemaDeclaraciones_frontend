@@ -366,19 +366,22 @@ export class ServidorPublicoComponent implements OnInit {
       const fingreso = formGroup.get(fechaIngreso);
       const fegreso = formGroup.get(fechaEgreso);
       if (fegreso.errors && !fegreso.errors.validarFechas) {
-        console.log('fechaIngresoParse 1: '+Date.parse(fingreso.value));
-        console.log('fechaEgresoParse 1: '+Date.parse(fegreso.value));
+        console.log('fechaIngresoParse 1: '+(fingreso.value));
+        console.log('fechaEgresoParse 1: '+(fegreso.value));
         return;
       }
 
       if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
-        console.log('fechaIngresoParse 2: '+Date.parse(fingreso.value));
-        console.log('fechaEgresoParse 2: '+Date.parse(fegreso.value));
+        console.log('fechaIngresoParse 2: '+(fingreso.value));
+        console.log('fechaEgresoParse 2: '+(fegreso.value));
         fegreso.setErrors({ validarFechas: true });
       }
+      /*if(){
+        fegreso.setErrors({ validarFechas: true });
+      }*/
       else {
-        console.log('fechaIngresoParse 3: '+Date.parse(fingreso.value));
-        console.log('fechaEgresoParse 3: '+Date.parse(fegreso.value));
+        console.log('fechaIngresoParse 3: '+(fingreso.value));
+        console.log('fechaEgresoParse 3: '+(fegreso.value));
         fegreso.setErrors(null);
       }
     };
