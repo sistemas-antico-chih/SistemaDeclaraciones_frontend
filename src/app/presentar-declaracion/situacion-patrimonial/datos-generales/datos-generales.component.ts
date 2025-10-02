@@ -172,6 +172,7 @@ export class DatosGeneralesComponent implements OnInit {
         })
         .toPromise();
 
+      console.log ({ data, errors });  
       if (errors) {
         throw errors;
       }

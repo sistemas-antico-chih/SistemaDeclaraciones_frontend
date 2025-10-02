@@ -38,7 +38,7 @@
       </mat-expansion-panel>
 
       <!--<mat-expansion-panel *ngIf="!declaracionSimplificada || tipoDeclaracion != 'aviso'" >-->
-      <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso' && !declaracionSimplificada"  >
+      <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso'"  >
         <mat-expansion-panel-header [ngClass]="{ active: url?.startsWith('/' + tipoDeclaracion + '/intereses') }">
           <mat-panel-title> II. Declaración de intereses </mat-panel-title>
         </mat-expansion-panel-header>
