@@ -81,9 +81,6 @@ export class DialogElementsExampleDialog implements OnInit {
     }
 
     if (await this.isValid(tipoDeclaracion, formaDeclaracion)) {
-      console.log("tipoDeclaracion: "+tipoDeclaracion);
-      console.log("formaDeclaracion: "+formaDeclaracion);
-      console.log("route: "+route);
       this.router.navigate([`/${route}`], { replaceUrl: true });
       this.dialogRef.close({ data: '' })
     }
