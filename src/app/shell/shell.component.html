@@ -17,7 +17,7 @@
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
-      <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso'">
+      <mat-expansion-panel>
         <mat-expansion-panel-header [ngClass]="{
             active:
               url?.startsWith('/' + tipoDeclaracion + '/situacion-patrimonial') ||
