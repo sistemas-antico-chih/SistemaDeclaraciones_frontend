@@ -164,7 +164,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   async getLastUserInfo() {
-    console.log("lastUser")
+    //console.log("lastUser")
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
