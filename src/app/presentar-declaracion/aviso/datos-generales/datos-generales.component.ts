@@ -175,7 +175,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
+      console.log("data?: "+data?.lastDeclaracion.datosGenerales);
       this.fillForm(data?.lastDeclaracion.datosGenerales);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);

@@ -136,7 +136,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
+      console.log("data?: "+data?.lastDeclaracion.domicilioDeclarante);
       this.fillForm(data?.lastDeclaracion.domicilioDeclarante);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
