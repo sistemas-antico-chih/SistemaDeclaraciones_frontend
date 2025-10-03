@@ -197,12 +197,16 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const { data } = this.apollo
+    /*const { data } = this.apollo
         .query<LastDeclaracionOutput>({
           query: lastDeclaracionDomicilioDeclarante,
         })
         .toPromise();
-    console.log("data?: "+data?.lastDeclaracion.domicilioDeclarante);
+    */console.log("data?: "+(this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDeclaracionDomicilioDeclarante,
+        })
+        .toPromise())?.lastDeclaracion.domicilioDeclarante);
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
