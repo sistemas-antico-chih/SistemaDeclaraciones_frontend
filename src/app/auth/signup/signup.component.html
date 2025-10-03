@@ -78,13 +78,13 @@
           </mat-form-field>
 
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
-            <mat-label>Contraseña</mat-label>
+            <mat-label>Contraseña (8-16 caracteres)</mat-label>
             <mat-icon matPrefix>lock</mat-icon>
             <input
               type="password"
               matInput
               formControlName="contrasena"
-              [placeholder]="'Contraseña  (8-16 caracteres)' | translate"
+              [placeholder]="'Contraseña (8-16 caracteres)' | translate"
               maxlength="20"
               required
             />
