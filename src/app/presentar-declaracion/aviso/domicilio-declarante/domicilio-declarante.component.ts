@@ -197,7 +197,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const { data, errors } = this.apollo
+    const { data } = this.apollo
         .query<LastDeclaracionOutput>({
           query: lastDeclaracionDomicilioDeclarante,
         })
