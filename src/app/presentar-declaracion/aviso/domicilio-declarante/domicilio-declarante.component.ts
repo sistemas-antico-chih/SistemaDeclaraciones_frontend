@@ -127,6 +127,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
   async getLastUserInfo() {
     try {
+      console.log("llega");
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
           query: lastDeclaracionDomicilioDeclarante,
@@ -137,6 +138,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
         throw errors;
       }
       this.fillForm(data?.lastDeclaracion.domicilioDeclarante);
+      console.log("data?: "+data?.lastDeclaracion.domicilioDeclarante);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
       // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -197,16 +199,6 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    /*const { data } = this.apollo
-        .query<LastDeclaracionOutput>({
-          query: lastDeclaracionDomicilioDeclarante,
-        })
-        .toPromise();
-    */console.log("data?: "+(this.apollo
-        .query<LastDeclaracionOutput>({
-          query: lastDeclaracionDomicilioDeclarante,
-        })
-        .toPromise())?.lastDeclaracion.domicilioDeclarante);
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
