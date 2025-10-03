@@ -15,7 +15,7 @@ import {
 } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
-import AmbitoPublico from '@static/catalogos/ambitoPublico.json';
+import AmbitoPublico from '@static/catalogos/ambitoPublicoMunicipal.json';
 import Estados from '@static/catalogos/estados.json';
 import EstadoFijo from '@static/catalogos/estadoFijo.json';
 import Municipios from '@static/catalogos/municipios.json';
