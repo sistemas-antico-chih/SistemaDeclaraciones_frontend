@@ -422,7 +422,7 @@
                 required />
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.valorAdquisicion }}" appearance="fill"
-              formGroupName="valorAdquisicion">
+              formGroupName="valorAdquisicion" matInput type="number">
               <mat-label>Valor de Adquisición</mat-label>
               <mat-icon matPrefix>account_balance_wallet</mat-icon>
               <input [errorStateMatcher]="errorMatcher" matInput type="number" formControlName="valor" min="0"

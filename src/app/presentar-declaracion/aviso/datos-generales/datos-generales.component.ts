@@ -164,8 +164,6 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   }
 
   async getLastUserInfo() {
-    console.log("llega");
-    console.log("lastUser")
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
@@ -177,7 +175,6 @@ export class DatosGeneralesAvisoComponent implements OnInit {
         throw errors;
       }
       this.fillForm(data?.lastDeclaracion.datosGenerales);
-      console.log("data?: "+data?.lastDeclaracion.datosGenerales);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
       // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
