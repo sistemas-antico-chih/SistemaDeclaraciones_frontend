@@ -4,7 +4,7 @@
     <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile" [disableClose]="!isMobile"
       ngClass.gt-sm="has-border">
 
-      <mat-expansion-panel *ngIf="tipoDeclaracion === 'aviso'">
+      <mat-expansion-panel *ngIf="tipoDeclaracion === 'aviso' && declaracionSimplificada">
         <mat-expansion-panel-header [ngClass]="{
             active:
               url?.startsWith('/' + tipoDeclaracion)
@@ -17,7 +17,7 @@
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso' ">
         <mat-expansion-panel-header [ngClass]="{
             active:
               url?.startsWith('/' + tipoDeclaracion + '/situacion-patrimonial') ||
@@ -38,7 +38,7 @@
       </mat-expansion-panel>
 
       <!--<mat-expansion-panel *ngIf="!declaracionSimplificada || tipoDeclaracion != 'aviso'" >-->
-      <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso' || !declaracionSimplificada">
+      <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso' && !declaracionSimplificada">
         <mat-expansion-panel-header [ngClass]="{ active: url?.startsWith('/' + tipoDeclaracion + '/intereses') }">
           <mat-panel-title> II. Declaración de intereses </mat-panel-title>
         </mat-expansion-panel-header>
