@@ -136,7 +136,6 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-      console.log("data?: "+data?.lastDeclaracion.domicilioDeclarante);
       this.fillForm(data?.lastDeclaracion.domicilioDeclarante);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -198,6 +197,12 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    const { data, errors } = this.apollo
+        .query<LastDeclaracionOutput>({
+          query: lastDeclaracionDomicilioDeclarante,
+        })
+        .toPromise();
+    console.log("data?: "+data?.lastDeclaracion.domicilioDeclarante);
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
