@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 @Component({
   selector: 'app-footer',
