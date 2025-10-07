@@ -48,7 +48,8 @@ export class AuthenticationService {
         .query({
           query: login,
           variables: {
-            username: context.username,
+            //username: context.username,
+            identifier: context.username,
             password: context.password,
           },
         })

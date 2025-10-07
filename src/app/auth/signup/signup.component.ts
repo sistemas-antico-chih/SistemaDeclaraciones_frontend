@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, UntilDestroy, untilDestroyed } from '@core';
-import { AuthenticationService } from '../authentication.service';
+import {  } from '../authentication.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CatalogosService } from '@app/services/catalogos.service';
