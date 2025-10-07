@@ -14,14 +14,6 @@
     <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('declaraciones')">MIS DECLARACIONES</button>
     <button *ngIf="!isLoggedIn" mat-button (click)="goTo('preguntas-frecuentes')">PREGUNTAS FRECUENTES</button>
 
-    <div style="margin-top: 10px;">
-      <a href="https://wa.me/526144432375" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="32"
-          height="32" style="vertical-align: middle;">
-        Contactar por WhatsApp
-      </a>
-    </div>
-
     <button *ngIf="isLoggedIn" mat-icon-button [matMenuTriggerFor]="accountMenu">
       <mat-icon>person</mat-icon>
     </button>
