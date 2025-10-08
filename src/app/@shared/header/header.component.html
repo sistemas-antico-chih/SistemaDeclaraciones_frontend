@@ -4,7 +4,7 @@
   <div class="title">Declaraciones Patrimoniales <br />municipales a excepción de <del>Juárez</del></div>
   <div fxFlex>
     <div class="WhatsApp" style="margin-top: 10px;">
-      <a href="https://wa.me/526144432375" target="_blank" style="color: #34b3eb; color: #b0b0b0;  text-decoration: none; display: flex; 
+      <a href="https://wa.me/526144432375" target="_blank" style="color: #34b3eb; color: #b0b0b0; text-decoration: none; display: flex; 
              align-items: center; flex-direction: row-reverse; justify-content: flex-end;">
         <span style="margin-right: 8px;">WhatsApp</span>
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="32"
@@ -13,27 +13,28 @@
     </div>
   </div>
 
-  <button mat-button (click)="goToPDF('assets/documents/manual_atencion_usuarios_S1.pdf')">MANUAL DE ATENCIÓN</button>
+  <div>
+    <button mat-button (click)="goToPDF('assets/documents/manual_atencion_usuarios_S1.pdf')">MANUAL DE ATENCIÓN</button>
 
-  <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/usuarios')">USUARIOS</button>
-  <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('comienza-tu-declaracion')">
-    COMIENZA TU DECLARACIÓN
-  </button>
-  <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/declaraciones')">DECLARACIONES</button>
-  <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('declaraciones')">MIS DECLARACIONES</button>
-  <button *ngIf="!isLoggedIn" mat-button (click)="goTo('preguntas-frecuentes')">PREGUNTAS FRECUENTES</button>
+    <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/usuarios')">USUARIOS</button>
+    <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('comienza-tu-declaracion')">
+      COMIENZA TU DECLARACIÓN
+    </button>
+    <button *ngIf="isLoggedIn && isAdmin" mat-button (click)="goTo('admin/declaraciones')">DECLARACIONES</button>
+    <button *ngIf="isLoggedIn && isDeclarant" mat-button (click)="goTo('declaraciones')">MIS DECLARACIONES</button>
+    <button *ngIf="!isLoggedIn" mat-button (click)="goTo('preguntas-frecuentes')">PREGUNTAS FRECUENTES</button>
 
-  <button *ngIf="isLoggedIn" mat-icon-button [matMenuTriggerFor]="accountMenu">
-    <mat-icon>person</mat-icon>
-  </button>
-  <mat-menu #accountMenu="matMenu" xPosition="before">
-    <button mat-menu-item (click)="goTo('perfil')">MI PERFIL</button>
-    <button mat-menu-item (click)="goTo('preguntas-frecuentes')">PREGUNTAS FRECUENTES</button>
-    <button mat-menu-item (click)="logout()">CERRAR SESIÓN <mat-icon>exit_to_app</mat-icon></button>
-  </mat-menu>
+    <button *ngIf="isLoggedIn" mat-icon-button [matMenuTriggerFor]="accountMenu">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #accountMenu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="goTo('perfil')">MI PERFIL</button>
+      <button mat-menu-item (click)="goTo('preguntas-frecuentes')">PREGUNTAS FRECUENTES</button>
+      <button mat-menu-item (click)="logout()">CERRAR SESIÓN <mat-icon>exit_to_app</mat-icon></button>
+    </mat-menu>
 
-  <button *ngIf="!isLoggedIn" mat-button (click)="goTo('registro')">
-    REGISTRARSE <mat-icon>how_to_reg</mat-icon>
-  </button>
+    <button *ngIf="!isLoggedIn" mat-button (click)="goTo('registro')">
+      REGISTRARSE <mat-icon>how_to_reg</mat-icon>
+    </button>
   </div>
 </mat-toolbar>
