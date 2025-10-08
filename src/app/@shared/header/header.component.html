@@ -1,19 +1,22 @@
 <mat-toolbar class="toolbar-column">
-  <div class="toolbar-left">
-    <div class="WhatsApp" style="margin-top: 10px;">
-      <a href="https://wa.me/526144432375" target="_blank" style="color: #34b3eb; color: #b0b0b0; text-decoration: none; display: flex; 
-             align-items: center; flex-direction: row-reverse; justify-content: flex-end;">
-        <span style="margin-right: 8px;">+52-(614)-443-2375</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="32"
-          height="32" style="vertical-align: middle;">
-      </a>
-    </div>
-    <div class="logo-container">
-      <img class="pdn-logo" src="assets/sesea.png" alt="PDE" (click)="goTo('')" />
+  <div class="whatsapp">
+    <a href="https://wa.me/526144432375" target="_blank">
+      <span class="whatsapp-text">+52-(614)-443-2375</span>
+      <img class="whatsapp-icon"
+           src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+           alt="WhatsApp" width="32" height="32">
+    </a>
+  </div>
+
+  <!-- Línea 2: Logo + Divider + Título -->
+  <div class="logo-title">
+    <img class="pdn-logo" src="assets/sesea.png" alt="PDE" (click)="goTo('')" />
+    <div class="divider"></div>
+    <div class="title">
+      Declaraciones Patrimoniales <br />
+      municipales a excepción de <del>Juárez</del>
     </div>
   </div>
-  <div class="divider"></div>
-  <div class="title">Declaraciones Patrimoniales <br />municipales a excepción de <del>Juárez</del></div>
   <div fxFlex></div>
 
   <div>

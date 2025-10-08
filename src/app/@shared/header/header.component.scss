@@ -27,23 +27,16 @@ mat-toolbar {
 }
 
 /*CHAT GPT*/
-.toolbar-column {
+.toolbar-custom {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column; /* apila el contenido */
+  align-items: flex-start; /* todo pegado a la izquierda */
   padding: 10px;
 }
 
-/* Columna izquierda */
-.toolbar-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* todo pegado a la izquierda */
-}
-
+/* WhatsApp arriba */
 .whatsapp {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .whatsapp a {
@@ -63,17 +56,36 @@ mat-toolbar {
   vertical-align: middle;
 }
 
-.logo-container img {
-  max-height: 40px;
-  cursor: pointer;
-}
-
-/* Columna derecha */
-.toolbar-right {
+/* Logo + Divider + Título en una fila */
+.logo-title {
   display: flex;
   align-items: center;
-  gap: 10px; /* separación entre botones */
   flex-wrap: wrap;
 }
 
+.pdn-logo {
+  height: 40px;
+  cursor: pointer;
+}
 
+.divider {
+  border: solid var(--primary-color) 1px;
+  display: inline-block;
+  height: 54px;
+  margin: 0 20px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 26px;
+  color: #ff0000;
+}
+
+/* Columna derecha: botones */
+.toolbar-right {
+  margin-left: auto; /* los manda a la derecha */
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
