@@ -12,14 +12,14 @@
         <!--<div class="login-fields" fxLayout="column">-->
         <div class="login-fields">
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
-            <mat-label translate>Correo electrónico o CURP</mat-label>
+            <mat-label translate>Email</mat-label>
             <mat-icon matPrefix>mail</mat-icon>
             <input
               type="text"
               matInput
               formControlName="username"
               autocomplete="username"
-              [placeholder]="'Correo electrónico o CURP' | translate"
+              [placeholder]="'Username' | translate"
               maxlength="255"
               required
             />
