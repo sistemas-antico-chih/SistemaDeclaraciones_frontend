@@ -7,7 +7,7 @@ export const forgotPassword = gql`
 `;
 
 export const login = gql`
-  query login($username: Email!, $password: LimitedString!) {
+  query login($username: LimitedString!, $password: LimitedString!) {
     login(username: $username, password: $password) {
       user {
         _id
