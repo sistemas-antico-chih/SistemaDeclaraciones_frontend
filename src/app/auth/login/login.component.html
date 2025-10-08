@@ -3,30 +3,8 @@
   <mat-toolbar class="background-white title-toolbar">
     <label class="step-title">Iniciar sesión</label>
   </mat-toolbar>
-  <mat-divider>
-    <div class="WhatsApp" style="margin-top: 10px;">
-      <a href="https://wa.me/526144432375" target="_blank" style="color: #808080; text-decoration: none; display: flex; 
-        align-items: center; flex-direction: row-reverse; justify-content: flex-end;">
-
-        <span style="margin-right: 8px;">WhatsApp</span>
-
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="32"
-          height="32" style="vertical-align: middle;">
-
-      </a>
-    </div>
-  </mat-divider>
-  <div class="WhatsApp" style="margin-top: 10px;">
-      <a href="https://wa.me/526144432375" target="_blank" style="color: #808080; text-decoration: none; display: flex; 
-        align-items: center; flex-direction: row-reverse; justify-content: flex-end;">
-
-        <span style="margin-right: 8px;">WhatsApp</span>
-
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="32"
-          height="32" style="vertical-align: middle;">
-
-      </a>
-    </div>
+  <mat-divider></mat-divider>
+  
   <div class="login-container" fxLayout="row" fxLayoutAlign="center center">
     <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box">
       <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
