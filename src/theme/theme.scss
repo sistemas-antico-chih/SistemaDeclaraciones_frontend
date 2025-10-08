@@ -67,6 +67,10 @@ body {
 .title-toolbar {
   height: 145px;
   padding: 0 min(20%, 180px) !important;
+  /* --- CAMBIOS AÑADIDOS ABAJO --- */
+    display: flex; /* Habilita Flexbox */
+    justify-content: center; /* Centra horizontalmente el contenido (la etiqueta label) */
+    align-items: center; /* Centra verticalmente el contenido */
 }
 
 .form-card {
