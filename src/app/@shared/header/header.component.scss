@@ -27,12 +27,13 @@ mat-toolbar {
 }
 
 /*CHAT GPT*/
+/* ====== ESTILO DESKTOP (por defecto) ====== */
 .toolbar-custom {
   display: flex;
-  flex-direction: column; /* apila el contenido */
-  align-items: flex-start; /* todo pegado a la izquierda */
-  padding: 5px 10px; /* menos padding arriba */
-  height: auto; /* para que la altura se adapte al contenido */
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px 10px;
+  height: auto;
 }
 
 /* WhatsApp arriba */
@@ -55,10 +56,10 @@ mat-toolbar {
 
 .whatsapp-icon {
   vertical-align: middle;
-  margin-top: -4px; /* mueve el ícono un poco hacia arriba */
+  margin-top: -4px;
 }
 
-/* Logo + Divider + Título en una fila */
+/* Logo + Divider + Título en fila */
 .logo-title {
   display: flex;
   align-items: center;
@@ -66,9 +67,9 @@ mat-toolbar {
 }
 
 .pdn-logo {
-  height: 38px; /* un poco más pequeño para subir */
+  height: 38px;
   cursor: pointer;
-  margin-top: -6px; /* desplaza hacia arriba */
+  margin-top: -6px;
 }
 
 .divider {
@@ -80,5 +81,74 @@ mat-toolbar {
 
 .title {
   font-weight: bold;
-  font-size: 19px
+  font-size: 19px;
+  line-height: 24px;
+  color: #ff0000;
+  margin-top: -4px;
+}
+
+/* Botones a la derecha */
+.toolbar-right {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ====== ESTILO RESPONSIVO ====== */
+@media (max-width: 768px) {
+  /* El toolbar completo */
+  .toolbar-custom {
+    align-items: center; /* centrar todo */
+  }
+
+  /* WhatsApp centrado */
+  .whatsapp {
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .whatsapp a {
+    justify-content: center; /* centrado horizontal */
+    flex-direction: row;     /* icono a la izquierda, texto a la derecha */
+  }
+
+  .whatsapp-text {
+    margin-left: 8px;
+    margin-right: 0;
+  }
+
+  /* Logo + Divider + Texto en columna */
+  .logo-title {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .divider {
+    height: 2px; /* se convierte en línea horizontal */
+    width: 80%;
+    margin: 10px 0;
+  }
+
+  .title {
+    margin-top: 5px;
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  /* Botones en columna */
+  .toolbar-right {
+    margin-left: 0;
+    margin-top: 15px;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .toolbar-right button {
+    width: 90%; /* que ocupen casi todo el ancho */
+  }
 }
