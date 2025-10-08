@@ -25,3 +25,55 @@ mat-toolbar {
   //color: #848483;
   color: #ff0000; 
 }
+
+/*CHAT GPT*/
+.toolbar-column {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+/* Columna izquierda */
+.toolbar-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* todo pegado a la izquierda */
+}
+
+.whatsapp {
+  margin-bottom: 8px;
+}
+
+.whatsapp a {
+  color: #b0b0b0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.whatsapp-text {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.whatsapp-icon {
+  vertical-align: middle;
+}
+
+.logo-container img {
+  max-height: 40px;
+  cursor: pointer;
+}
+
+/* Columna derecha */
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* separación entre botones */
+  flex-wrap: wrap;
+}
+
+

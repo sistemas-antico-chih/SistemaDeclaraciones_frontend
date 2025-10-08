@@ -315,3 +315,6 @@ mat-grid-tile.content-left > figure {
   }
 }
 
+.full-width-block {
+    width: 100%; /* Fuerza al div a ocupar todo el ancho disponible */
+}
