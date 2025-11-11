@@ -165,53 +165,61 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     });
   }
 
-  /*validarFECHA(fechaConclusionEncargo: string): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const fechaInicioEncargo = control.value;
-      const fechaConcluyeEncargo = control.root.get(fechaConclusionEncargo)?.value;
-      console.log("aquiiii");
-      console.log(fechaConcluyeEncargo);
-      console.log(fechaConcluyeEncargo);
-      console.log(fechaInicioEncargo);
-      /*if (fechaConclusionEncargo && fechaInicioEncargo) {
-        const fechaInicioMoment = moment(fechaConclusionEncargo);
-        const fechaFinMoment = moment(fechaTomaPosesion);
-  
-        if (fechaInicioMoment.isAfter(fechaFinMoment)) {
-          return { fechaAnterior: true };
-        }
-      }
-      return null;
-    };
-  }*/
+  validarFECHA(control: FormControl) {
+    const fechaIni = control.value ? new Date(control.value) : null;
+    const fechaFin = control.root.get('fechaConclusionEncargo')?.value
+      ? new Date(control.root.get('fechaConclusionEncargo')?.value)
+      : null;
 
-  validarFECHA(control: FormControl){
-   let fechaIni=new Date(control.value)
-   let fechaFin=new Date(control.root.get('fechaConclusionEncargo')?.value)
-   let anio = new Date().getFullYear();
-   let mes = new Date().getMonth() + 1;
-   let dia = new Date().getDate();
-  //maxDate = new Date(this.anio, this.mes - 1, this.dia);
-   if (fechaIni && fechaFin) {
-        const fechaInicioMoment = moment(fechaIni);
-        const fechaFinMoment = moment(fechaFin);
-  
-        //if (fechaInicioMoment.isAfter(fechaFinMoment) || (fechaIni < new Date(anio, mes - 1, dia))) { 
-        if (fechaIni >= fechaFin) { 
-            return null; 
-        }
-      }
-      return { 'validarFECHA': true };
+    // Si aún no hay ambas fechas, no validar
+    if (!fechaIni || !fechaFin) {
+      return null;
+    }
+
+    const fechaInicioMoment = moment(fechaIni);
+    const fechaFinMoment = moment(fechaFin);
+
+    // ❌ Si la fecha de inicio es igual o posterior a la de conclusión → error
+    if (fechaInicioMoment.isSameOrAfter(fechaFinMoment)) {
+      return { validarFECHA: true };
+    }
+
+    // ✅ Si la fecha de inicio es anterior a la de conclusión → válido
+    return null;
   }
 
-  fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
+
+  /*fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
     this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision || {});
 
     if (datosEmpleoCargoComision?.aclaracionesObservaciones) {
       this.toggleAclaraciones(true);
     }
     this.setSelectedOptions(datosEmpleoCargoComision);
+  }*/
+
+  fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
+    if (!datosEmpleoCargoComision) return;
+
+    // Primero llena todo lo que coincida normalmente
+    this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
+
+    // ✅ Luego reasigna los valores del empleo que concluye hacia los campos del empleo que inicia
+    this.datosEmpleoCargoComisionForm.patchValue({
+      areaAdscripcion: datosEmpleoCargoComision.areaAdscripcionConcluye || '',
+      nivelEmpleoCargoComision: datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye || '',
+      fechaTomaPosesion: datosEmpleoCargoComision.fechaConclusionEncargo || ''
+    });
+
+    // Si existen aclaraciones, activar el textarea
+    if (datosEmpleoCargoComision.aclaracionesObservaciones) {
+      this.toggleAclaraciones(true);
+    }
+
+    // Lógica de selección de domicilio
+    this.setSelectedOptions(datosEmpleoCargoComision);
   }
+
 
   async getLastUserInfo() {
     try {
@@ -285,11 +293,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*
-    console.log(this.datosEmpleoCargoComisionForm.get('fechaConclusionEncargo').value);
-    this.minDateInicio = new Date(this.datosEmpleoCargoComisionForm.get('fechaConclusionEncargo').value);
-    console.log(this.minDateInicio);
-    */
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
