@@ -180,7 +180,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     const fechaFinMoment = moment(fechaFin);
 
     // ❌ Si la fecha de inicio es igual o posterior a la de conclusión → error
-    if (fechaInicioMoment.isSameOrAfter(fechaFinMoment)) {
+    if (fechaFinMoment.isSameOrAfter(fechaInicioMoment)) {
       return { validarFECHA: true };
     }
 
@@ -199,10 +199,25 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }*/
 
   fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
+    console.log('🧩 Datos recibidos desde MongoDB:', datosEmpleoCargoComision);
     if (!datosEmpleoCargoComision) return;
 
     // Primero llena todo lo que coincida normalmente
-    this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
+
+    this.datosEmpleoCargoComisionForm.patchValue({
+      areaAdscripcion: datosEmpleoCargoComision.areaAdscripcionConcluye,
+      nivelEmpleoCargoComision: datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye,
+      fechaTomaPosesion: datosEmpleoCargoComision.fechaConclusionEncargo
+    });
+
+    console.log('Valores reasignados:',
+      datosEmpleoCargoComision.areaAdscripcionConcluye,
+      datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye,
+      datosEmpleoCargoComision.fechaConclusionEncargo
+    );
+
+
+
 
     // ✅ Luego reasigna los valores del empleo que concluye hacia los campos del empleo que inicia
     this.datosEmpleoCargoComisionForm.patchValue({
