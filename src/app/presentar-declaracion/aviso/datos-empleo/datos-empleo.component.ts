@@ -185,7 +185,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
     // Si ambas fechas existen, validar orden
     if (fechaIni && fechaFin) {
-      // ❌ Si la fecha de toma de posesión NO es posterior a la de conclusión
+      // ❌ Si la toma de posesión NO es posterior a la conclusión
       if (!fechaIni.isAfter(fechaFin)) {
         return { ordenIncorrecto: true };
       }
@@ -194,6 +194,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     // ✅ Todo correcto
     return null;
   }
+
 
 
   /*fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
@@ -345,6 +346,17 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         trueText: 'Aceptar',
         //falseText: '',
       },
+    });
+    const fechaInicioCtrl = this.datosEmpleoCargoComisionForm.get('fechaTomaPosesion');
+    const fechaFinCtrl = this.datosEmpleoCargoComisionForm.get('fechaConclusionEncargo');
+
+    // 🔄 Revalidación cruzada completa
+    fechaInicioCtrl?.valueChanges.subscribe(() => {
+      fechaFinCtrl?.updateValueAndValidity({ emitEvent: false });
+    });
+
+    fechaFinCtrl?.valueChanges.subscribe(() => {
+      fechaInicioCtrl?.updateValueAndValidity({ emitEvent: false });
     });
   }
 
