@@ -116,7 +116,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       nivelEmpleoCargoComisionConcluye: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       fechaConclusionEncargo: [null, [Validators.required, this.validarFECHA]],
       areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      //funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       fechaTomaPosesion: [null, [Validators.required, this.validarFECHA]],
       contratadoPorHonorarios: [null, [Validators.required]],
