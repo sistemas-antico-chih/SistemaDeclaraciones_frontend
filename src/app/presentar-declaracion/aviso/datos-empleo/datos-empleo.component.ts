@@ -198,9 +198,9 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     this.setSelectedOptions(datosEmpleoCargoComision);
   }*/
   fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
-    if (!datosEmpleoCargoComision) return;
-
-    // 🔹 Copiar valores de los campos "de inicio" a los "que concluyen"
+    //if (!datosEmpleoCargoComision) return;
+    if (!datosEmpleoCargoComision) {
+      // 🔹 Copiar valores de los campos "de inicio" a los "que concluyen"
     if (datosEmpleoCargoComision.areaAdscripcion) {
       datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
       datosEmpleoCargoComision.areaAdscripcion = ''; // limpiar el campo de inicio
@@ -215,6 +215,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     // 🔹 Limpiar fechas (inicio y conclusión)
     datosEmpleoCargoComision.fechaTomaPosesion = null;
     datosEmpleoCargoComision.fechaConclusionEncargo = null;
+    datosEmpleoCargoComision.empleoCargoComision = null;
 
     // 🔹 Conservar nombre del ente público
     const nombreEnte = datosEmpleoCargoComision.nombreEntePublico;
@@ -235,8 +236,11 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     // 🔹 Configurar selects (domicilio, etc.)
     this.setSelectedOptions(datosEmpleoCargoComision);
 
-
-
+    }
+    else{
+      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision || {});
+    }
+    
 
     // Si existen aclaraciones, activar el textarea
     if (datosEmpleoCargoComision.aclaracionesObservaciones) {
