@@ -197,59 +197,55 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     }
     this.setSelectedOptions(datosEmpleoCargoComision);
   }*/
+
   fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
-    //if (!datosEmpleoCargoComision) return;
-    if (!datosEmpleoCargoComision) {
-      // 🔹 Copiar valores de los campos "de inicio" a los "que concluyen"
-    if (datosEmpleoCargoComision.areaAdscripcion) {
-      datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
-      datosEmpleoCargoComision.areaAdscripcion = ''; // limpiar el campo de inicio
+    if (!datosEmpleoCargoComision) return;
+
+    // 🧠 Detectar si el registro ya está completo (ya tiene área de conclusión)
+    const registroConcluido =
+      !!datosEmpleoCargoComision.areaAdscripcionConcluye?.trim() ||
+      !!datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye?.trim() ||
+      !!datosEmpleoCargoComision.fechaConclusionEncargo;
+
+    if (registroConcluido) {
+      // ✅ Caso 1: Registro ya concluido → poblar todo sin modificar
+      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
+    } else {
+      // ✅ Caso 2: No hay registro previo → llenar con datos "de inicio"
+      if (datosEmpleoCargoComision.areaAdscripcion) {
+        datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
+        datosEmpleoCargoComision.areaAdscripcion = '';
+      }
+
+      if (datosEmpleoCargoComision.nivelEmpleoCargoComision) {
+        datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye =
+          datosEmpleoCargoComision.nivelEmpleoCargoComision;
+        datosEmpleoCargoComision.nivelEmpleoCargoComision = '';
+      }
+
+      // Limpiar fechas
+      datosEmpleoCargoComision.fechaTomaPosesion = null;
+      datosEmpleoCargoComision.fechaConclusionEncargo = null;
+
+      // Conservar nombre del ente
+      const nombreEnte = datosEmpleoCargoComision.nombreEntePublico;
+
+      // Llenar formulario
+      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
+
+      // Restaurar nombre del ente
+      this.datosEmpleoCargoComisionForm.get('nombreEntePublico')?.setValue(nombreEnte);
     }
 
-    if (datosEmpleoCargoComision.nivelEmpleoCargoComision) {
-      datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye =
-        datosEmpleoCargoComision.nivelEmpleoCargoComision;
-      datosEmpleoCargoComision.nivelEmpleoCargoComision = ''; // limpiar el campo de inicio
-    }
-
-    // 🔹 Limpiar fechas (inicio y conclusión)
-    datosEmpleoCargoComision.fechaTomaPosesion = null;
-    datosEmpleoCargoComision.fechaConclusionEncargo = null;
-    datosEmpleoCargoComision.empleoCargoComision = null;
-
-    // 🔹 Conservar nombre del ente público
-    const nombreEnte = datosEmpleoCargoComision.nombreEntePublico;
-
-    // 🔹 Llenar el formulario
-    this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
-
-    // 🔹 Restaurar nombreEntePublico (para evitar que patchValue lo limpie si no existiera)
-    this.datosEmpleoCargoComisionForm
-      .get('nombreEntePublico')
-      .setValue(nombreEnte);
-
-    // 🔹 Mostrar aclaraciones si aplica
+    // Mostrar aclaraciones si aplica
     if (datosEmpleoCargoComision.aclaracionesObservaciones) {
       this.toggleAclaraciones(true);
     }
 
-    // 🔹 Configurar selects (domicilio, etc.)
-    this.setSelectedOptions(datosEmpleoCargoComision);
-
-    }
-    else{
-      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision || {});
-    }
-    
-
-    // Si existen aclaraciones, activar el textarea
-    if (datosEmpleoCargoComision.aclaracionesObservaciones) {
-      this.toggleAclaraciones(true);
-    }
-
-    // Lógica de selección de domicilio
+    // Configurar selects u opciones de domicilio, etc.
     this.setSelectedOptions(datosEmpleoCargoComision);
   }
+
 
 
   async getLastUserInfo() {
