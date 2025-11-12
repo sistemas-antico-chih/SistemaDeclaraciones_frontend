@@ -198,53 +198,62 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     this.setSelectedOptions(datosEmpleoCargoComision);
   }*/
 
-  fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
+  fillForm(datosEmpleoCargoComision: any) {
     if (!datosEmpleoCargoComision) return;
 
-    // 🧠 Detectar si el registro ya está completo (ya tiene área de conclusión)
+    // 🧠 Detectar si el registro ya tiene datos de conclusión
     const registroConcluido =
-      !!datosEmpleoCargoComision.areaAdscripcionConcluye?.trim() ||
-      !!datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye?.trim() ||
-      !!datosEmpleoCargoComision.fechaConclusionEncargo;
+      !!datosEmpleoCargoComision.areaAdscripcionConcluye ||
+      !!datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye;
 
     if (registroConcluido) {
-      // ✅ Caso 1: Registro ya concluido → poblar todo sin modificar
-      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
+      // ✅ Caso 2: Registro actual (ya tiene campos de conclusión)
+      const datosModificados = {
+        ...datosEmpleoCargoComision,
+        fechaConclusionEncargo: null // limpiar solo esta fecha
+      };
+
+      this.datosEmpleoCargoComisionForm.patchValue(datosModificados);
     } else {
-      // ✅ Caso 2: No hay registro previo → llenar con datos "de inicio"
-      if (datosEmpleoCargoComision.areaAdscripcion) {
-        datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
-        datosEmpleoCargoComision.areaAdscripcion = '';
+      // ✅ Caso 1: Registro anterior (sin campos de conclusión)
+      const datosModificados = { ...datosEmpleoCargoComision };
+
+      if (datosModificados.areaAdscripcion) {
+        datosModificados.areaAdscripcionConcluye = datosModificados.areaAdscripcion;
+        datosModificados.areaAdscripcion = '';
       }
 
-      if (datosEmpleoCargoComision.nivelEmpleoCargoComision) {
-        datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye =
-          datosEmpleoCargoComision.nivelEmpleoCargoComision;
-        datosEmpleoCargoComision.nivelEmpleoCargoComision = '';
+      if (datosModificados.nivelEmpleoCargoComision) {
+        datosModificados.nivelEmpleoCargoComisionConcluye =
+          datosModificados.nivelEmpleoCargoComision;
+        datosModificados.nivelEmpleoCargoComision = '';
       }
 
-      // Limpiar fechas
-      datosEmpleoCargoComision.fechaTomaPosesion = null;
-      datosEmpleoCargoComision.fechaConclusionEncargo = null;
+      // Empleo vacío (nuevo comportamiento)
+      datosModificados.empleoCargoComision = '';
+
+      // Fechas vacías
+      datosModificados.fechaTomaPosesion = null;
+      datosModificados.fechaConclusionEncargo = null;
 
       // Conservar nombre del ente
-      const nombreEnte = datosEmpleoCargoComision.nombreEntePublico;
+      const nombreEnte = datosModificados.nombreEntePublico;
 
-      // Llenar formulario
-      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
+      this.datosEmpleoCargoComisionForm.patchValue(datosModificados);
 
       // Restaurar nombre del ente
       this.datosEmpleoCargoComisionForm.get('nombreEntePublico')?.setValue(nombreEnte);
     }
 
-    // Mostrar aclaraciones si aplica
+    // Mostrar aclaraciones si existen
     if (datosEmpleoCargoComision.aclaracionesObservaciones) {
       this.toggleAclaraciones(true);
     }
 
-    // Configurar selects u opciones de domicilio, etc.
+    // Configurar selects, combos o catálogos asociados
     this.setSelectedOptions(datosEmpleoCargoComision);
   }
+
 
 
 
