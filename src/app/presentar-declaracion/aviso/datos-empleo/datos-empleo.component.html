@@ -118,6 +118,17 @@
             <input [errorStateMatcher]="errorMatcher" matInput #input_nivel_cargo type="text"
               formControlName="nivelEmpleoCargoComision" required />
           </mat-form-field>
+
+          <mat-form-field matTooltip="{{ tooltipData.especifiqueFuncionPrincipal }}" appearance="fill">
+            <mat-label>Especifique función principal</mat-label>
+            <mat-icon matPrefix>speaker_notes</mat-icon>
+            <input
+              [errorStateMatcher]="errorMatcher"
+              matInput
+              type="text"
+              formControlName="funcionPrincipal"
+              required
+            />
         </div>
 
         <!-- Segundo Bloque -->
