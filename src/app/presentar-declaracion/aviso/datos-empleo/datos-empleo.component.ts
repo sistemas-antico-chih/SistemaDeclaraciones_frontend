@@ -166,25 +166,32 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   validarFECHA(control: FormControl) {
-    const fechaIni = control.value ? new Date(control.value) : null;
-    const fechaFin = control.root.get('fechaConclusionEncargo')?.value
-      ? new Date(control.root.get('fechaConclusionEncargo')?.value)
+    const fechaActual = moment().startOf('day');
+
+    const fechaIni = control.root.get('fechaTomaPosesion')?.value
+      ? moment(control.root.get('fechaTomaPosesion')?.value).startOf('day')
       : null;
 
-    // Si aún no hay ambas fechas, no validar
-    if (!fechaIni || !fechaFin) {
-      return null;
+    const fechaFin = control.root.get('fechaConclusionEncargo')?.value
+      ? moment(control.root.get('fechaConclusionEncargo')?.value).startOf('day')
+      : null;
+
+    const fechaControl = control.value ? moment(control.value).startOf('day') : null;
+
+    // ❌ No permitir fechas futuras
+    if (fechaControl && fechaControl.isAfter(fechaActual)) {
+      return { fechaFutura: true };
     }
 
-    const fechaInicioMoment = moment(fechaIni);
-    const fechaFinMoment = moment(fechaFin);
-
-    // ❌ Si la fecha de inicio es igual o posterior a la de conclusión → error
-    if (fechaFinMoment.isSameOrAfter(fechaInicioMoment)) {
-      return { validarFECHA: true };
+    // Si ambas fechas existen, validar orden
+    if (fechaIni && fechaFin) {
+      // ❌ Si la fecha de toma de posesión NO es posterior a la de conclusión
+      if (!fechaIni.isAfter(fechaFin)) {
+        return { ordenIncorrecto: true };
+      }
     }
 
-    // ✅ Si la fecha de inicio es anterior a la de conclusión → válido
+    // ✅ Todo correcto
     return null;
   }
 
