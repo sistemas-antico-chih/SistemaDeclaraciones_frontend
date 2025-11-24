@@ -171,6 +171,7 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   async getLastUserInfo() {
+    
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
