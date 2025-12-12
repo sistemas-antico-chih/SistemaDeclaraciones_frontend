@@ -2,35 +2,58 @@
   <app-header></app-header>
   <mat-sidenav-container fxFill>
     <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile" [disableClose]="!isMobile"
-      ngClass.gt-sm="has-border"> 
-   
+      ngClass.gt-sm="has-border">
+
       <mat-expansion-panel *ngIf="tipoDeclaracion === 'aviso' && !declaracionSimplificada">
-        <mat-expansion-panel-header [ngClass]="{
-            active: url?.startsWith('/' + tipoDeclaracion)
-          }">
-          <mat-panel-title>I. Aviso por cambio de dependencia </mat-panel-title>
+        <mat-expansion-panel-header [ngClass]="{ active: url?.startsWith('/' + tipoDeclaracion) }">
+          <mat-panel-title>I. Aviso por cambio de dependencia</mat-panel-title>
         </mat-expansion-panel-header>
+
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
-          <mat-step *ngFor="let opt of avisoOptions" 
-                    label="{{ opt.text }}"
-                    [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
+          <mat-step *ngFor="let opt of avisoOptions">
+
+            <ng-template matStepLabel>
+              <span [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                {{ opt.text }}
+              </span>
+            </ng-template>
+
+            <ng-template matStepIcon="edit">
+              <mat-icon [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                check_circle
+              </mat-icon>
+            </ng-template>
+
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
+
       <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso'">
         <mat-expansion-panel-header [ngClass]="{
-            active:
-              url?.startsWith('/' + tipoDeclaracion + '/situacion-patrimonial') ||
-              url?.startsWith('/' + tipoDeclaracion + '/simplificada/situacion-patrimonial')
-          }">
-          <mat-panel-title> I. Declaración de situación patrimonial </mat-panel-title>
+      active:
+        url?.startsWith('/' + tipoDeclaracion + '/situacion-patrimonial') ||
+        url?.startsWith('/' + tipoDeclaracion + '/simplificada/situacion-patrimonial')
+    }">
+          <mat-panel-title>I. Declaración de situación patrimonial</mat-panel-title>
         </mat-expansion-panel-header>
+
         <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedStep)">
           <ng-container *ngFor="let opt of situacionPatrimonialOptions">
-            <mat-step *ngIf="!declaracionSimplificada || opt.simplificada" 
-                      label="{{ opt.text }}"
-                      [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
+            <mat-step *ngIf="!declaracionSimplificada || opt.simplificada">
+
+              <ng-template matStepLabel>
+                <span [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                  {{ opt.text }}
+                </span>
+              </ng-template>
+
+              <ng-template matStepIcon="edit">
+                <mat-icon [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                  check_circle
+                </mat-icon>
+              </ng-template>
+
             </mat-step>
           </ng-container>
         </mat-vertical-stepper>
@@ -38,15 +61,28 @@
 
       <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso' && !declaracionSimplificada">
         <mat-expansion-panel-header [ngClass]="{ active: url?.startsWith('/' + tipoDeclaracion + '/intereses') }">
-          <mat-panel-title> II. Declaración de intereses </mat-panel-title>
+          <mat-panel-title>II. Declaración de intereses</mat-panel-title>
         </mat-expansion-panel-header>
+
         <mat-vertical-stepper (selectionChange)="goToInteresesSection($event.selectedIndex)">
-          <mat-step *ngFor="let opt of interesesOptions" 
-                    label="{{ opt.text }}"
-                    [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
+          <mat-step *ngFor="let opt of interesesOptions">
+
+            <ng-template matStepLabel>
+              <span [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                {{ opt.text }}
+              </span>
+            </ng-template>
+
+            <ng-template matStepIcon="edit">
+              <mat-icon [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                check_circle
+              </mat-icon>
+            </ng-template>
+
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
+
     </mat-sidenav>
     <mat-sidenav-content>
       <mat-toolbar class="menu-button-container">
