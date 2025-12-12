@@ -11,10 +11,15 @@
           <mat-panel-title>I. Aviso por cambio de dependencia </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
-          <mat-step *ngFor="let opt of avisoOptions" 
-                    label="{{ opt.text }}"
-                    [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
-          </mat-step>
+          <mat-step *ngFor="let opt of avisoOptions; let i = index"
+          [completed]="opt.saved">
+
+  <ng-template matStepLabel>
+    <span [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">{{ opt.text }}</span>
+  </ng-template>
+
+</mat-step>
+
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
@@ -28,10 +33,15 @@
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedStep)">
           <ng-container *ngFor="let opt of situacionPatrimonialOptions">
-            <mat-step *ngIf="!declaracionSimplificada || opt.simplificada" 
-                      label="{{ opt.text }}"
-                      [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
-            </mat-step>
+            <mat-step *ngFor="let opt of situacionPatrimonialOptions; let i = index"
+          [completed]="opt.saved">
+
+  <ng-template matStepLabel>
+    <span [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">{{ opt.text }}</span>
+  </ng-template>
+
+</mat-step>
+
           </ng-container>
         </mat-vertical-stepper>
       </mat-expansion-panel>
@@ -41,10 +51,15 @@
           <mat-panel-title> II. Declaración de intereses </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToInteresesSection($event.selectedIndex)">
-          <mat-step *ngFor="let opt of interesesOptions" 
-                    label="{{ opt.text }}"
-                    [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
-          </mat-step>
+          <mat-step *ngFor="let opt of interesesOptions; let i = index"
+          [completed]="opt.saved">
+
+  <ng-template matStepLabel>
+    <span [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">{{ opt.text }}</span>
+  </ng-template>
+
+</mat-step>
+
         </mat-vertical-stepper>
       </mat-expansion-panel>
     </mat-sidenav>
