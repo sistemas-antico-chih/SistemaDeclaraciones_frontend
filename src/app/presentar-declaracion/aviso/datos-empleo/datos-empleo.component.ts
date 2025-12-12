@@ -29,7 +29,7 @@ import entePublico from '@static/catalogos/entePublico_municipios.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { findOption } from '@utils/utils';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
-import { MenuStateService } from '@shared/services/menu-state.service';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -244,7 +244,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
+      this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);

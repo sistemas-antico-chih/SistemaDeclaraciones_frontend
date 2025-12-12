@@ -16,6 +16,7 @@ import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import Paises from '@static/catalogos/paises.json';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -42,12 +43,16 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  // Flag para determinar si la información es de un registro anterior
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -136,6 +141,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
+      this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.domicilioDeclarante);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);

@@ -18,6 +18,7 @@ import SituacionPersonalEstadoCivil from '@static/catalogos/situacionPersonalEst
 import RegimenMatrimonial from '@static/catalogos/regimenMatrimonial.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-generales';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -48,12 +49,16 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  // Flag para determinar si la información es de un registro anterior
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -175,6 +180,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
         throw errors;
       }
       this.fillForm(data?.lastDeclaracion.datosGenerales);
+      this.isFromPreviousRecord = true;
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
       // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
