@@ -70,43 +70,36 @@ mat-expansion-panel-header {
 }
 
 
-/* --- RESET DE ESTILOS PROBLEMÁTICOS --- */
-::ng-deep .step-saved .mat-step-header,
-::ng-deep .step-unsaved .mat-step-header {
-  all: unset;
-}
+/* --- ESTILOS CORRECTOS PARA PASOS GUARDADOS/NO GUARDADOS --- */
 
-/* --- COLORES POR ESTADO --- */
-
-/* Paso guardado = texto azul */
-::ng-deep .step-saved {
+/* Paso guardado = azul */
+::ng-deep .mat-step-header[ng-reflect-state="saved"] .mat-step-label {
   color: #1976d2 !important;
   font-weight: 600 !important;
 }
 
-/* Paso no guardado = texto gris */
-::ng-deep .step-unsaved {
-  color: #9e9e9e !important;
-}
-
-/* Iconos */
-::ng-deep .mat-step-header .mat-step-icon {
-  background-color: #9e9e9e !important; /* default gris */
+::ng-deep .mat-step-header[ng-reflect-state="saved"] .mat-step-icon {
+  background-color: #1976d2 !important;
   color: white !important;
 }
 
-::ng-deep .mat-step-header .mat-step-icon.step-saved {
-  background-color: #1976d2 !important; /* azul guardado */
+/* Paso no guardado = gris */
+::ng-deep .mat-step-header[ng-reflect-state="unsaved"] .mat-step-label {
+  color: #9e9e9e !important;
 }
 
-/* --- COLOR DE PASO ACTIVO --- */
-::ng-deep .mat-step-header.mat-step-header-selected
-  .mat-step-label {
+::ng-deep .mat-step-header[ng-reflect-state="unsaved"] .mat-step-icon {
+  background-color: #9e9e9e !important;
+  color: white !important;
+}
+
+/* Paso activo (seleccionado) – siempre azul */
+::ng-deep .mat-step-header.mat-step-header-selected .mat-step-label {
   color: #1976d2 !important;
   font-weight: 700 !important;
 }
 
-::ng-deep .mat-step-header.mat-step-header-selected
-  .mat-step-icon {
+::ng-deep .mat-step-header.mat-step-header-selected .mat-step-icon {
   background-color: #1976d2 !important;
+  color: white !important;
 }
