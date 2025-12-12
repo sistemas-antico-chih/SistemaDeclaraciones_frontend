@@ -104,30 +104,28 @@ mat-expansion-panel-header {
 }
 
 // Estado no guardado (asegurar que sea gris)
-::ng-deep .step-unsaved {
-  .mat-step-header {
-    .mat-step-label {
-      color: #9e9e9e !important;
-    }
-    
-    .mat-step-icon {
-      background-color: #9e9e9e !important;
-    }
-  }
+/* Texto de pasos */
+::ng-deep .step-saved {
+  color: #1976d2 !important;
+  font-weight: 600 !important;
 }
 
-// Paso actualmente seleccionado (mantener contraste)
-::ng-deep .mat-step-header.cdk-keyboard-focused,
-::ng-deep .mat-step-header.cdk-program-focused,
+::ng-deep .step-unsaved {
+  color: #9e9e9e !important;
+}
+
+/* Iconos del stepper */
+::ng-deep .mat-step-icon.step-saved {
+  background-color: #1976d2 !important;
+  color: white !important;
+}
+
+::ng-deep .mat-step-icon.step-unsaved {
+  background-color: #9e9e9e !important;
+  color: white !important;
+}
+
+/* Hover y selección (mantener limpio) */
 ::ng-deep .mat-step-header:hover {
   background-color: rgba(0, 0, 0, 0.04);
-}
-
-// Asegurar que el ícono de "completado" use el color correcto
-::ng-deep .step-saved .mat-step-icon-state-done {
-  background-color: #1976d2 !important;
-}
-
-::ng-deep .step-unsaved .mat-step-icon-state-done {
-  background-color: #9e9e9e !important;
 }
