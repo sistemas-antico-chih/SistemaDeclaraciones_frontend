@@ -14,7 +14,6 @@ import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.c
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   datosEmpleoCargoComisionQuery,
-  //declaracionMutation,
   datosEmpleoCargoComisionMutation,
   lastDatosEmpleoCargoComisionQuery,
 } from '@api/declaracion';
@@ -30,6 +29,7 @@ import entePublico from '@static/catalogos/entePublico_municipios.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { findOption } from '@utils/utils';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
+import { MenuStateService } from '@shared/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -75,12 +75,16 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
   minDateInicio = new Date();
 
+  // Flag para determinar si la información es de un registro anterior
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -149,8 +153,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       ],
     });
 
-    // this.datosEmpleoCargoComisionForm.get('domicilioExtranjero').disable();
-
     const estado = this.datosEmpleoCargoComisionForm.get('domicilioMexico').get('entidadFederativa');
     estado.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       const municipio = this.datosEmpleoCargoComisionForm.get('domicilioMexico').get('municipioAlcaldia');
@@ -178,48 +180,31 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
     const fechaControl = control.value ? moment(control.value).startOf('day') : null;
 
-    // ❌ No permitir fechas futuras
     if (fechaControl && fechaControl.isAfter(fechaActual)) {
       return { fechaFutura: true };
     }
 
-    // Si ambas fechas existen, validar orden
     if (fechaIni && fechaFin) {
-      // ❌ Si la fecha de toma de posesión NO es posterior a la de conclusión
       if (!fechaIni.isAfter(fechaFin)) {
         return { ordenIncorrecto: true };
       }
     }
 
-    // ✅ Todo correcto
     return null;
   }
-
-
-
-  /*fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
-    this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision || {});
-
-    if (datosEmpleoCargoComision?.aclaracionesObservaciones) {
-      this.toggleAclaraciones(true);
-    }
-    this.setSelectedOptions(datosEmpleoCargoComision);
-  }*/
 
   fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
     if (!datosEmpleoCargoComision) return;
 
-    // 🧠 Detectar si el registro ya está completo (ya tiene área de conclusión)
     const registroConcluido =
       !!datosEmpleoCargoComision.areaAdscripcionConcluye?.trim() ||
       !!datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye?.trim() ||
       !!datosEmpleoCargoComision.fechaConclusionEncargo;
 
     if (registroConcluido) {
-      // ✅ Caso 1: Registro ya concluido → poblar todo sin modificar
       this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
+      this.isFromPreviousRecord = false;
     } else {
-      // ✅ Caso 2: No hay registro previo → llenar con datos "de inicio"
       if (datosEmpleoCargoComision.areaAdscripcion) {
         datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
         datosEmpleoCargoComision.areaAdscripcion = '';
@@ -231,30 +216,22 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         datosEmpleoCargoComision.nivelEmpleoCargoComision = '';
       }
 
-      // Limpiar fechas
       datosEmpleoCargoComision.fechaTomaPosesion = null;
       datosEmpleoCargoComision.fechaConclusionEncargo = null;
 
-      // Conservar nombre del ente
       const nombreEnte = datosEmpleoCargoComision.nombreEntePublico;
-
-      // Llenar formulario
       this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
-
-      // Restaurar nombre del ente
       this.datosEmpleoCargoComisionForm.get('nombreEntePublico')?.setValue(nombreEnte);
+      
+      this.isFromPreviousRecord = true;
     }
 
-    // Mostrar aclaraciones si aplica
     if (datosEmpleoCargoComision.aclaracionesObservaciones) {
       this.toggleAclaraciones(true);
     }
 
-    // Configurar selects u opciones de domicilio, etc.
     this.setSelectedOptions(datosEmpleoCargoComision);
   }
-
-
 
   async getLastUserInfo() {
     try {
@@ -271,7 +248,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
-      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
@@ -305,7 +281,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
   formHasChanges() {
     let url = '/aviso/datos-empleo';
-    //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosEmpleoCargoComisionForm.dirty;
     console.log(isDirty);
 
@@ -335,7 +310,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         messageAviso: `Recuerde Guardar la información del registro,`,
         messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        //falseText: '',
       },
     });
   }
@@ -345,7 +319,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       duration: 5000,
     });
   }
-
 
   async saveInfo() {
     try {
@@ -369,6 +342,16 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       }
 
       this.isLoading = false;
+      
+      // ✅ Marcar esta sección como guardada
+      this.menuStateService.markSectionAsSaved(
+        '/datos-empleo',
+        'aviso',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+      
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
       console.log(error);
@@ -380,7 +363,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     const { domicilioExtranjero, domicilioMexico } = datosEmpleoCargoComision ?? {};
 
     if (domicilioMexico) {
-      //this.datosEmpleoCargoComisionForm.get
       this.datosEmpleoCargoComisionForm
         .get('domicilioMexico.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa?.clave));
@@ -421,6 +403,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   entePublicoChanged(value: string) {
-    this.datosEmpleoCargoComisionForm.get('nombreEntePublico').setValue(value)
+    this.datosEmpleoCargoComisionForm.get('nombreEntePublico').setValue(value);
   }
 }

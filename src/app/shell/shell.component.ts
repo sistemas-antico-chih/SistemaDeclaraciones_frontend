@@ -5,6 +5,14 @@ import { MediaObserver } from '@angular/flex-layout';
 
 import { AuthenticationService, CredentialsService } from '@app/auth';
 import { MatStep } from '@angular/material/stepper';
+import { MenuStateService } from '@shared/services/menu-state.service'; // Importar el servicio
+
+interface MenuOption {
+  text: string;
+  url: string;
+  simplificada?: boolean;
+  saved?: boolean;
+}
 
 @Component({
   selector: 'app-shell',
@@ -12,7 +20,7 @@ import { MatStep } from '@angular/material/stepper';
   styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent implements OnInit {
-  situacionPatrimonialOptions = [
+  situacionPatrimonialOptions: MenuOption[] = [
     { text: 'Datos generales', url: '/situacion-patrimonial/datos-generales', simplificada: true },
     { text: 'Domicilio del declarante', url: '/situacion-patrimonial/domicilio-declarante', simplificada: true },
     { text: 'Datos curriculares del declarante', url: '/situacion-patrimonial/datos-curriculares', simplificada: true },
@@ -49,7 +57,7 @@ export class ShellComponent implements OnInit {
     { text: 'Préstamo o comodato por terceros', url: '/situacion-patrimonial/prestamos-terceros' },
   ];
 
-  interesesOptions = [
+  interesesOptions: MenuOption[] = [
     {
       text: 'Participación en empresas, sociedades o asociaciones (hasta los dos últimos años)',
       url: '/intereses/participacion-empresa',
@@ -65,7 +73,7 @@ export class ShellComponent implements OnInit {
     { text: 'Fideicomisos (hasta los dos últimos años)', url: '/intereses/fideicomisos' },
   ];
 
-  avisoOptions = [
+  avisoOptions: MenuOption[] = [
     { text: 'Datos generales', url: '/datos-generales' },
     { text: 'Domicilio del declarante', url: '/domicilio-declarante'},
     {
@@ -83,13 +91,13 @@ export class ShellComponent implements OnInit {
     private titleService: Title,
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
-    private media: MediaObserver
+    private media: MediaObserver,
+    private menuStateService: MenuStateService // Inyectar el servicio
   ) {}
 
   goToAvisoSection(selectedStep: MatStep) {
-    //this.router.navigate([`/${this.tipoDeclaracion}${this.avisoOptions[optionIndex].url}`], { replaceUrl: true });
     const selected = this.avisoOptions.find((opt) => opt.text === selectedStep.label);
-    const route =`/${this.tipoDeclaracion}/${selected.url}`
+    const route = `/${this.tipoDeclaracion}/${selected.url}`;
     this.router.navigate([route], {
       replaceUrl: true,
     });
@@ -118,10 +126,45 @@ export class ShellComponent implements OnInit {
     this.tipoDeclaracion = chunks[1] || null;
     this.declaracionSimplificada = chunks[2] === 'simplificada';
 
+    // Cargar el estado de guardado desde el servicio
+    this.loadSavedState();
+
+    // Suscribirse a cambios en el estado
+    this.menuStateService.savedState$.subscribe(state => {
+      this.updateOptionsState(this.situacionPatrimonialOptions, state.situacionPatrimonial);
+      this.updateOptionsState(this.interesesOptions, state.intereses);
+      this.updateOptionsState(this.avisoOptions, state.aviso);
+    });
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = this.router.url;
       }
+    });
+  }
+
+  /**
+   * Carga el estado de guardado desde el servicio
+   */
+  private loadSavedState() {
+    const savedState = this.menuStateService.loadSavedState(
+      this.tipoDeclaracion, 
+      this.declaracionSimplificada
+    );
+    
+    this.updateOptionsState(this.situacionPatrimonialOptions, savedState.situacionPatrimonial);
+    this.updateOptionsState(this.interesesOptions, savedState.intereses);
+    this.updateOptionsState(this.avisoOptions, savedState.aviso);
+  }
+
+  /**
+   * Actualiza el estado 'saved' de las opciones del menú
+   */
+  private updateOptionsState(options: MenuOption[], savedUrls: string[] = []) {
+    if (!savedUrls) return;
+    
+    options.forEach(opt => {
+      opt.saved = savedUrls.includes(opt.url);
     });
   }
 
