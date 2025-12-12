@@ -290,6 +290,18 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       }
 
       this.isLoading = false;
+      
+      console.log('💾 Guardando estado en menú...');
+      
+      // ✅ Marcar esta sección como guardada
+      this.menuStateService.markSectionAsSaved(
+        '/datos-generales',
+        'aviso',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+      
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
       console.log(error);

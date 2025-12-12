@@ -5,7 +5,7 @@ import { MediaObserver } from '@angular/flex-layout';
 
 import { AuthenticationService, CredentialsService } from '@app/auth';
 import { MatStep } from '@angular/material/stepper';
-import { MenuStateService } from '@app/services/menu-state.service'; // Importar el servicio
+import { MenuStateService } from '@shared/services/menu-state.service'; // Importar el servicio
 
 interface MenuOption {
   text: string;
@@ -147,10 +147,17 @@ export class ShellComponent implements OnInit {
    * Carga el estado de guardado desde el servicio
    */
   private loadSavedState() {
+    console.log('📂 Cargando estado guardado:', {
+      tipoDeclaracion: this.tipoDeclaracion,
+      declaracionSimplificada: this.declaracionSimplificada
+    });
+    
     const savedState = this.menuStateService.loadSavedState(
       this.tipoDeclaracion, 
       this.declaracionSimplificada
     );
+    
+    console.log('📋 Estado recuperado:', savedState);
     
     this.updateOptionsState(this.situacionPatrimonialOptions, savedState.situacionPatrimonial);
     this.updateOptionsState(this.interesesOptions, savedState.intereses);
@@ -163,8 +170,15 @@ export class ShellComponent implements OnInit {
   private updateOptionsState(options: MenuOption[], savedUrls: string[] = []) {
     if (!savedUrls) return;
     
+    console.log('🔄 Actualizando estado de opciones:', { savedUrls });
+    
     options.forEach(opt => {
+      const wasSaved = opt.saved;
       opt.saved = savedUrls.includes(opt.url);
+      
+      if (wasSaved !== opt.saved) {
+        console.log(`  ${opt.saved ? '🔵' : '⚪'} ${opt.text}: ${opt.url}`);
+      }
     });
   }
 

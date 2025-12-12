@@ -1,3 +1,5 @@
+// Crear este archivo: src/app/shared/services/menu-state.service.ts
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -51,6 +53,15 @@ export class MenuStateService {
     const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
     let savedState = JSON.parse(localStorage.getItem(storageKey) || '{}') as SavedState;
     
+    console.log('🔵 Marcando sección como guardada:', {
+      url,
+      section,
+      tipoDeclaracion,
+      declaracionSimplificada,
+      storageKey,
+      estadoAntes: savedState
+    });
+    
     // Inicializar el array si no existe
     if (!savedState[section]) {
       savedState[section] = [];
@@ -63,6 +74,9 @@ export class MenuStateService {
     
     // Guardar en localStorage
     localStorage.setItem(storageKey, JSON.stringify(savedState));
+    
+    console.log('✅ Estado guardado:', savedState);
+    console.log('💾 LocalStorage:', localStorage.getItem(storageKey));
     
     // Notificar cambios
     this.savedStateSubject.next(savedState);

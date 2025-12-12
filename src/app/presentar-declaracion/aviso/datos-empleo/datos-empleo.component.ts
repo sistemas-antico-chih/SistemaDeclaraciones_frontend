@@ -343,6 +343,8 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
       this.isLoading = false;
       
+      console.log('💾 Guardando estado en menú...');
+      
       // ✅ Marcar esta sección como guardada
       this.menuStateService.markSectionAsSaved(
         '/datos-empleo',
@@ -356,8 +358,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
-    }
-  }
+    }  }
 
   setSelectedOptions(datosEmpleoCargoComision: DatosEmpleoCargoComision) {
     const { domicilioExtranjero, domicilioMexico } = datosEmpleoCargoComision ?? {};

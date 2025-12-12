@@ -4,6 +4,7 @@
     <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile" [disableClose]="!isMobile"
       ngClass.gt-sm="has-border"> 
    
+      <!-- Menú para AVISO -->
       <mat-expansion-panel *ngIf="tipoDeclaracion === 'aviso' && !declaracionSimplificada">
         <mat-expansion-panel-header [ngClass]="{
             active: url?.startsWith('/' + tipoDeclaracion)
@@ -12,12 +13,13 @@
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
           <mat-step *ngFor="let opt of avisoOptions" 
-                    label="{{ opt.text }}"
-                    [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
+                    [label]="opt.text"
+                    [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
+      <!-- Menú para SITUACIÓN PATRIMONIAL -->
       <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso'">
         <mat-expansion-panel-header [ngClass]="{
             active:
@@ -29,25 +31,27 @@
         <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedStep)">
           <ng-container *ngFor="let opt of situacionPatrimonialOptions">
             <mat-step *ngIf="!declaracionSimplificada || opt.simplificada" 
-                      label="{{ opt.text }}"
-                      [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
+                      [label]="opt.text"
+                      [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
             </mat-step>
           </ng-container>
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
+      <!-- Menú para INTERESES -->
       <mat-expansion-panel *ngIf="tipoDeclaracion != 'aviso' && !declaracionSimplificada">
         <mat-expansion-panel-header [ngClass]="{ active: url?.startsWith('/' + tipoDeclaracion + '/intereses') }">
           <mat-panel-title> II. Declaración de intereses </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToInteresesSection($event.selectedIndex)">
           <mat-step *ngFor="let opt of interesesOptions" 
-                    label="{{ opt.text }}"
-                    [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
+                    [label]="opt.text"
+                    [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
     </mat-sidenav>
+    
     <mat-sidenav-content>
       <mat-toolbar class="menu-button-container">
         <button class="menu-button" mat-icon-button (click)="sidenav.toggle()" fxHide.gt-sm>
