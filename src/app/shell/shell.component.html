@@ -13,7 +13,7 @@
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
           <mat-step *ngFor="let opt of avisoOptions" 
                     label="{{ opt.text }}"
-                    [ngClass]="step-saved">
+                    [ngClass]="{'step-saved': opt.saved, 'step-unsaved': !opt.saved}">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
