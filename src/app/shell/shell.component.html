@@ -3,7 +3,7 @@
   <mat-sidenav-container fxFill>
     <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile" [disableClose]="!isMobile"
       ngClass.gt-sm="has-border"> 
-
+   
       <mat-expansion-panel *ngIf="tipoDeclaracion === 'aviso' && !declaracionSimplificada">
         <mat-expansion-panel-header [ngClass]="{
             active:
