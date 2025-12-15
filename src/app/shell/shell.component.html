@@ -14,7 +14,8 @@
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
           <mat-step *ngFor="let opt of avisoOptions" 
                     [label]="opt.text"
-                    [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                    [ngClass]="{'step-saved': opt.saved === true, 'step-unsaved': opt.saved !== true}"
+                    [attr.data-saved]="opt.saved">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
@@ -32,7 +33,8 @@
           <ng-container *ngFor="let opt of situacionPatrimonialOptions">
             <mat-step *ngIf="!declaracionSimplificada || opt.simplificada" 
                       [label]="opt.text"
-                      [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                      [ngClass]="{'step-saved': opt.saved === true, 'step-unsaved': opt.saved !== true}"
+                      [attr.data-saved]="opt.saved">
             </mat-step>
           </ng-container>
         </mat-vertical-stepper>
@@ -46,7 +48,8 @@
         <mat-vertical-stepper (selectionChange)="goToInteresesSection($event.selectedIndex)">
           <mat-step *ngFor="let opt of interesesOptions" 
                     [label]="opt.text"
-                    [ngClass]="opt.saved ? 'step-saved' : 'step-unsaved'">
+                    [ngClass]="{'step-saved': opt.saved === true, 'step-unsaved': opt.saved !== true}"
+                    [attr.data-saved]="opt.saved">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>

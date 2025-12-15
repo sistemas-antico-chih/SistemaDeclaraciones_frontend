@@ -1,5 +1,5 @@
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MediaObserver } from '@angular/flex-layout';
 
@@ -92,7 +92,8 @@ export class ShellComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
     private media: MediaObserver,
-    private menuStateService: MenuStateService // Inyectar el servicio
+    private menuStateService: MenuStateService, // Inyectar el servicio
+    private cdr: ChangeDetectorRef // Agregar ChangeDetectorRef
   ) {}
 
   goToAvisoSection(selectedStep: MatStep) {
@@ -131,9 +132,13 @@ export class ShellComponent implements OnInit {
 
     // Suscribirse a cambios en el estado
     this.menuStateService.savedState$.subscribe(state => {
+      console.log('🔄 Estado actualizado desde observable:', state);
       this.updateOptionsState(this.situacionPatrimonialOptions, state.situacionPatrimonial);
       this.updateOptionsState(this.interesesOptions, state.intereses);
       this.updateOptionsState(this.avisoOptions, state.aviso);
+      
+      // Forzar detección de cambios
+      this.cdr.detectChanges();
     });
 
     this.router.events.subscribe((event) => {
