@@ -12,10 +12,10 @@
           <mat-panel-title>I. Aviso por cambio de dependencia </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
-          <mat-step *ngFor="let opt of avisoOptions" 
+          <mat-step *ngFor="let opt of avisoOptions; trackBy: trackByUrl" 
                     [label]="opt.text"
-                    [ngClass]="{'step-saved': opt.saved === true, 'step-unsaved': opt.saved !== true}"
-                    [attr.data-saved]="opt.saved">
+                    [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
+                    [attr.data-saved]="isOptionSaved(opt.url)">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
@@ -30,11 +30,11 @@
           <mat-panel-title> I. Declaración de situación patrimonial </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedStep)">
-          <ng-container *ngFor="let opt of situacionPatrimonialOptions">
+          <ng-container *ngFor="let opt of situacionPatrimonialOptions; trackBy: trackByUrl">
             <mat-step *ngIf="!declaracionSimplificada || opt.simplificada" 
                       [label]="opt.text"
-                      [ngClass]="{'step-saved': opt.saved === true, 'step-unsaved': opt.saved !== true}"
-                      [attr.data-saved]="opt.saved">
+                      [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
+                      [attr.data-saved]="isOptionSaved(opt.url)">
             </mat-step>
           </ng-container>
         </mat-vertical-stepper>
@@ -46,10 +46,10 @@
           <mat-panel-title> II. Declaración de intereses </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToInteresesSection($event.selectedIndex)">
-          <mat-step *ngFor="let opt of interesesOptions" 
+          <mat-step *ngFor="let opt of interesesOptions; trackBy: trackByUrl" 
                     [label]="opt.text"
-                    [ngClass]="{'step-saved': opt.saved === true, 'step-unsaved': opt.saved !== true}"
-                    [attr.data-saved]="opt.saved">
+                    [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
+                    [attr.data-saved]="isOptionSaved(opt.url)">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>

@@ -144,6 +144,10 @@ export class ShellComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = this.router.url;
+        
+        // ✅ CRÍTICO: Recargar el estado cada vez que navegamos
+        console.log('🔄 Navegación detectada, recargando estado...');
+        this.loadSavedState();
       }
     });
   }
@@ -157,34 +161,52 @@ export class ShellComponent implements OnInit {
       declaracionSimplificada: this.declaracionSimplificada
     });
     
-    const savedState = this.menuStateService.loadSavedState(
-      this.tipoDeclaracion, 
-      this.declaracionSimplificada
+    // Forzar recarga desde localStorage
+    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
+    const savedStateStr = localStorage.getItem(storageKey);
+    
+    console.log('💾 Datos en localStorage:', savedStateStr);
+    
+    const savedState = savedStateStr ? JSON.parse(savedStateStr) : {};
+    
+    console.log('📋 Estado parseado:', savedState);
+    
+    this.updateOptionsState(this.situacionPatrimonialOptions, savedState.situacionPatrimonial || []);
+    this.updateOptionsState(this.interesesOptions, savedState.intereses || []);
+    this.updateOptionsState(this.avisoOptions, savedState.aviso || []);
+    
+    console.log('📊 Estado final de avisoOptions:', 
+      this.avisoOptions.map(o => ({ text: o.text, url: o.url, saved: o.saved }))
     );
-    
-    console.log('📋 Estado recuperado:', savedState);
-    
-    this.updateOptionsState(this.situacionPatrimonialOptions, savedState.situacionPatrimonial);
-    this.updateOptionsState(this.interesesOptions, savedState.intereses);
-    this.updateOptionsState(this.avisoOptions, savedState.aviso);
   }
 
   /**
    * Actualiza el estado 'saved' de las opciones del menú
    */
   private updateOptionsState(options: MenuOption[], savedUrls: string[] = []) {
-    if (!savedUrls) return;
+    if (!savedUrls) {
+      savedUrls = [];
+    }
     
     console.log('🔄 Actualizando estado de opciones:', { savedUrls });
     
+    let hasChanges = false;
+    
     options.forEach(opt => {
-      const wasSaved = opt.saved;
-      opt.saved = savedUrls.includes(opt.url);
+      const newSavedState = savedUrls.includes(opt.url);
       
-      if (wasSaved !== opt.saved) {
+      if (opt.saved !== newSavedState) {
+        opt.saved = newSavedState;
+        hasChanges = true;
         console.log(`  ${opt.saved ? '🔵' : '⚪'} ${opt.text}: ${opt.url}`);
       }
     });
+    
+    // Si hubo cambios, forzar detección
+    if (hasChanges) {
+      console.log('✅ Se detectaron cambios, forzando actualización de vista');
+      this.cdr.detectChanges();
+    }
   }
 
   logout() {
@@ -202,5 +224,35 @@ export class ShellComponent implements OnInit {
 
   get title(): string {
     return this.titleService.getTitle();
+  }
+
+  /**
+   * Verifica si una URL está guardada leyendo directamente de localStorage
+   */
+  isOptionSaved(url: string): boolean {
+    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
+    const savedStateStr = localStorage.getItem(storageKey);
+    
+    if (!savedStateStr) return false;
+    
+    try {
+      const savedState = JSON.parse(savedStateStr);
+      const allSavedUrls = [
+        ...(savedState.situacionPatrimonial || []),
+        ...(savedState.intereses || []),
+        ...(savedState.aviso || [])
+      ];
+      
+      return allSavedUrls.includes(url);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * TrackBy function para mejorar performance de ngFor
+   */
+  trackByUrl(index: number, item: MenuOption): string {
+    return item.url;
   }
 }

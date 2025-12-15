@@ -291,7 +291,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
       this.isLoading = false;
       
-      console.log('💾 Guardando estado en menú...');
+      //console.log('💾 Guardando estado en menú...');
       
       // ✅ Marcar esta sección como guardada
       this.menuStateService.markSectionAsSaved(
