@@ -16,7 +16,9 @@ export class MenuStateService {
   private savedStateSubject = new BehaviorSubject<SavedState>({});
   public savedState$: Observable<SavedState> = this.savedStateSubject.asObservable();
 
-  constructor() {}
+  constructor() {
+    console.log('🚀 MenuStateService inicializado');
+  }
 
   /**
    * Obtiene la clave de almacenamiento según el tipo de declaración
