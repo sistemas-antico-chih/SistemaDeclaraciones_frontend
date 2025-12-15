@@ -29,7 +29,7 @@ import entePublico from '@static/catalogos/entePublico_municipios.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { findOption } from '@utils/utils';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
-import { MenuStateService } from '@app/services/menu-state.service'
+import { MenuStateService } from '@shared/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -86,27 +86,29 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     private snackBar: MatSnackBar,
     private menuStateService: MenuStateService
   ) {
-    //console.log('🏗️ DatosEmpleoAvisoComponent constructor');
-    //console.log('📦 MenuStateService inyectado:', this.menuStateService);
+    console.log('🏗️ DatosEmpleoAvisoComponent constructor');
+    console.log('📦 MenuStateService inyectado:', this.menuStateService);
+    
+    // Exponer globalmente para debug
+    (window as any).debugMenuService = this.menuStateService;
+    
     
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
 
-    /*
     console.log('🔧 Configuración:', {
       tipoDeclaracion: this.tipoDeclaracion,
       declaracionSimplificada: this.declaracionSimplificada,
       url: this.router.url
     });
-    */
 
     this.createForm();
     this.getUserInfo();
   }
 
   confirmSaveInfo() {
-    //console.log('🔔 confirmSaveInfo() llamado');
+    console.log('🔔 confirmSaveInfo() llamado');
     
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
@@ -119,7 +121,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
     this.pushButtonSave = true;
 
-    /*
     dialogRef.afterClosed().subscribe((result) => {
       console.log('🔔 Diálogo cerrado, resultado:', result);
       if (result) {
@@ -129,7 +130,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         console.log('❌ Usuario canceló');
       }
     });
-    */
   }
 
   createForm() {
@@ -215,15 +215,27 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
     if (!datosEmpleoCargoComision) return;
 
+    // 🧠 Detectar si el registro ya está completo (ya tiene área de conclusión)
     const registroConcluido =
       !!datosEmpleoCargoComision.areaAdscripcionConcluye?.trim() ||
       !!datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye?.trim() ||
       !!datosEmpleoCargoComision.fechaConclusionEncargo;
 
+    console.log('📋 Llenando formulario:', {
+      registroConcluido,
+      areaAdscripcionConcluye: datosEmpleoCargoComision.areaAdscripcionConcluye,
+      declaracionId: this.declaracionId
+    });
+
     if (registroConcluido) {
+      // ✅ Caso 1: Registro ya concluido → poblar todo sin modificar
+      console.log('✅ Registro COMPLETO - información del registro ACTUAL');
       this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
-      this.isFromPreviousRecord = false;
+      this.isFromPreviousRecord = false; // Ya fue guardado en este registro
     } else {
+      // ⚠️ Caso 2: No hay registro previo → llenar con datos "de inicio"
+      console.log('⚠️ Registro INCOMPLETO - información del registro ANTERIOR');
+      
       if (datosEmpleoCargoComision.areaAdscripcion) {
         datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
         datosEmpleoCargoComision.areaAdscripcion = '';
@@ -242,7 +254,9 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
       this.datosEmpleoCargoComisionForm.get('nombreEntePublico')?.setValue(nombreEnte);
       
-      this.isFromPreviousRecord = true;
+      this.isFromPreviousRecord = true; // Datos del registro anterior
+      
+      // ❌ NO marcar como guardado porque es del registro anterior
     }
 
     if (datosEmpleoCargoComision.aclaracionesObservaciones) {
@@ -340,8 +354,10 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   async saveInfo() {
-    //alert('INICIO saveInfo()'); // Alert para debug
-    //console.log('💾 INICIO saveInfo()');
+    debugger; // Esto FUERZA una pausa en el navegador
+    
+    alert('INICIO saveInfo()'); // Alert para debug
+    console.log('💾 INICIO saveInfo()');
     
     try {
       this.isLoading = true;
@@ -349,7 +365,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
       };
 
-     // console.log('📤 Enviando mutación...');
+      console.log('📤 Enviando mutación...');
 
       const { errors } = await this.apollo
         .mutate({
@@ -365,12 +381,11 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         throw errors;
       }
 
-      //alert('Mutación exitosa, intentando guardar estado'); // Alert para debug
-      //console.log('✅ Mutación exitosa');
+      alert('Mutación exitosa, intentando guardar estado'); // Alert para debug
+      console.log('✅ Mutación exitosa');
       this.isLoading = false;
       
-      //console.log('💾 Intentando marcar sección como guardada...');
-      /*
+      console.log('💾 Intentando marcar sección como guardada...');
       console.log('📋 Parámetros:', {
         url: '/datos-empleo',
         section: 'aviso',
@@ -378,7 +393,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         declaracionSimplificada: this.declaracionSimplificada,
         menuStateService: this.menuStateService
       });
-      */
       
       // ✅ Marcar esta sección como guardada
       this.menuStateService.markSectionAsSaved(
@@ -388,13 +402,13 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         this.declaracionSimplificada
       );
       
-      //alert('Sección marcada'); // Alert para debug
-      //console.log('✅ Sección marcada como guardada');
+      alert('Sección marcada'); // Alert para debug
+      console.log('✅ Sección marcada como guardada');
       this.isFromPreviousRecord = false;
       
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
-      //alert('ERROR: ' + error.message); // Alert para debug
+      alert('ERROR: ' + error.message); // Alert para debug
       console.error('❌ Error en saveInfo:', error);
       this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
