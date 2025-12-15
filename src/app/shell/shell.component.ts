@@ -5,7 +5,7 @@ import { MediaObserver } from '@angular/flex-layout';
 
 import { AuthenticationService, CredentialsService } from '@app/auth';
 import { MatStep } from '@angular/material/stepper';
-import { MenuStateService } from '@app/services/menu-state.service'; // Importar el servicio
+import { MenuStateService } from '@shared/services/menu-state.service'; // Importar el servicio
 
 interface MenuOption {
   text: string;
@@ -255,4 +255,4 @@ export class ShellComponent implements OnInit {
   trackByUrl(index: number, item: MenuOption): string {
     return item.url;
   }
-}
+} 
