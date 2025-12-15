@@ -88,11 +88,19 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   ) {
     console.log('🏗️ DatosEmpleoAvisoComponent constructor');
     console.log('📦 MenuStateService inyectado:', this.menuStateService);
-    
+
     // Exponer globalmente para debug
     (window as any).debugMenuService = this.menuStateService;
-    
-    
+    (window as any).debugSaveSection = () => {
+      console.log('🔧 Guardando desde window.debugSaveSection()');
+      this.menuStateService.markSectionAsSaved(
+        '/datos-empleo',
+        'aviso',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+    };
+
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
@@ -109,7 +117,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
   confirmSaveInfo() {
     console.log('🔔 confirmSaveInfo() llamado');
-    
+
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: 'Guardar cambios',
@@ -232,10 +240,18 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       console.log('✅ Registro COMPLETO - información del registro ACTUAL');
       this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
       this.isFromPreviousRecord = false; // Ya fue guardado en este registro
+
+      // ✅ Marcar como guardado porque es del registro actual
+      this.menuStateService.markSectionAsSaved(
+        '/datos-empleo',
+        'aviso',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
     } else {
       // ⚠️ Caso 2: No hay registro previo → llenar con datos "de inicio"
       console.log('⚠️ Registro INCOMPLETO - información del registro ANTERIOR');
-      
+
       if (datosEmpleoCargoComision.areaAdscripcion) {
         datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
         datosEmpleoCargoComision.areaAdscripcion = '';
@@ -253,9 +269,9 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       const nombreEnte = datosEmpleoCargoComision.nombreEntePublico;
       this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
       this.datosEmpleoCargoComisionForm.get('nombreEntePublico')?.setValue(nombreEnte);
-      
+
       this.isFromPreviousRecord = true; // Datos del registro anterior
-      
+
       // ❌ NO marcar como guardado porque es del registro anterior
     }
 
@@ -278,6 +294,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -304,7 +321,17 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       if (data?.declaracion.datosEmpleoCargoComision === null) {
         this.getLastUserInfo();
       } else {
-        this.fillForm(data?.declaracion.datosEmpleoCargoComision);
+        console.log('✅ Hay datos en registro actual - datos-generales');
+        this.fillForm(data?.declaracion.datosGenerales);
+        this.isFromPreviousRecord = false; // Es del registro actual
+
+        // ✅ Marcar como guardado porque ya existe en el registro actual
+        this.menuStateService.markSectionAsSaved(
+          '/datos-empleo',
+          'aviso',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -354,19 +381,11 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   async saveInfo() {
-    debugger; // Esto FUERZA una pausa en el navegador
-    
-    alert('INICIO saveInfo()'); // Alert para debug
-    console.log('💾 INICIO saveInfo()');
-    
     try {
       this.isLoading = true;
       const declaracion = {
         datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
       };
-
-      console.log('📤 Enviando mutación...');
-
       const { errors } = await this.apollo
         .mutate({
           mutation: datosEmpleoCargoComisionMutation,
@@ -381,35 +400,27 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         throw errors;
       }
 
-      alert('Mutación exitosa, intentando guardar estado'); // Alert para debug
-      console.log('✅ Mutación exitosa');
       this.isLoading = false;
-      
-      console.log('💾 Intentando marcar sección como guardada...');
-      console.log('📋 Parámetros:', {
-        url: '/datos-empleo',
-        section: 'aviso',
-        tipoDeclaracion: this.tipoDeclaracion,
-        declaracionSimplificada: this.declaracionSimplificada,
-        menuStateService: this.menuStateService
-      });
-      
-      // ✅ Marcar esta sección como guardada
-      this.menuStateService.markSectionAsSaved(
-        '/datos-empleo',
-        'aviso',
-        this.tipoDeclaracion,
-        this.declaracionSimplificada
-      );
-      
-      alert('Sección marcada'); // Alert para debug
-      console.log('✅ Sección marcada como guardada');
+
+      // ✅ CRÍTICO: Solo marcar como guardado si NO es del registro anterior
+      if (!this.isFromPreviousRecord) {
+        console.log('✅ Guardando información del REGISTRO ACTUAL - datos-empleo');
+        this.menuStateService.markSectionAsSaved(
+          '/datos-empleo',
+          'aviso',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
+      } else {
+        console.log('⚠️ No marcar como guardado - es información del registro ANTERIOR');
+      }
+
+      // Marcar que ya no es del registro anterior después de guardar
       this.isFromPreviousRecord = false;
-      
+
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
-      alert('ERROR: ' + error.message); // Alert para debug
-      console.error('❌ Error en saveInfo:', error);
+      console.log(error);
       this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }

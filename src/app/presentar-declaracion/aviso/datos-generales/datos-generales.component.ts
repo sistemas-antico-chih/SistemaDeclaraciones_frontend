@@ -33,7 +33,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
   anio_ejercicio: number = null;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -179,13 +179,15 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-      this.fillForm(data?.lastDeclaracion.datosGenerales);
+
       this.isFromPreviousRecord = true;
+      this.fillForm(data?.lastDeclaracion.datosGenerales);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
       // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
+
 
   async getUserInfo() {
     try {
@@ -207,16 +209,26 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
 
       if (data.declaracion.datosGenerales === null) {
+        console.log('⚠️ No hay datos en registro actual, cargando del anterior');
         this.getLastUserInfo();
       } else {
+        console.log('✅ Hay datos en registro actual - datos-generales');
         this.fillForm(data?.declaracion.datosGenerales);
+        this.isFromPreviousRecord = false; // Es del registro actual
+
+        // ✅ Marcar como guardado porque ya existe en el registro actual
+        this.menuStateService.markSectionAsSaved(
+          '/datos-generales',
+          'aviso',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
-
   get finalForm() {
     const form = JSON.parse(JSON.stringify(this.datosGeneralesForm.value)); // Deep copy
 
@@ -235,7 +247,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
     return typeof this.anio_ejercicio === 'number';
     // return true;
   }
-  
+
 
 
   formHasChanges() {
@@ -290,18 +302,23 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       }
 
       this.isLoading = false;
-      
-      //console.log('💾 Guardando estado en menú...');
-      
-      // ✅ Marcar esta sección como guardada
-      this.menuStateService.markSectionAsSaved(
-        '/datos-generales',
-        'aviso',
-        this.tipoDeclaracion,
-        this.declaracionSimplificada
-      );
+
+      // ✅ CRÍTICO: Solo marcar como guardado si NO es del registro anterior
+      if (!this.isFromPreviousRecord) {
+        console.log('✅ Guardando información del REGISTRO ACTUAL - datos-generales');
+        this.menuStateService.markSectionAsSaved(
+          '/datos-generales',
+          'aviso',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
+      } else {
+        console.log('⚠️ No marcar como guardado - es información del registro ANTERIOR');
+      }
+
+      // Marcar que ya no es del registro anterior después de guardar
       this.isFromPreviousRecord = false;
-      
+
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
       console.log(error);

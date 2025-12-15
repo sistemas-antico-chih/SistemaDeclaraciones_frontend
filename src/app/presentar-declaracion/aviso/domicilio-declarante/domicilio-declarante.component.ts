@@ -29,7 +29,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
   domicilioDeclaranteForm: FormGroup;
   estado: Catalogo = null;
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   estadosCatalogo = Estados;
   municipiosCatalogo = Municipios;
@@ -169,7 +169,17 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       if (data?.declaracion.domicilioDeclarante === null) {
         this.getLastUserInfo();
       } else {
-        this.fillForm(data?.declaracion.domicilioDeclarante);
+        console.log('✅ Hay datos en registro actual - datos-generales');
+        this.fillForm(data?.declaracion.datosGenerales);
+        this.isFromPreviousRecord = false; // Es del registro actual
+
+        // ✅ Marcar como guardado porque ya existe en el registro actual
+        this.menuStateService.markSectionAsSaved(
+          '/domicilio-declarante',
+          'aviso',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -244,9 +254,9 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       }
 
       this.isLoading = false;
-      
+
       console.log('💾 Guardando estado en menú...');
-      
+
       // ✅ Marcar esta sección como guardada
       this.menuStateService.markSectionAsSaved(
         '/domicilio-declarante',
@@ -255,7 +265,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
         this.declaracionSimplificada
       );
       this.isFromPreviousRecord = false;
-      
+
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
       console.log(error);
