@@ -77,94 +77,37 @@ mat-expansion-panel-header {
 /*  ESTILOS PARA STEP SAVED/UNSAVED */
 /* ------------------------------- */
 
-// shell.component.scss - Estilos con mayor especificidad
-
-// ⚪ Estado NO guardado (gris) - por defecto
-::ng-deep mat-step.step-unsaved {
-  .mat-step-header {
-    .mat-step-label,
-    .mat-step-optional,
-    .mat-step-text-label {
-      color: #9e9e9e !important;
-      font-weight: 400 !important;
-    }
-    
-    .mat-step-icon {
-      background-color: #9e9e9e !important;
-      color: white !important;
-    }
-    
-    .mat-step-icon-state-number,
-    .mat-step-icon-state-edit,
-    .mat-step-icon-content {
-      color: white !important;
-    }
-  }
+/* Estado gris por defecto (no guardado) */
+::ng-deep .mat-step-header .mat-step-label {
+  color: #9e9e9e !important;
 }
 
-// 🔵 Estado GUARDADO (azul) - información del registro actual
-::ng-deep mat-step.step-saved {
-  .mat-step-header {
-    .mat-step-label,
-    .mat-step-optional,
-    .mat-step-text-label {
-      color: #1976d2 !important;
-      font-weight: 500 !important;
-    }
-    
-    .mat-step-icon {
-      background-color: #1976d2 !important;
-      color: white !important;
-    }
-    
-    .mat-step-icon-state-number,
-    .mat-step-icon-state-edit,
-    .mat-step-icon-state-done,
-    .mat-step-icon-content {
-      color: white !important;
-    }
-  }
-  
-  // Asegurar que el label seleccionado también sea azul
-  .mat-step-label-selected {
-    color: #1976d2 !important;
-  }
+::ng-deep .mat-step-header .mat-step-icon {
+  background-color: #9e9e9e !important;
+  color: white !important;
 }
 
-// Estados de interacción (hover, focus)
-::ng-deep .mat-step-header {
-  &.cdk-keyboard-focused,
-  &.cdk-program-focused,
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.04) !important;
-  }
+/* ✔ Paso guardado (azul) */
+::ng-deep .step-saved .mat-step-header .mat-step-label {
+  color: #1976d2 !important;
+  font-weight: 500;
 }
 
-// Asegurar transiciones suaves
-::ng-deep mat-step {
-  .mat-step-label,
-  .mat-step-icon {
-    transition: all 0.3s ease-in-out;
-  }
+::ng-deep .step-saved .mat-step-header .mat-step-icon {
+  background-color: #1976d2 !important;
+  color: white !important;
 }
 
-// Override adicional para Material Angular
-::ng-deep .mat-vertical-stepper-header {
-  &[ng-reflect-ng-class*="step-saved"] {
-    .mat-step-label {
-      color: #1976d2 !important;
-    }
-    .mat-step-icon {
-      background-color: #1976d2 !important;
-    }
-  }
-  
-  &[ng-reflect-ng-class*="step-unsaved"] {
-    .mat-step-label {
-      color: #9e9e9e !important;
-    }
-    .mat-step-icon {
-      background-color: #9e9e9e !important;
-    }
-  }
+/* Mantener gris para los no guardados */
+::ng-deep .step-unsaved .mat-step-header .mat-step-label {
+  color: #9e9e9e !important;
+}
+
+::ng-deep .step-unsaved .mat-step-header .mat-step-icon {
+  background-color: #9e9e9e !important;
+}
+
+/* No interferir con navegación */
+::ng-deep .mat-step-header:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
