@@ -318,8 +318,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    alert('INICIO ngOnInit()'); // Alert para debug
-    console.log('💾 INICIO ngOnInit()');
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
