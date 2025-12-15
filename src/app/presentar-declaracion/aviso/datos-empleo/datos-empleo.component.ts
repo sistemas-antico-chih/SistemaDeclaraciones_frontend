@@ -29,7 +29,7 @@ import entePublico from '@static/catalogos/entePublico_municipios.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { findOption } from '@utils/utils';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
-import { MenuStateService } from '@shared/services/menu-state.service';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
