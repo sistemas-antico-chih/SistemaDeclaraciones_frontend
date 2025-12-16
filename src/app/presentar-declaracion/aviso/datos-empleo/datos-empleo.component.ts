@@ -321,8 +321,8 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       if (data?.declaracion.datosEmpleoCargoComision === null) {
         this.getLastUserInfo();
       } else {
-        console.log('✅ Hay datos en registro actual - datos-generales');
-        this.fillForm(data?.declaracion.datosGenerales);
+        console.log('✅ Hay datos en registro actual - datos-empleo');
+        this.fillForm(data?.declaracion.datosEmpleoCargoComision);
         this.isFromPreviousRecord = false; // Es del registro actual
 
         // ✅ Marcar como guardado porque ya existe en el registro actual
