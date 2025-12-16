@@ -386,6 +386,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       const declaracion = {
         datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
       };
+
       const { errors } = await this.apollo
         .mutate({
           mutation: datosEmpleoCargoComisionMutation,
@@ -420,7 +421,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
-      console.log(error);
+      console.error('❌ Error en saveInfo:', error);
       this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }

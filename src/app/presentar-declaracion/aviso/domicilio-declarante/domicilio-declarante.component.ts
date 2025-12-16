@@ -167,11 +167,12 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.domicilioDeclarante === null) {
+        console.log('⚠️ No hay datos en registro actual, cargando del anterior');
         this.getLastUserInfo();
       } else {
-        console.log('✅ Hay datos en registro actual - datos-generales');
-        this.fillForm(data?.declaracion.datosGenerales);
+        console.log('✅ Hay datos en registro actual - domicilio-declarante');
         this.isFromPreviousRecord = false; // Es del registro actual
+        this.fillForm(data?.declaracion.domicilioDeclarante);
 
         // ✅ Marcar como guardado porque ya existe en el registro actual
         this.menuStateService.markSectionAsSaved(
@@ -186,6 +187,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
+
 
   formHasChanges() {
     let url = '/aviso/datos-empleo';
@@ -231,6 +233,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
     });
   }
 
+
   async saveInfo() {
     try {
       this.isLoading = true;
@@ -255,15 +258,20 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
       this.isLoading = false;
 
-      console.log('💾 Guardando estado en menú...');
+      // ✅ CRÍTICO: Solo marcar como guardado si NO es del registro anterior
+      if (!this.isFromPreviousRecord) {
+        console.log('✅ Guardando información del REGISTRO ACTUAL - domicilio-declarante');
+        this.menuStateService.markSectionAsSaved(
+          '/domicilio-declarante',
+          'aviso',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
+      } else {
+        console.log('⚠️ No marcar como guardado - es información del registro ANTERIOR');
+      }
 
-      // ✅ Marcar esta sección como guardada
-      this.menuStateService.markSectionAsSaved(
-        '/domicilio-declarante',
-        'aviso',
-        this.tipoDeclaracion,
-        this.declaracionSimplificada
-      );
+      // Marcar que ya no es del registro anterior después de guardar
       this.isFromPreviousRecord = false;
 
       this.openSnackBar('Información actualizada', 'Aceptar');
