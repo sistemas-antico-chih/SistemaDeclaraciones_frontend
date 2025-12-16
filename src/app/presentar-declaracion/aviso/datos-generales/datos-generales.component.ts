@@ -146,6 +146,12 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   }
 
   fillForm(datosGenerales: DatosGenerales) {
+    console.log('📋 [DATOS-GENERALES] fillForm() llamado:', {
+      tieneRegistro: !!datosGenerales,
+      isFromPreviousRecord: this.isFromPreviousRecord,
+      declaracionId: this.declaracionId
+    });
+
     this.datosGeneralesForm.patchValue(datosGenerales || {});
 
     if (datosGenerales?.aclaracionesObservaciones) {
@@ -157,6 +163,8 @@ export class DatosGeneralesAvisoComponent implements OnInit {
     }
 
     this.setSelectedOptions();
+
+    console.log('📋 [DATOS-GENERALES] fillForm() terminado, isFromPreviousRecord:', this.isFromPreviousRecord);
   }
 
   async getUserDataQuery() {
@@ -170,6 +178,8 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
   async getLastUserInfo() {
     try {
+      console.log('🔍 [DATOS-GENERALES] getLastUserInfo() - Buscando registro anterior');
+
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
           query: lastDeclaracionDatosGenerales,
@@ -180,11 +190,15 @@ export class DatosGeneralesAvisoComponent implements OnInit {
         throw errors;
       }
 
+      console.log('✅ [DATOS-GENERALES] Registro anterior encontrado');
       this.isFromPreviousRecord = true;
+      console.log('⚠️ [DATOS-GENERALES] Marcando isFromPreviousRecord = true');
+
       this.fillForm(data?.lastDeclaracion.datosGenerales);
+
+      console.log('❌ [DATOS-GENERALES] NO se debe marcar como guardado - es del registro anterior');
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
-      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
