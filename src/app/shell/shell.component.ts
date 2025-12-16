@@ -255,4 +255,14 @@ export class ShellComponent implements OnInit {
   trackByUrl(index: number, item: MenuOption): string {
     return item.url;
   }
+
+  debugStep(opt: MenuOption) {
+  console.log('🐛 DEBUG STEP:', {
+    text: opt.text,
+    url: opt.url,
+    saved: opt.saved,
+    isOptionSaved: this.isOptionSaved(opt.url),
+    localStorage: localStorage.getItem('declaracion_saved_state_aviso_false')
+  });
+}
 } 
