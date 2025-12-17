@@ -37,11 +37,17 @@
   height: 46px;
 }
 
-mat-expansion-panel,
-mat-vertical-stepper {
+mat-expansion-panel {
   border-radius: 0;
   background: #f2f2f2;
 }
+
+/* NO pintar el stepper completo */
+mat-vertical-stepper {
+  border-radius: 0;
+  background: transparent;
+}
+
 
 mat-expansion-panel-header {
   background: #ffffff;
@@ -58,6 +64,16 @@ mat-expansion-panel-header {
     }
   }
 }
+
+mat-expansion-panel-header.active {
+  background-color: var(--primary-color) !important;
+
+  mat-panel-title {
+    color: var(--text-primary-color) !important;
+    white-space: normal;
+  }
+}
+
 
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]),
 .mat-expansion-panel-header.mat-expanded:focus,

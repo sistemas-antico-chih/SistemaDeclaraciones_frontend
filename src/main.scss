@@ -306,3 +306,7 @@ mat-vertical-stepper {
 // Theme customization
 @import "theme/theme";
 //@import "styles/shell-layout";
+
+.mat-step-header {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}

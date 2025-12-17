@@ -32,12 +32,14 @@
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedStep)">
           <ng-container *ngFor="let opt of situacionPatrimonialOptions; trackBy: trackByUrl">
-            <mat-step *ngIf="!declaracionSimplificada || opt.simplificada" 
-                      [label]="opt.text"
-                      [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
-                      [attr.data-saved]="isOptionSaved(opt.url)"
-          (click)="debugStep(opt)">
-            </mat-step>
+            <mat-step
+  *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
+  [label]="opt.text"
+  [completed]="isOptionSaved(opt.url)"
+>
+</mat-step>
+
+
           </ng-container>
         </mat-vertical-stepper>
       </mat-expansion-panel>
