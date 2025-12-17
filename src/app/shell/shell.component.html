@@ -16,7 +16,6 @@
           [label]="opt.text"
           [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
           [attr.data-saved]="isOptionSaved(opt.url)"
-          [style.--step-color]="isOptionSaved(opt.url) ? '#1976d2' : '#9e9e9e'"
           (click)="debugStep(opt)">
 </mat-step>
         </mat-vertical-stepper>
@@ -36,7 +35,8 @@
             <mat-step *ngIf="!declaracionSimplificada || opt.simplificada" 
                       [label]="opt.text"
                       [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
-                      [attr.data-saved]="isOptionSaved(opt.url)">
+                      [attr.data-saved]="isOptionSaved(opt.url)"
+          (click)="debugStep(opt)">
             </mat-step>
           </ng-container>
         </mat-vertical-stepper>
@@ -51,7 +51,8 @@
           <mat-step *ngFor="let opt of interesesOptions; trackBy: trackByUrl" 
                     [label]="opt.text"
                     [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
-                    [attr.data-saved]="isOptionSaved(opt.url)">
+                    [attr.data-saved]="isOptionSaved(opt.url)"
+          (click)="debugStep(opt)">
           </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
