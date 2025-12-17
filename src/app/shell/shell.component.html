@@ -34,9 +34,13 @@
           <ng-container *ngFor="let opt of situacionPatrimonialOptions; trackBy: trackByUrl">
             <mat-step
   [label]="opt.text"
-  [completed]="isOptionSaved(opt.url)"
+  [ngClass]="{
+    'step-current': isOptionSaved(opt.url),
+    'step-previous': !isOptionSaved(opt.url)
+  }"
 >
 </mat-step>
+
 
 
 
