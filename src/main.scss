@@ -1,33 +1,35 @@
 // ============================================
-// Estilos para menú de declaraciones - FINAL
+// Estilos para menú de declaraciones - VERSIÓN FINAL
 // ============================================
 
-// Guardado (AZUL) - Todos los estados CDK
-mat-step.step-saved .mat-step-header .mat-step-icon,
-mat-step.step-saved.cdk-step-state-edit .mat-step-header .mat-step-icon,
-mat-step.step-saved.cdk-step-state-number .mat-step-header .mat-step-icon,
-mat-step.step-saved.cdk-step-state-done .mat-step-header .mat-step-icon {
-  background-color: #1976d2 !important;
-  color: white !important;
-}
-
-mat-step.step-saved .mat-step-header .mat-step-label,
-mat-step.step-saved .mat-step-header .mat-step-text-label {
-  color: #1976d2 !important;
-  font-weight: 500 !important;
-}
-
-// No guardado (GRIS) - Todos los estados CDK
-mat-step.step-unsaved .mat-step-header .mat-step-icon,
-mat-step.step-unsaved.cdk-step-state-edit .mat-step-header .mat-step-icon,
-mat-step.step-unsaved.cdk-step-state-number .mat-step-header .mat-step-icon,
-mat-step.step-unsaved.cdk-step-state-done .mat-step-header .mat-step-icon {
+// Forzar GRIS para steps no guardados - MÁXIMA PRIORIDAD
+mat-vertical-stepper mat-step.step-unsaved .mat-step-header .mat-step-icon,
+mat-vertical-stepper mat-step.step-unsaved.cdk-step-state-edit .mat-step-header .mat-step-icon,
+mat-vertical-stepper mat-step.step-unsaved.cdk-step-state-number .mat-step-header .mat-step-icon,
+mat-vertical-stepper mat-step.step-unsaved.cdk-step-state-done .mat-step-header .mat-step-icon {
   background-color: #9e9e9e !important;
   color: white !important;
 }
 
-mat-step.step-unsaved .mat-step-header .mat-step-label,
-mat-step.step-unsaved .mat-step-header .mat-step-text-label {
+mat-vertical-stepper mat-step.step-unsaved .mat-step-header .mat-step-label,
+mat-vertical-stepper mat-step.step-unsaved .mat-step-header .mat-step-text-label,
+mat-vertical-stepper mat-step.step-unsaved.cdk-step-state-edit .mat-step-header .mat-step-label {
   color: #9e9e9e !important;
   font-weight: 400 !important;
+}
+
+// Forzar AZUL para steps guardados - MÁXIMA PRIORIDAD
+mat-vertical-stepper mat-step.step-saved .mat-step-header .mat-step-icon,
+mat-vertical-stepper mat-step.step-saved.cdk-step-state-edit .mat-step-header .mat-step-icon,
+mat-vertical-stepper mat-step.step-saved.cdk-step-state-number .mat-step-header .mat-step-icon,
+mat-vertical-stepper mat-step.step-saved.cdk-step-state-done .mat-step-header .mat-step-icon {
+  background-color: #1976d2 !important;
+  color: white !important;
+}
+
+mat-vertical-stepper mat-step.step-saved .mat-step-header .mat-step-label,
+mat-vertical-stepper mat-step.step-saved .mat-step-header .mat-step-text-label,
+mat-vertical-stepper mat-step.step-saved.cdk-step-state-edit .mat-step-header .mat-step-label {
+  color: #1976d2 !important;
+  font-weight: 500 !important;
 }

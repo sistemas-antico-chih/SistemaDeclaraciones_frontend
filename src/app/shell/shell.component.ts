@@ -75,7 +75,7 @@ export class ShellComponent implements OnInit {
 
   avisoOptions: MenuOption[] = [
     { text: 'Datos generales', url: '/datos-generales' },
-    { text: 'Domicilio del declarante', url: '/domicilio-declarante'},
+    { text: 'Domicilio del declarante', url: '/domicilio-declarante' },
     {
       text: 'Aviso cambio de dependencia',
       url: '/datos-empleo',
@@ -94,7 +94,7 @@ export class ShellComponent implements OnInit {
     private media: MediaObserver,
     private menuStateService: MenuStateService, // Inyectar el servicio
     private cdr: ChangeDetectorRef // Agregar ChangeDetectorRef
-  ) {}
+  ) { }
 
   goToAvisoSection(selectedStep: MatStep) {
     const selected = this.avisoOptions.find((opt) => opt.text === selectedStep.label);
@@ -136,7 +136,7 @@ export class ShellComponent implements OnInit {
       this.updateOptionsState(this.situacionPatrimonialOptions, state.situacionPatrimonial);
       this.updateOptionsState(this.interesesOptions, state.intereses);
       this.updateOptionsState(this.avisoOptions, state.aviso);
-      
+
       // Forzar detección de cambios
       this.cdr.detectChanges();
     });
@@ -144,7 +144,7 @@ export class ShellComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = this.router.url;
-        
+
         // ✅ CRÍTICO: Recargar el estado cada vez que navegamos
         console.log('🔄 Navegación detectada, recargando estado...');
         this.loadSavedState();
@@ -160,22 +160,22 @@ export class ShellComponent implements OnInit {
       tipoDeclaracion: this.tipoDeclaracion,
       declaracionSimplificada: this.declaracionSimplificada
     });
-    
+
     // Forzar recarga desde localStorage
     const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
     const savedStateStr = localStorage.getItem(storageKey);
-    
+
     console.log('💾 Datos en localStorage:', savedStateStr);
-    
+
     const savedState = savedStateStr ? JSON.parse(savedStateStr) : {};
-    
+
     console.log('📋 Estado parseado:', savedState);
-    
+
     this.updateOptionsState(this.situacionPatrimonialOptions, savedState.situacionPatrimonial || []);
     this.updateOptionsState(this.interesesOptions, savedState.intereses || []);
     this.updateOptionsState(this.avisoOptions, savedState.aviso || []);
-    
-    console.log('📊 Estado final de avisoOptions:', 
+
+    console.log('📊 Estado final de avisoOptions:',
       this.avisoOptions.map(o => ({ text: o.text, url: o.url, saved: o.saved }))
     );
   }
@@ -187,21 +187,21 @@ export class ShellComponent implements OnInit {
     if (!savedUrls) {
       savedUrls = [];
     }
-    
+
     console.log('🔄 Actualizando estado de opciones:', { savedUrls });
-    
+
     let hasChanges = false;
-    
+
     options.forEach(opt => {
       const newSavedState = savedUrls.includes(opt.url);
-      
+
       if (opt.saved !== newSavedState) {
         opt.saved = newSavedState;
         hasChanges = true;
         console.log(`  ${opt.saved ? '🔵' : '⚪'} ${opt.text}: ${opt.url}`);
       }
     });
-    
+
     // Si hubo cambios, forzar detección
     if (hasChanges) {
       console.log('✅ Se detectaron cambios, forzando actualización de vista');
@@ -232,9 +232,9 @@ export class ShellComponent implements OnInit {
   isOptionSaved(url: string): boolean {
     const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
     const savedStateStr = localStorage.getItem(storageKey);
-    
+
     if (!savedStateStr) return false;
-    
+
     try {
       const savedState = JSON.parse(savedStateStr);
       const allSavedUrls = [
@@ -242,7 +242,7 @@ export class ShellComponent implements OnInit {
         ...(savedState.intereses || []),
         ...(savedState.aviso || [])
       ];
-      
+
       return allSavedUrls.includes(url);
     } catch (e) {
       return false;
@@ -257,12 +257,12 @@ export class ShellComponent implements OnInit {
   }
 
   debugStep(opt: MenuOption) {
-  console.log('🐛 DEBUG STEP:', {
-    text: opt.text,
-    url: opt.url,
-    saved: opt.saved,
-    isOptionSaved: this.isOptionSaved(opt.url),
-    localStorage: localStorage.getItem('declaracion_saved_state_aviso_false')
-  });
-}
+    console.log('🐛 DEBUG STEP:', {
+      text: opt.text,
+      url: opt.url,
+      saved: opt.saved,
+      isOptionSaved: this.isOptionSaved(opt.url),
+      localStorage: localStorage.getItem('declaracion_saved_state_aviso_false')
+    });
+  }
 } 
