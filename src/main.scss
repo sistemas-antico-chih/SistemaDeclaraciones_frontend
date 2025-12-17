@@ -338,3 +338,16 @@ mat-vertical-stepper {
 .mat-step-label-selected {
   color: inherit !important;
 }
+
+
+.step-current {
+  color: #1976d2 !important;
+  font-weight: 500;
+  white-space: normal;
+}
+
+.step-previous {
+  color: #9e9e9e !important;
+  font-weight: 400;
+  white-space: normal;
+}
