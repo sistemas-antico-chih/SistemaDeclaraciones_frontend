@@ -17,7 +17,6 @@
   </ng-template>
 </mat-step>
 
-
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
@@ -50,18 +49,12 @@
           <mat-panel-title> II. Declaración de intereses </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToInteresesSection($event.selectedIndex)">
-          <mat-step *ngFor="let opt of interesesOptions; trackBy: trackByUrl">
-  <ng-template matStepLabel>
-    <span
-      [ngClass]="{
-        'step-current': isOptionSaved(opt.url),
-        'step-previous': !isOptionSaved(opt.url)
-      }">
-      {{ opt.text }}
-    </span>
-  </ng-template>
-</mat-step> 
-
+          <mat-step *ngFor="let opt of interesesOptions; trackBy: trackByUrl" 
+                    [label]="opt.text"
+                    [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
+                    [attr.data-saved]="isOptionSaved(opt.url)"
+          (click)="debugStep(opt)">
+          </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
     </mat-sidenav>
