@@ -33,11 +33,11 @@
         <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedStep)">
           <ng-container *ngFor="let opt of situacionPatrimonialOptions; trackBy: trackByUrl">
             <mat-step
-  *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
   [label]="opt.text"
   [completed]="isOptionSaved(opt.url)"
 >
 </mat-step>
+
 
 
           </ng-container>
