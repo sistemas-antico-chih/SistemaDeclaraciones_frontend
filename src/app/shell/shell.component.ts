@@ -18,7 +18,7 @@ interface MenuOption {
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
-  encapsulation: ViewEncapsulation.None // ← AGREGAR ESTA LÍNEA
+  //encapsulation: ViewEncapsulation.None // ← AGREGAR ESTA LÍNEA
 })
 export class ShellComponent implements OnInit {
   situacionPatrimonialOptions: MenuOption[] = [
