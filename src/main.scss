@@ -305,3 +305,39 @@ mat-vertical-stepper {
 
 // Theme customization
 @import "theme/theme";
+
+
+
+/* ====== STEP CON REGISTRO ACTUAL (AZUL) ====== */
+mat-step[data-saved="true"] .mat-step-header .mat-step-icon {
+  background-color: #219ae2 !important;
+  color: #ffffff !important;
+}
+
+mat-step[data-saved="true"] .mat-step-header .mat-step-label,
+mat-step[data-saved="true"] .mat-step-header .mat-step-text-label {
+  color: #219ae2 !important;
+  font-weight: 500;
+}
+
+/* ====== STEP CON REGISTRO ANTERIOR (GRIS) ====== */
+mat-step[data-saved="false"] .mat-step-header .mat-step-icon {
+  background-color: #9e9e9e !important;
+  color: #ffffff !important;
+}
+
+mat-step[data-saved="false"] .mat-step-header .mat-step-label,
+mat-step[data-saved="false"] .mat-step-header .mat-step-text-label {
+  color: #9e9e9e !important;
+  font-weight: 400;
+}
+
+/* ====== STEP SELECCIONADO (mantener azul) ====== */
+.mat-step-header.mat-step-header-selected .mat-step-icon {
+  background-color: #219ae2 !important;
+}
+
+.mat-step-header.mat-step-header-selected .mat-step-label {
+  color: #219ae2 !important;
+  font-weight: 600;
+}

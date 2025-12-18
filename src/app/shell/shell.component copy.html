@@ -12,11 +12,11 @@
           <mat-panel-title>I. Aviso por cambio de dependencia </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
-          <mat-step
-  [label]="opt.text"
-  [attr.data-saved]="isOptionSaved(opt.url)">
-</mat-step>
-
+          <mat-step *ngFor="let opt of avisoOptions; trackBy: trackByUrl" 
+                    [label]="opt.text"
+                    [ngClass]="{'step-saved': isOptionSaved(opt.url), 'step-unsaved': !isOptionSaved(opt.url)}"
+                    [attr.data-saved]="isOptionSaved(opt.url)">
+          </mat-step>
         </mat-vertical-stepper>
       </mat-expansion-panel>
 
