@@ -15,7 +15,11 @@
   <mat-step
     *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
     [label]="opt.text"
-    [attr.data-saved]="isOptionSaved(opt.url)">
+    [ngClass]="{
+      'step-saved': isOptionSaved(opt.url),
+      'step-unsaved': !isOptionSaved(opt.url)
+    }"
+  >
   </mat-step>
 </mat-vertical-stepper>
 
