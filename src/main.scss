@@ -305,49 +305,5 @@ mat-vertical-stepper {
 
 // Theme customization
 @import "theme/theme";
-//@import "styles/shell-layout";
-
-.mat-step-header .step-current {
-  color: #1976d2 !important;
-  font-weight: 500;
-}
-
-.mat-step-header .step-current
-  ~ .mat-step-icon,
-.mat-step-header .step-current
-  ~ .mat-step-icon .mat-step-icon-content {
-  background-color: #1976d2 !important;
-  color: #fff;
-}
 
 
-.mat-step-header .step-previous {
-  color: #9e9e9e !important;
-  font-weight: 400;
-}
-
-.mat-step-header .step-previous
-  ~ .mat-step-icon,
-.mat-step-header .step-previous
-  ~ .mat-step-icon .mat-step-icon-content {
-  background-color: #9e9e9e !important;
-  color: #fff;
-}
-
-
-.mat-step-label-selected {
-  color: inherit !important;
-}
-
-
-.step-current {
-  color: #1976d2 !important;
-  font-weight: 500;
-  white-space: normal;
-}
-
-.step-previous {
-  color: #9e9e9e !important;
-  font-weight: 400;
-  white-space: normal;
-}

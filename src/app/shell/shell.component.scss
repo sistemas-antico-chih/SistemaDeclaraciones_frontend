@@ -1,4 +1,3 @@
-/* estilos específicos del componente shell solamente */
 :host {
   display: flex;
   flex: 1;
@@ -9,7 +8,7 @@
 }
 
 .mat-sidenav-content {
-  background-color: #ffffff; /*section background color*/
+  background-color: #ffffff;
 }
 
 .has-border {
@@ -22,7 +21,6 @@
 
 .mat-list-item {
   text-decoration: none;
-
   &:hover {
     background: rgba(0, 0, 0, 0.05);
   }
@@ -37,17 +35,11 @@
   height: 46px;
 }
 
-mat-expansion-panel {
+mat-expansion-panel,
+mat-vertical-stepper {
   border-radius: 0;
   background: #f2f2f2;
 }
-
-/* NO pintar el stepper completo */
-mat-vertical-stepper {
-  border-radius: 0;
-  background: transparent;
-}
-
 
 mat-expansion-panel-header {
   background: #ffffff;
@@ -56,7 +48,7 @@ mat-expansion-panel-header {
   font-weight: bold;
   height: auto !important;
   padding: 30px 15px;
-
+  
   &.active {
     background-color: var(--primary-color);
     mat-panel-title {
@@ -64,16 +56,6 @@ mat-expansion-panel-header {
     }
   }
 }
-
-mat-expansion-panel-header.active {
-  background-color: var(--primary-color) !important;
-
-  mat-panel-title {
-    color: var(--text-primary-color) !important;
-    white-space: normal;
-  }
-}
-
 
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]),
 .mat-expansion-panel-header.mat-expanded:focus,
@@ -84,4 +66,39 @@ mat-expansion-panel-header.active {
 
 .mat-step-label {
   white-space: normal;
+}
+
+// ============================================
+// Estilos para estado guardado/no guardado
+// ============================================
+
+// GRIS - No guardado (registro anterior)
+::ng-deep mat-step.step-unsaved {
+  .mat-step-header {
+    .mat-step-icon {
+      background-color: #9e9e9e !important;
+      color: white !important;
+    }
+    
+    .mat-step-label,
+    .mat-step-text-label {
+      color: #9e9e9e !important;
+    }
+  }
+}
+
+// AZUL - Guardado (registro actual)
+::ng-deep mat-step.step-saved {
+  .mat-step-header {
+    .mat-step-icon {
+      background-color: #1976d2 !important;
+      color: white !important;
+    }
+    
+    .mat-step-label,
+    .mat-step-text-label {
+      color: #1976d2 !important;
+      font-weight: 500 !important;
+    }
+  }
 }
