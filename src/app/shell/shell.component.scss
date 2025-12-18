@@ -70,10 +70,11 @@ mat-expansion-panel-header {
 
 // ============================================
 // Estilos para estado guardado/no guardado
+// SIN ::ng-deep porque usamos ViewEncapsulation.None
 // ============================================
 
 // GRIS - No guardado (registro anterior)
-::ng-deep mat-step.step-unsaved {
+mat-step.step-unsaved {
   .mat-step-header {
     .mat-step-icon {
       background-color: #9e9e9e !important;
@@ -88,7 +89,7 @@ mat-expansion-panel-header {
 }
 
 // AZUL - Guardado (registro actual)
-::ng-deep mat-step.step-saved {
+mat-step.step-saved {
   .mat-step-header {
     .mat-step-icon {
       background-color: #1976d2 !important;
