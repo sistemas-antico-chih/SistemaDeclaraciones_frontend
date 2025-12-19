@@ -112,6 +112,16 @@ export class ShellComponent implements OnInit {
     this.router.navigate([route], { replaceUrl: true });
   }
 
+  goToAvisoByIndex(index: number, stepper: any): void {
+  const opt = this.avisoOptions[index];
+  if (!opt) return;
+
+  // mover visualmente el step
+  stepper.selectedIndex = index;
+
+  // navegar por router
+  this.router.navigate([opt.url], { replaceUrl: true });
+}
 
 
   goToInteresesSection(optionIndex: number) {
@@ -240,25 +250,14 @@ export class ShellComponent implements OnInit {
    * Verifica si una URL está guardada leyendo directamente de localStorage
    */
   isOptionSaved(url: string): boolean {
-    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
-    const savedStateStr = localStorage.getItem(storageKey);
+  const storageKey = `declaracion_saved_state_aviso_false`;
+  const savedStateStr = localStorage.getItem(storageKey);
 
-    if (!savedStateStr) return false;
+  if (!savedStateStr) return false;
 
-    try {
-      const savedState = JSON.parse(savedStateStr);
-
-      const cleanUrl = url.startsWith('/aviso/')
-        ? url.replace('/aviso', '')
-        : url;
-
-      return (savedState.aviso || []).includes(cleanUrl);
-    } catch {
-      return false;
-    }
-  }
-
-
+  const savedState = JSON.parse(savedStateStr);
+  return savedState.aviso?.includes(url) ?? false;
+}
 
   /**
    * TrackBy function para mejorar performance de ngFor
