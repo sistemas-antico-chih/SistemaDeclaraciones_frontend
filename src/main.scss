@@ -389,3 +389,46 @@ mat-step[data-saved="false"] .mat-step-header .mat-step-text-label {
     color: inherit !important;
   }
 }
+
+
+/* ================================
+   STEPPER – ESTADOS REALES
+   ================================ */
+
+/* ⚪ REGISTRO ANTERIOR / NO GUARDADO */
+.mat-step-header:not(.mat-step-header-completed) {
+  .mat-step-icon {
+    background-color: #9e9e9e !important;
+    color: #ffffff !important;
+  }
+
+  .mat-step-label,
+  .mat-step-text-label {
+    color: #9e9e9e !important;
+    font-weight: 400;
+    white-space: normal;
+  }
+}
+
+/* 🔵 REGISTRO ACTUAL / GUARDADO */
+.mat-step-header.mat-step-header-completed {
+  .mat-step-icon {
+    background-color: #219ae2 !important;
+    color: #ffffff !important;
+  }
+
+  .mat-step-label,
+  .mat-step-text-label {
+    color: #219ae2 !important;
+    font-weight: 500;
+    white-space: normal;
+  }
+}
+
+/* 🔵 STEP SELECCIONADO
+   (solo refuerza, NO cambia el estado) */
+.mat-step-header.mat-step-header-selected {
+  .mat-step-label {
+    font-weight: 600;
+  }
+}

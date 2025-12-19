@@ -15,13 +15,10 @@
   <mat-step
     *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
     [label]="opt.text"
-    [ngClass]="{
-      'step-saved': isOptionSaved(opt.url),
-      'step-unsaved': !isOptionSaved(opt.url)
-    }"
-  >
+    [completed]="isOptionSaved(opt.url)">
   </mat-step>
 </mat-vertical-stepper>
+
 
       </mat-expansion-panel>
 
