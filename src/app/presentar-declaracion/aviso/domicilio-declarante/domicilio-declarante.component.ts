@@ -176,12 +176,11 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
         // ✅ Marcar como guardado porque ya existe en el registro actual
         this.menuStateService.markSectionAsSaved(
-          '/aviso/domicilio-declarante',
+          '/domicilio-declarante',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
-
       }
     } catch (error) {
       console.error(error);
@@ -257,15 +256,13 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
         throw errors;
       }
 
-      console.log('URL QUE SE GUARDA:', '/aviso/domicilio-declarante');
-
       this.isLoading = false;
 
       // ✅ CRÍTICO: Solo marcar como guardado si NO es del registro anterior
       if (!this.isFromPreviousRecord) {
         console.log('✅ Guardando información del REGISTRO ACTUAL - domicilio-declarante');
         this.menuStateService.markSectionAsSaved(
-          '/aviso/domicilio-declarante',
+          '/domicilio-declarante',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada

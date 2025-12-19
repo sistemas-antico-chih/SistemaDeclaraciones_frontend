@@ -238,17 +238,20 @@ export class ShellComponent implements OnInit {
 
     try {
       const savedState = JSON.parse(savedStateStr);
+      const cleanUrl = this.menuStateService['normalizeUrl'](url);
+
       const allSavedUrls = [
         ...(savedState.situacionPatrimonial || []),
         ...(savedState.intereses || []),
-        ...(savedState.aviso || [])
+        ...(savedState.aviso || []),
       ];
 
-      return allSavedUrls.includes(url);
-    } catch (e) {
+      return allSavedUrls.includes(cleanUrl);
+    } catch {
       return false;
     }
   }
+
 
   /**
    * TrackBy function para mejorar performance de ngFor

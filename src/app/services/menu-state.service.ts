@@ -53,7 +53,7 @@ export class MenuStateService {
     declaracionSimplificada: boolean
   ): void {
     const storageKey = `declaracion_saved_state_${tipoDeclaracion}_${declaracionSimplificada}`;
-
+    const cleanUrl = this.normalizeUrl(url); // 👈 AQUÍ
     const savedState = JSON.parse(
       localStorage.getItem(storageKey) || '{}'
     );
@@ -94,5 +94,14 @@ export class MenuStateService {
     const savedState = JSON.parse(localStorage.getItem(storageKey) || '{}') as SavedState;
 
     return savedState[section]?.includes(url) || false;
+  }
+
+  private normalizeUrl(url: string): string {
+    if (!url) return url;
+
+    // Elimina el prefijo /aviso si existe
+    return url.startsWith('/aviso/')
+      ? url.replace('/aviso', '')
+      : url;
   }
 }
