@@ -5,7 +5,12 @@ import { Apollo } from 'apollo-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { declaracionMutation, datosEmpleoQuery, lastDeclaracionDatosEmpleo } from '@api/declaracion';
+import {
+  datosEmpleoCargoComisionQuery,
+  //declaracionMutation,
+  datosEmpleoCargoComisionMutation,
+  lastDatosEmpleoCargoComisionQuery,
+} from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
 import { DeclaracionOutput, DatosEmpleo, LastDeclaracionOutput } from '@models/declaracion';
@@ -93,7 +98,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
-          query: lastDeclaracionDatosEmpleo,
+          query: lastDatosEmpleoCargoComisionQuery,
         })
         .toPromise();
 
@@ -116,7 +121,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
-          query: datosEmpleoQuery,
+          query: datosEmpleoCargoComisionQuery,
           variables: {
             tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
             declaracionCompleta: !this.declaracionSimplificada,
@@ -205,7 +210,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
       const { errors } = await this.apollo
         .mutate({
-          mutation: declaracionMutation,
+          mutation: datosEmpleoCargoComisionMutation,
           variables: {
             id: this.declaracionId,
             declaracion,
