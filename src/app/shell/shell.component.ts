@@ -134,13 +134,6 @@ export class ShellComponent implements OnInit {
     // Suscribirse a cambios en el estado
     this.menuStateService.savedState$.subscribe(state => {
       console.log('🔄 Estado actualizado desde observable:', state);
-      // En shell.component.ts
-console.log('🔍 Verificando:', {
-  url,
-  section,
-  isSaved: this.isOptionSaved(url),
-  tipoDeclaracion: this.tipoDeclaracion
-});
       this.updateOptionsState(this.situacionPatrimonialOptions, state.situacionPatrimonial);
       this.updateOptionsState(this.interesesOptions, state.intereses);
       this.updateOptionsState(this.avisoOptions, state.aviso);
