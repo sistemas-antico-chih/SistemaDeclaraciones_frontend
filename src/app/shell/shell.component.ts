@@ -97,22 +97,21 @@ export class ShellComponent implements OnInit {
     private cdr: ChangeDetectorRef // Agregar ChangeDetectorRef
   ) { }
 
-  goToAvisoSection(selectedStep: MatStep) {
-  const selected = this.avisoOptions.find(
-    opt => opt.text === selectedStep.label
-  );
+  goToAvisoSection(selectedIndex: number) {
+  const selected = this.avisoOptions[selectedIndex];
 
   if (!selected) {
-    console.warn('⚠️ Paso no encontrado en avisoOptions');
+    console.warn('⚠️ Índice inválido:', selectedIndex);
     return;
   }
 
-  // ⚠️ selected.url YA incluye el "/"
-  this.router.navigate(
-    [`/${this.tipoDeclaracion}${selected.url}`],
-    { replaceUrl: true }
-  );
+  const route = `/${this.tipoDeclaracion}${selected.url}`;
+
+  console.log('➡️ Navegando a:', route);
+
+  this.router.navigate([route], { replaceUrl: true });
 }
+
 
 
   goToInteresesSection(optionIndex: number) {
