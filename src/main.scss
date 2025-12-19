@@ -291,5 +291,17 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   background-color: var(--progress-bar-color);
 }
 
+mat-vertical-stepper {
+  .mat-vertical-stepper-header {
+    height: unset;
+    min-height: 24px;
+    padding: 16px;
+  }
 
+  .mat-step .mat-step-label {
+    white-space: normal;
+  }
+}
 
+// Theme customization
+@import "theme/theme";
