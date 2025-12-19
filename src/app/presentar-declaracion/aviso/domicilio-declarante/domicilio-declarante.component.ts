@@ -256,6 +256,8 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
         throw errors;
       }
 
+      console.log('URL QUE SE GUARDA:', '/aviso/domicilio-declarante');
+
       this.isLoading = false;
 
       // ✅ CRÍTICO: Solo marcar como guardado si NO es del registro anterior
