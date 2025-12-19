@@ -48,28 +48,33 @@ export class MenuStateService {
    */
   markSectionAsSaved(
     url: string,
-    menu: 'aviso' | 'situacionPatrimonial' | 'intereses',
+    menuType: 'situacionPatrimonial' | 'intereses' | 'aviso',
     tipoDeclaracion: string,
     declaracionSimplificada: boolean
-  ): void {
-    const storageKey = `declaracion_saved_state_${tipoDeclaracion}_${declaracionSimplificada}`;
-    const cleanUrl = this.normalizeUrl(url); // 👈 AQUÍ
-    const savedState = JSON.parse(
-      localStorage.getItem(storageKey) || '{}'
-    );
+  ) {
+    const storageKey = `declaracion_saved_state_${menuType}_${declaracionSimplificada}`;
+    const cleanUrl = this.normalizeUrl(url);
 
-    if (!savedState[menu]) {
-      savedState[menu] = [];
+    const savedState = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+    if (!savedState[menuType]) {
+      savedState[menuType] = [];
     }
 
-    if (!savedState[menu].includes(url)) {
-      savedState[menu].push(url);
+    // 🔥 Elimina cualquier versión vieja antes de guardar
+    savedState[menuType] = savedState[menuType]
+      .map((u: string) => this.normalizeUrl(u))
+      .filter((u: string, i: number, arr: string[]) => arr.indexOf(u) === i);
+
+    if (!savedState[menuType].includes(cleanUrl)) {
+      savedState[menuType].push(cleanUrl);
     }
 
     localStorage.setItem(storageKey, JSON.stringify(savedState));
 
-    console.log('💾 GUARDADO EN LOCALSTORAGE:', storageKey, savedState);
+    console.log('💾 GUARDADO LIMPIO:', storageKey, savedState);
   }
+
 
 
   /**
@@ -98,8 +103,6 @@ export class MenuStateService {
 
   private normalizeUrl(url: string): string {
     if (!url) return url;
-
-    // Elimina el prefijo /aviso si existe
     return url.startsWith('/aviso/')
       ? url.replace('/aviso', '')
       : url;

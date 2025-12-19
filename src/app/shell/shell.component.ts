@@ -238,19 +238,17 @@ export class ShellComponent implements OnInit {
 
     try {
       const savedState = JSON.parse(savedStateStr);
-      const cleanUrl = this.menuStateService['normalizeUrl'](url);
 
-      const allSavedUrls = [
-        ...(savedState.situacionPatrimonial || []),
-        ...(savedState.intereses || []),
-        ...(savedState.aviso || []),
-      ];
+      const cleanUrl = url.startsWith('/aviso/')
+        ? url.replace('/aviso', '')
+        : url;
 
-      return allSavedUrls.includes(cleanUrl);
+      return (savedState.aviso || []).includes(cleanUrl);
     } catch {
       return false;
     }
   }
+
 
 
   /**
