@@ -97,32 +97,13 @@ export class ShellComponent implements OnInit {
     private cdr: ChangeDetectorRef // Agregar ChangeDetectorRef
   ) { }
 
-  goToAvisoSection(selectedIndex: number) {
-    const selected = this.avisoOptions[selectedIndex];
-
-    if (!selected) {
-      console.warn('⚠️ Índice inválido:', selectedIndex);
-      return;
-    }
-
-    const route = `/${this.tipoDeclaracion}${selected.url}`;
-
-    console.log('➡️ Navegando a:', route);
-
-    this.router.navigate([route], { replaceUrl: true });
+  goToAvisoSection(selectedStep: MatStep) {
+    const selected = this.avisoOptions.find((opt) => opt.text === selectedStep.label);
+    const route = `/${this.tipoDeclaracion}/${selected.url}`;
+    this.router.navigate([route], {
+      replaceUrl: true,
+    });
   }
-
-  goToAvisoByIndex(index: number, stepper: any): void {
-  const opt = this.avisoOptions[index];
-  if (!opt) return;
-
-  // mover visualmente el step
-  stepper.selectedIndex = index;
-
-  // navegar por router
-  this.router.navigate([opt.url], { replaceUrl: true });
-}
-
 
   goToInteresesSection(optionIndex: number) {
     this.router.navigate([`/${this.tipoDeclaracion}${this.interesesOptions[optionIndex].url}`], { replaceUrl: true });
@@ -250,14 +231,24 @@ export class ShellComponent implements OnInit {
    * Verifica si una URL está guardada leyendo directamente de localStorage
    */
   isOptionSaved(url: string): boolean {
-  const storageKey = `declaracion_saved_state_aviso_false`;
-  const savedStateStr = localStorage.getItem(storageKey);
+    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
+    const savedStateStr = localStorage.getItem(storageKey);
 
-  if (!savedStateStr) return false;
+    if (!savedStateStr) return false;
 
-  const savedState = JSON.parse(savedStateStr);
-  return savedState.aviso?.includes(url) ?? false;
-}
+    try {
+      const savedState = JSON.parse(savedStateStr);
+      const allSavedUrls = [
+        ...(savedState.situacionPatrimonial || []),
+        ...(savedState.intereses || []),
+        ...(savedState.aviso || [])
+      ];
+
+      return allSavedUrls.includes(url);
+    } catch (e) {
+      return false;
+    }
+  }
 
   /**
    * TrackBy function para mejorar performance de ngFor
@@ -274,12 +265,5 @@ export class ShellComponent implements OnInit {
       isOptionSaved: this.isOptionSaved(opt.url),
       localStorage: localStorage.getItem('declaracion_saved_state_aviso_false')
     });
-  }
-
-  onStepChange(event: any): void {
-    const opt = this.avisoOptions[event.selectedIndex];
-    if (opt?.url) {
-      this.router.navigate([opt.url]);
-    }
   }
 } 
