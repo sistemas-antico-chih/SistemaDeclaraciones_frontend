@@ -262,7 +262,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       if (!this.isFromPreviousRecord) {
         console.log('✅ Guardando información del REGISTRO ACTUAL - domicilio-declarante');
         this.menuStateService.markSectionAsSaved(
-          '/domicilio-declarante',
+          '/aviso/domicilio-declarante',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada
