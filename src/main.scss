@@ -385,3 +385,23 @@ mat-vertical-stepper {
   }
 }
 
+
+/* =========================
+   STEP LABEL STATE (REAL)
+   ========================= */
+
+.step-label.step-saved {
+  color: #1976d2 !important;
+  font-weight: 500;
+}
+
+.step-label.step-unsaved {
+  color: #9e9e9e !important;
+  font-weight: 400;
+}
+
+/* Neutralizar Material */
+.mat-step-header.mat-step-header-selected
+  .mat-step-text-label {
+  color: inherit !important;
+}
