@@ -98,19 +98,19 @@ export class ShellComponent implements OnInit {
   ) { }
 
   goToAvisoSection(selectedIndex: number) {
-  const selected = this.avisoOptions[selectedIndex];
+    const selected = this.avisoOptions[selectedIndex];
 
-  if (!selected) {
-    console.warn('⚠️ Índice inválido:', selectedIndex);
-    return;
+    if (!selected) {
+      console.warn('⚠️ Índice inválido:', selectedIndex);
+      return;
+    }
+
+    const route = `/${this.tipoDeclaracion}${selected.url}`;
+
+    console.log('➡️ Navegando a:', route);
+
+    this.router.navigate([route], { replaceUrl: true });
   }
-
-  const route = `/${this.tipoDeclaracion}${selected.url}`;
-
-  console.log('➡️ Navegando a:', route);
-
-  this.router.navigate([route], { replaceUrl: true });
-}
 
 
 
@@ -275,5 +275,12 @@ export class ShellComponent implements OnInit {
       isOptionSaved: this.isOptionSaved(opt.url),
       localStorage: localStorage.getItem('declaracion_saved_state_aviso_false')
     });
+  }
+
+  onStepChange(event: any): void {
+    const opt = this.avisoOptions[event.selectedIndex];
+    if (opt?.url) {
+      this.router.navigate([opt.url]);
+    }
   }
 } 

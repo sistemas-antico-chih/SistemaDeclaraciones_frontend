@@ -405,3 +405,26 @@ mat-vertical-stepper {
   .mat-step-text-label {
   color: inherit !important;
 }
+
+
+/* ===============================
+   STEP ICON (NÚMERO)
+   =============================== */
+
+/* 🔵 GUARDADO = AZUL */
+.mat-step.completed .mat-step-icon {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+}
+
+/* ⚪ NO GUARDADO = GRIS */
+.mat-step:not(.completed) .mat-step-icon {
+  background-color: #9e9e9e !important;
+  color: #fff !important;
+}
+
+/* 🚫 EVITAR AZUL AUTOMÁTICO AL NAVEGAR */
+.mat-step-header.mat-step-header-selected .mat-step-icon {
+  background-color: inherit !important;
+  color: inherit !important;
+}
