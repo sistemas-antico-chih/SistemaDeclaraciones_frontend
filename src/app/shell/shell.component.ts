@@ -98,12 +98,22 @@ export class ShellComponent implements OnInit {
   ) { }
 
   goToAvisoSection(selectedStep: MatStep) {
-    const selected = this.avisoOptions.find((opt) => opt.text === selectedStep.label);
-    const route = `/${this.tipoDeclaracion}/${selected.url}`;
-    this.router.navigate([route], {
-      replaceUrl: true,
-    });
+  const selected = this.avisoOptions.find(
+    opt => opt.text === selectedStep.label
+  );
+
+  if (!selected) {
+    console.warn('⚠️ Paso no encontrado en avisoOptions');
+    return;
   }
+
+  // ⚠️ selected.url YA incluye el "/"
+  this.router.navigate(
+    [`/${this.tipoDeclaracion}${selected.url}`],
+    { replaceUrl: true }
+  );
+}
+
 
   goToInteresesSection(optionIndex: number) {
     this.router.navigate([`/${this.tipoDeclaracion}${this.interesesOptions[optionIndex].url}`], { replaceUrl: true });

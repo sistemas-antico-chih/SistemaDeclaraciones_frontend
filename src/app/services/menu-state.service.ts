@@ -47,33 +47,32 @@ export class MenuStateService {
    * Marca una sección como guardada
    */
   markSectionAsSaved(
-    url: string,
-    menuType: 'situacionPatrimonial' | 'intereses' | 'aviso',
-    tipoDeclaracion: string,
-    declaracionSimplificada: boolean
-  ) {
-    const storageKey = `declaracion_saved_state_${menuType}_${declaracionSimplificada}`;
-    const cleanUrl = this.normalizeUrl(url);
+  url: string,
+  menuType: 'situacionPatrimonial' | 'intereses' | 'aviso',
+  tipoDeclaracion: string,
+  declaracionSimplificada: boolean
+) {
+  const storageKey = `declaracion_saved_state_${tipoDeclaracion}_${declaracionSimplificada}`;
+  const cleanUrl = this.normalizeUrl(url);
 
-    const savedState = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  const savedState = JSON.parse(localStorage.getItem(storageKey) || '{}');
 
-    if (!savedState[menuType]) {
-      savedState[menuType] = [];
-    }
-
-    // 🔥 Elimina cualquier versión vieja antes de guardar
-    savedState[menuType] = savedState[menuType]
-      .map((u: string) => this.normalizeUrl(u))
-      .filter((u: string, i: number, arr: string[]) => arr.indexOf(u) === i);
-
-    if (!savedState[menuType].includes(cleanUrl)) {
-      savedState[menuType].push(cleanUrl);
-    }
-
-    localStorage.setItem(storageKey, JSON.stringify(savedState));
-
-    console.log('💾 GUARDADO LIMPIO:', storageKey, savedState);
+  if (!savedState[menuType]) {
+    savedState[menuType] = [];
   }
+
+  savedState[menuType] = savedState[menuType]
+    .map((u: string) => this.normalizeUrl(u))
+    .filter((u: string, i: number, arr: string[]) => arr.indexOf(u) === i);
+
+  if (!savedState[menuType].includes(cleanUrl)) {
+    savedState[menuType].push(cleanUrl);
+  }
+
+  localStorage.setItem(storageKey, JSON.stringify(savedState));
+  console.log('💾 GUARDADO LIMPIO:', storageKey, savedState);
+}
+
 
 
 

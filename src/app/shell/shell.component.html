@@ -13,11 +13,11 @@
         </mat-expansion-panel-header>
         <mat-vertical-stepper [linear]="false">
   <mat-step
-    *ngFor="let opt of avisoOptions"
-    [label]="opt.text"
-    [completed]="isOptionSaved(opt.url)"
-    [attr.data-saved]="isOptionSaved(opt.url)">
-  </mat-step>
+  *ngFor="let opt of avisoOptions"
+  (click)="debugStep(opt)"
+  [label]="opt.text">
+</mat-step>
+
 </mat-vertical-stepper>
 
 
