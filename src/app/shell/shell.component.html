@@ -11,18 +11,10 @@
           }">
           <mat-panel-title>I. Aviso por cambio de dependencia </mat-panel-title>
         </mat-expansion-panel-header>
-<mat-vertical-stepper
-  #stepper
-  class="aviso-stepper"
->
+<mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
   <mat-step
-    *ngFor="let opt of avisoOptions; let i = index"
-    [completed]="isOptionSaved(opt.url)"
-    (click)="goToAvisoByIndex(i, stepper)"
-  >
-    <ng-template matStepLabel>
-      {{ opt.text }}
-    </ng-template>
+    *ngFor="let opt of avisoOptions"
+    [label]="opt.text">
   </mat-step>
 </mat-vertical-stepper>
 

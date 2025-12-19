@@ -292,23 +292,4 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 }
 
 
-/* ===============================
-   STEPPER AVISO – SOLO NÚMERO
-   =============================== */
-
-.aviso-stepper {
-
-  /* 🔵 GUARDADO */
-  .mat-step-header.mat-completed .mat-step-icon {
-    background-color: #1976d2 !important;
-    color: #fff !important;
-  }
-
-  /* ⚪ NO GUARDADO */
-  .mat-step-header:not(.mat-completed):not(.mat-step-header-selected)
-    .mat-step-icon {
-    background-color: #9e9e9e !important;
-    color: #fff !important;
-  }
-}
 
