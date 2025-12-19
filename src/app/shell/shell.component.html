@@ -15,10 +15,19 @@
   [linear]="false"
   (selectionChange)="goToAvisoSection($event.selectedIndex)"
 >
-  <mat-step *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
-            [label]="opt.text">
+  <mat-step
+    *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
+    [ngClass]="{
+      'step-saved': opt.saved,
+      'step-unsaved': !opt.saved
+    }"
+  >
+    <ng-template matStepLabel>
+      {{ opt.text }}
+    </ng-template>
   </mat-step>
 </mat-vertical-stepper>
+
 
 
 
