@@ -8,7 +8,7 @@
 }
 
 .mat-sidenav-content {
-  background-color: #ffffff; /*section background color*/
+  background-color: #ffffff;
 }
 
 .has-border {
@@ -21,7 +21,6 @@
 
 .mat-list-item {
   text-decoration: none;
-
   &:hover {
     background: rgba(0, 0, 0, 0.05);
   }
@@ -49,7 +48,7 @@ mat-expansion-panel-header {
   font-weight: bold;
   height: auto !important;
   padding: 30px 15px;
-
+  
   &.active {
     background-color: var(--primary-color);
     mat-panel-title {
@@ -67,4 +66,65 @@ mat-expansion-panel-header {
 
 .mat-step-label {
   white-space: normal;
+}
+
+// ============================================
+// ESTILOS CORREGIDOS - LÓGICA INVERTIDA
+// ============================================
+::ng-deep {
+  // ⚪ GRIS - Información del REGISTRO ANTERIOR (paso-from-previous)
+  .step-from-previous {
+    .mat-step-icon {
+      background-color: #9e9e9e !important; // GRIS para registro anterior
+      color: white !important;
+    }
+    
+    .mat-step-icon-state-number {
+      background-color: #9e9e9e !important;
+    }
+  }
+  
+  // 🔵 AZUL - Información del REGISTRO ACTUAL (paso-current)
+  .step-current {
+    .mat-step-icon {
+      background-color: var(--primary-color, #1976d2) !important; // AZUL para registro actual
+      color: white !important;
+    }
+    
+    .mat-step-icon-state-number {
+      background-color: var(--primary-color, #1976d2) !important;
+    }
+  }
+  
+  // Step seleccionado actualmente - mantener el color según su estado
+  .mat-vertical-stepper-header[aria-selected="true"] {
+    // El color se mantendrá según la clase step-from-previous o step-current
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  // Override para step-from-previous cuando está seleccionado (mantener gris)
+  .step-from-previous .mat-vertical-stepper-header[aria-selected="true"] {
+    .mat-step-icon {
+      background-color: #9e9e9e !important;
+    }
+  }
+  
+  // Override para step-current cuando está seleccionado (mantener azul)
+  .step-current .mat-vertical-stepper-header[aria-selected="true"] {
+    .mat-step-icon {
+      background-color: var(--primary-color, #1976d2) !important;
+    }
+  }
+  
+  // Hover states
+  .mat-vertical-stepper-header:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  // Asegurar que el número sea visible
+  .mat-step-icon .mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
 }

@@ -58,6 +58,12 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
 
+    console.log('🏗️ DomicilioDeclarante inicializado:', {
+      tipoDeclaracion: this.tipoDeclaracion,
+      declaracionSimplificada: this.declaracionSimplificada,
+      url: this.router.url
+    });
+
     this.createForm();
     this.getUserInfo();
   }
@@ -141,11 +147,16 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
+      
+      console.log('⚠️ Cargando datos del REGISTRO ANTERIOR - domicilio-declarante');
       this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.domicilioDeclarante);
+      
+      // ❌ NO marcar como guardado porque son datos del registro anterior
+      // Los datos anteriores deben aparecer en AZUL hasta que se guarden en el registro actual
+      console.log('🔵 NO se marca como guardado → aparece en AZUL');
     } catch (error) {
-      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
-      // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+      console.warn('⚠️ El usuario probablemente no tiene una declaración anterior:', error.message);
     }
   }
 
@@ -166,15 +177,18 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
+      
       if (data?.declaracion.domicilioDeclarante === null) {
         console.log('⚠️ No hay datos en registro actual, cargando del anterior');
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
-        console.log('✅ Hay datos en registro actual - domicilio-declarante');
+        console.log('✅ Hay datos en REGISTRO ACTUAL - domicilio-declarante');
         this.isFromPreviousRecord = false; // Es del registro actual
         this.fillForm(data?.declaracion.domicilioDeclarante);
 
         // ✅ Marcar como guardado porque ya existe en el registro actual
+        // Esto hará que aparezca en GRIS en el menú
+        console.log('⚪ Marcando como guardado → aparece en GRIS');
         this.menuStateService.markSectionAsSaved(
           '/domicilio-declarante',
           'aviso',
@@ -183,17 +197,15 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
         );
       }
     } catch (error) {
-      console.error(error);
+      console.error('❌ Error al obtener información:', error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
-
   formHasChanges() {
     let url = '/aviso/datos-empleo';
-    //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.domicilioDeclaranteForm.dirty;
-    console.log(isDirty);
+    console.log('📝 Form dirty:', isDirty);
 
     if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
@@ -206,13 +218,12 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([`${url}`], { replaceUrl: true });;
+        if (result) this.router.navigate([`${url}`], { replaceUrl: true });
       });
     } else {
       this.router.navigate([url]);
     }
   }
-
 
   ngOnInit(): void {
     this.pushButtonSave = false;
@@ -222,7 +233,6 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
         messageAviso: `Recuerde Guardar la información del registro,`,
         messageAviso2: `dando clic en el botón correspondiente`,
         trueText: 'Aceptar',
-        //falseText: '',
       },
     });
   }
@@ -232,7 +242,6 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       duration: 5000,
     });
   }
-
 
   async saveInfo() {
     try {
@@ -258,25 +267,24 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
       this.isLoading = false;
 
-      // ✅ CRÍTICO: Solo marcar como guardado si NO es del registro anterior
-      if (!this.isFromPreviousRecord) {
-        console.log('✅ Guardando información del REGISTRO ACTUAL - domicilio-declarante');
-        this.menuStateService.markSectionAsSaved(
-          '/domicilio-declarante',
-          'aviso',
-          this.tipoDeclaracion,
-          this.declaracionSimplificada
-        );
-      } else {
-        console.log('⚠️ No marcar como guardado - es información del registro ANTERIOR');
-      }
+      // ✅ SIEMPRE marcar como guardado después de guardar exitosamente
+      // Esto cambiará el color del menú de AZUL a GRIS
+      console.log('✅ Guardando información en REGISTRO ACTUAL - domicilio-declarante');
+      console.log('⚪ Marcando como guardado → cambia a GRIS');
+      
+      this.menuStateService.markSectionAsSaved(
+        '/domicilio-declarante',
+        'aviso',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
 
       // Marcar que ya no es del registro anterior después de guardar
       this.isFromPreviousRecord = false;
 
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
-      console.log(error);
+      console.error('❌ Error al guardar:', error);
       this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }

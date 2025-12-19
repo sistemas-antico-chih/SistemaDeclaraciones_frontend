@@ -1,269 +1,219 @@
-import { Title } from '@angular/platform-browser';
-import { Component, OnInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { MediaObserver } from '@angular/flex-layout';
-
-import { AuthenticationService, CredentialsService } from '@app/auth';
-import { MatStep } from '@angular/material/stepper';
-import { MenuStateService } from '@app/services/menu-state.service'; // Importar el servicio
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 interface MenuOption {
   text: string;
   url: string;
   simplificada?: boolean;
-  saved?: boolean;
 }
 
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss'],
-  //encapsulation: ViewEncapsulation.None // ← AGREGAR ESTA LÍNEA
+  styleUrls: ['./shell.component.scss']
 })
-export class ShellComponent implements OnInit {
-  situacionPatrimonialOptions: MenuOption[] = [
-    { text: 'Datos generales', url: '/situacion-patrimonial/datos-generales', simplificada: true },
-    { text: 'Domicilio del declarante', url: '/situacion-patrimonial/domicilio-declarante', simplificada: true },
-    { text: 'Datos curriculares del declarante', url: '/situacion-patrimonial/datos-curriculares', simplificada: true },
-    {
-      text: 'Datos del empleo, cargo o comisión',
-      url: '/situacion-patrimonial/datos-empleo',
-      simplificada: true,
-    },
-    {
-      text: 'Experiencia laboral (últimos cinco empleos)',
-      url: '/situacion-patrimonial/experiencia-laboral',
-      simplificada: true,
-    },
-    { text: 'Datos de la pareja', url: '/situacion-patrimonial/datos-pareja' },
-    { text: 'Datos del dependiente económico', url: '/situacion-patrimonial/datos-dependiente' },
-    {
-      text: 'Ingresos netos del declarante, pareja y/o dependientes económicos',
-      url: '/situacion-patrimonial/ingresos-netos',
-      simplificada: true,
-    },
-    {
-      text: '¿Te desempeñaste como servidor público en el año inmediato anterior?',
-      url: '/situacion-patrimonial/servidor-publico',
-      simplificada: true,
-    },
-    { text: 'Bienes inmuebles', url: '/situacion-patrimonial/bienes-inmuebles' },
-    { text: 'Vehículos', url: '/situacion-patrimonial/vehiculos' },
-    { text: 'Bienes muebles', url: '/situacion-patrimonial/bienes-muebles' },
-    {
-      text: 'Inversiones, cuentas bancarias u otro tipo de valores / activos',
-      url: '/situacion-patrimonial/inversiones',
-    },
-    { text: 'Adeudos / pasivos', url: '/situacion-patrimonial/adeudos' },
-    { text: 'Préstamo o comodato por terceros', url: '/situacion-patrimonial/prestamos-terceros' },
-  ];
-
-  interesesOptions: MenuOption[] = [
-    {
-      text: 'Participación en empresas, sociedades o asociaciones (hasta los dos últimos años)',
-      url: '/intereses/participacion-empresa',
-    },
-    {
-      text: '¿Participa en la toma de decisiones de alguna de estas instituciones? (hasta los dos últimos años)',
-      url: '/intereses/toma-decisiones',
-    },
-    { text: 'Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/intereses/apoyos-publicos' },
-    { text: 'Representación (hasta los dos últimos años)', url: '/intereses/representacion' },
-    { text: 'Clientes principales (hasta los dos últimos años)', url: '/intereses/clientes-principales' },
-    { text: 'Beneficios privados (hasta los dos últimos años)', url: '/intereses/beneficios-privados' },
-    { text: 'Fideicomisos (hasta los dos últimos años)', url: '/intereses/fideicomisos' },
-  ];
-
+export class ShellComponent implements OnInit, OnDestroy {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+  
+  isMobile = false;
+  url: string = '';
+  tipoDeclaracion: string = 'aviso';
+  declaracionSimplificada: boolean = false;
+  declaracionCompleta: boolean = true;
+  
+  private subscriptions: Subscription[] = [];
+  
+  // Opciones del menú de Aviso
   avisoOptions: MenuOption[] = [
-    { text: 'Datos generales', url: '/datos-generales' },
-    { text: 'Domicilio del declarante', url: '/domicilio-declarante' },
-    {
-      text: 'Aviso cambio de dependencia',
-      url: '/datos-empleo',
-    },
+    { text: '1. Datos generales', url: '/datos-generales' },
+    { text: '2. Domicilio del declarante', url: '/domicilio-declarante' },
+    { text: '3. Datos del empleo, cargo o comisión', url: '/datos-empleo' }
   ];
-
-  declaracionSimplificada = false;
-  tipoDeclaracion: string = null;
-  url: string = null;
+  
+  // Opciones del menú de Situación Patrimonial
+  situacionPatrimonialOptions: MenuOption[] = [
+    { text: '1. Datos generales', url: '/datos-generales', simplificada: true },
+    { text: '2. Domicilio del declarante', url: '/domicilio-declarante', simplificada: true },
+    { text: '3. Datos curriculares del declarante', url: '/datos-curriculares', simplificada: false },
+    { text: '4. Datos del empleo, cargo o comisión', url: '/datos-empleo', simplificada: true },
+    { text: '5. Experiencia laboral', url: '/experiencia-laboral', simplificada: false },
+    // Agregar más opciones según tu estructura
+  ];
+  
+  // Opciones del menú de Intereses
+  interesesOptions: MenuOption[] = [
+    { text: '1. Participación en empresas', url: '/participacion-empresas' },
+    { text: '2. Participación en instituciones', url: '/participacion-instituciones' },
+    { text: '3. Socios o accionistas', url: '/socios-accionistas' },
+    // Agregar más opciones según tu estructura
+  ];
 
   constructor(
     private router: Router,
-    private titleService: Title,
-    private authenticationService: AuthenticationService,
-    private credentialsService: CredentialsService,
-    private media: MediaObserver,
-    private menuStateService: MenuStateService, // Inyectar el servicio
-    private cdr: ChangeDetectorRef // Agregar ChangeDetectorRef
-  ) { }
-
-  goToAvisoSection(selectedStep: MatStep) {
-    const selected = this.avisoOptions.find((opt) => opt.text === selectedStep.label);
-    const route = `/${this.tipoDeclaracion}/${selected.url}`;
-    this.router.navigate([route], {
-      replaceUrl: true,
+    private breakpointObserver: BreakpointObserver,
+    private menuStateService: MenuStateService
+  ) {
+    console.log('🚀 ShellComponent inicializado');
+    
+    // Detectar si es móvil
+    const breakpointSub = this.breakpointObserver
+      .observe(['(max-width: 959px)'])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
+    this.subscriptions.push(breakpointSub);
+    
+    // Escuchar cambios de ruta
+    const routerSub = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.url = event.url;
+      console.log('📍 Navegación a:', this.url);
+      
+      if (this.isMobile) {
+        this.sidenav?.close();
+      }
     });
+    this.subscriptions.push(routerSub);
+
+    // Obtener tipo de declaración desde la URL
+    this.extractDeclaracionInfo();
   }
 
-  goToInteresesSection(optionIndex: number) {
-    this.router.navigate([`/${this.tipoDeclaracion}${this.interesesOptions[optionIndex].url}`], { replaceUrl: true });
-  }
-
-  goToSituacionPatrimonialSection(selectedStep: MatStep) {
-    const selected = this.situacionPatrimonialOptions.find((opt) => opt.text === selectedStep.label);
-    const route =
-      this.declaracionSimplificada && selected.simplificada
-        ? `/${this.tipoDeclaracion}/simplificada${selected.url}`
-        : `/${this.tipoDeclaracion}${selected.url}`;
-
-    this.router.navigate([route], {
-      replaceUrl: true,
-    });
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.url = this.router.url;
+    console.log('🎯 URL inicial:', this.url);
+    
+    // Extraer info de la declaración
+    this.extractDeclaracionInfo();
+    
+    // Cargar el estado guardado desde localStorage
+    console.log('📦 Cargando estado guardado...');
+    this.menuStateService.loadSavedState(this.tipoDeclaracion, this.declaracionSimplificada);
+    
+    // Suscribirse a cambios en el estado guardado
+    const stateSub = this.menuStateService.savedState$
+      .subscribe(state => {
+        console.log('🔄 Estado del menú actualizado:', state);
+        console.log('🔍 Tipo declaración:', this.tipoDeclaracion);
+        console.log('🔍 Declaración simplificada:', this.declaracionSimplificada);
+      });
+    this.subscriptions.push(stateSub);
+  }
 
-    const chunks = this.router.url.split('/');
-    this.tipoDeclaracion = chunks[1] || null;
-    this.declaracionSimplificada = chunks[2] === 'simplificada';
-
-    // Cargar el estado de guardado desde el servicio
-    this.loadSavedState();
-
-    // Suscribirse a cambios en el estado
-    this.menuStateService.savedState$.subscribe(state => {
-      console.log('🔄 Estado actualizado desde observable:', state);
-      this.updateOptionsState(this.situacionPatrimonialOptions, state.situacionPatrimonial);
-      this.updateOptionsState(this.interesesOptions, state.intereses);
-      this.updateOptionsState(this.avisoOptions, state.aviso);
-
-      // Forzar detección de cambios
-      this.cdr.detectChanges();
-    });
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.url = this.router.url;
-
-        // ✅ CRÍTICO: Recargar el estado cada vez que navegamos
-        console.log('🔄 Navegación detectada, recargando estado...');
-        this.loadSavedState();
-      }
-    });
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   /**
-   * Carga el estado de guardado desde el servicio
+   * Extrae el tipo de declaración y si es simplificada desde la URL
    */
-  private loadSavedState() {
-    console.log('📂 Cargando estado guardado:', {
-      tipoDeclaracion: this.tipoDeclaracion,
-      declaracionSimplificada: this.declaracionSimplificada
-    });
-
-    // Forzar recarga desde localStorage
-    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
-    const savedStateStr = localStorage.getItem(storageKey);
-
-    console.log('💾 Datos en localStorage:', savedStateStr);
-
-    const savedState = savedStateStr ? JSON.parse(savedStateStr) : {};
-
-    console.log('📋 Estado parseado:', savedState);
-
-    this.updateOptionsState(this.situacionPatrimonialOptions, savedState.situacionPatrimonial || []);
-    this.updateOptionsState(this.interesesOptions, savedState.intereses || []);
-    this.updateOptionsState(this.avisoOptions, savedState.aviso || []);
-
-    console.log('📊 Estado final de avisoOptions:',
-      this.avisoOptions.map(o => ({ text: o.text, url: o.url, saved: o.saved }))
-    );
-  }
-
-  /**
-   * Actualiza el estado 'saved' de las opciones del menú
-   */
-  private updateOptionsState(options: MenuOption[], savedUrls: string[] = []) {
-    if (!savedUrls) {
-      savedUrls = [];
-    }
-
-    console.log('🔄 Actualizando estado de opciones:', { savedUrls });
-
-    let hasChanges = false;
-
-    options.forEach(opt => {
-      const newSavedState = savedUrls.includes(opt.url);
-
-      if (opt.saved !== newSavedState) {
-        opt.saved = newSavedState;
-        hasChanges = true;
-        console.log(`  ${opt.saved ? '🔵' : '⚪'} ${opt.text}: ${opt.url}`);
-      }
-    });
-
-    // Si hubo cambios, forzar detección
-    if (hasChanges) {
-      console.log('✅ Se detectaron cambios, forzando actualización de vista');
-      this.cdr.detectChanges();
+  private extractDeclaracionInfo(): void {
+    const urlChunks = this.router.url.split('/').filter(chunk => chunk);
+    
+    if (urlChunks.length > 0) {
+      this.tipoDeclaracion = urlChunks[0]; // 'aviso', 'inicial', 'modificacion', etc.
+      this.declaracionSimplificada = urlChunks[1] === 'simplificada';
+      this.declaracionCompleta = !this.declaracionSimplificada;
+      
+      console.log('📋 Info extraída:', {
+        tipoDeclaracion: this.tipoDeclaracion,
+        declaracionSimplificada: this.declaracionSimplificada,
+        url: this.router.url,
+        urlChunks
+      });
     }
   }
 
-  logout() {
-    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
-  }
-
-  get username(): string | null {
-    const credentials = this.credentialsService.credentials;
-    return credentials ? credentials.user.username : null;
-  }
-
-  get isMobile(): boolean {
-    return this.media.isActive('xs') || this.media.isActive('sm');
-  }
-
-  get title(): string {
-    return this.titleService.getTitle();
-  }
-
   /**
-   * Verifica si una URL está guardada leyendo directamente de localStorage
+   * Determina si una opción debe mostrarse en GRIS (guardada)
+   * true = GRIS (tiene datos guardados en el registro actual)
+   * false = AZUL (no tiene datos o tiene datos del registro anterior)
    */
   isOptionSaved(url: string): boolean {
-    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
-    const savedStateStr = localStorage.getItem(storageKey);
+    // Determinar la sección según el tipo de declaración actual
+    let section: 'situacionPatrimonial' | 'intereses' | 'aviso';
+    
+    if (this.tipoDeclaracion === 'aviso') {
+      section = 'aviso';
+    } else if (this.url.includes('/intereses/') || url.includes('participacion') || url.includes('socios')) {
+      section = 'intereses';
+    } else {
+      section = 'situacionPatrimonial';
+    }
 
-    if (!savedStateStr) return false;
+    const isSaved = this.menuStateService.isUrlSaved(
+      url, 
+      section,
+      this.tipoDeclaracion,
+      this.declaracionSimplificada
+    );
 
-    try {
-      const savedState = JSON.parse(savedStateStr);
-      const allSavedUrls = [
-        ...(savedState.situacionPatrimonial || []),
-        ...(savedState.intereses || []),
-        ...(savedState.aviso || [])
-      ];
+    console.log(`🔍 Verificando "${url}":`, {
+      section,
+      isSaved,
+      tipoDeclaracion: this.tipoDeclaracion,
+      declaracionSimplificada: this.declaracionSimplificada,
+      color: isSaved ? '⚪ GRIS' : '🔵 AZUL'
+    });
 
-      return allSavedUrls.includes(url);
-    } catch (e) {
-      return false;
+    return isSaved;
+  }
+
+  /**
+   * Navegar a sección de Aviso
+   */
+  goToAvisoSection(step: any): void {
+    if (step && this.avisoOptions[step.selectedIndex]) {
+      const option = this.avisoOptions[step.selectedIndex];
+      const fullUrl = `/aviso${option.url}`;
+      console.log('🚀 Navegando a:', fullUrl);
+      this.router.navigate([fullUrl]);
     }
   }
 
   /**
-   * TrackBy function para mejorar performance de ngFor
+   * Navegar a sección de Situación Patrimonial
+   */
+  goToSituacionPatrimonialSection(step: any): void {
+    if (step) {
+      const visibleOptions = this.declaracionSimplificada
+        ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
+        : this.situacionPatrimonialOptions;
+      
+      if (visibleOptions[step.selectedIndex]) {
+        const option = visibleOptions[step.selectedIndex];
+        const basePath = this.declaracionSimplificada 
+          ? `/${this.tipoDeclaracion}/simplificada/situacion-patrimonial`
+          : `/${this.tipoDeclaracion}/situacion-patrimonial`;
+        const fullUrl = `${basePath}${option.url}`;
+        console.log('🚀 Navegando a:', fullUrl);
+        this.router.navigate([fullUrl]);
+      }
+    }
+  }
+
+  /**
+   * Navegar a sección de Intereses
+   */
+  goToInteresesSection(index: number): void {
+    if (this.interesesOptions[index]) {
+      const option = this.interesesOptions[index];
+      const fullUrl = `/${this.tipoDeclaracion}/intereses${option.url}`;
+      console.log('🚀 Navegando a:', fullUrl);
+      this.router.navigate([fullUrl]);
+    }
+  }
+
+  /**
+   * TrackBy para optimizar renderizado
    */
   trackByUrl(index: number, item: MenuOption): string {
     return item.url;
   }
-
-  debugStep(opt: MenuOption) {
-    console.log('🐛 DEBUG STEP:', {
-      text: opt.text,
-      url: opt.url,
-      saved: opt.saved,
-      isOptionSaved: this.isOptionSaved(opt.url),
-      localStorage: localStorage.getItem('declaracion_saved_state_aviso_false')
-    });
-  }
-} 
+}

@@ -1,80 +1,33 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormGroup, FormBuilder, Validators, FormControl,
-  AbstractControl, ValidatorFn, ValidationErrors
-} from '@angular/forms';
-import * as moment from 'moment';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { MatSelect } from '@angular/material/select';
 import { Apollo } from 'apollo-angular';
-
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  datosEmpleoCargoComisionQuery,
-  datosEmpleoCargoComisionMutation,
-  lastDatosEmpleoCargoComisionQuery,
-} from '@api/declaracion';
+import { declaracionMutation, datosEmpleoQuery, lastDeclaracionDatosEmpleo } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { Catalogo, DatosEmpleoCargoComision, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
-import AmbitoPublico from '@static/catalogos/ambitoPublicoMunicipal.json';
-import Estados from '@static/catalogos/estados.json';
-import EstadoFijo from '@static/catalogos/estadoFijo.json';
-import Municipios from '@static/catalogos/municipios.json';
-import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoEmpleo.json';
-import Paises from '@static/catalogos/paises.json';
-import entePublico from '@static/catalogos/entePublico_municipios.json';
-import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
-import { findOption } from '@utils/utils';
-import { UntilDestroy, untilDestroyed } from '@app/@core';
+import { UntilDestroy, untilDestroyed } from '@core';
+import { DeclaracionOutput, DatosEmpleo, LastDeclaracionOutput } from '@models/declaracion';
 import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-datos-empleo',
+  selector: 'app-datos-empleo-aviso',
   templateUrl: './datos-empleo.component.html',
   styleUrls: ['./datos-empleo.component.scss'],
 })
 export class DatosEmpleoAvisoComponent implements OnInit {
-
-  orden: string;
-  ambito: string;
-  aclaraciones = false;
-  datosEmpleoCargoComisionForm: FormGroup;
-  estado: Catalogo = null;
+  datosEmpleoForm: FormGroup;
   isLoading = false;
-  entePublicoCatalogo = entePublico;
-  entePublicoFiltrado = entePublico;
-  entesFiltrados: any = [];
   pushButtonSave: boolean = false;
-  entePublicoInicia: String = null;
-
-  @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
-
-  nivelOrdenGobiernoCatalogo = NivelOrdenGobierno;
-  ambitoPublicoCatalogo = AmbitoPublico;
-  estadosCatalogo = EstadoFijo;
-  municipiosCatalogo = Municipios;
-  paisesCatalogo = Paises;
-
+  
   declaracionSimplificada = false;
   tipoDeclaracion: string = null;
-  tipoDomicilio: string = null;
-
   declaracionId: string = null;
-
-  tooltipData = tooltipData;
+  
   errorMatcher = new DeclarationErrorStateMatcher();
-
-  minDate = new Date(1980, 1, 1);
-  anio: number = new Date().getFullYear();
-  mes: number = new Date().getMonth() + 1;
-  dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes - 1, this.dia);
-  minDateInicio = new Date();
-
+  
   // Flag para determinar si la información es de un registro anterior
   isFromPreviousRecord = false;
 
@@ -86,26 +39,11 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     private snackBar: MatSnackBar,
     private menuStateService: MenuStateService
   ) {
-    console.log('🏗️ DatosEmpleoAvisoComponent constructor');
-    console.log('📦 MenuStateService inyectado:', this.menuStateService);
-
-    // Exponer globalmente para debug
-    (window as any).debugMenuService = this.menuStateService;
-    (window as any).debugSaveSection = () => {
-      console.log('🔧 Guardando desde window.debugSaveSection()');
-      this.menuStateService.markSectionAsSaved(
-        '/datos-empleo',
-        'aviso',
-        this.tipoDeclaracion,
-        this.declaracionSimplificada
-      );
-    };
-
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
 
-    console.log('🔧 Configuración:', {
+    console.log('🏗️ DatosEmpleo inicializado:', {
       tipoDeclaracion: this.tipoDeclaracion,
       declaracionSimplificada: this.declaracionSimplificada,
       url: this.router.url
@@ -116,8 +54,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   confirmSaveInfo() {
-    console.log('🔔 confirmSaveInfo() llamado');
-
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: 'Guardar cambios',
@@ -130,174 +66,49 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     this.pushButtonSave = true;
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('🔔 Diálogo cerrado, resultado:', result);
       if (result) {
-        console.log('✅ Usuario confirmó, llamando saveInfo()...');
         this.saveInfo();
-      } else {
-        console.log('❌ Usuario canceló');
       }
     });
   }
 
   createForm() {
-    this.datosEmpleoCargoComisionForm = this.formBuilder.group({
-      nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      areaAdscripcionConcluye: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      nivelEmpleoCargoComisionConcluye: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaConclusionEncargo: [null, [Validators.required, this.validarFECHA]],
-      areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaTomaPosesion: [null, [Validators.required, this.validarFECHA]],
-      contratadoPorHonorarios: [null, [Validators.required]],
-      nivelEmpleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      domicilioMexico: this.formBuilder.group({
-        calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
-        coloniaLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        municipioAlcaldia: [{ disabled: true, value: null }, [Validators.required]],
-        entidadFederativa: [null, [Validators.required]],
-        codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
-      }),
-      domicilioExtranjero: this.formBuilder.group({
-        calle: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroExterior: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        numeroInterior: [null, [Validators.pattern(/^\S.*$/)]],
-        ciudadLocalidad: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        estadoProvincia: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-        pais: [null, [Validators.required]],
-        codigoPostal: [null, [Validators.required, Validators.pattern(/^\d{5}$/i)]],
-      }),
-      aclaracionesObservaciones: [
-        { disabled: true, value: '' },
-        [Validators.required, Validators.pattern(/^\S.*\S?$/)],
-      ],
-      cuentaConOtroCargoPublico: [
-        { disabled: this.tipoDeclaracion !== 'modificacion', value: null },
-        [Validators.required],
-      ],
-    });
-
-    const estado = this.datosEmpleoCargoComisionForm.get('domicilioMexico').get('entidadFederativa');
-    estado.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      const municipio = this.datosEmpleoCargoComisionForm.get('domicilioMexico').get('municipioAlcaldia');
-
-      if (value) {
-        municipio.enable();
-      } else {
-        municipio.disable();
-        municipio.reset();
-      }
-      this.estado = value;
+    this.datosEmpleoForm = this.formBuilder.group({
+      nivelOrdenGobierno: [null, [Validators.required]],
+      ambitoPublico: [null, [Validators.required]],
+      nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+      areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+      empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+      funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
+      fechaTomaPosesion: [null, [Validators.required]],
+      // Agregar más campos según tu formulario
     });
   }
 
-  validarFECHA(control: FormControl) {
-    const fechaActual = moment().startOf('day');
-
-    const fechaIni = control.root.get('fechaTomaPosesion')?.value
-      ? moment(control.root.get('fechaTomaPosesion')?.value).startOf('day')
-      : null;
-
-    const fechaFin = control.root.get('fechaConclusionEncargo')?.value
-      ? moment(control.root.get('fechaConclusionEncargo')?.value).startOf('day')
-      : null;
-
-    const fechaControl = control.value ? moment(control.value).startOf('day') : null;
-
-    if (fechaControl && fechaControl.isAfter(fechaActual)) {
-      return { fechaFutura: true };
-    }
-
-    if (fechaIni && fechaFin) {
-      if (!fechaIni.isAfter(fechaFin)) {
-        return { ordenIncorrecto: true };
-      }
-    }
-
-    return null;
-  }
-
-  fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
-    if (!datosEmpleoCargoComision) return;
-
-    // 🧠 Detectar si el registro ya está completo (ya tiene área de conclusión)
-    const registroConcluido =
-      !!datosEmpleoCargoComision.areaAdscripcionConcluye?.trim() ||
-      !!datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye?.trim() ||
-      !!datosEmpleoCargoComision.fechaConclusionEncargo;
-
-    console.log('📋 Llenando formulario:', {
-      registroConcluido,
-      areaAdscripcionConcluye: datosEmpleoCargoComision.areaAdscripcionConcluye,
-      declaracionId: this.declaracionId
-    });
-
-    if (registroConcluido) {
-      // ✅ Caso 1: Registro ya concluido → poblar todo sin modificar
-      console.log('✅ Registro COMPLETO - información del registro ACTUAL');
-      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
-      this.isFromPreviousRecord = false; // Ya fue guardado en este registro
-
-      // ✅ Marcar como guardado porque es del registro actual
-      this.menuStateService.markSectionAsSaved(
-        '/datos-empleo',
-        'aviso',
-        this.tipoDeclaracion,
-        this.declaracionSimplificada
-      );
-    } else {
-      // ⚠️ Caso 2: No hay registro previo → llenar con datos "de inicio"
-      console.log('⚠️ Registro INCOMPLETO - información del registro ANTERIOR');
-
-      if (datosEmpleoCargoComision.areaAdscripcion) {
-        datosEmpleoCargoComision.areaAdscripcionConcluye = datosEmpleoCargoComision.areaAdscripcion;
-        datosEmpleoCargoComision.areaAdscripcion = '';
-      }
-
-      if (datosEmpleoCargoComision.nivelEmpleoCargoComision) {
-        datosEmpleoCargoComision.nivelEmpleoCargoComisionConcluye =
-          datosEmpleoCargoComision.nivelEmpleoCargoComision;
-        datosEmpleoCargoComision.nivelEmpleoCargoComision = '';
-      }
-
-      datosEmpleoCargoComision.fechaTomaPosesion = null;
-      datosEmpleoCargoComision.fechaConclusionEncargo = null;
-
-      const nombreEnte = datosEmpleoCargoComision.nombreEntePublico;
-      this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision);
-      this.datosEmpleoCargoComisionForm.get('nombreEntePublico')?.setValue(nombreEnte);
-
-      this.isFromPreviousRecord = true; // Datos del registro anterior
-
-      // ❌ NO marcar como guardado porque es del registro anterior
-    }
-
-    if (datosEmpleoCargoComision.aclaracionesObservaciones) {
-      this.toggleAclaraciones(true);
-    }
-
-    this.setSelectedOptions(datosEmpleoCargoComision);
+  fillForm(datosEmpleo: DatosEmpleo) {
+    this.datosEmpleoForm.patchValue(datosEmpleo || {});
   }
 
   async getLastUserInfo() {
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
-          query: lastDatosEmpleoCargoComisionQuery,
+          query: lastDeclaracionDatosEmpleo,
         })
         .toPromise();
 
       if (errors) {
         throw errors;
       }
-
+      
+      console.log('⚪ Cargando datos del REGISTRO ANTERIOR - datos-empleo');
       this.isFromPreviousRecord = true;
-      this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
+      this.fillForm(data?.lastDeclaracion.datosEmpleo);
+      
+      // ❌ NO marcar como guardado - debe aparecer en GRIS
+      console.log('⚪ NO se marca como guardado → aparece en GRIS');
     } catch (error) {
-      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
+      console.warn('⚠️ El usuario probablemente no tiene una declaración anterior:', error.message);
     }
   }
 
@@ -305,7 +116,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     try {
       const { data, errors } = await this.apollo
         .query<DeclaracionOutput>({
-          query: datosEmpleoCargoComisionQuery,
+          query: datosEmpleoQuery,
           variables: {
             tipoDeclaracion: this.tipoDeclaracion.toUpperCase(),
             declaracionCompleta: !this.declaracionSimplificada,
@@ -318,14 +129,17 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      if (data?.declaracion.datosEmpleoCargoComision === null) {
-        this.getLastUserInfo();
+      
+      if (data?.declaracion.datosEmpleo === null) {
+        console.log('⚪ No hay datos en registro actual, cargando del anterior');
+        await this.getLastUserInfo();
       } else {
-        console.log('✅ Hay datos en registro actual - datos-empleo');
-        this.fillForm(data?.declaracion.datosEmpleoCargoComision);
-        this.isFromPreviousRecord = false; // Es del registro actual
+        console.log('🔵 Hay datos en REGISTRO ACTUAL - datos-empleo');
+        this.isFromPreviousRecord = false;
+        this.fillForm(data?.declaracion.datosEmpleo);
 
-        // ✅ Marcar como guardado porque ya existe en el registro actual
+        // ✅ Marcar como guardado - debe aparecer en AZUL
+        console.log('🔵 Marcando como guardado → aparece en AZUL');
         this.menuStateService.markSectionAsSaved(
           '/datos-empleo',
           'aviso',
@@ -334,15 +148,16 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         );
       }
     } catch (error) {
-      console.error(error);
+      console.error('❌ Error al obtener información:', error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
   formHasChanges() {
-    let url = '/aviso/datos-empleo';
-    let isDirty = this.datosEmpleoCargoComisionForm.dirty;
-    console.log(isDirty);
+    // Navegar a la siguiente sección o finalizar
+    let url = '/aviso/finalizar'; // O la siguiente sección
+    let isDirty = this.datosEmpleoForm.dirty;
+    console.log('📝 Form dirty:', isDirty);
 
     if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
@@ -355,10 +170,10 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([url + '/situacion-patrimonial/experiencia-laboral']);
+        if (result) this.router.navigate([`${url}`], { replaceUrl: true });
       });
     } else {
-      this.router.navigate([url + '/situacion-patrimonial/experiencia-laboral']);
+      this.router.navigate([url]);
     }
   }
 
@@ -383,13 +198,14 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   async saveInfo() {
     try {
       this.isLoading = true;
+
       const declaracion = {
-        datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
+        datosEmpleo: this.datosEmpleoForm.value,
       };
 
       const { errors } = await this.apollo
         .mutate({
-          mutation: datosEmpleoCargoComisionMutation,
+          mutation: declaracionMutation,
           variables: {
             id: this.declaracionId,
             declaracion,
@@ -403,73 +219,25 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
       this.isLoading = false;
 
-      // ✅ CRÍTICO: Solo marcar como guardado si NO es del registro anterior
-      if (!this.isFromPreviousRecord) {
-        console.log('✅ Guardando información del REGISTRO ACTUAL - datos-empleo');
-        this.menuStateService.markSectionAsSaved(
-          '/datos-empleo',
-          'aviso',
-          this.tipoDeclaracion,
-          this.declaracionSimplificada
-        );
-      } else {
-        console.log('⚠️ No marcar como guardado - es información del registro ANTERIOR');
-      }
+      // ✅ SIEMPRE marcar como guardado después de guardar exitosamente
+      // Esto cambiará el color del menú de GRIS a AZUL
+      console.log('✅ Guardando información en REGISTRO ACTUAL - datos-empleo');
+      console.log('🔵 Marcando como guardado → cambia a AZUL');
+      
+      this.menuStateService.markSectionAsSaved(
+        '/datos-empleo',
+        'aviso',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
 
-      // Marcar que ya no es del registro anterior después de guardar
+      // Marcar que ya no es del registro anterior
       this.isFromPreviousRecord = false;
 
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
-      console.error('❌ Error en saveInfo:', error);
+      console.error('❌ Error al guardar:', error);
       this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
-  }
-
-  setSelectedOptions(datosEmpleoCargoComision: DatosEmpleoCargoComision) {
-    const { domicilioExtranjero, domicilioMexico } = datosEmpleoCargoComision ?? {};
-
-    if (domicilioMexico) {
-      this.datosEmpleoCargoComisionForm
-        .get('domicilioMexico.entidadFederativa')
-        .setValue(findOption(this.estadosCatalogo, domicilioMexico.entidadFederativa?.clave));
-      this.datosEmpleoCargoComisionForm
-        .get('domicilioMexico.municipioAlcaldia')
-        .setValue(
-          findOption(this.municipiosCatalogo[this.estado?.clave] || [], domicilioMexico.municipioAlcaldia?.clave)
-        );
-      this.tipoDomicilioInput.writeValue('MEXICO');
-      this.tipoDomicilioChanged('MEXICO');
-    } else if (domicilioExtranjero) {
-      this.tipoDomicilioInput.writeValue('EXTRANJERO');
-      this.tipoDomicilioChanged('EXTRANJERO');
-    }
-  }
-
-  tipoDomicilioChanged(value: string) {
-    this.tipoDomicilio = value;
-    const notSelectedType = this.tipoDomicilio === 'MEXICO' ? 'domicilioExtranjero' : 'domicilioMexico';
-    const selectedType = this.tipoDomicilio === 'EXTRANJERO' ? 'domicilioExtranjero' : 'domicilioMexico';
-
-    const notSelected = this.datosEmpleoCargoComisionForm.get(notSelectedType);
-    notSelected.disable();
-    notSelected.reset();
-
-    this.datosEmpleoCargoComisionForm.get(selectedType).enable();
-  }
-
-  toggleAclaraciones(value: boolean) {
-    const aclaraciones = this.datosEmpleoCargoComisionForm.get('aclaracionesObservaciones');
-    if (value) {
-      aclaraciones.enable();
-    } else {
-      aclaraciones.disable();
-      aclaraciones.reset();
-    }
-    this.aclaraciones = value;
-  }
-
-  entePublicoChanged(value: string) {
-    this.datosEmpleoCargoComisionForm.get('nombreEntePublico').setValue(value);
   }
 }
