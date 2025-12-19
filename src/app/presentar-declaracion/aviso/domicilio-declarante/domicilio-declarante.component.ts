@@ -176,11 +176,12 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
 
         // ✅ Marcar como guardado porque ya existe en el registro actual
         this.menuStateService.markSectionAsSaved(
-          '/domicilio-declarante',
+          '/aviso/domicilio-declarante',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
+
       }
     } catch (error) {
       console.error(error);

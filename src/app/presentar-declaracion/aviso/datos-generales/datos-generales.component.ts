@@ -232,7 +232,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
         // ✅ Marcar como guardado porque ya existe en el registro actual
         this.menuStateService.markSectionAsSaved(
-          '/datos-generales',
+          '/aviso/datos-generales',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada
@@ -322,7 +322,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       if (!this.isFromPreviousRecord) {
         console.log('✅ Guardando información del REGISTRO ACTUAL - datos-generales');
         this.menuStateService.markSectionAsSaved(
-          '/datos-generales',
+          '/aviso/datos-generales',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada

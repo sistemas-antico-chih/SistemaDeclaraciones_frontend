@@ -94,7 +94,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     (window as any).debugSaveSection = () => {
       console.log('🔧 Guardando desde window.debugSaveSection()');
       this.menuStateService.markSectionAsSaved(
-        '/datos-empleo',
+        '/aviso/datos-empleo',
         'aviso',
         this.tipoDeclaracion,
         this.declaracionSimplificada
@@ -243,7 +243,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
       // ✅ Marcar como guardado porque es del registro actual
       this.menuStateService.markSectionAsSaved(
-        '/datos-empleo',
+        '/aviso/datos-empleo',
         'aviso',
         this.tipoDeclaracion,
         this.declaracionSimplificada
@@ -327,7 +327,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
         // ✅ Marcar como guardado porque ya existe en el registro actual
         this.menuStateService.markSectionAsSaved(
-          '/datos-empleo',
+          '/aviso/datos-empleo',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada
@@ -407,7 +407,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       if (!this.isFromPreviousRecord) {
         console.log('✅ Guardando información del REGISTRO ACTUAL - datos-empleo');
         this.menuStateService.markSectionAsSaved(
-          '/datos-empleo',
+          '/aviso/datos-empleo',
           'aviso',
           this.tipoDeclaracion,
           this.declaracionSimplificada
