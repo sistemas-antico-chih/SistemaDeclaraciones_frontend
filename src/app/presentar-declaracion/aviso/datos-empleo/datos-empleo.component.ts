@@ -30,6 +30,7 @@ import entePublico from '@static/catalogos/entePublico_municipios.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { findOption } from '@utils/utils';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -75,12 +76,16 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
   minDateInicio = new Date();
 
+  // Flag para determinar si la información es de un registro anterior
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -267,8 +272,12 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
+      console.log('⚪ Cargando datos del REGISTRO ANTERIOR - datos-empleo');
+      this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
+      
+      // ❌ NO marcar como guardado - debe aparecer en GRIS
+      console.log('⚪ NO se marca como guardado → aparece en GRIS');
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
       // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -293,9 +302,19 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.datosEmpleoCargoComision === null) {
-        this.getLastUserInfo();
+        console.log('⚪ No hay datos en registro actual, cargando del anterior');
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.fillForm(data?.declaracion.datosEmpleoCargoComision);
+        // ✅ Marcar como guardado - debe aparecer en AZUL
+        console.log('🔵 Marcando como guardado → aparece en AZUL');
+        this.menuStateService.markSectionAsSaved(
+          '/datos-empleo',
+          'aviso',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -304,7 +323,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   formHasChanges() {
-    let url = '/aviso/datos-empleo';
+    //let url = '/aviso/datos-empleo';
     //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosEmpleoCargoComisionForm.dirty;
     console.log(isDirty);
@@ -369,6 +388,21 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       }
 
       this.isLoading = false;
+
+      // ✅ SIEMPRE marcar como guardado después de guardar exitosamente
+      // Esto cambiará el color del menú de GRIS a AZUL
+      console.log('✅ Guardando información en REGISTRO ACTUAL - datos-empleo');
+      console.log('🔵 Marcando como guardado → cambia a AZUL');
+      
+      this.menuStateService.markSectionAsSaved(
+        '/datos-empleo',
+        'aviso',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      // Marcar que ya no es del registro anterior
+      this.isFromPreviousRecord = false;
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
       console.log(error);

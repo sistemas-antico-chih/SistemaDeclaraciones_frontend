@@ -1,33 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { Apollo } from 'apollo-angular';
+
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { declaracionMutation, datosGeneralesQuery, lastDeclaracionDatosGenerales } from '@api/declaracion';
+
+import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
-import { DeclaracionOutput, DatosGenerales, LastDeclaracionOutput } from '@models/declaracion';
+import { DatosGenerales, DeclaracionOutput, LastDeclaracionOutput } from '@models/declaracion';
+import Nacionalidades from '@static/catalogos/nacionalidades.json';
+import Paises from '@static/catalogos/paisesMX.json';
+import SituacionPersonalEstadoCivil from '@static/catalogos/situacionPersonalEstadoCivil.json';
+import RegimenMatrimonial from '@static/catalogos/regimenMatrimonial.json';
+import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-generales';
+import { findOption } from '@utils/utils';
 import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-datos-generales-aviso',
+  selector: 'app-datos-generales',
   templateUrl: './datos-generales.component.html',
   styleUrls: ['./datos-generales.component.scss'],
 })
 export class DatosGeneralesAvisoComponent implements OnInit {
+  array_anio_ejercicio: Array<number> = [];
+  aclaraciones = false;
   datosGeneralesForm: FormGroup;
   isLoading = false;
+  currentYear = new Date().getFullYear();
+  anio_ejercicio: number = null;
   pushButtonSave: boolean = false;
-  
+
+  @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
+
+  nacionalidadesCatalogo = Nacionalidades;
+  paisesCatalogo = Paises;
+  situacionPersonalEstadoCivilCatalogo = SituacionPersonalEstadoCivil;
+  regimenMatrimonialCatalogo = RegimenMatrimonial;
+
   declaracionSimplificada = false;
   tipoDeclaracion: string = null;
   declaracionId: string = null;
-  
+
+  tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
-  
+
   // Flag para determinar si la información es de un registro anterior
   isFromPreviousRecord = false;
 
@@ -43,14 +64,13 @@ export class DatosGeneralesAvisoComponent implements OnInit {
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
 
-    console.log('🏗️ DatosGenerales inicializado:', {
-      tipoDeclaracion: this.tipoDeclaracion,
-      declaracionSimplificada: this.declaracionSimplificada,
-      url: this.router.url
-    });
+    for (let index = 0; index < 5; index++) {
+      this.array_anio_ejercicio.push(this.currentYear - index);
+    }
 
     this.createForm();
     this.getUserInfo();
+    this.getUserDataQuery();
   }
 
   confirmSaveInfo() {
@@ -74,21 +94,92 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
   createForm() {
     this.datosGeneralesForm = this.formBuilder.group({
-      nombre: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-      primerApellido: [null, [Validators.required, Validators.pattern(/^\S.*$/)]],
-      segundoApellido: [null, [Validators.pattern(/^\S.*$/)]],
-      curp: [null, [Validators.required, Validators.pattern(/^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]\d$/)]],
-      rfc: [null, [Validators.required, Validators.pattern(/^[A-Z]{4}\d{6}[A-Z0-9]{3}$/)]],
-      // Agregar más campos según tu formulario
+      nombre: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]], //no side white spaces
+      primerApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
+      segundoApellido: ['', [Validators.pattern(/^\S.*\S$/)]],
+      curp: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(
+            /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
+          ),
+        ],
+      ],
+      rfc: this.formBuilder.group({
+        rfc: [
+          null,
+          [
+            Validators.required,
+            Validators.pattern(/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01]))$/i),
+          ],
+        ],
+        homoClave: [null, [Validators.required, Validators.pattern(/^([A-Z\d]{2})([A\d])$/i)]],
+      }),
+      //rfc con homoclave /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/i
+      correoElectronico: this.formBuilder.group({
+        institucional: [null, [Validators.email]],
+        personal: [null, [Validators.required, Validators.email]],
+      }),
+      telefono: this.formBuilder.group({
+        casa: [null, [Validators.pattern(/^\d{10}$/)]],
+        celularPersonal: [null, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      }),
+      situacionPersonalEstadoCivil: [null, [Validators.required]],
+      regimenMatrimonial: [{ disabled: true, value: null }, [Validators.required]],
+      paisNacimiento: [null, [Validators.required]],
+      nacionalidad: [null, [Validators.required, Validators.pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/i)]], //solo letras, incluyendo acentos
+      aclaracionesObservaciones: [{ disabled: true, value: null }, [Validators.required, Validators.pattern(/^\S.*$/)]],
+    });
+
+    const situacionPersonal = this.datosGeneralesForm.get('situacionPersonalEstadoCivil');
+    situacionPersonal.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      const regimenMatrimonial = this.datosGeneralesForm.get('regimenMatrimonial');
+
+      if (value?.clave === 'CAS') {
+        regimenMatrimonial.enable();
+      } else {
+        regimenMatrimonial.disable();
+        regimenMatrimonial.reset();
+      }
     });
   }
 
   fillForm(datosGenerales: DatosGenerales) {
+    console.log('📋 [DATOS-GENERALES] fillForm() llamado:', {
+      tieneRegistro: !!datosGenerales,
+      isFromPreviousRecord: this.isFromPreviousRecord,
+      declaracionId: this.declaracionId
+    });
+
     this.datosGeneralesForm.patchValue(datosGenerales || {});
+
+    if (datosGenerales?.aclaracionesObservaciones) {
+      this.toggleAclaraciones(true);
+    }
+
+    if (datosGenerales?.regimenMatrimonial?.clave === 'OTR') {
+      this.otroRegimenMatrimonial.nativeElement.value = datosGenerales?.regimenMatrimonial?.valor;
+    }
+
+    this.setSelectedOptions();
+
+    console.log('📋 [DATOS-GENERALES] fillForm() terminado, isFromPreviousRecord:', this.isFromPreviousRecord);
+  }
+
+  async getUserDataQuery() {
+    const credentials = JSON.parse(localStorage.getItem('credentials'));
+    const rfc = credentials.user.rfc.slice(0, 10);
+    const homo = credentials.user.rfc.slice(10, 13);
+    const dataUser = { ...credentials.user, rfc: { rfc, homoClave: homo } };
+
+    this.datosGeneralesForm.patchValue({ ...dataUser } || {});
   }
 
   async getLastUserInfo() {
     try {
+      console.log('🔍 [DATOS-GENERALES] getLastUserInfo() - Buscando registro anterior');
+
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
           query: lastDeclaracionDatosGenerales,
@@ -98,17 +189,19 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-      
+
       console.log('⚪ Cargando datos del REGISTRO ANTERIOR - datos-generales');
       this.isFromPreviousRecord = true;
+      console.log('⚠️ [DATOS-GENERALES] Marcando isFromPreviousRecord = true');
+
       this.fillForm(data?.lastDeclaracion.datosGenerales);
-      
-      // ❌ NO marcar como guardado - debe aparecer en GRIS
+
       console.log('⚪ NO se marca como guardado → aparece en GRIS');
     } catch (error) {
-      console.warn('⚠️ El usuario probablemente no tiene una declaración anterior:', error.message);
+      console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
     }
   }
+
 
   async getUserInfo() {
     try {
@@ -127,16 +220,17 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      
-      if (data?.declaracion.datosGenerales === null) {
-        console.log('⚪ No hay datos en registro actual, cargando del anterior');
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
+
+      if (data.declaracion.datosGenerales === null) {
+        console.log('⚠️ No hay datos en registro actual, cargando del anterior');
         await this.getLastUserInfo();
       } else {
-        console.log('🔵 Hay datos en REGISTRO ACTUAL - datos-generales');
-        this.isFromPreviousRecord = false;
+        console.log('✅ Hay datos en registro actual - datos-generales');
         this.fillForm(data?.declaracion.datosGenerales);
+        this.isFromPreviousRecord = false; // Es del registro actual
 
-        // ✅ Marcar como guardado - debe aparecer en AZUL
+        // ✅ Marcar como guardado porque ya existe en el registro actual
         console.log('🔵 Marcando como guardado → aparece en AZUL');
         this.menuStateService.markSectionAsSaved(
           '/datos-generales',
@@ -146,13 +240,35 @@ export class DatosGeneralesAvisoComponent implements OnInit {
         );
       }
     } catch (error) {
-      console.error('❌ Error al obtener información:', error);
+      console.log(error);
       this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
     }
   }
 
+  get finalForm() {
+    const form = JSON.parse(JSON.stringify(this.datosGeneralesForm.value)); // Deep copy
+
+    if (form.regimenMatrimonial?.clave === 'OTR') {
+      form.regimenMatrimonial.valor = this.otroRegimenMatrimonial.nativeElement.value;
+    }
+
+    return form;
+  }
+
+  inputsAreValid(): boolean {
+    if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
+      return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
+    }
+
+    return typeof this.anio_ejercicio === 'number';
+    // return true;
+  }
+
+
+
   formHasChanges() {
     let url = '/aviso/domicilio-declarante';
+    //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosGeneralesForm.dirty;
     console.log('📝 Form dirty:', isDirty);
 
@@ -167,23 +283,11 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([`${url}`], { replaceUrl: true });
+        if (result) this.router.navigate([url]);
       });
     } else {
       this.router.navigate([url]);
     }
-  }
-
-  ngOnInit(): void {
-    this.pushButtonSave = false;
-    const dialogRef = this.dialog.open(DialogComponentMensaje, {
-      data: {
-        title: '',
-        messageAviso: `Recuerde Guardar la información del registro,`,
-        messageAviso2: `dando clic en el botón correspondiente`,
-        trueText: 'Aceptar',
-      },
-    });
   }
 
   openSnackBar(message: string, action: string = null) {
@@ -195,9 +299,9 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   async saveInfo() {
     try {
       this.isLoading = true;
-
       const declaracion = {
-        datosGenerales: this.datosGeneralesForm.value,
+        datosGenerales: this.finalForm,
+        anioEjercicio: this.anio_ejercicio,
       };
 
       const { errors } = await this.apollo
@@ -218,7 +322,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
       // ✅ SIEMPRE marcar como guardado después de guardar exitosamente
       // Esto cambiará el color del menú de GRIS a AZUL
-      console.log('✅ Guardando información en REGISTRO ACTUAL - datos-generales');
+      console.log('✅ Guardando información en REGISTRO ACTUAL - datos-empleo');
       console.log('🔵 Marcando como guardado → cambia a AZUL');
       
       this.menuStateService.markSectionAsSaved(
@@ -230,11 +334,51 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
       // Marcar que ya no es del registro anterior
       this.isFromPreviousRecord = false;
-
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
-      console.error('❌ Error al guardar:', error);
+      console.log(error);
       this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
     }
   }
+
+  setSelectedOptions() {
+    const { situacionPersonalEstadoCivil, regimenMatrimonial } = this.datosGeneralesForm.value;
+
+    if (situacionPersonalEstadoCivil) {
+      this.datosGeneralesForm
+        .get('situacionPersonalEstadoCivil')
+        .setValue(findOption(this.situacionPersonalEstadoCivilCatalogo, situacionPersonalEstadoCivil.clave));
+    }
+
+    if (regimenMatrimonial) {
+      this.datosGeneralesForm
+        .get('regimenMatrimonial')
+        .setValue(findOption(this.regimenMatrimonialCatalogo, regimenMatrimonial.clave));
+    }
+  }
+
+  toggleAclaraciones(value: boolean) {
+    const aclaraciones = this.datosGeneralesForm.get('aclaracionesObservaciones');
+    if (value) {
+      aclaraciones.enable();
+    } else {
+      aclaraciones.disable();
+      aclaraciones.reset();
+    }
+    this.aclaraciones = value;
+  }
+
+  ngOnInit(): void {
+    this.pushButtonSave = false;
+    const dialogRef = this.dialog.open(DialogComponentMensaje, {
+      data: {
+        title: '',
+        messageAviso: `Recuerde Guardar la información del registro,`,
+        messageAviso2: `dando clic en el botón correspondiente`,
+        trueText: 'Aceptar',
+        //falseText: '',
+      },
+    });
+  }
 }
+
