@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -54,7 +54,8 @@ export class ShellComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private breakpointObserver: BreakpointObserver,
-    private menuStateService: MenuStateService
+    private menuStateService: MenuStateService,
+    private cdr: ChangeDetectorRef
   ) {
     console.log('🚀 ShellComponent inicializado');
     
@@ -76,6 +77,11 @@ export class ShellComponent implements OnInit, OnDestroy {
       // Extraer info cada vez que cambia la ruta
       this.extractDeclaracionInfo();
       
+      // Forzar detección de cambios para actualizar el menú
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      }, 100);
+      
       if (this.isMobile) {
         this.sidenav?.close();
       }
@@ -95,7 +101,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     
     // Cargar el estado guardado desde localStorage
     console.log('📦 Cargando estado guardado...');
-    this.menuStateService.loadSavedState(this.tipoDeclaracion, this.declaracionSimplificada);
+    const savedState = this.menuStateService.loadSavedState(this.tipoDeclaracion, this.declaracionSimplificada);
+    console.log('📦 Estado cargado:', savedState);
     
     // Suscribirse a cambios en el estado guardado
     const stateSub = this.menuStateService.savedState$
@@ -103,8 +110,18 @@ export class ShellComponent implements OnInit, OnDestroy {
         console.log('🔄 Estado del menú actualizado:', state);
         console.log('🔍 Tipo declaración:', this.tipoDeclaracion);
         console.log('🔍 Declaración simplificada:', this.declaracionSimplificada);
+        
+        // Forzar re-evaluación del menú
+        this.cdr.detectChanges();
       });
     this.subscriptions.push(stateSub);
+    
+    // Debug inicial: mostrar estado de cada opción
+    console.log('🎨 Estado inicial del menú:');
+    this.avisoOptions.forEach(opt => {
+      const isCurrent = this.isCurrentRecord(opt.url);
+      console.log(`  ${opt.text}: ${isCurrent ? '🔵 AZUL' : '⚪ GRIS'}`);
+    });
   }
 
   ngOnDestroy(): void {
@@ -132,7 +149,7 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * LÓGICA CORREGIDA:
+   * LÓGICA CORREGIDA CON DEBUG:
    * Determina si una opción es del REGISTRO ACTUAL (azul) o ANTERIOR (gris)
    * 
    * true = 🔵 AZUL (registro ACTUAL - datos guardados recientemente)
@@ -150,8 +167,7 @@ export class ShellComponent implements OnInit, OnDestroy {
       section = 'situacionPatrimonial';
     }
 
-    // Si está en localStorage = registro ACTUAL → AZUL (true)
-    // Si NO está en localStorage = registro ANTERIOR → GRIS (false)
+    // Verificar en localStorage
     const isCurrentRecord = this.menuStateService.isUrlSaved(
       url, 
       section,
@@ -159,12 +175,19 @@ export class ShellComponent implements OnInit, OnDestroy {
       this.declaracionSimplificada
     );
 
-    console.log(`🔍 Verificando "${url}":`, {
+    // Debug detallado
+    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
+    const rawState = localStorage.getItem(storageKey);
+    
+    console.log(`🔍 isCurrentRecord("${url}"):`, {
       section,
-      isCurrentRecord,
       tipoDeclaracion: this.tipoDeclaracion,
       declaracionSimplificada: this.declaracionSimplificada,
-      color: isCurrentRecord ? '🔵 AZUL (actual)' : '⚪ GRIS (anterior)'
+      storageKey,
+      rawState,
+      parsedState: rawState ? JSON.parse(rawState) : null,
+      isCurrentRecord,
+      resultado: isCurrentRecord ? '🔵 AZUL (actual)' : '⚪ GRIS (anterior)'
     });
 
     return isCurrentRecord;
@@ -176,13 +199,14 @@ export class ShellComponent implements OnInit, OnDestroy {
   goToAvisoSection(event: any): void {
     console.log('🚦 goToAvisoSection event:', event);
     
-    // El evento puede venir como { selectedIndex: number } o directamente el step
     const selectedIndex = event?.selectedIndex ?? event;
     
     if (selectedIndex !== undefined && this.avisoOptions[selectedIndex]) {
       const option = this.avisoOptions[selectedIndex];
       const fullUrl = `/aviso${option.url}`;
       console.log('🚀 Navegando a:', fullUrl, 'desde index:', selectedIndex);
+      
+      // NO marcar como guardado aquí - solo navegar
       this.router.navigate([fullUrl]);
     } else {
       console.warn('⚠️ No se pudo navegar, selectedIndex:', selectedIndex);
