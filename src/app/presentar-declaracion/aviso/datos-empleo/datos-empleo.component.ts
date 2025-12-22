@@ -275,7 +275,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       console.log('⚪ Cargando datos del REGISTRO ANTERIOR - datos-empleo');
       this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
-      
+
       // ❌ NO marcar como guardado - debe aparecer en GRIS
       console.log('⚪ NO se marca como guardado → aparece en GRIS');
     } catch (error) {
@@ -338,11 +338,13 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         },
       });
 
+      /*
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) this.router.navigate([url + '/situacion-patrimonial/experiencia-laboral']);
+        if (result) this.router.navigate([url]);
       });
     } else {
-      this.router.navigate([url + '/situacion-patrimonial/experiencia-laboral']);
+      this.router.navigate([url]);
+    }*/
     }
   }
 
@@ -393,7 +395,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       // Esto cambiará el color del menú de GRIS a AZUL
       console.log('✅ Guardando información en REGISTRO ACTUAL - datos-empleo');
       console.log('🔵 Marcando como guardado → cambia a AZUL');
-      
+
       this.menuStateService.markSectionAsSaved(
         '/datos-empleo',
         'aviso',
