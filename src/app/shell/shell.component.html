@@ -12,7 +12,7 @@
           <mat-panel-title>I. Aviso por cambio de dependencia</mat-panel-title>
         </mat-expansion-panel-header>
         
-        <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedStep)">
+        <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedIndex)">
           <mat-step
             *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
             [label]="opt.text"
@@ -34,7 +34,7 @@
           <mat-panel-title>I. Declaración de situación patrimonial</mat-panel-title>
         </mat-expansion-panel-header>
         
-        <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedStep)">
+        <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedIndex)">
           <ng-container *ngFor="let opt of situacionPatrimonialOptions; trackBy: trackByUrl">
             <mat-step 
               *ngIf="!declaracionSimplificada || opt.simplificada" 

@@ -42,7 +42,6 @@ export class ShellComponent implements OnInit, OnDestroy {
     { text: '3. Datos curriculares del declarante', url: '/datos-curriculares', simplificada: false },
     { text: '4. Datos del empleo, cargo o comisión', url: '/datos-empleo', simplificada: true },
     { text: '5. Experiencia laboral', url: '/experiencia-laboral', simplificada: false },
-    // Agregar más opciones según tu estructura
   ];
   
   // Opciones del menú de Intereses
@@ -50,7 +49,6 @@ export class ShellComponent implements OnInit, OnDestroy {
     { text: '1. Participación en empresas', url: '/participacion-empresas' },
     { text: '2. Participación en instituciones', url: '/participacion-instituciones' },
     { text: '3. Socios o accionistas', url: '/socios-accionistas' },
-    // Agregar más opciones según tu estructura
   ];
 
   constructor(
@@ -74,6 +72,9 @@ export class ShellComponent implements OnInit, OnDestroy {
     ).subscribe((event: any) => {
       this.url = event.url;
       console.log('📍 Navegación a:', this.url);
+      
+      // Extraer info cada vez que cambia la ruta
+      this.extractDeclaracionInfo();
       
       if (this.isMobile) {
         this.sidenav?.close();
@@ -131,9 +132,11 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Determina si una opción debe mostrarse en GRIS (guardada)
-   * true = GRIS (tiene datos guardados en el registro actual)
-   * false = AZUL (no tiene datos o tiene datos del registro anterior)
+   * LÓGICA CORREGIDA:
+   * Determina si una opción es del REGISTRO ACTUAL (azul) o ANTERIOR (gris)
+   * 
+   * true = 🔵 AZUL (registro ACTUAL - datos guardados recientemente)
+   * false = ⚪ GRIS (registro ANTERIOR - datos precargados o sin datos)
    */
   isCurrentRecord(url: string): boolean {
     // Determinar la sección según el tipo de declaración actual
@@ -147,7 +150,9 @@ export class ShellComponent implements OnInit, OnDestroy {
       section = 'situacionPatrimonial';
     }
 
-    const isSaved = this.menuStateService.isUrlSaved(
+    // Si está en localStorage = registro ACTUAL → AZUL (true)
+    // Si NO está en localStorage = registro ANTERIOR → GRIS (false)
+    const isCurrentRecord = this.menuStateService.isUrlSaved(
       url, 
       section,
       this.tipoDeclaracion,
@@ -156,56 +161,71 @@ export class ShellComponent implements OnInit, OnDestroy {
 
     console.log(`🔍 Verificando "${url}":`, {
       section,
-      isSaved,
+      isCurrentRecord,
       tipoDeclaracion: this.tipoDeclaracion,
       declaracionSimplificada: this.declaracionSimplificada,
-      color: isSaved ? '⚪ GRIS' : '🔵 AZUL'
+      color: isCurrentRecord ? '🔵 AZUL (actual)' : '⚪ GRIS (anterior)'
     });
 
-    return isSaved;
+    return isCurrentRecord;
   }
 
   /**
-   * Navegar a sección de Aviso
+   * Navegar a sección de Aviso - CORREGIDO
    */
-  goToAvisoSection(step: any): void {
-    if (step && this.avisoOptions[step.selectedIndex]) {
-      const option = this.avisoOptions[step.selectedIndex];
+  goToAvisoSection(event: any): void {
+    console.log('🚦 goToAvisoSection event:', event);
+    
+    // El evento puede venir como { selectedIndex: number } o directamente el step
+    const selectedIndex = event?.selectedIndex ?? event;
+    
+    if (selectedIndex !== undefined && this.avisoOptions[selectedIndex]) {
+      const option = this.avisoOptions[selectedIndex];
       const fullUrl = `/aviso${option.url}`;
-      console.log('🚀 Navegando a:', fullUrl);
+      console.log('🚀 Navegando a:', fullUrl, 'desde index:', selectedIndex);
       this.router.navigate([fullUrl]);
+    } else {
+      console.warn('⚠️ No se pudo navegar, selectedIndex:', selectedIndex);
     }
   }
 
   /**
-   * Navegar a sección de Situación Patrimonial
+   * Navegar a sección de Situación Patrimonial - CORREGIDO
    */
-  goToSituacionPatrimonialSection(step: any): void {
-    if (step) {
+  goToSituacionPatrimonialSection(event: any): void {
+    console.log('🚦 goToSituacionPatrimonialSection event:', event);
+    
+    const selectedIndex = event?.selectedIndex ?? event;
+    
+    if (selectedIndex !== undefined) {
       const visibleOptions = this.declaracionSimplificada
         ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
         : this.situacionPatrimonialOptions;
       
-      if (visibleOptions[step.selectedIndex]) {
-        const option = visibleOptions[step.selectedIndex];
+      if (visibleOptions[selectedIndex]) {
+        const option = visibleOptions[selectedIndex];
         const basePath = this.declaracionSimplificada 
           ? `/${this.tipoDeclaracion}/simplificada/situacion-patrimonial`
           : `/${this.tipoDeclaracion}/situacion-patrimonial`;
         const fullUrl = `${basePath}${option.url}`;
-        console.log('🚀 Navegando a:', fullUrl);
+        console.log('🚀 Navegando a:', fullUrl, 'desde index:', selectedIndex);
         this.router.navigate([fullUrl]);
       }
     }
   }
 
   /**
-   * Navegar a sección de Intereses
+   * Navegar a sección de Intereses - CORREGIDO
    */
-  goToInteresesSection(index: number): void {
-    if (this.interesesOptions[index]) {
-      const option = this.interesesOptions[index];
+  goToInteresesSection(event: any): void {
+    console.log('🚦 goToInteresesSection event:', event);
+    
+    const selectedIndex = event?.selectedIndex ?? event;
+    
+    if (selectedIndex !== undefined && this.interesesOptions[selectedIndex]) {
+      const option = this.interesesOptions[selectedIndex];
       const fullUrl = `/${this.tipoDeclaracion}/intereses${option.url}`;
-      console.log('🚀 Navegando a:', fullUrl);
+      console.log('🚀 Navegando a:', fullUrl, 'desde index:', selectedIndex);
       this.router.navigate([fullUrl]);
     }
   }
