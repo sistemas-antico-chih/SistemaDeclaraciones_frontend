@@ -323,7 +323,7 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   }
 
   formHasChanges() {
-    let url = '/aviso/datos-empleo';
+    //let url = '/aviso/datos-empleo';
     //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosEmpleoCargoComisionForm.dirty;
     console.log(isDirty);
@@ -338,11 +338,13 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         },
       });
       
+      /*
       dialogRef.afterClosed().subscribe((result) => {
         if (result) this.router.navigate([url]);
       });
     } else {
       this.router.navigate([url]);
+    */
     }
   }
 

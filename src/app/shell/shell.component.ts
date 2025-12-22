@@ -135,7 +135,7 @@ export class ShellComponent implements OnInit, OnDestroy {
    * true = GRIS (tiene datos guardados en el registro actual)
    * false = AZUL (no tiene datos o tiene datos del registro anterior)
    */
-  isOptionSaved(url: string): boolean {
+  isCurrentRecord(url: string): boolean {
     // Determinar la sección según el tipo de declaración actual
     let section: 'situacionPatrimonial' | 'intereses' | 'aviso';
     
