@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ViewChildren, QueryList, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatStep } from '@angular/material/stepper';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -17,8 +18,9 @@ interface MenuOption {
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss']
 })
-export class ShellComponent implements OnInit, OnDestroy {
+export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('sidenav') sidenav!: MatSidenav;
+  @ViewChildren(MatStep) steps!: QueryList<MatStep>;
   
   isMobile = false;
   url: string = '';
@@ -55,7 +57,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     private router: Router,
     private breakpointObserver: BreakpointObserver,
     private menuStateService: MenuStateService,
-    private cdr: ChangeDetectorRef
+    private renderer: Renderer2
   ) {
     console.log('🚀 ShellComponent inicializado');
     
@@ -77,9 +79,9 @@ export class ShellComponent implements OnInit, OnDestroy {
       // Extraer info cada vez que cambia la ruta
       this.extractDeclaracionInfo();
       
-      // Forzar detección de cambios para actualizar el menú
+      // Actualizar colores después de la navegación
       setTimeout(() => {
-        this.cdr.detectChanges();
+        this.updateStepColors();
       }, 100);
       
       if (this.isMobile) {
@@ -108,19 +110,25 @@ export class ShellComponent implements OnInit, OnDestroy {
     const stateSub = this.menuStateService.savedState$
       .subscribe(state => {
         console.log('🔄 Estado del menú actualizado:', state);
-        console.log('🔍 Tipo declaración:', this.tipoDeclaracion);
-        console.log('🔍 Declaración simplificada:', this.declaracionSimplificada);
-        
-        // Forzar re-evaluación del menú
-        this.cdr.detectChanges();
+        // Actualizar colores cuando cambia el estado
+        setTimeout(() => {
+          this.updateStepColors();
+        }, 100);
       });
     this.subscriptions.push(stateSub);
+  }
+
+  ngAfterViewInit(): void {
+    // Aplicar colores iniciales después de que la vista esté lista
+    setTimeout(() => {
+      this.updateStepColors();
+    }, 200);
     
-    // Debug inicial: mostrar estado de cada opción
-    console.log('🎨 Estado inicial del menú:');
-    this.avisoOptions.forEach(opt => {
-      const isCurrent = this.isCurrentRecord(opt.url);
-      console.log(`  ${opt.text}: ${isCurrent ? '🔵 AZUL' : '⚪ GRIS'}`);
+    // Observar cambios en los steps
+    this.steps.changes.subscribe(() => {
+      setTimeout(() => {
+        this.updateStepColors();
+      }, 100);
     });
   }
 
@@ -135,28 +143,72 @@ export class ShellComponent implements OnInit, OnDestroy {
     const urlChunks = this.router.url.split('/').filter(chunk => chunk);
     
     if (urlChunks.length > 0) {
-      this.tipoDeclaracion = urlChunks[0]; // 'aviso', 'inicial', 'modificacion', etc.
+      this.tipoDeclaracion = urlChunks[0];
       this.declaracionSimplificada = urlChunks[1] === 'simplificada';
       this.declaracionCompleta = !this.declaracionSimplificada;
       
       console.log('📋 Info extraída:', {
         tipoDeclaracion: this.tipoDeclaracion,
         declaracionSimplificada: this.declaracionSimplificada,
-        url: this.router.url,
-        urlChunks
+        url: this.router.url
       });
     }
   }
 
   /**
-   * LÓGICA CORREGIDA CON DEBUG:
+   * MÉTODO CLAVE: Actualiza los colores de los steps
+   */
+  private updateStepColors(): void {
+    if (!this.steps || this.steps.length === 0) {
+      console.log('⚠️ No hay steps disponibles aún');
+      return;
+    }
+
+    console.log('🎨 Actualizando colores de steps, total:', this.steps.length);
+
+    let options: MenuOption[] = [];
+    
+    // Determinar qué opciones usar según el tipo de declaración
+    if (this.tipoDeclaracion === 'aviso') {
+      options = this.avisoOptions;
+    } else if (this.url.includes('/intereses/')) {
+      options = this.interesesOptions;
+    } else {
+      options = this.declaracionSimplificada
+        ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
+        : this.situacionPatrimonialOptions;
+    }
+
+    // Aplicar clases a cada step
+    this.steps.forEach((step, index) => {
+      if (index < options.length) {
+        const option = options[index];
+        const isCurrentRecord = this.isCurrentRecord(option.url);
+        
+        // Obtener el elemento nativeElement del step
+        const stepElement = (step as any)._elementRef?.nativeElement;
+        
+        if (stepElement) {
+          if (isCurrentRecord) {
+            // AZUL - registro actual
+            this.renderer.removeClass(stepElement, 'step-from-previous');
+            this.renderer.addClass(stepElement, 'step-current');
+            console.log(`  🔵 Step ${index}: "${option.text}" → AZUL (current)`);
+          } else {
+            // GRIS - registro anterior
+            this.renderer.removeClass(stepElement, 'step-current');
+            this.renderer.addClass(stepElement, 'step-from-previous');
+            console.log(`  ⚪ Step ${index}: "${option.text}" → GRIS (previous)`);
+          }
+        }
+      }
+    });
+  }
+
+  /**
    * Determina si una opción es del REGISTRO ACTUAL (azul) o ANTERIOR (gris)
-   * 
-   * true = 🔵 AZUL (registro ACTUAL - datos guardados recientemente)
-   * false = ⚪ GRIS (registro ANTERIOR - datos precargados o sin datos)
    */
   isCurrentRecord(url: string): boolean {
-    // Determinar la sección según el tipo de declaración actual
     let section: 'situacionPatrimonial' | 'intereses' | 'aviso';
     
     if (this.tipoDeclaracion === 'aviso') {
@@ -167,7 +219,6 @@ export class ShellComponent implements OnInit, OnDestroy {
       section = 'situacionPatrimonial';
     }
 
-    // Verificar en localStorage
     const isCurrentRecord = this.menuStateService.isUrlSaved(
       url, 
       section,
@@ -175,50 +226,27 @@ export class ShellComponent implements OnInit, OnDestroy {
       this.declaracionSimplificada
     );
 
-    // Debug detallado
-    const storageKey = `declaracion_saved_state_${this.tipoDeclaracion}_${this.declaracionSimplificada}`;
-    const rawState = localStorage.getItem(storageKey);
-    
-    console.log(`🔍 isCurrentRecord("${url}"):`, {
-      section,
-      tipoDeclaracion: this.tipoDeclaracion,
-      declaracionSimplificada: this.declaracionSimplificada,
-      storageKey,
-      rawState,
-      parsedState: rawState ? JSON.parse(rawState) : null,
-      isCurrentRecord,
-      resultado: isCurrentRecord ? '🔵 AZUL (actual)' : '⚪ GRIS (anterior)'
-    });
-
     return isCurrentRecord;
   }
 
   /**
-   * Navegar a sección de Aviso - CORREGIDO
+   * Navegar a sección de Aviso
    */
   goToAvisoSection(event: any): void {
-    console.log('🚦 goToAvisoSection event:', event);
-    
     const selectedIndex = event?.selectedIndex ?? event;
     
     if (selectedIndex !== undefined && this.avisoOptions[selectedIndex]) {
       const option = this.avisoOptions[selectedIndex];
       const fullUrl = `/aviso${option.url}`;
-      console.log('🚀 Navegando a:', fullUrl, 'desde index:', selectedIndex);
-      
-      // NO marcar como guardado aquí - solo navegar
+      console.log('🚀 Navegando a:', fullUrl);
       this.router.navigate([fullUrl]);
-    } else {
-      console.warn('⚠️ No se pudo navegar, selectedIndex:', selectedIndex);
     }
   }
 
   /**
-   * Navegar a sección de Situación Patrimonial - CORREGIDO
+   * Navegar a sección de Situación Patrimonial
    */
   goToSituacionPatrimonialSection(event: any): void {
-    console.log('🚦 goToSituacionPatrimonialSection event:', event);
-    
     const selectedIndex = event?.selectedIndex ?? event;
     
     if (selectedIndex !== undefined) {
@@ -232,24 +260,22 @@ export class ShellComponent implements OnInit, OnDestroy {
           ? `/${this.tipoDeclaracion}/simplificada/situacion-patrimonial`
           : `/${this.tipoDeclaracion}/situacion-patrimonial`;
         const fullUrl = `${basePath}${option.url}`;
-        console.log('🚀 Navegando a:', fullUrl, 'desde index:', selectedIndex);
+        console.log('🚀 Navegando a:', fullUrl);
         this.router.navigate([fullUrl]);
       }
     }
   }
 
   /**
-   * Navegar a sección de Intereses - CORREGIDO
+   * Navegar a sección de Intereses
    */
   goToInteresesSection(event: any): void {
-    console.log('🚦 goToInteresesSection event:', event);
-    
     const selectedIndex = event?.selectedIndex ?? event;
     
     if (selectedIndex !== undefined && this.interesesOptions[selectedIndex]) {
       const option = this.interesesOptions[selectedIndex];
       const fullUrl = `/${this.tipoDeclaracion}/intereses${option.url}`;
-      console.log('🚀 Navegando a:', fullUrl, 'desde index:', selectedIndex);
+      console.log('🚀 Navegando a:', fullUrl);
       this.router.navigate([fullUrl]);
     }
   }
