@@ -305,3 +305,81 @@ mat-vertical-stepper {
 
 // Theme customization
 @import "theme/theme";
+
+
+// ============================================
+// ESTILOS GLOBALES PARA STEPPER - AL FINAL DEL ARCHIVO
+// ============================================
+
+// ⚪ GRIS - Información del REGISTRO ANTERIOR
+.step-from-previous {
+  // Estilos para el ícono del step
+  .mat-step-header .mat-step-icon {
+    background-color: #9e9e9e !important;
+    color: white !important;
+  }
+  
+  .mat-step-header .mat-step-icon-state-number {
+    background-color: #9e9e9e !important;
+  }
+  
+  // Asegurar que el estado se mantenga al hacer hover
+  .mat-step-header:hover .mat-step-icon {
+    background-color: #757575 !important; // Gris más oscuro en hover
+  }
+  
+  // Asegurar que el estado se mantenga cuando está seleccionado
+  .mat-step-header[aria-selected="true"] .mat-step-icon {
+    background-color: #9e9e9e !important;
+  }
+}
+
+// 🔵 AZUL - Información del REGISTRO ACTUAL
+.step-current {
+  // Estilos para el ícono del step
+  .mat-step-header .mat-step-icon {
+    background-color: var(--primary-color, #34b3eb) !important;
+    color: white !important;
+  }
+  
+  .mat-step-header .mat-step-icon-state-number {
+    background-color: var(--primary-color, #34b3eb) !important;
+  }
+  
+  // Asegurar que el estado se mantenga al hacer hover
+  .mat-step-header:hover .mat-step-icon {
+    background-color: var(--primary-darker-color, #219ae2) !important; // Azul más oscuro en hover
+  }
+  
+  // Asegurar que el estado se mantenga cuando está seleccionado
+  .mat-step-header[aria-selected="true"] .mat-step-icon {
+    background-color: var(--primary-color, #34b3eb) !important;
+  }
+}
+
+// Estilos generales para todos los steps
+.mat-vertical-stepper {
+  .mat-step-header {
+    // Fondo sutil cuando está seleccionado
+    &[aria-selected="true"] {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+    
+    // Hover para todos los headers
+    &:hover:not([aria-disabled="true"]) {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+  
+  // Asegurar que el número sea visible
+  .mat-step-icon {
+    .mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+    }
+  }
+}
+
+// Los estilos de step-current y step-from-previous tienen suficiente especificidad
+// con !important para sobrescribir los estilos por defecto de Material
