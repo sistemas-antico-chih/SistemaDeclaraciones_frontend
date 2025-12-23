@@ -170,6 +170,16 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
     console.log('🎨 Actualizando colores de steps, total:', this.steps.length);
 
+    // 🔍 DEBUG: Verificar que los steps existen
+    this.steps.forEach((step, index) => {
+      const stepElement = (step as any)._elementRef?.nativeElement;
+      console.log(`Step ${index}:`, {
+        exists: !!stepElement,
+        classes: stepElement?.className,
+        hasHeader: !!stepElement?.querySelector('.mat-step-header')
+      });
+    });
+
     let options: MenuOption[] = [];
 
     // Determinar qué opciones usar según el tipo de declaración
