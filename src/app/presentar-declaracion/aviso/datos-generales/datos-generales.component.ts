@@ -224,6 +224,14 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
       if (data.declaracion.datosGenerales === null) {
         console.log('⚠️ No hay datos en registro actual, cargando del anterior');
+        // 🔍 DETECTAR SI ES UN REGISTRO COMPLETAMENTE NUEVO
+        // Si NO hay datos en el registro actual, limpiar el estado guardado
+        // para que todos los steps aparezcan en GRIS al inicio
+        console.log('🗑️ Limpiando estado anterior porque es un registro nuevo');
+        this.menuStateService.clearState(
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
         await this.getLastUserInfo();
       } else {
         console.log('✅ Hay datos en registro actual - datos-generales');
@@ -324,7 +332,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       // Esto cambiará el color del menú de GRIS a AZUL
       console.log('✅ Guardando información en REGISTRO ACTUAL - datos-empleo');
       console.log('🔵 Marcando como guardado → cambia a AZUL');
-      
+
       this.menuStateService.markSectionAsSaved(
         '/datos-generales',
         'aviso',

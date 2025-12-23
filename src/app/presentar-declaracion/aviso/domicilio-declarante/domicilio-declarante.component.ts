@@ -140,11 +140,11 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-      
+
       console.log('⚪ Cargando datos del REGISTRO ANTERIOR - domicilio-declarante');
       this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.domicilioDeclarante);
-      
+
       // ❌ NO marcar como guardado - debe aparecer en GRIS
       console.log('⚪ NO se marca como guardado → aparece en GRIS');
     } catch (error) {
@@ -169,10 +169,17 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
-      
+
       if (data?.declaracion.domicilioDeclarante === null) {
-        console.log('⚪ No hay datos en registro actual, cargando del anterior');
-        await this.getLastUserInfo();
+        console.log('⚠️ No hay datos en registro actual, cargando del anterior');
+        // 🔍 DETECTAR SI ES UN REGISTRO COMPLETAMENTE NUEVO
+        // Si NO hay datos en el registro actual, limpiar el estado guardado
+        // para que todos los steps aparezcan en GRIS al inicio
+        console.log('🗑️ Limpiando estado anterior porque es un registro nuevo');
+        this.menuStateService.clearState(
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       } else {
         console.log('🔵 Hay datos en REGISTRO ACTUAL - domicilio-declarante');
         this.isFromPreviousRecord = false;
@@ -262,7 +269,7 @@ export class DomicilioDeclaranteAvisoComponent implements OnInit {
       // Esto cambiará el color del menú de GRIS a AZUL
       console.log('✅ Guardando información en REGISTRO ACTUAL - domicilio-declarante');
       console.log('🔵 Marcando como guardado → cambia a AZUL');
-      
+
       this.menuStateService.markSectionAsSaved(
         '/domicilio-declarante',
         'aviso',

@@ -107,4 +107,62 @@ export class MenuStateService {
     
     return savedState[section]?.includes(url) || false;
   }
+
+  // ============================================
+// AGREGAR ESTE MÉTODO AL MenuStateService
+// ============================================
+
+/**
+ * Limpia COMPLETAMENTE el estado guardado para un tipo de declaración específico
+ * Útil cuando se crea un registro nuevo desde cero
+ */
+clearState(
+  tipoDeclaracion: string,
+  declaracionSimplificada: boolean
+): void {
+  const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
+  
+  console.log('🗑️ Limpiando estado guardado:', {
+    tipoDeclaracion,
+    declaracionSimplificada,
+    storageKey
+  });
+
+  // Limpiar localStorage
+  localStorage.removeItem(storageKey);
+  
+  // Limpiar el estado en memoria
+  this.savedStateSubject.next({});
+  
+  console.log('✅ Estado limpiado completamente');
+}
+
+/**
+ * Limpia solo una sección específica del estado guardado
+ */
+clearSection(
+  section: 'situacionPatrimonial' | 'intereses' | 'aviso',
+  tipoDeclaracion: string,
+  declaracionSimplificada: boolean
+): void {
+  const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
+  const currentState = this.loadSavedState(tipoDeclaracion, declaracionSimplificada);
+  
+  console.log('🗑️ Limpiando sección:', {
+    section,
+    estadoAntes: currentState
+  });
+
+  // Eliminar la sección específica
+  delete currentState[section];
+  
+  // Guardar el estado actualizado
+  localStorage.setItem(storageKey, JSON.stringify(currentState));
+  this.savedStateSubject.next(currentState);
+  
+  console.log('✅ Sección limpiada:', {
+    section,
+    estadoDespues: currentState
+  });
+}
 }
