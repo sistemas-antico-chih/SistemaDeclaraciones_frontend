@@ -120,27 +120,27 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-  // Aplicar colores iniciales después de que la vista esté lista
-  setTimeout(() => {
-    this.updateStepColors();
-  }, 200);
-  
-  // Observar cambios en los steps
-  this.steps.changes.subscribe(() => {
+    // Aplicar colores iniciales después de que la vista esté lista
     setTimeout(() => {
       this.updateStepColors();
-    }, 100);
-  });
-  
-  // Observar cambios en los elementos del DOM
-  if (this.stepElements) {
-    this.stepElements.changes.subscribe(() => {
+    }, 200);
+
+    // Observar cambios en los steps
+    this.steps.changes.subscribe(() => {
       setTimeout(() => {
         this.updateStepColors();
       }, 100);
     });
+
+    // Observar cambios en los elementos del DOM
+    if (this.stepElements) {
+      this.stepElements.changes.subscribe(() => {
+        setTimeout(() => {
+          this.updateStepColors();
+        }, 100);
+      });
+    }
   }
-}
 
 
   ngOnDestroy(): void {
@@ -174,51 +174,51 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
  * VERSIÓN MEJORADA - Aplica clases en múltiples lugares para asegurar que funcione
  */
   private updateStepColors(): void {
-  console.log('🎨 Actualizando colores de steps');
+    console.log('🎨 Actualizando colores de steps');
 
-  let options: MenuOption[] = [];
-  
-  // Determinar qué opciones usar según el tipo de declaración
-  if (this.tipoDeclaracion === 'aviso') {
-    options = this.avisoOptions;
-  } else if (this.url.includes('/intereses/')) {
-    options = this.interesesOptions;
-  } else {
-    options = this.declaracionSimplificada
-      ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
-      : this.situacionPatrimonialOptions;
-  }
+    let options: MenuOption[] = [];
 
-  // Esperar a que el DOM esté listo
-  setTimeout(() => {
-    // Buscar todos los mat-step-header en el documento
-    const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
-    
-    console.log(`📊 Total de step-headers encontrados: ${stepHeaders.length}`);
-    
-    stepHeaders.forEach((stepHeader, index) => {
-      if (index < options.length) {
-        const option = options[index];
-        const isCurrentRecord = this.isCurrentRecord(option.url);
-        
-        // Remover todas las clases primero
-        stepHeader.classList.remove('step-current');
-        stepHeader.classList.remove('step-from-previous');
-        
-        // Aplicar la clase correcta
-        if (isCurrentRecord) {
-          // AZUL - registro actual
-          stepHeader.classList.add('step-current');
-          console.log(`  🔵 Step ${index}: "${option.text}" → AZUL (current)`);
-        } else {
-          // GRIS - registro anterior
-          stepHeader.classList.add('step-from-previous');
-          console.log(`  ⚪ Step ${index}: "${option.text}" → GRIS (previous)`);
+    // Determinar qué opciones usar según el tipo de declaración
+    if (this.tipoDeclaracion === 'aviso') {
+      options = this.avisoOptions;
+    } else if (this.url.includes('/intereses/')) {
+      options = this.interesesOptions;
+    } else {
+      options = this.declaracionSimplificada
+        ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
+        : this.situacionPatrimonialOptions;
+    }
+
+    // Esperar a que el DOM esté listo
+    setTimeout(() => {
+      // Buscar todos los mat-step-header en el documento
+      const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+
+      console.log(`📊 Total de step-headers encontrados: ${stepHeaders.length}`);
+
+      stepHeaders.forEach((stepHeader, index) => {
+        if (index < options.length) {
+          const option = options[index];
+          const isCurrentRecord = this.isCurrentRecord(option.url);
+
+          // Remover todas las clases primero
+          stepHeader.classList.remove('step-current');
+          stepHeader.classList.remove('step-from-previous');
+
+          // Aplicar la clase correcta
+          if (isCurrentRecord) {
+            // AZUL - registro actual
+            stepHeader.classList.add('step-current');
+            console.log(`  🔵 Step ${index}: "${option.text}" → AZUL (current)`);
+          } else {
+            // GRIS - registro anterior
+            stepHeader.classList.add('step-from-previous');
+            console.log(`  ⚪ Step ${index}: "${option.text}" → GRIS (previous)`);
+          }
         }
-      }
-    });
-  }, 50);
-}
+      });
+    }, 50);
+  }
 
   /**
    * Determina si una opción es del REGISTRO ACTUAL (azul) o ANTERIOR (gris)
@@ -300,5 +300,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   trackByUrl(index: number, item: MenuOption): string {
     return item.url;
+  }
+
+  getStepControl(index: number): any {
+    return null;
   }
 }
