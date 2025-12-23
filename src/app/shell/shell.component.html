@@ -14,8 +14,9 @@
         
         <mat-vertical-stepper (selectionChange)="goToAvisoSection($event.selectedIndex)">
           <mat-step
-            *ngFor="let opt of avisoOptions; trackBy: trackByUrl"
+            *ngFor="let opt of avisoOptions; let i = index; trackBy: trackByUrl"
             [label]="opt.text"
+            [stepControl]="getStepControl(i)"
             [ngClass]="{
               'step-current': isCurrentRecord(opt.url),
               'step-from-previous': !isCurrentRecord(opt.url)
@@ -35,10 +36,11 @@
         </mat-expansion-panel-header>
         
         <mat-vertical-stepper (selectionChange)="goToSituacionPatrimonialSection($event.selectedIndex)">
-          <ng-container *ngFor="let opt of situacionPatrimonialOptions; trackBy: trackByUrl">
+          <ng-container *ngFor="let opt of situacionPatrimonialOptions; let i = index; trackBy: trackByUrl">
             <mat-step 
               *ngIf="!declaracionSimplificada || opt.simplificada" 
               [label]="opt.text"
+              [stepControl]="getStepControl(i)"
               [ngClass]="{
                 'step-current': isCurrentRecord(opt.url),
                 'step-from-previous': !isCurrentRecord(opt.url)
@@ -56,8 +58,9 @@
         
         <mat-vertical-stepper (selectionChange)="goToInteresesSection($event.selectedIndex)">
           <mat-step 
-            *ngFor="let opt of interesesOptions; trackBy: trackByUrl" 
+            *ngFor="let opt of interesesOptions; let i = index; trackBy: trackByUrl" 
             [label]="opt.text"
+            [stepControl]="getStepControl(i)"
             [ngClass]="{
               'step-current': isCurrentRecord(opt.url),
               'step-from-previous': !isCurrentRecord(opt.url)

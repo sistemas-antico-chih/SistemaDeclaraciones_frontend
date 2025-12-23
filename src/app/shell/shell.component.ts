@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ViewChildren, QueryList, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ViewChildren, QueryList, Renderer2, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatStep } from '@angular/material/stepper';
@@ -21,6 +21,7 @@ interface MenuOption {
 export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   @ViewChildren(MatStep) steps!: QueryList<MatStep>;
+  @ViewChildren('stepElement', { read: ElementRef }) stepElements!: QueryList<ElementRef>;
 
   isMobile = false;
   url: string = '';
@@ -119,18 +120,28 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // Aplicar colores iniciales después de que la vista esté lista
+  // Aplicar colores iniciales después de que la vista esté lista
+  setTimeout(() => {
+    this.updateStepColors();
+  }, 200);
+  
+  // Observar cambios en los steps
+  this.steps.changes.subscribe(() => {
     setTimeout(() => {
       this.updateStepColors();
-    }, 200);
-
-    // Observar cambios en los steps
-    this.steps.changes.subscribe(() => {
+    }, 100);
+  });
+  
+  // Observar cambios en los elementos del DOM
+  if (this.stepElements) {
+    this.stepElements.changes.subscribe(() => {
       setTimeout(() => {
         this.updateStepColors();
       }, 100);
     });
   }
+}
+
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
@@ -163,77 +174,51 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
  * VERSIÓN MEJORADA - Aplica clases en múltiples lugares para asegurar que funcione
  */
   private updateStepColors(): void {
-    if (!this.steps || this.steps.length === 0) {
-      console.log('⚠️ No hay steps disponibles aún');
-      return;
-    }
+  console.log('🎨 Actualizando colores de steps');
 
-    console.log('🎨 Actualizando colores de steps, total:', this.steps.length);
+  let options: MenuOption[] = [];
+  
+  // Determinar qué opciones usar según el tipo de declaración
+  if (this.tipoDeclaracion === 'aviso') {
+    options = this.avisoOptions;
+  } else if (this.url.includes('/intereses/')) {
+    options = this.interesesOptions;
+  } else {
+    options = this.declaracionSimplificada
+      ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
+      : this.situacionPatrimonialOptions;
+  }
 
-    // 🔍 DEBUG: Verificar que los steps existen
-    this.steps.forEach((step, index) => {
-      const stepElement = (step as any)._elementRef?.nativeElement;
-      console.log(`Step ${index}:`, {
-        exists: !!stepElement,
-        classes: stepElement?.className,
-        hasHeader: !!stepElement?.querySelector('.mat-step-header')
-      });
-    });
-
-    let options: MenuOption[] = [];
-
-    // Determinar qué opciones usar según el tipo de declaración
-    if (this.tipoDeclaracion === 'aviso') {
-      options = this.avisoOptions;
-    } else if (this.url.includes('/intereses/')) {
-      options = this.interesesOptions;
-    } else {
-      options = this.declaracionSimplificada
-        ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
-        : this.situacionPatrimonialOptions;
-    }
-
-    // Aplicar clases a cada step
-    this.steps.forEach((step, index) => {
+  // Esperar a que el DOM esté listo
+  setTimeout(() => {
+    // Buscar todos los mat-step-header en el documento
+    const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+    
+    console.log(`📊 Total de step-headers encontrados: ${stepHeaders.length}`);
+    
+    stepHeaders.forEach((stepHeader, index) => {
       if (index < options.length) {
         const option = options[index];
         const isCurrentRecord = this.isCurrentRecord(option.url);
-
-        // Obtener el elemento nativeElement del step
-        const stepElement = (step as any)._elementRef?.nativeElement;
-
-        if (stepElement) {
-          // Remover todas las clases primero
-          this.renderer.removeClass(stepElement, 'step-current');
-          this.renderer.removeClass(stepElement, 'step-from-previous');
-
-          // Aplicar la clase correcta
-          if (isCurrentRecord) {
-            // AZUL - registro actual
-            this.renderer.addClass(stepElement, 'step-current');
-            console.log(`  🔵 Step ${index}: "${option.text}" → AZUL (current)`);
-          } else {
-            // GRIS - registro anterior
-            this.renderer.addClass(stepElement, 'step-from-previous');
-            console.log(`  ⚪ Step ${index}: "${option.text}" → GRIS (previous)`);
-          }
-
-          // IMPORTANTE: También aplicar las clases al mat-step-header dentro del step
-          const stepHeader = stepElement.querySelector('.mat-step-header');
-          if (stepHeader) {
-            this.renderer.removeClass(stepHeader, 'step-current');
-            this.renderer.removeClass(stepHeader, 'step-from-previous');
-
-            if (isCurrentRecord) {
-              this.renderer.addClass(stepHeader, 'step-current');
-            } else {
-              this.renderer.addClass(stepHeader, 'step-from-previous');
-            }
-          }
+        
+        // Remover todas las clases primero
+        stepHeader.classList.remove('step-current');
+        stepHeader.classList.remove('step-from-previous');
+        
+        // Aplicar la clase correcta
+        if (isCurrentRecord) {
+          // AZUL - registro actual
+          stepHeader.classList.add('step-current');
+          console.log(`  🔵 Step ${index}: "${option.text}" → AZUL (current)`);
+        } else {
+          // GRIS - registro anterior
+          stepHeader.classList.add('step-from-previous');
+          console.log(`  ⚪ Step ${index}: "${option.text}" → GRIS (previous)`);
         }
       }
     });
-  }
+  }, 50);
+}
 
   /**
    * Determina si una opción es del REGISTRO ACTUAL (azul) o ANTERIOR (gris)
