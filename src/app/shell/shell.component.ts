@@ -33,50 +33,50 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Opciones del menú de Aviso
   avisoOptions: MenuOption[] = [
-    { text: '1. Datos generales', url: '/datos-generales' },
-    { text: '2. Domicilio del declarante', url: '/domicilio-declarante' },
-    { text: '3. Datos del empleo, cargo o comisión', url: '/datos-empleo' }
+    { text: 'Datos generales', url: '/datos-generales' },
+    { text: 'Domicilio del declarante', url: '/domicilio-declarante' },
+    { text: 'Datos del empleo, cargo o comisión', url: '/datos-empleo' }
   ];
 
   // Opciones del menú de Situación Patrimonial
   situacionPatrimonialOptions: MenuOption[] = [
-    { text: '1. Datos generales', url: '/datos-generales', simplificada: true },
-    { text: '2. Domicilio del declarante', url: '/domicilio-declarante', simplificada: true },
-    { text: '3. Datos curriculares del declarante', url: '/datos-curriculares', simplificada: false },
-    { text: '4. Datos del empleo, cargo o comisión', url: '/datos-empleo', simplificada: true },
-    { text: '5. Experiencia laboral', url: '/experiencia-laboral', simplificada: false },
-    { text: '6. Datos de la pareja', url: '/situacion-patrimonial/datos-pareja', simplificada: false },
-    { text: '7. Datos del dependiente económico', url: '/situacion-patrimonial/datos-dependiente', simplificada: false },
+    { text: 'Datos generales', url: '/datos-generales', simplificada: true },
+    { text: 'Domicilio del declarante', url: '/domicilio-declarante', simplificada: true },
+    { text: 'Datos curriculares del declarante', url: '/datos-curriculares', simplificada: false },
+    { text: 'Datos del empleo, cargo o comisión', url: '/datos-empleo', simplificada: true },
+    { text: 'Experiencia laboral', url: '/experiencia-laboral', simplificada: false },
+    { text: 'Datos de la pareja', url: '/situacion-patrimonial/datos-pareja', simplificada: false },
+    { text: 'Datos del dependiente económico', url: '/situacion-patrimonial/datos-dependiente', simplificada: false },
     {
-      text: '8. Ingresos netos del declarante, pareja y/o dependientes económicos',
+      text: 'Ingresos netos del declarante, pareja y/o dependientes económicos',
       url: '/situacion-patrimonial/ingresos-netos',
       simplificada: true,
     },
     {
-      text: '9. ¿Te desempeñaste como servidor público en el año inmediato anterior?',
+      text: '¿Te desempeñaste como servidor público en el año inmediato anterior?',
       url: '/situacion-patrimonial/servidor-publico',
       simplificada: true,
     },
-    { text: '10. Bienes inmuebles', url: '/situacion-patrimonial/bienes-inmuebles', simplificada: false },
-    { text: '11. Vehículos', url: '/situacion-patrimonial/vehiculos', simplificada: false },
-    { text: '12. Bienes muebles', url: '/situacion-patrimonial/bienes-muebles', simplificada: false },
+    { text: 'Bienes inmuebles', url: '/situacion-patrimonial/bienes-inmuebles', simplificada: false },
+    { text: 'Vehículos', url: '/situacion-patrimonial/vehiculos', simplificada: false },
+    { text: 'Bienes muebles', url: '/situacion-patrimonial/bienes-muebles', simplificada: false },
     {
-      text: '13. Inversiones, cuentas bancarias u otro tipo de valores / activos',
+      text: 'Inversiones, cuentas bancarias u otro tipo de valores / activos',
       url: '/situacion-patrimonial/inversiones', simplificada: false
     },
-    { text: '14. Adeudos / pasivos', url: '/situacion-patrimonial/adeudos', simplificada: false },
-    { text: '15. Préstamo o comodato por terceros', url: '/situacion-patrimonial/prestamos-terceros', simplificada: false },
+    { text: 'Adeudos / pasivos', url: '/situacion-patrimonial/adeudos', simplificada: false },
+    { text: 'Préstamo o comodato por terceros', url: '/situacion-patrimonial/prestamos-terceros', simplificada: false },
   ];
 
   // Opciones del menú de Intereses
   interesesOptions: MenuOption[] = [
-    { text: '1. Participación en empresas', url: '/participacion-empresas' },
-    { text: '2. Participación en instituciones', url: '/participacion-instituciones' },
-    { text: '3. Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/intereses/apoyos-publicos' },
-    { text: '4. Representación (hasta los dos últimos años)', url: '/intereses/representacion' },
-    { text: '5. Clientes principales (hasta los dos últimos años)', url: '/intereses/clientes-principales' },
-    { text: '6. Beneficios privados (hasta los dos últimos años)', url: '/intereses/beneficios-privados' },
-    { text: '7. Fideicomisos (hasta los dos últimos años)', url: '/intereses/fideicomisos' },
+    { text: 'Participación en empresas', url: '/participacion-empresas' },
+    { text: 'Participación en instituciones', url: '/participacion-instituciones' },
+    { text: 'Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/intereses/apoyos-publicos' },
+    { text: 'Representación (hasta los dos últimos años)', url: '/intereses/representacion' },
+    { text: 'Clientes principales (hasta los dos últimos años)', url: '/intereses/clientes-principales' },
+    { text: 'Beneficios privados (hasta los dos últimos años)', url: '/intereses/beneficios-privados' },
+    { text: 'Fideicomisos (hasta los dos últimos años)', url: '/intereses/fideicomisos' },
   ];
 
   constructor(
