@@ -213,10 +213,6 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.participacion === null) {
-        this.menuStateService.clearState(
-          this.tipoDeclaracion,
-          this.declaracionSimplificada
-        );
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;
