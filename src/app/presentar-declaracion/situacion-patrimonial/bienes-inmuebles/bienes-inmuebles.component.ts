@@ -23,12 +23,10 @@ import Paises from '@static/catalogos/paises.json';
 import Monedas from '@static/catalogos/monedas.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmueble';
-
 import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
-
 import { findOption, ifExistsEnableFields } from '@utils/utils';
-import { MenuStateService } from '@app/services/menu-state.service';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -81,8 +79,8 @@ export class BienesInmueblesComponent implements OnInit {
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   valores: ValorDeclarante[] = [];
-
   tipoPersona: string;
+
   isFromPreviousRecord = false;
   declaracionSimplificada = false;
 
@@ -279,7 +277,7 @@ export class BienesInmueblesComponent implements OnInit {
         this.setupForm(data.declaracion.bienesInmuebles);
         this.menuStateService.markSectionAsSaved(
           '/bienes-inmuebles', // ← Cambiar por tu URL (ej: '/participacion-empresas')
-          'situacion-patimonial', // ← Siempre 'intereses' para estos componentes
+          'situacionPatimonial', // ← Siempre 'intereses' para estos componentes
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
@@ -441,12 +439,12 @@ export class BienesInmueblesComponent implements OnInit {
       this.editMode = false;
       this.menuStateService.markSectionAsSaved(
         '/bienes-inmuebles', // ← Cambiar por tu URL
-        'situacion-patimonial',
+        'situacionPatimonial',
         this.tipoDeclaracion,
         this.declaracionSimplificada
       );
-
       this.isFromPreviousRecord = false;
+      
       if (data?.declaracion.bienesInmuebles) {
         this.setupForm(data?.declaracion.bienesInmuebles);
       }

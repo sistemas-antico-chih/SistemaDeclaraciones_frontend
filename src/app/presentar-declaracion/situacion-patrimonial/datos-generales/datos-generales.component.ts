@@ -220,7 +220,7 @@ export class DatosGeneralesComponent implements OnInit {
         this.fillForm(data?.declaracion.datosGenerales);
         this.menuStateService.markSectionAsSaved(
           '/datos-generales', // ← Cambiar por tu URL (ej: '/participacion-empresas')
-          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          'situacionPatrimonial', // ← Siempre 'intereses' para estos componentes
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
@@ -305,7 +305,7 @@ export class DatosGeneralesComponent implements OnInit {
       }
       this.menuStateService.markSectionAsSaved(
         '/datos-generales', // ← Cambiar por tu URL
-        'situacion-patrimonial',
+        'situacionPatrimonial',
         this.tipoDeclaracion,
         this.declaracionSimplificada
       );

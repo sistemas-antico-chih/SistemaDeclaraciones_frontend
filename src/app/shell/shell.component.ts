@@ -224,14 +224,14 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
    * Determina si una opción es del REGISTRO ACTUAL (azul) o ANTERIOR (gris)
    */
   isCurrentRecord(url: string): boolean {
-    let section: 'situacion-patrimonial' | 'intereses' | 'aviso';
+    let section: 'situacionPatrimonial' | 'intereses' | 'aviso';
 
     if (this.tipoDeclaracion === 'aviso') {
       section = 'aviso';
     } else if (this.url.includes('/intereses/') || url.includes('participacion') || url.includes('socios')) {
       section = 'intereses';
     } else {
-      section = 'situacion-patrimonial';
+      section = 'situacionPatrimonial';
     }
 
     const isCurrentRecord = this.menuStateService.isUrlSaved(

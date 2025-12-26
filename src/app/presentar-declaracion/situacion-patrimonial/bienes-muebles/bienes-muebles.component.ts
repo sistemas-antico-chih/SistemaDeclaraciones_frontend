@@ -202,7 +202,7 @@ export class BienesMueblesComponent implements OnInit {
         this.setupForm(data.declaracion.bienesMuebles);
         this.menuStateService.markSectionAsSaved(
           '/bienes-muebles', // ← Cambiar por tu URL (ej: '/participacion-empresas')
-          'situacion-patimonial', // ← Siempre 'intereses' para estos componentes
+          'situacionPatimonial', // ← Siempre 'intereses' para estos componentes
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
@@ -307,12 +307,12 @@ export class BienesMueblesComponent implements OnInit {
       this.editMode = false;
       this.menuStateService.markSectionAsSaved(
         '/bienes-muebles', // ← Cambiar por tu URL
-        'situacion-patimonial',
+        'situacionPatimonial',
         this.tipoDeclaracion,
         this.declaracionSimplificada
       );
-
       this.isFromPreviousRecord = false;
+      
       if (data.declaracion.bienesMuebles) {
         this.setupForm(data.declaracion.bienesMuebles);
       }

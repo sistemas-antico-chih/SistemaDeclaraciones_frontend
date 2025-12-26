@@ -177,7 +177,7 @@ export class DatosCurricularesComponent implements OnInit {
         this.isFromPreviousRecord = false;
         this.menuStateService.markSectionAsSaved(
           '/datos-curriculares', // ← Cambiar por tu URL (ej: '/participacion-empresas')
-          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          'situacionPatrimonial', // ← Siempre 'intereses' para estos componentes
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
@@ -286,12 +286,12 @@ export class DatosCurricularesComponent implements OnInit {
       this.editMode = false;
       this.menuStateService.markSectionAsSaved(
         '/datos-curriculares', // ← Cambiar por tu URL
-        'situacion-patrimonial',
+        'situacionPatrimonial',
         this.tipoDeclaracion,
         this.declaracionSimplificada
       );
-
       this.isFromPreviousRecord = false;
+      
       this.setupForm(data?.declaracion.datosCurricularesDeclarante);
       this.presentSuccessAlert();
     } catch (error) {

@@ -648,7 +648,7 @@ export class ServidorPublicoComponent implements OnInit {
       }
 
       this.menuStateService.markSectionAsSaved(
-        '/servidor-publico',
+        '/servidorublico',
         'situacionPatrimonial',
         this.tipoDeclaracion,
         this.declaracionSimplificada
