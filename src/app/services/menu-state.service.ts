@@ -141,7 +141,7 @@ clearState(
  * Limpia solo una sección específica del estado guardado
  */
 clearSection(
-  section: 'situacionPatrimonial' | 'intereses' | 'aviso',
+  section: 'situacion-patrimonial' | 'intereses' | 'aviso',
   tipoDeclaracion: string,
   declaracionSimplificada: boolean
 ): void {
