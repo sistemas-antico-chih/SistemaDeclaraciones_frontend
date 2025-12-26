@@ -277,7 +277,7 @@ export class BienesInmueblesComponent implements OnInit {
         this.setupForm(data.declaracion.bienesInmuebles);
         this.menuStateService.markSectionAsSaved(
           '/bienes-inmuebles', // ← Cambiar por tu URL (ej: '/participacion-empresas')
-          'situacionPatimonial', // ← Siempre 'intereses' para estos componentes
+          'situacionPatrimonial', // ← Siempre 'intereses' para estos componentes
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
@@ -439,7 +439,7 @@ export class BienesInmueblesComponent implements OnInit {
       this.editMode = false;
       this.menuStateService.markSectionAsSaved(
         '/bienes-inmuebles', // ← Cambiar por tu URL
-        'situacionPatimonial',
+        'situacionPatrimonial',
         this.tipoDeclaracion,
         this.declaracionSimplificada
       );

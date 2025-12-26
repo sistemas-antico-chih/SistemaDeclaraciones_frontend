@@ -270,7 +270,7 @@ export class ApoyosPublicosComponent implements OnInit {
       this.isFromPreviousRecord = false;
 
       if (data.declaracion.apoyos) { // ← Cambiar por tu campo
-        this.setupForm(data.declaracion.tuCampo);
+        this.setupForm(data.declaracion.apoyos);
       }
       this.presentSuccessAlert();
     } catch (error) {

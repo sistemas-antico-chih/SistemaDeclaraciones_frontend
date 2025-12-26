@@ -217,7 +217,7 @@ export class AdeudosComponent implements OnInit {
         this.setupForm(data.declaracion.adeudosPasivos);
         this.menuStateService.markSectionAsSaved(
           '/adeudos', // ← Cambiar por tu URL (ej: '/participacion-empresas')
-          'situacionPatimonial', // ← Siempre 'intereses' para estos componentes
+          'situacionPatrimonial', // ← Siempre 'intereses' para estos componentes
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
