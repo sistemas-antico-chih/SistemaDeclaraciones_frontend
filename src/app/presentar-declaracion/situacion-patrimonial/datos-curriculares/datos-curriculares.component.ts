@@ -27,6 +27,7 @@ import Estatus from '@static/catalogos/estatus.json';
 import Nivel from '@static/catalogos/nivel.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-curriculares';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @Component({
   selector: 'app-datos-curriculares',
@@ -41,7 +42,7 @@ export class DatosCurricularesComponent implements OnInit {
   editIndex: number = null;
   escolaridad: Escolaridad[] = [];
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   documentoObtenidoCatalogo = DocumentoObtenido;
   estatusCatalogo = Estatus;
@@ -61,12 +62,15 @@ export class DatosCurricularesComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -141,6 +145,7 @@ export class DatosCurricularesComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.datosCurricularesDeclarante);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -166,9 +171,16 @@ export class DatosCurricularesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.datosCurricularesDeclarante === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
         this.setupForm(data?.declaracion.datosCurricularesDeclarante);
+        this.isFromPreviousRecord = false;
+        this.menuStateService.markSectionAsSaved(
+          '/datos-curriculares', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -272,6 +284,14 @@ export class DatosCurricularesComponent implements OnInit {
       }
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/datos-curriculares', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
       this.setupForm(data?.declaracion.datosCurricularesDeclarante);
       this.presentSuccessAlert();
     } catch (error) {
@@ -358,23 +378,23 @@ export class DatosCurricularesComponent implements OnInit {
   }
 
   cambioNivel(nivel: any) {
-    let estatus=this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus').value;
-    this.actualizacionDocumento(nivel.clave,estatus);
+    let estatus = this.datosCurricularesDeclaranteForm.get('escolaridad').get('estatus').value;
+    this.actualizacionDocumento(nivel.clave, estatus);
   }
 
   cambioEstatus(estatus: any) {
-    let nivel=this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value;
-    this.actualizacionDocumento(nivel.clave,estatus);
+    let nivel = this.datosCurricularesDeclaranteForm.get('escolaridad').get('nivel').value;
+    this.actualizacionDocumento(nivel.clave, estatus);
   }
 
-  actualizacionDocumento(nivel: any, estatus: any){
-    const certificados=['PRI', 'SEC', 'BCH', 'CTC'];
-    const titulos=['LIC', 'ESP', 'MAE', 'DOC'];
-    if(estatus === 'FINALIZADO'){
-      if (certificados.includes(nivel)){
+  actualizacionDocumento(nivel: any, estatus: any) {
+    const certificados = ['PRI', 'SEC', 'BCH', 'CTC'];
+    const titulos = ['LIC', 'ESP', 'MAE', 'DOC'];
+    if (estatus === 'FINALIZADO') {
+      if (certificados.includes(nivel)) {
         this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('CERTIFICADO');
       }
-      if (titulos.includes(nivel)){
+      if (titulos.includes(nivel)) {
         this.datosCurricularesDeclaranteForm.get('escolaridad').get('documentoObtenido').setValue('TITULO');
       }
     }

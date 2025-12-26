@@ -25,6 +25,7 @@ import { DeclaracionOutput, Representacion, Representaciones, LastDeclaracionOut
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -39,7 +40,7 @@ export class RepresentacionComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   relacionCatalogo = TipoRelacion;
   representacionCatalogo = TipoRepresentacion;
@@ -66,13 +67,16 @@ export class RepresentacionComponent implements OnInit {
 
   @ViewChild('otroSector') otroSector: ElementRef;
   location: string = null;
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -191,6 +195,7 @@ export class RepresentacionComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.representaciones);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -211,9 +216,16 @@ export class RepresentacionComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.representaciones === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.representaciones);
+        this.menuStateService.markSectionAsSaved(
+          '/representacion', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'intereses', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -313,6 +325,14 @@ export class RepresentacionComponent implements OnInit {
         .toPromise();
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/representacion', // ← Cambiar por tu URL
+        'intereses',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
       if (data.declaracion.representaciones) {
         this.setupForm(data.declaracion.representaciones);
       }
@@ -359,20 +379,20 @@ export class RepresentacionComponent implements OnInit {
     if (sector) {
       //this.representacionForm.get('representacion.sector').setValue(findOption(this.sectorCatalogo, sector));
       const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
-        // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
-        this.representacionForm.get('representacion.sector').setValue(optSector[0]);
-        if (sector.clave === 'OTRO') {
-          this.varOtroSector = sector.valor;
-        }
+      // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+      this.representacionForm.get('representacion.sector').setValue(optSector[0]);
+      if (sector.clave === 'OTRO') {
+        this.varOtroSector = sector.valor;
+      }
     }
 
     if (entidadFederativa) {
       this.representacionForm
         .get('representacion.ubicacion.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
-      this.location="MX"
-    }else{
-      this.location="EX"
+      this.location = "MX"
+    } else {
+      this.location = "EX"
     }
   }
 
@@ -419,7 +439,7 @@ export class RepresentacionComponent implements OnInit {
     }
   }
 
-  get finalRepresentacionForm(){
+  get finalRepresentacionForm() {
     const form = JSON.parse(JSON.stringify(this.representacionForm.value.representacion)); // Deep copy
 
     if (form.sector?.clave === 'OTRO') {

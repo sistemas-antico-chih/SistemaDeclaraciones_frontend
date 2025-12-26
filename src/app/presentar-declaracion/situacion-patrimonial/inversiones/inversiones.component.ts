@@ -22,8 +22,6 @@ import SubTipoInversionMetales from '@static/catalogos/subTipoInversionMetales.j
 import SubTipoInversionOrganizaciones from '@static/catalogos/subTipoInversionOrganizaciones.json';
 import SubTipoInversionSeguros from '@static/catalogos/subTipoInversionSeguros.json';
 import SubTipoInversionValores from '@static/catalogos/subTipoInversionValores.json';
-
-
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
 import TitularBien from '@static/catalogos/titularBien.json';
 import FormaPago from '@static/catalogos/formaPago.json';
@@ -32,9 +30,7 @@ import ValorConformeA from '@static/catalogos/valorConformeA.json';
 import Extranjero from '@static/catalogos/extranjero.json';
 import Paises from '@static/catalogos/paises.json';
 import Monedas from '@static/catalogos/monedas.json';
-
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/inversiones';
-
 import {
   Catalogo,
   DeclaracionOutput,
@@ -43,9 +39,9 @@ import {
   LastDeclaracionOutput,
 } from '@models/declaracion';
 import { findOption, ifExistsEnableFields } from '@utils/utils';
-
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @Component({
   selector: 'app-inversiones',
@@ -75,7 +71,7 @@ export class InversionesComponent implements OnInit {
   subTipoSegurosCatalogo = SubTipoInversionSeguros;
   subTipoValoresCatalogo = SubTipoInversionValores;
 
-  mexicoExtranjero: string =null;
+  mexicoExtranjero: string = null;
 
   formaAdquisicionCatalogo = FormaAdquisicion;
   titularBienCatalogo = TitularBien;
@@ -119,13 +115,16 @@ export class InversionesComponent implements OnInit {
     .filter((e: any) => e.tipoInversion === 'AFOT')
     .map((e: any) => ({ clave: e.clave, valor: e.valor }));
 
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -247,6 +246,7 @@ export class InversionesComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.inversionesCuentasValores);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -267,9 +267,16 @@ export class InversionesComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.inversionesCuentasValores === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.inversionesCuentasValores);
+        this.menuStateService.markSectionAsSaved(
+          '/inversiones', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -370,6 +377,14 @@ export class InversionesComponent implements OnInit {
         .toPromise();
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/inversiones', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+
       if (data.declaracion.inversionesCuentasValores) {
         this.setupForm(data.declaracion.inversionesCuentasValores);
       }
@@ -411,8 +426,8 @@ export class InversionesComponent implements OnInit {
   setSelectedOptions() {
     const { tipoInversion, subTipoInversion, titular, localizacionInversion, tercero } = this.inversionesCuentasValoresForm.value.inversion;
 
-    if (tercero){
-      this.tipoPersona=tercero.tipoPersona;
+    if (tercero) {
+      this.tipoPersona = tercero.tipoPersona;
     }
 
     if (tipoInversion) {
@@ -464,11 +479,11 @@ export class InversionesComponent implements OnInit {
     }
 
     if (localizacionInversion) {
-      if (!localizacionInversion.pais ) {
-        this.mexicoExtranjero='MX'
+      if (!localizacionInversion.pais) {
+        this.mexicoExtranjero = 'MX'
       }
       else {
-        this.mexicoExtranjero='EX'
+        this.mexicoExtranjero = 'EX'
       }
     }
   }

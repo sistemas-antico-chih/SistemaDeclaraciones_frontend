@@ -7,7 +7,6 @@ import { Apollo } from 'apollo-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import {
   datosDependientesEconomicosMutation,
   datosDependientesEconomicosQuery,
@@ -37,6 +36,8 @@ import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-dependiente';
 import { findOption } from '@utils/utils';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { MenuStateService } from '@app/services/menu-state.service';
+
 
 @UntilDestroy()
 @Component({
@@ -53,7 +54,7 @@ export class DatosDependienteComponent implements OnInit {
   estado: Catalogo = null;
   editIndex: number = null;
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -83,19 +84,23 @@ export class DatosDependienteComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes-1, this.dia);
+  maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
   hidden: string = 'false';
 
   extranjero: boolean;
   active: boolean;
 
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -274,12 +279,12 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    
+
     this.hidden = event;
     this.active = this.datosDependientesEconomicosForm.get('dependienteEconomico.extranjero').value;
-    
+
     if (this.active == false) {
-      
+
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").setValidators([Validators.required]);
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").enable();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
@@ -287,7 +292,7 @@ export class DatosDependienteComponent implements OnInit {
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").enable();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
     } else {
-      
+
       //console.log(this.active)
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").clearValidators();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
@@ -297,7 +302,7 @@ export class DatosDependienteComponent implements OnInit {
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").disable();
 
-      
+
     }
     //console.log("Requerido", this.datosDependientesEconomicosForm.errors);
   }
@@ -347,6 +352,7 @@ export class DatosDependienteComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       if (data?.lastDeclaracion.datosDependientesEconomicos) {
         this.setupForm(data?.lastDeclaracion.datosDependientesEconomicos);
       }
@@ -373,9 +379,16 @@ export class DatosDependienteComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.datosDependientesEconomicos === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.datosDependientesEconomicos);
+        this.menuStateService.markSectionAsSaved(
+          '/datos-dependiente', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -558,6 +571,14 @@ export class DatosDependienteComponent implements OnInit {
       }
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/datos-dependiente', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
       if (data?.declaracion.datosDependientesEconomicos) {
         this.setupForm(data?.declaracion.datosDependientesEconomicos);
       }

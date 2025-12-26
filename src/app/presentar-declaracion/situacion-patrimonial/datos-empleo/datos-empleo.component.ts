@@ -25,6 +25,8 @@ import entePublico from '@static/catalogos/entePublico_municipios.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { findOption } from '@utils/utils';
 import { UntilDestroy, untilDestroyed } from '@app/@core';
+import { MenuStateService } from '@app/services/menu-state.service';
+
 
 @UntilDestroy()
 @Component({
@@ -42,8 +44,8 @@ export class DatosEmpleoComponent implements OnInit {
   isLoading = false;
   entePublicoCatalogo = entePublico;
   entePublicoFiltrado = entePublico;
-  entesFiltrados:any = [] ;
-  pushButtonSave: boolean =false;
+  entesFiltrados: any = [];
+  pushButtonSave: boolean = false;
 
   @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
 
@@ -68,12 +70,15 @@ export class DatosEmpleoComponent implements OnInit {
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
 
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -171,7 +176,7 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   async getLastUserInfo() {
-    
+
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
@@ -183,6 +188,7 @@ export class DatosEmpleoComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -208,9 +214,16 @@ export class DatosEmpleoComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.datosEmpleoCargoComision === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.fillForm(data?.declaracion.datosEmpleoCargoComision);
+        this.menuStateService.markSectionAsSaved(
+          '/datos-empleo', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -282,6 +295,14 @@ export class DatosEmpleoComponent implements OnInit {
         throw errors;
       }
 
+      this.menuStateService.markSectionAsSaved(
+        '/datos-empleo', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+
       this.isLoading = false;
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {
@@ -338,19 +359,19 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   cambioAmbito(value: any) {
-    this.filtrarEntes(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno').value,value);
+    this.filtrarEntes(this.datosEmpleoCargoComisionForm.get('nivelOrdenGobierno').value, value);
   }
 
-  filtrarEntes(orden: string, ambito: string){
-    if(orden==="MUNICIPAL_ALCALDIA"){
+  filtrarEntes(orden: string, ambito: string) {
+    if (orden === "MUNICIPAL_ALCALDIA") {
       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.ambito===orden && o.empleo==='SI');
+        (o: any) => o.ambito === orden && o.empleo === 'SI');
       return;
     }
-    else{
-       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
-        (o:any) =>  o.ambito!=="MUNICIPAL_ALCALDIA"  && o.empleo==='NO' && o.ambito === ambito);
-       return
+    else {
+      this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
+        (o: any) => o.ambito !== "MUNICIPAL_ALCALDIA" && o.empleo === 'NO' && o.ambito === ambito);
+      return
     }
   }
 }

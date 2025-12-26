@@ -20,6 +20,7 @@ import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import TipoParticipacion from '@static/catalogos/tipoParticipacionFideicomiso.json';
 import { tooltipData } from '@static/tooltips/intereses/fideicomisos';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -52,13 +53,16 @@ export class FideicomisosComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -182,6 +186,7 @@ export class FideicomisosComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.fideicomisos);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -206,9 +211,16 @@ export class FideicomisosComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.fideicomisos === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data?.declaracion.fideicomisos);
+        this.menuStateService.markSectionAsSaved(
+          '/fideicomisos', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'intereses', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -302,7 +314,17 @@ export class FideicomisosComponent implements OnInit {
       }
 
       this.editMode = false;
-      this.setupForm(data?.declaracion.fideicomisos);
+      this.menuStateService.markSectionAsSaved(
+        '/fideicomisos', // ← Cambiar por tu URL
+        'intereses',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
+      if (data.declaracion.fideicomisos) {
+        this.setupForm(data?.declaracion.fideicomisos);
+      }
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
@@ -348,10 +370,10 @@ export class FideicomisosComponent implements OnInit {
 
     if (sector) {
       const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
-        this.fideicomisosForm.get('fideicomiso.sector').setValue(optSector[0]);
-        if (sector.clave === 'OTRO') {
-          this.varOtroSector = sector.valor; 
-        }
+      this.fideicomisosForm.get('fideicomiso.sector').setValue(optSector[0]);
+      if (sector.clave === 'OTRO') {
+        this.varOtroSector = sector.valor;
+      }
     }
   }
 

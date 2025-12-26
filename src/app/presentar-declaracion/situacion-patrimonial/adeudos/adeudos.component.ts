@@ -24,7 +24,7 @@ import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/adeudos';
 
 import { findOption } from '@utils/utils';
-
+import { MenuStateService } from '@app/services/menu-state.service';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 
 @Component({
@@ -49,7 +49,7 @@ export class AdeudosComponent implements OnInit {
   extranjeroCatalogo = Extranjero;
   paisesCatalogo = Paises;
   monedasCatalogo = Monedas;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   tipoDeclaracion: string = null;
   tipoDomicilio: MexicoExtranjero = null;
@@ -70,13 +70,16 @@ export class AdeudosComponent implements OnInit {
   varOtroTipoAdeudo: string = null;
 
   @ViewChild('otroTipoAdeudo') otroTipoAdeudo: ElementRef;
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -187,6 +190,7 @@ export class AdeudosComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.adeudosPasivos);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -207,9 +211,16 @@ export class AdeudosComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.adeudosPasivos === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.adeudosPasivos);
+        this.menuStateService.markSectionAsSaved(
+          '/adeudos', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -309,6 +320,14 @@ export class AdeudosComponent implements OnInit {
         .toPromise();
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/adeudos', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+      
       if (data.declaracion.adeudosPasivos) {
         this.setupForm(data.declaracion.adeudosPasivos);
       }

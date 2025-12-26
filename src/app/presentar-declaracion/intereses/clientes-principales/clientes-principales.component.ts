@@ -20,6 +20,7 @@ import Sector from '@static/catalogos/sector.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { tooltipData } from '@static/tooltips/intereses/clientes-principales';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @Component({
   selector: 'app-clientes-principales',
@@ -36,7 +37,7 @@ export class ClientesPrincipalesComponent implements OnInit {
   isLoading = false;
   varOtroSector: string = null;
   location: string = null;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('locationSelect') locationSelect: MatSelect;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -55,13 +56,16 @@ export class ClientesPrincipalesComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -159,6 +163,7 @@ export class ClientesPrincipalesComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.clientesPrincipales);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -183,9 +188,16 @@ export class ClientesPrincipalesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.clientesPrincipales === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data?.declaracion.clientesPrincipales);
+        this.menuStateService.markSectionAsSaved(
+          '/clientes-principales', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'intereses', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -328,6 +340,14 @@ export class ClientesPrincipalesComponent implements OnInit {
       }
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/clientes-principales', // ← Cambiar por tu URL
+        'intereses',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
       if (data.declaracion.clientesPrincipales) {
         this.setupForm(data.declaracion.clientesPrincipales);
       }
@@ -378,10 +398,10 @@ export class ClientesPrincipalesComponent implements OnInit {
 
     if (sector) {
       const optSector = this.sectorCatalogo.filter((ins: any) => ins.clave === sector.clave);
-        this.clientesPrincipalesForm.get('cliente.sector').setValue(optSector[0]);
-        if (sector.clave === 'OTRO') {
-          this.varOtroSector = sector.valor; 
-        }
+      this.clientesPrincipalesForm.get('cliente.sector').setValue(optSector[0]);
+      if (sector.clave === 'OTRO') {
+        this.varOtroSector = sector.valor;
+      }
     }
 
     if (entidadFederativa) {

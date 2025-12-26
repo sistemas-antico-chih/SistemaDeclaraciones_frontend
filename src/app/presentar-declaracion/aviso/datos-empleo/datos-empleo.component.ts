@@ -272,12 +272,9 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-      console.log('⚪ Cargando datos del REGISTRO ANTERIOR - datos-empleo');
+      
       this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.datosEmpleoCargoComision);
-
-      // ❌ NO marcar como guardado - debe aparecer en GRIS
-      console.log('⚪ NO se marca como guardado → aparece en GRIS');
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
       // this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
@@ -302,20 +299,10 @@ export class DatosEmpleoAvisoComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.datosEmpleoCargoComision === null) {
-        console.log('⚠️ No hay datos en registro actual, cargando del anterior');
-        // 🔍 DETECTAR SI ES UN REGISTRO COMPLETAMENTE NUEVO
-        // Si NO hay datos en el registro actual, limpiar el estado guardado
-        // para que todos los steps aparezcan en GRIS al inicio
-        console.log('🗑️ Limpiando estado anterior porque es un registro nuevo');
-        this.menuStateService.clearState(
-          this.tipoDeclaracion,
-          this.declaracionSimplificada
-        );
+        await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;
         this.fillForm(data?.declaracion.datosEmpleoCargoComision);
-        // ✅ Marcar como guardado - debe aparecer en AZUL
-        console.log('🔵 Marcando como guardado → aparece en AZUL');
         this.menuStateService.markSectionAsSaved(
           '/datos-empleo',
           'aviso',
@@ -397,12 +384,6 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       }
 
       this.isLoading = false;
-
-      // ✅ SIEMPRE marcar como guardado después de guardar exitosamente
-      // Esto cambiará el color del menú de GRIS a AZUL
-      console.log('✅ Guardando información en REGISTRO ACTUAL - datos-empleo');
-      console.log('🔵 Marcando como guardado → cambia a AZUL');
-
       this.menuStateService.markSectionAsSaved(
         '/datos-empleo',
         'aviso',

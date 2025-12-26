@@ -1,13 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Apollo } from 'apollo-angular';
-
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { datosGeneralesQuery, declaracionMutation, lastDeclaracionDatosGenerales } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -51,6 +48,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
   // Flag para determinar si la información es de un registro anterior
   isFromPreviousRecord = false;
+  
 
   constructor(
     private apollo: Apollo,
@@ -146,11 +144,6 @@ export class DatosGeneralesAvisoComponent implements OnInit {
   }
 
   fillForm(datosGenerales: DatosGenerales) {
-    console.log('📋 [DATOS-GENERALES] fillForm() llamado:', {
-      tieneRegistro: !!datosGenerales,
-      isFromPreviousRecord: this.isFromPreviousRecord,
-      declaracionId: this.declaracionId
-    });
 
     this.datosGeneralesForm.patchValue(datosGenerales || {});
 
@@ -163,8 +156,6 @@ export class DatosGeneralesAvisoComponent implements OnInit {
     }
 
     this.setSelectedOptions();
-
-    console.log('📋 [DATOS-GENERALES] fillForm() terminado, isFromPreviousRecord:', this.isFromPreviousRecord);
   }
 
   async getUserDataQuery() {
@@ -178,8 +169,6 @@ export class DatosGeneralesAvisoComponent implements OnInit {
 
   async getLastUserInfo() {
     try {
-      console.log('🔍 [DATOS-GENERALES] getLastUserInfo() - Buscando registro anterior');
-
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
           query: lastDeclaracionDatosGenerales,
@@ -190,13 +179,9 @@ export class DatosGeneralesAvisoComponent implements OnInit {
         throw errors;
       }
 
-      console.log('⚪ Cargando datos del REGISTRO ANTERIOR - datos-generales');
       this.isFromPreviousRecord = true;
-      console.log('⚠️ [DATOS-GENERALES] Marcando isFromPreviousRecord = true');
-
       this.fillForm(data?.lastDeclaracion.datosGenerales);
 
-      console.log('⚪ NO se marca como guardado → aparece en GRIS');
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
     }
@@ -223,23 +208,16 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
 
       if (data.declaracion.datosGenerales === null) {
-        console.log('⚠️ No hay datos en registro actual, cargando del anterior');
-        // 🔍 DETECTAR SI ES UN REGISTRO COMPLETAMENTE NUEVO
-        // Si NO hay datos en el registro actual, limpiar el estado guardado
-        // para que todos los steps aparezcan en GRIS al inicio
-        console.log('🗑️ Limpiando estado anterior porque es un registro nuevo');
         this.menuStateService.clearState(
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
         await this.getLastUserInfo();
       } else {
-        console.log('✅ Hay datos en registro actual - datos-generales');
+        
         this.fillForm(data?.declaracion.datosGenerales);
         this.isFromPreviousRecord = false; // Es del registro actual
 
-        // ✅ Marcar como guardado porque ya existe en el registro actual
-        console.log('🔵 Marcando como guardado → aparece en AZUL');
         this.menuStateService.markSectionAsSaved(
           '/datos-generales',
           'aviso',
@@ -327,11 +305,6 @@ export class DatosGeneralesAvisoComponent implements OnInit {
       }
 
       this.isLoading = false;
-
-      // ✅ SIEMPRE marcar como guardado después de guardar exitosamente
-      // Esto cambiará el color del menú de GRIS a AZUL
-      console.log('✅ Guardando información en REGISTRO ACTUAL - datos-empleo');
-      console.log('🔵 Marcando como guardado → cambia a AZUL');
 
       this.menuStateService.markSectionAsSaved(
         '/datos-generales',

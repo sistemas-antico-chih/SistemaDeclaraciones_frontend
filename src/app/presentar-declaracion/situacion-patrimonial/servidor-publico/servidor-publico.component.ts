@@ -1,12 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Apollo } from 'apollo-angular';
-
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { declaracionMutation, actividadAnualAnteriorQuery } from '@api/declaracion';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import { UntilDestroy, untilDestroyed } from '@core';
@@ -23,6 +20,7 @@ import TipoBienEnajenado from '@static/catalogos/tipoBienEnajenacionBienes.json'
 import TipoInstrumento from '@static/catalogos/tipoInstrumento.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/anio-anterior';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -35,11 +33,11 @@ export class ServidorPublicoComponent implements OnInit {
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
   ingresoActividad: any = [];
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   //@Output("otroTipoInstrumento") ids: any = [];
   @ViewChildren('otroTipoInstrumento') otroTipoInstrumento: QueryList<ElementRef>;
-  
+
   aclaraciones = false;
   actividadAnualAnteriorForm: FormGroup;
   isLoading = false;
@@ -76,12 +74,15 @@ export class ServidorPublicoComponent implements OnInit {
   minDateFinal = new Date(2010, 1, 1);
   maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
 
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -318,7 +319,7 @@ export class ServidorPublicoComponent implements OnInit {
       validator: this.validarFechas("fechaIngreso", "fechaConclusion")
     });
 
-    
+
 
     this.actividadAnualAnteriorForm.valueChanges
       .pipe(untilDestroyed(this))
@@ -374,7 +375,7 @@ export class ServidorPublicoComponent implements OnInit {
       if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
         fegreso.setErrors({ validarFechas: true });
       }
-      if(diferenciaMilisegundos > milisegundosEnUnAnio){
+      if (diferenciaMilisegundos > milisegundosEnUnAnio) {
         fegreso.setErrors({ validarFechas: true });
       }
       else {
@@ -535,7 +536,18 @@ export class ServidorPublicoComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.actividadAnualAnterior) {
-        this.fillForm(data?.declaracion.actividadAnualAnterior);
+        await this.fillForm(data?.declaracion.actividadAnualAnterior);
+        this.isFromPreviousRecord = false;
+
+        this.menuStateService.markSectionAsSaved(
+          '/servidor-publico',
+          'situacionPatrimonial',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
+      }
+      else {
+        this.isFromPreviousRecord = false;
       }
     } catch (error) {
       console.log(error);
@@ -634,6 +646,14 @@ export class ServidorPublicoComponent implements OnInit {
       if (errors) {
         throw errors;
       }
+
+      this.menuStateService.markSectionAsSaved(
+        '/servidor-publico',
+        'situacionPatrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
 
       this.isLoading = false;
       this.presentSuccessAlert();

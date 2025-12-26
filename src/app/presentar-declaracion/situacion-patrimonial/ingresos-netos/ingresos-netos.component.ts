@@ -22,6 +22,7 @@ import {
 import TipoInstrumento from '@static/catalogos/tipoInstrumento.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/ingresos-netos';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -33,7 +34,7 @@ export class IngresosNetosComponent implements OnInit {
   index: number = 0;
   arrayOtroTipoInstrumento: any = [];
   arrayHTMLOtroTipoInstrumento: any = [];
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   ingresoActividad: any = [];
   //@Output("otroTipoInstrumento") ids: any = [];
@@ -58,13 +59,15 @@ export class IngresosNetosComponent implements OnInit {
 
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
+  isFromPreviousRecord = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -293,7 +296,7 @@ export class IngresosNetosComponent implements OnInit {
     data: Array<ActividadIndustrial | ActividadFinanciera | OtrosIngresos | ServiciosProfesionales>
   ) {
     let formArray: FormArray = null;
-    
+
     for (let [index, value] of data.entries()) {
       switch (formArrayName) {
         case 'actividadIndustrialComercialEmpresarial':
@@ -395,7 +398,20 @@ export class IngresosNetosComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.ingresos) {
-        this.fillForm(data?.declaracion.ingresos);
+        await this.fillForm(data?.declaracion.ingresos);
+        this.isFromPreviousRecord = false;
+
+        // ✅ Marcar como guardado
+        console.log('🔵 Marcando como guardado → aparece en AZUL');
+        this.menuStateService.markSectionAsSaved(
+          '/ingresos-netos',
+          'situacionPatrimonial',
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
+      }
+      else {
+        this.isFromPreviousRecord = false;
       }
 
     } catch (error) {
@@ -412,7 +428,7 @@ export class IngresosNetosComponent implements OnInit {
     let isDirty = this.ingresosForm.dirty;
     //console.log(isDirty);
 
-      if (isDirty && !this.pushButtonSave) {
+    if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           title: 'Tienes cambios sin guardar',
@@ -502,6 +518,14 @@ export class IngresosNetosComponent implements OnInit {
         throw errors;
       }
 
+      this.menuStateService.markSectionAsSaved(
+        '/ingresos-netos',
+        'situacionPatrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
       this.isLoading = false;
       this.presentSuccessAlert();
     } catch (error) {

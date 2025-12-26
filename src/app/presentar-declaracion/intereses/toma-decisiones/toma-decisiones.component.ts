@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -33,6 +33,7 @@ import {
 import { findOption, ifExistsEnableFields } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -48,7 +49,7 @@ export class TomaDecisionesComponent implements OnInit {
   editIndex: number = null;
   estado: string = null;
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   relacionCatalogo = Relacion;
   institucionCatalogo = Institucion;
@@ -74,13 +75,16 @@ export class TomaDecisionesComponent implements OnInit {
 
   @ViewChild('otroTipoParticipacion') otroTipoParticipacion: ElementRef;
   location: string = null;
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -204,6 +208,7 @@ export class TomaDecisionesComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.participacionTomaDecisiones);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -224,9 +229,16 @@ export class TomaDecisionesComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.participacionTomaDecisiones === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
         this.setupForm(data.declaracion.participacionTomaDecisiones);
+        this.isFromPreviousRecord = false;
+        this.menuStateService.markSectionAsSaved(
+          '/toma-decisiones', // ← Cambiar por tu URL
+          'intereses', // ← Cambiar por tu sección: 'aviso' | 'situacionPatrimonial' | 'intereses'
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -327,6 +339,14 @@ export class TomaDecisionesComponent implements OnInit {
         .toPromise();
 
       this.editMode = false;
+      this.isLoading = false;
+      this.menuStateService.markSectionAsSaved(
+        '/toma-decisiones', // ← Cambiar por tu URL
+        'intereses', // ← Cambiar por tu sección
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
       if (data.declaracion.participacionTomaDecisiones) {
         this.setupForm(data.declaracion.participacionTomaDecisiones);
       }
@@ -383,9 +403,9 @@ export class TomaDecisionesComponent implements OnInit {
       this.participacionTomaDecisionesForm
         .get('participacion.ubicacion.entidadFederativa')
         .setValue(findOption(this.estadosCatalogo, entidadFederativa.clave));
-      this.location="MX"
-    }else{
-      this.location="EX"
+      this.location = "MX"
+    } else {
+      this.location = "EX"
     }
   }
 

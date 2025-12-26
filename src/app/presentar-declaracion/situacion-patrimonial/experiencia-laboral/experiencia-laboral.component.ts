@@ -21,6 +21,7 @@ import NivelOrdenGobierno from '@static/catalogos/nivelOrdenGobiernoOtro.json';
 import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/experiencia-laboral';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -36,7 +37,7 @@ export class ExperienciaLaboralComponent implements OnInit {
   editIndex: number = null;
   experiencia: Experiencia[] = [];
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroAmbitoSector') otroAmbitoSector: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -59,18 +60,21 @@ export class ExperienciaLaboralComponent implements OnInit {
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
   maxDate = new Date(this.anio, this.mes - 1, this.dia);
-  maxDateIngreso = new Date(this.anio, this.mes - 1, this.dia-1);
+  maxDateIngreso = new Date(this.anio, this.mes - 1, this.dia - 1);
 
   ahora: any;
   deshabilitar: any;
   fechaIngreso: string;
+
+  isFromPreviousRecord = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -242,6 +246,7 @@ export class ExperienciaLaboralComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.experienciaLaboral);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -267,9 +272,16 @@ export class ExperienciaLaboralComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.experienciaLaboral === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data?.declaracion.experienciaLaboral);
+        this.menuStateService.markSectionAsSaved(
+          '/experiencia-laboral', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -423,6 +435,14 @@ export class ExperienciaLaboralComponent implements OnInit {
       }
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/experiencia-laboral', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+
       this.setupForm(data?.declaracion.experienciaLaboral);
       this.presentSuccessAlert();
     } catch (error) {

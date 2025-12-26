@@ -25,6 +25,7 @@ import Sector from '@static/catalogos/sector.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-pareja';
 import { findOption } from '@utils/utils';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 
 @UntilDestroy()
@@ -40,7 +41,7 @@ export class DatosParejaComponent implements OnInit {
   editMode = false;
   estado: Catalogo = null;
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroActividadLaboral') otroActividadLaboral: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
@@ -77,13 +78,16 @@ export class DatosParejaComponent implements OnInit {
   hidden: string = 'false';
   ciudadanoExtranjero: boolean;
   active: boolean;
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -289,6 +293,7 @@ export class DatosParejaComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       if (data?.lastDeclaracion.datosPareja) {
         this.setupForm(data?.lastDeclaracion.datosPareja);
       }
@@ -315,9 +320,16 @@ export class DatosParejaComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data?.declaracion.datosPareja === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data?.declaracion.datosPareja);
+        this.menuStateService.markSectionAsSaved(
+          '/datos-pareja', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -470,6 +482,15 @@ export class DatosParejaComponent implements OnInit {
 
       this.isLoading = false;
       this.editMode = false;
+
+      this.menuStateService.markSectionAsSaved(
+        '/datos-pareja', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
 
       if (data?.declaracion.datosPareja) {
         this.setupForm(data?.declaracion.datosPareja);

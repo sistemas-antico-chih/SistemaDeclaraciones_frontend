@@ -18,6 +18,8 @@ import SituacionPersonalEstadoCivil from '@static/catalogos/situacionPersonalEst
 import RegimenMatrimonial from '@static/catalogos/regimenMatrimonial.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-generales';
 import { findOption } from '@utils/utils';
+import { MenuStateService } from '@app/services/menu-state.service';
+
 
 @UntilDestroy()
 @Component({
@@ -32,7 +34,7 @@ export class DatosGeneralesComponent implements OnInit {
   isLoading = false;
   currentYear = new Date().getFullYear();
   anio_ejercicio: number = null;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
 
@@ -48,12 +50,15 @@ export class DatosGeneralesComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
+  isFromPreviousRecord = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     const urlChunks = this.router.url.split('/');
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
@@ -172,11 +177,12 @@ export class DatosGeneralesComponent implements OnInit {
         })
         .toPromise();
 
-      console.log ({ data, errors });  
+      console.log({ data, errors });
       if (errors) {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.fillForm(data?.lastDeclaracion.datosGenerales);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -204,9 +210,20 @@ export class DatosGeneralesComponent implements OnInit {
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
 
       if (data.declaracion.datosGenerales === null) {
-        this.getLastUserInfo();
+        this.menuStateService.clearState(
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.fillForm(data?.declaracion.datosGenerales);
+        this.menuStateService.markSectionAsSaved(
+          '/datos-generales', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.log(error);
@@ -232,7 +249,7 @@ export class DatosGeneralesComponent implements OnInit {
     return typeof this.anio_ejercicio === 'number';
     // return true;
   }
-  
+
 
 
   formHasChanges() {
@@ -286,7 +303,13 @@ export class DatosGeneralesComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
+      this.menuStateService.markSectionAsSaved(
+        '/datos-generales', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
       this.isLoading = false;
       this.openSnackBar('Información actualizada', 'Aceptar');
     } catch (error) {

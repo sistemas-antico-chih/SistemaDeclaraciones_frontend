@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef   } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ import { tooltipData } from '@static/tooltips/intereses/apoyos';
 import { apoyosQuery, apoyosMutation, lastApoyosQuery } from '@api/declaracion';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @Component({
   selector: 'app-apoyos-publicos',
@@ -35,7 +36,7 @@ export class ApoyosPublicosComponent implements OnInit {
   editMode = false;
   editIndex: number = null;
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   beneficiarioProgramaCatalogo = beneficiarioPrograma;
   NivelGobiernoCatalogo = NivelGobierno;
@@ -54,13 +55,16 @@ export class ApoyosPublicosComponent implements OnInit {
 
   @ViewChild('otroBeneficiario') otroBeneficiario: ElementRef;
   @ViewChild('otroTipoApoyo') otroTipoApoyo: ElementRef;
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -127,7 +131,7 @@ export class ApoyosPublicosComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.apoyos);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -147,9 +151,16 @@ export class ApoyosPublicosComponent implements OnInit {
         .toPromise();
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.apoyos === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.apoyos);
+        this.menuStateService.markSectionAsSaved(
+          '/apoyos-publicos', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'intereses', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -249,7 +260,18 @@ export class ApoyosPublicosComponent implements OnInit {
         .toPromise();
 
       this.editMode = false;
-      this.setupForm(data.declaracion.apoyos);
+      this.menuStateService.markSectionAsSaved(
+        '/apoyos-publilco', // ← Cambiar por tu URL
+        'intereses',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
+
+      if (data.declaracion.apoyos) { // ← Cambiar por tu campo
+        this.setupForm(data.declaracion.tuCampo);
+      }
       this.presentSuccessAlert();
     } catch (error) {
       console.log(error);
@@ -297,12 +319,12 @@ export class ApoyosPublicosComponent implements OnInit {
     const { beneficiarioPrograma, tipoApoyo } = this.apoyosForm.value.apoyo;
 
     if (beneficiarioPrograma) {
-        const optBeneficiario = this.beneficiarioProgramaCatalogo.filter((ins: any) => ins.clave === beneficiarioPrograma.clave);
-        // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
-        this.apoyosForm.get('apoyo.beneficiarioPrograma').setValue(optBeneficiario[0]);
-        if (beneficiarioPrograma.clave === 'OTRO') {
-          this.varOtroBeneficiario = beneficiarioPrograma.valor;
-        }
+      const optBeneficiario = this.beneficiarioProgramaCatalogo.filter((ins: any) => ins.clave === beneficiarioPrograma.clave);
+      // this.participacionTomaDecisionesForm.get('participacion.tipoInstitucion').setValue(findOption(this.institucionCatalogo, tipoInstitucion));
+      this.apoyosForm.get('apoyo.beneficiarioPrograma').setValue(optBeneficiario[0]);
+      if (beneficiarioPrograma.clave === 'OTRO') {
+        this.varOtroBeneficiario = beneficiarioPrograma.valor;
+      }
     }
 
     if (tipoApoyo) {

@@ -2,16 +2,12 @@ import { filter } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Apollo } from 'apollo-angular';
 import { lastPrestamoComodatoQuery, prestamoComodatoMutation, prestamoComodatoQuery } from '@api/declaracion';
-
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { UntilDestroy, untilDestroyed } from '@core';
-
 import TipoInmueble from '@static/catalogos/tipoInmueble.json';
 import TipoVehiculo from '@static/catalogos/tipoVehiculo.json';
 import Extranjero from '@static/catalogos/extranjero.json';
@@ -20,14 +16,11 @@ import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import ParentescoRelacion from '@static/catalogos/parentescoRelacion.json';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
-
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/prestamo-terceros';
-
 import { Catalogo, DeclaracionOutput, LastDeclaracionOutput, Prestamo, PrestamoComodato } from '@models/declaracion';
-
 import { findOption, ifExistsEnableFields } from '@utils/utils';
-
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @UntilDestroy()
 @Component({
@@ -45,7 +38,7 @@ export class PrestamosTercerosComponent implements OnInit {
   prestamo: Prestamo[] = [];
   isLoading = false;
   currentYear = new Date().getFullYear();
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   tipoInmuebleCatalogo = TipoInmueble;
   tipoVehiculoCatalogo = TipoVehiculo;
@@ -82,12 +75,16 @@ export class PrestamosTercerosComponent implements OnInit {
     "SOBRINO(A)", "SUEGRO(A)", "TATARABUELO(A)", "TATARANIETO(A)", "TIO(A)", "NIETO(A)", "NINGUNO",
     "AHIJADO(A)", "NUERA", "YERNO", "OTRO(ESPECIFIQUE)"]
 
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -199,8 +196,8 @@ export class PrestamosTercerosComponent implements OnInit {
             marca: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],
             modelo: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],
             anio: [null, [
-              Validators.required, 
-              Validators.min(1920), 
+              Validators.required,
+              Validators.min(1920),
               Validators.max(this.maxAnio),
             ]],
             numeroSerieRegistro: ['', [Validators.required, Validators.pattern(/^\S.*\S$/)]],
@@ -322,6 +319,7 @@ export class PrestamosTercerosComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.prestamoComodato);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -342,9 +340,16 @@ export class PrestamosTercerosComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.prestamoComodato === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.prestamoComodato);
+        this.menuStateService.markSectionAsSaved(
+          '/prestamos-terceros', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -461,6 +466,14 @@ export class PrestamosTercerosComponent implements OnInit {
         })
         .toPromise();
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/prestamos-terceros', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+
       if (data.declaracion.prestamoComodato) {
         this.setupForm(data.declaracion.prestamoComodato);
       }
@@ -513,11 +526,11 @@ export class PrestamosTercerosComponent implements OnInit {
     const { duenoTitular } = this.prestamoComodatoForm.value.prestamo;
 
     if (duenoTitular) {
-      if (this.parentescoArray.includes(duenoTitular.relacionConTitular)){
+      if (this.parentescoArray.includes(duenoTitular.relacionConTitular)) {
       }
-      else{
-        this.relacionConTitular="OTRO(ESPECIFIQUE)"
-        this.varOtroRelacion = duenoTitular.relacionConTitular      
+      else {
+        this.relacionConTitular = "OTRO(ESPECIFIQUE)"
+        this.varOtroRelacion = duenoTitular.relacionConTitular
       }
     }
 

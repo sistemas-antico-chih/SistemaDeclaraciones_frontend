@@ -24,6 +24,7 @@ import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import { findOption } from '@utils/utils';
 
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @Component({
   selector: 'app-bienes-muebles',
@@ -37,7 +38,7 @@ export class BienesMueblesComponent implements OnInit {
   editIndex: number = null;
   bienMueble: BienMueble[] = [];
   isLoading = false;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   tipoBienBienesMueblesCatalogo = TipoBienBienesMuebles;
   formaAdquisicionCatalogo = FormaAdquisicion;
@@ -67,13 +68,16 @@ export class BienesMueblesComponent implements OnInit {
 
   @ViewChild('otroTipoBienMueble') otroTipoBienMueble: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -170,6 +174,7 @@ export class BienesMueblesComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.bienesMuebles);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -191,9 +196,16 @@ export class BienesMueblesComponent implements OnInit {
       this.declaracionId = data.declaracion._id;
 
       if (data.declaracion.bienesMuebles === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.bienesMuebles);
+        this.menuStateService.markSectionAsSaved(
+          '/bienes-muebles', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -293,6 +305,14 @@ export class BienesMueblesComponent implements OnInit {
         .toPromise();
 
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/bienes-muebles', // ← Cambiar por tu URL
+        'situacion-patimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
       if (data.declaracion.bienesMuebles) {
         this.setupForm(data.declaracion.bienesMuebles);
       }
@@ -344,7 +364,7 @@ export class BienesMueblesComponent implements OnInit {
         this.varOtroTipoBienMueble = tipoBien.valor;
       }
     }
-    
+
     if (titular) {
       this.bienesMueblesForm.get('bienMueble.titular').setValue(findOption(this.titularBienCatalogo, titular[0].clave));
     }
@@ -353,7 +373,7 @@ export class BienesMueblesComponent implements OnInit {
         .get('bienMueble.formaAdquisicion')
         .setValue(findOption(this.formaAdquisicionCatalogo, formaAdquisicion.clave));
     }
-    
+
     if (relacion) {
       const optRelacion = this.parentescoRelacionCatalogo.filter((par: any) => par.clave === relacion.clave);
       // this.bienesMueblesForm.get('bienMueble.transmisor.relacion').setValue(findOption(this.parentescoRelacionCatalogo, relacion));

@@ -27,7 +27,7 @@ import { tooltipData } from '@static/tooltips/situacion-patrimonial/bien-inmuebl
 import { BienInmueble, BienesInmuebles, Catalogo, DeclaracionOutput, ValorDeclarante, LastDeclaracionOutput } from '@models/declaracion';
 
 import { findOption, ifExistsEnableFields } from '@utils/utils';
-
+import { MenuStateService } from '@app/services/menu-state.service';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 
 @UntilDestroy()
@@ -83,13 +83,16 @@ export class BienesInmueblesComponent implements OnInit {
   valores: ValorDeclarante[] = [];
 
   tipoPersona: string;
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
 
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -243,6 +246,7 @@ export class BienesInmueblesComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       if (data?.lastDeclaracion.bienesInmuebles) {
         this.setupForm(data?.lastDeclaracion.bienesInmuebles);
       }
@@ -269,9 +273,16 @@ export class BienesInmueblesComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.bienesInmuebles === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.bienesInmuebles);
+        this.menuStateService.markSectionAsSaved(
+          '/bienes-inmuebles', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -413,7 +424,7 @@ export class BienesInmueblesComponent implements OnInit {
       const declaracion = {
         bienesInmuebles: form,
       };
-      
+
       const { data, errors } = await this.apollo
         .mutate<DeclaracionOutput>({
           mutation: bienesInmueblesMutation,
@@ -427,8 +438,15 @@ export class BienesInmueblesComponent implements OnInit {
       if (errors) {
         throw errors;
       }
-
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/bienes-inmuebles', // ← Cambiar por tu URL
+        'situacion-patimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+
+      this.isFromPreviousRecord = false;
       if (data?.declaracion.bienesInmuebles) {
         this.setupForm(data?.declaracion.bienesInmuebles);
       }

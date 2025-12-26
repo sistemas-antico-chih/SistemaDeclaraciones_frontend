@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Apollo } from 'apollo-angular';
 import { vehiculosMutation, vehiculosQuery, lastVehiculosQuery } from '@api/declaracion';
-
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import TipoVehiculo from '@static/catalogos/tipoVehiculo.json';
 import FormaAdquisicion from '@static/catalogos/formaAdquisicion.json';
 import TitularBien from '@static/catalogos/titularBien.json';
@@ -19,15 +16,12 @@ import Estados from '@static/catalogos/estados.json';
 import Municipios from '@static/catalogos/municipios.json';
 import Paises from '@static/catalogos/paises.json';
 import Monedas from '@static/catalogos/monedas.json';
-
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/vehiculos';
-
 import { DeclaracionOutput, Vehiculo, Vehiculos, LastDeclaracionOutput } from '@models/declaracion';
-
 import { findOption, ifExistsEnableFields } from '@utils/utils';
-
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
+import { MenuStateService } from '@app/services/menu-state.service';
 
 @Component({
   selector: 'app-vehiculos',
@@ -45,7 +39,7 @@ export class VehiculosComponent implements OnInit {
 
   varOtroTipoVehiculo: string = null;
   varOtroRelacion: string = null;
-  pushButtonSave: boolean =false;
+  pushButtonSave: boolean = false;
 
   @ViewChild('otroTipoVehiculo') otroTipoVehiculo: ElementRef;
   @ViewChild('otroParentesco') otroParentesco: ElementRef;
@@ -82,12 +76,16 @@ export class VehiculosComponent implements OnInit {
 
   tipoPersona: string;
 
+  isFromPreviousRecord = false;
+  declaracionSimplificada = false;
+
   constructor(
     private apollo: Apollo,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private menuStateService: MenuStateService // ← AGREGAR
   ) {
     this.tipoDeclaracion = this.router.url.split('/')[1];
     this.createForm();
@@ -147,8 +145,8 @@ export class VehiculosComponent implements OnInit {
         modelo: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
         //anio: [null, [Validators.required, Validators.pattern(/^\d{4}$/)]],
         anio: [null, [
-          Validators.required, 
-          Validators.min(1920), 
+          Validators.required,
+          Validators.min(1920),
           Validators.max(this.maxAnio),
           //this.validarLongitud
         ]],
@@ -222,6 +220,7 @@ export class VehiculosComponent implements OnInit {
         throw errors;
       }
 
+      this.isFromPreviousRecord = true;
       this.setupForm(data?.lastDeclaracion.vehiculos);
     } catch (error) {
       console.warn('El usuario probablemente no tienen una declaración anterior', error.message);
@@ -242,9 +241,16 @@ export class VehiculosComponent implements OnInit {
       this.declaracionId = data.declaracion._id;
 
       if (data.declaracion.vehiculos === null) {
-        this.getLastUserInfo();
+        await this.getLastUserInfo();
       } else {
+        this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.vehiculos);
+        this.menuStateService.markSectionAsSaved(
+          '/vehiculos', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          'situacion-patrimonial', // ← Siempre 'intereses' para estos componentes
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
       }
     } catch (error) {
       console.error(error);
@@ -343,6 +349,14 @@ export class VehiculosComponent implements OnInit {
         })
         .toPromise();
       this.editMode = false;
+      this.menuStateService.markSectionAsSaved(
+        '/vehiculos', // ← Cambiar por tu URL
+        'situacion-patrimonial',
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
+      this.isFromPreviousRecord = false;
+
       if (data.declaracion.vehiculos) {
         this.setupForm(data.declaracion.vehiculos);
       }
@@ -416,15 +430,15 @@ export class VehiculosComponent implements OnInit {
       this.vehiculosForm.get('vehiculo.formaAdquisicion').setValue(optFormaAdquision[0]);
     }
 
-    if(lugarRegistro){
-      if( !lugarRegistro.pais || lugarRegistro.pais.value === 'MX'){
+    if (lugarRegistro) {
+      if (!lugarRegistro.pais || lugarRegistro.pais.value === 'MX') {
         const { entidadFederativa } = lugarRegistro;
         this.location = "MX";
         const optEntidad = this.estadosCatalogo.filter((edo: any) => edo.clave === entidadFederativa.clave);
         this.vehiculosForm.get('vehiculo.lugarRegistro.entidadFederativa').setValue(optEntidad[0]);
 
       }
-      else{
+      else {
         this.location = "EX";
       }
     }
