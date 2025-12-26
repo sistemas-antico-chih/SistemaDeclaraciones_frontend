@@ -231,7 +231,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.url.includes('/intereses/') || url.includes('participacion') || url.includes('socios')) {
       section = 'intereses';
     } else {
-      section = 'situacionPatrimonial';
+      section = 'situacion-patrimonial';
     }
 
     const isCurrentRecord = this.menuStateService.isUrlSaved(
