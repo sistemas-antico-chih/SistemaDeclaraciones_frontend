@@ -49,7 +49,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     { text: 'Datos del dependiente económico', url: '/datos-dependiente', simplificada: false },
     {
       text: 'Ingresos netos del declarante, pareja y/o dependientes económicos',
-      url: '/ingresos-netos',simplificada: true
+      url: '/ingresos-netos', simplificada: true
     },
     {
       text: '¿Te desempeñaste como servidor público en el año inmediato anterior?',
@@ -68,10 +68,14 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Opciones del menú de Intereses
   interesesOptions: MenuOption[] = [
-    { text: 'Participación en empresas, sociedades o asociaciones (hasta los dos últimos años) ',
-       url: '/participacion-empresa' },
-    { text: '¿Participa en la toma de decisiones de alguna de estas instituciones? (hasta los dos últimos años)',
-       url: '/toma-decisiones' },
+    {
+      text: 'Participación en empresas, sociedades o asociaciones (hasta los dos últimos años) ',
+      url: '/participacion-empresa'
+    },
+    {
+      text: '¿Participa en la toma de decisiones de alguna de estas instituciones? (hasta los dos últimos años)',
+      url: '/toma-decisiones'
+    },
     { text: 'Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/apoyos-publicos' },
     { text: 'Representación (hasta los dos últimos años)', url: '/representacion' },
     { text: 'Clientes principales (hasta los dos últimos años)', url: '/clientes-principales' },
@@ -200,49 +204,99 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
  */
   private updateStepColors(): void {
     console.log('🎨 Actualizando colores de steps');
+    const twoMenusMode = this.tipoDeclaracion !== 'aviso' && this.declaracionCompleta;
 
-    let options: MenuOption[] = [];
+    if (twoMenusMode) {
+      // MODO DOS MENÚS: Actualizar AMBOS menús simultáneamente
+      console.log('📋 Modo DOS MENÚS detectado - Actualizando Situación Patrimonial e Intereses');
 
-    // Determinar qué opciones usar según el tipo de declaración
-    if (this.tipoDeclaracion === 'aviso') {
-      options = this.avisoOptions;
-    } else if (this.url.includes('/intereses/')) {
-      options = this.interesesOptions;
+      setTimeout(() => {
+        // Actualizar menú I - Situación Patrimonial
+        this.updateSingleMenu(
+          'situacionPatrimonial',
+          this.situacionPatrimonialOptions,
+          0  // Índice de inicio: 0
+        );
+
+        // Actualizar menú II - Intereses
+        this.updateSingleMenu(
+          'intereses',
+          this.interesesOptions,
+          this.situacionPatrimonialOptions.length  // Índice después del primer menú
+        );
+      }, 50);
     } else {
-      options = this.declaracionSimplificada
-        ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
-        : this.situacionPatrimonialOptions;
+      // MODO UN SOLO MENÚ: Lógica original
+      let options: MenuOption[] = [];
+      let section: 'situacionPatrimonial' | 'intereses' | 'aviso';
+
+      if (this.tipoDeclaracion === 'aviso') {
+        options = this.avisoOptions;
+        section = 'aviso';
+      } else if (this.url.includes('/intereses/')) {
+        options = this.interesesOptions;
+        section = 'intereses';
+      } else {
+        options = this.declaracionSimplificada
+          ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
+          : this.situacionPatrimonialOptions;
+        section = 'situacionPatrimonial';
+      }
+
+      setTimeout(() => {
+        this.updateSingleMenu(section, options, 0);
+      }, 50);
+    }
+  }
+
+  /**
+   * Actualiza un menú específico
+   * @param section - Sección del menú ('aviso' | 'situacionPatrimonial' | 'intereses')
+   * @param options - Opciones del menú
+   * @param startIndex - Índice de inicio en el DOM (para cuando hay múltiples menús)
+   */
+  private updateSingleMenu(
+    section: 'situacionPatrimonial' | 'intereses' | 'aviso',
+    options: MenuOption[],
+    startIndex: number
+  ): void {
+    console.log(`🎨 Actualizando menú: ${section} (inicio en índice ${startIndex})`);
+
+    // Buscar todos los mat-step-header en el documento
+    const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+
+    console.log(`📊 Total de step-headers encontrados: ${stepHeaders.length}`);
+
+    // Filtrar opciones visibles si es necesario
+    let visibleOptions = options;
+    if (section === 'situacionPatrimonial' && this.declaracionSimplificada) {
+      visibleOptions = options.filter(opt => opt.simplificada);
     }
 
-    // Esperar a que el DOM esté listo
-    setTimeout(() => {
-      // Buscar todos los mat-step-header en el documento
-      const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+    // Actualizar cada step del menú
+    visibleOptions.forEach((option, index) => {
+      const globalIndex = startIndex + index;
 
-      console.log(`📊 Total de step-headers encontrados: ${stepHeaders.length}`);
+      if (globalIndex < stepHeaders.length) {
+        const stepHeader = stepHeaders[globalIndex];
+        const isCurrentRecord = this.isCurrentRecord(option.url);
 
-      stepHeaders.forEach((stepHeader, index) => {
-        if (index < options.length) {
-          const option = options[index];
-          const isCurrentRecord = this.isCurrentRecord(option.url);
+        // Remover todas las clases primero
+        stepHeader.classList.remove('step-current');
+        stepHeader.classList.remove('step-from-previous');
 
-          // Remover todas las clases primero
-          stepHeader.classList.remove('step-current');
-          stepHeader.classList.remove('step-from-previous');
-
-          // Aplicar la clase correcta
-          if (isCurrentRecord) {
-            // AZUL - registro actual
-            stepHeader.classList.add('step-current');
-            console.log(`  🔵 Step ${index}: "${option.text}" → AZUL (current)`);
-          } else {
-            // GRIS - registro anterior
-            stepHeader.classList.add('step-from-previous');
-            console.log(`  ⚪ Step ${index}: "${option.text}" → GRIS (previous)`);
-          }
+        // Aplicar la clase correcta
+        if (isCurrentRecord) {
+          // AZUL - registro actual
+          stepHeader.classList.add('step-current');
+          console.log(`  🔵 Step ${globalIndex} [${section}]: "${option.text}" → AZUL (current)`);
+        } else {
+          // GRIS - registro anterior
+          stepHeader.classList.add('step-from-previous');
+          console.log(`  ⚪ Step ${globalIndex} [${section}]: "${option.text}" → GRIS (previous)`);
         }
-      });
-    }, 50);
+      }
+    });
   }
 
   /**
@@ -253,10 +307,26 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.tipoDeclaracion === 'aviso') {
       section = 'aviso';
-    } else if (this.url.includes('/intereses/')) {
-      section = 'intereses';
-    } else {
+    } else if (url.includes('/ingresos-netos') ||
+      url.includes('/servidor-publico') ||
+      url.includes('/bienes-inmuebles') ||
+      url.includes('/vehiculos') ||
+      url.includes('/bienes-muebles') ||
+      url.includes('/inversiones') ||
+      url.includes('/adeudos') ||
+      url.includes('/prestamos-terceros') ||
+      url.includes('/datos-generales') ||
+      url.includes('/domicilio-declarante') ||
+      url.includes('/datos-curriculares') ||
+      url.includes('/datos-empleo') ||
+      url.includes('/experiencia-laboral') ||
+      url.includes('/datos-pareja') ||
+      url.includes('/datos-dependiente')) {
+      // URLs de Situación Patrimonial
       section = 'situacionPatrimonial';
+    } else {
+      // URLs de Intereses
+      section = 'intereses';
     }
 
     const isCurrentRecord = this.menuStateService.isUrlSaved(
