@@ -45,38 +45,36 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     { text: 'Datos curriculares del declarante', url: '/datos-curriculares', simplificada: false },
     { text: 'Datos del empleo, cargo o comisión', url: '/datos-empleo', simplificada: true },
     { text: 'Experiencia laboral', url: '/experiencia-laboral', simplificada: false },
-    { text: 'Datos de la pareja', url: '/situacion-patrimonial/datos-pareja', simplificada: false },
-    { text: 'Datos del dependiente económico', url: '/situacion-patrimonial/datos-dependiente', simplificada: false },
+    { text: 'Datos de la pareja', url: '/datos-pareja', simplificada: false },
+    { text: 'Datos del dependiente económico', url: '/datos-dependiente', simplificada: false },
     {
       text: 'Ingresos netos del declarante, pareja y/o dependientes económicos',
-      url: '/situacion-patrimonial/ingresos-netos',
-      simplificada: true,
+      url: '/ingresos-netos',simplificada: true
     },
     {
       text: '¿Te desempeñaste como servidor público en el año inmediato anterior?',
-      url: '/situacion-patrimonial/servidor-publico',
-      simplificada: true,
+      url: '/servidor-publico', simplificada: true,
     },
-    { text: 'Bienes inmuebles', url: '/situacion-patrimonial/bienes-inmuebles', simplificada: false },
-    { text: 'Vehículos', url: '/situacion-patrimonial/vehiculos', simplificada: false },
-    { text: 'Bienes muebles', url: '/situacion-patrimonial/bienes-muebles', simplificada: false },
+    { text: 'Bienes inmuebles', url: '/bienes-inmuebles', simplificada: false },
+    { text: 'Vehículos', url: '/vehiculos', simplificada: false },
+    { text: 'Bienes muebles', url: '/bienes-muebles', simplificada: false },
     {
       text: 'Inversiones, cuentas bancarias u otro tipo de valores / activos',
-      url: '/situacion-patrimonial/inversiones', simplificada: false
+      url: '/inversiones', simplificada: false
     },
-    { text: 'Adeudos / pasivos', url: '/situacion-patrimonial/adeudos', simplificada: false },
-    { text: 'Préstamo o comodato por terceros', url: '/situacion-patrimonial/prestamos-terceros', simplificada: false },
+    { text: 'Adeudos / pasivos', url: '/adeudos', simplificada: false },
+    { text: 'Préstamo o comodato por terceros', url: '/prestamos-terceros', simplificada: false },
   ];
 
   // Opciones del menú de Intereses
   interesesOptions: MenuOption[] = [
     { text: 'Participación en empresas', url: '/participacion-empresas' },
     { text: 'Participación en instituciones', url: '/participacion-instituciones' },
-    { text: 'Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/intereses/apoyos-publicos' },
-    { text: 'Representación (hasta los dos últimos años)', url: '/intereses/representacion' },
-    { text: 'Clientes principales (hasta los dos últimos años)', url: '/intereses/clientes-principales' },
-    { text: 'Beneficios privados (hasta los dos últimos años)', url: '/intereses/beneficios-privados' },
-    { text: 'Fideicomisos (hasta los dos últimos años)', url: '/intereses/fideicomisos' },
+    { text: 'Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/apoyos-publicos' },
+    { text: 'Representación (hasta los dos últimos años)', url: '/representacion' },
+    { text: 'Clientes principales (hasta los dos últimos años)', url: '/clientes-principales' },
+    { text: 'Beneficios privados (hasta los dos últimos años)', url: '/beneficios-privados' },
+    { text: 'Fideicomisos (hasta los dos últimos años)', url: '/fideicomisos' },
   ];
 
   constructor(
