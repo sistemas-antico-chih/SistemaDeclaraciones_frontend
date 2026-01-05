@@ -131,10 +131,13 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // Extraer info de la declaración
     this.extractDeclaracionInfo();
 
-    // Cargar el estado guardado desde localStorage
+    // 🔑 IMPORTANTE: Cargar el estado ANTES de actualizar colores
     console.log('📦 Cargando estado guardado...');
-    const savedState = this.menuStateService.loadSavedState(this.tipoDeclaracion, this.declaracionSimplificada);
-    console.log('📦 Estado cargado:', savedState);
+    const savedState = this.menuStateService.loadSavedState(
+      this.tipoDeclaracion,
+      this.declaracionSimplificada
+    );
+    console.log('📦 Estado cargado desde localStorage:', savedState);
 
     // Suscribirse a cambios en el estado guardado
     const stateSub = this.menuStateService.savedState$
@@ -149,10 +152,11 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // Aplicar colores iniciales después de que la vista esté lista
+    // 🔑 CRÍTICO: Esperar más tiempo para que el DOM y el estado estén listos
     setTimeout(() => {
+      console.log('🎨 Aplicando colores iniciales (después de cargar estado)...');
       this.updateStepColors();
-    }, 200);
+    }, 500); // Aumentado de 200 a 500ms
 
     // Observar cambios en los steps
     this.steps.changes.subscribe(() => {
@@ -177,8 +181,8 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Extrae el tipo de declaración y si es simplificada desde la URL
-   */
+ * Extrae el tipo de declaración y si es simplificada desde la URL
+ */
   private extractDeclaracionInfo(): void {
     const urlChunks = this.router.url.split('/').filter(chunk => chunk);
 
@@ -190,20 +194,26 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log('📋 Info extraída:', {
         tipoDeclaracion: this.tipoDeclaracion,
         declaracionSimplificada: this.declaracionSimplificada,
+        declaracionCompleta: this.declaracionCompleta,
         url: this.router.url
       });
     }
   }
 
   /**
-   * MÉTODO CLAVE: Actualiza los colores de los steps
-   */
-  /**
- * MÉTODO CLAVE: Actualiza los colores de los steps
- * VERSIÓN MEJORADA - Aplica clases en múltiples lugares para asegurar que funcione
+ * MÉTODO CORREGIDO: Actualiza los colores de los steps
+ * Ahora maneja correctamente los DOS menús cuando declaracionCompleta === true
  */
   private updateStepColors(): void {
     console.log('🎨 Actualizando colores de steps');
+    console.log('📊 Estado actual:', {
+      tipoDeclaracion: this.tipoDeclaracion,
+      declaracionSimplificada: this.declaracionSimplificada,
+      declaracionCompleta: this.declaracionCompleta,
+      url: this.url
+    });
+
+    // Determinar si estamos en modo de DOS MENÚS
     const twoMenusMode = this.tipoDeclaracion !== 'aviso' && this.declaracionCompleta;
 
     if (twoMenusMode) {
@@ -211,18 +221,24 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log('📋 Modo DOS MENÚS detectado - Actualizando Situación Patrimonial e Intereses');
 
       setTimeout(() => {
+        // Calcular opciones visibles de situación patrimonial
+        const visibleSituacionOptions = this.declaracionSimplificada
+          ? this.situacionPatrimonialOptions.filter(opt => opt.simplificada)
+          : this.situacionPatrimonialOptions;
+
         // Actualizar menú I - Situación Patrimonial
         this.updateSingleMenu(
           'situacionPatrimonial',
-          this.situacionPatrimonialOptions,
+          visibleSituacionOptions,
           0  // Índice de inicio: 0
         );
 
         // Actualizar menú II - Intereses
+        // El índice de inicio es el número de opciones visibles del primer menú
         this.updateSingleMenu(
           'intereses',
           this.interesesOptions,
-          this.situacionPatrimonialOptions.length  // Índice después del primer menú
+          visibleSituacionOptions.length
         );
       }, 50);
     } else {
@@ -243,6 +259,8 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
         section = 'situacionPatrimonial';
       }
 
+      console.log(`📋 Modo UN MENÚ: ${section} con ${options.length} opciones`);
+
       setTimeout(() => {
         this.updateSingleMenu(section, options, 0);
       }, 50);
@@ -250,11 +268,11 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Actualiza un menú específico
-   * @param section - Sección del menú ('aviso' | 'situacionPatrimonial' | 'intereses')
-   * @param options - Opciones del menú
-   * @param startIndex - Índice de inicio en el DOM (para cuando hay múltiples menús)
-   */
+ * Actualiza un menú específico
+ * @param section - Sección del menú ('aviso' | 'situacionPatrimonial' | 'intereses')
+ * @param options - Opciones del menú
+ * @param startIndex - Índice de inicio en el DOM (para cuando hay múltiples menús)
+ */
   private updateSingleMenu(
     section: 'situacionPatrimonial' | 'intereses' | 'aviso',
     options: MenuOption[],
@@ -265,16 +283,11 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // Buscar todos los mat-step-header en el documento
     const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
 
-    console.log(`📊 Total de step-headers encontrados: ${stepHeaders.length}`);
-
-    // Filtrar opciones visibles si es necesario
-    let visibleOptions = options;
-    if (section === 'situacionPatrimonial' && this.declaracionSimplificada) {
-      visibleOptions = options.filter(opt => opt.simplificada);
-    }
+    console.log(`📊 Total de step-headers encontrados en DOM: ${stepHeaders.length}`);
+    console.log(`📊 Opciones a procesar: ${options.length}`);
 
     // Actualizar cada step del menú
-    visibleOptions.forEach((option, index) => {
+    options.forEach((option, index) => {
       const globalIndex = startIndex + index;
 
       if (globalIndex < stepHeaders.length) {
@@ -295,9 +308,12 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
           stepHeader.classList.add('step-from-previous');
           console.log(`  ⚪ Step ${globalIndex} [${section}]: "${option.text}" → GRIS (previous)`);
         }
+      } else {
+        console.warn(`⚠️ Step ${globalIndex} fuera de rango (max: ${stepHeaders.length - 1})`);
       }
     });
   }
+
 
   /**
    * Determina si una opción es del REGISTRO ACTUAL (azul) o ANTERIOR (gris)
@@ -335,6 +351,8 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       this.tipoDeclaracion,
       this.declaracionSimplificada
     );
+
+    console.log(`🔍 Verificando URL "${url}" en sección "${section}":`, isCurrentRecord ? '✅ AZUL' : '❌ GRIS');
 
     return isCurrentRecord;
   }
