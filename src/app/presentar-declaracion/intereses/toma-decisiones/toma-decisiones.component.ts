@@ -234,7 +234,7 @@ export class TomaDecisionesComponent implements OnInit {
         this.setupForm(data.declaracion.participacionTomaDecisiones);
         this.isFromPreviousRecord = false;
         this.menuStateService.markSectionAsSaved(
-          '/toma-decisiones', // ← Cambiar por tu URL
+          '/toma-descisiones', // ← Cambiar por tu URL
           'intereses', // ← Cambiar por tu sección: 'aviso' | 'situacionPatrimonial' | 'intereses'
           this.tipoDeclaracion,
           this.declaracionSimplificada
@@ -341,7 +341,7 @@ export class TomaDecisionesComponent implements OnInit {
       this.editMode = false;
       this.isLoading = false;
       this.menuStateService.markSectionAsSaved(
-        '/toma-decisiones', // ← Cambiar por tu URL
+        '/toma-descisiones', // ← Cambiar por tu URL
         'intereses', // ← Cambiar por tu sección
         this.tipoDeclaracion,
         this.declaracionSimplificada

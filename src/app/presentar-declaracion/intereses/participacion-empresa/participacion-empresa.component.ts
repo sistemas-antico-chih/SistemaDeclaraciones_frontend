@@ -63,6 +63,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
   @ViewChild('otroTipoParticipacion') otroTipoParticipacion: ElementRef;
   @ViewChild('otroSector') otroSector: ElementRef;
   location: string = null;
+  
   isFromPreviousRecord = false;
   declaracionSimplificada = false;
 
@@ -212,11 +213,11 @@ export class ParticipacionEmpresaComponent implements OnInit {
         .toPromise();
 
       this.declaracionId = data.declaracion._id;
-      if (data.declaracion.participacion === null) {
-        this.menuStateService.clearState(
-        this.tipoDeclaracion,
-        this.declaracionSimplificada
-      );
+        if (data.declaracion.participacion === null) {
+          this.menuStateService.clearState(
+          this.tipoDeclaracion,
+          this.declaracionSimplificada
+        );
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;
