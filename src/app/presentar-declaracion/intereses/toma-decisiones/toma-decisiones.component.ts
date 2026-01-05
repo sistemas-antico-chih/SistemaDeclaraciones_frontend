@@ -21,7 +21,7 @@ import Extranjero from '@static/catalogos/extranjero.json';
 import Paises from '@static/catalogos/paises.json';
 import Estados from '@static/catalogos/estados.json';
 
-import { tooltipData } from '@static/tooltips/intereses/toma-descisiones';
+import { tooltipData } from '@static/tooltips/intereses/toma-decisiones';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import {
   DeclaracionOutput,
@@ -234,7 +234,7 @@ export class TomaDecisionesComponent implements OnInit {
         this.setupForm(data.declaracion.participacionTomaDecisiones);
         this.isFromPreviousRecord = false;
         this.menuStateService.markSectionAsSaved(
-          '/toma-descisiones', // ← Cambiar por tu URL
+          '/toma-decisiones', // ← Cambiar por tu URL
           'intereses', // ← Cambiar por tu sección: 'aviso' | 'situacionPatrimonial' | 'intereses'
           this.tipoDeclaracion,
           this.declaracionSimplificada
@@ -341,7 +341,7 @@ export class TomaDecisionesComponent implements OnInit {
       this.editMode = false;
       this.isLoading = false;
       this.menuStateService.markSectionAsSaved(
-        '/toma-descisiones', // ← Cambiar por tu URL
+        '/toma-decisiones', // ← Cambiar por tu URL
         'intereses', // ← Cambiar por tu sección
         this.tipoDeclaracion,
         this.declaracionSimplificada
