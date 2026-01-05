@@ -42,9 +42,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   situacionPatrimonialOptions: MenuOption[] = [
     { text: 'Datos generales', url: '/datos-generales', simplificada: true },
     { text: 'Domicilio del declarante', url: '/domicilio-declarante', simplificada: true },
-    { text: 'Datos curriculares del declarante', url: '/datos-curriculares', simplificada: false },
+    { text: 'Datos curriculares del declarante', url: '/datos-curriculares', simplificada: true },
     { text: 'Datos del empleo, cargo o comisión', url: '/datos-empleo', simplificada: true },
-    { text: 'Experiencia laboral', url: '/experiencia-laboral', simplificada: false },
+    { text: 'Experiencia laboral', url: '/experiencia-laboral', simplificada: true },
     { text: 'Datos de la pareja', url: '/datos-pareja', simplificada: false },
     { text: 'Datos del dependiente económico', url: '/datos-dependiente', simplificada: false },
     {
@@ -52,7 +52,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       url: '/ingresos-netos',simplificada: true
     },
     {
-      text: '¿Te desempeñaste como servidor público en el año inmediato anterior?', 
+      text: '¿Te desempeñaste como servidor público en el año inmediato anterior?',
       url: '/servidor-publico', simplificada: true,
     },
     { text: 'Bienes inmuebles', url: '/bienes-inmuebles', simplificada: false },
