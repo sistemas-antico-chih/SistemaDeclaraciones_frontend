@@ -261,7 +261,7 @@ export class ApoyosPublicosComponent implements OnInit {
 
       this.editMode = false;
       this.menuStateService.markSectionAsSaved(
-        '/apoyos-publilco', // ← Cambiar por tu URL
+        '/apoyos-publico', // ← Cambiar por tu URL
         'intereses',
         this.tipoDeclaracion,
         this.declaracionSimplificada

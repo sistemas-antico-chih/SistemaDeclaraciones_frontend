@@ -213,12 +213,16 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.participacion === null) {
+        this.menuStateService.clearState(
+        this.tipoDeclaracion,
+        this.declaracionSimplificada
+      );
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;
         this.setupForm(data.declaracion.participacion);
         this.menuStateService.markSectionAsSaved(
-          '/participacion-empresas', // ← Cambiar por tu URL (ej: '/participacion-empresas')
+          '/participacion-empresa', // ← Cambiar por tu URL (ej: '/participacion-empresas')
           'intereses', // ← Siempre 'intereses' para estos componentes
           this.tipoDeclaracion,
           this.declaracionSimplificada
@@ -324,7 +328,7 @@ export class ParticipacionEmpresaComponent implements OnInit {
 
       this.editMode = false;
       this.menuStateService.markSectionAsSaved(
-        '/participacion-empresas', // ← Cambiar por tu URL
+        '/participacion-empresa', // ← Cambiar por tu URL
         'intereses',
         this.tipoDeclaracion,
         this.declaracionSimplificada
