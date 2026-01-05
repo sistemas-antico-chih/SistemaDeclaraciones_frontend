@@ -68,8 +68,10 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Opciones del menú de Intereses
   interesesOptions: MenuOption[] = [
-    { text: 'Participación en empresas', url: '/participacion-empresa' },
-    { text: 'Participación en instituciones', url: '/participacion-instituciones' },
+    { text: 'Participación en empresas, sociedades o asociaciones (hasta los dos últimos años) ',
+       url: '/participacion-empresa' },
+    { text: '¿Participa en la toma de decisiones de alguna de estas instituciones? (hasta los dos últimos años)',
+       url: '/toma-decisiones' },
     { text: 'Apoyos o beneficios públicos (hasta los dos últimos años)', url: '/apoyos-publicos' },
     { text: 'Representación (hasta los dos últimos años)', url: '/representacion' },
     { text: 'Clientes principales (hasta los dos últimos años)', url: '/clientes-principales' },
