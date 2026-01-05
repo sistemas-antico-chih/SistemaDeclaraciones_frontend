@@ -21,7 +21,7 @@ import Extranjero from '@static/catalogos/extranjero.json';
 import Paises from '@static/catalogos/paises.json';
 import Estados from '@static/catalogos/estados.json';
 
-import { tooltipData } from '@static/tooltips/intereses/toma-decisiones';
+import { tooltipData } from '@static/tooltips/intereses/toma-descisiones';
 import TipoOperacion from '@static/catalogos/tipoOperacion.json';
 import {
   DeclaracionOutput,
