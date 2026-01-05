@@ -254,7 +254,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.tipoDeclaracion === 'aviso') {
       section = 'aviso';
     } else if (this.url.includes('/intereses/')) {
-      console.log("llega");
       section = 'intereses';
     } else {
       section = 'situacionPatrimonial';
