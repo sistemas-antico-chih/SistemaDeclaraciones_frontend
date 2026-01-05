@@ -52,7 +52,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       url: '/ingresos-netos',simplificada: true
     },
     {
-      text: '¿Te desempeñaste como servidor público en el año inmediato anterior?',
+      text: '¿Te desempeñaste como servidor público en el año inmediato anterior?', 
       url: '/servidor-publico', simplificada: true,
     },
     { text: 'Bienes inmuebles', url: '/bienes-inmuebles', simplificada: false },
