@@ -151,6 +151,7 @@ export class ApoyosPublicosComponent implements OnInit {
         .toPromise();
       this.declaracionId = data.declaracion._id;
       if (data.declaracion.apoyos === null) {
+        this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;

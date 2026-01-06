@@ -171,6 +171,7 @@ export class DatosCurricularesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       if (data?.declaracion.datosCurricularesDeclarante === null) {
+        this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
       } else {
         this.setupForm(data?.declaracion.datosCurricularesDeclarante);

@@ -210,10 +210,7 @@ export class DatosGeneralesComponent implements OnInit {
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
 
       if (data.declaracion.datosGenerales === null) {
-        this.menuStateService.clearState(
-          this.tipoDeclaracion,
-          this.declaracionSimplificada
-        );
+        this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;

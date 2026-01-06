@@ -196,6 +196,7 @@ export class BienesMueblesComponent implements OnInit {
       this.declaracionId = data.declaracion._id;
 
       if (data.declaracion.bienesMuebles === null) {
+        this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;

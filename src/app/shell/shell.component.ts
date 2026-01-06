@@ -150,23 +150,17 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       this.declaracionSimplificada
     );
     console.log('📦 Estado inicial cargado:', savedState);
-
-    // Aplicar colores después de cargar el estado
-    setTimeout(() => {
-      console.log('🎨 Aplicando colores iniciales basados en estado cargado...');
-      this.updateStepColors();
-    }, 200);
   }
 
   ngAfterViewInit(): void {
-    // Aplicar colores después de que el DOM esté completamente renderizado
-    setTimeout(() => {
-      console.log('🎨 Aplicando colores después de renderizar DOM...');
-      this.updateStepColors();
-    }, 500);
+    console.log('🎨 ngAfterViewInit ejecutado');
 
-    // Observar cambios en los steps
+    // 🔑 CRÍTICO: Usar MutationObserver para esperar a que el DOM esté listo
+    this.waitForStepsAndApplyColors();
+
+    // Observar cambios en los steps de Angular Material
     this.steps.changes.subscribe(() => {
+      console.log('📊 Steps de Angular Material cambiaron');
       setTimeout(() => {
         this.updateStepColors();
       }, 100);
@@ -175,11 +169,82 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // Observar cambios en los elementos del DOM
     if (this.stepElements) {
       this.stepElements.changes.subscribe(() => {
+        console.log('📊 Step elements cambiaron');
         setTimeout(() => {
           this.updateStepColors();
         }, 100);
       });
     }
+  }
+
+  /**
+   * 🔑 NUEVO MÉTODO CRÍTICO: Espera a que los mat-step-header existan en el DOM
+   * antes de aplicar colores por primera vez
+   */
+  private waitForStepsAndApplyColors(): void {
+    console.log('⏳ Esperando a que los steps se rendericen en el DOM...');
+
+    // Intentar aplicar colores inmediatamente por si ya están renderizados
+    setTimeout(() => {
+      const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+
+      if (stepHeaders.length > 0) {
+        console.log('✅ Steps encontrados inmediatamente, aplicando colores...');
+        this.updateStepColors();
+      } else {
+        console.log('⏳ Steps no encontrados, configurando MutationObserver...');
+        this.setupMutationObserver();
+      }
+    }, 100);
+
+    // También intentar después de más tiempo por si acaso
+    setTimeout(() => {
+      const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+      if (stepHeaders.length > 0) {
+        console.log('✅ Steps encontrados después de 500ms, aplicando colores...');
+        this.updateStepColors();
+      }
+    }, 500);
+
+    setTimeout(() => {
+      const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+      if (stepHeaders.length > 0) {
+        console.log('✅ Steps encontrados después de 1000ms, aplicando colores...');
+        this.updateStepColors();
+      }
+    }, 1000);
+  }
+
+  /**
+   * 🔑 NUEVO MÉTODO: Configura un observador para detectar cuando los steps aparecen en el DOM
+   */
+  private setupMutationObserver(): void {
+    const targetNode = document.body;
+    const config = { childList: true, subtree: true };
+
+    const callback: MutationCallback = (mutationsList, observer) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
+
+          if (stepHeaders.length > 0) {
+            console.log('✅ MutationObserver detectó steps en el DOM, aplicando colores...');
+            this.updateStepColors();
+            observer.disconnect(); // Dejar de observar una vez encontrados
+            break;
+          }
+        }
+      }
+    };
+
+    const observer = new MutationObserver(callback);
+    observer.observe(targetNode, config);
+
+    // Desconectar después de 5 segundos para no dejar el observer corriendo indefinidamente
+    setTimeout(() => {
+      observer.disconnect();
+      console.log('⏱️ MutationObserver desconectado después de 5 segundos');
+    }, 5000);
   }
 
   ngOnDestroy(): void {
@@ -291,6 +356,14 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
     console.log(`📊 Total de step-headers encontrados en DOM: ${stepHeaders.length}`);
     console.log(`📊 Opciones a procesar: ${options.length}`);
+
+    if (stepHeaders.length === 0) {
+      console.warn('⚠️ No se encontraron step-headers en el DOM, reintentando...');
+      setTimeout(() => {
+        this.updateSingleMenu(section, options, startIndex);
+      }, 200);
+      return;
+    }
 
     // Actualizar cada step del menú
     options.forEach((option, index) => {

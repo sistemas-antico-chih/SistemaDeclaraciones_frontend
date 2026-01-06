@@ -241,6 +241,7 @@ export class VehiculosComponent implements OnInit {
       this.declaracionId = data.declaracion._id;
 
       if (data.declaracion.vehiculos === null) {
+        this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;

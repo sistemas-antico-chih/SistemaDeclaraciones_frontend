@@ -320,6 +320,7 @@ export class DatosParejaComponent implements OnInit {
 
       this.declaracionId = data.declaracion._id;
       if (data?.declaracion.datosPareja === null) {
+        this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;
