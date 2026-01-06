@@ -89,8 +89,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     private menuStateService: MenuStateService,
     private renderer: Renderer2
   ) {
-    console.log('🚀 ShellComponent inicializado');
-
     // Detectar si es móvil
     const breakpointSub = this.breakpointObserver
       .observe(['(max-width: 959px)'])
@@ -104,7 +102,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       this.url = event.url;
-      console.log('📍 Navegación a:', this.url);
 
       // Extraer info cada vez que cambia la ruta
       this.extractDeclaracionInfo();
@@ -124,7 +121,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // Esto permite que los colores se actualicen cuando los componentes marcan secciones como guardadas
     const stateSub = this.menuStateService.savedState$
       .subscribe(state => {
-        console.log('🔄 Estado del menú actualizado (constructor):', state);
+        //console.log('🔄 Estado del menú actualizado (constructor):', state);
         // Actualizar colores cuando cambia el estado
         setTimeout(() => {
           this.updateStepColors();
@@ -138,29 +135,23 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.url = this.router.url;
-    console.log('🎯 URL inicial:', this.url);
 
     // Extraer info de la declaración
     this.extractDeclaracionInfo();
 
     // 🔑 IMPORTANTE: Cargar el estado guardado
-    console.log('📦 Cargando estado guardado desde localStorage...');
     const savedState = this.menuStateService.loadSavedState(
       this.tipoDeclaracion,
       this.declaracionSimplificada
     );
-    console.log('📦 Estado inicial cargado:', savedState);
   }
 
   ngAfterViewInit(): void {
-    console.log('🎨 ngAfterViewInit ejecutado');
-
     // 🔑 CRÍTICO: Usar MutationObserver para esperar a que el DOM esté listo
     this.waitForStepsAndApplyColors();
 
     // Observar cambios en los steps de Angular Material
     this.steps.changes.subscribe(() => {
-      console.log('📊 Steps de Angular Material cambiaron');
       setTimeout(() => {
         this.updateStepColors();
       }, 100);
@@ -169,7 +160,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // Observar cambios en los elementos del DOM
     if (this.stepElements) {
       this.stepElements.changes.subscribe(() => {
-        console.log('📊 Step elements cambiaron');
         setTimeout(() => {
           this.updateStepColors();
         }, 100);
@@ -182,17 +172,13 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
    * antes de aplicar colores por primera vez
    */
   private waitForStepsAndApplyColors(): void {
-    console.log('⏳ Esperando a que los steps se rendericen en el DOM...');
-
     // Intentar aplicar colores inmediatamente por si ya están renderizados
     setTimeout(() => {
       const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
 
       if (stepHeaders.length > 0) {
-        console.log('✅ Steps encontrados inmediatamente, aplicando colores...');
         this.updateStepColors();
       } else {
-        console.log('⏳ Steps no encontrados, configurando MutationObserver...');
         this.setupMutationObserver();
       }
     }, 100);
@@ -201,7 +187,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
       if (stepHeaders.length > 0) {
-        console.log('✅ Steps encontrados después de 500ms, aplicando colores...');
         this.updateStepColors();
       }
     }, 500);
@@ -209,7 +194,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
       if (stepHeaders.length > 0) {
-        console.log('✅ Steps encontrados después de 1000ms, aplicando colores...');
         this.updateStepColors();
       }
     }, 1000);
@@ -228,7 +212,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
           const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
 
           if (stepHeaders.length > 0) {
-            console.log('✅ MutationObserver detectó steps en el DOM, aplicando colores...');
             this.updateStepColors();
             observer.disconnect(); // Dejar de observar una vez encontrados
             break;
@@ -243,7 +226,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // Desconectar después de 5 segundos para no dejar el observer corriendo indefinidamente
     setTimeout(() => {
       observer.disconnect();
-      console.log('⏱️ MutationObserver desconectado después de 5 segundos');
     }, 5000);
   }
 
@@ -261,13 +243,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       this.tipoDeclaracion = urlChunks[0];
       this.declaracionSimplificada = urlChunks[1] === 'simplificada';
       this.declaracionCompleta = !this.declaracionSimplificada;
-
-      console.log('📋 Info extraída:', {
-        tipoDeclaracion: this.tipoDeclaracion,
-        declaracionSimplificada: this.declaracionSimplificada,
-        declaracionCompleta: this.declaracionCompleta,
-        url: this.router.url
-      });
     }
   }
 
@@ -276,21 +251,11 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
  * Ahora maneja correctamente los DOS menús cuando declaracionCompleta === true
  */
   private updateStepColors(): void {
-    console.log('🎨 Actualizando colores de steps');
-    console.log('📊 Estado actual:', {
-      tipoDeclaracion: this.tipoDeclaracion,
-      declaracionSimplificada: this.declaracionSimplificada,
-      declaracionCompleta: this.declaracionCompleta,
-      url: this.url
-    });
-
     // Determinar si estamos en modo de DOS MENÚS
     const twoMenusMode = this.tipoDeclaracion !== 'aviso' && this.declaracionCompleta;
 
     if (twoMenusMode) {
       // MODO DOS MENÚS: Actualizar AMBOS menús simultáneamente
-      console.log('📋 Modo DOS MENÚS detectado - Actualizando Situación Patrimonial e Intereses');
-
       setTimeout(() => {
         // Calcular opciones visibles de situación patrimonial
         const visibleSituacionOptions = this.declaracionSimplificada
@@ -330,8 +295,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
         section = 'situacionPatrimonial';
       }
 
-      console.log(`📋 Modo UN MENÚ: ${section} con ${options.length} opciones`);
-
       setTimeout(() => {
         this.updateSingleMenu(section, options, 0);
       }, 50);
@@ -349,13 +312,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     options: MenuOption[],
     startIndex: number
   ): void {
-    console.log(`🎨 Actualizando menú: ${section} (inicio en índice ${startIndex})`);
 
     // Buscar todos los mat-step-header en el documento
     const stepHeaders = document.querySelectorAll('mat-vertical-stepper .mat-step-header');
-
-    console.log(`📊 Total de step-headers encontrados en DOM: ${stepHeaders.length}`);
-    console.log(`📊 Opciones a procesar: ${options.length}`);
 
     if (stepHeaders.length === 0) {
       console.warn('⚠️ No se encontraron step-headers en el DOM, reintentando...');
@@ -381,11 +340,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
         if (isCurrentRecord) {
           // AZUL - registro actual
           stepHeader.classList.add('step-current');
-          console.log(`  🔵 Step ${globalIndex} [${section}]: "${option.text}" → AZUL (current)`);
         } else {
           // GRIS - registro anterior
           stepHeader.classList.add('step-from-previous');
-          console.log(`  ⚪ Step ${globalIndex} [${section}]: "${option.text}" → GRIS (previous)`);
         }
       } else {
         console.warn(`⚠️ Step ${globalIndex} fuera de rango (max: ${stepHeaders.length - 1})`);
@@ -431,8 +388,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       this.declaracionSimplificada
     );
 
-    console.log(`🔍 Verificando URL "${url}" en sección "${section}":`, isCurrentRecord ? '✅ AZUL' : '❌ GRIS');
-
     return isCurrentRecord;
   }
 
@@ -445,7 +400,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     if (selectedIndex !== undefined && this.avisoOptions[selectedIndex]) {
       const option = this.avisoOptions[selectedIndex];
       const fullUrl = `/aviso${option.url}`;
-      console.log('🚀 Navegando a:', fullUrl);
       this.router.navigate([fullUrl]);
     }
   }
@@ -467,7 +421,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
           ? `/${this.tipoDeclaracion}/simplificada/situacion-patrimonial`
           : `/${this.tipoDeclaracion}/situacion-patrimonial`;
         const fullUrl = `${basePath}${option.url}`;
-        console.log('🚀 Navegando a:', fullUrl);
         this.router.navigate([fullUrl]);
       }
     }
@@ -482,7 +435,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     if (selectedIndex !== undefined && this.interesesOptions[selectedIndex]) {
       const option = this.interesesOptions[selectedIndex];
       const fullUrl = `/${this.tipoDeclaracion}/intereses${option.url}`;
-      console.log('🚀 Navegando a:', fullUrl);
       this.router.navigate([fullUrl]);
     }
   }

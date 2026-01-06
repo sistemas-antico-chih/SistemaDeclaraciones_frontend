@@ -17,7 +17,7 @@ export class MenuStateService {
   public savedState$: Observable<SavedState> = this.savedStateSubject.asObservable();
 
   constructor() {
-    console.log('🚀 MenuStateService inicializado');
+
   }
 
   /**
@@ -33,13 +33,13 @@ export class MenuStateService {
   loadSavedState(tipoDeclaracion: string, declaracionSimplificada: boolean): SavedState {
     const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
     const savedState = localStorage.getItem(storageKey);
-    
+
     if (savedState) {
       const parsedState = JSON.parse(savedState);
       this.savedStateSubject.next(parsedState);
       return parsedState;
     }
-    
+
     return {};
   }
 
@@ -47,39 +47,28 @@ export class MenuStateService {
    * Marca una sección como guardada
    */
   markSectionAsSaved(
-    url: string, 
+    url: string,
     section: 'situacionPatrimonial' | 'intereses' | 'aviso',
     tipoDeclaracion: string,
     declaracionSimplificada: boolean
   ): void {
     const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
     let savedState = JSON.parse(localStorage.getItem(storageKey) || '{}') as SavedState;
-    
-    console.log('🔵 Marcando sección como guardada:', {
-      url,
-      section,
-      tipoDeclaracion,
-      declaracionSimplificada,
-      storageKey,
-      estadoAntes: savedState
-    });
-    
+
+
     // Inicializar el array si no existe
     if (!savedState[section]) {
       savedState[section] = [];
     }
-    
+
     // Agregar la URL si no está ya guardada
     if (!savedState[section].includes(url)) {
       savedState[section].push(url);
     }
-    
+
     // Guardar en localStorage
     localStorage.setItem(storageKey, JSON.stringify(savedState));
-    
-    console.log('✅ Estado guardado:', savedState);
-    console.log('💾 LocalStorage:', localStorage.getItem(storageKey));
-    
+
     // Notificar cambios
     this.savedStateSubject.next(savedState);
   }
@@ -97,72 +86,55 @@ export class MenuStateService {
    * Verifica si una URL ha sido guardada
    */
   isUrlSaved(
-    url: string, 
+    url: string,
     section: 'situacionPatrimonial' | 'intereses' | 'aviso',
     tipoDeclaracion: string,
     declaracionSimplificada: boolean
   ): boolean {
     const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
     const savedState = JSON.parse(localStorage.getItem(storageKey) || '{}') as SavedState;
-    
+
     return savedState[section]?.includes(url) || false;
   }
 
   // ============================================
-// AGREGAR ESTE MÉTODO AL MenuStateService
-// ============================================
+  // AGREGAR ESTE MÉTODO AL MenuStateService
+  // ============================================
 
-/**
- * Limpia COMPLETAMENTE el estado guardado para un tipo de declaración específico
- * Útil cuando se crea un registro nuevo desde cero
- */
-clearState(
-  tipoDeclaracion: string,
-  declaracionSimplificada: boolean
-): void {
-  const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
-  
-  console.log('🗑️ Limpiando estado guardado:', {
-    tipoDeclaracion,
-    declaracionSimplificada,
-    storageKey
-  });
+  /**
+   * Limpia COMPLETAMENTE el estado guardado para un tipo de declaración específico
+   * Útil cuando se crea un registro nuevo desde cero
+   */
+  clearState(
+    tipoDeclaracion: string,
+    declaracionSimplificada: boolean
+  ): void {
+    const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
 
-  // Limpiar localStorage
-  localStorage.removeItem(storageKey);
-  
-  // Limpiar el estado en memoria
-  this.savedStateSubject.next({});
-  
-  console.log('✅ Estado limpiado completamente');
-}
+    // Limpiar localStorage
+    localStorage.removeItem(storageKey);
 
-/**
- * Limpia solo una sección específica del estado guardado
- */
-clearSection(
-  section: 'situacion-patrimonial' | 'intereses' | 'aviso',
-  tipoDeclaracion: string,
-  declaracionSimplificada: boolean
-): void {
-  const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
-  const currentState = this.loadSavedState(tipoDeclaracion, declaracionSimplificada);
-  
-  console.log('🗑️ Limpiando sección:', {
-    section,
-    estadoAntes: currentState
-  });
+    // Limpiar el estado en memoria
+    this.savedStateSubject.next({});
+  }
 
-  // Eliminar la sección específica
-  delete currentState[section];
-  
-  // Guardar el estado actualizado
-  localStorage.setItem(storageKey, JSON.stringify(currentState));
-  this.savedStateSubject.next(currentState);
-  
-  console.log('✅ Sección limpiada:', {
-    section,
-    estadoDespues: currentState
-  });
-}
+  /**
+   * Limpia solo una sección específica del estado guardado
+   */
+  clearSection(
+    section: 'situacion-patrimonial' | 'intereses' | 'aviso',
+    tipoDeclaracion: string,
+    declaracionSimplificada: boolean
+  ): void {
+    const storageKey = this.getStorageKey(tipoDeclaracion, declaracionSimplificada);
+    const currentState = this.loadSavedState(tipoDeclaracion, declaracionSimplificada);
+
+    // Eliminar la sección específica
+    delete currentState[section];
+
+    // Guardar el estado actualizado
+    localStorage.setItem(storageKey, JSON.stringify(currentState));
+    this.savedStateSubject.next(currentState);
+
+  }
 }
