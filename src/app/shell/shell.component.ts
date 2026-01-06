@@ -120,6 +120,18 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.subscriptions.push(routerSub);
 
+    // 🔑 NUEVO: Suscribirse a cambios en el estado guardado DESDE EL CONSTRUCTOR
+    // Esto permite que los colores se actualicen cuando los componentes marcan secciones como guardadas
+    const stateSub = this.menuStateService.savedState$
+      .subscribe(state => {
+        console.log('🔄 Estado del menú actualizado (constructor):', state);
+        // Actualizar colores cuando cambia el estado
+        setTimeout(() => {
+          this.updateStepColors();
+        }, 150);
+      });
+    this.subscriptions.push(stateSub);
+
     // Obtener tipo de declaración desde la URL
     this.extractDeclaracionInfo();
   }
@@ -131,32 +143,27 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // Extraer info de la declaración
     this.extractDeclaracionInfo();
 
-    // 🔑 IMPORTANTE: Cargar el estado ANTES de actualizar colores
-    console.log('📦 Cargando estado guardado...');
+    // 🔑 IMPORTANTE: Cargar el estado guardado
+    console.log('📦 Cargando estado guardado desde localStorage...');
     const savedState = this.menuStateService.loadSavedState(
       this.tipoDeclaracion,
       this.declaracionSimplificada
     );
-    console.log('📦 Estado cargado desde localStorage:', savedState);
+    console.log('📦 Estado inicial cargado:', savedState);
 
-    // Suscribirse a cambios en el estado guardado
-    const stateSub = this.menuStateService.savedState$
-      .subscribe(state => {
-        console.log('🔄 Estado del menú actualizado:', state);
-        // Actualizar colores cuando cambia el estado
-        setTimeout(() => {
-          this.updateStepColors();
-        }, 100);
-      });
-    this.subscriptions.push(stateSub);
+    // Aplicar colores después de cargar el estado
+    setTimeout(() => {
+      console.log('🎨 Aplicando colores iniciales basados en estado cargado...');
+      this.updateStepColors();
+    }, 200);
   }
 
   ngAfterViewInit(): void {
-    // 🔑 CRÍTICO: Esperar más tiempo para que el DOM y el estado estén listos
+    // Aplicar colores después de que el DOM esté completamente renderizado
     setTimeout(() => {
-      console.log('🎨 Aplicando colores iniciales (después de cargar estado)...');
+      console.log('🎨 Aplicando colores después de renderizar DOM...');
       this.updateStepColors();
-    }, 500); // Aumentado de 200 a 500ms
+    }, 500);
 
     // Observar cambios en los steps
     this.steps.changes.subscribe(() => {
@@ -174,7 +181,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
