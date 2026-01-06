@@ -402,7 +402,6 @@ export class IngresosNetosComponent implements OnInit {
         this.isFromPreviousRecord = false;
 
         // ✅ Marcar como guardado
-        console.log('🔵 Marcando como guardado → aparece en AZUL');
         this.menuStateService.markSectionAsSaved(
           '/ingresos-netos',
           'situacionPatrimonial',
@@ -426,7 +425,6 @@ export class IngresosNetosComponent implements OnInit {
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.ingresosForm.dirty;
-    //console.log(isDirty);
 
     if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {

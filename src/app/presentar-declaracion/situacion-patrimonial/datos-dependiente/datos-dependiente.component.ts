@@ -293,7 +293,6 @@ export class DatosDependienteComponent implements OnInit {
       this.datosDependientesEconomicosForm.get("dependienteEconomico.curp").updateValueAndValidity();
     } else {
 
-      //console.log(this.active)
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").clearValidators();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").updateValueAndValidity();
       this.datosDependientesEconomicosForm.get("dependienteEconomico.rfc").disable();
@@ -304,7 +303,6 @@ export class DatosDependienteComponent implements OnInit {
 
 
     }
-    //console.log("Requerido", this.datosDependientesEconomicosForm.errors);
   }
 
   editItem(index: number) {

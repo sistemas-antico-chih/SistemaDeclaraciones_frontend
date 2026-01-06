@@ -219,8 +219,6 @@ export class ExperienciaLaboralComponent implements OnInit {
 
   fillForm(experiencia: Experiencia) {
     this.experienciaLaboralForm.get('experiencia').patchValue(experiencia);
-    console.log("experiencia");
-    console.log(this.experienciaLaboralForm);
     this.setAclaraciones(this.aclaracionesText);
 
     if (experiencia.ambitoSector?.clave === 'OTR') {
@@ -325,7 +323,6 @@ export class ExperienciaLaboralComponent implements OnInit {
     if (this.declaracionSimplificada) url += '/ingresos-netos';
     else url += '/datos-pareja';
     let isDirty = this.experienciaLaboralForm.dirty;
-    console.log(isDirty);
 
     if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {

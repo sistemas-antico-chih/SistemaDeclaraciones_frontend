@@ -314,7 +314,6 @@ export class BienesInmueblesComponent implements OnInit {
       result = result && this.otroParentesco.nativeElement.value?.match(/^\S.*\S$/);
     }
 
-    console.log(result);
     return result;
   }
 

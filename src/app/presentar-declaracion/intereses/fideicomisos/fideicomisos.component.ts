@@ -345,7 +345,6 @@ export class FideicomisosComponent implements OnInit {
     }
 
     this.isLoading = true;
-    console.log(fideicomiso);
     this.saveInfo({
       fideicomiso,
       aclaracionesObservaciones,

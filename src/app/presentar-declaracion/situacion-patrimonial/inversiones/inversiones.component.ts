@@ -467,7 +467,6 @@ export class InversionesComponent implements OnInit {
             this.inversionesCuentasValoresForm.get('inversion.subTipoInversion').setValue(optAFOT[0]);
             break;
           default:
-            console.log('ESTO NO DEBERIA SALIR');
             break;
         }
       }

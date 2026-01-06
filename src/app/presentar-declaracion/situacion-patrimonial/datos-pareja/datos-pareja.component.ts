@@ -579,7 +579,6 @@ export class DatosParejaComponent implements OnInit {
       this.datosParejaForm.get("curp").updateValueAndValidity();
       this.datosParejaForm.get("curp").disable();
     }
-    console.log("Requerido", this.datosParejaForm.errors);
   }
 
   checkPartner() {

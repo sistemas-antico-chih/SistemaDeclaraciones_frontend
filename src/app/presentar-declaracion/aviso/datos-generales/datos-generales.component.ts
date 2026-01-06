@@ -253,8 +253,7 @@ export class DatosGeneralesAvisoComponent implements OnInit {
     let url = '/aviso/domicilio-declarante';
     //if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.datosGeneralesForm.dirty;
-    console.log('📝 Form dirty:', isDirty);
-
+    
     if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {

@@ -189,7 +189,6 @@ export class DomicilioDeclaranteComponent implements OnInit {
     let url = '/' + this.tipoDeclaracion;
     if (this.declaracionSimplificada) url += '/simplificada';
     let isDirty = this.domicilioDeclaranteForm.dirty;
-    console.log(isDirty);
 
     if (isDirty && !this.pushButtonSave) {
       const dialogRef = this.dialog.open(DialogComponent, {

@@ -240,9 +240,6 @@ export class PrestamosTercerosComponent implements OnInit {
       );
     this.prestamoComodatoForm.get(`prestamo.tipoOperacion`).patchValue(prestamo.tipoOperacion);
 
-    //console.log("prestamo")
-    //console.log(prestamo)
-
     ifExistsEnableFields(prestamo.tipoBien.inmueble, this.prestamoComodatoForm, 'prestamo.tipoBien.inmueble');
     if (prestamo.tipoBien.inmueble) {
       this.tipoBien = 'inmueble';
@@ -566,7 +563,6 @@ export class PrestamosTercerosComponent implements OnInit {
     }
 
     if (vehiculo) {
-      //console.log('vehiculo: ', vehiculo);
       const { tipo, lugarRegistro } = this.prestamoComodatoForm.value.prestamo.tipoBien.vehiculo;
       const optTipoVehiculo = this.tipoVehiculoCatalogo.filter((v: any) => (v.clave = tipo.clave));
       // this.prestamoComodatoForm.get('prestamo.tipoBien.vehiculo.tipo').setValue(findOption(this.tipoVehiculoCatalogo, tipo));

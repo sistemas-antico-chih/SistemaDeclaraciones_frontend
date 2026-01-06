@@ -169,7 +169,6 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   async getLastUserInfo() {
-    //console.log("lastUser")
     try {
       const { data, errors } = await this.apollo
         .query<LastDeclaracionOutput>({
@@ -177,7 +176,6 @@ export class DatosGeneralesComponent implements OnInit {
         })
         .toPromise();
 
-      console.log({ data, errors });
       if (errors) {
         throw errors;
       }
