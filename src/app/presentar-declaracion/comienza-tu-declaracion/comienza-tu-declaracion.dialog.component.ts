@@ -386,6 +386,5 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   confirmSaveInfo() {
-    console.log("boton guardar");
   }
 }

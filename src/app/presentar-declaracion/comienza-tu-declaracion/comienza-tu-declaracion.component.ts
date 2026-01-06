@@ -23,7 +23,6 @@ export class ComienzaTuDeclaracionComponent  {
     let dialogRef = this.dialog.open(DialogElementsExampleDialog, {
       data: `Are you sure you want to delete?`
     })
-    console.log("");
     dialogRef.afterClosed().subscribe((res: { data: any; }) => {
       console.log(res.data)
     })
