@@ -41,9 +41,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.loadInstituciones();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
   async loadInstituciones() {
     this.institucionesCatalogo = await this.catalogoService.getInstituciones().then((data) => data);
@@ -55,7 +55,14 @@ export class SignupComponent implements OnInit, OnDestroy {
   signup() {
     this.isLoading = true;
 
-    const signupForm = this.signupForm.value;
+    const signupForm = {
+      ...this.signupForm.value,
+      nombre: this.signupForm.value.nombre?.trim(),
+      primerApellido: this.signupForm.value.primerApellido?.trim(),
+      segundoApellido: this.signupForm.value.segundoApellido?.trim(),
+      username: this.signupForm.value.username?.trim()
+    };
+
     if (this.institucionesCatalogo?.length) {
       signupForm.institucion = {
         clave: signupForm.institucion.clave,
@@ -103,7 +110,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       nombre: ['',
         Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
       ],
-      primerApellido: ['', 
+      primerApellido: ['',
         Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i),
       ],
       segundoApellido: ['', Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1\u00d1]*$/i)],
@@ -125,7 +132,7 @@ export class SignupComponent implements OnInit, OnDestroy {
             /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/i
           ),
         ],
-      ],updatedOn: 'change',
+      ], updatedOn: 'change',
       rfc: [
         '',
         [
