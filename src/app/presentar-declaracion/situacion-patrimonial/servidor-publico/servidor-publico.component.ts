@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
+import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -70,9 +71,9 @@ export class ServidorPublicoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio - 1, this.mes - 1, this.dia);
-  minDateFinal = new Date(2010, 1, 1);
-  maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
+  //maxDate = new Date(this.anio - 1, this.mes - 1, this.dia);
+  //minDateFinal = new Date(2010, 1, 1);
+  //maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
 
   isFromPreviousRecord = false;
 
@@ -255,9 +256,9 @@ export class ServidorPublicoComponent implements OnInit {
   createForm() {
     this.actividadAnualAnteriorForm = this.formBuilder.group({
       servidorPublicoAnioAnterior: [true, [Validators.required]],
-      fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)], this.validarFECHA],
       fechaConclusion: [
-        null, [Validators.required, Validators.pattern(/^\S.*\S$/)]
+        null, [Validators.required, Validators.pattern(/^\S.*\S$/), this.validarFECHA]
       ],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
@@ -315,8 +316,6 @@ export class ServidorPublicoComponent implements OnInit {
         moneda: ['MXN'],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-    }, {
-      validator: this.validarFechas("fechaIngreso", "fechaConclusion")
     });
 
 
@@ -362,27 +361,36 @@ export class ServidorPublicoComponent implements OnInit {
       });
   }
 
-  validarFechas(fechaIngreso: string, fechaEgreso: string) {
-    return (formGroup: FormGroup) => {
-      const fingreso = formGroup.get(fechaIngreso);
-      const fegreso = formGroup.get(fechaEgreso);
-      const milisegundosEnUnAnio = 1000 * 60 * 60 * 24 * 365.25;
-      const diferenciaMilisegundos = Date.parse(fegreso.value) - Date.parse(fingreso.value);
-      if (fegreso.errors && !fegreso.errors.validarFechas) {
-        return;
-      }
+  validarFECHA(control: FormControl) {
+    const fechaActual = moment().startOf('day');
 
-      if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
-        fegreso.setErrors({ validarFechas: true });
+    const fechaIni = control.root.get('fechaTomaPosesion')?.value
+      ? moment(control.root.get('fechaTomaPosesion')?.value).startOf('day')
+      : null;
+
+    const fechaFin = control.root.get('fechaConclusionEncargo')?.value
+      ? moment(control.root.get('fechaConclusionEncargo')?.value).startOf('day')
+      : null;
+
+    const fechaControl = control.value ? moment(control.value).startOf('day') : null;
+
+    // ❌ No permitir fechas futuras
+    if (fechaControl && fechaControl.isAfter(fechaActual)) {
+      return { fechaFutura: true };
+    }
+
+    // Si ambas fechas existen, validar orden
+    if (fechaIni && fechaFin) {
+      // ❌ Si la fecha de toma de posesión NO es posterior a la de conclusión
+      if (!fechaIni.isAfter(fechaFin)) {
+        return { ordenIncorrecto: true };
       }
-      if (diferenciaMilisegundos > milisegundosEnUnAnio) {
-        fegreso.setErrors({ validarFechas: true });
-      }
-      else {
-        fegreso.setErrors(null);
-      }
-    };
+    }
+
+    // ✅ Todo correcto
+    return null;
   }
+
 
   deleteFormArrayItem(formArrayName: string, index: number) {
     let formArray: FormArray = null;
