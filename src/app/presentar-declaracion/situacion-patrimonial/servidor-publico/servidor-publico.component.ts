@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; 
-import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { FormArray, FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import * as moment from 'moment';
@@ -257,9 +257,9 @@ export class ServidorPublicoComponent implements OnInit {
   createForm() {
     this.actividadAnualAnteriorForm = this.formBuilder.group({
       servidorPublicoAnioAnterior: [true, [Validators.required]],
-      fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)], this.validarFECHA],
+      fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       fechaConclusion: [
-        null, [Validators.required, Validators.pattern(/^\S.*\S$/), this.validarFECHA]
+        null, [Validators.required, Validators.pattern(/^\S.*\S$/), this]
       ],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
@@ -317,7 +317,26 @@ export class ServidorPublicoComponent implements OnInit {
         moneda: ['MXN'],
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+    }, {
+      validators: this.validadorRangoFechas
     });
+
+
+    this.actividadAnualAnteriorForm
+      .get('fechaIngreso')
+      ?.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.actividadAnualAnteriorForm.updateValueAndValidity({ onlySelf: true });
+      });
+
+    this.actividadAnualAnteriorForm
+      .get('fechaConclusion')
+      ?.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.actividadAnualAnteriorForm.updateValueAndValidity({ onlySelf: true });
+      });
 
 
 
@@ -362,36 +381,21 @@ export class ServidorPublicoComponent implements OnInit {
       });
   }
 
-  validarFECHA(control: FormControl) {
-  const fechaActual = moment().startOf('day');
+  validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
+    const fechaIngreso = group.get('fechaIngreso')?.value;
+    const fechaConclusion = group.get('fechaConclusion')?.value;
 
-  const fechaIni = control.root.get('fechaIngreso')?.value
-    ? moment(control.root.get('fechaIngreso')?.value).startOf('day')
-    : null;
+    if (!fechaIngreso || !fechaConclusion) {
+      return null;
+    }
 
-  const fechaFin = control.root.get('fechaConclusion')?.value
-    ? moment(control.root.get('fechaConclusion')?.value).startOf('day')
-    : null;
+    const inicio = moment(fechaIngreso).startOf('day');
+    const fin = moment(fechaConclusion).startOf('day');
 
-  const fechaControl = control.value
-    ? moment(control.value).startOf('day')
-    : null;
-
-  // ❌ No permitir fechas futuras
-  if (fechaControl && fechaControl.isAfter(fechaActual)) {
-    return { fechaFutura: true };
+    return inicio.isAfter(fin)
+      ? { ordenIncorrecto: true }
+      : null;
   }
-
-  // ❌ fechaIngreso NO puede ser mayor que fechaConclusion
-  if (fechaIni && fechaFin && fechaIni.isAfter(fechaFin)) {
-    return { ordenIncorrecto: true };
-  }
-
-  // ✅ Todo correcto
-  return null;
-}
-
-
 
   deleteFormArrayItem(formArrayName: string, index: number) {
     let formArray: FormArray = null;
