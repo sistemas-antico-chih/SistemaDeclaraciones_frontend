@@ -60,6 +60,9 @@
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="pickerInicio"></mat-datepicker-toggle>
               <mat-datepicker #pickerInicio></mat-datepicker>
+              <mat-error *ngIf="actividadAnualAnteriorForm.hasError('ordenIncorrecto')">
+                La fecha de inicio no puede ser mayor a la fecha de fin
+              </mat-error>
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.fechaConclusion }}" appearance="fill">
               <mat-label>Fecha de fin</mat-label>
@@ -72,6 +75,9 @@
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="pickerFin"></mat-datepicker-toggle>
               <mat-datepicker #pickerFin></mat-datepicker>
+              <mat-error *ngIf="actividadAnualAnteriorForm.hasError('ordenIncorrecto')">
+                La fecha de inicio no puede ser mayor a la fecha de fin
+              </mat-error>
             </mat-form-field>
           </div>
         </div>
