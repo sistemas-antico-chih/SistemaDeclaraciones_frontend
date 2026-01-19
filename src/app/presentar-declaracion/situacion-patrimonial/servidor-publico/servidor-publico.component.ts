@@ -72,7 +72,7 @@ export class ServidorPublicoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  //maxDate = new Date(this.anio - 1, this.mes - 1, this.dia);
+  maxDate = new Date(this.anio - 1, this.mes - 1, this.dia);
   //minDateFinal = new Date(2010, 1, 1);
   //maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
 
