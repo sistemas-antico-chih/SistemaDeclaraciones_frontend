@@ -1,4 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup, FormBuilder, Validators, FormControl,
+  AbstractControl, ValidatorFn, ValidationErrors
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import * as moment from 'moment';
@@ -364,12 +368,12 @@ export class ServidorPublicoComponent implements OnInit {
   validarFECHA(control: FormControl) {
     const fechaActual = moment().startOf('day');
 
-    const fechaIni = control.root.get('fechaTomaPosesion')?.value
-      ? moment(control.root.get('fechaTomaPosesion')?.value).startOf('day')
+    const fechaIni = control.root.get('fechaIngreso')?.value
+      ? moment(control.root.get('fechaIngreso')?.value).startOf('day')
       : null;
 
-    const fechaFin = control.root.get('fechaConclusionEncargo')?.value
-      ? moment(control.root.get('fechaConclusionEncargo')?.value).startOf('day')
+    const fechaFin = control.root.get('fechaConclusion')?.value
+      ? moment(control.root.get('fechaConclusion')?.value).startOf('day')
       : null;
 
     const fechaControl = control.value ? moment(control.value).startOf('day') : null;
