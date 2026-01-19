@@ -72,7 +72,7 @@ export class ServidorPublicoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio-1, 11, 31);
+  maxDate = new Date(this.anio - 1, 11, 31);
   //minDateFinal = new Date(2010, 1, 1);
   //maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
 
@@ -327,7 +327,7 @@ export class ServidorPublicoComponent implements OnInit {
       ?.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.actividadAnualAnteriorForm.updateValueAndValidity({ onlySelf: true });
+        this.actividadAnualAnteriorForm.updateValueAndValidity();
       });
 
     this.actividadAnualAnteriorForm
@@ -335,9 +335,8 @@ export class ServidorPublicoComponent implements OnInit {
       ?.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.actividadAnualAnteriorForm.updateValueAndValidity({ onlySelf: true });
+        this.actividadAnualAnteriorForm.updateValueAndValidity();
       });
-
 
 
     this.actividadAnualAnteriorForm.valueChanges
