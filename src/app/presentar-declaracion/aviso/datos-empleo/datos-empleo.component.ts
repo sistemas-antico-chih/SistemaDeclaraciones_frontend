@@ -69,12 +69,11 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  minDate = new Date(1980, 1, 1);
+  minDate = new Date(2010, 1, 1);
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes - 1, this.dia);
-  minDateInicio = new Date();
+  maxDate = new Date(this.anio, this.mes -1, this.dia - 1 );
 
   // Flag para determinar si la información es de un registro anterior
   isFromPreviousRecord = false;
@@ -119,11 +118,11 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       areaAdscripcionConcluye: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       nivelEmpleoCargoComisionConcluye: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaConclusionEncargo: [null, [Validators.required, this.validarFECHA]],
+      fechaConclusionEncargo: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaTomaPosesion: [null, [Validators.required, this.validarFECHA]],
+      fechaTomaPosesion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       contratadoPorHonorarios: [null, [Validators.required]],
       nivelEmpleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       domicilioMexico: this.formBuilder.group({
@@ -152,7 +151,25 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         { disabled: this.tipoDeclaracion !== 'modificacion', value: null },
         [Validators.required],
       ],
+    }, {
+      validators: this.validadorRangoFechas
     });
+
+    this.datosEmpleoCargoComisionForm
+      .get('fechaIngrfechaConclusionEncargoeso')
+      ?.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.datosEmpleoCargoComisionForm.updateValueAndValidity({ onlySelf: true });
+      });
+
+    this.datosEmpleoCargoComisionForm
+      .get('fechaTomaPosesion')
+      ?.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.datosEmpleoCargoComisionForm.updateValueAndValidity({ onlySelf: true });
+      });
 
     // this.datosEmpleoCargoComisionForm.get('domicilioExtranjero').disable();
 
@@ -170,34 +187,20 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     });
   }
 
-  validarFECHA(control: FormControl) {
-    const fechaActual = moment().startOf('day');
+  validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
+    const fechaIngreso = group.get('fechaConclusionEncargo')?.value;
+    const fechaConclusion = group.get('fechaTomaPosesion')?.value;
 
-    const fechaIni = control.root.get('fechaConclusionEncargo')?.value
-      ? moment(control.root.get('fechaConclusionEncargo')?.value).startOf('day')
-      : null;
-
-    const fechaFin = control.root.get('fechaTomaPosesion')?.value
-      ? moment(control.root.get('fechaTomaPosesion')?.value).startOf('day')
-      : null;
-
-    const fechaControl = control.value ? moment(control.value).startOf('day') : null;
-
-    // ❌ No permitir fechas futuras
-    if (fechaControl && fechaControl.isAfter(fechaActual)) {
-      return { fechaFutura: true };
+    if (!fechaIngreso || !fechaConclusion) {
+      return null;
     }
 
-    // Si ambas fechas existen, validar orden
-    if (fechaIni && fechaFin) {
-      // ❌ Si la fecha de toma de posesión NO es posterior a la de conclusión
-      if (!fechaIni.isAfter(fechaFin)) {
-        return { ordenIncorrecto: true };
-      }
-    }
+    const inicio = moment(fechaIngreso).startOf('day');
+    const fin = moment(fechaConclusion).startOf('day');
 
-    // ✅ Todo correcto
-    return null;
+    return inicio.isAfter(fin)
+      ? { ordenIncorrecto: true }
+      : null;
   }
 
 
