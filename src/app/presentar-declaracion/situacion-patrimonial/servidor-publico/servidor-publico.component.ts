@@ -365,12 +365,12 @@ export class ServidorPublicoComponent implements OnInit {
   validarFECHA(control: FormControl) {
     const fechaActual = moment().startOf('day');
 
-    const fechaIni = control.root.get('fechaIngreso')?.value
-      ? moment(control.root.get('fechaIngreso')?.value).startOf('day')
+    const fechaIni = control.root.get('fechaConclusion')?.value
+      ? moment(control.root.get('fechaConclusion')?.value).startOf('day')
       : null;
 
-    const fechaFin = control.root.get('fechaConclusion')?.value
-      ? moment(control.root.get('fechaConclusion')?.value).startOf('day')
+    const fechaFin = control.root.get('fechaIngreso')?.value
+      ? moment(control.root.get('fechaIngreso')?.value).startOf('day')
       : null;
 
     const fechaControl = control.value ? moment(control.value).startOf('day') : null;
