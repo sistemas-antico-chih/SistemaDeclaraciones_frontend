@@ -363,34 +363,34 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   validarFECHA(control: FormControl) {
-    const fechaActual = moment().startOf('day');
+  const fechaActual = moment().startOf('day');
 
-    const fechaIni = control.root.get('fechaConclusion')?.value
-      ? moment(control.root.get('fechaConclusion')?.value).startOf('day')
-      : null;
+  const fechaIni = control.root.get('fechaIngreso')?.value
+    ? moment(control.root.get('fechaIngreso')?.value).startOf('day')
+    : null;
 
-    const fechaFin = control.root.get('fechaIngreso')?.value
-      ? moment(control.root.get('fechaIngreso')?.value).startOf('day')
-      : null;
+  const fechaFin = control.root.get('fechaConclusion')?.value
+    ? moment(control.root.get('fechaConclusion')?.value).startOf('day')
+    : null;
 
-    const fechaControl = control.value ? moment(control.value).startOf('day') : null;
+  const fechaControl = control.value
+    ? moment(control.value).startOf('day')
+    : null;
 
-    // ❌ No permitir fechas futuras
-    if (fechaControl && fechaControl.isAfter(fechaActual)) {
-      return { fechaFutura: true };
-    }
-
-    // Si ambas fechas existen, validar orden
-    if (fechaIni && fechaFin) {
-      // ❌ Si la fecha de toma de posesión NO es posterior a la de conclusión
-      if (!fechaIni.isAfter(fechaFin)) {
-        return { ordenIncorrecto: true };
-      }
-    }
-
-    // ✅ Todo correcto
-    return null;
+  // ❌ No permitir fechas futuras
+  if (fechaControl && fechaControl.isAfter(fechaActual)) {
+    return { fechaFutura: true };
   }
+
+  // ❌ fechaIngreso NO puede ser mayor que fechaConclusion
+  if (fechaIni && fechaFin && fechaIni.isAfter(fechaFin)) {
+    return { ordenIncorrecto: true };
+  }
+
+  // ✅ Todo correcto
+  return null;
+}
+
 
 
   deleteFormArrayItem(formArrayName: string, index: number) {

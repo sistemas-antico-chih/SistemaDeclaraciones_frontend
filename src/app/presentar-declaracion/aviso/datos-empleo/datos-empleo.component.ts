@@ -173,12 +173,12 @@ export class DatosEmpleoAvisoComponent implements OnInit {
   validarFECHA(control: FormControl) {
     const fechaActual = moment().startOf('day');
 
-    const fechaIni = control.root.get('fechaTomaPosesion')?.value
-      ? moment(control.root.get('fechaTomaPosesion')?.value).startOf('day')
+    const fechaIni = control.root.get('fechaConclusionEncargo')?.value
+      ? moment(control.root.get('fechaConclusionEncargo')?.value).startOf('day')
       : null;
 
-    const fechaFin = control.root.get('fechaConclusionEncargo')?.value
-      ? moment(control.root.get('fechaConclusionEncargo')?.value).startOf('day')
+    const fechaFin = control.root.get('fechaTomaPosesion')?.value
+      ? moment(control.root.get('fechaTomaPosesion')?.value).startOf('day')
       : null;
 
     const fechaControl = control.value ? moment(control.value).startOf('day') : null;
