@@ -1,8 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {
-  FormGroup, FormBuilder, Validators, FormControl,
-  AbstractControl, ValidatorFn, ValidationErrors
-} from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; 
+import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import * as moment from 'moment';
