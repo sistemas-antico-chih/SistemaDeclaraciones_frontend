@@ -259,7 +259,7 @@ export class ServidorPublicoComponent implements OnInit {
       servidorPublicoAnioAnterior: [true, [Validators.required]],
       fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       fechaConclusion: [
-        null, [Validators.required, Validators.pattern(/^\S.*\S$/), this]
+        null, [Validators.required, Validators.pattern(/^\S.*\S$/)]
       ],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
