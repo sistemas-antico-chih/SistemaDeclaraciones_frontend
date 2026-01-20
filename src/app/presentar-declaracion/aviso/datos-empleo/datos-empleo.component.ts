@@ -221,19 +221,12 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       const minFin = new Date(inicioDate);
       minFin.setDate(minFin.getDate() + 1); // +1 día
 
-      const maxFin = new Date(inicioDate.getFullYear(), 11, 31); // 31/12 del mismo año
-
       const errorsInicio: ValidationErrors = {};
       const errorsFin: ValidationErrors = {};
 
       // ❌ fechaConclusion debe ser al menos 1 día mayor
       if (finDate < minFin) {
         errorsFin.menorQueInicio = true;
-      }
-
-      // ❌ fechaConclusion no puede pasar del 31/12 del año de inicio
-      if (finDate > maxFin) {
-        errorsFin.fechaFueraDeRango = true;
       }
 
       // 👉 Asignar errores sin pisar otros validadores
