@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; 
+import { FormArray, FormGroup, FormBuilder, Validators, ValidatorFn  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { MatDialog } from '@angular/material/dialog';
@@ -369,47 +370,52 @@ export class ServidorPublicoComponent implements OnInit {
       });
   }
 
-  validarRangoFechas(fechaInicioKey: string, fechaFinKey: string) {
-    return (form: FormGroup) => {
-      const inicioCtrl = form.get(fechaInicioKey);
-      const finCtrl = form.get(fechaFinKey);
+  validarRangoFechas(fechaInicioKey: string, fechaFinKey: string): ValidatorFn {
+  return (form: FormGroup): null => {
+    const inicioCtrl = form.get(fechaInicioKey);
+    const finCtrl = form.get(fechaFinKey);
 
-      if (!inicioCtrl || !finCtrl) return null;
-
-      const inicio: Date = inicioCtrl.value;
-      const fin: Date = finCtrl.value;
-
-      if (!inicio || !fin) return null;
-
-      const minInicio = new Date(2010, 0, 1); // 01/01/2010
-      const maxFin = new Date(inicio.getFullYear(), 11, 31); // 31/12 del año inicio
-
-      const errorsInicio: any = {};
-      const errorsFin: any = {};
-
-      // 🔴 Fecha inicio mínima
-      if (inicio < minInicio) {
-        errorsInicio.fechaMinima = true;
-      }
-
-      // 🔴 Inicio debe ser menor que fin
-      if (inicio >= fin) {
-        errorsInicio.mayorQueFin = true;
-        errorsFin.menorQueInicio = true;
-      }
-
-      // 🔴 Fecha fin máxima según año de inicio
-      if (fin > maxFin) {
-        errorsFin.fechaFueraDeRango = true;
-      }
-
-      // Asignar errores SIN borrar otros
-      inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
-      finCtrl.setErrors(Object.keys(errorsFin).length ? errorsFin : null);
-
+    if (!inicioCtrl || !finCtrl) {
       return null;
-    };
-  }
+    }
+
+    const inicio: Date = inicioCtrl.value;
+    const fin: Date = finCtrl.value;
+
+    if (!inicio || !fin) {
+      return null;
+    }
+
+    const minInicio = new Date(2010, 0, 1); // 01/01/2010
+    const maxFin = new Date(inicio.getFullYear(), 11, 31); // 31/12 del año inicio
+
+    const errorsInicio: any = {};
+    const errorsFin: any = {};
+
+    // Fecha mínima de inicio
+    if (inicio < minInicio) {
+      errorsInicio.fechaMinima = true;
+    }
+
+    // Inicio debe ser menor que fin
+    if (inicio >= fin) {
+      errorsInicio.mayorQueFin = true;
+      errorsFin.menorQueInicio = true;
+    }
+
+    // Fecha fin máxima según año de inicio
+    if (fin > maxFin) {
+      errorsFin.fechaFueraDeRango = true;
+    }
+
+    // Asignar errores sin pisar otros validadores
+    inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
+    finCtrl.setErrors(Object.keys(errorsFin).length ? errorsFin : null);
+
+    return null;
+  };
+}
+
 
   deleteFormArrayItem(formArrayName: string, index: number) {
     let formArray: FormArray = null;
