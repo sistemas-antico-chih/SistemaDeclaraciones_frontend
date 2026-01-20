@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { FormArray, FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormArray, FormGroup, FormBuilder, Validators, 
+  AbstractControl, ValidationErrors, FormControl, FormGroupDirective, NgForm  
+ } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import * as moment from 'moment';
@@ -18,11 +20,22 @@ import {
   OtrosIngresos,
   ServiciosProfesionales,
 } from '@models/declaracion';
+import { ErrorStateMatcher } from '@angular/material/core';  // AGREGAR ESTE
 import TipoBienEnajenado from '@static/catalogos/tipoBienEnajenacionBienes.json';
 import TipoInstrumento from '@static/catalogos/tipoInstrumento.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/anio-anterior';
 import { findOption } from '@utils/utils';
 import { MenuStateService } from '@app/services/menu-state.service';
+
+// AGREGAR ESTA CLASE ANTES DEL @UntilDestroy()
+export class DateRangeErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    const controlInvalid = !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    const formInvalid = !!(control && control.parent && control.parent.hasError('ordenIncorrecto') && (control.dirty || control.touched || isSubmitted));
+    return controlInvalid || formInvalid;
+  }
+}
 
 @UntilDestroy()
 @Component({
