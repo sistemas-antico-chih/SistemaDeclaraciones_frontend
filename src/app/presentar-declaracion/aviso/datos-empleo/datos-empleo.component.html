@@ -62,6 +62,9 @@
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="pickerConclusion"> </mat-datepicker-toggle>
               <mat-datepicker #pickerConclusion></mat-datepicker>
+              <mat-error *ngIf="datosEmpleoCargoComisionForm.get('fechaConclusionEncargo')?.hasError('mayorQueFin')">
+                La fecha de conclusion debe ser menor a la fecha de inicio
+              </mat-error>
             </mat-form-field>
         </div>
         <div class="grid-2-col">
@@ -104,6 +107,9 @@
             <mat-hint>dd/mm/yyyy</mat-hint>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="datosEmpleoCargoComisionForm.get('fechaTomaPosesion')?.hasError('mayorQueFin')">
+                La fecha de conclusion debe ser menor a la fecha inicio
+              </mat-error>
           </mat-form-field>
           <!--<div class="grid-2-col">-->
           <mat-radio-group class="checkbox" appearance="fill" formControlName="contratadoPorHonorarios">

@@ -1,9 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormGroup, FormBuilder, Validators, FormControl,
-  AbstractControl, ValidatorFn, ValidationErrors
-} from '@angular/forms';
-import * as moment from 'moment';
+import { FormArray, FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors}  from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MatSelect } from '@angular/material/select';
@@ -118,11 +114,11 @@ export class DatosEmpleoAvisoComponent implements OnInit {
       nombreEntePublico: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       areaAdscripcionConcluye: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       nivelEmpleoCargoComisionConcluye: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaConclusionEncargo: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      fechaConclusionEncargo: [null, Validators.required],
       areaAdscripcion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       funcionPrincipal: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       empleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaTomaPosesion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      fechaTomaPosesion: [null, Validators.required],
       contratadoPorHonorarios: [null, [Validators.required]],
       nivelEmpleoCargoComision: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       domicilioMexico: this.formBuilder.group({
@@ -152,11 +148,21 @@ export class DatosEmpleoAvisoComponent implements OnInit {
         [Validators.required],
       ],
     }, {
-      validators: this.validadorRangoFechas
+      validators: this.validarRangoFechas('fechaConclusionEncargo', 'fechaTomaPosesion')
     });
 
+    this.datosEmpleoCargoComisionForm.get('fechaConclusionEncargo')?.valueChanges
+          .pipe(untilDestroyed(this))
+          .subscribe((fecha: Date) => {
+            if (fecha) {
+              this.datosEmpleoCargoComisionForm.get('fechaTomaPosesion')?.updateValueAndValidity();
+            }
+          });
+
+    this.datosEmpleoCargoComisionForm.updateValueAndValidity({ emitEvent: false });
+
     this.datosEmpleoCargoComisionForm
-      .get('fechaIngrfechaConclusionEncargoeso')
+      .get('fechaConclusionEncargo')
       ?.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(() => {
@@ -187,20 +193,55 @@ export class DatosEmpleoAvisoComponent implements OnInit {
     });
   }
 
-  validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
-    const fechaIngreso = group.get('fechaConclusionEncargo')?.value;
-    const fechaConclusion = group.get('fechaTomaPosesion')?.value;
+  validarRangoFechas(fechaInicioKey: string, fechaFinKey: string): ValidatorFn {
+    return (form: FormGroup): ValidationErrors | null => {
 
-    if (!fechaIngreso || !fechaConclusion) {
+      const inicioCtrl = form.get(fechaInicioKey);
+      const finCtrl = form.get(fechaFinKey);
+
+      if (!inicioCtrl || !finCtrl) {
+        return null;
+      }
+
+      const inicio: Date = inicioCtrl.value;
+      const fin: Date = finCtrl.value;
+
+      if (!inicio || !fin) {
+        return null;
+      }
+
+      // 🔹 Normalizar horas para evitar errores
+      const inicioDate = new Date(inicio);
+      inicioDate.setHours(0, 0, 0, 0);
+
+      const finDate = new Date(fin);
+      finDate.setHours(0, 0, 0, 0);
+
+      // 🔹 Reglas
+      const minFin = new Date(inicioDate);
+      minFin.setDate(minFin.getDate() + 1); // +1 día
+
+      const maxFin = new Date(inicioDate.getFullYear(), 11, 31); // 31/12 del mismo año
+
+      const errorsInicio: ValidationErrors = {};
+      const errorsFin: ValidationErrors = {};
+
+      // ❌ fechaConclusion debe ser al menos 1 día mayor
+      if (finDate < minFin) {
+        errorsFin.menorQueInicio = true;
+      }
+
+      // ❌ fechaConclusion no puede pasar del 31/12 del año de inicio
+      if (finDate > maxFin) {
+        errorsFin.fechaFueraDeRango = true;
+      }
+
+      // 👉 Asignar errores sin pisar otros validadores
+      inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
+      finCtrl.setErrors(Object.keys(errorsFin).length ? errorsFin : null);
+
       return null;
-    }
-
-    const inicio = moment(fechaIngreso).startOf('day');
-    const fin = moment(fechaConclusion).startOf('day');
-
-    return inicio.isAfter(fin)
-      ? { ordenIncorrecto: true }
-      : null;
+    };
   }
 
 

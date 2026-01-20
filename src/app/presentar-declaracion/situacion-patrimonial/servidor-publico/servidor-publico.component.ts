@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; 
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
@@ -257,7 +257,7 @@ export class ServidorPublicoComponent implements OnInit {
     this.actividadAnualAnteriorForm = this.formBuilder.group({
       servidorPublicoAnioAnterior: [true, [Validators.required]],
       fechaIngreso: [null, Validators.required],
-      fechaConclusion: [ null, Validators.required],
+      fechaConclusion: [null, Validators.required],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
         moneda: ['MXN'],
@@ -367,63 +367,59 @@ export class ServidorPublicoComponent implements OnInit {
         }
       });
 
-      this.actividadAnualAnteriorForm.updateValueAndValidity({ emitEvent: false });
-
+    this.actividadAnualAnteriorForm.updateValueAndValidity({ emitEvent: false });
   }
 
   validarRangoFechas(fechaInicioKey: string, fechaFinKey: string): ValidatorFn {
-  return (form: FormGroup): ValidationErrors | null => {
+    return (form: FormGroup): ValidationErrors | null => {
 
-    const inicioCtrl = form.get(fechaInicioKey);
-    const finCtrl = form.get(fechaFinKey);
+      const inicioCtrl = form.get(fechaInicioKey);
+      const finCtrl = form.get(fechaFinKey);
 
-    if (!inicioCtrl || !finCtrl) {
+      if (!inicioCtrl || !finCtrl) {
+        return null;
+      }
+
+      const inicio: Date = inicioCtrl.value;
+      const fin: Date = finCtrl.value;
+
+      if (!inicio || !fin) {
+        return null;
+      }
+
+      // 🔹 Normalizar horas para evitar errores
+      const inicioDate = new Date(inicio);
+      inicioDate.setHours(0, 0, 0, 0);
+
+      const finDate = new Date(fin);
+      finDate.setHours(0, 0, 0, 0);
+
+      // 🔹 Reglas
+      const minFin = new Date(inicioDate);
+      minFin.setDate(minFin.getDate() + 1); // +1 día
+
+      const maxFin = new Date(inicioDate.getFullYear(), 11, 31); // 31/12 del mismo año
+
+      const errorsInicio: ValidationErrors = {};
+      const errorsFin: ValidationErrors = {};
+
+      // ❌ fechaConclusion debe ser al menos 1 día mayor
+      if (finDate < minFin) {
+        errorsFin.menorQueInicio = true;
+      }
+
+      // ❌ fechaConclusion no puede pasar del 31/12 del año de inicio
+      if (finDate > maxFin) {
+        errorsFin.fechaFueraDeRango = true;
+      }
+
+      // 👉 Asignar errores sin pisar otros validadores
+      inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
+      finCtrl.setErrors(Object.keys(errorsFin).length ? errorsFin : null);
+
       return null;
-    }
-
-    const inicio: Date = inicioCtrl.value;
-    const fin: Date = finCtrl.value;
-
-    if (!inicio || !fin) {
-      return null;
-    }
-
-    // 🔹 Normalizar horas para evitar errores
-    const inicioDate = new Date(inicio);
-    inicioDate.setHours(0, 0, 0, 0);
-
-    const finDate = new Date(fin);
-    finDate.setHours(0, 0, 0, 0);
-
-    // 🔹 Reglas
-    const minFin = new Date(inicioDate);
-    minFin.setDate(minFin.getDate() + 1); // +1 día
-
-    const maxFin = new Date(inicioDate.getFullYear(), 11, 31); // 31/12 del mismo año
-
-    const errorsInicio: ValidationErrors = {};
-    const errorsFin: ValidationErrors = {};
-
-    // ❌ fechaConclusion debe ser al menos 1 día mayor
-    if (finDate < minFin) {
-      errorsFin.menorQueInicio = true;
-    }
-
-    // ❌ fechaConclusion no puede pasar del 31/12 del año de inicio
-    if (finDate > maxFin) {
-      errorsFin.fechaFueraDeRango = true;
-    }
-
-    // 👉 Asignar errores sin pisar otros validadores
-    inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
-    finCtrl.setErrors(Object.keys(errorsFin).length ? errorsFin : null);
-
-    return null;
-  };
-}
-
-
-
+    };
+  }
 
   deleteFormArrayItem(formArrayName: string, index: number) {
     let formArray: FormArray = null;
