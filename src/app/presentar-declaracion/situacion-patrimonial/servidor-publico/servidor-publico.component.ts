@@ -258,9 +258,7 @@ export class ServidorPublicoComponent implements OnInit {
     this.actividadAnualAnteriorForm = this.formBuilder.group({
       servidorPublicoAnioAnterior: [true, [Validators.required]],
       fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaConclusion: [
-        null, [Validators.required, Validators.pattern(/^\S.*\S$/)]
-      ],
+      fechaConclusion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
         moneda: ['MXN'],
@@ -322,12 +320,16 @@ export class ServidorPublicoComponent implements OnInit {
     });
 
 
+    // CORREGIR ESTOS SUSCRIPTORES:
     this.actividadAnualAnteriorForm
       .get('fechaIngreso')
       ?.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.actividadAnualAnteriorForm.updateValueAndValidity();
+        // Agregar { emitEvent: false } para evitar loop infinito
+        this.actividadAnualAnteriorForm.updateValueAndValidity({ emitEvent: false });
+        // Actualizar también el campo de fecha de conclusión
+        this.actividadAnualAnteriorForm.get('fechaConclusion')?.updateValueAndValidity({ emitEvent: false });
       });
 
     this.actividadAnualAnteriorForm
@@ -335,9 +337,11 @@ export class ServidorPublicoComponent implements OnInit {
       ?.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.actividadAnualAnteriorForm.updateValueAndValidity();
+        // Agregar { emitEvent: false } para evitar loop infinito
+        this.actividadAnualAnteriorForm.updateValueAndValidity({ emitEvent: false });
+        // Actualizar también el campo de fecha de ingreso
+        this.actividadAnualAnteriorForm.get('fechaIngreso')?.updateValueAndValidity({ emitEvent: false });
       });
-
 
     this.actividadAnualAnteriorForm.valueChanges
       .pipe(untilDestroyed(this))
@@ -380,32 +384,31 @@ export class ServidorPublicoComponent implements OnInit {
       });
   }
 
-  // El validador está correctamente implementado:
-validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
-  const fechaIngresoCtrl = group.get('fechaIngreso');
-  const fechaConclusionCtrl = group.get('fechaConclusion');
+  // MANTENER EL VALIDADOR EXACTAMENTE COMO ESTÁ:
+  validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
+    const fechaIngresoCtrl = group.get('fechaIngreso');
+    const fechaConclusionCtrl = group.get('fechaConclusion');
 
-  if (!fechaIngresoCtrl || !fechaConclusionCtrl) {
+    if (!fechaIngresoCtrl || !fechaConclusionCtrl) {
+      return null;
+    }
+
+    const fechaIngreso = fechaIngresoCtrl.value;
+    const fechaConclusion = fechaConclusionCtrl.value;
+
+    if (!fechaIngreso || !fechaConclusion) {
+      return null;
+    }
+
+    const inicio = moment(fechaIngreso).startOf('day');
+    const fin = moment(fechaConclusion).startOf('day');
+
+    if (inicio.isAfter(fin)) {
+      return { ordenIncorrecto: true };
+    }
+
     return null;
   }
-
-  const fechaIngreso = fechaIngresoCtrl.value;
-  const fechaConclusion = fechaConclusionCtrl.value;
-
-  if (!fechaIngreso || !fechaConclusion) {
-    return null;
-  }
-
-  const inicio = moment(fechaIngreso).startOf('day');
-  const fin = moment(fechaConclusion).startOf('day');
-
-  if (inicio.isAfter(fin)) {
-    return { ordenIncorrecto: true };
-  }
-
-  return null;
-}
-
 
   deleteFormArrayItem(formArrayName: string, index: number) {
     let formArray: FormArray = null;
