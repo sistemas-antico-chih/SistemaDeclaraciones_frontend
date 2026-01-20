@@ -380,7 +380,8 @@ export class ServidorPublicoComponent implements OnInit {
       });
   }
 
-  validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
+  // El validador está correctamente implementado:
+validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
   const fechaIngresoCtrl = group.get('fechaIngreso');
   const fechaConclusionCtrl = group.get('fechaConclusion');
 
