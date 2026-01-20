@@ -1,10 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { FormArray, FormGroup, FormBuilder, Validators, 
-  AbstractControl, ValidationErrors, FormControl, FormGroupDirective, NgForm  
- } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogComponentMensaje } from '@shared/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -20,22 +16,11 @@ import {
   OtrosIngresos,
   ServiciosProfesionales,
 } from '@models/declaracion';
-import { ErrorStateMatcher } from '@angular/material/core';  // AGREGAR ESTE
 import TipoBienEnajenado from '@static/catalogos/tipoBienEnajenacionBienes.json';
 import TipoInstrumento from '@static/catalogos/tipoInstrumento.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/anio-anterior';
 import { findOption } from '@utils/utils';
 import { MenuStateService } from '@app/services/menu-state.service';
-
-// AGREGAR ESTA CLASE ANTES DEL @UntilDestroy()
-export class DateRangeErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    const controlInvalid = !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-    const formInvalid = !!(control && control.parent && control.parent.hasError('ordenIncorrecto') && (control.dirty || control.touched || isSubmitted));
-    return controlInvalid || formInvalid;
-  }
-}
 
 @UntilDestroy()
 @Component({
@@ -85,9 +70,9 @@ export class ServidorPublicoComponent implements OnInit {
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth() + 1;
   dia: number = new Date().getDate();
-  maxDate = new Date(this.anio - 1, 11, 31);
-  //minDateFinal = new Date(2010, 1, 1);
-  //maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
+  maxDate = new Date(this.anio - 1, this.mes - 1, this.dia);
+  minDateFinal = new Date(2010, 1, 1);
+  maxDateFinal = new Date(this.anio, this.mes - 1, this.dia);
 
   isFromPreviousRecord = false;
 
@@ -271,7 +256,9 @@ export class ServidorPublicoComponent implements OnInit {
     this.actividadAnualAnteriorForm = this.formBuilder.group({
       servidorPublicoAnioAnterior: [true, [Validators.required]],
       fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaConclusion: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
+      fechaConclusion: [
+        null, [Validators.required, Validators.pattern(/^\S.*\S$/)]
+      ],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
         moneda: ['MXN'],
@@ -329,32 +316,10 @@ export class ServidorPublicoComponent implements OnInit {
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     }, {
-      validators: this.validadorRangoFechas
+      validator: this.validarFechas("fechaIngreso", "fechaConclusion")
     });
 
 
-    // CORREGIR ESTOS SUSCRIPTORES:
-    this.actividadAnualAnteriorForm
-      .get('fechaIngreso')
-      ?.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        // Agregar { emitEvent: false } para evitar loop infinito
-        this.actividadAnualAnteriorForm.updateValueAndValidity({ emitEvent: false });
-        // Actualizar también el campo de fecha de conclusión
-        this.actividadAnualAnteriorForm.get('fechaConclusion')?.updateValueAndValidity({ emitEvent: false });
-      });
-
-    this.actividadAnualAnteriorForm
-      .get('fechaConclusion')
-      ?.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        // Agregar { emitEvent: false } para evitar loop infinito
-        this.actividadAnualAnteriorForm.updateValueAndValidity({ emitEvent: false });
-        // Actualizar también el campo de fecha de ingreso
-        this.actividadAnualAnteriorForm.get('fechaIngreso')?.updateValueAndValidity({ emitEvent: false });
-      });
 
     this.actividadAnualAnteriorForm.valueChanges
       .pipe(untilDestroyed(this))
@@ -397,30 +362,26 @@ export class ServidorPublicoComponent implements OnInit {
       });
   }
 
-  // MANTENER EL VALIDADOR EXACTAMENTE COMO ESTÁ:
-  validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
-    const fechaIngresoCtrl = group.get('fechaIngreso');
-    const fechaConclusionCtrl = group.get('fechaConclusion');
+  validarFechas(fechaIngreso: string, fechaEgreso: string) {
+    return (formGroup: FormGroup) => {
+      const fingreso = formGroup.get(fechaIngreso);
+      const fegreso = formGroup.get(fechaEgreso);
+      const milisegundosEnUnAnio = 1000 * 60 * 60 * 24 * 365.25;
+      const diferenciaMilisegundos = Date.parse(fegreso.value) - Date.parse(fingreso.value);
+      if (fegreso.errors && !fegreso.errors.validarFechas) {
+        return;
+      }
 
-    if (!fechaIngresoCtrl || !fechaConclusionCtrl) {
-      return null;
-    }
-
-    const fechaIngreso = fechaIngresoCtrl.value;
-    const fechaConclusion = fechaConclusionCtrl.value;
-
-    if (!fechaIngreso || !fechaConclusion) {
-      return null;
-    }
-
-    const inicio = moment(fechaIngreso).startOf('day');
-    const fin = moment(fechaConclusion).startOf('day');
-
-    if (inicio.isAfter(fin)) {
-      return { ordenIncorrecto: true };
-    }
-
-    return null;
+      if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
+        fegreso.setErrors({ validarFechas: true });
+      }
+      if (diferenciaMilisegundos > milisegundosEnUnAnio) {
+        fegreso.setErrors({ validarFechas: true });
+      }
+      else {
+        fegreso.setErrors(null);
+      }
+    };
   }
 
   deleteFormArrayItem(formArrayName: string, index: number) {

@@ -60,15 +60,6 @@
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="pickerInicio"></mat-datepicker-toggle>
               <mat-datepicker #pickerInicio></mat-datepicker>
-              <!-- Errores del campo individual -->
-              <mat-error *ngIf="actividadAnualAnteriorForm.get('fechaIngreso').hasError('required')">
-                La fecha de inicio es requerida
-              </mat-error>
-              <!-- Error de validación de rango -->
-              <mat-error *ngIf="actividadAnualAnteriorForm.hasError('ordenIncorrecto') && 
-                  !actividadAnualAnteriorForm.get('fechaIngreso').hasError('required')">
-                La fecha de inicio debe ser menor a la fecha de fin
-              </mat-error>
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.fechaConclusion }}" appearance="fill">
               <mat-label>Fecha de fin</mat-label>
@@ -76,20 +67,13 @@
                 [errorStateMatcher]="errorMatcher"
                 matInput
                 [matDatepicker]="pickerFin"
+                [min]="minDate"
+                [max]="maxDateFinal"
                 formControlName="fechaConclusion"
               />
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="pickerFin"></mat-datepicker-toggle>
               <mat-datepicker #pickerFin></mat-datepicker>
-              <!-- Errores del campo individual -->
-              <mat-error *ngIf="actividadAnualAnteriorForm.get('fechaConclusion').hasError('required')">
-                La fecha de fin es requerida
-              </mat-error>
-              <!-- Error de validación de rango -->
-              <mat-error *ngIf="actividadAnualAnteriorForm.hasError('ordenIncorrecto') && 
-                  !actividadAnualAnteriorForm.get('fechaConclusion').hasError('required')">
-                La fecha de fin debe ser mayor a la fecha de inicio
-              </mat-error>
             </mat-form-field>
           </div>
         </div>
