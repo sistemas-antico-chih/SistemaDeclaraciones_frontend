@@ -316,7 +316,7 @@ export class ServidorPublicoComponent implements OnInit {
       }),
       aclaracionesObservaciones: [{ disabled: true, value: '' }, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
     }, {
-      validator: this.validarFechas("fechaIngreso", "fechaConclusion")
+      validators: this.validarRangoFechas('fechaIngreso', 'fechaConclusion')
     });
 
 
@@ -360,27 +360,56 @@ export class ServidorPublicoComponent implements OnInit {
           formFields.forEach((field) => this.actividadAnualAnteriorForm.get(field).disable());
         }
       });
+
+    this.actividadAnualAnteriorForm.get('fechaIngreso')?.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((fecha: Date) => {
+        if (fecha) {
+          this.maxDateFinal = new Date(fecha.getFullYear(), 11, 31);
+          this.actividadAnualAnteriorForm.get('fechaConclusion')?.updateValueAndValidity();
+        }
+      });
   }
 
-  validarFechas(fechaIngreso: string, fechaEgreso: string) {
-    return (formGroup: FormGroup) => {
-      const fingreso = formGroup.get(fechaIngreso);
-      const fegreso = formGroup.get(fechaEgreso);
-      const milisegundosEnUnAnio = 1000 * 60 * 60 * 24 * 365.25;
-      const diferenciaMilisegundos = Date.parse(fegreso.value) - Date.parse(fingreso.value);
-      if (fegreso.errors && !fegreso.errors.validarFechas) {
-        return;
+  validarRangoFechas(fechaInicioKey: string, fechaFinKey: string) {
+    return (form: FormGroup) => {
+      const inicioCtrl = form.get(fechaInicioKey);
+      const finCtrl = form.get(fechaFinKey);
+
+      if (!inicioCtrl || !finCtrl) return null;
+
+      const inicio: Date = inicioCtrl.value;
+      const fin: Date = finCtrl.value;
+
+      if (!inicio || !fin) return null;
+
+      const minInicio = new Date(2010, 0, 1); // 01/01/2010
+      const maxFin = new Date(inicio.getFullYear(), 11, 31); // 31/12 del año inicio
+
+      const errorsInicio: any = {};
+      const errorsFin: any = {};
+
+      // 🔴 Fecha inicio mínima
+      if (inicio < minInicio) {
+        errorsInicio.fechaMinima = true;
       }
 
-      if (Date.parse(fingreso.value) >= Date.parse(fegreso.value)) {
-        fegreso.setErrors({ validarFechas: true });
+      // 🔴 Inicio debe ser menor que fin
+      if (inicio >= fin) {
+        errorsInicio.mayorQueFin = true;
+        errorsFin.menorQueInicio = true;
       }
-      if (diferenciaMilisegundos > milisegundosEnUnAnio) {
-        fegreso.setErrors({ validarFechas: true });
+
+      // 🔴 Fecha fin máxima según año de inicio
+      if (fin > maxFin) {
+        errorsFin.fechaFueraDeRango = true;
       }
-      else {
-        fegreso.setErrors(null);
-      }
+
+      // Asignar errores SIN borrar otros
+      inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
+      finCtrl.setErrors(Object.keys(errorsFin).length ? errorsFin : null);
+
+      return null;
     };
   }
 

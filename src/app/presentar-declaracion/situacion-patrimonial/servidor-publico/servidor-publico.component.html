@@ -60,6 +60,12 @@
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="pickerInicio"></mat-datepicker-toggle>
               <mat-datepicker #pickerInicio></mat-datepicker>
+              <mat-error *ngIf="actividadAnualAnteriorForm.get('fechaIngreso')?.hasError('fechaMinima')">
+                La fecha no puede ser menor al 01/01/2010
+              </mat-error>
+              <mat-error *ngIf="actividadAnualAnteriorForm.get('fechaIngreso')?.hasError('mayorQueFin')">
+                La fecha de inicio debe ser menor a la fecha de fin
+              </mat-error>
             </mat-form-field>
             <mat-form-field matTooltip="{{ tooltipData.fechaConclusion }}" appearance="fill">
               <mat-label>Fecha de fin</mat-label>
@@ -74,6 +80,12 @@
               <mat-hint>dd/mm/yyyy</mat-hint>
               <mat-datepicker-toggle matPrefix [for]="pickerFin"></mat-datepicker-toggle>
               <mat-datepicker #pickerFin></mat-datepicker>
+              <mat-error *ngIf="actividadAnualAnteriorForm.get('fechaConclusion')?.hasError('menorQueInicio')">
+                La fecha de fin debe ser mayor a la fecha de inicio
+              </mat-error>
+              <mat-error *ngIf="actividadAnualAnteriorForm.get('fechaConclusion')?.hasError('fechaFueraDeRango')">
+                La fecha de fin no puede ser mayor al 31 de diciembre del año de inicio
+              </mat-error>  
             </mat-form-field>
           </div>
         </div>
