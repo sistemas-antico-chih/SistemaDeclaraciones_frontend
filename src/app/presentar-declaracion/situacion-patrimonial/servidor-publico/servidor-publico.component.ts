@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core'; 
-import { FormArray, FormGroup, FormBuilder, Validators, ValidatorFn  } from '@angular/forms';
+import { FormArray, FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { MatDialog } from '@angular/material/dialog';
@@ -256,10 +256,8 @@ export class ServidorPublicoComponent implements OnInit {
   createForm() {
     this.actividadAnualAnteriorForm = this.formBuilder.group({
       servidorPublicoAnioAnterior: [true, [Validators.required]],
-      fechaIngreso: [null, [Validators.required, Validators.pattern(/^\S.*\S$/)]],
-      fechaConclusion: [
-        null, [Validators.required, Validators.pattern(/^\S.*\S$/)]
-      ],
+      fechaIngreso: [null, Validators.required],
+      fechaConclusion: [ null, Validators.required],
       remuneracionNetaCargoPublico: this.formBuilder.group({
         valor: [0, [Validators.required, Validators.pattern(/^\d+$/), Validators.min(0)]],
         moneda: ['MXN'],
@@ -368,10 +366,14 @@ export class ServidorPublicoComponent implements OnInit {
           formFields.forEach((field) => this.actividadAnualAnteriorForm.get(field).disable());
         }
       });
+
+      this.actividadAnualAnteriorForm.updateValueAndValidity({ emitEvent: false });
+
   }
 
   validarRangoFechas(fechaInicioKey: string, fechaFinKey: string): ValidatorFn {
-  return (form: FormGroup): null => {
+  return (form: FormGroup): ValidationErrors | null => {
+
     const inicioCtrl = form.get(fechaInicioKey);
     const finCtrl = form.get(fechaFinKey);
 
@@ -386,35 +388,41 @@ export class ServidorPublicoComponent implements OnInit {
       return null;
     }
 
-    const minInicio = new Date(2010, 0, 1); // 01/01/2010
-    const maxFin = new Date(inicio.getFullYear(), 11, 31); // 31/12 del año inicio
+    // 🔹 Normalizar horas para evitar errores
+    const inicioDate = new Date(inicio);
+    inicioDate.setHours(0, 0, 0, 0);
 
-    const errorsInicio: any = {};
-    const errorsFin: any = {};
+    const finDate = new Date(fin);
+    finDate.setHours(0, 0, 0, 0);
 
-    // Fecha mínima de inicio
-    if (inicio < minInicio) {
-      errorsInicio.fechaMinima = true;
-    }
+    // 🔹 Reglas
+    const minFin = new Date(inicioDate);
+    minFin.setDate(minFin.getDate() + 1); // +1 día
 
-    // Inicio debe ser menor que fin
-    if (inicio >= fin) {
-      errorsInicio.mayorQueFin = true;
+    const maxFin = new Date(inicioDate.getFullYear(), 11, 31); // 31/12 del mismo año
+
+    const errorsInicio: ValidationErrors = {};
+    const errorsFin: ValidationErrors = {};
+
+    // ❌ fechaConclusion debe ser al menos 1 día mayor
+    if (finDate < minFin) {
       errorsFin.menorQueInicio = true;
     }
 
-    // Fecha fin máxima según año de inicio
-    if (fin > maxFin) {
+    // ❌ fechaConclusion no puede pasar del 31/12 del año de inicio
+    if (finDate > maxFin) {
       errorsFin.fechaFueraDeRango = true;
     }
 
-    // Asignar errores sin pisar otros validadores
+    // 👉 Asignar errores sin pisar otros validadores
     inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
     finCtrl.setErrors(Object.keys(errorsFin).length ? errorsFin : null);
 
     return null;
   };
 }
+
+
 
 
   deleteFormArrayItem(formArrayName: string, index: number) {
