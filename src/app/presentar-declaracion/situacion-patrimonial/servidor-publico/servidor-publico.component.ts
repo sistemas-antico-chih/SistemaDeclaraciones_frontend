@@ -381,20 +381,30 @@ export class ServidorPublicoComponent implements OnInit {
   }
 
   validadorRangoFechas(group: AbstractControl): ValidationErrors | null {
-    const fechaIngreso = group.get('fechaIngreso')?.value;
-    const fechaConclusion = group.get('fechaConclusion')?.value;
+  const fechaIngresoCtrl = group.get('fechaIngreso');
+  const fechaConclusionCtrl = group.get('fechaConclusion');
 
-    if (!fechaIngreso || !fechaConclusion) {
-      return null;
-    }
-
-    const inicio = moment(fechaIngreso).startOf('day');
-    const fin = moment(fechaConclusion).startOf('day');
-
-    return inicio.isAfter(fin)
-      ? { ordenIncorrecto: true }
-      : null;
+  if (!fechaIngresoCtrl || !fechaConclusionCtrl) {
+    return null;
   }
+
+  const fechaIngreso = fechaIngresoCtrl.value;
+  const fechaConclusion = fechaConclusionCtrl.value;
+
+  if (!fechaIngreso || !fechaConclusion) {
+    return null;
+  }
+
+  const inicio = moment(fechaIngreso).startOf('day');
+  const fin = moment(fechaConclusion).startOf('day');
+
+  if (inicio.isAfter(fin)) {
+    return { ordenIncorrecto: true };
+  }
+
+  return null;
+}
+
 
   deleteFormArrayItem(formArrayName: string, index: number) {
     let formArray: FormArray = null;
