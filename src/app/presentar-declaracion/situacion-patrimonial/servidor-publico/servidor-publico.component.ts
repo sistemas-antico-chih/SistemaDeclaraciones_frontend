@@ -319,7 +319,14 @@ export class ServidorPublicoComponent implements OnInit {
       validators: this.validarRangoFechas('fechaIngreso', 'fechaConclusion')
     });
 
-
+    this.actividadAnualAnteriorForm.get('fechaIngreso')?.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((fecha: Date) => {
+        if (fecha) {
+          this.maxDateFinal = new Date(fecha.getFullYear(), 11, 31);
+          this.actividadAnualAnteriorForm.get('fechaConclusion')?.updateValueAndValidity();
+        }
+      });
 
     this.actividadAnualAnteriorForm.valueChanges
       .pipe(untilDestroyed(this))
@@ -358,15 +365,6 @@ export class ServidorPublicoComponent implements OnInit {
           formFields.forEach((field) => this.actividadAnualAnteriorForm.get(field).enable());
         } else {
           formFields.forEach((field) => this.actividadAnualAnteriorForm.get(field).disable());
-        }
-      });
-
-    this.actividadAnualAnteriorForm.get('fechaIngreso')?.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe((fecha: Date) => {
-        if (fecha) {
-          this.maxDateFinal = new Date(fecha.getFullYear(), 11, 31);
-          this.actividadAnualAnteriorForm.get('fechaConclusion')?.updateValueAndValidity();
         }
       });
   }
