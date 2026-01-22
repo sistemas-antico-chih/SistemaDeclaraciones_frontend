@@ -149,6 +149,8 @@ export class DialogElementsExampleDialog implements OnInit {
           const validaModificacion = await this.verificarDeclaracionModificacionCompleta(this.anio, tipoDeclaracion, formaDeclaracion);
           if (validaModificacion)
             return true;
+          if (this.mes = 5)
+            return true
           else
             return false
         }
@@ -156,6 +158,8 @@ export class DialogElementsExampleDialog implements OnInit {
           const validaModificacion = await this.verificarDeclaracionModificacionSimple(this.anio, tipoDeclaracion, formaDeclaracion);
           if (validaModificacion)
             return true;
+          if (this.mes = 5)
+            return true
           else
             return false
         }
