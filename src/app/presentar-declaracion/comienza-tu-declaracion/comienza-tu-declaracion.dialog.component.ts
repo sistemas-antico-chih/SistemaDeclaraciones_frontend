@@ -105,10 +105,11 @@ export class DialogElementsExampleDialog implements OnInit {
             width: '600px',
             data: {
               title: 'No es posible iniciar la declaración de tipo MODIFICACIÓN',
-              message: `No cuenta con una declaración de tipo INICIAL o ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion}, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
+              message: `Los registros de MODIFICACIÓN deben realizarse en el mes de mayo. \nNo cuenta con una declaración de tipo INICIAL o ya se encuentra firmada una declaración de tipo MODIFICACIÓN para el año ${fechaModificacion}, en caso de alguna duda favor de dirigirse a su Órgano Interno de Control.`,
               trueText: 'Continuar',
             },
           });
+
           break;
         case "conclusion":
           const dialogRefConclusion = this.dialog.open(DialogComponent, {
