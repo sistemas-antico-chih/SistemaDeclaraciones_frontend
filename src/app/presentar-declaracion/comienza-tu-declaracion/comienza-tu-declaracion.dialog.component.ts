@@ -280,7 +280,7 @@ export class DialogElementsExampleDialog implements OnInit {
   async verificarDeclaracionModificacionCompleta(fechaModificacion: any,
     tipoDeclaracion: string, formaDeclaracion: string) {
     try {
-      if(this.mes===5){
+      //if(this.mes===5){
         const { data }: any = await this.apollo
         .query({
           query: gql`
@@ -300,8 +300,7 @@ export class DialogElementsExampleDialog implements OnInit {
       this.declaraciones = data.statsModif.counters.count || 0;
       //this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === true)?.count || 0;
       this.declaracionesModificacionCompleta = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion)?.count || 0;
-      }
-      else
+      //}else
         return false
     } catch (error) {
       console.log(error);
@@ -322,7 +321,7 @@ export class DialogElementsExampleDialog implements OnInit {
   async verificarDeclaracionModificacionSimple(fechaModificacion: any,
     tipoDeclaracion: string, formaDeclaracion: string) {
     try {
-      if(this.mes===5){
+      //if(this.mes===5){
         const { data }: any = await this.apollo
         .query({
           query: gql`
@@ -342,7 +341,7 @@ export class DialogElementsExampleDialog implements OnInit {
         this.declaraciones = data.statsModif.counters.count || 0;
         //this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion && d.declaracionCompleta === false)?.count || 0;
         this.declaracionesModificacionSimple = data.statsModif.counters.find((d: any) => d.anioEjercicio === fechaModificacion)?.count || 0;
-      }else
+      //}else
         return false;   
       } catch (error) {
         console.log(error);
