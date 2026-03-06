@@ -23,7 +23,7 @@
     
     <div class="grid-3-col">
       <mat-form-field matTooltip="{{ tooltipData.anio_ejercicio }}" appearance="fill">
-        <mat-label>Año del ejercicio</mat-label>
+        <mat-label>Año del ejercicio (año actual)</mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
         <mat-select name="anio_ejercicio" [(value)]="anio_ejercicio" required>
           <mat-option *ngFor="let num of array_anio_ejercicio" [value]="num">
