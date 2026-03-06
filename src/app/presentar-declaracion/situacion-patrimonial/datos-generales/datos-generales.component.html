@@ -23,9 +23,8 @@
     <div class="grid-3-col">
       <mat-form-field matTooltip="{{ tooltipData.anio_ejercicio }}" appearance="fill">
         <mat-label>
-          Año del ejercicio
-          <span *ngIf="tipoDeclaracion === 'modificacion'"><br>(año inmediato anterior)</span>
-          <span *ngIf="tipoDeclaracion !== 'modificacion'"><br>(año actual)</span>
+          <span *ngIf="tipoDeclaracion === 'modificacion'">Año inmediato anterior</span>
+          <span *ngIf="tipoDeclaracion !== 'modificacion'">Año actual</span>
         </mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
         <mat-select [(ngModel)]="anio_ejercicio" required>

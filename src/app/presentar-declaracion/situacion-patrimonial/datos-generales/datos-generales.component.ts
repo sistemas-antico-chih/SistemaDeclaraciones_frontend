@@ -361,6 +361,10 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   setAnioEjercicio() {
+    // Si ya existe un valor guardado, no lo modificamos
+    if (this.anio_ejercicio !== null && this.anio_ejercicio !== undefined) {
+      return;
+    }
     if (this.tipoDeclaracion?.toLowerCase() === 'modificacion') {
       this.anio_ejercicio = this.currentYear - 1;
     } else {
