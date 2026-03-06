@@ -341,6 +341,13 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // asignar valor dependiendo del tipo de declaración
+    for (let index = 0; index < 5; index++) {
+      this.array_anio_ejercicio.push(this.currentYear - index);
+    }
+
+    this.setAnioEjercicio();
+
     this.pushButtonSave = false;
     const dialogRef = this.dialog.open(DialogComponentMensaje, {
       data: {
@@ -351,6 +358,14 @@ export class DatosGeneralesComponent implements OnInit {
         //falseText: '',
       },
     });
+  }
+
+  setAnioEjercicio() {
+    if (this.tipoDeclaracion?.toLowerCase() === 'modificacion') {
+      this.anio_ejercicio = this.currentYear - 1;
+    } else {
+      this.anio_ejercicio = this.currentYear;
+    }
   }
 }
 
