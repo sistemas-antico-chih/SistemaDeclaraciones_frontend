@@ -167,11 +167,25 @@ export class DatosEmpleoComponent implements OnInit {
   }
 
   fillForm(datosEmpleoCargoComision: DatosEmpleoCargoComision | undefined) {
-    this.datosEmpleoCargoComisionForm.patchValue(datosEmpleoCargoComision || {});
+
+    if (!datosEmpleoCargoComision) {
+      this.datosEmpleoCargoComisionForm.patchValue({});
+      return;
+    }
+
+    const datos = { ...datosEmpleoCargoComision };
+
+    // Si es declaración de conclusión no cargar la fecha
+    if (this.tipoDeclaracion?.toUpperCase() === 'CONCLUSION') {
+      datos.fechaTomaPosesion = null;
+    }
+
+    this.datosEmpleoCargoComisionForm.patchValue(datos);
 
     if (datosEmpleoCargoComision?.aclaracionesObservaciones) {
       this.toggleAclaraciones(true);
     }
+
     this.setSelectedOptions(datosEmpleoCargoComision);
   }
 
