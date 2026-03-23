@@ -408,10 +408,12 @@ export class ServidorPublicoComponent implements OnInit {
         errorsFin.menorQueInicio = true;
       }
 
+      /*
       // ❌ fechaConclusion no puede pasar del 31/12 del año de inicio
       if (finDate > maxFin) {
         errorsFin.fechaFueraDeRango = true;
       }
+      */
 
       // 👉 Asignar errores sin pisar otros validadores
       inicioCtrl.setErrors(Object.keys(errorsInicio).length ? errorsInicio : null);
