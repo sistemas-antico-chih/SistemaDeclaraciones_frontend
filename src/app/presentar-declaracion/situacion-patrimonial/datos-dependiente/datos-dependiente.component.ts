@@ -396,16 +396,59 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   get finalDependienteEconomicoForm() {
-    const form = JSON.parse(JSON.stringify(this.datosDependientesEconomicosForm.value.dependienteEconomico)); // Deep copy
+    const form = JSON.parse(
+      JSON.stringify(this.datosDependientesEconomicosForm.value.dependienteEconomico)
+    );
 
+    // Campos OTRO
     if (form.actividadLaboral?.clave === 'OTR') {
       form.actividadLaboral.valor = this.otroActividadLaboral.nativeElement.value;
     }
+
     if (form.parentescoRelacion?.clave === 'OTRO') {
       form.parentescoRelacion.valor = this.otroParentesco.nativeElement.value;
     }
+
     if (form.actividadLaboralSectorPrivadoOtro?.sector?.clave === 'OTRO') {
       form.actividadLaboralSectorPrivadoOtro.sector.valor = this.otroSector.nativeElement.value;
+    }
+
+    // =========================================
+    // LIMPIEZA DE DOMICILIOS
+    // =========================================
+
+    // Si habita con el declarante NO debe existir domicilio
+    if (form.habitaDomicilioDeclarante === true) {
+      delete form.domicilioMexico;
+      delete form.domicilioExtranjero;
+      delete form.lugarDondeReside;
+    }
+
+    // Si vive en México
+    else if (form.lugarDondeReside === 'MEXICO') {
+      delete form.domicilioExtranjero;
+    }
+
+    // Si vive en el extranjero
+    else if (form.lugarDondeReside === 'EXTRANJERO') {
+      delete form.domicilioMexico;
+    }
+
+    // =========================================
+    // LIMPIEZA ACTIVIDAD LABORAL
+    // =========================================
+
+    // Sector público
+    if (form.actividadLaboral?.clave === 'PUB') {
+      delete form.actividadLaboralSectorPrivadoOtro;
+    }
+
+    // Privado u otro
+    if (
+      form.actividadLaboral?.clave === 'PRI' ||
+      form.actividadLaboral?.clave === 'OTR'
+    ) {
+      delete form.actividadLaboralSectorPublico;
     }
 
     return form;
