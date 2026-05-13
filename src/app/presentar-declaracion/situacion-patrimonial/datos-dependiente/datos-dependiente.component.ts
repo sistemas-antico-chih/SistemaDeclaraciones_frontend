@@ -528,23 +528,75 @@ export class DatosDependienteComponent implements OnInit {
   }
 
   checkItems() {
-    //let depEconomico = this.datosDependientesEconomicosForm.get('dependienteEconomico');
-    let dependienteEconomico = [...this.dependienteEconomico];
-    if (dependienteEconomico.length === 0) {
-      this.saveInfo({ ninguno: true });
-    } else {
-      for (let i = 0; i < dependienteEconomico.length; i++) {
-        dependienteEconomico[i].tipoOperacion = 'SIN_CAMBIOS';
+
+  let dependienteEconomico = [...this.dependienteEconomico];
+
+  if (dependienteEconomico.length === 0) {
+
+    this.saveInfo({ ninguno: true });
+
+  } else {
+
+    dependienteEconomico = dependienteEconomico.map(item => {
+
+      // Deep copy
+      const cleanItem = JSON.parse(JSON.stringify(item));
+
+      cleanItem.tipoOperacion = 'SIN_CAMBIOS';
+
+      // =========================================
+      // LIMPIEZA DOMICILIOS
+      // =========================================
+
+      if (cleanItem.habitaDomicilioDeclarante === true) {
+
+        delete cleanItem.domicilioMexico;
+        delete cleanItem.domicilioExtranjero;
+        delete cleanItem.lugarDondeReside;
+
+      } else if (cleanItem.lugarDondeReside === 'MEXICO') {
+
+        delete cleanItem.domicilioExtranjero;
+
+      } else if (cleanItem.lugarDondeReside === 'EXTRANJERO') {
+
+        delete cleanItem.domicilioMexico;
       }
-      const aclaracionesObservaciones = this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
-      this.isLoading = true;
-      this.saveInfo({
-        dependienteEconomico,
-        aclaracionesObservaciones,
-      });
-      this.isLoading = false;
-    }
+
+      // =========================================
+      // LIMPIEZA ACTIVIDAD LABORAL
+      // =========================================
+
+      if (cleanItem.actividadLaboral?.clave === 'PUB') {
+
+        delete cleanItem.actividadLaboralSectorPrivadoOtro;
+
+      }
+
+      if (
+        cleanItem.actividadLaboral?.clave === 'PRI' ||
+        cleanItem.actividadLaboral?.clave === 'OTR'
+      ) {
+
+        delete cleanItem.actividadLaboralSectorPublico;
+      }
+
+      return cleanItem;
+    });
+
+    const aclaracionesObservaciones =
+      this.datosDependientesEconomicosForm.value.aclaracionesObservaciones;
+
+    this.isLoading = true;
+
+    this.saveInfo({
+      dependienteEconomico,
+      aclaracionesObservaciones,
+    });
+
+    this.isLoading = false;
   }
+}
 
   noDependent() {
     this.saveInfo({ ninguno: true });
