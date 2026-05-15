@@ -64,7 +64,7 @@ export class DatosGeneralesComponent implements OnInit {
     this.declaracionSimplificada = urlChunks[2] === 'simplificada';
     this.tipoDeclaracion = urlChunks[1] || null;
 
-    for (let index = 0; index < 7; index++) {
+    for (let index = 0; index < 6; index++) {
       this.array_anio_ejercicio.push(this.currentYear - index);
     }
 
