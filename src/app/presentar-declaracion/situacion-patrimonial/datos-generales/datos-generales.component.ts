@@ -29,11 +29,16 @@ import { MenuStateService } from '@app/services/menu-state.service';
 })
 export class DatosGeneralesComponent implements OnInit {
   array_anio_ejercicio: Array<number> = [];
+  extemporanea: boolean = false;
+  esExtemporanea = false;
+  array_anio_extemporaneo: number[] = [];
+  
   aclaraciones = false;
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
   anio_ejercicio: number = null;
+  
   pushButtonSave: boolean = false;
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
@@ -66,6 +71,12 @@ export class DatosGeneralesComponent implements OnInit {
 
     for (let index = 0; index < 6; index++) {
       this.array_anio_ejercicio.push(this.currentYear - index);
+    }
+
+    for (let i = 1; i <= 5; i++) {
+      this.array_anio_extemporaneo.push(
+        this.currentYear - i
+      );
     }
 
     this.createForm();
