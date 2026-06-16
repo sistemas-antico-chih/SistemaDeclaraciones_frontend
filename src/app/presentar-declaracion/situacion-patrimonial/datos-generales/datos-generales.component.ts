@@ -217,6 +217,7 @@ export class DatosGeneralesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
+      this.esExtemporanea = data?.declaracion.extemporanea || false;
 
       if (data.declaracion.datosGenerales === null) {
         this.isFromPreviousRecord = true;
@@ -292,8 +293,8 @@ export class DatosGeneralesComponent implements OnInit {
       this.isLoading = true;
       const declaracion = {
         datosGenerales: this.finalForm,
-        //anioEjercicio: this.anioEjercicioForm.anio_ejercicio,
         anioEjercicio: this.anio_ejercicio,
+        this.extemporanea: this.esExtemporanea
       };
 
       const { errors } = await this.apollo
