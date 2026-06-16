@@ -294,7 +294,7 @@ export class DatosGeneralesComponent implements OnInit {
       const declaracion = {
         datosGenerales: this.finalForm,
         anioEjercicio: this.anio_ejercicio,
-        this.esExtemporanea: this.esExtemporanea
+        esExtemporanea: this.esExtemporanea
       };
 
       const { errors } = await this.apollo
