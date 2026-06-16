@@ -29,7 +29,7 @@ import { MenuStateService } from '@app/services/menu-state.service';
 })
 export class DatosGeneralesComponent implements OnInit {
   array_anio_ejercicio: Array<number> = [];
-  extemporanea: boolean = false;
+  //extemporanea: boolean = false;
   esExtemporanea: boolean = false;
   array_anio_extemporaneo: number[] = [];
 
@@ -217,7 +217,7 @@ export class DatosGeneralesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
-      this.esExtemporanea = data?.declaracion.extemporanea || false;
+      this.esExtemporanea = data?.declaracion.esExtemporanea || false;
       if (!this.anio_ejercicio) {
         this.anio_ejercicio = this.currentYear;
       }
@@ -298,7 +298,7 @@ export class DatosGeneralesComponent implements OnInit {
       const declaracion = {
         datosGenerales: this.finalForm,
         anioEjercicio: this.anio_ejercicio,
-        extemporanea: this.esExtemporanea
+        esExtemporanea: this.esExtemporanea
       };
 
       const { errors } = await this.apollo
@@ -367,6 +367,13 @@ export class DatosGeneralesComponent implements OnInit {
         //falseText: '',
       },
     });
+  }
+
+  onExtemporaneaChange(event: any) {
+    this.esExtemporanea = event.checked;
+    if (!this.esExtemporanea) {
+      this.anio_ejercicio = this.currentYear;
+    }
   }
 }
 

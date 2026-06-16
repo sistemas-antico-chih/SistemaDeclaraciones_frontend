@@ -555,7 +555,7 @@ export const datosGeneralesQuery = gql`
     declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta) {
       _id
       anioEjercicio
-      extemporanea
+      esExtemporanea
       datosGenerales {
         nombre
         primerApellido

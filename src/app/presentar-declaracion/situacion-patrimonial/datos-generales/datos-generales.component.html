@@ -38,9 +38,22 @@
     </div>
 
     <div *ngIf="tipoDeclaracion === 'modificacion'" class="grid-margin">
-      <mat-checkbox [(ngModel)]="esExtemporanea">
+      <mat-checkbox [(ngModel)]="esExtemporanea" (change)="onExtemporaneaChange($event)">
         Declaración extemporánea
       </mat-checkbox>
+    </div>
+
+    <div class="grid-3-col" *ngIf="tipoDeclaracion === 'modificacion' && esExtemporanea">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Año que declara</mat-label>
+        <mat-icon matPrefix>date_range</mat-icon>
+        <mat-select [(ngModel)]="anio_ejercicio">
+          <mat-option *ngFor="let num of array_anio_extemporaneo" [value]="num">
+            {{ num }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm">
