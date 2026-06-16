@@ -33,10 +33,14 @@
       <mat-form-field appearance="fill">
         <mat-label>Año actual</mat-label>
         <mat-icon matPrefix>date_range</mat-icon>
-
         <input matInput [value]="currentYear" readonly>
       </mat-form-field>
+    </div>
 
+    <div *ngIf="tipoDeclaracion === 'modificacion'" class="grid-margin">
+      <mat-checkbox [(ngModel)]="esExtemporanea">
+        Declaración extemporánea
+      </mat-checkbox>
     </div>
 
     <form (ngSubmit)="confirmSaveInfo()" [formGroup]="datosGeneralesForm">
