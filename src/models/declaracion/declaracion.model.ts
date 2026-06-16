@@ -28,6 +28,7 @@ export interface Declaracion {
   declaracionCompleta?: boolean;
   tipoDeclaracion?: TipoDeclaracion;
   anioEjercicio?: number;
+  extemporanea?: boolean;
   datosGenerales?: DatosGenerales;
   domicilioDeclarante?: DomicilioDeclarante;
   datosCurricularesDeclarante?: DatosCurricularesDeclarante;

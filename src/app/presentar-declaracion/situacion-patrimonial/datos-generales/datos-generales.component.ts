@@ -217,7 +217,7 @@ export class DatosGeneralesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
-      this.esExtemporanea = data?.declaracion.this.extemporanea || false;
+      this.esExtemporanea = data?.declaracion.extemporanea || false;
 
       if (data.declaracion.datosGenerales === null) {
         this.isFromPreviousRecord = true;
