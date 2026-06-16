@@ -30,7 +30,7 @@ import { MenuStateService } from '@app/services/menu-state.service';
 export class DatosGeneralesComponent implements OnInit {
   array_anio_ejercicio: Array<number> = [];
   extemporanea: boolean = false;
-  esExtemporanea = false;
+  esExtemporanea: boolean = false;
   array_anio_extemporaneo: number[] = [];
   
   aclaraciones = false;
@@ -217,7 +217,7 @@ export class DatosGeneralesComponent implements OnInit {
 
       this.declaracionId = data?.declaracion._id;
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
-      this.esExtemporanea = data?.declaracion.extemporanea || false;
+      this.esExtemporanea = data?.declaracion.esExtemporanea || false;
 
       if (data.declaracion.datosGenerales === null) {
         this.isFromPreviousRecord = true;
