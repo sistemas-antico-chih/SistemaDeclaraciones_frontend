@@ -5,6 +5,7 @@ export const lastDeclaracionDatosGenerales = gql`
     lastDeclaracion {
       _id
       anioEjercicio
+      extemporanea
       datosGenerales {
         nombre
         primerApellido
