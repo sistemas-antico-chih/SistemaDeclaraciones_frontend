@@ -32,13 +32,13 @@ export class DatosGeneralesComponent implements OnInit {
   extemporanea: boolean = false;
   esExtemporanea: boolean = false;
   array_anio_extemporaneo: number[] = [];
-  
+
   aclaraciones = false;
   datosGeneralesForm: FormGroup;
   isLoading = false;
   currentYear = new Date().getFullYear();
   anio_ejercicio: number = null;
-  
+
   pushButtonSave: boolean = false;
 
   @ViewChild('otroRegimenMatrimonial') otroRegimenMatrimonial: ElementRef;
@@ -218,6 +218,9 @@ export class DatosGeneralesComponent implements OnInit {
       this.declaracionId = data?.declaracion._id;
       this.anio_ejercicio = data?.declaracion.anioEjercicio;
       this.esExtemporanea = data?.declaracion.extemporanea || false;
+      if (!this.anio_ejercicio) {
+        this.anio_ejercicio = this.currentYear;
+      }
 
       if (data.declaracion.datosGenerales === null) {
         this.isFromPreviousRecord = true;
@@ -249,6 +252,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   inputsAreValid(): boolean {
+    console.log('anio_ejercicio:', this.anio_ejercicio);
     if (this.datosGeneralesForm.value.regimenMatrimonial?.clave === 'OTR') {
       return this.otroRegimenMatrimonial.nativeElement.value?.match(/^\S.*$/);
     }
