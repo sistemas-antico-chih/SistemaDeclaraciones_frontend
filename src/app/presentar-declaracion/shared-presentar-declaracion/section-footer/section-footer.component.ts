@@ -37,7 +37,7 @@ export class SectionFooterComponent implements OnInit {
     this.tipoDeclaracion = tipoDeclaracion[this.router.url.split('/')[1]];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   confirmFinish() {
     const dialogRef = this.dialog.open(PreviewDeclarationComponent, {
@@ -100,11 +100,17 @@ export class SectionFooterComponent implements OnInit {
           });
         } catch (error) {
           console.log(error);
-          this.openSnackBar('ERROR: No pudo firmar la declaración', 'Aceptar');
+
+          let mensaje =
+            error?.graphQLErrors?.[0]?.message ||
+            error?.message ||
+            'ERROR: No pudo firmar la declaración';
+
+          this.openSnackBar(mensaje, 'Aceptar');
         }
       }
     });
-    
+
     /*console.log("tipoDeclaracion: "+this.tipoDeclaracion);
     if(this.tipoDeclaracion ==='modificación'){
       dialogRef.afterClosed().subscribe(async (password) => {
