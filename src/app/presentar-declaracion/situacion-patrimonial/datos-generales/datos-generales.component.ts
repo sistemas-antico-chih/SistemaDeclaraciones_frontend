@@ -371,8 +371,12 @@ export class DatosGeneralesComponent implements OnInit {
 
   onExtemporaneaChange(event: any) {
     this.esExtemporanea = event.checked;
-    if (!this.esExtemporanea) {
-      this.anio_ejercicio = this.currentYear;
+    if (this.esExtemporanea) {
+      this.anio_ejercicio =
+        this.array_anio_extemporaneo[0];
+    } else {
+      this.anio_ejercicio =
+        this.currentYear;
     }
   }
 }
