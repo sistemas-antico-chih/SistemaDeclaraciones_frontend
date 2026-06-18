@@ -14,13 +14,11 @@ export const firmarDeclaracion = gql`
 
 export const agregarNotaAclaratoria = gql`
   mutation agregarNotaAclaratoria(
-    $declaracionID: ID!,
-    $seccion: String!,
-    $nota: String!
+    $id: ID!,
+    $nota: AgregarNotaAclaratoriaInput!
   ) {
     agregarNotaAclaratoria(
-      declaracionID: $declaracionID,
-      seccion: $seccion,
+      id: $id,
       nota: $nota
     ) {
       _id
