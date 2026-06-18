@@ -168,7 +168,11 @@ export class MisDeclaracionesComponent implements OnInit {
 
     } catch (error) {
 
-      console.log(error);
+        console.error(
+          JSON.stringify(error, null, 2)
+        );
+
+      }
 
       this.presentAlert(
         'Error',
@@ -176,6 +180,5 @@ export class MisDeclaracionesComponent implements OnInit {
       );
 
     }
-
-  }
+    
 }
