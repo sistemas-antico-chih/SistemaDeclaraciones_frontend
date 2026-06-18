@@ -156,9 +156,11 @@ export class MisDeclaracionesComponent implements OnInit {
       await this.apollo.mutate({
         mutation: agregarNotaAclaratoria,
         variables: {
-          declaracionID: id,
-//          seccion: 'GENERAL',
-          nota: nota.trim()
+          id: id,
+          nota: {
+            seccion: 'GENERAL',
+            nota: nota.trim()
+          }
         }
       }).toPromise();
 
@@ -169,17 +171,17 @@ export class MisDeclaracionesComponent implements OnInit {
 
     } catch (error) {
 
-        console.error(
-          JSON.stringify(error, null, 2)
-        );
-
-      }
-
-      this.presentAlert(
-        'Error',
-        'No fue posible guardar la nota aclaratoria'
+      console.error(
+        JSON.stringify(error, null, 2)
       );
 
     }
-    
+
+    this.presentAlert(
+      'Error',
+      'No fue posible guardar la nota aclaratoria'
+    );
+
+  }
+
 }
