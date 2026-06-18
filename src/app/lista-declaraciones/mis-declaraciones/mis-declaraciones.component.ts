@@ -142,6 +142,7 @@ export class MisDeclaracionesComponent implements OnInit {
 
   async agregarNota(id: string) {
 
+    console.log('ID RECIBIDO: ', id)
     const nota = prompt(
       'Ingrese la nota aclaratoria'
     );
@@ -156,7 +157,7 @@ export class MisDeclaracionesComponent implements OnInit {
         mutation: agregarNotaAclaratoria,
         variables: {
           declaracionID: id,
-          seccion: 'GENERAL',
+//          seccion: 'GENERAL',
           nota: nota.trim()
         }
       }).toPromise();
