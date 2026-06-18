@@ -142,7 +142,10 @@ export class MisDeclaracionesComponent implements OnInit {
 
   async agregarNota(id: string) {
 
-    console.log('ID RECIBIDO: ', id)
+    console.log('DECLARACION ID:', declaracionID);
+    console.log('USER ID:', userID);
+    console.log('SECCION:', seccion);
+    console.log('NOTA:', nota);
     const nota = prompt(
       'Ingrese la nota aclaratoria'
     );

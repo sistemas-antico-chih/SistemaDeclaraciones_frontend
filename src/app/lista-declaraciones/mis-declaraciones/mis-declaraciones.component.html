@@ -67,7 +67,7 @@
               <button mat-button color="primary" (click)="previewDeclaration(declaracion._id, true)">
                 Versión pública
               </button>
-              <button mat-button color="accent" *ngIf="declaracion.firmada" (click)="agregarNota(declaracion)">
+              <button mat-button color="accent" *ngIf="declaracion.firmada" (click)="agregarNota(declaracion._id)">
                 Nota aclaratoria
               </button>
             </div>
