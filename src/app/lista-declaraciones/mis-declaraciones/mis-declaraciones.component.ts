@@ -19,7 +19,7 @@ export class MisDeclaracionesComponent implements OnInit {
   currentTab: TipoDeclaracion = 'INICIAL';
   listaDeclaraciones: DeclaracionMetadata[] = [];
 
-  constructor(private apollo: Apollo, private dialog: MatDialog, private router: Router) {}
+  constructor(private apollo: Apollo, private dialog: MatDialog, private router: Router) { }
 
   confirmDeleteDeclaration(id: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -61,19 +61,19 @@ export class MisDeclaracionesComponent implements OnInit {
   editDeclaration(declaracion: DeclaracionMetadata) {
     const tipoDeclaracion = declaracion.tipoDeclaracion.toLocaleLowerCase();
 
-    if(tipoDeclaracion === 'aviso'){
+    if (tipoDeclaracion === 'aviso') {
       this.router.navigate(['/aviso'], { replaceUrl: true });
       return;
     }
-    if(tipoDeclaracion !== 'AVISO'){
+    if (tipoDeclaracion !== 'AVISO') {
       const url = declaracion.declaracionCompleta
-      ? `/${tipoDeclaracion}/situacion-patrimonial`
-      : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
+        ? `/${tipoDeclaracion}/situacion-patrimonial`
+        : `/${tipoDeclaracion}/simplificada/situacion-patrimonial`;
 
-    this.router.navigate([url], { replaceUrl: true });
-    return;
+      this.router.navigate([url], { replaceUrl: true });
+      return;
     }
-    
+
   }
 
   async getList(tipoDeclaracion: TipoDeclaracion = null) {
@@ -89,12 +89,12 @@ export class MisDeclaracionesComponent implements OnInit {
         })
         .toPromise();
 
-      this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || []; 
+      this.listaDeclaraciones = data.myDeclaracionesMetadata.docs || [];
     } catch (error) {
       console.log(error);
     }
   }
-  
+
   ngOnInit(): void {
     this.getList(this.currentTab);
   }
@@ -134,5 +134,12 @@ export class MisDeclaracionesComponent implements OnInit {
       if (result) {
       }
     });
+  }
+
+  agregarNota(declaracion: DeclaracionMetadata) {
+    console.log(
+      'Agregar nota aclaratoria:',
+      declaracion._id
+    );
   }
 }
