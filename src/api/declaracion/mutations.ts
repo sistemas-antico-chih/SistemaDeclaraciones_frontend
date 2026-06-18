@@ -12,6 +12,22 @@ export const firmarDeclaracion = gql`
   }
 `;
 
+export const agregarNotaAclaratoria = gql`
+  mutation agregarNotaAclaratoria(
+    $declaracionID: ID!,
+    $seccion: String!,
+    $nota: String!
+  ) {
+    agregarNotaAclaratoria(
+      declaracionID: $declaracionID,
+      seccion: $seccion,
+      nota: $nota
+    ) {
+      _id
+    }
+  }
+`;
+
 /**** PESENTAR DECLARACION ****/
 
 // actividadAnualAnteriorMutation --> declaracionMutation

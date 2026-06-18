@@ -5,7 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@shared/dialog/dialog.component';
 import { PreviewDeclarationComponent } from '@shared/preview-declaration/preview-declaration.component';
 
-import { deleteDeclaracion, myDeclaracionesMetadata } from '@api/declaracion';
+import {
+  deleteDeclaracion,
+  myDeclaracionesMetadata,
+  agregarNotaAclaratoria
+} from '@api/declaracion';
 import { DeclaracionMetadata, TipoDeclaracion } from '@models/declaracion';
 
 import { Apollo } from 'apollo-angular';
@@ -136,10 +140,42 @@ export class MisDeclaracionesComponent implements OnInit {
     });
   }
 
-  agregarNota(declaracion: DeclaracionMetadata) {
-    console.log(
-      'Agregar nota aclaratoria:',
-      declaracion._id
+  async agregarNota(id: string) {
+
+    const nota = prompt(
+      'Ingrese la nota aclaratoria'
     );
+
+    if (!nota || nota.trim() === '') {
+      return;
+    }
+
+    try {
+
+      await this.apollo.mutate({
+        mutation: agregarNotaAclaratoria,
+        variables: {
+          declaracionID: id,
+          seccion: 'GENERAL',
+          nota: nota.trim()
+        }
+      }).toPromise();
+
+      this.presentAlert(
+        'Éxito',
+        'Nota aclaratoria agregada correctamente'
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+      this.presentAlert(
+        'Error',
+        'No fue posible guardar la nota aclaratoria'
+      );
+
+    }
+
   }
 }
