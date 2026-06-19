@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -14,7 +15,7 @@ import { AgregarNotaAclaratoriaComponent } from './agregar-nota-aclaratoria/agre
 import { ReplacePipe } from './pipes/replace.pipe';
 
 @NgModule({
-  imports: [FlexLayoutModule, MaterialModule, CommonModule],
+  imports: [FlexLayoutModule, MaterialModule, CommonModule, FormsModule],
   declarations: [
     LoaderComponent,
     DialogComponent,
@@ -36,6 +37,7 @@ import { ReplacePipe } from './pipes/replace.pipe';
     PreviewDeclarationComponent,
     AgregarNotaAclaratoriaComponent,
     ReplacePipe,
+    FormsModule
   ],
 })
 export class SharedModule {}
