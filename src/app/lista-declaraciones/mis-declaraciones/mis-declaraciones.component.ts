@@ -206,6 +206,24 @@ export class MisDeclaracionesComponent implements OnInit {
     declaracion: DeclaracionMetadata
   ): any[] {
 
+    // Caso especial: AVISO
+    if (declaracion.tipoDeclaracion === 'AVISO') {
+      return [
+        {
+          valor: 'datosGenerales',
+          descripcion: 'Datos Generales'
+        },
+        {
+          valor: 'datosEmpleoCargoComision',
+          descripcion: 'Empleo Cargo Comisión'
+        },
+        {
+          valor: 'domicilioDeclarante',
+          descripcion: 'Domicilio del Declarante'
+        }
+      ];
+    }
+
     const secciones = [
 
       {
