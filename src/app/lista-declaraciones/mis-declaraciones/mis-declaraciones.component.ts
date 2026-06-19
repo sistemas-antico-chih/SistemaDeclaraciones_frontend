@@ -141,11 +141,6 @@ export class MisDeclaracionesComponent implements OnInit {
   }
 
   async agregarNota(id: string) {
-
-    console.log('TIPO:', typeof id);
-    console.log('VALOR:', id);
-    console.log('ID PURO:', id['_id']);
-
     const nota = prompt(
       'Ingrese la nota aclaratoria'
     );
@@ -174,16 +169,12 @@ export class MisDeclaracionesComponent implements OnInit {
 
     } catch (error) {
 
-      console.error(
-        JSON.stringify(error, null, 2)
+      this.presentAlert(
+        'Error',
+        'No fue posible guardar la nota aclaratoria'
       );
 
     }
-
-    this.presentAlert(
-      'Error',
-      'No fue posible guardar la nota aclaratoria'
-    );
 
   }
 
