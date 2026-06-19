@@ -178,4 +178,119 @@ export class MisDeclaracionesComponent implements OnInit {
 
   }
 
+  private obtenerSecciones(
+    declaracion: DeclaracionMetadata
+  ): any[] {
+
+    const secciones = [
+
+      {
+        valor: 'datosGenerales',
+        descripcion: 'Datos Generales'
+      },
+      {
+        valor: 'domicilioDeclarante',
+        descripcion: 'Domicilio del Declarante'
+      },
+      {
+        valor: 'datosCurricularesDeclarante',
+        descripcion: 'Datos Curriculares'
+      },
+      {
+        valor: 'datosEmpleoCargoComision',
+        descripcion: 'Empleo Cargo Comisión'
+      },
+      {
+        valor: 'experienciaLaboral',
+        descripcion: 'Experiencia Laboral'
+      },
+      {
+        valor: 'ingresos',
+        descripcion: 'Ingresos'
+      }
+
+    ];
+
+    if (
+      declaracion.tipoDeclaracion === 'INICIAL' ||
+      declaracion.tipoDeclaracion === 'CONCLUSION'
+    ) {
+
+      secciones.push({
+        valor: 'actividadAnualAnterior',
+        descripcion: 'Actividad Anual Anterior'
+      });
+
+    }
+
+    if (declaracion.declaracionCompleta) {
+
+      secciones.push(
+        {
+          valor: 'datosPareja',
+          descripcion: 'Datos Pareja'
+        },
+        {
+          valor: 'datosDependientesEconomicos',
+          descripcion: 'Dependientes Económicos'
+        },
+        {
+          valor: 'bienesInmuebles',
+          descripcion: 'Bienes Inmuebles'
+        },
+        {
+          valor: 'vehiculos',
+          descripcion: 'Vehículos'
+        },
+        {
+          valor: 'bienesMuebles',
+          descripcion: 'Bienes Muebles'
+        },
+        {
+          valor: 'inversionesCuentasValores',
+          descripcion: 'Inversiones'
+        },
+        {
+          valor: 'adeudosPasivos',
+          descripcion: 'Adeudos'
+        },
+        {
+          valor: 'prestamoComodato',
+          descripcion: 'Préstamo Comodato'
+        },
+        {
+          valor: 'participacion',
+          descripcion: 'Participaciones'
+        },
+        {
+          valor: 'participacionTomaDecisiones',
+          descripcion: 'Toma de Decisiones'
+        },
+        {
+          valor: 'apoyos',
+          descripcion: 'Apoyos'
+        },
+        {
+          valor: 'representaciones',
+          descripcion: 'Representaciones'
+        },
+        {
+          valor: 'clientesPrincipales',
+          descripcion: 'Clientes Principales'
+        },
+        {
+          valor: 'beneficiosPrivados',
+          descripcion: 'Beneficios Privados'
+        },
+        {
+          valor: 'fideicomisos',
+          descripcion: 'Fideicomisos'
+        }
+      );
+
+    }
+
+    return secciones;
+
+  }
 }

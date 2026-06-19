@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>
+  Agregar nota aclaratoria
+</h2>
+
+<mat-dialog-content>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Sección</mat-label>
+
+    <mat-select [(ngModel)]="seccion">
+
+      <mat-option
+        *ngFor="let item of secciones"
+        [value]="item.valor">
+
+        {{ item.descripcion }}
+
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+
+    <mat-label>Nota</mat-label>
+
+    <textarea
+      matInput
+      rows="5"
+      maxlength="1000"
+      [(ngModel)]="nota">
+    </textarea>
+
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button mat-button mat-dialog-close>
+    Cancelar
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="guardar()">
+
+    Guardar
+
+  </button>
+
+</mat-dialog-actions>
