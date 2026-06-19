@@ -213,7 +213,7 @@ export class MisDeclaracionesComponent implements OnInit {
 
     if (
       declaracion.tipoDeclaracion === 'INICIAL' ||
-      declaracion.tipoDeclaracion === 'CONCLUSION'
+      declaracion.tipoDeclaracion === 'FINAL'
     ) {
 
       secciones.push({
