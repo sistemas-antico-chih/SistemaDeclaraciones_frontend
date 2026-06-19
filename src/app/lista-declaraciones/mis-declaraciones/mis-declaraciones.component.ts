@@ -156,7 +156,7 @@ export class MisDeclaracionesComponent implements OnInit {
         variables: {
           id: id,
           nota: {
-            seccion: 'GENERAL',
+            seccion: 'datosGenerales',
             nota: nota.trim()
           }
         }
