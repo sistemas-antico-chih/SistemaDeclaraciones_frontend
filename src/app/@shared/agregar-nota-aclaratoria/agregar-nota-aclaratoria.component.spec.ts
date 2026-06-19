@@ -1,26 +1,49 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  waitForAsync,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 
-import { MisDeclaracionesComponent } from './mis-declaraciones.component';
+import { AgregarNotaAclaratoriaComponent }
+from './agregar-nota-aclaratoria.component';
 
-describe('MisDeclaracionesComponent', () => {
-  let component: MisDeclaracionesComponent;
-  let fixture: ComponentFixture<MisDeclaracionesComponent>;
+describe('AgregarNotaAclaratoriaComponent', () => {
+
+  let component: AgregarNotaAclaratoriaComponent;
+
+  let fixture:
+    ComponentFixture<AgregarNotaAclaratoriaComponent>;
 
   beforeEach(
     waitForAsync(() => {
+
       TestBed.configureTestingModule({
-        declarations: [MisDeclaracionesComponent],
+        declarations: [
+          AgregarNotaAclaratoriaComponent
+        ],
       }).compileComponents();
+
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MisDeclaracionesComponent);
-    component = fixture.componentInstance;
+
+    fixture =
+      TestBed.createComponent(
+        AgregarNotaAclaratoriaComponent
+      );
+
+    component =
+      fixture.componentInstance;
+
     fixture.detectChanges();
+
   });
 
   it('should create', () => {
+
     expect(component).toBeTruthy();
+
   });
+
 });

@@ -11,6 +11,9 @@ import {
   agregarNotaAclaratoria
 } from '@api/declaracion';
 import { DeclaracionMetadata, TipoDeclaracion } from '@models/declaracion';
+import {
+  AgregarNotaAclaratoriaComponent
+} from '@shared/agregar-nota-aclaratoria/agregar-nota-aclaratoria.component';
 
 import { Apollo } from 'apollo-angular';
 
@@ -140,41 +143,62 @@ export class MisDeclaracionesComponent implements OnInit {
     });
   }
 
-  async agregarNota(id: string) {
-    const nota = prompt(
-      'Ingrese la nota aclaratoria'
+  async agregarNota(
+    declaracion: DeclaracionMetadata
+  ) {
+
+    const dialogRef = this.dialog.open(
+      AgregarNotaAclaratoriaComponent,
+      {
+        width: '600px',
+        data: {
+          secciones:
+            this.obtenerSecciones(
+              declaracion
+            )
+        }
+      }
     );
 
-    if (!nota || nota.trim() === '') {
-      return;
-    }
+    dialogRef.afterClosed()
+      .subscribe(async resultado => {
 
-    try {
-
-      await this.apollo.mutate({
-        mutation: agregarNotaAclaratoria,
-        variables: {
-          id: id,
-          nota: {
-            seccion: 'datosGenerales',
-            nota: nota.trim()
-          }
+        if (!resultado) {
+          return;
         }
-      }).toPromise();
 
-      this.presentAlert(
-        'Éxito',
-        'Nota aclaratoria agregada correctamente'
-      );
+        try {
 
-    } catch (error) {
+          await this.apollo.mutate({
+            mutation: agregarNotaAclaratoria,
+            variables: {
+              id: declaracion._id,
+              nota: {
+                seccion:
+                  resultado.seccion,
+                nota:
+                  resultado.nota
+              }
+            }
+          }).toPromise();
 
-      this.presentAlert(
-        'Error',
-        'No fue posible guardar la nota aclaratoria'
-      );
+          this.presentAlert(
+            'Éxito',
+            'Nota aclaratoria agregada correctamente'
+          );
 
-    }
+        } catch (error) {
+
+          console.error(error);
+
+          this.presentAlert(
+            'Error',
+            'No fue posible guardar la nota'
+          );
+
+        }
+
+      });
 
   }
 
