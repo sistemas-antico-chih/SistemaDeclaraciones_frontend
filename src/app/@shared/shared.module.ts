@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewDeclarationComponent } from './preview-declaration/preview-declaration.component';
+import { AgregarNotaAclaratoriaComponent } from './agregar-nota-aclaratoria/agregar-nota-aclaratoria.component';
 import { ReplacePipe } from './pipes/replace.pipe';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ReplacePipe } from './pipes/replace.pipe';
     HeaderComponent,
     PaginatorComponent,
     PreviewDeclarationComponent,
+    AgregarNotaAclaratoriaComponent,
     ReplacePipe,
   ],
   exports: [
@@ -32,6 +34,7 @@ import { ReplacePipe } from './pipes/replace.pipe';
     HeaderComponent,
     PaginatorComponent,
     PreviewDeclarationComponent,
+    AgregarNotaAclaratoriaComponent,
     ReplacePipe,
   ],
 })
