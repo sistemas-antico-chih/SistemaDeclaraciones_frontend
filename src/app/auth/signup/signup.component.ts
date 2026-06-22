@@ -29,6 +29,15 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   institucionesCatalogo: any[];
 
+   private dominiosSugeridos = {
+    'gmial.com': 'gmail.com',
+    'gmai.com': 'gmail.com',
+    'gmal.com': 'gmail.com',
+    'hotnail.com': 'hotmail.com',
+    'hotmai.com': 'hotmail.com',
+    'outlok.com': 'outlook.com'
+  };
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -60,7 +69,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       nombre: this.signupForm.value.nombre?.trim(),
       primerApellido: this.signupForm.value.primerApellido?.trim(),
       segundoApellido: this.signupForm.value.segundoApellido?.trim(),
-      username: this.signupForm.value.username?.trim()
+      username: this.signupForm.value.username
+        ?.trim()
+        .toLowerCase()
     };
 
     if (this.institucionesCatalogo?.length) {
@@ -123,6 +134,12 @@ export class SignupComponent implements OnInit, OnDestroy {
           ),
         ],
       ],
+      confirmarCorreo: [
+        '',
+        [
+          Validators.required
+        ]
+      ],
       curp: [
         '',
         [
@@ -147,5 +164,28 @@ export class SignupComponent implements OnInit, OnDestroy {
       confirmarContrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       institucion: [{ disabled: true, value: null }, [Validators.required]],
     });
+  }
+
+  validarDominioCorreo() {
+
+    const correo = this.signupForm.get('username')?.value;
+
+    if (!correo || correo.indexOf('@') === -1) {
+      return;
+    }
+
+    const partes = correo.toLowerCase().split('@');
+
+    const dominio = partes[1];
+
+    if (this.dominiosSugeridos[dominio]) {
+
+      this.openSnackBar(
+        `¿Quiso decir ${partes[0]}@${this.dominiosSugeridos[dominio]} ?`,
+        'Aceptar'
+      );
+
+    }
+
   }
 }

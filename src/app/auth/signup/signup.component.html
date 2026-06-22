@@ -14,15 +14,8 @@
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Nombre(s)</mat-label>
             <mat-icon matPrefix>person</mat-icon>
-            <input
-              type="text"
-              matInput
-              formControlName="nombre"
-              autocomplete="nombre"
-              [placeholder]="'Nombre' | translate"
-              required
-              minlength="2"
-            />
+            <input type="text" matInput formControlName="nombre" autocomplete="nombre"
+              [placeholder]="'Nombre' | translate" required minlength="2" />
             <mat-error *ngIf="signupForm.controls.nombre.invalid && signupForm.controls.nombre.touched">
               <span translate>Nombre requerido</span>
             </mat-error>
@@ -31,14 +24,8 @@
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Primer apellido</mat-label>
             <mat-icon matPrefix>person</mat-icon>
-            <input
-              type="text"
-              matInput
-              formControlName="primerApellido"
-              autocomplete="apellido"
-              [placeholder]="'Apellido paterno' | translate"
-              minlength="2"
-            />
+            <input type="text" matInput formControlName="primerApellido" autocomplete="apellido"
+              [placeholder]="'Apellido paterno' | translate" minlength="2" />
             <mat-error *ngIf="signupForm.controls.primerApellido.invalid && signupForm.controls.primerApellido.touched">
               <span translate>Primer apellido requerido</span>
             </mat-error>
@@ -47,16 +34,10 @@
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Segundo apellido</mat-label>
             <mat-icon matPrefix>person</mat-icon>
-            <input
-              type="text"
-              matInput
-              formControlName="segundoApellido"
-              autocomplete="apellido"
-              [placeholder]="'Apellido materno' | translate"
-            />
+            <input type="text" matInput formControlName="segundoApellido" autocomplete="apellido"
+              [placeholder]="'Apellido materno' | translate" />
             <mat-error
-              *ngIf="signupForm.controls.segundoApellido.invalid && signupForm.controls.segundoApellido.touched"
-            >
+              *ngIf="signupForm.controls.segundoApellido.invalid && signupForm.controls.segundoApellido.touched">
               <span translate>Segundo apellido requerido</span>
             </mat-error>
           </mat-form-field>
@@ -64,30 +45,33 @@
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Correo electrónico</mat-label>
             <mat-icon matPrefix>mail</mat-icon>
-            <input
-              type="text"
-              matInput
-              formControlName="username"
-              autocomplete="correo"
-              [placeholder]="'Correo electrónico' | translate"
-              required
-            />
+            <input type="text" matInput formControlName="username" (blur)="validarDominioCorreo()" autocomplete="correo"
+              [placeholder]="'Correo electrónico' | translate" required />
             <mat-error *ngIf="signupForm.controls.username.invalid && signupForm.controls.username.touched">
               <span translate>Correo electrónico requerido</span>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Confirmar correo electrónico</mat-label>
+            <mat-icon matPrefix>mail</mat-icon>
+
+            <input type="email" matInput formControlName="confirmarCorreo" autocomplete="correo"
+              placeholder="Confirmar correo electrónico" required />
+
+            <mat-error *ngIf="
+              signupForm.value.username &&
+              signupForm.value.confirmarCorreo &&
+              signupForm.value.username !== signupForm.value.confirmarCorreo">
+              Los correos electrónicos no coinciden
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Contraseña (8-16 caracteres)</mat-label>
             <mat-icon matPrefix>lock</mat-icon>
-            <input
-              type="password"
-              matInput
-              formControlName="contrasena"
-              [placeholder]="'Contraseña (8-16 caracteres)' | translate"
-              maxlength="20"
-              required
-            />
+            <input type="password" matInput formControlName="contrasena"
+              [placeholder]="'Contraseña (8-16 caracteres)' | translate" maxlength="20" required />
             <mat-error *ngIf="signupForm.controls.contrasena.invalid && signupForm.controls.contrasena.touched">
               <span translate>Contraseña requerida</span>
             </mat-error>
@@ -96,14 +80,8 @@
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Confirmar contraseña</mat-label>
             <mat-icon matPrefix>lock</mat-icon>
-            <input
-              type="password"
-              matInput
-              formControlName="confirmarContrasena"
-              [placeholder]="'Confirmar contraseña' | translate"
-              maxlength="20"
-              required
-            />
+            <input type="password" matInput formControlName="confirmarContrasena"
+              [placeholder]="'Confirmar contraseña' | translate" maxlength="20" required />
             <mat-error *ngIf="signupForm.value.contrasena !== signupForm.value.confirmarContrasena">
               <span translate>Las contraseñas no coinciden</span>
             </mat-error>
@@ -111,16 +89,8 @@
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>CURP</mat-label>
             <mat-icon matPrefix>fingerprint</mat-icon>
-            <input
-              type="text"
-              matInput
-              formControlName="curp"
-              autocomplete="curp"
-              [placeholder]="'CURP' | translate"
-              required
-              #input_curp
-              maxlength="18"
-            />
+            <input type="text" matInput formControlName="curp" autocomplete="curp" [placeholder]="'CURP' | translate"
+              required #input_curp maxlength="18" />
             <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
             <mat-error *ngIf="signupForm.controls.curp.invalid && signupForm.controls.curp.touched">
               <span translate>Ingrese una CURP válida</span>
@@ -130,16 +100,8 @@
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>RFC</mat-label>
             <mat-icon matPrefix>fingerprint</mat-icon>
-            <input
-              type="text"
-              matInput
-              formControlName="rfc"
-              autocomplete="rfc"
-              [placeholder]="'RFC' | translate"
-              required
-              #input_rfc
-              maxlength="13"
-            />
+            <input type="text" matInput formControlName="rfc" autocomplete="rfc" [placeholder]="'RFC' | translate"
+              required #input_rfc maxlength="13" />
             <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
             <mat-error *ngIf="signupForm.controls.rfc.invalid && signupForm.controls.rfc.touched">
               <span translate>Ingrese un RFC válida</span>
@@ -159,15 +121,12 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <button
-          mat-raised-button
-          class="signup-btn"
-          color="primary"
-          type="submit"
-          [disabled]="
-            signupForm.invalid || isLoading || signupForm.value.confirmarContrasena !== signupForm.value.contrasena
-          "
-        >
+        <button mat-raised-button class="signup-btn" color="primary" type="submit" [disabled]="
+          signupForm.invalid ||
+          isLoading ||
+          signupForm.value.confirmarContrasena !== signupForm.value.contrasena ||
+          signupForm.value.confirmarCorreo !== signupForm.value.username
+        ">
           <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
           <span translate>REGISTRAR</span>
         </button>
