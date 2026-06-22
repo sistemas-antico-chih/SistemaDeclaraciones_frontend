@@ -56,15 +56,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.loadInstituciones();
   }
 
-  ngOnInit() {
-    this.signupForm.get('confirmarCorreo')?.valueChanges.subscribe(() => {
-      this.signupForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
-    });
-
-    this.signupForm.get('username')?.valueChanges.subscribe(() => {
-      this.signupForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
-    });
-  }
+  ngOnInit() { }
 
   ngOnDestroy() { }
 
@@ -183,22 +175,16 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   }
 
-  validarCorreosCoinciden(
-    control: AbstractControl
-  ): ValidationErrors | null {
-
+  validarCorreosCoinciden(control: AbstractControl): ValidationErrors | null {
     const username = control.get('username');
     const confirmarCorreo = control.get('confirmarCorreo');
 
-    if (!username || !confirmarCorreo) {
-      return null;
-    }
+    if (!username || !confirmarCorreo) return null;
 
-    if (
-      username.value &&
-      confirmarCorreo.value &&
-      username.value !== confirmarCorreo.value
-    ) {
+    const correo1 = username.value;
+    const correo2 = confirmarCorreo.value;
+
+    if (correo1 && correo2 && correo1 !== correo2) {
       return { correoNoCoincide: true };
     }
 
