@@ -122,9 +122,11 @@
         <mat-label>Correo Electrónico</mat-label>
         <mat-icon matPrefix>email</mat-icon>
         <input matInput type="text" [value]="user?.username" />
-        <mat-error
-          *ngIf="profileForm.get('username')?.touched">
-          Ingresar correo válido
+        <mat-error *ngIf="profileForm.get('correo')?.hasError('required') && profileForm.get('correo')?.touched">
+          El correo es obligatorio
+        </mat-error>
+        <mat-error *ngIf="profileForm.get('correo')?.hasError('email') && profileForm.get('correo')?.touched">
+          Formato de correo inválido
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
