@@ -80,45 +80,27 @@
         <input matInput type="text" formControlName="segundoApellido" />
       </mat-form-field>
     </div>
-    <div
-      class="grid-margin"
-      [ngClass]="{ 'grid-2-col': !institucionesCatalogo.length, 'grid-3-col': institucionesCatalogo.length }"
-    >
+    <div class="grid-margin"
+      [ngClass]="{ 'grid-2-col': !institucionesCatalogo.length, 'grid-3-col': institucionesCatalogo.length }">
       <mat-form-field [hideRequiredMarker]="true" appearance="fill">
         <mat-label>CURP</mat-label>
         <mat-icon matPrefix>fingerprint</mat-icon>
-        <input
-          type="text"
-          matInput
-          formControlName="curp"
-          autocomplete="curp"
-          [placeholder]="'CURP' | translate"
-          required
-          #input_curp
-          maxlength="18"
-        />
+        <input type="text" matInput formControlName="curp" autocomplete="curp" [placeholder]="'CURP' | translate"
+          required #input_curp maxlength="18" />
         <mat-hint align="end">{{ input_curp.value?.length || 0 }}/18</mat-hint>
         <mat-error *ngIf="profileForm.controls.curp.invalid && profileForm.controls.curp.touched">
-          <span translate>CURP requerido</span>
+          <span translate>CURP Válida requerido</span>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field [hideRequiredMarker]="true" appearance="fill">
         <mat-label>RFC</mat-label>
         <mat-icon matPrefix>fingerprint</mat-icon>
-        <input
-          type="text"
-          matInput
-          formControlName="rfc"
-          autocomplete="rfc"
-          [placeholder]="'RFC' | translate"
-          required
-          #input_rfc
-          maxlength="13"
-        />
+        <input type="text" matInput formControlName="rfc" autocomplete="rfc" [placeholder]="'RFC' | translate" required
+          #input_rfc maxlength="13" />
         <mat-hint align="end">{{ input_rfc.value?.length || 0 }}/13</mat-hint>
         <mat-error *ngIf="profileForm.controls.rfc.invalid && profileForm.controls.rfc.touched">
-          <span translate>RFC requerido</span>
+          <span translate>RFC Válido requerido</span>
         </mat-error>
       </mat-form-field>
 
@@ -140,6 +122,10 @@
         <mat-label>Correo Electrónico</mat-label>
         <mat-icon matPrefix>email</mat-icon>
         <input matInput type="text" [value]="user?.username" />
+        <mat-error
+          *ngIf="signupForm.get('username')?.touched">
+          Ingresar correo válido
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Contraseña</mat-label>
@@ -185,12 +171,10 @@
         <mat-form-field appearance="fill">
           <mat-label>Verificar Contraseña</mat-label>
           <input matInput type="password" formControlName="confirmPassword" />
-          <mat-error
-            *ngIf="
+          <mat-error *ngIf="
               changePasswordForm.value.confirmPassword.touched &&
               changePasswordForm.value.newPassword !== changePasswordForm.value.confirmPassword
-            "
-          >
+            ">
             <span translate>La contraseña no coincide</span>
           </mat-error>
         </mat-form-field>
@@ -198,16 +182,11 @@
 
       <div class="center">
         <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-        <button
-          mat-raised-button
-          color="primary"
-          class="btn-guardar"
-          [disabled]="
+        <button mat-raised-button color="primary" class="btn-guardar" [disabled]="
             changePasswordForm.invalid ||
             changePasswordForm.value.newPassword !== changePasswordForm.value.confirmPassword ||
             isLoading
-          "
-        >
+          ">
           CAMBIAR CONTRASEÑA
         </button>
       </div>
