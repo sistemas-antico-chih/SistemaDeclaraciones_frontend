@@ -17,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CatalogosService } from '@app/services/catalogos.service';
 //import InstitucionesCatalogo from '@static/custom/instituciones.json';
 
-import { validarCURP, validarRFC } from '../signup/signup.validador';
+import { validarCURP, validarRFC } from '../../@shared/validators/signup.validador';
 
 const log = new Logger('Signup');
 
