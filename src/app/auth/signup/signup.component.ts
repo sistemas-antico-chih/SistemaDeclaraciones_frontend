@@ -57,7 +57,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.signupForm.get('confirmarCorreo')?.valueChanges.subscribe(() => {
+      this.signupForm.updateValueAndValidity();
+    });
   }
 
   ngOnDestroy() { }
@@ -133,7 +135,9 @@ export class SignupComponent implements OnInit, OnDestroy {
         '',
         [
           Validators.required,
-          Validators.pattern(/* regex correo */)
+          Validators.pattern(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+          )
         ]
       ],
 
