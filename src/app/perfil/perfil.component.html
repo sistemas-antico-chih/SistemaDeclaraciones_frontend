@@ -123,7 +123,7 @@
         <mat-icon matPrefix>email</mat-icon>
         <input matInput type="text" [value]="user?.username" />
         <mat-error
-          *ngIf="signupForm.get('username')?.touched">
+          *ngIf="profileForm.get('username')?.touched">
           Ingresar correo válido
         </mat-error>
       </mat-form-field>
