@@ -185,7 +185,18 @@ export class SignupComponent implements OnInit, OnDestroy {
     const correo2 = confirmarCorreo.value;
 
     if (correo1 && correo2 && correo1 !== correo2) {
+      username.setErrors({ correoNoCoincide: true });
+      confirmarCorreo.setErrors({ correoNoCoincide: true });
       return { correoNoCoincide: true };
+    }
+
+    // limpiar errores correctamente
+    if (username.hasError('correoNoCoincide')) {
+      username.setErrors(null);
+    }
+
+    if (confirmarCorreo.hasError('correoNoCoincide')) {
+      confirmarCorreo.setErrors(null);
     }
 
     return null;

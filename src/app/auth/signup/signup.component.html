@@ -47,12 +47,10 @@
             <mat-icon matPrefix>mail</mat-icon>
             <input type="text" matInput formControlName="username" (blur)="validarDominioCorreo()" autocomplete="correo"
               [placeholder]="'Correo electrónico' | translate" required />
-            <mat-error *ngIf="
-  signupForm.get('username')?.touched &&
-  signupForm.hasError('correoNoCoincide')
-">
-  Los correos no coinciden
-</mat-error>
+            <mat-error
+              *ngIf="signupForm.get('username')?.hasError('correoNoCoincide') && signupForm.get('username')?.touched">
+              Los correos no coinciden
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
@@ -61,12 +59,10 @@
 
             <input type="email" matInput formControlName="confirmarCorreo" autocomplete="correo"
               placeholder="Confirmar correo electrónico" required />
-            <mat-error *ngIf="
-  signupForm.get('confirmarCorreo')?.touched &&
-  signupForm.hasError('correoNoCoincide')
-">
-  Los correos no coinciden
-</mat-error>
+            <mat-error
+              *ngIf="signupForm.get('confirmarCorreo')?.hasError('correoNoCoincide') && signupForm.get('confirmarCorreo')?.touched">
+              Los correos no coinciden
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
