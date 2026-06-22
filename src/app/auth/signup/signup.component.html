@@ -57,18 +57,15 @@
             <mat-icon matPrefix>mail</mat-icon>
 
             <input type="email" matInput formControlName="confirmarCorreo" autocomplete="correo"
-              placeholder="Confirmar correo electrónico" required />
+              placeholder="Confirmar correo electrónico" required [errorStateMatcher]="matcher"/>
 
             <mat-error *ngIf="
-  signupForm.get('confirmarCorreo')?.dirty &&
-  signupForm.hasError('correoNoCoincide')
-">
+              signupForm.get('confirmarCorreo')?.dirty &&
+              signupForm.hasError('correoNoCoincide')
+            ">
               Los correos electrónicos no coinciden
             </mat-error>
           </mat-form-field>
-
-          <input type="email" matInput formControlName="confirmarCorreo" autocomplete="correo"
-            placeholder="Confirmar correo electrónico" required [errorStateMatcher]="matcher" />
 
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Contraseña (8-16 caracteres)</mat-label>
