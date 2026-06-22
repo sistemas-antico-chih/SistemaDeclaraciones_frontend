@@ -60,9 +60,9 @@
               placeholder="Confirmar correo electrónico" required />
 
             <mat-error *ngIf="
-              signupForm.value.username &&
-              signupForm.value.confirmarCorreo &&
-              signupForm.value.username !== signupForm.value.confirmarCorreo">
+              signupForm.hasError('correoNoCoincide') &&
+              signupForm.get('confirmarCorreo')?.dirty
+            ">
               Los correos electrónicos no coinciden
             </mat-error>
           </mat-form-field>
@@ -124,8 +124,7 @@
         <button mat-raised-button class="signup-btn" color="primary" type="submit" [disabled]="
           signupForm.invalid ||
           isLoading ||
-          signupForm.value.confirmarContrasena !== signupForm.value.contrasena ||
-          signupForm.value.confirmarCorreo !== signupForm.value.username
+          signupForm.value.confirmarContrasena !== signupForm.value.contrasena
         ">
           <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
           <span translate>REGISTRAR</span>

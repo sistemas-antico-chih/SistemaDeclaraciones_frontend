@@ -1,6 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
@@ -29,7 +35,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   institucionesCatalogo: any[];
 
-   private dominiosSugeridos = {
+  private dominiosSugeridos = {
     'gmial.com': 'gmail.com',
     'gmai.com': 'gmail.com',
     'gmal.com': 'gmail.com',
@@ -163,7 +169,10 @@ export class SignupComponent implements OnInit, OnDestroy {
       contrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       confirmarContrasena: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       institucion: [{ disabled: true, value: null }, [Validators.required]],
-    });
+    },
+      {
+        validators: this.validarCorreosCoinciden
+      });
   }
 
   validarDominioCorreo() {
@@ -188,4 +197,27 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
 
   }
+
+  validarCorreosCoinciden(
+    control: AbstractControl
+  ): ValidationErrors | null {
+
+    const username = control.get('username');
+    const confirmarCorreo = control.get('confirmarCorreo');
+
+    if (!username || !confirmarCorreo) {
+      return null;
+    }
+
+    if (
+      username.value &&
+      confirmarCorreo.value &&
+      username.value !== confirmarCorreo.value
+    ) {
+      return { correoNoCoincide: true };
+    }
+
+    return null;
+  }
+
 }
