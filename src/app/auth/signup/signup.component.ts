@@ -126,6 +126,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   private createForm() {
+    this.signupForm.valueChanges.subscribe(() => {
+      this.signupForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
+    });
     this.signupForm = this.formBuilder.group({
       //nombre: ['', Validators.required,
       nombre: ['',

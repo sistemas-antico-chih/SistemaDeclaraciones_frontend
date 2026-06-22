@@ -57,12 +57,9 @@
             <mat-icon matPrefix>mail</mat-icon>
 
             <input type="email" matInput formControlName="confirmarCorreo" autocomplete="correo"
-              placeholder="Confirmar correo electrónico" required [errorStateMatcher]="matcher"/>
+              placeholder="Confirmar correo electrónico" required />
 
-            <mat-error *ngIf="
-              signupForm.get('confirmarCorreo')?.dirty &&
-              signupForm.hasError('correoNoCoincide')
-            ">
+            <mat-error *ngIf="signupForm.hasError('correoNoCoincide') && signupForm.get('confirmarCorreo')?.touched">
               Los correos electrónicos no coinciden
             </mat-error>
           </mat-form-field>
@@ -130,6 +127,9 @@
           <span translate>REGISTRAR</span>
         </button>
       </form>
+      <div class="signup-error" *ngIf="signupForm.hasError('correoNoCoincide')">
+        Los correos electrónicos no coinciden
+      </div>
       <button class="login-button" mat-button color="primary" type="button" routerLink="/login">
         ¿YA TIENES CUENTA? INICIA SESIÓN
       </button>
