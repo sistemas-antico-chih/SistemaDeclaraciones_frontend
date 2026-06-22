@@ -56,7 +56,11 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.loadInstituciones();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.signupForm.valueChanges.subscribe(() => {
+      console.log(this.signupForm.errors);
+    });
+  }
 
   ngOnDestroy() { }
 
