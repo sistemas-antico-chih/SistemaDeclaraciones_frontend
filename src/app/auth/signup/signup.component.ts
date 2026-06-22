@@ -58,7 +58,11 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.signupForm.get('confirmarCorreo')?.valueChanges.subscribe(() => {
-      this.signupForm.updateValueAndValidity();
+      this.signupForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
+    });
+
+    this.signupForm.get('username')?.valueChanges.subscribe(() => {
+      this.signupForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
     });
   }
 
