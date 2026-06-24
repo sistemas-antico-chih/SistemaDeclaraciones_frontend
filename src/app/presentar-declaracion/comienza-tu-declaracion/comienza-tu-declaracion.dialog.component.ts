@@ -68,7 +68,7 @@ export class DialogElementsExampleDialog implements OnInit {
   ) {
   }
 
-  /*
+  
   async closeDialog(route: string) {
     var splits = route.split("/");
     var tipoDeclaracion = splits[1];
@@ -80,8 +80,8 @@ export class DialogElementsExampleDialog implements OnInit {
     else {
       formaDeclaracion = "completa";
     }
-
-    if (await this.isValid(tipoDeclaracion, formaDeclaracion)) {
+  }
+    /*if (await this.isValid(tipoDeclaracion, formaDeclaracion)) {
       this.router.navigate([`/${route}`], { replaceUrl: true });
       this.dialogRef.close({ data: '' })
     }
