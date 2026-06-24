@@ -145,6 +145,7 @@ export class DialogElementsExampleDialog implements OnInit {
           return true;
         else
           return false;
+    /*  
       case 'modificacion':
         if (formaDeclaracion === "completa") {
           const validaModificacion = await this.verificarDeclaracionModificacionCompleta(this.anio, tipoDeclaracion, formaDeclaracion);
@@ -160,7 +161,8 @@ export class DialogElementsExampleDialog implements OnInit {
           else
             return false
         }
-      case 'conclusion':
+    */
+     case 'conclusion':
         const validaConclusion = await this.verificarDeclaracionConclusion(tipoDeclaracion, formaDeclaracion);
         if (validaConclusion)
           return true;
@@ -277,6 +279,7 @@ export class DialogElementsExampleDialog implements OnInit {
     }
   }
 
+  /*
   async verificarDeclaracionModificacionCompleta(
     fechaModificacion: any,
     tipoDeclaracion: string,
@@ -422,4 +425,5 @@ export class DialogElementsExampleDialog implements OnInit {
 
   confirmSaveInfo() {
   }
+  */
 }
