@@ -68,6 +68,7 @@ export class DialogElementsExampleDialog implements OnInit {
   ) {
   }
 
+  /*
   async closeDialog(route: string) {
     var splits = route.split("/");
     var tipoDeclaracion = splits[1];
@@ -145,23 +146,6 @@ export class DialogElementsExampleDialog implements OnInit {
           return true;
         else
           return false;
-      /*
-      case 'modificacion':
-        if (formaDeclaracion === "completa") {
-          const validaModificacion = await this.verificarDeclaracionModificacionCompleta(this.anio, tipoDeclaracion, formaDeclaracion);
-          if (validaModificacion)
-            return true;
-          else
-            return false
-        }
-        if (formaDeclaracion === "simplificada") {
-          const validaModificacion = await this.verificarDeclaracionModificacionSimple(this.anio, tipoDeclaracion, formaDeclaracion);
-          if (validaModificacion)
-            return true;
-          else
-            return false
-        }
-      */
      case 'conclusion':
         const validaConclusion = await this.verificarDeclaracionConclusion(tipoDeclaracion, formaDeclaracion);
         if (validaConclusion)
@@ -279,119 +263,6 @@ export class DialogElementsExampleDialog implements OnInit {
     }
   }
 
-  /*
-  async verificarDeclaracionModificacionCompleta(
-    fechaModificacion: any,
-    tipoDeclaracion: string,
-    formaDeclaracion: string
-  ) {
-
-    try {
-
-      const { data }: any = await this.apollo
-        .query({
-          query: gql`
-          query statsModif {
-            statsModif {
-              counters{
-                anioEjercicio
-                declaracionCompleta
-                count
-              }
-            }
-          }
-        `,
-        })
-        .toPromise();
-
-      const modificacionCompleta =
-        data.statsModif.counters.find(
-          (d: any) =>
-            d.anioEjercicio === fechaModificacion &&
-            d.declaracionCompleta === true
-        );
-
-      // Si ya existe una COMPLETA, bloquear
-      if (modificacionCompleta) {
-        return false;
-      }
-
-      // Si no existe COMPLETA, permitir
-      await this.crearDeclaracion(
-        tipoDeclaracion,
-        formaDeclaracion
-      );
-
-      return true;
-
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
-
-  async verificarDeclaracionModificacionSimple(
-    fechaModificacion: any,
-    tipoDeclaracion: string,
-    formaDeclaracion: string
-  ) {
-
-    try {
-
-      const { data }: any = await this.apollo
-        .query({
-          query: gql`
-          query statsModif {
-            statsModif {
-              counters{
-                anioEjercicio
-                declaracionCompleta
-                count
-              }
-            }
-          }
-        `,
-        })
-        .toPromise();
-
-      const modificacionCompleta =
-        data.statsModif.counters.find(
-          (d: any) =>
-            d.anioEjercicio === fechaModificacion &&
-            d.declaracionCompleta === true
-        );
-
-      const modificacionSimple =
-        data.statsModif.counters.find(
-          (d: any) =>
-            d.anioEjercicio === fechaModificacion &&
-            d.declaracionCompleta === false
-        );
-
-      // Si ya existe COMPLETA, bloquear
-      if (modificacionCompleta) {
-        return false;
-      }
-
-      // Si ya existe SIMPLE, bloquear
-      if (modificacionSimple) {
-        return false;
-      }
-
-      // No existe ninguna
-      await this.crearDeclaracion(
-        tipoDeclaracion,
-        formaDeclaracion
-      );
-
-      return true;
-
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
-  */
   async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string) {
     try {
       if (formaDeclaracion === "completa") {
@@ -425,4 +296,5 @@ export class DialogElementsExampleDialog implements OnInit {
 
   confirmSaveInfo() {
   }
+  */
 }
