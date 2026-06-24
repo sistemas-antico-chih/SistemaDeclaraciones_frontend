@@ -1,21 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '@shared/dialog/dialog.component';
 import { Router } from '@angular/router';
-//import { Catalogo, DatosDialog } from '@models/declaracion';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//import { tooltipData } from '@static/tooltips/situacion-patrimonial/datos-empleo';
 import { DeclarationErrorStateMatcher } from '@app/presentar-declaracion/shared-presentar-declaracion/declaration-error-state-matcher';
-import { DatosDialog } from '@models/declaracion/datos-dialog.model';
-
 import { Apollo } from 'apollo-angular';
 import { DeclaracionOutput } from '@models/declaracion';
 import { datosGeneralesQuery } from '@api/declaracion';
-
-import gql from 'graphql-tag';
-
-import puesto from '@static/catalogos/catalogoPuestos.json';
-import tipoDeclaracion from '@static/catalogos/tipoDeclaracion.json';
 import { tooltipData } from '@static/tooltips/situacion-patrimonial/crear_declaracion';
 
 
@@ -28,10 +17,19 @@ import { tooltipData } from '@static/tooltips/situacion-patrimonial/crear_declar
 
 export class DialogElementsExampleDialog implements OnInit {
 
+  declaracionSimplificada = false;
+  declaracionId: string = null;
+  anio_ejercicio: number = new Date().getFullYear();
+
+  tooltipData = tooltipData;
+  errorMatcher = new DeclarationErrorStateMatcher();
+
+  tipoDeclaracion: String = null;
+  isLoading = false;
+
   ngOnInit(): void { }
 
   constructor(
-    private dialog: MatDialog,
     private router: Router,
     private dialogRef: MatDialogRef<DialogElementsExampleDialog>,
     private apollo: Apollo,
@@ -41,6 +39,59 @@ export class DialogElementsExampleDialog implements OnInit {
   }
 
   async closeDialog(route: string) {
-   
-  }   
+
+    const splits = route.split("/");
+    const tipoDeclaracion = splits[1];
+
+    let formaDeclaracion = "completa";
+
+    if (splits[2] === "simplificada") {
+      formaDeclaracion = "simplificada";
+    }
+
+    const creada = await this.crearDeclaracion(
+      tipoDeclaracion,
+      formaDeclaracion
+    );
+
+    if (creada) {
+
+      this.router.navigate(
+        [`/${route}`],
+        { replaceUrl: true }
+      );
+
+      this.dialogRef.close({ data: '' });
+
+    }
+
+    this.dialogRef.close({ data: '' });
+
+  }
+
+  async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string) {
+    try {
+      const creada = await this.crearDeclaracion(
+        tipoDeclaracion,
+        formaDeclaracion
+      );
+
+      if (creada) {
+
+        this.router.navigate(
+          [`/${route}`],
+          { replaceUrl: true }
+        );
+
+        this.dialogRef.close({ data: '' });
+
+      }
+
+      catch (error) {
+        console.log(error);
+        return false;
+      }
+    }
+
+  }
 }
