@@ -65,33 +65,46 @@ export class DialogElementsExampleDialog implements OnInit {
 
     }
 
-    this.dialogRef.close({ data: '' });
-
   }
 
-  async crearDeclaracion(tipoDeclaracion: string, formaDeclaracion: string) {
+  async crearDeclaracion(
+    tipoDeclaracion: string,
+    formaDeclaracion: string
+  ) {
     try {
-      const creada = await this.crearDeclaracion(
-        tipoDeclaracion,
-        formaDeclaracion
-      );
 
-      if (creada) {
-
-        this.router.navigate(
-          [`/${route}`],
-          { replaceUrl: true }
-        );
-
-        this.dialogRef.close({ data: '' });
-
+      if (formaDeclaracion === "completa") {
+        this.declaracionSimplificada = false;
+      } else {
+        this.declaracionSimplificada = true;
       }
 
-      catch (error) {
-        console.log(error);
-        return false;
+      const { data, errors } = await this.apollo
+        .query<DeclaracionOutput>({
+          query: datosGeneralesQuery,
+          variables: {
+            tipoDeclaracion: tipoDeclaracion.toUpperCase(),
+            declaracionCompleta: !this.declaracionSimplificada,
+            anioEjercicio: this.anio_ejercicio
+          },
+        })
+        .toPromise();
+
+      if (errors) {
+        throw errors;
       }
+
+      this.declaracionId = data?.declaracion._id;
+      this.anio_ejercicio = data?.declaracion.anioEjercicio;
+
+      return true;
+
+    } catch (error) {
+
+      console.log(error);
+
+      return false;
+
     }
-
   }
 }
