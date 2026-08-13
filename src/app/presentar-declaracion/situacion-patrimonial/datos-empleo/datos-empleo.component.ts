@@ -64,11 +64,10 @@ export class DatosEmpleoComponent implements OnInit {
   tooltipData = tooltipData;
   errorMatcher = new DeclarationErrorStateMatcher();
 
-  minDate = new Date(1980, 1, 1);
-  anio: number = new Date().getFullYear();
-  mes: number = new Date().getMonth() + 1;
-  dia: number = new Date().getDate();
-  maxDate = new Date(this.anio, this.mes - 1, this.dia);
+  minDate: Date;
+  maxDate: Date;
+
+  anioActual: number = new Date().getFullYear();
 
   isFromPreviousRecord = false;
 
@@ -227,6 +226,8 @@ export class DatosEmpleoComponent implements OnInit {
       }
 
       this.declaracionId = data?.declaracion._id;
+      const anioEjercicio = data?.declaracion?.anioEjercicio;
+      this.configurarRangoFechaTomaPosesion(anioEjercicio); 
       if (data?.declaracion.datosEmpleoCargoComision === null) {
         this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
@@ -386,6 +387,20 @@ export class DatosEmpleoComponent implements OnInit {
       this.entePublicoFiltrado = this.entePublicoCatalogo.filter(
         (o: any) => o.ambito !== "MUNICIPAL_ALCALDIA" && o.empleo === 'NO' && o.ambito === ambito);
       return
+    }
+  }
+
+  private configurarRangoFechaTomaPosesion(anioEjercicio: number): void {
+    if (!anioEjercicio) {
+      return;
+    }
+
+    if (anioEjercicio === this.anioActual) {
+      this.minDate = new Date(anioEjercicio, 0, 1);
+      this.maxDate = new Date();
+    } else {
+      this.minDate = new Date(anioEjercicio, 0, 1);
+      this.maxDate = new Date(anioEjercicio, 11, 31);
     }
   }
 }

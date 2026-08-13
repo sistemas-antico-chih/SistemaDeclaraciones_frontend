@@ -502,6 +502,7 @@ export const datosEmpleoCargoComisionQuery = gql`
   query declaracion($tipoDeclaracion: TipoDeclaracion!, $declaracionCompleta: Boolean) {
     declaracion(tipoDeclaracion: $tipoDeclaracion, declaracionCompleta: $declaracionCompleta) {
       _id
+      anioEjercicio
       datosEmpleoCargoComision {
         nivelOrdenGobierno
         ambitoPublico
