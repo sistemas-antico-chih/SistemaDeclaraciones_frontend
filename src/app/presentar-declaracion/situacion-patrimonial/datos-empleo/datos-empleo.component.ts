@@ -47,6 +47,7 @@ export class DatosEmpleoComponent implements OnInit {
   entesFiltrados: any = [];
   pushButtonSave: boolean = false;
   anioEjercicioGuardado: boolean =false;
+  anioEjercicio: boolean =false;
 
   @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
 
