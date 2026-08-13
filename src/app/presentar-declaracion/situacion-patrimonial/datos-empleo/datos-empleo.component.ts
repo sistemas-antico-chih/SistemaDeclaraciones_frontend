@@ -225,25 +225,49 @@ export class DatosEmpleoComponent implements OnInit {
         throw errors;
       }
 
-      this.declaracionId = data?.declaracion._id;
+      this.declaracionId = data?.declaracion?._id;
+
       const anioEjercicio = data?.declaracion?.anioEjercicio;
-      this.configurarRangoFechaTomaPosesion(anioEjercicio); 
-      if (data?.declaracion.datosEmpleoCargoComision === null) {
+
+      // Validar que Datos Generales haya sido guardado previamente
+      if (!anioEjercicio) {
+        this.anioEjercicioGuardado = false;
+
+        this.openSnackBar(
+          'Primero debe guardar el año del ejercicio en Datos Generales.',
+          'Aceptar'
+        );
+
+        this.regresarADatosGenerales();
+
+        return;
+      }
+
+      // Configurar el rango permitido para fechaTomaPosesion
+      this.configurarRangoFechaTomaPosesion(anioEjercicio);
+
+      if (data?.declaracion?.datosEmpleoCargoComision === null) {
         this.isFromPreviousRecord = true;
         await this.getLastUserInfo();
       } else {
         this.isFromPreviousRecord = false;
-        this.fillForm(data?.declaracion.datosEmpleoCargoComision);
+
+        this.fillForm(data?.declaracion?.datosEmpleoCargoComision);
+
         this.menuStateService.markSectionAsSaved(
-          '/datos-empleo', // ← Cambiar por tu URL (ej: '/participacion-empresas')
-          'situacionPatrimonial', // ← Siempre 'intereses' para estos componentes
+          '/datos-empleo',
+          'situacionPatrimonial',
           this.tipoDeclaracion,
           this.declaracionSimplificada
         );
       }
     } catch (error) {
       console.error(error);
-      this.openSnackBar('[ERROR: No se pudo recuperar la información]', 'Aceptar');
+
+      this.openSnackBar(
+        '[ERROR: No se pudo recuperar la información]',
+        'Aceptar'
+      );
     }
   }
 
@@ -291,7 +315,38 @@ export class DatosEmpleoComponent implements OnInit {
 
   async saveInfo() {
     try {
+
+      // Validar que exista un año de ejercicio guardado
+      if (!this.anioEjercicioGuardado || !this.anioEjercicio) {
+        this.openSnackBar(
+          'Primero debe guardar el año del ejercicio en Datos Generales.',
+          'Aceptar'
+        );
+
+        this.regresarADatosGenerales();
+
+        return;
+      }
+
+      // Validar que la fecha esté dentro del año permitido
+      const fechaTomaPosesion =
+        this.datosEmpleoCargoComisionForm.get('fechaTomaPosesion')?.value;
+
+      if (fechaTomaPosesion && this.minDate && this.maxDate) {
+        const fecha = new Date(fechaTomaPosesion);
+
+        if (fecha < this.minDate || fecha > this.maxDate) {
+          this.openSnackBar(
+            'La fecha de toma de posesión debe estar dentro del año del ejercicio seleccionado.',
+            'Aceptar'
+          );
+
+          return;
+        }
+      }
+
       this.isLoading = true;
+
       const declaracion = {
         datosEmpleoCargoComision: this.datosEmpleoCargoComisionForm.value,
       };
@@ -311,18 +366,27 @@ export class DatosEmpleoComponent implements OnInit {
       }
 
       this.menuStateService.markSectionAsSaved(
-        '/datos-empleo', // ← Cambiar por tu URL
+        '/datos-empleo',
         'situacionPatrimonial',
         this.tipoDeclaracion,
         this.declaracionSimplificada
       );
+
       this.isFromPreviousRecord = false;
 
       this.isLoading = false;
+
       this.openSnackBar('Información actualizada', 'Aceptar');
+
     } catch (error) {
       console.log(error);
-      this.openSnackBar('[ERROR: No se guardaron los cambios]', 'Aceptar');
+
+      this.isLoading = false;
+
+      this.openSnackBar(
+        '[ERROR: No se guardaron los cambios]',
+        'Aceptar'
+      );
     }
   }
 
@@ -402,5 +466,17 @@ export class DatosEmpleoComponent implements OnInit {
       this.minDate = new Date(anioEjercicio, 0, 1);
       this.maxDate = new Date(anioEjercicio, 11, 31);
     }
+  }
+
+  private regresarADatosGenerales(): void {
+    let url = '/' + this.tipoDeclaracion;
+
+    if (this.declaracionSimplificada) {
+      url += '/simplificada';
+    }
+
+    url += '/situacion-patrimonial/datos-generales';
+
+    this.router.navigate([url]);
   }
 }
