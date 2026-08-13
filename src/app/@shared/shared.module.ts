@@ -13,6 +13,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewDeclarationComponent } from './preview-declaration/preview-declaration.component';
 import { AgregarNotaAclaratoriaComponent } from './agregar-nota-aclaratoria/agregar-nota-aclaratoria.component';
 import { ReplacePipe } from './pipes/replace.pipe';
+import { ConfirmarPasswordComponent } from './confirmar-password/confirmar-password.component';
 
 @NgModule({
   imports: [FlexLayoutModule, MaterialModule, CommonModule, FormsModule],
@@ -26,6 +27,7 @@ import { ReplacePipe } from './pipes/replace.pipe';
     PreviewDeclarationComponent,
     AgregarNotaAclaratoriaComponent,
     ReplacePipe,
+    ConfirmarPasswordComponent
   ],
   exports: [
     LoaderComponent,
@@ -37,7 +39,8 @@ import { ReplacePipe } from './pipes/replace.pipe';
     PreviewDeclarationComponent,
     AgregarNotaAclaratoriaComponent,
     ReplacePipe,
-    FormsModule
+    FormsModule,
+    ConfirmarPasswordComponent
   ],
 })
 export class SharedModule {}

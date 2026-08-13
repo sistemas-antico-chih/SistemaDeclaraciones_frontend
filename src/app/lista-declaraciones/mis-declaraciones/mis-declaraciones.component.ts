@@ -14,7 +14,9 @@ import { DeclaracionMetadata, TipoDeclaracion } from '@models/declaracion';
 import {
   AgregarNotaAclaratoriaComponent
 } from '@shared/agregar-nota-aclaratoria/agregar-nota-aclaratoria.component';
-
+import {
+  ConfirmarPasswordComponent
+} from '@shared/confirmar-password/confirmar-password.component';
 import { Apollo } from 'apollo-angular';
 
 @Component({
@@ -22,7 +24,9 @@ import { Apollo } from 'apollo-angular';
   templateUrl: './mis-declaraciones.component.html',
   styleUrls: ['./mis-declaraciones.component.scss'],
 })
+
 export class MisDeclaracionesComponent implements OnInit {
+  password: string = '';
   currentTab: TipoDeclaracion = 'INICIAL';
   listaDeclaraciones: DeclaracionMetadata[] = [];
 
@@ -167,17 +171,41 @@ export class MisDeclaracionesComponent implements OnInit {
           return;
         }
 
+        // ============================================
+        // SEGUNDO PASO: SOLICITAR CONTRASEÑA
+        // ============================================
+
+        const passwordDialogRef = this.dialog.open(
+          ConfirmarPasswordComponent,
+          {
+            width: '450px'
+          }
+        );
+
+        const password = await passwordDialogRef
+          .afterClosed()
+          .toPromise();
+
+        if (!password) {
+          return;
+        }
+
+        // ============================================
+        // TERCER PASO: GUARDAR NOTA
+        // ============================================
+
         try {
 
           await this.apollo.mutate({
             mutation: agregarNotaAclaratoria,
             variables: {
               id: declaracion._id,
+
+              password,
+
               nota: {
-                seccion:
-                  resultado.seccion,
-                nota:
-                  resultado.nota
+                seccion: resultado.seccion,
+                nota: resultado.nota
               }
             }
           }).toPromise();
