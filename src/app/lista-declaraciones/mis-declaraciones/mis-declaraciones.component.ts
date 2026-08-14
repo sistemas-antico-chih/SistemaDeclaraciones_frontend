@@ -200,9 +200,7 @@ export class MisDeclaracionesComponent implements OnInit {
             mutation: agregarNotaAclaratoria,
             variables: {
               id: declaracion._id,
-
               password,
-
               nota: {
                 seccion: resultado.seccion,
                 nota: resultado.nota
@@ -215,19 +213,26 @@ export class MisDeclaracionesComponent implements OnInit {
             'Nota aclaratoria agregada correctamente'
           );
 
-        } catch (error) {
+        } catch (error: any) {
 
           console.error(error);
 
+          let mensaje = 'No fue posible guardar la nota';
+
+          if (error?.graphQLErrors?.length > 0) {
+            mensaje = error.graphQLErrors[0].message;
+          } else if (error?.message) {
+            mensaje = error.message;
+          }
+
           this.presentAlert(
             'Error',
-            'No fue posible guardar la nota'
+            mensaje
           );
 
         }
 
       });
-
   }
 
   private obtenerSecciones(
