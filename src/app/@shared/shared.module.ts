@@ -40,7 +40,6 @@ import { ConfirmarPasswordComponent } from './confirmar-password/confirmar-passw
     AgregarNotaAclaratoriaComponent,
     ReplacePipe,
     FormsModule,
-    ConfirmarPasswordComponent
   ],
 })
 export class SharedModule {}
