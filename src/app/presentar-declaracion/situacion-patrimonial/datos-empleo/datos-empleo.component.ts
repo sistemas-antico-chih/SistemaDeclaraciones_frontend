@@ -236,7 +236,7 @@ export class DatosEmpleoComponent implements OnInit {
         this.anioEjercicioGuardado = false;
 
         this.openSnackBar(
-          'Primero debe guardar el año del ejercicio en Datos Generales.',
+          'Primero debe guardar el apartado Datos Generales.',
           'Aceptar'
         );
 
