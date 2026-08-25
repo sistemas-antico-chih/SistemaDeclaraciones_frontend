@@ -46,8 +46,8 @@ export class DatosEmpleoComponent implements OnInit {
   entePublicoFiltrado = entePublico;
   entesFiltrados: any = [];
   pushButtonSave: boolean = false;
-  anioEjercicioGuardado: boolean =false;
-  anioEjercicio: boolean =false;
+  anioEjercicioGuardado: boolean = false;
+  anioEjercicio: number = null;
 
   @ViewChild('tipoDomicilioInput') tipoDomicilioInput: MatSelect;
 
@@ -234,6 +234,7 @@ export class DatosEmpleoComponent implements OnInit {
       // Validar que Datos Generales haya sido guardado previamente
       if (!anioEjercicio) {
         this.anioEjercicioGuardado = false;
+        this.anioEjercicio = null;
 
         this.openSnackBar(
           'Primero debe guardar el apartado Datos Generales.',
@@ -245,8 +246,12 @@ export class DatosEmpleoComponent implements OnInit {
         return;
       }
 
+      // Guardar el año en las propiedades del componente
+      this.anioEjercicio = Number(anioEjercicio);
+      this.anioEjercicioGuardado = true;
+
       // Configurar el rango permitido para fechaTomaPosesion
-      this.configurarRangoFechaTomaPosesion(anioEjercicio);
+      this.configurarRangoFechaTomaPosesion(this.anioEjercicio);
 
       if (data?.declaracion?.datosEmpleoCargoComision === null) {
         this.isFromPreviousRecord = true;
@@ -319,7 +324,11 @@ export class DatosEmpleoComponent implements OnInit {
     try {
 
       // Validar que exista un año de ejercicio guardado
-      if (!this.anioEjercicioGuardado || !this.anioEjercicio) {
+      if (
+        this.anioEjercicio === null ||
+        this.anioEjercicio === undefined ||
+        !Number.isInteger(this.anioEjercicio)
+      ) {
         this.openSnackBar(
           'Primero debe guardar el año del ejercicio en Datos Generales.',
           'Aceptar'
@@ -329,7 +338,6 @@ export class DatosEmpleoComponent implements OnInit {
 
         return;
       }
-
       // Validar que la fecha esté dentro del año permitido
       const fechaTomaPosesion =
         this.datosEmpleoCargoComisionForm.get('fechaTomaPosesion')?.value;
