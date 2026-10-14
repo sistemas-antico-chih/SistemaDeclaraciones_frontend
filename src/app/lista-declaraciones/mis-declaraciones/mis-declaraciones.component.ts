@@ -209,7 +209,7 @@ export class MisDeclaracionesComponent implements OnInit {
           }).toPromise();
 
           this.presentAlert(
-            'Éxito',
+            'Envío exitoso',
             'Nota aclaratoria enviada por correo correctamente'
           );
 
