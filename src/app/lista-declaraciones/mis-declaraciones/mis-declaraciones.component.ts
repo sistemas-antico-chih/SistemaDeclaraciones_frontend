@@ -210,7 +210,7 @@ export class MisDeclaracionesComponent implements OnInit {
 
           this.presentAlert(
             'Éxito',
-            'Nota aclaratoria agregada correctamente'
+            'Nota aclaratoria enviada por correo correctamente'
           );
 
         } catch (error: any) {
